@@ -1,3 +1,4 @@
+import Foundation
 import MEGAAppSDKRepo
 import MEGASdk
 import MEGASDKRepo
@@ -940,7 +941,86 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         delegate.onTransferFinish?(self, transfer: transfer, error: error)
     }
 
+    /// The delegate callbacks each upload fires, keyed by the local path it was started with, or
+    /// by that path's last component when the items of a batch are told apart by name alone.
+    public var stubbedUploadScripts: [String: MockUploadScript] = [:]
+    /// The script for an upload no key of `stubbedUploadScripts` matches. Left `nil`, such an
+    /// upload answers with `stubbedUploadTransferResult`, the way every upload did before scripts.
+    public var defaultUploadScript: MockUploadScript?
+    private let uploadRecords = MockUploadRecords()
+
+    /// The local paths handed to `startUpload`, in the order they arrived.
+    public var startedUploadPaths: [String] { uploadRecords.startedPaths }
+    /// The parent handles handed to `startUpload`, in the order they arrived.
+    public var startedUploadParentHandles: [UInt64] { uploadRecords.startedParentHandles }
+    /// The upload options handed to `startUpload`, in the order they arrived.
+    public var startedUploadOptions: [MEGAUploadOptions] { uploadRecords.startedOptions }
+    /// The cancel tokens handed to `startUpload`, in the order they arrived. One batch shares one
+    /// token, so the same token appears once per item of it.
+    public var startedUploadCancelTokens: [MEGACancelToken] { uploadRecords.startedCancelTokens }
+
+    /// The upload started for `key`, once it has been started, for the test to drive itself.
+    ///
+    /// Waits for it, rather than reading it straight away, because a batch hands its items over
+    /// from tasks of its own and the test asks for one before those tasks have all run.
+    ///
+    /// - Parameter key: the local path the upload was started with, or that path's last component.
+    /// - Throws: `MockUploadError.noUploadStarted` if no such upload was started in time.
+    public func drivenUploadDelegate(for key: String) async throws -> MockDrivenUpload {
+        for _ in 0..<Self.drivenUploadPollCount {
+            if let held = uploadRecords.heldDelegate(for: key) {
+                return MockDrivenUpload(localPath: held.path, sdk: self, delegate: held.delegate)
+            }
+            await Task.yield()
+            try? await Task.sleep(nanoseconds: NSEC_PER_MSEC)
+        }
+        throw MockUploadError.noUploadStarted(forPath: key)
+    }
+
+    private static let drivenUploadPollCount = 2000
+
     public override func startUpload(withLocalPath localPath: String, parentHandle: UInt64, cancelToken: MEGACancelToken?, options: MEGAUploadOptions, delegate: any MEGATransferDelegate) {
+        uploadRecords.record(path: localPath, parentHandle: parentHandle, options: options, cancelToken: cancelToken)
+
+        let script = stubbedUploadScripts[localPath]
+            ?? stubbedUploadScripts[(localPath as NSString).lastPathComponent]
+            ?? defaultUploadScript
+        guard let script else {
+            finishUpload(withStubbedResult: parentHandle, delegate: delegate)
+            return
+        }
+
+        let upload = MockDrivenUpload(localPath: localPath, sdk: self, delegate: delegate)
+        switch script {
+        case .driven:
+            uploadRecords.hold(delegate, forPath: localPath)
+        case .silent:
+            upload.fireFinish(fileName: (localPath as NSString).lastPathComponent)
+        case .failure(let errorType, let state):
+            upload.fireFinish(fileName: (localPath as NSString).lastPathComponent, errorType: errorType, state: state)
+        case .events(let events):
+            let fileName = (localPath as NSString).lastPathComponent
+            for event in events {
+                switch event {
+                case .start(let isFolderTransfer):
+                    upload.fireStart(fileName: fileName, isFolderTransfer: isFolderTransfer)
+                case .update(let stage):
+                    upload.fireUpdate(fileName: fileName, stage: stage)
+                case let .folderUpdate(stage, name, folderCount, createdFolderCount, fileCount):
+                    upload.fireFolderUpdate(
+                        stage: stage,
+                        name: name,
+                        folderCount: folderCount,
+                        createdFolderCount: createdFolderCount,
+                        fileCount: fileCount
+                    )
+                }
+            }
+            upload.fireFinish(fileName: fileName)
+        }
+    }
+
+    private func finishUpload(withStubbedResult parentHandle: UInt64, delegate: any MEGATransferDelegate) {
         let transfer: MockTransfer
         let error: MockError
 

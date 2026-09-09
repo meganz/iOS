@@ -8,15 +8,15 @@ import Testing
 /// screen is told about, which are dropped, and what ends the reading.
 ///
 /// The mapper is shared by both batch use cases and reads an upload exactly as it reads a
-/// download -- `kind` only names the batch in the logs -- so the matrix is exercised once here
+/// download -- `direction` only names the batch in the logs -- so the matrix is exercised once here
 /// rather than twice through the use cases.
 @Suite("CancellableTransferStateMapper Tests")
 struct CancellableTransferStateMapperTests {
 
     // MARK: - Helpers
 
-    private func makeSUT(kind: CancellableTransferStateMapper.Kind = .upload) -> CancellableTransferStateMapper {
-        CancellableTransferStateMapper(kind: kind)
+    private func makeSUT(direction: TransferDirectionEntity = .upload) -> CancellableTransferStateMapper {
+        CancellableTransferStateMapper(direction: direction)
     }
 
     /// The states read from a batch that reported `events` and then ended, on `error` when given.

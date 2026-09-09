@@ -1,9 +1,8 @@
 import Foundation
 
-/// One root of a batch upload: what to upload, where it goes and how it is queued.
+/// One item of a batch upload: what to upload, where it goes and how it is queued.
 ///
-/// Handed to `UploadFileRepositoryProtocol.upload(batch:)`, which reports the whole selection as a
-/// single transfer. Every item carries its own parent, so a batch may span several destinations.
+/// Handed to `UploadFileRepositoryProtocol.upload(batch:)`, which reports the whole selection as a single transfer.
 public struct UploadBatchItemEntity: Sendable {
     public let localFileURL: URL
     public let parentHandle: HandleEntity

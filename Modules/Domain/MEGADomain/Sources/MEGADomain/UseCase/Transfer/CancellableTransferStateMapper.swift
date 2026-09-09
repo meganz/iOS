@@ -31,23 +31,10 @@ public protocol CancellableTransferStateMapping: Sendable {
 /// Running out of events without ever reaching the transferring stage means the same as reaching
 /// it, so that ends on `.transferringFiles` too. An error ends the mapping on `.failed`.
 public struct CancellableTransferStateMapper: CancellableTransferStateMapping {
-    public enum Kind: Sendable, CustomStringConvertible {
-        case upload, download
+    private let direction: TransferDirectionEntity
 
-        public var description: String {
-            switch self {
-            case .upload:
-                "Upload"
-            case .download:
-                "Download"
-            }
-        }
-    }
-
-    private let kind: Kind
-
-    public init(kind: Kind) {
-        self.kind = kind
+    public init(direction: TransferDirectionEntity) {
+        self.direction = direction
     }
 
     public func map(
@@ -57,12 +44,13 @@ public struct CancellableTransferStateMapper: CancellableTransferStateMapping {
             let task = Task {
                 do {
                     mainLoop: for try await event in events() {
+                        guard !Task.isCancelled else { break }
                         guard case let .folderUpdate(update) = event else { continue }
                         switch update.stage {
                         case .scan:
                             MEGALog.log(
                                 level: .info,
-                                message: "[CancellableTransfer] Batch transfer kind \(kind) scanning \(update.folderCount) folders, \(update.fileCount) files"
+                                message: "[CancellableTransfer] \(direction) batch scanning \(update.folderCount) folders, \(update.fileCount) files"
                             )
                             continuation.yield(
                                 .scanning(
@@ -74,7 +62,7 @@ public struct CancellableTransferStateMapper: CancellableTransferStateMapping {
                         case .createTree:
                             MEGALog.log(
                                 level: .info,
-                                message: "[CancellableTransfer] Batch transfer kind \(kind) creatingTree \(update.createdFolderCount)  / \(update.folderCount)"
+                                message: "[CancellableTransfer] \(direction) batch creatingTree \(update.createdFolderCount)  / \(update.folderCount)"
                             )
                             continuation.yield(
                                 .creatingFolders(
@@ -83,7 +71,7 @@ public struct CancellableTransferStateMapper: CancellableTransferStateMapping {
                                 )
                             )
                         case .transferringFiles:
-                            MEGALog.log(level: .info, message: "[CancellableTransfer] Batch transfer kind \(kind) reached its transferring stage")
+                            MEGALog.log(level: .info, message: "[CancellableTransfer] \(direction) batch reached its transferring stage")
                             break mainLoop
                         case .none:
                             break
@@ -91,11 +79,11 @@ public struct CancellableTransferStateMapper: CancellableTransferStateMapping {
                     }
                     // Reaching the transferring stage and running out of events mean the same
                     // thing: every item of the batch has started transferring
-                    MEGALog.log(level: .info, message: "[CancellableTransfer] Batch transfer kind \(kind) stopped reading events")
+                    MEGALog.log(level: .info, message: "[CancellableTransfer] \(direction) batch stopped reading events")
                     continuation.yield(.transferringFiles)
                     continuation.finish()
                 } catch {
-                    MEGALog.log(level: .error, message: "[CancellableTransfer] Batch transfer kind \(kind) failed: \(error)")
+                    MEGALog.log(level: .error, message: "[CancellableTransfer] \(direction) batch failed: \(error)")
                     continuation.yield(.failed)
                     continuation.finish()
                 }

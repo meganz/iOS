@@ -1,6 +1,6 @@
 import Foundation
 
-/// One root of a batch download: what to download, where it is stored and how it is queued.
+/// One item of a batch download: what to download, where it is stored and how it is queued.
 ///
 /// Handed to `DownloadFileRepositoryProtocol.download(batch:)`, which downloads the whole selection as a single transfer
 public struct DownloadBatchItemEntity: Sendable {

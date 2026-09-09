@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAFoundation
 import MEGARepo
 import MEGASwift
 
@@ -108,6 +109,7 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
                         handle: .invalid,
                         parentHandle: parent.handle,
                         localFileURL: fileURL,
+                        isFile: !fileURL.isDirectory,
                         type: .upload,
                         uploadOptions: uploadOptions
                     )

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAFoundation
 import MEGASdk
 import MEGASwift
 
@@ -80,12 +81,36 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
             })
         }
     }
-    
-    // MARK: - Batch upload
 
-    /// Will be implemented in next MRs
-    public func upload(batch: [UploadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
-        EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+    /// Uploads one item of a batch, reporting its transfer's callbacks as they arrive.
+    func upload(_ item: UploadBatchItemEntity) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+        AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            let transferDelegate = TransferDelegate { result in
+                switch result {
+                case .success(let transferEntity):
+                    continuation.yield(.finish(transferEntity))
+                    continuation.finish()
+                case .failure(let error):
+                    continuation.finish(throwing: error)
+                }
+            }
+
+            transferDelegate.start = { continuation.yield(.start($0)) }
+            transferDelegate.progress = { continuation.yield(.update($0)) }
+            transferDelegate.folderUpdate = { continuation.yield(.folderUpdate($0)) }
+
+            MEGALog.log(
+                level: .debug,
+                message: "[UploadFileRepository] uploading \(item.isFile ? "file" : "folder") into parent \(item.parentHandle)"
+            )
+            sdk.startUpload(
+                withLocalPath: item.localFileURL.path,
+                parentHandle: item.parentHandle,
+                cancelToken: cancelToken.value,
+                options: item.options.toMEGAUploadOptions(),
+                delegate: transferDelegate
+            )
+        }.eraseToAnyAsyncThrowingSequence()
     }
     
     public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {

@@ -17,7 +17,7 @@ public struct CancellableDownloadTransferUseCase: CancellableTransferUseCaseProt
     public init(
         downloadFileRepository: some DownloadFileRepositoryProtocol,
         fileSystemRepository: some FileSystemRepositoryProtocol,
-        mapper: some CancellableTransferStateMapping = CancellableTransferStateMapper(kind: .download)
+        mapper: some CancellableTransferStateMapping = CancellableTransferStateMapper(direction: .download)
     ) {
         self.downloadFileRepository = downloadFileRepository
         self.fileSystemRepository = fileSystemRepository

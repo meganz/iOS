@@ -20,7 +20,7 @@ public struct CancellableUploadTransferUseCase: CancellableTransferUseCaseProtoc
     
     public init(
         uploadFileRepository: some UploadFileRepositoryProtocol,
-        mapper: some CancellableTransferStateMapping = CancellableTransferStateMapper(kind: .upload)
+        mapper: some CancellableTransferStateMapping = CancellableTransferStateMapper(direction: .upload)
     ) {
         self.uploadFileRepository = uploadFileRepository
         self.mapper = mapper
