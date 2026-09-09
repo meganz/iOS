@@ -464,6 +464,66 @@ struct TransfersListViewModelSelectModeActionsTests {
         #expect(transferControlUseCase.retryTransfersReceivedTagSets.isEmpty)
         #expect(!sut.isSelectModeActive)
     }
+
+    // MARK: - Retry selected enablement
+
+    @Test func canRetrySelected_withNothingSelected_isFalse() {
+        let sut = makeSUT()
+        sut.selectedTab = .failed
+        sut.enterSelectMode()
+
+        #expect(!sut.canRetrySelectedTransfers)
+    }
+
+    @Test func canRetrySelected_whenNoSelectedRowIsRetryable_isFalse() {
+        // Failed uploads staged from the Photos picker: the SDK unlinked the source
+        // file on finish, so retrying them could only fail again. Offering the button
+        // would run an action that skips every row it was given.
+        let sut = makeSUT()
+        sut.selectedTab = .failed
+        sut.enterSelectMode()
+        register(tag: 3, type: .upload, isRetryable: false, on: sut)
+        register(tag: 5, type: .upload, isRetryable: false, on: sut)
+        sut.selection.selectedTags = [3, 5]
+
+        #expect(!sut.canRetrySelectedTransfers)
+    }
+
+    @Test func canRetrySelected_withOneRetryableRowInTheSelection_isTrue() {
+        // Mixed selection: retry filters rather than refusing, so the retryable
+        // download still re-queues and the upload's row stays put.
+        let sut = makeSUT()
+        sut.selectedTab = .failed
+        sut.enterSelectMode()
+        register(tag: 3, type: .upload, isRetryable: false, on: sut)
+        register(tag: 5, type: .download, isRetryable: true, on: sut)
+        sut.selection.selectedTags = [3, 5]
+
+        #expect(sut.canRetrySelectedTransfers)
+    }
+
+    @Test func canRetrySelected_withOnlyUploadsWhoseSourceStillExists_isTrue() {
+        // Uploads are not blanket-disabled: one whose staged file is still on disk
+        // retries like any download, matching the row's own Retry entries.
+        let sut = makeSUT()
+        sut.selectedTab = .failed
+        sut.enterSelectMode()
+        register(tag: 3, type: .upload, isRetryable: true, on: sut)
+        sut.selection.selectedTags = [3]
+
+        #expect(sut.canRetrySelectedTransfers)
+    }
+
+    @Test func canRetrySelected_withTagsTheRegistryNoLongerHolds_isFalse() {
+        // A selected row can outlive its registry entry for a frame; an unresolvable
+        // tag counts as nothing to retry rather than enabling the button.
+        let sut = makeSUT()
+        sut.selectedTab = .failed
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [99]
+
+        #expect(!sut.canRetrySelectedTransfers)
+    }
 }
 
 @Suite("TransfersListViewModel pause all")
@@ -944,6 +1004,22 @@ private func makeSUT(
         networkMonitorUseCase: networkMonitorUseCase,
         isNewOfflineModeEnabled: isNewOfflineModeEnabled,
         onClose: onClose
+    )
+}
+
+/// Registers a Failed-tab row in the screen's shared registry, which is where
+/// `canRetrySelectedTransfers` reads per-row retryability from.
+@MainActor
+private func register(
+    tag: Int,
+    type: TransferTypeEntity,
+    isRetryable: Bool,
+    on sut: TransfersListViewModel
+) {
+    let entity = TransferEntity(type: type, tag: tag, state: .failed)
+    sut.dependency.registry.upsert(
+        TransferEntityMapper.rowState(for: entity, isRetryable: isRetryable),
+        transfer: entity
     )
 }
 
