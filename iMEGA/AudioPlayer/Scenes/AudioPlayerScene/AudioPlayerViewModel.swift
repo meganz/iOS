@@ -107,6 +107,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let isNewOfflineModeEnabled: Bool
     private let tracker: any AnalyticsTracking
     private var allNodes: [MEGANode]?
     private var shouldRequestStopAudioPlayerSession = false
@@ -168,6 +169,7 @@ final class AudioPlayerViewModel: ViewModelType {
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+         isNewOfflineModeEnabled: Bool = DIContainer.featureFlagProvider.isNewOfflineModeEnabled,
          tracker: some AnalyticsTracking
     ) {
         self.configEntity = configEntity
@@ -180,6 +182,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.audioPlayerUseCase = audioPlayerUseCase
         self.accountUseCase = accountUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
+        self.isNewOfflineModeEnabled = isNewOfflineModeEnabled
         self.repeatItemsState = playerHandler.currentRepeatMode()
         self.speedModeState = playerHandler.currentSpeedMode()
         self.shuffleModeEnabled = playerHandler.isShuffleEnabled()
@@ -227,6 +230,11 @@ final class AudioPlayerViewModel: ViewModelType {
                 return
             }
             
+            if isNetworkOffline {
+                await initializeOffline(with: node)
+                return
+            }
+
             if await isTakenDownNode(node) {
                 await router?.showTermsOfServiceViolationAlert()
                 return
@@ -358,6 +366,48 @@ final class AudioPlayerViewModel: ViewModelType {
     private func isCurrentUserNode(_ node: MEGANode) -> Bool {
         accountUseCase.currentUserHandle == node.owner
     }
+
+    // MARK: - Offline Node Initialize
+
+    private nonisolated var isNetworkOffline: Bool {
+        isNewOfflineModeEnabled && !networkMonitorUseCase.isConnected()
+    }
+
+    /// Plays a node from the copy already on the device, with a queue holding only the siblings that
+    /// have one too — a queue entry that could only be streamed would stall the moment it came up.
+    /// Mirrors `initialize(with:)`, including its fallback to the tapped track on its own.
+    private func initializeOffline(with node: MEGANode) async {
+        guard let nodeInfoUseCase else {
+            dismiss()
+            return
+        }
+
+        let queue = offlineQueue(for: node, using: nodeInfoUseCase)
+
+        if let currentTrack = queue.first(where: { $0.node?.handle == node.handle }) {
+            await initialize(tracks: queue, currentTrack: currentTrack)
+            return
+        }
+
+        // The queue could not place the tapped node — a queue carried over from another folder, say.
+        guard let track = nodeInfoUseCase.offlineAudioTracks(from: [node]).first else {
+            MEGALogError("[AudioPlayer] no local copy for the node tapped while offline, dismissing")
+            dismiss()
+            return
+        }
+
+        await initialize(tracks: [track], currentTrack: track)
+    }
+
+    private func offlineQueue(
+        for node: MEGANode,
+        using nodeInfoUseCase: any NodeInfoUseCaseProtocol
+    ) -> [TrackEntity] {
+        if let allNodes, allNodes.isNotEmpty {
+            return nodeInfoUseCase.offlineAudioTracks(from: allNodes)
+        }
+        return nodeInfoUseCase.fetchOfflineAudioTracks(from: node.parentHandle) ?? []
+    }
     
     private func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) async {
         let tracksFromNodes = allNodes.compactMap { streamingInfoUseCase?.fetchTrack(from: $0) }
@@ -471,7 +521,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case .onViewDidLoad:
             Task { [weak self] in
                 guard let self, let node = configEntity.node else { return }
-                if await isTakenDownNode(node) {
+                if !isNetworkOffline, await isTakenDownNode(node) {
                     router?.showTermsOfServiceViolationAlert()
                     return
                 }

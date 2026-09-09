@@ -16,6 +16,17 @@ protocol OfflineInfoRepositoryProtocol: Sendable {
     /// - Parameter nodes: The audio nodes to look up.
     /// - Returns: The file `URL` for each node that has an offline copy; nodes without one are absent.
     func offlineFileURLs(for nodes: [MEGANode]) -> [MEGANode: URL]
+
+    /// Resolves the copy a node has *saved to Offline*, if it is still on disk
+    /// - Parameter node: The audio node to look up.
+    /// - Returns: The file `URL` of the saved copy, or `nil` when the node was never saved offline
+    ///   or its copy is gone.
+    func offlineSavedFileURL(for node: MEGANode) -> URL?
+
+    /// Resolves, in one read of the offline store, the copy each node has *saved to Offline*
+    /// - Parameter nodes: The audio nodes to look up.
+    /// - Returns: The file `URL` for each node whose saved copy is still on disk.
+    func offlineSavedFileURLs(for nodes: [MEGANode]) -> [MEGANode: URL]
     
     /// Determines whether a given audio node is available offline.
     /// - Parameter node: The audio node to check.
@@ -53,6 +64,20 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
             } else {
                 return nil
             }
+        }
+    }
+
+    func offlineSavedFileURL(for node: MEGANode) -> URL? {
+        offlineSavedFileURLs(for: [node])[node]
+    }
+
+    func offlineSavedFileURLs(for nodes: [MEGANode]) -> [MEGANode: URL] {
+        let localPaths = megaStore.offlineLocalPaths(for: nodes)
+
+        return nodes.reduce(into: [MEGANode: URL]()) { result, node in
+            guard let offlinePath = localPaths[node].map({ Helper.pathForOffline().append(pathComponent: $0) }),
+                  fileManager.fileExists(atPath: offlinePath) else { return }
+            result[node] = URL(fileURLWithPath: offlinePath)
         }
     }
 

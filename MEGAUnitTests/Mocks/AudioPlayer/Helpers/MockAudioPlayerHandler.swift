@@ -49,6 +49,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     private var _isSingleItemPlaylist: Bool
     
     private(set) var playerResumePlayback_Calls = [TimeInterval]()
+    /// The queue the player was handed, so a test can assert what ended up in it.
+    private(set) var setCurrent_tracks = [AudioPlayerItem]()
+    /// The same, for the mini player: it hands its queue over through `addPlayer(tracks:)`.
+    private(set) var addPlayer_tracks = [AudioPlayerItem]()
     
     init(isPlayerDefined: Bool = false, isSingleItemPlaylist: Bool = false) {
         _isPlayerDefined = isPlayerDefined
@@ -69,6 +73,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     ) {
         addPlayer_calledTimes += 1
         addPlayerTracks_calledTimes += 1
+        setCurrent_tracks = tracks
         _isPlayerDefined = true
     }
     
@@ -83,6 +88,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func addPlayer(tracks: [AudioPlayerItem]) {
         addPlayerTracks_calledTimes += 1
+        addPlayer_tracks = tracks
     }
     
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
