@@ -108,6 +108,7 @@
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
 		0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */; };
 		0E7533A62EF1ECDC002BEE1E /* NewTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533A42EF1ECDC002BEE1E /* NewTimelineViewModel.swift */; };
+		0E7533C12EF1ECDC002BEE1E /* TimelineProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533C02EF1ECDC002BEE1E /* TimelineProjection.swift */; };
 		0E7533A72EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533A22EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift */; };
 		0E7533A82EF1ECDC002BEE1E /* NewTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */; };
 		0E7533A92EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533A12EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift */; };
@@ -2965,6 +2966,7 @@
 		0E7533A22EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTimelineTabContentViewModel.swift; sourceTree = "<group>"; };
 		0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTimelineView.swift; sourceTree = "<group>"; };
 		0E7533A42EF1ECDC002BEE1E /* NewTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTimelineViewModel.swift; sourceTree = "<group>"; };
+		0E7533C02EF1ECDC002BEE1E /* TimelineProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineProjection.swift; sourceTree = "<group>"; };
 		0E80B3132DC47AA400582D55 /* LoginRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutingViewModel.swift; sourceTree = "<group>"; };
 		0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutingViewModelTests.swift; sourceTree = "<group>"; };
 		0E80B3202DC4884600582D55 /* MockLoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoginRouter.swift; sourceTree = "<group>"; };
@@ -6074,6 +6076,7 @@
 				0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */,
 				0E7533A42EF1ECDC002BEE1E /* NewTimelineViewModel.swift */,
 				0EB0F0C52F0DDB930061EEA0 /* TimelineMediaTabContentView.swift */,
+				0E7533C02EF1ECDC002BEE1E /* TimelineProjection.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -16266,6 +16269,7 @@
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				0EB0F0C62F0DDB930061EEA0 /* TimelineMediaTabContentView.swift in Sources */,
+				0E7533C12EF1ECDC002BEE1E /* TimelineProjection.swift in Sources */,
 				25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */,
 				25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */,
 				834B518E2C9D8ADC002E46FB /* TimerSequenceFactory.swift in Sources */,

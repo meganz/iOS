@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwift
 import UIKit
 
 // MARK: - Coordinator Protocol
@@ -28,23 +29,29 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
     }
 
     func handleToolbarAction(_ action: MediaBottomToolbarAction, with nodes: [NodeEntity]) {
-        guard let viewController, !nodes.isEmpty else { return }
+        guard let viewController else { return }
+
+        // Convert once, here, for the whole action. Both call sites below used to convert
+        // independently and drop unresolvable handles silently, so the sheet the user was shown
+        // could describe a different set from the one that executed.
+        let megaNodes = nodes.compactMap { $0.toMEGANode(in: .sharedSdk) }
+        guard megaNodes.isNotEmpty else { return }
 
         switch action {
         case .more:
-            presentMoreActions(for: nodes, from: viewController)
+            presentMoreActions(for: megaNodes, from: viewController)
         case .download:
-            executeNodeAction(.download, for: nodes, from: viewController)
+            executeNodeAction(.download, for: megaNodes, from: viewController)
         case .manageLink:
-            executeNodeAction(.manageLink, for: nodes, from: viewController)
+            executeNodeAction(.manageLink, for: megaNodes, from: viewController)
         case .saveToPhotos:
-            executeNodeAction(.saveToPhotos, for: nodes, from: viewController)
+            executeNodeAction(.saveToPhotos, for: megaNodes, from: viewController)
         case .sendToChat:
-            executeNodeAction(.sendToChat, for: nodes, from: viewController)
+            executeNodeAction(.sendToChat, for: megaNodes, from: viewController)
         case .addToAlbum:
-            executeNodeAction(.addToAlbum, for: nodes, from: viewController)
+            executeNodeAction(.addToAlbum, for: megaNodes, from: viewController)
         case .moveToRubbishBin:
-            executeNodeAction(.moveToRubbishBin, for: nodes, from: viewController)
+            executeNodeAction(.moveToRubbishBin, for: megaNodes, from: viewController)
         default:
             break
         }
@@ -52,7 +59,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
 
     // MARK: - Private Methods
 
-    private func presentMoreActions(for nodes: [NodeEntity], from viewController: MediaTabViewController) {
+    private func presentMoreActions(for nodes: [MEGANode], from viewController: MediaTabViewController) {
         let nodeActionViewController = createNodeActionViewController(
             displayMode: viewController.nodeActionDisplayMode,
             with: nodes,
@@ -63,7 +70,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
 
     private func executeNodeAction(
         _ actionType: MegaNodeActionType,
-        for nodes: [NodeEntity],
+        for nodes: [MEGANode],
         from viewController: MediaTabViewController
     ) {
         let nodeActionViewController = createNodeActionViewController(
@@ -82,11 +89,11 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
 
     private func createNodeActionViewController(
         displayMode: DisplayMode,
-        with nodes: [NodeEntity],
+        with nodes: [MEGANode],
         from viewController: MediaTabViewController
     ) -> NodeActionViewController {
         let nodeActionVC = NodeActionViewController(
-            nodes: nodes.compactMap { $0.toMEGANode(in: .sharedSdk) },
+            nodes: nodes,
             delegate: viewController,
             displayMode: displayMode,
             // Timeline reports .photosTimeline; the Videos tab falls back to .cloudDrive. Both present
@@ -103,9 +110,9 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
     private func handleNodesAction(
         _ nodeAction: NodeActionViewController,
         action: MegaNodeActionType,
-        nodes: [NodeEntity],
+        nodes: [MEGANode],
         from viewController: MediaTabViewController
     ) {
-        viewController.nodeAction(nodeAction, didSelect: action, forNodes: nodes.compactMap { $0.toMEGANode(in: .sharedSdk) }, from: viewController.toolbar)
+        viewController.nodeAction(nodeAction, didSelect: action, forNodes: nodes, from: viewController.toolbar)
     }
 }
