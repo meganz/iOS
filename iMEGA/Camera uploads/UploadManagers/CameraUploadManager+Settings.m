@@ -153,11 +153,15 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults setBool:convertHEVCVideo forKey:ShouldConvertHEVCVideoKey];
     
     if (convertHEVCVideo && [NSUserDefaults.standardUserDefaults objectForKey:HEVCToH264CompressionQualityKey] == nil) {
-        [self setHEVCToH264CompressionQuality:CameraUploadVideoQualityMedium];
+        [self setHEVCToH264CompressionQuality:CameraUploadVideoQualityOriginal];
     }
 }
 
 + (CameraUploadVideoQuality)HEVCToH264CompressionQuality {
+    if ([NSUserDefaults.standardUserDefaults objectForKey:HEVCToH264CompressionQualityKey] == nil) {
+        return CameraUploadVideoQualityOriginal;
+    }
+    
     return [NSUserDefaults.standardUserDefaults integerForKey:HEVCToH264CompressionQualityKey];
 }
 
