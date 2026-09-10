@@ -33,7 +33,8 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable
                 observer.didEnumerate(items)
                 observer.finishEnumerating(upTo: nil)
             } catch {
-                observer.finishEnumeratingWithError(error)
+                // A login failure surfaces as a raw MEGAError, whose domain fileproviderd does not understand.
+                observer.finishEnumeratingWithError(FileProviderExtension.fileProviderError(for: error))
             }
         }
     }

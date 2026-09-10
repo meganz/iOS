@@ -40,6 +40,10 @@ final class FileProviderExtension: NSFileProviderExtension {
     // MARK: - Working with items and persistent identifiers
     
     override func persistentIdentifierForItem(at url: URL) -> NSFileProviderItemIdentifier? {
+        Self.persistentIdentifier(at: url)
+    }
+
+    private static func persistentIdentifier(at url: URL) -> NSFileProviderItemIdentifier? {
         var localRelativePath: String
         // This is a bit tricky. As an identifier, we use the "path" in MEGA ex: /folder/subfolder/file,
         // We create "placeholders" and files/folders in NSFileProviderManager.default.documentStorageURL (+ identifier) appending the identifier (path in MEGA)
@@ -87,8 +91,11 @@ final class FileProviderExtension: NSFileProviderExtension {
             throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue)
         }
         
+        // Kept here as well as in `FileProviderSession.ensureReady()`: this method is synchronous and cannot
+        // await, and failing before the enumerator is built keeps Files from waiting on an enumeration that
+        // is going to be rejected anyway.
         guard !credentialUseCase.isPasscodeEnabled() else {
-            throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue, userInfo: [PickerConstant.passcodeEnabled: true])
+            throw FileProviderSession.passcodeEnabledError
         }
         
         return FileProviderEnumerator(
@@ -99,6 +106,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     // MARK: - Managing shared files
     
     override func providePlaceholder(at url: URL) async throws {
+        try await Self.ensureSessionReady()
         guard let identifier = persistentIdentifierForItem(at: url) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -113,31 +121,54 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func startProvidingItem(at url: URL) async throws {
+        try await Self.ensureSessionReady()
         guard let identifier = persistentIdentifierForItem(at: url),
               let node = node(for: identifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
-        
+        // A directory has no contents to provide: its children come from enumeration. Starting an SDK
+        // download for a folder node recursively downloads everything inside it and collides with the
+        // user's own per-file downloads (the SDK rejects a second transfer to the same path).
+        guard node.isFile else { return }
+
         let fileProviderItem = try item(for: identifier)
-        
-        if !(fileProviderItem.isDownloaded ?? false) {
-            _ = try await transferUseCase.download(node: node, to: url, collisionResolution: .overwrite)
+        let isDownloaded = fileProviderItem.isDownloaded ?? false
+        guard !isDownloaded else { return }
+
+        // Large files outlive fileproviderd's patience: Files reports a failure while the transfer keeps
+        // running. Joining the in-flight download and signalling once it lands keeps the item consistent
+        // for the retry and lets Files refresh the downloaded state on its own.
+        let parentItemIdentifier = fileProviderItem.parentItemIdentifier
+        do {
+            try await FileProviderDownloadCoordinator.shared.download(node: node, to: url, using: transferUseCase) {
+                await FileProviderExtension.signalEnumerators(for: [identifier, parentItemIdentifier])
+            }
+        } catch {
+            throw FileProviderExtension.fileProviderError(for: error)
         }
     }
     
     override func itemChanged(at url: URL) {
-        guard let identifier = persistentIdentifierForItem(at: url),
-              let node = node(for: identifier),
-              FileManager.default.fileExists(atPath: url.path),
-              let parentNode = MEGASdk.shared.node(forHandle: node.parentHandle) else {
-            return
-        }
-        
-        guard let parentItemIdentifier = try? item(for: identifier).parentItemIdentifier else {
-            return
-        }
-        
         Task { [transferUseCase] in
+            // Every lookup below goes through the SDK node tree, which a freshly launched extension process
+            // does not have yet. Resolving them before the session is ready made all four guards fail and the
+            // user's local edit was silently dropped instead of uploaded. Nothing here can be resolved outside
+            // the Task, so the whole body waits for the session first.
+            do {
+                try await FileProviderSession.shared.ensureReady()
+            } catch {
+                MEGALogError("[Picker] Can't upload the change at \(url): \(error)")
+                return
+            }
+
+            guard let identifier = FileProviderExtension.persistentIdentifier(at: url),
+                  let node = FileProviderExtension.node(for: identifier),
+                  FileManager.default.fileExists(atPath: url.path),
+                  let parentNode = MEGASdk.shared.node(forHandle: node.parentHandle) else {
+                return
+            }
+            let parentItemIdentifier = FileProviderItem(node: node).parentItemIdentifier
+
             guard let transferEntity = try? await transferUseCase.uploadFile(at: url, to: parentNode.toNodeEntity(), startHandler: {  _ in
                 NSFileProviderManager.default.signalEnumerator(for: identifier) { error in
                     if let error {
@@ -171,6 +202,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     // MARK: - Handling Actions
     
     override func createDirectory(withName directoryName: String, inParentItemIdentifier parentItemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let parentNode = node(for: parentItemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -180,6 +212,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func renameItem(withIdentifier itemIdentifier: NSFileProviderItemIdentifier, toName itemName: String) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -190,6 +223,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func trashItem(withIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -200,6 +234,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func untrashItem(withIdentifier itemIdentifier: NSFileProviderItemIdentifier, toParentItemIdentifier parentItemIdentifier: NSFileProviderItemIdentifier?) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -210,6 +245,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func deleteItem(withIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws {
+        try await Self.ensureSessionReady()
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -218,6 +254,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func reparentItem(withIdentifier itemIdentifier: NSFileProviderItemIdentifier, toParentItemWithIdentifier parentItemIdentifier: NSFileProviderItemIdentifier, newName: String?) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let parentNode = node(for: parentItemIdentifier),
               let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
@@ -229,6 +266,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func importDocument(at fileURL: URL, toParentItemIdentifier parentItemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let parentNode = node(for: parentItemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -251,6 +289,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func setFavoriteRank(_ favoriteRank: NSNumber?, forItemIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -263,6 +302,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func setTagData(_ tagData: Data?, forItemIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        try await Self.ensureSessionReady()
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
@@ -282,35 +322,45 @@ final class FileProviderExtension: NSFileProviderExtension {
                                   completionHandler: @Sendable @escaping ((any Error)?) -> Void) -> Progress {
         
         let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))
-        
-        for identifier in itemIdentifiers {
-            let node = node(for: identifier)
-            guard let node else {
-                perThumbnailCompletionHandler(identifier, nil, nil)
-                continue
+        let maxConcurrentThumbnails = 3
+
+        // `completionHandler` must run exactly once on every path, otherwise fileproviderd waits forever
+        // and eventually kills the extension. Every per-item outcome, including cancellation, therefore goes
+        // through `fetchThumbnail`; the parent task advances `progress`.
+        Task { [thumbnailUseCase] in
+            do {
+                try await FileProviderExtension.ensureSessionReady()
+            } catch {
+                // Files caches a `nil` thumbnail as "this item has none" and never asks again, so a session
+                // failure must surface as an error: that keeps the request retryable once the user is back in.
+                itemIdentifiers.forEach { perThumbnailCompletionHandler($0, nil, error) }
+                completionHandler(error)
+                return
             }
-            
-            Task { [thumbnailUseCase] in
-                var error: (any Error)?
-                var data: Data?
-                do {
-                    let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
-                    guard progress.isCancelled != true else {
-                        return
+
+            for batchStart in stride(from: 0, to: itemIdentifiers.count, by: maxConcurrentThumbnails) {
+                guard !progress.isCancelled else { break }
+                let batch = itemIdentifiers[batchStart..<min(batchStart + maxConcurrentThumbnails, itemIdentifiers.count)]
+                await withTaskGroup(of: Void.self) { group in
+                    for identifier in batch {
+                        group.addTask {
+                            await FileProviderExtension.fetchThumbnail(
+                                for: identifier,
+                                using: thumbnailUseCase,
+                                progress: progress,
+                                completion: perThumbnailCompletionHandler
+                            )
+                        }
                     }
-                    
-                    data = try Data(contentsOf: thumbnailEntity.url, options: Data.ReadingOptions.alwaysMapped)
-                } catch let mappingError {
-                    error = mappingError
                 }
-                progress.completedUnitCount += 1
-                perThumbnailCompletionHandler(identifier, data, error)
-                if progress.isFinished {
-                    completionHandler(error)
-                }
+                // Advance the progress once per batch from the parent task: `completedUnitCount += 1` is a
+                // read-modify-write and would lose updates when the child tasks race on it.
+                progress.completedUnitCount += Int64(batch.count)
             }
+
+            completionHandler(progress.isCancelled ? CocoaError(.userCancelled) : nil)
         }
-        
+
         return progress
     }
     
@@ -330,6 +380,10 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     private func node(for identifier: NSFileProviderItemIdentifier) -> NodeEntity? {
+        Self.node(for: identifier)
+    }
+
+    private static func node(for identifier: NSFileProviderItemIdentifier) -> NodeEntity? {
         if identifier == NSFileProviderItemIdentifier.rootContainer {
             return MEGASdk.shared.rootNode?.toNodeEntity()
         }
@@ -339,5 +393,87 @@ final class FileProviderExtension: NSFileProviderExtension {
             return nil
         }
         return node.toNodeEntity()
+    }
+
+    /// Logs in and fetches nodes if this process has not done it yet, mapping the failure to an error
+    /// fileproviderd understands. `AuthRepository.login` surfaces a raw `MEGAError`, whose bridged domain is
+    /// neither NSCocoaErrorDomain nor NSFileProviderErrorDomain, so it must never reach the system as-is.
+    private static func ensureSessionReady() async throws {
+        do {
+            try await FileProviderSession.shared.ensureReady()
+        } catch {
+            throw fileProviderError(for: error)
+        }
+    }
+
+    /// fileproviderd only understands NSCocoaErrorDomain and NSFileProviderErrorDomain; any other domain surfaces
+    /// in Files as the generic "couldn't communicate with the helper application" alert.
+    ///
+    /// Unknown failures fall back to `serverUnreachable`, the closest "try again later" code available to a
+    /// non-replicated extension. `cannotSynchronize` is not an option: it is a replicated-only (V3) code, and
+    /// it tells the system the item is definitively broken and must not be retried until the item changes on
+    /// disk or the extension is updated - the wrong contract for a transient login or transfer failure.
+    static func fileProviderError(for error: any Error) -> any Error {
+        // Errors that already live in a domain the system understands are passed through untouched. Wrapping
+        // them would hide `notAuthenticated`, the one code Files acts on by prompting the user to sign in.
+        let nsError = error as NSError
+        guard nsError.domain != NSFileProviderErrorDomain, nsError.domain != NSCocoaErrorDomain else {
+            return error
+        }
+
+        guard let transferError = error as? TransferErrorEntity else {
+            return NSFileProviderError(.serverUnreachable, userInfo: [NSUnderlyingErrorKey: error])
+        }
+        switch transferError {
+        case .cancelled:
+            return CocoaError(.userCancelled)
+        case .couldNotFindNodeByHandle, .couldNotFindNodeByLink:
+            return NSFileProviderError(.noSuchItem)
+        case .overquota:
+            return NSFileProviderError(.insufficientQuota)
+        default:
+            return NSFileProviderError(.serverUnreachable, userInfo: [NSUnderlyingErrorKey: error])
+        }
+    }
+
+    private static func signalEnumerators(for identifiers: [NSFileProviderItemIdentifier]) async {
+        for identifier in identifiers {
+            do {
+                try await NSFileProviderManager.default.signalEnumerator(for: identifier)
+            } catch {
+                MEGALogError("[Picker] Error signaling enumerator for \(identifier.rawValue): \(error)")
+            }
+        }
+    }
+
+    private static func fetchThumbnail(
+        for identifier: NSFileProviderItemIdentifier,
+        using thumbnailUseCase: some ThumbnailUseCaseProtocol,
+        progress: Progress,
+        completion: @Sendable (NSFileProviderItemIdentifier, Data?, (any Error)?) -> Void
+    ) async {
+        guard let node = node(for: identifier) else {
+            completion(identifier, nil, nil)
+            return
+        }
+        do {
+            let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
+            guard !progress.isCancelled else {
+                completion(identifier, nil, CocoaError(.userCancelled))
+                return
+            }
+            let data = try Data(contentsOf: thumbnailEntity.url, options: .alwaysMapped)
+            completion(identifier, data, nil)
+        } catch let thumbnailError as ThumbnailErrorEntity {
+            // Definitive: the node has no thumbnail attribute (or no longer exists). Files treats a `nil`
+            // thumbnail as final and falls back to the generic icon, which is the right outcome here.
+            // fileproviderd would also log a fault for this foreign error domain if it were passed through.
+            MEGALogDebug("[Picker] No thumbnail for \(identifier.rawValue): \(thumbnailError)")
+            completion(identifier, nil, nil)
+        } catch {
+            // Transient (network, SDK, file read): report an error in a domain fileproviderd accepts so Files
+            // retries later instead of caching "no thumbnail" for good.
+            completion(identifier, nil, fileProviderError(for: error))
+        }
     }
 }

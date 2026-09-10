@@ -83,25 +83,37 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
     var isDownloaded: Bool {
         isFileInCloud()
     }
-    
+
+    /// Files draws a dashed cloud badge on items that are downloaded but not the most recent version. Without this
+    /// the system assumes `false`, so every downloaded file kept the dashed badge. A local copy only counts as
+    /// downloaded when its fingerprint matches the node, which by definition is the most recent version.
+    var isMostRecentVersionDownloaded: Bool {
+        isFileInCloud()
+    }
+
+    /// A node only exists in the MEGA tree once its upload has completed, so an item is uploaded unless a
+    /// replacement upload for it is in flight (`itemChanged`). Files uses `isUploaded` for the cloud badge and
+    /// treats an unimplemented value as `false`, which showed a "waiting to upload" dashed cloud on every
+    /// downloaded item.
+    var isUploaded: Bool {
+        !isUploading
+    }
+
     var isUploading: Bool {
-        let uploadingTransfers = MEGASdk.shared.uploadTransfers.toTransferEntities().filter { !$0.isFinished }
-        
-        guard !uploadingTransfers.isEmpty else {
+        // `localURL()` returns nil for folders, which is what keeps every ancestor of an uploading file - and
+        // the root container, whose node path is "/" - from reporting itself as uploading. A folder node only
+        // exists in the cloud once it has been created there, so it is never in flight.
+        guard let localPath = localURL()?.path.fileProviderStoragePath else {
             return false
         }
-        
-        for transfer in uploadingTransfers {
-            if let transferPath = transfer.path,
-               let nodePath = nodeAttributeUseCase.pathFor(node: node) {
-                if transferPath.contains(nodePath) {
-                    return true
+        return MEGASdk.shared.uploadTransfers
+            .toTransferEntities()
+            .contains { transfer in
+                guard !transfer.isFinished, let transferPath = transfer.path else {
+                    return false
                 }
+                return transferPath.fileProviderStoragePath == localPath
             }
-        }
-        
-        return false
-
     }
 
     var favoriteRank: NSNumber? {
@@ -126,22 +138,46 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
 
     // MARK: - Private
         
+    /// Location of this node's local copy inside the File Provider storage, or `nil` for anything but a file.
+    private func localURL() -> URL? {
+        guard node.isFile, let nodePath = nodeAttributeUseCase.pathFor(node: node) else {
+            return nil
+        }
+        return NSFileProviderManager.default.documentStorageURL.appendingPathComponent(nodePath)
+    }
+
     private func isFileInCloud() -> Bool {
-        guard node.isFile, let path = nodeAttributeUseCase.pathFor(node: node) else {
+        guard let itemURL = localURL() else {
             return false
         }
-        let itemURL = NSFileProviderManager.default.documentStorageURL.appendingPathComponent(path)
         var isDirectory: ObjCBool = false
         guard FileManager.default.fileExists(atPath: itemURL.path, isDirectory: &isDirectory),
               !isDirectory.boolValue else {
             return false
         }
-        return MEGASdk.shared.fingerprint(forFilePath: itemURL.path) == node.fingerprint
+        // A partial file left behind by an interrupted transfer must not count as downloaded: `nil == nil`
+        // would otherwise report it as complete and Files would stop offering the download.
+        guard let localFingerprint = MEGASdk.shared.fingerprint(forFilePath: itemURL.path),
+              let remoteFingerprint = node.fingerprint else {
+            return false
+        }
+        return localFingerprint == remoteFingerprint
     }
 }
 
-private extension String {
-    func toItemIdentifier() -> String {
+extension String {
+    /// fileproviderd and the SDK spell the same location both as `/private/var/…` and as `/var/…`
+    /// (see the comment in `FileProviderExtension.persistentIdentifier(at:)`), so two paths are only
+    /// comparable once that alias is removed. `standardizedFileURL` only resolves `.` and `..`.
+    var fileProviderStoragePath: String {
+        let standardized = URL(fileURLWithPath: self).standardizedFileURL.path
+        guard standardized.hasPrefix("/private/") else {
+            return standardized
+        }
+        return String(standardized.dropFirst("/private".count))
+    }
+
+    fileprivate func toItemIdentifier() -> String {
         let rootNodeHandle = MEGASdk.shared.rootNode?.handle ?? ~UInt64(0)
         let rootNodeBase64Handle = MEGASdk.base64Handle(forHandle: rootNodeHandle)!
         if self == rootNodeBase64Handle {
