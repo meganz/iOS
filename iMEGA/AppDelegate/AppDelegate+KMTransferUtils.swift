@@ -1,3 +1,4 @@
+import CryptoKit
 import KMTransferUtils
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
@@ -51,11 +52,28 @@ extension AppDelegate {
                 }
             }
         } catch {
-            // Raw CryptoKit errors from the framework's decrypt() land here — a real failure.
-            migrationLog.error("import failed: \(String(describing: error), privacy: .public)")
+            // Everything the framework models is taken by the typed catch above, so only its two
+            // raw error sources reach here, both inside readTransferFile(): the Data(contentsOf:)
+            // read and the AES-GCM decrypt
+            let reason: String
+            switch try? DIContainer.kmTransferUtils.getDataFromTransferFile() {
+            case .some(let records) where records.isEmpty:
+                reason = "backupEmpty"
+            case .some:
+                reason = "backupReadable"
+            case .none:
+                reason = switch error {
+                case is CryptoKitError: "backupUndecryptable"
+                case let readError as CocoaError: "backupUnreadable:\(readError.errorCode)"
+                // Neither family: name the type, so a framework or SDK change that starts
+                // throwing something else is visible instead of hiding in one opaque bucket.
+                default: "unexpected:\(type(of: error))"
+                }
+            }
+            migrationLog.error("import failed: \(String(describing: error), privacy: .public) \(reason, privacy: .public)")
             if isCrossTeamLaunch {
                 DIContainer.tracker.trackAnalyticsEvent(
-                    with: IOSKMTransferUSMigrationFailedEvent(reason: "unexpected")
+                    with: IOSKMTransferUSMigrationFailedEvent(reason: reason)
                 )
             }
         }
