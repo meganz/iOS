@@ -1160,6 +1160,9 @@
 		83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
 		83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */; };
 		83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
+		A50AE348304C4DDB007A07CF /* CancellableTransferAlertScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AE347304C4DDB007A07CF /* CancellableTransferAlertScheduler.swift */; };
+		A50AE34A304C4DDB007A07CF /* CancellableTransferAlertSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AE349304C4DDB007A07CF /* CancellableTransferAlertSchedulerTests.swift */; };
+		A50AE34C304C4DDB007A07CF /* MockClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AE34B304C4DDB007A07CF /* MockClock.swift */; };
 		83A612EE2C1091BE00116241 /* CallControlView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A612ED2C1091BE00116241 /* CallControlView+Factory.swift */; };
 		83A66D222C590E6D00047F24 /* SendToChatWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A66D212C590E6D00047F24 /* SendToChatWrapper.swift */; };
 		83A66D2E2C593B5F00047F24 /* EmptyCallShareOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A66D2D2C593B5F00047F24 /* EmptyCallShareOptionsView.swift */; };
@@ -4028,6 +4031,9 @@
 		83A4E47227F49AE000A429F4 /* TransferStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferStage.swift; sourceTree = "<group>"; };
 		83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferRouter.swift; sourceTree = "<group>"; };
 		83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CancellableTransfer+Shared.swift"; sourceTree = "<group>"; };
+		A50AE347304C4DDB007A07CF /* CancellableTransferAlertScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferAlertScheduler.swift; sourceTree = "<group>"; };
+		A50AE349304C4DDB007A07CF /* CancellableTransferAlertSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferAlertSchedulerTests.swift; sourceTree = "<group>"; };
+		A50AE34B304C4DDB007A07CF /* MockClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClock.swift; sourceTree = "<group>"; };
 		83A612ED2C1091BE00116241 /* CallControlView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallControlView+Factory.swift"; sourceTree = "<group>"; };
 		83A66D212C590E6D00047F24 /* SendToChatWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToChatWrapper.swift; sourceTree = "<group>"; };
 		83A66D2D2C593B5F00047F24 /* EmptyCallShareOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCallShareOptionsView.swift; sourceTree = "<group>"; };
@@ -6571,6 +6577,7 @@
 			isa = PBXGroup;
 			children = (
 				24B261C02AB169F2006F23BE /* ViewEntity */,
+				A50AE349304C4DDB007A07CF /* CancellableTransferAlertSchedulerTests.swift */,
 				243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */,
 				BE1A0A052F60000100AA0401 /* RevampedCancellableTransferViewModelTests.swift */,
 			);
@@ -8422,6 +8429,7 @@
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				94A2AD3B2D6E368B0022D6B4 /* MockAudioQueueLoaderDelegate.swift */,
 				94A144612C9DE58800C34A98 /* MockChatUploader.swift */,
+				A50AE34B304C4DDB007A07CF /* MockClock.swift */,
 				948B29492CA1671D00428787 /* MockFileManager.swift */,
 				948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
@@ -9843,6 +9851,7 @@
 			children = (
 				83BA00662798701A00498493 /* ViewEntity */,
 				83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */,
+				A50AE347304C4DDB007A07CF /* CancellableTransferAlertScheduler.swift */,
 				83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */,
 				83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */,
 				83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */,
@@ -14967,6 +14976,7 @@
 				BE1A0A022F60000100AA0401 /* CancellableTransfer+DomainMapping.swift in Sources */,
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */,
+				A50AE348304C4DDB007A07CF /* CancellableTransferAlertScheduler.swift in Sources */,
 				83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */,
 				83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */,
 				83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */,
@@ -16810,6 +16820,7 @@
 				25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */,
 				0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */,
 				0E32294D2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift in Sources */,
+				A50AE34A304C4DDB007A07CF /* CancellableTransferAlertSchedulerTests.swift in Sources */,
 				BE1A0A042F60000100AA0401 /* CancellableTransferDomainMappingTests.swift in Sources */,
 				24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */,
 				243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */,
@@ -16948,6 +16959,7 @@
 				948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */,
 				0E8C8EA22ED7B03D0083918C /* MockCameraUploadProgressRouter.swift in Sources */,
 				94A144622C9DE59100C34A98 /* MockChatUploader.swift in Sources */,
+				A50AE34C304C4DDB007A07CF /* MockClock.swift in Sources */,
 				94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */,
 				94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */,
 				C4944FE82C339F6800A2C082 /* MockDownloadedNodesListener.swift in Sources */,

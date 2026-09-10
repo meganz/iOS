@@ -110,6 +110,8 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
             router: self,
             cancellableTransferUseCase: makeCancellableTransferUseCase(),
             overDiskQuotaChecker: makeOverDiskQuotaChecker(),
+            alertScheduler: CancellableTransferAlertScheduler(
+                presentHandler: { [weak self] in self?.showTransfersAlert() }),
             transfers: transfers,
             transferType: transferType
         )

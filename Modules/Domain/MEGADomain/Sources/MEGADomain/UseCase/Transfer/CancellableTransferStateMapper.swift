@@ -10,7 +10,7 @@ public protocol CancellableTransferStateMapping: Sendable {
     /// Reads a batch's transfer events as the state of that batch.
     ///
     /// - Parameter events: Starts the batch and returns its events. A closure rather than a
-    ///   sequence, so that the batch is handed over from inside the mapping, once, whatever the
+    ///   sequence, so that the batch is started from inside the mapping, once, whatever the
     ///   caller then does with the states.
     /// - Returns: A sequence of the batch's progress ended by exactly one terminal state,
     ///   `.transferringFiles` or `.failed`, after which it finishes. It does not throw: an error

@@ -961,8 +961,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
 
     /// The upload started for `key`, once it has been started, for the test to drive itself.
     ///
-    /// Waits for it, rather than reading it straight away, because a batch hands its items over
-    /// from tasks of its own and the test asks for one before those tasks have all run.
+    /// Waits for it, rather than reading it straight away, because a batch starts its items from
+    /// tasks of its own and the test asks for one before those tasks have all run.
     ///
     /// - Parameter key: the local path the upload was started with, or that path's last component.
     /// - Throws: `MockUploadError.noUploadStarted` if no such upload was started in time.

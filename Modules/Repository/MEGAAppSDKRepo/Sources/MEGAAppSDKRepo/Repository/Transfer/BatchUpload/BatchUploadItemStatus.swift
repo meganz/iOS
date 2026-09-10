@@ -3,8 +3,9 @@ import MEGADomain
 /// One item's standing in a batch upload, as of the last transfer callback seen for it.
 ///
 /// A snapshot of where the item is in its lifecycle, not a measure of how much of it has moved:
-/// the batch reports no byte counts, only whether it is away and whether it is over. Items report
-/// these to `BatchUploadAggregator`, which is the only thing that keeps a running picture.
+/// the batch reports no byte counts, only whether it has started transferring and whether it has
+/// finished. Items report these to `BatchUploadAggregator`, which is the only thing that keeps a
+/// running picture.
 struct BatchUploadItemStatus: Sendable {
     enum Phase: Sendable {
         case none
@@ -13,18 +14,19 @@ struct BatchUploadItemStatus: Sendable {
     }
     
     let index: Int
-    /// Whether the item is a file rather than a folder. Decides when it counts as away.
+    /// Whether the item is a file rather than a folder. Decides when it counts as started.
     let isFile: Bool
     let phase: Phase
     
-    /// Whether the item is away: past the point where the SDK might still not have queued it.
+    /// Whether the item has started transferring: past the point where the SDK might still not
+    /// have queued it.
     ///
-    /// - A file is away as soon as its transfer starts, so any event at all counts.
-    /// - A folder is away only once its scan is over and the SDK has moved on to the files it
-    ///   found, which a `.folderUpdate` or an `.update` reports as the `.transferringFiles` stage.
-    ///   A folder's own `.start` says only that the scan began.
-    /// - An item that has ended, whether it succeeded or failed, is away too: there is nothing
-    ///   left to wait for.
+    /// - A file has started as soon as its transfer starts, so any event at all counts.
+    /// - A folder has started only once its scan has ended and the SDK has moved on to the files
+    ///   it found, which a `.folderUpdate` or an `.update` reports as the `.transferringFiles`
+    ///   stage. A folder's own `.start` says only that the scan began.
+    /// - An item that has ended, whether it succeeded or failed, counts as started too: there is
+    ///   nothing left to wait for.
     var hasStartedTransferring: Bool {
         switch phase {
         case .none:
@@ -45,11 +47,12 @@ struct BatchUploadItemStatus: Sendable {
         }
     }
     
-    /// Whether the item is over, by either route.
+    /// Whether the item has finished, by either route.
     ///
-    /// - A transfer is over when it reports `.finish`. For a folder that is the whole tree, not
-    ///   the first file in it.
-    /// - A failed item is over too: nothing further is reported for it once its error arrives.
+    /// - A transfer has finished when it reports `.finish`. For a folder that is the whole tree,
+    ///   not the first file in it.
+    /// - A failed item has finished too: nothing further is reported for it once its error
+    ///   arrives.
     var hasFinishedTransferring: Bool {
         switch phase {
         case .none:

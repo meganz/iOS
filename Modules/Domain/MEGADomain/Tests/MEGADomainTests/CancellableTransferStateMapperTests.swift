@@ -93,7 +93,7 @@ struct CancellableTransferStateMapperTests {
         ])
     }
 
-    @Test("A stage is reported as the batch reaches it, not once the batch is over")
+    @Test("A stage is reported as the batch reaches it, not once the batch has ended")
     func aStageIsReportedAsItArrives() async {
         let (events, continuation) = AsyncThrowingStream.makeStream(
             of: TransferEventEntity.self,
@@ -134,7 +134,7 @@ struct CancellableTransferStateMapperTests {
 
     // MARK: - Ending the batch
 
-    @Test("A batch that reaches its transferring stage is away")
+    @Test("A batch that reaches its transferring stage has started")
     func aTransferringUpdateEndsOnTransferringFiles() async {
         let states = await states(from: [
             .folderUpdateEvent(stage: .transferringFiles, fileCount: 5)
@@ -143,7 +143,7 @@ struct CancellableTransferStateMapperTests {
         #expect(states == [.transferringFiles])
     }
 
-    @Test("A batch that ends without reaching its transferring stage is away all the same")
+    @Test("A batch that ends without reaching its transferring stage has started all the same")
     func exhaustedEventsEndOnTransferringFiles() async {
         // A screen waiting on a terminal state has to be given one, whichever way the batch ended,
         // and events that ran out without an error are events of a batch that got queued.
@@ -180,7 +180,7 @@ struct CancellableTransferStateMapperTests {
         #expect(states == [.scanning(name: "Docs", folderCount: 2, fileCount: 3), .failed])
     }
 
-    @Test("A batch that failed after reporting itself away is not walked back")
+    @Test("A batch that failed after reporting itself started is not walked back")
     func anErrorAfterTheTransferringStageIsNotRead() async {
         let states = await states(
             from: [.folderUpdateEvent(stage: .transferringFiles, fileCount: 1)],

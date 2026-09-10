@@ -47,8 +47,8 @@ struct CancellableTransferDomainMappingTests {
         #expect(transfer.cancellableTransferEntity.uploadOptions?.fileName == "file (1).txt")
     }
 
-    /// A folder is only away once it reports reaching its transferring stage, where a file is
-    /// away as soon as its transfer starts, so the data layer has to be told which it is.
+    /// A folder has only started once it reports reaching its transferring stage, where a file has
+    /// started as soon as its transfer starts, so the data layer has to be told which it is.
     @Test("An upload of a folder says so")
     func uploadOfAFolder() {
         let transfer = CancellableTransfer(

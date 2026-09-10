@@ -5,7 +5,7 @@ import Testing
 ///
 /// A batch upload asks whether an item has reached its transferring stage by comparing the stage
 /// it last reported against `.transferringFiles`, so the order the stages sort in is what decides
-/// whether the batch calls itself away -- not a detail of the enum.
+/// whether the batch calls itself started -- not a detail of the enum.
 @Suite("TransferStageEntity Tests")
 struct TransferStageEntityTests {
 

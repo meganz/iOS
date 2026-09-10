@@ -12,13 +12,13 @@ extension UploadFileRepository {
     /// The fold follows the shape the SDK uses. Every item reports a `BatchUploadItemStatus` snapshot; all
     /// of them are merged into one aggregator, BatchUploadAggregator.
     ///
-    /// What is folded is only whether the batch is away: the whole selection is queued at once, so
-    /// its items scan and build their trees at overlapping times and no count taken across them
-    /// describes a stage the batch as a whole is in. So one folder update is reported, carrying the
-    /// transferring stage, once every item has started; then a finish, once every item has ended.
-    /// Losing every item of the batch is an error, and it is thrown rather than reported as a
-    /// finish. Lost before any of them got away, the batch reports no hand-over at all; lost
-    /// after, the hand-over stands and only the finish is withheld.
+    /// What is folded is only whether the batch has started transferring: the whole selection is
+    /// queued at once, so its items scan and build their trees at overlapping times and no count
+    /// taken across them describes a stage the batch as a whole is in. So one folder update is
+    /// reported, carrying the transferring stage, once every item has started; then a finish, once
+    /// every item has ended. Losing every item of the batch is an error, and it is thrown rather
+    /// than reported as a finish. Lost before any of them started, the batch reports no start at
+    /// all; lost after, the start stands and only the finish is withheld.
     ///
     /// When the SDK does support a batch upload, this calls it directly, everything in the
     /// `BatchUpload` folder is deleted, and `CancellableUploadTransferUseCase` is not touched at
@@ -27,7 +27,7 @@ extension UploadFileRepository {
         AsyncThrowingStream { continuation in
             let task = Task {
                 guard batch.isNotEmpty else {
-                    MEGALog.log(level: .error, message: "[UploadFileRepository] upload batch is empty, nothing to hand over")
+                    MEGALog.log(level: .error, message: "[UploadFileRepository] upload batch is empty, nothing to upload")
                     continuation.finish(throwing: TransferErrorEntity.upload)
                     return
                 }

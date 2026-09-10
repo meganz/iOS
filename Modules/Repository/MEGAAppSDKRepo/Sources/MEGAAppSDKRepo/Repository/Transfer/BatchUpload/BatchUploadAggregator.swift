@@ -39,8 +39,8 @@ extension TransferEntity {
 
 /// Folds every item's `BatchUploadItemStatus` into the batch's own transfer events.
 ///
-/// What is folded is only whether the batch is away: one folder update carrying the transferring
-/// stage, once every item has started, then a finish, once every item has ended.
+/// What is folded is only whether the batch has started transferring: one folder update carrying
+/// the transferring stage, once every item has started, then a finish, once every item has ended.
 ///
 /// A batch whose every item failed early without starting transferring, `record` throws instead of reporting the batch finished.
 struct BatchUploadAggregator: Sendable {
@@ -48,8 +48,8 @@ struct BatchUploadAggregator: Sendable {
     private var transferEntity: TransferEntity
     private var items: [BatchUploadItemStatus] = []
     private let updateHandler: @Sendable (TransferEventEntity) -> Void
-    private var didReportHandover = false
-    /// The items that have been away at some point, and the ones that have ended.
+    private var didReportBatchStarted = false
+    /// The items that have started transferring at some point, and the ones that have ended.
     ///
     /// Remembered rather than counted off `items`, because an item reports where it stands as of
     /// its last callback, so an item counted as `hasStarted` = true at this point could be changed back to false later.
@@ -96,11 +96,11 @@ struct BatchUploadAggregator: Sendable {
         }
 
         // If every item in the batch has started transferring, report the folder update with stage .transferringFiles
-        if hasStarted && !didReportHandover {
-            didReportHandover = true
+        if hasStarted && !didReportBatchStarted {
+            didReportBatchStarted = true
             MEGALog.log(
                 level: .info,
-                message: "[UploadFileRepository] upload batch handed over: all \(items.count) item(s) started"
+                message: "[UploadFileRepository] upload batch started: all \(items.count) item(s) started transferring"
             )
             updateHandler(
                 .folderUpdate(

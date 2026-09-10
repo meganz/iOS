@@ -8,10 +8,11 @@ import Testing
 /// Covers `UploadFileRepository.upload(batch:)` -- the fold that turns one transfer per selected
 /// item into a single report for the batch.
 ///
-/// What is folded is only whether the batch is away. The whole selection is queued at once, so its
-/// items scan and build their trees at overlapping times and no count taken across them describes a
-/// stage the batch as a whole is in; the fold says nothing about them, and only reports the batch
-/// handed over once every item is, finished once every item is, or failed when none got away.
+/// What is folded is only whether the batch has started transferring. The whole selection is queued
+/// at once, so its items scan and build their trees at overlapping times and no count taken across
+/// them describes a stage the batch as a whole is in; the fold says nothing about them, and only
+/// reports the batch started once every item has, finished once every item has, or failed when none
+/// of them started.
 ///
 /// Driven through `CancellableUploadTransferUseCase` rather than read as raw `TransferEventEntity`s:
 /// `TransferEventEntity` is not `Equatable`, and what the fold is for is the state a screen ends up
@@ -89,8 +90,8 @@ struct UploadFileRepositoryBatchTests {
         return (events, nil)
     }
 
-    /// The hand-overs in `events`: the folder updates that say the batch is away.
-    private func handOvers(in events: [TransferEventEntity]) -> [FolderTransferUpdateEntity] {
+    /// The start reports in `events`: the folder updates that say the batch has started transferring.
+    private func startReports(in events: [TransferEventEntity]) -> [FolderTransferUpdateEntity] {
         events.compactMap {
             guard case let .folderUpdate(update) = $0, update.stage == .transferringFiles else { return nil }
             return update
@@ -112,7 +113,7 @@ struct UploadFileRepositoryBatchTests {
 
     /// The value `task` produced, or `nil` if it produced none within `timeout`.
     ///
-    /// A batch that never reports itself away never ends, so a test that expects it to be reported
+    /// A batch that never reports itself started never ends, so a test that expects it to be reported
     /// has to be able to give up on it rather than hang waiting.
     private func value<Success: Sendable>(
         of task: Task<Success, Never>,
@@ -146,8 +147,8 @@ struct UploadFileRepositoryBatchTests {
 
     // MARK: - A single file item
 
-    @Test("A file is away as soon as its transfer starts")
-    func aFileIsAwayWhenItsTransferStarts() async {
+    @Test("A file has started as soon as its transfer starts")
+    func aFileHasStartedWhenItsTransferStarts() async {
         let states = await states(forSingle: "photo.jpg", isFile: true, script: .events([.start()]))
 
         #expect(states == [.transferringFiles])
@@ -160,16 +161,16 @@ struct UploadFileRepositoryBatchTests {
         #expect(states == [.failed])
     }
 
-    @Test("A file's byte progress is enough for it to be away")
-    func aFilesByteProgressIsEnoughToBeAway() async {
+    @Test("A file's byte progress is enough for it to count as started")
+    func aFilesByteProgressIsEnoughToCountAsStarted() async {
         // Bytes only move once the transfer is under way, whatever the start callback did.
         let states = await states(forSingle: "photo.jpg", isFile: true, script: .events([.update()]))
 
         #expect(states == [.transferringFiles])
     }
 
-    @Test("A file reporting nothing but its finish is treated as away")
-    func aSilentFileIsTreatedAsAway() async {
+    @Test("A file reporting nothing but its finish is treated as started")
+    func aSilentFileIsTreatedAsStarted() async {
         let states = await states(forSingle: "photo.jpg", isFile: true, script: .silent)
 
         #expect(states == [.transferringFiles])
@@ -177,11 +178,11 @@ struct UploadFileRepositoryBatchTests {
 
     // MARK: - A single folder item
 
-    @Test("A folder's start event is not enough for it to be away")
-    func aFoldersStartEventIsNotEnoughToBeAway() async throws {
+    @Test("A folder's start event is not enough for it to count as started")
+    func aFoldersStartEventIsNotEnoughToCountAsStarted() async throws {
         // `start` fires for the virtual transfer the SDK creates for a folder, before it has
-        // scanned anything. Taken as a hand-over, the batch would call itself away with nothing
-        // queued at all.
+        // scanned anything. Taken as a start of the batch, it would call itself started with
+        // nothing queued at all.
         let (sdk, sut, transfers) = makeDrivenBatch([("Docs", false)])
         var iterator = sut.start(transfers: transfers).makeAsyncIterator()
         let docs = try await sdk.drivenUploadDelegate(for: "Docs")
@@ -190,17 +191,17 @@ struct UploadFileRepositoryBatchTests {
         docs.fireFolderUpdate(stage: .scan, name: "Docs", folderCount: 1, fileCount: 2)
         docs.fireFolderUpdate(stage: .createTree, folderCount: 1, createdFolderCount: 1, fileCount: 2)
 
-        // Nothing so far says the folder is away, so the only state the batch ever reaches is the
+        // Nothing so far says the folder has started, so the only state the batch ever reaches is the
         // one its transferring stage brings.
         docs.fireFolderUpdate(stage: .transferringFiles, fileCount: 2)
         #expect(await iterator.next() == .transferringFiles)
     }
 
-    @Test("A folder's byte progress before it has scanned is not enough for it to be away")
-    func aFoldersUpdateBeforeScanningIsNotEnoughToBeAway() async {
+    @Test("A folder's byte progress before it has scanned is not enough for it to count as started")
+    func aFoldersUpdateBeforeScanningIsNotEnoughToCountAsStarted() async {
         // The reported bug: `onTransferUpdate` fires on a folder's virtual transfer while it is
-        // still scanning. Read as a hand-over, the batch called itself away before the folder had
-        // queued a single file.
+        // still scanning. Read as a start of the batch, it called itself started before the folder
+        // had queued a single file.
         let (sdk, sut, transfers) = makeDrivenBatch([("Docs", false)])
         let collector = Task { await states(of: transfers, from: sut) }
         guard let docs = try? await sdk.drivenUploadDelegate(for: "Docs") else {
@@ -212,12 +213,12 @@ struct UploadFileRepositoryBatchTests {
         docs.fireUpdate(fileName: "Docs")
         docs.fireFinish(fileName: "Docs")
 
-        // Only the finish makes it away: nothing before it did.
+        // Only the finish makes it count as started: nothing before it did.
         #expect(await collector.value == [.transferringFiles])
     }
 
-    @Test("A folder's byte progress once it is transferring is enough for it to be away")
-    func aFoldersUpdateWhileTransferringIsEnoughToBeAway() async throws {
+    @Test("A folder's byte progress once it is transferring is enough for it to count as started")
+    func aFoldersUpdateWhileTransferringIsEnoughToCountAsStarted() async throws {
         // A folder's byte updates carry its stage, so one taken while it transfers says the same
         // thing its folder update would have.
         let (sdk, sut, transfers) = makeDrivenBatch([("Docs", false)])
@@ -229,8 +230,8 @@ struct UploadFileRepositoryBatchTests {
         #expect(await iterator.next() == .transferringFiles)
     }
 
-    @Test("A folder is away once it reports reaching its transferring stage")
-    func aFolderIsAwayWhenItReportsTransferring() async {
+    @Test("A folder has started once it reports reaching its transferring stage")
+    func aFolderHasStartedWhenItReportsTransferring() async {
         let states = await states(
             forSingle: "Docs",
             isFile: false,
@@ -252,8 +253,8 @@ struct UploadFileRepositoryBatchTests {
         #expect(states == [.failed])
     }
 
-    @Test("A folder whose events run out after scanning is treated as away")
-    func aFolderWhoseEventsRunOutAfterScanningIsTreatedAsAway() async {
+    @Test("A folder whose events run out after scanning is treated as started")
+    func aFolderWhoseEventsRunOutAfterScanningIsTreatedAsStarted() async {
         // The transfer finishes without ever reaching the transferring stage. Nothing is pending on
         // the folder any more, so it must not hold the batch back forever.
         let states = await states(
@@ -265,11 +266,11 @@ struct UploadFileRepositoryBatchTests {
         #expect(states == [.transferringFiles])
     }
 
-    @Test("A folder that goes on reporting bytes after it got away does not hold the batch back")
-    func aFolderReportingBytesAfterItGotAwayDoesNotHoldTheBatchBack() async throws {
+    @Test("A folder that goes on reporting bytes after it started does not hold the batch back")
+    func aFolderReportingBytesAfterItStartedDoesNotHoldTheBatchBack() async throws {
         // A folder's own virtual transfer keeps reporting bytes once its files are moving, and
         // those updates carry no stage. Taken as the folder's whole standing rather than as one
-        // more snapshot of it, the folder would stop counting as away and the batch would go
+        // more snapshot of it, the folder would stop counting as started and the batch would go
         // unreported until the folder had uploaded -- minutes, for a folder worth batching.
         let (sdk, sut, transfers) = makeDrivenBatch([("Docs", false), ("Pics", false)])
         let collector = Task { await self.states(of: transfers, from: sut) }
@@ -280,7 +281,7 @@ struct UploadFileRepositoryBatchTests {
         docs.fireUpdate(fileName: "Docs")
         pics.fireFolderUpdate(stage: .transferringFiles, name: "Pics", fileCount: 1)
 
-        // Neither folder has finished, and neither needs to: the batch is away because both are.
+        // Neither folder has finished, and neither needs to: the batch has started because both have.
         #expect(await value(of: collector) == [.transferringFiles])
     }
 
@@ -335,11 +336,11 @@ struct UploadFileRepositoryBatchTests {
         #expect(byName["Docs"]?.1.startFirst == false)
     }
 
-    @Test("A batch where every item fails reports failed, and never says it got away first")
+    @Test("A batch where every item fails reports failed, and never says it started first")
     func aBatchWhereEveryItemFailsReportsFailed() async {
-        // A failed item has nothing left pending on it, which is the same thing being away means,
-        // so a wholly failed batch satisfies the hand-over check too. Read in that order it would
-        // report itself away and only then throw, and a screen would call the batch a success.
+        // A failed item has nothing left pending on it, which is the same thing having started
+        // means, so a wholly failed batch satisfies the started check too. Read in that order it
+        // would report itself started and only then throw, and a screen would call it a success.
         let sdk = MockSdk()
         sdk.defaultUploadScript = .failure(.apiEFailed)
         let transfers = [makeTransfer("a.jpg", isFile: true), makeTransfer("b.jpg", isFile: true)]
@@ -349,10 +350,10 @@ struct UploadFileRepositoryBatchTests {
         #expect(states == [.failed])
     }
 
-    @Test("A batch where one item gets away reports transferring files")
-    func aBatchWhereOneItemGetsAwayReportsTransferringFiles() async {
+    @Test("A batch where one item starts reports transferring files")
+    func aBatchWhereOneItemStartsReportsTransferringFiles() async {
         // No partial failure state exists: what happens to the rest shows in the transfers widget,
-        // so one item getting away is enough.
+        // so one item starting is enough.
         let sdk = MockSdk()
         sdk.stubbedUploadScripts = [
             "a.jpg": .failure(.apiEFailed),
@@ -365,14 +366,14 @@ struct UploadFileRepositoryBatchTests {
         #expect(states == [.transferringFiles])
     }
 
-    @Test("The batch only reports away once every item is")
-    func theBatchOnlyReportsAwayOnceEveryItemIs() async throws {
+    @Test("The batch only reports started once every item has")
+    func theBatchOnlyReportsStartedOnceEveryItemHas() async throws {
         let (sdk, sut, transfers) = makeDrivenBatch([("photo.jpg", true), ("Docs", false)])
         var iterator = sut.start(transfers: transfers).makeAsyncIterator()
         let photo = try await sdk.drivenUploadDelegate(for: "photo.jpg")
         let docs = try await sdk.drivenUploadDelegate(for: "Docs")
 
-        // The file is away, but Docs is still scanning, so nothing may be reported yet.
+        // The file has started, but Docs is still scanning, so nothing may be reported yet.
         photo.fireStart(fileName: "photo.jpg")
         docs.fireFolderUpdate(stage: .scan, name: "Docs", folderCount: 1, fileCount: 2)
 
@@ -382,7 +383,7 @@ struct UploadFileRepositoryBatchTests {
     }
 
     @Test("A folder is handed to the SDK without waiting for the files of the batch to start")
-    func aFolderIsHandedOverWithoutWaitingForFiles() async throws {
+    func aFolderIsHandedToTheSdkWithoutWaitingForFiles() async throws {
         // Files and folders go together. Queued behind the files, the folder below would not reach
         // the SDK at all, because the file before it never starts.
         let (sdk, sut, transfers) = makeDrivenBatch([("photo.jpg", true), ("Docs", false)])
@@ -403,7 +404,7 @@ struct UploadFileRepositoryBatchTests {
     func twoItemsSharingAFileNameAreFoldedApart() async throws {
         // A real selection: the same folder name under two different parents. Were the fold keyed
         // by name rather than by the item's place in the batch, one would overwrite the other and
-        // the batch would call itself away with an item still scanning.
+        // the batch would call itself started with an item still scanning.
         let sdk = MockSdk()
         sdk.stubbedUploadScripts = ["/tmp/a/Docs": .driven, "/tmp/b/Docs": .driven]
         let transfers = [makeTransfer("a/Docs", isFile: false), makeTransfer("b/Docs", isFile: false)]
@@ -441,11 +442,11 @@ struct UploadFileRepositoryBatchTests {
             Issue.record("expected the batch to end with its own transfer, got \(String(describing: events.last))")
             return
         }
-        let handOvers = events.filter {
+        let startReports = events.filter {
             guard case let .folderUpdate(update) = $0 else { return false }
             return update.stage == .transferringFiles
         }
-        #expect(handOvers.count == 1)
+        #expect(startReports.count == 1)
     }
 
     @Test("The batch is reported as a folder transfer of its own, carrying no counts")
@@ -468,17 +469,17 @@ struct UploadFileRepositoryBatchTests {
         #expect(transfer.totalBytes == 0)
         #expect(transfer.transferredBytes == 0)
 
-        let handOver = handOvers(in: batchReport.events).first
-        #expect(handOver?.folderCount == 0)
-        #expect(handOver?.createdFolderCount == 0)
-        #expect(handOver?.fileCount == 0)
+        let startReport = startReports(in: batchReport.events).first
+        #expect(startReport?.folderCount == 0)
+        #expect(startReport?.createdFolderCount == 0)
+        #expect(startReport?.fileCount == 0)
     }
 
-    @Test("The batch says it got away once, however much its items go on reporting")
-    func theHandOverIsReportedOnlyOnce() async throws {
-        // Every callback of every item is folded, and all of them satisfy the hand-over check once
-        // the last item has started. Reported each time, a screen would be told the batch was away
-        // once per callback of a selection that may run to thousands of them.
+    @Test("The batch says it started once, however much its items go on reporting")
+    func theStartIsReportedOnlyOnce() async throws {
+        // Every callback of every item is folded, and all of them satisfy the started check once
+        // the last item has started. Reported each time, a screen would be told the batch had
+        // started once per callback of a selection that may run to thousands of them.
         let sdk = MockSdk()
         sdk.defaultUploadScript = .driven
         let batch = [makeItem("a.jpg", isFile: true), makeItem("b.jpg", isFile: true)]
@@ -495,16 +496,16 @@ struct UploadFileRepositoryBatchTests {
 
         let batchReport = await running.value
         let events = batchReport.events
-        #expect(handOvers(in: events).count == 1)
-        // Its own start, the one hand-over and its own finish: nothing an item reported is passed on.
+        #expect(startReports(in: events).count == 1)
+        // Its own start, the one start report and its own finish: nothing an item reported is passed on.
         #expect(events.count == 3)
         #expect(batchReport.error == nil)
     }
 
-    @Test("An item lost after the batch got away does not fail the batch")
-    func anItemFailingAfterTheHandOverDoesNotFailTheBatch() async throws {
-        // What happens to any one item afterwards shows in the transfers widget. The batch was
-        // handed over, so it finishes, and the screen that asked for it is not sent back to failed.
+    @Test("An item lost after the batch started does not fail the batch")
+    func anItemFailingAfterTheBatchStartedDoesNotFailTheBatch() async throws {
+        // What happens to any one item afterwards shows in the transfers widget. The batch had
+        // started, so it finishes, and the screen that asked for it is not sent back to failed.
         let sdk = MockSdk()
         sdk.defaultUploadScript = .driven
         let batch = [makeItem("a.jpg", isFile: true), makeItem("b.jpg", isFile: true)]
@@ -519,18 +520,18 @@ struct UploadFileRepositoryBatchTests {
 
         let batchReport = await running.value
         #expect(batchReport.error == nil)
-        #expect(handOvers(in: batchReport.events).count == 1)
+        #expect(startReports(in: batchReport.events).count == 1)
         guard case .finish = batchReport.events.last else {
             Issue.record("expected the batch to end with its own transfer, got \(String(describing: batchReport.events.last))")
             return
         }
     }
 
-    @Test("A batch that loses every item after getting away throws, without walking the hand-over back")
-    func aBatchThatLosesEveryItemAfterTheHandOverThrows() async throws {
+    @Test("A batch that loses every item after starting throws, without walking the start back")
+    func aBatchThatLosesEveryItemAfterStartingThrows() async throws {
         // Losing every item is an error whenever it happens, and it is thrown whenever it happens.
-        // Reported after the hand-over it changes nothing on the screen, which stopped reading at
-        // the hand-over -- what it does is keep the batch from being reported as finished.
+        // Reported after the start it changes nothing on the screen, which stopped reading at the
+        // start -- what it does is keep the batch from being reported as finished.
         let sdk = MockSdk()
         sdk.defaultUploadScript = .driven
         let batch = [makeItem("a.jpg", isFile: true), makeItem("b.jpg", isFile: true)]
@@ -545,7 +546,7 @@ struct UploadFileRepositoryBatchTests {
 
         let batchReport = await running.value
         #expect(batchReport.error as? TransferErrorEntity == .upload)
-        #expect(handOvers(in: batchReport.events).count == 1)
+        #expect(startReports(in: batchReport.events).count == 1)
         // Thrown instead of finished: a batch with nothing left of it did not end well.
         if case .finish = batchReport.events.last {
             Issue.record("expected the batch not to report itself finished")
@@ -571,7 +572,7 @@ struct UploadFileRepositoryBatchTests {
             thrown = error
         }
 
-        // The batch's own start is all it ever reported: it never handed anything over.
+        // The batch's own start is all it ever reported: it never reported itself started.
         #expect(events.count == 1)
         #expect(thrown as? TransferErrorEntity == .cancelled)
     }
@@ -610,7 +611,7 @@ struct UploadFileRepositoryBatchTests {
         a.fireFinish(fileName: "a.jpg", errorType: .apiEIncomplete, state: .cancelled)
         b.fireFinish(fileName: "b.jpg", errorType: .apiEIncomplete, state: .cancelled)
 
-        // Nothing got away, so the batch as a whole failed. A cancelled batch is not told apart
+        // Nothing started, so the batch as a whole failed. A cancelled batch is not told apart
         // from a failed one: there is no state for it.
         #expect(await iterator.next() == .failed)
         #expect(await iterator.next() == nil)
@@ -662,8 +663,8 @@ struct UploadFileRepositoryBatchTests {
         try await sdk.drivenUploadDelegate(for: "Docs").fireFinish(fileName: "Docs")
         try await sdk.drivenUploadDelegate(for: "Pics").fireFinish(fileName: "Pics")
 
-        // A hundred scans said nothing about the batch, and the two finishes handed it over exactly
-        // once -- no event folded twice, and none lost.
+        // A hundred scans said nothing about the batch, and the two finishes reported it started
+        // exactly once -- no event folded twice, and none lost.
         #expect(await collector.value == [.transferringFiles])
     }
 
