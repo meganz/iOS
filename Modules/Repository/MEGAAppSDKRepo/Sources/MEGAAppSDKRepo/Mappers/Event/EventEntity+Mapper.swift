@@ -29,6 +29,7 @@ extension EventEntity.EventType {
         case .transfersResumed: 23
         case .lastPurge: 24
         case .streamingOverQuota: 25
+        case .transferQuotaState: 26
         }
     }
 }

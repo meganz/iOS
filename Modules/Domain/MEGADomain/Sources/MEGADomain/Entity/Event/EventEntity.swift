@@ -50,6 +50,7 @@ public struct EventEntity: Sendable {
         case transfersResumed
         case lastPurge
         case streamingOverQuota
+        case transferQuotaState
     }
 
     public enum ReasonError: Sendable {
