@@ -23,6 +23,7 @@ struct MenuDiscountBannerView: View {
         .frame(height: cappedHeight)
         .background { backgroundImage }
         .clipShape(RoundedRectangle(cornerRadius: TokenRadius.medium))
+        .contentShape(Rectangle())
         .overlay(alignment: .topTrailing) { closeButton }
         .padding(.horizontal, TokenSpacing._4)
         .padding(.vertical, TokenSpacing._3)
