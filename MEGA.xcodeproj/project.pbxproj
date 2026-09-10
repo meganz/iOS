@@ -1634,6 +1634,7 @@
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A5472CBF2F04EE2000A49688 /* NewFolderLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */; };
+		8CC111C641C89AB41A73B3F5 /* ViewedLinks in Frameworks */ = {isa = PBXBuildFile; productRef = CE6DA084558DA2E906E4BDDA /* ViewedLinks */; };
 		A5472CC72F04EF0900A49688 /* FolderLink in Frameworks */ = {isa = PBXBuildFile; productRef = A5472CC62F04EF0900A49688 /* FolderLink */; };
 		A5472CCE2F05010E00A49688 /* NewFolderLinkViewController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */; };
 		A5472D082F06494300A49688 /* MEGAFolderLinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */; };
@@ -5726,6 +5727,7 @@
 				A835E49C2ED0636B004CE294 /* SearchMock in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				2446DEE92B0F099D00FA3FB8 /* Video in Frameworks */,
+				8CC111C641C89AB41A73B3F5 /* ViewedLinks in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13892,6 +13894,7 @@
 				A5E136882EB4FFB3004BDD4F /* MEGAChatSdk */,
 				A5E1368B2EB50586004BDD4F /* MEGADomain */,
 				14F2EFBF2EDD46B300C37318 /* APMKit */,
+				CE6DA084558DA2E906E4BDDA /* ViewedLinks */,
 				A5472CC62F04EF0900A49688 /* FolderLink */,
 				FE1EA0000000000000000007 /* FileLink */,
 				BF7758D02F21D8490091DE2A /* Home */,
@@ -14300,6 +14303,7 @@
 				A5EA941A2EB5EDF6009778D3 /* XCLocalSwiftPackageReference "Modules/Features/MEGAVideoPlayer" */,
 				A5EA941B2EB5EE27009778D3 /* XCLocalSwiftPackageReference "Modules/MEGASharedRepo/MEGAStoreKit" */,
 				A5EA941C2EB5EE55009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Notifications" */,
+				5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */,
 				A5EA941D2EB5EE82009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Search" */,
 				A5EA941E2EB5EEB2009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Video" */,
 				A5EA941F2EB5EEE4009778D3 /* XCLocalSwiftPackageReference "Modules/Features/PhotosBrowser" */,
@@ -19049,6 +19053,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/Notifications;
 		};
+		5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/ViewedLinks;
+		};
 		A5EA941D2EB5EE82009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Search" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/Search;
@@ -19402,6 +19410,10 @@
 		99DB1D592AC64B34004A9CC3 /* ChatRepoMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ChatRepoMock;
+		};
+		CE6DA084558DA2E906E4BDDA /* ViewedLinks */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ViewedLinks;
 		};
 		A5472CC62F04EF0900A49688 /* FolderLink */ = {
 			isa = XCSwiftPackageProductDependency;

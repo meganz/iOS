@@ -1,0 +1,51 @@
+import Foundation
+import MEGASwift
+import ViewedLinks
+
+/// Mock `ViewedLinksRepositoryProtocol` for tests.
+package final class MockViewedLinksRepository: ViewedLinksRepositoryProtocol, @unchecked Sendable {
+    package var viewedLinksResult: [ViewedLinkEntity]
+    package var topViewedLinksResult: [ViewedLinkEntity]
+    package var changesSignalSequenceResult: AnyAsyncSequence<Void> = AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
+
+    package private(set) var recordedLinks: [ViewedLinkEntity] = []
+    package private(set) var removedLinks: [[ViewedLinkEntity]] = []
+    package private(set) var removedUnavailableURLs: [URL] = []
+    package private(set) var clearHistoryCallCount = 0
+
+    package init(
+        viewedLinksResult: [ViewedLinkEntity] = [],
+        topViewedLinksResult: [ViewedLinkEntity] = []
+    ) {
+        self.viewedLinksResult = viewedLinksResult
+        self.topViewedLinksResult = topViewedLinksResult
+    }
+
+    package func viewedLinks(sortedBy sortKey: ViewedLinksSortKey, ascending: Bool) async throws(ViewedLinkErrorEntity) -> [ViewedLinkEntity] {
+        viewedLinksResult
+    }
+
+    package func topViewedLinks(limit: Int) async throws(ViewedLinkErrorEntity) -> [ViewedLinkEntity] {
+        Array(topViewedLinksResult.prefix(limit))
+    }
+
+    package func record(_ link: ViewedLinkEntity) async throws(ViewedLinkErrorEntity) {
+        recordedLinks.append(link)
+    }
+
+    package func remove(_ links: [ViewedLinkEntity]) async throws(ViewedLinkErrorEntity) {
+        removedLinks.append(links)
+    }
+
+    package func removeUnavailable(linkURL: URL) async throws(ViewedLinkErrorEntity) {
+        removedUnavailableURLs.append(linkURL)
+    }
+
+    package func clearHistory() async throws(ViewedLinkErrorEntity) {
+        clearHistoryCallCount += 1
+    }
+
+    package func changesSignalSequence() -> AnyAsyncSequence<Void> {
+        changesSignalSequenceResult
+    }
+}
