@@ -27,11 +27,14 @@ final class IncompleteDownloadAlertRouter: IncompleteDownloadAlertRouting {
                 message: Strings.Localizable.Link.Download.Incomplete.message(downloadedCount),
                 preferredStyle: .alert
             )
-            alertController.addAction(
-                UIAlertAction(title: dismissTitle(downloadedCount: downloadedCount), style: .default) { [resumer] _ in
-                    resumer.resume()
-                }
-            )
+            let dismissAction = UIAlertAction(
+                title: dismissTitle(downloadedCount: downloadedCount),
+                style: .default
+            ) { [resumer] _ in
+                resumer.resume()
+            }
+            alertController.addAction(dismissAction)
+            alertController.preferredAction = dismissAction
 
             // Settled rather than straight away, because `topPresentableViewController()` hands back a
             // controller that is still animating in — presentable a moment later, but able to swallow a
