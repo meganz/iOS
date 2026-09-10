@@ -1238,8 +1238,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
         }
     }
     
-    /// Save to MEGA is deliberately absent: the anchored button carries it wherever the sheet can be
-    /// opened. Copy to Offline is there without a session too -- what it does about that is its own test.
+    /// Save to MEGA and Copy to Offline are offered without a session too -- what they do about that is
+    /// each their own test.
     @MainActor
     func testMoreOptions_whetherLoggedInOrOut_shouldOfferTheSameRows() throws {
         for isLoggedIn in [true, false] {
@@ -1248,7 +1248,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
                 accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn),
                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
             
-            XCTAssertEqual(sut.moreOptions, [.select, .copyToOffline, .shareLink], "logged in: \(isLoggedIn)")
+            XCTAssertEqual(sut.moreOptions, [.select, .saveToMEGA, .copyToOffline, .shareLink],
+                           "logged in: \(isLoggedIn)")
         }
     }
     
@@ -1259,7 +1260,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
-        XCTAssertEqual(sut.disabledMoreOptions, [.select, .copyToOffline, .shareLink])
+        XCTAssertEqual(sut.disabledMoreOptions, [.select, .saveToMEGA, .copyToOffline, .shareLink])
         XCTAssertTrue(sut.isMoreOptionsButtonDisabled)
     }
     
@@ -1311,11 +1312,41 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
-        sut.handle(moreOption: .select)
+        await sut.handle(moreOption: .select)
         
         XCTAssertTrue(sut.photoLibraryContentViewModel.selection.editMode.isEditing)
     }
     
+    @MainActor
+    func testHandleMoreOption_onSaveToMEGA_shouldShowTheDestinationPickerLikeTheAnchoredButton() async throws {
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 3, name: "valid album name")
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: publicAlbumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
+        await sut.loadPublicAlbum()
+
+        await sut.handle(moreOption: .saveToMEGA)
+
+        XCTAssertTrue(sut.showImportAlbumLocation)
+    }
+
+    @MainActor
+    func testHandleMoreOption_onSaveToMEGAWhileLoggedOut_shouldSendTheUserToSignIn() async throws {
+        let onboardingRouter = MockAlbumLinkImportOnboardingRouter()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            accountUseCase: MockAccountUseCase(isLoggedIn: false),
+            onboardingRouter: onboardingRouter,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
+
+        await sut.handle(moreOption: .saveToMEGA)
+
+        XCTAssertEqual(onboardingRouter.showOnboardingCalled, 1)
+        XCTAssertFalse(sut.showImportAlbumLocation)
+    }
+
     @MainActor
     func testHandleMoreOption_onCopyToOfflineWhileLoggedOut_shouldSendTheUserToSignInRatherThanCopy() async throws {
         let photos = try makePhotos()
@@ -1333,7 +1364,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
-        sut.handle(moreOption: .copyToOffline)
+        await sut.handle(moreOption: .copyToOffline)
         await sut.copyToOfflineTask?.value
         
         XCTAssertEqual(onboardingRouter.showOnboardingCalled, 1)
@@ -1358,9 +1389,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
         // The loading indicator does not block touches, so the sheet can be reopened and the row tapped
         // again while the photos are still being resolved.
         offlineRouter.whileCopying = { [weak sut] in
-            sut?.handle(moreOption: .copyToOffline)
+            await sut?.handle(moreOption: .copyToOffline)
         }
-        sut.handle(moreOption: .copyToOffline)
+        await sut.handle(moreOption: .copyToOffline)
         await sut.copyToOfflineTask?.value
         
         XCTAssertEqual(offlineRouter.copyToOfflineCalled, 1)
@@ -1383,7 +1414,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.loadPublicAlbum()
         sut.enablePhotoLibraryEditMode(true)
         sut.photoLibraryContentViewModel.selection.setSelectedPhotos([try XCTUnwrap(photos.first)])
-        sut.handle(moreOption: .copyToOffline)
+        await sut.handle(moreOption: .copyToOffline)
         await sut.copyToOfflineTask?.value
         
         XCTAssertEqual(offlineRouter.copiedPhotos, [try XCTUnwrap(photos.first)])
@@ -1404,7 +1435,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
-        sut.handle(moreOption: .copyToOffline)
+        await sut.handle(moreOption: .copyToOffline)
         await sut.copyToOfflineTask?.value
         
         // Compared by handle rather than by array: the photos are sent in the order the library lays
@@ -1428,7 +1459,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
-        sut.handle(moreOption: .copyToOffline)
+        await sut.handle(moreOption: .copyToOffline)
         await sut.copyToOfflineTask?.value
         
         XCTAssertNil(offlineRouter.copiedPhotos)
@@ -1441,7 +1472,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
-        sut.handle(moreOption: .shareLink)
+        await sut.handle(moreOption: .shareLink)
         
         XCTAssertFalse(sut.showShareLink)
     }
@@ -1473,7 +1504,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             tracker: tracker,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
 
-        sut.handle(moreOption: .copyToOffline)
+        await sut.handle(moreOption: .copyToOffline)
         await sut.copyToOfflineTask?.value
 
         assertTrackAnalyticsEventCalled(
