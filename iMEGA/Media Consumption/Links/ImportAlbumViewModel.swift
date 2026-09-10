@@ -167,13 +167,14 @@ final class ImportAlbumViewModel: ObservableObject {
         isLinkRevampEnabled
     }
     
-    /// Save to MEGA is not among them: the sheet only opens outside a selection, which is exactly where the
-    /// anchored button already offers it, so a row here would sit under a button saying the same thing.
+    /// Save to MEGA repeats the anchored button, the way the file and folder link sheets repeat theirs: the
+    /// sheet is where the album's actions are looked for, so the primary one belongs in it too.
     ///
-    /// Copy to Offline needs an account and is still offered without one, the way the anchored button is:
-    /// a row that disappears leaves nothing to explain why, where a tap can send the visitor to sign in.
+    /// It and Copy to Offline need an account and are still offered without one, the way the anchored
+    /// button is: a row that disappears leaves nothing to explain why, where a tap can send the visitor to
+    /// sign in.
     var moreOptions: [AlbumLinkMoreOption] {
-        [.select, .copyToOffline, .shareLink]
+        [.select, .saveToMEGA, .copyToOffline, .shareLink]
     }
     
     /// The rows follow the buttons they were moved from: the ones that act on the photos wait for photos
@@ -185,7 +186,7 @@ final class ImportAlbumViewModel: ObservableObject {
     var disabledMoreOptions: Set<AlbumLinkMoreOption> {
         var disabled = Set<AlbumLinkMoreOption>()
         if isToolbarButtonsDisabled {
-            disabled.formUnion([.select, .copyToOffline])
+            disabled.formUnion([.select, .saveToMEGA, .copyToOffline])
         }
         if photoLibraryContentViewModel.selectedMode != .all {
             disabled.insert(.select)
@@ -300,10 +301,17 @@ final class ImportAlbumViewModel: ObservableObject {
     
     /// One entry point for every row of the more options sheet, so the view does not have to know which
     /// action a row stands for.
-    func handle(moreOption: AlbumLinkMoreOption) {
+    ///
+    /// `async` for the sake of Save to MEGA alone -- the rest return at once -- which keeps the task that
+    /// carries it with the view, the way the anchored button's is.
+    func handle(moreOption: AlbumLinkMoreOption) async {
         switch moreOption {
         case .select:
             enablePhotoLibraryEditMode(true)
+        case .saveToMEGA:
+            // The same call the anchored button makes, tracking included: the album link has one Save to
+            // MEGA event rather than one per entry point.
+            await importAlbum()
         case .copyToOffline:
             copyToOffline()
         case .shareLink:

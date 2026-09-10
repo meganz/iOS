@@ -135,7 +135,9 @@ struct ImportAlbumView: View {
                 link: viewModel.shareableLink.absoluteString,
                 options: viewModel.moreOptions,
                 disabledOptions: viewModel.disabledMoreOptions,
-                selectionHandler: { viewModel.handle(moreOption: $0) }
+                selectionHandler: { option in
+                    Task { await viewModel.handle(moreOption: option) }
+                }
             )
     }
     

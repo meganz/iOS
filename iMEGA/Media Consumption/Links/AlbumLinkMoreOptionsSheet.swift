@@ -8,9 +8,12 @@ import SwiftUI
 /// The design also lists a Report row. It has no flow, string or tracking in the app yet, so it is left
 /// out until it gets a ticket of its own -- the same as on the file and folder links.
 /// Save to Photos is not among them either: the design keeps it on the bottom bar, which this sheet does not
-/// touch. Nor is Save to MEGA, which the anchored button offers wherever this sheet can be opened.
+/// touch. Save to MEGA is, repeating the anchored button the same way the file and folder link sheets repeat
+/// theirs -- the sheet is where the album's actions are looked for, so leaving the primary one out of it
+/// made it the only action the sheet could not perform.
 enum AlbumLinkMoreOption: Identifiable, Hashable {
     case select
+    case saveToMEGA
     case copyToOffline
     case shareLink
 
@@ -20,6 +23,8 @@ enum AlbumLinkMoreOption: Identifiable, Hashable {
         switch self {
         case .select:
             Strings.Localizable.select
+        case .saveToMEGA:
+            Strings.Localizable.Link.Button.saveToMega
         case .copyToOffline:
             Strings.Localizable.Link.Button.copyToOffline
         case .shareLink:
@@ -31,6 +36,8 @@ enum AlbumLinkMoreOption: Identifiable, Hashable {
         switch self {
         case .select:
             MEGAAssets.Image.checkCircle
+        case .saveToMEGA:
+            MEGAAssets.Image.uploadToCloud
         case .copyToOffline:
             MEGAAssets.Image.cloudDownload
         case .shareLink:
@@ -261,7 +268,7 @@ private struct ContentHeightPreferenceKey: PreferenceKey {
                 subtitle: Strings.Localizable.albumLink,
                 cover: nil,
                 link: "https://mega.nz/collection/abcdefgh#key",
-                options: [.select, .copyToOffline, .shareLink],
+                options: [.select, .saveToMEGA, .copyToOffline, .shareLink],
                 disabledOptions: [],
                 selectionHandler: { _ in }
             )
@@ -276,8 +283,8 @@ private struct ContentHeightPreferenceKey: PreferenceKey {
                 subtitle: Strings.Localizable.albumLink,
                 cover: nil,
                 link: "https://mega.nz/collection/abcdefgh#key",
-                options: [.select, .shareLink],
-                disabledOptions: [.select],
+                options: [.select, .saveToMEGA, .shareLink],
+                disabledOptions: [.select, .saveToMEGA],
                 selectionHandler: { _ in }
             )
         }
