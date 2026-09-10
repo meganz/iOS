@@ -20,7 +20,8 @@ package final class FolderLinkResultsViewModel: ObservableObject {
         let quickActionUseCase: any FolderLinkQuickActionUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
-        
+        let isLinkRevampEnabled: Bool
+
         package init(
             nodeHandle: HandleEntity,
             link: String,
@@ -31,7 +32,8 @@ package final class FolderLinkResultsViewModel: ObservableObject {
             editModeUseCase: some FolderLinkEditModeUseCaseProtocol,
             bottomBarUseCase: some FolderLinkBottomBarUseCaseProtocol,
             quickActionUseCase: some FolderLinkQuickActionUseCaseProtocol,
-            trackingUseCase: some FolderLinkTrackingUseCaseProtocol
+            trackingUseCase: some FolderLinkTrackingUseCaseProtocol,
+            isLinkRevampEnabled: Bool
         ) {
             self.nodeHandle = nodeHandle
             self.link = link
@@ -43,13 +45,15 @@ package final class FolderLinkResultsViewModel: ObservableObject {
             self.bottomBarUseCase = bottomBarUseCase
             self.quickActionUseCase = quickActionUseCase
             self.trackingUseCase = trackingUseCase
+            self.isLinkRevampEnabled = isLinkRevampEnabled
         }
         
         init(
             nodeHandle: HandleEntity,
             link: String,
             searchResultsProvidingBuilder: some FolderLinkSearchResultsProvidingBuilderProtocol,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            isLinkRevampEnabled: Bool
         ) {
             self.init(
                 nodeHandle: nodeHandle,
@@ -61,7 +65,8 @@ package final class FolderLinkResultsViewModel: ObservableObject {
                 editModeUseCase: FolderLinkEditModeUseCase(),
                 bottomBarUseCase: FolderLinkBottomBarUseCase(),
                 quickActionUseCase: FolderLinkQuickActionUseCase(),
-                trackingUseCase: FolderLinkTrackingUseCase()
+                trackingUseCase: FolderLinkTrackingUseCase(),
+                isLinkRevampEnabled: isLinkRevampEnabled
             )
         }
     }
@@ -222,8 +227,13 @@ package final class FolderLinkResultsViewModel: ObservableObject {
         
         $quickAction
             .compactMap { $0 }
-            .map { action in
-                switch action {
+            .map { action -> FolderLinkNodesAction in
+                // Only the revamped sheet is tracked; the pre-revamp menu drives the same actions and was
+                // never tracked.
+                if dependency.isLinkRevampEnabled {
+                    dependency.trackingUseCase.trackQuickAction(action, from: .moreOptionsMenu)
+                }
+                return switch action {
                 case .addToCloudDrive:
                     FolderLinkNodesAction.addToCloudDrive([dependency.nodeHandle])
                 case .makeAvailableOffline:
@@ -233,22 +243,11 @@ package final class FolderLinkResultsViewModel: ObservableObject {
                 }
             }
             .assign(to: &$nodesAction)
-        
+
         $bottomBarAction
             .compactMap { $0 }
             .compactMap { [weak self] action in
-                guard let self else { return nil }
-                let nodes = editMode.isEditing ? selectedNodes : [dependency.nodeHandle]
-                return switch action {
-                case .addToCloudDrive:
-                    FolderLinkNodesAction.addToCloudDrive(nodes)
-                case .makeAvailableOffline:
-                    FolderLinkNodesAction.makeAvailableOffline(nodes)
-                case .downloadToFiles:
-                    FolderLinkNodesAction.downloadToFiles(nodes)
-                case .saveToPhotos:
-                    FolderLinkNodesAction.saveToPhotos(nodes)
-                }
+                self?.nodesAction(for: action)
             }
             .assign(to: &$nodesAction)
         
@@ -305,6 +304,36 @@ package final class FolderLinkResultsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    /// Maps a bottom bar action to the nodes action it runs, and reports it in the same step.
+    ///
+    /// The two entry points write the same `bottomBarAction`, so they are told apart by `editMode`: the
+    /// anchored buttons only show while browsing, the toolbar buttons only while selecting. That has to be
+    /// read here, where the action is being handled, rather than from a subscription of its own -- the
+    /// `$nodesAction` subscriber resets `editMode`, and a separate subscription could be notified after it.
+    private func nodesAction(for action: FolderLinkBottomBarAction) -> FolderLinkNodesAction {
+        let isEditing = editMode.isEditing
+        // Only the revamped chrome is tracked; the pre-revamp bottom bar drives the same actions and was
+        // never tracked.
+        if dependency.isLinkRevampEnabled {
+            dependency.trackingUseCase.trackBottomBarAction(
+                action,
+                from: isEditing ? .selectionToolbar : .anchoredButton
+            )
+        }
+
+        let nodes = isEditing ? selectedNodes : [dependency.nodeHandle]
+        return switch action {
+        case .addToCloudDrive:
+            FolderLinkNodesAction.addToCloudDrive(nodes)
+        case .makeAvailableOffline:
+            FolderLinkNodesAction.makeAvailableOffline(nodes)
+        case .downloadToFiles:
+            FolderLinkNodesAction.downloadToFiles(nodes)
+        case .saveToPhotos:
+            FolderLinkNodesAction.saveToPhotos(nodes)
+        }
+    }
+
     /// Selecting a node from its action sheet both enters edit mode and ticks that node: Search reports
     /// the editing change back through the bridge, which is what moves `editMode` along.
     func selectNode(handle: HandleEntity) {

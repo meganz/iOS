@@ -42,7 +42,8 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
             wrappedValue: FolderLinkMediaDiscoveryViewModel(
                 dependency: FolderLinkMediaDiscoveryViewModel.Dependency(
                     handle: dependency.handle,
-                    link: dependency.link
+                    link: dependency.link,
+                    isLinkRevampEnabled: dependency.isLinkRevampEnabled
                 ),
                 viewMode: viewMode
             )

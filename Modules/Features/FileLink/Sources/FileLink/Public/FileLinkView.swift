@@ -105,6 +105,9 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
         }
         .environment(\.fileLinkBottomSafeAreaInset, bottomSafeAreaInset)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
+        .onAppear {
+            viewModel.trackScreenView()
+        }
         .task {
             await viewModel.monitorNetworkConnection()
         }

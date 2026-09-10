@@ -174,7 +174,7 @@ struct FileLinkContentView<Ads>: View where Ads: View {
             preview: viewModel.preview,
             link: viewModel.shareLink,
             options: viewModel.moreOptions,
-            selectionHandler: perform
+            selectionHandler: { perform($0, from: .moreOptionsMenu) }
         )
     }
 
@@ -183,8 +183,8 @@ struct FileLinkContentView<Ads>: View where Ads: View {
     private var anchoredButtons: some View {
         FileLinkAnchoredButtons(
             isDisabled: !networkConnected,
-            onDownload: { perform(.download) },
-            onSaveToMEGA: { perform(.saveToMEGA) }
+            onDownload: { perform(.download, from: .anchoredButton) },
+            onSaveToMEGA: { perform(.saveToMEGA, from: .anchoredButton) }
         )
     }
 
@@ -195,9 +195,9 @@ struct FileLinkContentView<Ads>: View where Ads: View {
         }
     }
 
-    private func perform(_ option: FileLinkMoreOption) {
+    private func perform(_ option: FileLinkMoreOption, from source: FileLinkActionSource) {
         Task {
-            await viewModel.handle(moreOption: option)
+            await viewModel.handle(moreOption: option, from: source)
         }
     }
 }

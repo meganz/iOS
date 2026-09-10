@@ -1446,6 +1446,41 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertFalse(sut.showShareLink)
     }
     
+    // MARK: - Analytics
+
+    /// Download is a revamp-only button and had no event of its own before this ticket.
+    @MainActor
+    func testExportPhotos_shouldTrackDownloadEvent() async throws {
+        let tracker = MockTracker()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            tracker: tracker)
+
+        await sut.exportPhotos()
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AlbumLinkDownloadSelectionToolbarButtonPressedEvent()])
+    }
+
+    /// Copy to Offline only exists behind the revamped more options sheet.
+    @MainActor
+    func testHandleMoreOption_onCopyToOffline_shouldTrackCopyToOfflineEvent() async throws {
+        let tracker = MockTracker()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            tracker: tracker,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
+
+        sut.handle(moreOption: .copyToOffline)
+        await sut.copyToOfflineTask?.value
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AlbumLinkCopyToOfflineMoreOptionsButtonPressedEvent()])
+    }
+
     @MainActor
     private func makeImportAlbumViewModel(
         publicLink: URL,

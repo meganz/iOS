@@ -220,11 +220,82 @@ struct FileLinkViewModelTests {
         #expect(sut.isNetworkConnected == false)
     }
 
+    // MARK: - Analytics
+
+    @Test("the screen reports itself as soon as it is up, before the link has resolved")
+    func trackScreenView_reportsScreenViewEvent() {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let sut = makeSUT(trackingUseCase: trackingUseCase)
+
+        sut.trackScreenView()
+
+        #expect(trackingUseCase.trackScreenViewCalled)
+        #expect(trackingUseCase.trackFileLinkOpenedCallCount == 0)
+    }
+
+    @Test("a resolved link is reported as opened")
+    func startLoading_success_reportsFileLinkOpened() async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(initialStartResult: .success(NodeEntity(handle: 42))),
+            trackingUseCase: trackingUseCase
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(trackingUseCase.trackFileLinkOpenedCallCount == 1)
+    }
+
+    @Test("a link resolved from a key the user typed in is reported as opened too")
+    func confirmDecryptionKey_success_reportsFileLinkOpened() async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(
+                confirmDecryptionKeyResult: .success(NodeEntity(handle: 42))
+            ),
+            trackingUseCase: trackingUseCase
+        )
+
+        await sut.confirmDecryptionKey("key")
+
+        #expect(trackingUseCase.trackFileLinkOpenedCallCount == 1)
+    }
+
+    /// The opened event is the numerator of the funnel the screen view event gives a denominator to, so a
+    /// link that never opens must not report it.
+    @Test("an unavailable link is not reported as opened")
+    func startLoading_failure_doesNotReportFileLinkOpened() async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(initialStartResult: .failure(.linkUnavailable(.expired))),
+            trackingUseCase: trackingUseCase
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(trackingUseCase.trackFileLinkOpenedCallCount == 0)
+    }
+
+    /// The link keeps resolving in the background after the user walks away, and a result arriving then
+    /// must not be reported as a link they opened.
+    @Test("a link that resolves after the screen was closed is not reported as opened")
+    func startLoading_closedWhileInFlight_doesNotReportFileLinkOpened() async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let flowUseCase = MockFileLinkFlowUseCase(initialStartResult: .success(NodeEntity(handle: 42)))
+        let sut = makeSUT(fileLinkFlowUseCase: flowUseCase, trackingUseCase: trackingUseCase)
+        flowUseCase.whileInFlight = { sut.stopLoadingFileLink() }
+
+        await sut.startLoadingFileLink()
+
+        #expect(trackingUseCase.trackFileLinkOpenedCallCount == 0)
+    }
+
     private func makeSUT(
         link: String = "link",
         encryptedLink: String? = nil,
         fileLinkFlowUseCase: MockFileLinkFlowUseCase = MockFileLinkFlowUseCase(),
-        networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase()
+        networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
+        trackingUseCase: MockFileLinkTrackingUseCase = MockFileLinkTrackingUseCase()
     ) -> FileLinkViewModel {
         FileLinkViewModel(
             dependency: FileLinkViewModel.Dependency(
@@ -232,7 +303,8 @@ struct FileLinkViewModelTests {
                 encryptedLink: encryptedLink,
                 fileLinkFlowUseCase: fileLinkFlowUseCase,
                 networkUseCase: networkUseCase
-            )
+            ),
+            trackingUseCase: trackingUseCase
         )
     }
 }

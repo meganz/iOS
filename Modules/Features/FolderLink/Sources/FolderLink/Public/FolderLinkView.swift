@@ -81,7 +81,8 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 dependency: FolderLinkViewModel.Dependency(
                     link: dependency.link,
                     folderLinkBuilder: dependency.folderLinkBuilder,
-                    folderLinkLogoutPolicy: dependency.folderLinkLogoutPolicy
+                    folderLinkLogoutPolicy: dependency.folderLinkLogoutPolicy,
+                    isLinkRevampEnabled: dependency.isLinkRevampEnabled
                 )
             )
         )
@@ -112,6 +113,9 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         .environment(\.folderLinkBottomSafeAreaInset, bottomSafeAreaInset)
         .environment(\.folderLinkMiniPlayerDocked, miniPlayerHeight > 0)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
+        .onAppear {
+            viewModel.trackScreenView()
+        }
         .task {
             await viewModel.onAppear()
         }

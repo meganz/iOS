@@ -89,13 +89,25 @@ package final class FileLinkViewModel: ObservableObject {
     }
 
     private let dependency: Dependency
+    private let trackingUseCase: any FileLinkTrackingUseCaseProtocol
     private var fileLinkFlowStopped = false
     /// Kept from the moment the link resolved. See `shareLink`.
     private var resolvedLink: String?
 
-    package init(dependency: Dependency) {
+    package init(
+        dependency: Dependency,
+        trackingUseCase: some FileLinkTrackingUseCaseProtocol = FileLinkTrackingUseCase()
+    ) {
         self.dependency = dependency
+        self.trackingUseCase = trackingUseCase
         isNetworkConnected = dependency.networkUseCase.isConnected()
+    }
+
+    /// Reported as soon as the screen is up, before the link has resolved, so that a link which never
+    /// opens -- taken down, expired, or missing its key -- is counted too. `trackFileLinkOpened()` is
+    /// the other half: it only fires once a file is actually on screen.
+    package func trackScreenView() {
+        trackingUseCase.trackScreenView()
     }
 
     /// Follows the connection for as long as the screen is up. The sequence never finishes, so the task
@@ -139,10 +151,13 @@ package final class FileLinkViewModel: ObservableObject {
         askingForDecryptionKey = true
     }
 
+    /// The single point both the initial resolution and a key the user typed in come through, which is
+    /// why the opened event is reported here rather than at either call site.
     private func show(_ resolvedFileLink: ResolvedFileLinkEntity) {
         guard !fileLinkFlowStopped else { return }
         resolvedLink = resolvedFileLink.link
         viewState = .loaded(resolvedFileLink.node)
+        trackingUseCase.trackFileLinkOpened()
     }
 
     private func handleFileLinkFlowError(_ error: FileLinkFlowErrorEntity) {

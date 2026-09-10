@@ -363,6 +363,7 @@ final class ImportAlbumViewModel: ObservableObject {
     /// Unlike Save to MEGA, this asks nothing of the account: an album link is browsable logged out and the
     /// download behind the export is too, the same way the file link and folder link Download buttons are.
     func exportPhotos() async {
+        tracker.trackAnalyticsEvent(with: AlbumLinkDownloadSelectionToolbarButtonPressedEvent())
         guard validateOverDiskQuota() else {
             return
         }
@@ -448,6 +449,7 @@ final class ImportAlbumViewModel: ObservableObject {
     // MARK: Private
     
     private func copyToOffline() {
+        tracker.trackAnalyticsEvent(with: AlbumLinkCopyToOfflineMoreOptionsButtonPressedEvent())
         // Offline is the account's own storage, so there is nowhere to put the photos yet -- the same
         // reason the anchored Save to MEGA button sends a logged out visitor to sign in first.
         guard accountUseCase.isLoggedIn() else {
