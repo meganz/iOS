@@ -316,6 +316,23 @@ public final class TransfersListViewModel: ObservableObject {
         dependency.clearTransfersUseCase.clearTransfers(tags: tags)
     }
 
+    /// Whether Retry selected has anything to re-queue: at least one selected row is
+    /// retryable per `TransferRetryPolicy`, meaning every failed or cancelled
+    /// download, plus uploads whose staged source file still exists. Read from the
+    /// shared registry, the same per-row state the row's own Retry entries are gated
+    /// on, so the bulk button and the row sheet never disagree about a transfer.
+    ///
+    /// A selection with nothing retryable in it (e.g. only uploads staged from the
+    /// Photos picker, whose file the SDK unlinked on finish) disables the button
+    /// rather than offering an action that would skip every row it was given. A mixed
+    /// selection stays enabled: retry filters rather than refusing, and the
+    /// non-retryable rows are left in place.
+    var canRetrySelectedTransfers: Bool {
+        selection.selectedTags.contains { tag in
+            dependency.registry.rowViewModel(for: tag)?.state.isRetryable == true
+        }
+    }
+
     /// Failed tab: re-queues the selected transfers, clears the re-queued entries and
     /// confirms with the retry snackbar — the sequence Retry all runs, scoped to the
     /// selection. Uploads whose staged source is gone are skipped, so their rows stay.

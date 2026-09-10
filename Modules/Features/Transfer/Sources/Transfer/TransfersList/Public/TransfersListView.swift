@@ -204,7 +204,9 @@ public struct TransfersListView: View {
     /// button bottom-leading. Rendered as a safe-area inset rather than an
     /// overlay so the list can scroll clear of them and the last row stays
     /// reachable. Each button acts on the selected subset and leaves select mode;
-    /// only cancel goes through the confirmation dialog first.
+    /// only cancel goes through the confirmation dialog first. Retry carries one
+    /// extra enablement condition: it needs a selection with something retryable in
+    /// it, or the tap would skip every row (see `canRetrySelectedTransfers`).
     private var selectModeActionButtons: some View {
         HStack(spacing: 0) {
             if viewModel.selectedTab == .failed {
@@ -213,6 +215,7 @@ public struct TransfersListView: View {
                     icon: MEGAAssets.Image.rotateCcw,
                     label: Strings.Localizable.retry,
                     isOfflineBlocked: viewModel.isOffline,
+                    isActionable: { viewModel.canRetrySelectedTransfers },
                     action: viewModel.retrySelectedTransfers
                 )
             }
@@ -387,6 +390,13 @@ private struct SelectModeActionButton: View {
     let icon: Image
     let label: String
     let isOfflineBlocked: Bool
+    /// Whether the selected rows have anything for this action to do — the gate on
+    /// top of "something is selected, and we are online". Evaluated inside `body`,
+    /// so it is re-read whenever the observed selection changes; a value computed
+    /// by the parent would go stale, since the screen's own view model publishes
+    /// nothing on a row tap. Defaults to no extra condition: every action but Retry
+    /// can act on any row the tab lists.
+    var isActionable: @MainActor () -> Bool = { true }
     let action: @MainActor () -> Void
 
     var body: some View {
@@ -405,6 +415,6 @@ private struct SelectModeActionButton: View {
     }
 
     private var isEnabled: Bool {
-        !selection.isEmpty && !isOfflineBlocked
+        !selection.isEmpty && !isOfflineBlocked && isActionable()
     }
 }
