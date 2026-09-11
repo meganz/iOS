@@ -52,6 +52,8 @@ extension MEGANode {
         }
 
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp) {
+            AudioPlayStartedTracker.trackShareLinkPlayStarted(fileLink: fileLink, isFolderLink: isFolderLink)
+
             if let source = makeRevampedPlaybackSource(node: node,
                                                        fileLink: fileLink,
                                                        isFolderLink: isFolderLink,

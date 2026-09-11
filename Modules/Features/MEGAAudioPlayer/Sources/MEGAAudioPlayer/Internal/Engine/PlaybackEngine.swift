@@ -1,6 +1,7 @@
 import AVFoundation
 @preconcurrency import Combine
 import Foundation
+import MEGAAppSDKRepo
 
 // MARK: - Protocol
 
@@ -44,8 +45,9 @@ final class PlaybackEngine {
     private let notificationCenter: NotificationCenter
     private var timeObserverToken: Any?
     private var rateObservation: NSKeyValueObservation?
-    private var durationObservation: NSKeyValueObservation?
-    private var endObservation: AnyCancellable?
+    /// Subscriptions bound to the loaded `AVPlayerItem`
+    private var itemObservations = Set<AnyCancellable>()
+    /// Engine-lifetime subscriptions
     private var cancellables = Set<AnyCancellable>()
 
     private var isPlaybackIntended = false
@@ -115,8 +117,10 @@ extension PlaybackEngine {
         resetSeekGate()
         configureAudioSession()
         let item = AVPlayerItem(url: url)
+        itemObservations.removeAll()
         observeDuration(of: item)
         observeEnd(of: item)
+        observeFailure(of: item)
         player.replaceCurrentItem(with: item)
         playbackStatusSubject.send(.loading)
         currentTimeSubject.send(0)
@@ -127,7 +131,7 @@ extension PlaybackEngine {
 
     /// Detach whatever is loaded without ending the session
     func unloadCurrentItem() {
-        endObservation = nil
+        itemObservations.removeAll()
         resetSeekGate()
         player.pause()
         player.replaceCurrentItem(with: nil)
@@ -203,7 +207,7 @@ extension PlaybackEngine {
     }
 
     func stop() {
-        endObservation = nil
+        itemObservations.removeAll()
         player.pause()
         player.replaceCurrentItem(with: nil)
         setPlaybackSpeed(1)
@@ -351,19 +355,36 @@ extension PlaybackEngine {
 
     private func observeEnd(of item: AVPlayerItem) {
         let subject = didPlayToEndSubject
-        endObservation = notificationCenter
+        notificationCenter
             .publisher(for: AVPlayerItem.didPlayToEndTimeNotification, object: item)
             .receive(on: DispatchQueue.main)
             .sink { _ in subject.send(()) }
+            .store(in: &itemObservations)
+    }
+
+    /// Failures after the item is handed to the player
+    private func observeFailure(of item: AVPlayerItem) {
+        item.publisher(for: \.status, options: [.new])
+            .filter { $0 == .failed }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self, weak item] _ in
+                self?.reportFailure(.itemFailed, message: item?.error?.localizedDescription)
+            }
+            .store(in: &itemObservations)
+    }
+
+    private func reportFailure(_ reason: AudioPlaybackFailureReason, message: String?) {
+        MEGALogError("[AudioPlayer] playback failed: \(reason.rawValue) — \(message ?? "no error description")")
+        playbackStatusSubject.send(.error(reason))
     }
 
     private func observeDuration(of item: AVPlayerItem) {
-        durationObservation?.invalidate()
-        durationObservation = item.observe(\.duration, options: [.initial, .new]) { [weak self] _, _ in
-            Task { @MainActor in
+        item.publisher(for: \.duration, options: [.initial, .new])
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
                 self?.publishCurrentDuration()
             }
-        }
+            .store(in: &itemObservations)
     }
 
     /// Reads the loaded item rather than the one that was observed

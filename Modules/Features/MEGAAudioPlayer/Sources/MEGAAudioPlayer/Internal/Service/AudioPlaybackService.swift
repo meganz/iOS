@@ -1,6 +1,7 @@
 import AVFoundation
 import Combine
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 
 @MainActor
@@ -30,6 +31,7 @@ final class AudioPlaybackService {
     private let engine: any PlaybackEngineProtocol
     private let notificationCenter: NotificationCenter
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
+    private let analyticsReporter: AudioPlaybackAnalyticsReporter
 
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
@@ -74,7 +76,8 @@ final class AudioPlaybackService {
         metadataCache: some AudioMetadataCacheProtocol = AudioMetadataCache(),
         engine: some PlaybackEngineProtocol = PlaybackEngine(),
         notificationCenter: NotificationCenter = .default,
-        playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase
+        playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase,
+        analyticsReporter: AudioPlaybackAnalyticsReporter = AudioPlaybackAnalyticsReporter(tracker: DependencyInjection.analyticsTracker, accountUseCase: DependencyInjection.accountUseCase)
     ) {
         self.trackResolver = trackResolver
         self.streamingRepository = streamingRepository
@@ -82,6 +85,7 @@ final class AudioPlaybackService {
         self.engine = engine
         self.notificationCenter = notificationCenter
         self.playbackContinuationUseCase = playbackContinuationUseCase
+        self.analyticsReporter = analyticsReporter
         bindEngineToState()
         observeAirPlayRouteChanges()
         setUpNowPlaying()
@@ -168,6 +172,28 @@ final class AudioPlaybackService {
         guard currentSource != nil else { return }
         self.status = status
         if status == .playing { hasStartedPlaybackSubject.send(true) }
+        // The engine reports failures it can only see after the item is loaded
+        if case .error(let reason) = status {
+            trackFailure(reason, track: playbackQueue.current, generation: playGeneration)
+        }
+    }
+
+    // MARK: - Analytics
+
+    private func reportStarted(track: PlaybackTrack, generation: Int) {
+        analyticsReporter.trackPlaybackStarted(track: track, generation: generation)
+    }
+
+    private func trackFailure(
+        _ reason: AudioPlaybackFailureReason,
+        track: PlaybackTrack?,
+        generation: Int
+    ) {
+        analyticsReporter.trackPlaybackFailed(
+            track: track,
+            reason: reason,
+            generation: generation
+        )
     }
 
     private func saveCurrentPlaybackPositionIfNeeded() {
@@ -397,9 +423,12 @@ extension AudioPlaybackService: PlaybackControllable {
         playbackBlockedSubject.send(nil)
 
         guard let track = playbackQueue.current else {
-            status = .error("url resolution error")
+            MEGALogError("[AudioPlayer] playCurrent with an empty queue")
+            status = .error(.queueEmpty)
             return
         }
+
+        reportStarted(track: track, generation: generation)
 
         title = track.displayName
         artist = nil
@@ -441,9 +470,11 @@ extension AudioPlaybackService: PlaybackControllable {
 
         case .takenDown:
             playbackBlockedSubject.send(.takenDown)
+            trackFailure(.takenDown, track: track, generation: generation)
 
         case .unresolved:
-            status = .error("url resolution error")
+            status = .error(.urlUnresolved)
+            trackFailure(.urlUnresolved, track: track, generation: generation)
         }
     }
 

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
@@ -36,5 +37,9 @@ enum DependencyInjection {
 
     static var accountUseCase: some AccountUseCaseProtocol {
         AccountUseCase(repository: AccountRepository.newRepo)
+    }
+
+    static var analyticsTracker: some AnalyticsTracking {
+        DIContainer.tracker
     }
 }
