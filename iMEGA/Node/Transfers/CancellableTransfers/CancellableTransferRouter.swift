@@ -120,12 +120,18 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     private func makeCancellableTransferUseCase() -> any CancellableTransferUseCaseProtocol {
         switch transferType {
         case .download, .downloadChat, .downloadFileLink:
-            CancellableDownloadTransferUseCase(
-                downloadFileRepository: DownloadFileRepository.newRepo,
+            let downloadRepository = DownloadFileRepository(
+                sdk: MEGASdk.shared,
+                sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLink : nil,
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared),
+                preresolvedNodes: preresolvedNodes
+            )
+            return CancellableDownloadTransferUseCase(
+                downloadFileRepository: downloadRepository,
                 fileSystemRepository: FileSystemRepository.sharedRepo
             )
         case .upload:
-            CancellableUploadTransferUseCase(
+            return CancellableUploadTransferUseCase(
                 uploadFileRepository: UploadFileRepository(sdk: MEGASdk.shared)
             )
         }

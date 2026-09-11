@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAFoundation
 import MEGASdk
 import MEGASwift
 
@@ -15,7 +16,9 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk?
+    private let chatNodeProvider: (any ChatMEGANodeProviding)?
     private let nodeProvider: any MEGANodeProviderProtocol
+    private let transferQuotaNotifier: any TransferQuotaStateNotifying
     private let preresolvedNodes: [HandleEntity: MEGANode]
     private let cancelToken = ThreadSafeCancelToken()
 
@@ -26,11 +29,15 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     public init(sdk: MEGASdk,
                 sharedFolderSdk: MEGASdk? = nil,
                 nodeProvider: any MEGANodeProviderProtocol = DefaultMEGANodeProvider(sdk: .sharedSdk),
+                chatNodeProvider: (any ChatMEGANodeProviding)? = nil,
+                transferQuotaNotifier: some TransferQuotaStateNotifying = DownloadTransferQuotaStateProvider.shared,
                 preresolvedNodes: [HandleEntity: MEGANode] = [:]) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
         self.nodeProvider = nodeProvider
+        self.chatNodeProvider = chatNodeProvider
         self.preresolvedNodes = preresolvedNodes
+        self.transferQuotaNotifier = transferQuotaNotifier
     }
     
     public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
@@ -103,12 +110,54 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             )
         }
     }
-
-    /// Will be implemented in next MRs
-    public func download(batch: [DownloadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
-        EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
-    }
     
+    public func download(batch: [DownloadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+        return AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            let task = Task {
+                let itemList = await buildDownloadItemList(from: batch)
+                MEGALog.log(
+                    level: .info,
+                    message: "[DownloadFileRepository] starting download batch: \(itemList.size) of \(batch.count) item(s) resolved"
+                )
+
+                guard !Task.isCancelled else {
+                    MEGALog.log(level: .debug, message: "[DownloadFileRepository] download batch cancelled")
+                    continuation.finish(throwing: TransferErrorEntity.cancelled)
+                    return
+                }
+
+                let transferDelegate = TransferDelegate { result in
+                    switch result {
+                    case .success(let transferEntity):
+                        continuation.yield(.finish(transferEntity))
+                        continuation.finish()
+                    case .failure(let error):
+                        MEGALog.log(level: .error, message: "[DownloadFileRepository] download batch transfer failed: \(error)")
+                        continuation.finish(throwing: error)
+                    }
+                }
+                
+                transferDelegate.start = { continuation.yield(.start($0)) }
+                transferDelegate.progress = { continuation.yield(.update($0)) }
+                transferDelegate.folderUpdate = { continuation.yield(.folderUpdate($0)) }
+                transferDelegate.transferQuotaState = { [transferQuotaNotifier] state in
+                    MEGALog.log(level: .info, message: "[DownloadFileRepository] download batch predicted transfer quota state: \(state)")
+                    transferQuotaNotifier.notify(state: state)
+                }
+                
+                sdk.startDownloadBatch(
+                    withItems: itemList,
+                    cancelToken: cancelToken.value,
+                    collisionCheck: CollisionCheck.fingerprint,
+                    collisionResolution: CollisionResolution.newWithN,
+                    delegate: transferDelegate
+                )
+            }
+            
+            continuation.onTermination = { _ in task.cancel() }
+        }.eraseToAnyAsyncThrowingSequence()
+    }
+
     private func fileCount(of node: MEGANode) async -> Int {
         // Whichever SDK the node came from, since only that one has it in its tree — see `megaNode(for:)`.
         await withAsyncValue { completion in
@@ -118,9 +167,82 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         }
     }
 
+    private func buildDownloadItemList(from batch: [DownloadBatchItemEntity]) async -> MEGADownloadItemList {
+        let itemList = MEGADownloadItemList()
+        let items: [(DownloadBatchItemEntity, MEGANode?)] = await batch.taskGroup(maxConcurrentTasks: 3) { item in
+            do {
+                return (item, try await megaNode(for: item.source))
+            } catch {
+                MEGALog.log(
+                    level: .error,
+                    message: "[DownloadFileRepository] download item dropped \(error)"
+                )
+                return (item, nil)
+            }
+        }
+        
+        for (item, node) in items {
+            guard let node else { continue }
+            itemList.add(
+                node,
+                localPath: item.destinationFolder.path,
+                customName: item.name,
+                appData: item.appData,
+                startFirst: item.startFirst,
+                undelete: false
+            )
+        }
+
+        return itemList
+    }
+    
+    private func megaNode(for source: DownloadBatchItemEntity.Source) async throws -> MEGANode {
+        switch source {
+        case let .node(handle):
+            return try await megaNode(for: handle)
+        case let .chatNode(handle, messageId, chatId):
+            return try await megaNode(handle: handle, messageId: messageId, chatId: chatId)
+        case let .fileLink(fileLink):
+            return try await nodeFor(fileLink: fileLink)
+        }
+    }
+
+    private func megaNode(
+        handle: HandleEntity,
+        messageId: HandleEntity,
+        chatId: HandleEntity
+    ) async throws -> MEGANode {
+        guard let chatNodeProvider,
+              let node = await chatNodeProvider.node(handle: handle, messageId: messageId, chatId: chatId) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
+        }
+        return node
+    }
+    
+    private func nodeFor(fileLink: FileLinkEntity) async throws -> MEGANode {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    guard let node = request.publicNode else {
+                        continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                        return
+                    }
+                    continuation.resume(returning: node)
+                case .failure:
+                    continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                }
+            })
+        }
+    }
+
     private func megaNode(for nodeHandle: HandleEntity) async throws -> MEGANode {
         if let sharedFolderNode = try sharedFolderNode(for: nodeHandle) {
             return sharedFolderNode
+        }
+        
+        if let preresolvedNode = preresolvedNodes[nodeHandle] {
+           return preresolvedNode
         }
         
         guard let node = await nodeProvider.node(for: nodeHandle) else {
@@ -367,5 +489,38 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     
     public func cancelDownloadTransfers() {
         cancelToken.cancel()
+    }
+}
+
+/// To be deleted once SDK submodule is updated.
+final class MEGADownloadItemList: NSObject {
+    var size: Int = 0
+    
+    override init() {
+        super.init()
+    }
+    
+    func add(
+        _ node: MEGANode,
+        localPath: String,
+        customName: String?,
+        appData: String?,
+        startFirst: Bool,
+        undelete: Bool
+    ) {
+        
+    }
+}
+
+/// To be deleted once SDK submodule is updated.
+extension MEGASdk {
+    func startDownloadBatch(
+        withItems: MEGADownloadItemList,
+        cancelToken: MEGACancelToken,
+        collisionCheck: CollisionCheck,
+        collisionResolution: CollisionResolution,
+        delegate: TransferDelegate
+    ) {
+        
     }
 }

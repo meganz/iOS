@@ -6,17 +6,20 @@ public final class TransferDelegate: NSObject, MEGATransferDelegate {
     public var progress: ((TransferEntity) -> Void)?
     var completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     public var folderUpdate: ((FolderTransferUpdateEntity) -> Void)?
+    public var transferQuotaState: ((TransferQuotaStateEntity) -> Void)?
     
     public init(
         start: ((TransferEntity) -> Void)? = nil,
         progress: ((TransferEntity) -> Void)? = nil,
         completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void,
-        folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil
+        folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil,
+        transferQuotaState: ((TransferQuotaStateEntity) -> Void)? = nil
     ) {
         self.start = start
         self.progress = progress
         self.completion = completion
         self.folderUpdate = folderUpdate
+        self.transferQuotaState = transferQuotaState
     }
     
     public init(completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -71,4 +74,16 @@ public final class TransferDelegate: NSObject, MEGATransferDelegate {
                                                     fileCount: fileCount))
         }
     }
+    
+    public func onTransferQuotaState(_ api: MEGASdk,
+                                     transfer: MEGATransfer,
+                                     state: MEGATransferQuotaState) {
+        guard let transferQuotaStateEntity = TransferQuotaStateEntity(transferQuotaState: state) else { return }
+        transferQuotaState?(transferQuotaStateEntity)
+    }
+}
+
+// To be deleted once SDK submodule is updated
+public enum MEGATransferQuotaState {
+    case unknown, green, orange, red
 }
