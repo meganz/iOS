@@ -45,6 +45,7 @@ enum MediaTabTimelineFactory {
             nodeRepository: NodeRepository.newRepo
         )
         
+        // Read once, only to inherit a direction chosen before the timeline kept its own order.
         let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
             preferenceUseCase: PreferenceUseCase.default,
             sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo

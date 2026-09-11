@@ -129,13 +129,8 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationBarItemProvider {
             .map { _ in () }
             .eraseToAnyPublisher()
 
-        // A sort order applied from the stored preference rather than from the menu has no other
-        // refresh trigger, so without this the sort menu would keep its checkmark on the previous
-        // option. The menu path is already covered by `MediaTabViewModel.sortMenu(didSelect:)`.
-        let sortOrderChanges = timelineViewModel.preferenceDrivenSortOrderUpdates
-
         return emptyStateChanges
-            .merge(with: sortOrderChanges, updateNavigationBarButtonsPassthroughSubject.eraseToAnyPublisher())
+            .merge(with: updateNavigationBarButtonsPassthroughSubject.eraseToAnyPublisher())
             .eraseToAnyPublisher()
     }
     

@@ -67,4 +67,5 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol, Sendable {
     case transferAlmostFullLimitedStreamingDialogShownCount
     case transferAlmostFullLimitedStreamingDialogLastShownDate
     case mediaTimelineSortedByDateTaken
+    case mediaTimelineSortedOldestFirst
 }

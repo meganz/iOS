@@ -26,9 +26,6 @@ struct NewTimelineView: View {
         .task {
             await viewModel.monitorNodeMetadataUpdates()
         }
-        .task {
-            await viewModel.monitorSortOrder()
-        }
         .onDisappear(perform: viewModel.onViewDisappear)
         .if(viewModel.showEmptyStateView) {
             $0.overlay(emptyView)

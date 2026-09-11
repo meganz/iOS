@@ -832,54 +832,88 @@ struct NewTimelineViewModelTests {
         }
     }
     
+    /// The direction is the timeline's own preference: it must never reach the app-wide sort
+    /// preference, which Cloud Drive and every other screen read.
     @MainActor
     @Suite("Sort Order Persistence")
     struct SortOrderPersistence {
-        @Test("Selecting a sort order saves it against the camera upload explorer feed key")
+        private static let oldestFirstKey = PreferenceKeyEntity.mediaTimelineSortedOldestFirst.rawValue
+
+        @Test("Selecting a sort order saves it in the timeline's own preference")
         func savesSelectedSortOrder() {
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
-            let sut = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+            let preferenceUseCase = MockPreferenceUseCase()
+            let sut = makeSUT(preferenceUseCase: preferenceUseCase)
 
             sut.updateSortOrder(.modificationAsc)
 
-            #expect(sortOrderPreferenceUseCase.messages.contains(
-                .save(sortOrder: .modificationAsc, for: .cameraUploadExplorerFeed)))
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == true)
+            #expect(sut.sortOrder == .modificationAsc)
         }
 
-        @Test("Selecting the current sort order again saves nothing")
+        @Test("Selecting the current sort order again leaves it where it was")
         func unchangedSortOrderIsNotSaved() {
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
-            let sut = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+            let preferenceUseCase = MockPreferenceUseCase()
+            let sut = makeSUT(preferenceUseCase: preferenceUseCase)
 
             sut.updateSortOrder(.modificationDesc)
 
-            #expect(sortOrderPreferenceUseCase.saveSortOrderCallCount == 0)
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == false)
+            #expect(sut.sortOrder == .modificationDesc)
         }
 
-        @Test("The stored sort order is restored before the first load, normalising orders the menu doesn't offer",
+        @Test("A direction chosen before the timeline kept its own order is inherited once",
               arguments: [
-                (stored: SortOrderEntity.modificationAsc, expected: SortOrderEntity.modificationAsc),
-                (stored: .modificationDesc, expected: .modificationDesc),
-                (stored: .defaultAsc, expected: .modificationDesc),
-                (stored: .none, expected: .modificationDesc)
+                (inherited: SortOrderEntity.modificationAsc, expected: SortOrderEntity.modificationAsc),
+                (inherited: .modificationDesc, expected: .modificationDesc),
+                (inherited: .defaultAsc, expected: .modificationDesc),
+                (inherited: .none, expected: .modificationDesc)
               ])
-        func restoresStoredSortOrder(stored: SortOrderEntity, expected: SortOrderEntity) {
+        func inheritsTheDirectionFromTheAppWidePreference(
+            inherited: SortOrderEntity,
+            expected: SortOrderEntity
+        ) {
+            let preferenceUseCase = MockPreferenceUseCase()
             let sut = makeSUT(
-                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: stored))
+                preferenceUseCase: preferenceUseCase,
+                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: inherited))
+
+            #expect(sut.sortOrder == expected)
+            // Persisted straight away, so the app-wide preference is read on this launch only.
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == (expected == .modificationAsc))
+        }
+
+        @Test("Once the timeline has its own order, the app-wide preference is never consulted")
+        func storedOrderWinsOverTheAppWidePreference() {
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationAsc)
+            let sut = makeSUT(
+                preferenceUseCase: MockPreferenceUseCase(dict: [Self.oldestFirstKey: false]),
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+            #expect(sut.sortOrder == .modificationDesc)
+            #expect(sortOrderPreferenceUseCase.getSortOrderCallCount == 0)
+        }
+
+        @Test("The stored sort order is restored before the first load",
+              arguments: [
+                (stored: true, expected: SortOrderEntity.modificationAsc),
+                (stored: false, expected: .modificationDesc)
+              ])
+        func restoresStoredSortOrder(stored: Bool, expected: SortOrderEntity) {
+            let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(
+                dict: [Self.oldestFirstKey: stored]))
 
             #expect(sut.sortOrder == expected)
         }
 
-        @Test("A sort order changed elsewhere is picked up by the monitor")
-        func monitorAppliesExternalSortOrderChange() async {
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
-            let sut = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
-            // Another screen sorting by oldest — reaches this feed when the user's sorting basis is "same for all".
-            sortOrderPreferenceUseCase.save(sortOrder: .modificationAsc, for: .homeVideos)
+        @Test("An order the menu doesn't offer normalises to newest first")
+        func normalisesAnOrderTheMenuDoesNotOffer() {
+            let preferenceUseCase = MockPreferenceUseCase(dict: [Self.oldestFirstKey: true])
+            let sut = makeSUT(preferenceUseCase: preferenceUseCase)
 
-            await sut.monitorSortOrder()
+            sut.updateSortOrder(.defaultAsc)
 
-            #expect(sut.sortOrder == .modificationAsc)
+            #expect(sut.sortOrder == .modificationDesc)
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == false)
         }
     }
 
@@ -986,13 +1020,13 @@ struct NewTimelineViewModelTests {
         )
     }
 
-    /// The timeline's sort order carries two axes: the direction, which lives in the shared sort
-    /// preference, and the timestamp, which is the timeline's own local preference and only exists
-    /// while the feature flag is on.
+    /// The timeline's sort order carries two axes — direction and timestamp — both of them local
+    /// preferences of its own; the timestamp one only exists while the feature flag is on.
     @MainActor
     @Suite
     struct MediaTimelineSortOrder {
         private static let dateTakenKey = PreferenceKeyEntity.mediaTimelineSortedByDateTaken.rawValue
+        private static let oldestFirstKey = PreferenceKeyEntity.mediaTimelineSortedOldestFirst.rawValue
 
         private static func makeSections() -> [MediaDateSectionEntity] {
             [MediaDateSectionEntity(
@@ -1065,21 +1099,23 @@ struct NewTimelineViewModelTests {
             #expect(sut.loadPhotosTaskId == loadId, "the eager path already holds every node")
         }
 
-        @Test("Direction comes from the shared preference, timestamp from the local one",
+        @Test("The offered order combines both stored axes",
               arguments: [
-                (SortOrderEntity.modificationDesc, true, MediaTimelineSortOrderEntity.newestByCaptureTime),
-                (.modificationAsc, true, .oldestByCaptureTime),
-                (.modificationDesc, false, .newest),
-                (.modificationAsc, false, .oldest)
+                (false, true, MediaTimelineSortOrderEntity.newestByCaptureTime),
+                (true, true, .oldestByCaptureTime),
+                (false, false, .newest),
+                (true, false, .oldest)
               ])
         func sortTypeCombinesBothAxes(
-            storedDirection: SortOrderEntity,
+            storedOldestFirst: Bool,
             storedDateTaken: Bool,
             expected: MediaTimelineSortOrderEntity
         ) {
             let sut = makeSUT(
-                preferenceUseCase: MockPreferenceUseCase(dict: [Self.dateTakenKey: storedDateTaken]),
-                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: storedDirection),
+                preferenceUseCase: MockPreferenceUseCase(dict: [
+                    Self.dateTakenKey: storedDateTaken,
+                    Self.oldestFirstKey: storedOldestFirst
+                ]),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(),
                 isDateTakenSortEnabled: true)
 
@@ -1123,13 +1159,11 @@ struct NewTimelineViewModelTests {
             #expect(queried.allSatisfy { $0 == .newestByCaptureTime })
         }
 
-        @Test("Changing only the timestamp persists it locally and reloads, leaving the shared preference alone")
+        @Test("Changing only the timestamp persists it and reloads, leaving the direction alone")
         func timestampOnlyChangePersistsLocallyAndReloads() {
             let preferenceUseCase = MockPreferenceUseCase()
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
             let sut = makeSUT(
                 preferenceUseCase: preferenceUseCase,
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                 mediaTimelineUseCase: MockMediaTimelineUseCase(),
                 isDateTakenSortEnabled: true)
             let loadId = sut.loadPhotosTaskId
@@ -1141,24 +1175,21 @@ struct NewTimelineViewModelTests {
             #expect(sut.mediaTimelineSortType == .newestByCaptureTime)
             #expect(sut.loadPhotosTaskId != loadId)
             #expect(sut.timelineQueryId != queryId)
-            // The direction did not move, so nothing may be written to the cross-screen preference.
-            #expect(sortOrderPreferenceUseCase.saveSortOrderCallCount == 0)
+            // The direction did not move.
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == false)
         }
 
-        @Test("Changing the direction writes it to the shared preference, as the newest / oldest menu always has")
-        func directionChangeWritesTheSharedPreference() {
+        @Test("Changing the direction persists it in the timeline's own preference")
+        func directionChangePersistsLocally() {
             let preferenceUseCase = MockPreferenceUseCase()
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
             let sut = makeSUT(
                 preferenceUseCase: preferenceUseCase,
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                 mediaTimelineUseCase: MockMediaTimelineUseCase(),
                 isDateTakenSortEnabled: true)
 
             sut.updateMediaTimelineSortOrder(.oldestByCaptureTime)
 
-            #expect(sortOrderPreferenceUseCase.messages.contains(
-                .save(sortOrder: .modificationAsc, for: .cameraUploadExplorerFeed)))
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == true)
             #expect(preferenceUseCase.dict[Self.dateTakenKey] as? Bool == true)
             #expect(sut.mediaTimelineSortType == .oldestByCaptureTime)
         }
@@ -1168,7 +1199,6 @@ struct NewTimelineViewModelTests {
             let preferenceUseCase = MockPreferenceUseCase(dict: [Self.dateTakenKey: true])
             let sut = makeSUT(
                 preferenceUseCase: preferenceUseCase,
-                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(),
                 isDateTakenSortEnabled: true)
 
@@ -1180,9 +1210,9 @@ struct NewTimelineViewModelTests {
 
         @Test("Re-picking the active order changes nothing")
         func rePickingTheActiveOrderIsANoOp() {
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let preferenceUseCase = MockPreferenceUseCase()
             let sut = makeSUT(
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                preferenceUseCase: preferenceUseCase,
                 mediaTimelineUseCase: MockMediaTimelineUseCase(),
                 isDateTakenSortEnabled: true)
             let loadId = sut.loadPhotosTaskId
@@ -1192,7 +1222,8 @@ struct NewTimelineViewModelTests {
 
             #expect(sut.loadPhotosTaskId == loadId)
             #expect(sut.timelineQueryId == queryId)
-            #expect(sortOrderPreferenceUseCase.saveSortOrderCallCount == 0)
+            #expect(preferenceUseCase.dict[Self.dateTakenKey] as? Bool == nil)
+            #expect(preferenceUseCase.dict[Self.oldestFirstKey] as? Bool == false)
         }
     }
 }
