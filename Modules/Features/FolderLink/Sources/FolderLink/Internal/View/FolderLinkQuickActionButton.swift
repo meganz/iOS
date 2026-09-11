@@ -7,6 +7,8 @@ extension FolderLinkQuickAction {
         switch self {
         case .addToCloudDrive:
             Strings.Localizable.importToCloudDrive
+        case .downloadToFiles:
+            Strings.Localizable.download
         case .makeAvailableOffline:
             Strings.Localizable.General.downloadToOffline
         case .sendToChat:
@@ -18,6 +20,8 @@ extension FolderLinkQuickAction {
         switch self {
         case .addToCloudDrive:
             Image(uiImage: MEGAAssets.UIImage.folderArrow)
+        case .downloadToFiles:
+            Image(uiImage: MEGAAssets.UIImage.downloadToDisk)
         case .makeAvailableOffline:
             Image(uiImage: MEGAAssets.UIImage.cloudDownload)
         case .sendToChat:

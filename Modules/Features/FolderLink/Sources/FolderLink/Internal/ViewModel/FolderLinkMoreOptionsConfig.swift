@@ -28,7 +28,7 @@ struct FolderLinkMoreOptionsConfig {
     ) {
         var options: [FolderLinkMoreOption] = [.select]
         if showsQuickActions {
-            options.append(.saveToMEGA)
+            options.append(contentsOf: [.saveToMEGA, .download])
             // Save to Photos lost its bottom bar slot to the two anchored buttons, so the sheet is where
             // it lives now.
             if savesToPhotos {
@@ -60,6 +60,8 @@ extension FolderLinkMoreOptionsHandling {
             editMode = .active
         case .saveToMEGA:
             quickAction = .addToCloudDrive
+        case .download:
+            quickAction = .downloadToFiles
         case .copyToOffline:
             quickAction = .makeAvailableOffline
         case .sendToChat:
