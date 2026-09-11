@@ -256,6 +256,7 @@
 		14F2EFC12EDD46B300C37318 /* APMKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 14F2EFBF2EDD46B300C37318 /* APMKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		14F2EFC42EDD4BF400C37318 /* APMKit in Frameworks */ = {isa = PBXBuildFile; productRef = 14F2EFC32EDD4BF400C37318 /* APMKit */; };
 		14F2EFC52EDD4BF400C37318 /* APMKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 14F2EFC32EDD4BF400C37318 /* APMKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		14F7CA813053C69E001EF47D /* AudioPlayStartedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F7CA803053C69E001EF47D /* AudioPlayStartedTracker.swift */; };
 		159F9C435B71596C5B9610A2 /* CameraUploadRecordCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021468315180776D7E2E4CB0 /* CameraUploadRecordCleanupTests.swift */; };
 		16009FA42BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA32BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift */; };
 		16009FA72BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */; };
@@ -3087,6 +3088,7 @@
 		14F2EFB92EDD464000C37318 /* APMCrashlyticsReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APMCrashlyticsReporterTests.swift; sourceTree = "<group>"; };
 		14F2EFBA2EDD464000C37318 /* CrashlyticsReportingMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashlyticsReportingMocks.swift; sourceTree = "<group>"; };
 		14F2EFBE2EDD468C00C37318 /* APMKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = APMKit; sourceTree = "<group>"; };
+		14F7CA803053C69E001EF47D /* AudioPlayStartedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayStartedTracker.swift; sourceTree = "<group>"; };
 		16009FA32BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnablingTwoFactorAuthenticationViewController+Additions.swift"; sourceTree = "<group>"; };
 		16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TwoFactorAuthenticationViewController+Additions.swift"; sourceTree = "<group>"; };
 		160711532A558DED00970A19 /* PagerTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModelTests.swift; sourceTree = "<group>"; };
@@ -13102,6 +13104,7 @@
 				C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */,
 				C49F8638255AE2030074A054 /* AudioPlayer.swift */,
 				C45E402025DD1C230060E116 /* AudioPlayerManager.swift */,
+				14F7CA803053C69E001EF47D /* AudioPlayStartedTracker.swift */,
 				944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */,
 			);
 			path = AudioPlayer;
@@ -14813,6 +14816,7 @@
 				C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */,
 				C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */,
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
+				14F7CA813053C69E001EF47D /* AudioPlayStartedTracker.swift in Sources */,
 				944C3AD42D5A517400C6BFB9 /* AudioQueueLoader.swift in Sources */,
 				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,

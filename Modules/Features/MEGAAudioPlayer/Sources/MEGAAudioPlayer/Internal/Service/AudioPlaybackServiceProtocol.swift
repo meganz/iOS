@@ -90,6 +90,18 @@ enum PlaybackBlockedReason: Equatable {
 
 // MARK: - Status
 
+/// Why a playback attempt failed
+enum AudioPlaybackFailureReason: String {
+    /// The track resolved to no playable URL.
+    case urlUnresolved
+    /// `AVPlayerItem` reported `.failed` — the engine had a URL but could not play it.
+    case itemFailed
+    /// The track was taken down
+    case takenDown
+    /// `playCurrent()` ran with nothing in the queue
+    case queueEmpty
+}
+
 enum PlaybackStatus: Equatable {
     case idle
     /// The session is starting a track up: resolving its address and clearing
@@ -100,5 +112,5 @@ enum PlaybackStatus: Equatable {
     case buffering
     case playing
     case paused
-    case error(String)
+    case error(AudioPlaybackFailureReason)
 }

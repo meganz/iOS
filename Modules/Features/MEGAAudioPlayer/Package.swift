@@ -21,9 +21,11 @@ let package = Package(
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
-        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -38,7 +40,9 @@ let package = Package(
                 "MEGAFoundation",
                 "MEGAInfrastructure",
                 "MEGADesignToken",
-                "MEGAUIComponent"
+                "MEGAUIComponent",
+                .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ]
         ),
         .testTarget(

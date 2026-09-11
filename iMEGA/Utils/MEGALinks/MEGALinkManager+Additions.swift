@@ -215,6 +215,8 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
     @MainActor
     @objc class func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, isFromSharedItem: Bool, presenter: UIViewController) {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp) {
+            AudioPlayStartedTracker.trackShareLinkPlayStarted(fileLink: fileLink, isFolderLink: isFolderLink)
+
             let source: PlaybackSource?
             if isFolderLink, let node {
                 // The folder link SDK has to authorize the node before anything downstream can stream it
