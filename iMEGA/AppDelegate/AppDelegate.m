@@ -275,6 +275,7 @@
 
     [self listenToDomainUpdates];
     [self listenToLoggedOutStreamingOverQuota];
+    [self startTransferQuotaWarningMonitoring];
 
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {

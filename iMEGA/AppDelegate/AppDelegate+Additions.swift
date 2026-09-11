@@ -76,6 +76,15 @@ extension AppDelegate {
         }
     }
 
+    @objc func startTransferQuotaWarningMonitoring() {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningRevampPhaseTwo) else { return }
+        Task {
+            await TransferQuotaWarningMonitor(
+                presentDialog: { QuotaWarningsRouter().presentTransferDialog(severity: $0) }
+            ).startMonitoring()
+        }
+    }
+
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
