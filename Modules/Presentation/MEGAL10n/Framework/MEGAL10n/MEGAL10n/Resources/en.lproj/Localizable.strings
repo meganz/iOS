@@ -5228,3 +5228,5 @@
 "pdfPreview.password.message"="This PDF is password protected.";
 /* Validation error shown under the password field when the entered PDF password is wrong */
 "pdfPreview.password.invalid"="Invalid password";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Audio track";
