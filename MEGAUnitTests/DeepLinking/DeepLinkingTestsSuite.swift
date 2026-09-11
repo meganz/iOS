@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAChatSdk
 import Testing
 
 @Suite("Deep Linking Tests Suite - Tests various types of deep links and their expected behavior.", .serialized)
@@ -487,6 +488,108 @@ struct DeepLinkingTestSuite {
         ])
         func nonMegaHostsAreRejected(url: String) {
             Self.assertIsMEGAHost(url, false)
+        }
+    }
+
+    // MARK: - Chat MEGA-Link Fast Path Tests
+    @Suite("Chat MEGA-Link Fast Path Tests - Pins the host guard that lets -[MEGAChatMessage containsMEGALink] skip data detection (MEET-4933).")
+    struct ChatMEGALinkFastPathTests {
+        /// The types that make a chat message render as a MEGA link, see -[MEGAChatMessage containsMEGALink].
+        private static let chatMEGALinkTypes: Set<URLType> = [
+            .fileLink, .folderLink, .publicChatLink, .contactLink, .collection
+        ]
+
+        private static func type(of urlString: String) -> URLType? {
+            guard let url = URL(string: urlString) as? NSURL else {
+                Issue.record("Invalid URL string: \(urlString)")
+                return nil
+            }
+            return url.mnz_type()
+        }
+
+        /// The test with teeth. Dropping the `host?.contains("mega")` guard in `parseUniversalLinkURL`
+        /// turns these into chat MEGA links and fails here. It walks `DeeplinkPathKey.allCases`, so a
+        /// newly added deeplink path is covered without anyone remembering to extend a list.
+        @Test("No deeplink path turns a non-MEGA host into a chat MEGA link")
+        func noDeeplinkPathMakesNonMEGAHostAChatMEGALink() {
+            for key in DeeplinkPathKey.allCases {
+                let urlString = "https://example.com\(key.rawValue)/1dICRLJS#snJiad_4WfCKEK7bgPri3A"
+                guard let type = Self.type(of: urlString) else { continue }
+                #expect(
+                    !Self.chatMEGALinkTypes.contains(type),
+                    """
+                    \(urlString) classifies as \(type) on a non-MEGA host. containsMEGALink skips \
+                    data detection for content with no "mega" substring, so it would now miss it.
+                    """
+                )
+            }
+        }
+
+        @Test("Every URL a chat treats as a MEGA link contains \"mega\"", arguments: [
+            "https://mega.nz/file/paBmgYJQ#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "https://testbed.preview.mega.co.nz/file/cNpAEKLS#B7T0WMhV38wOUkEUBRy6eej46wWJo0NKQC2Hz3wW0jc",
+            "mega://#!paBmgYJQ!sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
+            "mega://#F!1dICRLJS!snJiad_4WfCKEK7bgPri3A!0ch3QSwA",
+            "https://mega.nz/C!",
+            "https://mega.nz/#C!",
+            "https://mega.app/?a=sdf&b=123#C!",
+            "https://mega.nz/chat/X1FRRCaL#a7qjLayRnqR0fFHpov8DrA",
+            "mega://chat/5LpjxQAa#N_fC9cHlBXXWdbfpWQHrRg",
+            "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
+            "mega://collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"
+        ])
+        func knownChatMEGALinksContainMegaSubstring(urlString: String) {
+            guard let type = Self.type(of: urlString) else { return }
+            #expect(
+                Self.chatMEGALinkTypes.contains(type),
+                "Expected \(urlString) to be a chat MEGA link but got \(type)"
+            )
+            #expect(urlString.lowercased().contains("mega"))
+        }
+    }
+
+    // MARK: - Chat MEGA-Link Content Scan Tests
+    @Suite("Chat MEGA-Link Content Scan Tests - Covers +[MEGAChatMessage mnz_firstMEGALinkInContent:], the fast path itself (MEET-4933).")
+    struct ChatMEGALinkContentScanTests {
+        @Test("Content with no \"mega\" substring yields no link", arguments: [
+            "",
+            "no links in here at all",
+            "take a look at https://example.com/file/paBmgYJQ#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "call 021 555 0100 or meet me at 1 Queen St, Auckland tomorrow"
+        ])
+        func contentWithoutMegaSubstringYieldsNoLink(content: String) {
+            #expect(MEGAChatMessage.firstMEGALink(inContent: content) == nil)
+        }
+
+        @Test("\"mega\" in prose without a link yields no link", arguments: [
+            "is mega any good",
+            "OMEGA watches are nice",
+            "megabyte"
+        ])
+        func megaWordWithoutLinkYieldsNoLink(content: String) {
+            #expect(MEGAChatMessage.firstMEGALink(inContent: content) == nil)
+        }
+
+        /// Only https links are covered: NSDataDetector does not match the custom `mega://` scheme,
+        /// so a `mega://` link pasted into a message was never detected here, before or after
+        /// MEET-4933.
+        @Test("A MEGA link in the content is found whatever its case", arguments: [
+            "https://mega.nz/file/paBmgYJQ#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "take a look at https://MEGA.NZ/file/paBmgYJQ#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os thanks",
+            "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
+            "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"
+        ])
+        func megaLinkInContentIsFound(content: String) {
+            #expect(
+                MEGAChatMessage.firstMEGALink(inContent: content) != nil,
+                "Expected a MEGA link in: \(content)"
+            )
+        }
+
+        @Test("Nil content yields no link")
+        func nilContentYieldsNoLink() {
+            #expect(MEGAChatMessage.firstMEGALink(inContent: nil) == nil)
         }
     }
 }

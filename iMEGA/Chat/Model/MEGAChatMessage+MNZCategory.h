@@ -26,6 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSString *senderId;
 
 - (BOOL)containsMEGALink;
+
+/// Returns the first MEGA file, folder, public chat, contact or collection link in `content`,
+/// or nil when there is none. Backs -containsMEGALink; exposed so the fast path can be tested
+/// without building a MEGAChatMessage.
++ (nullable NSURL *)mnz_firstMEGALinkInContent:(nullable NSString *)content
+    NS_SWIFT_NAME(firstMEGALink(inContent:));
 - (BOOL)shouldShowForwardAccessory;
 - (NSString *)generateAttributedString:(BOOL)isMeeting;
 

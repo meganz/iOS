@@ -21,6 +21,16 @@ static const void *richStringTagKey = &richStringTagKey;
 static const void *richNumberTagKey = &richNumberTagKey;
 static const void *richTitleTagKey = &richTitleTagKey;
 static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
+static const void *noMEGALinkTagKey = &noMEGALinkTagKey;
+
+static NSDataDetector *linkDetector(void) {
+    static NSDataDetector *detector;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    });
+    return detector;
+}
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -71,24 +81,51 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
     return NO;
 }
 
++ (nullable NSURL *)mnz_firstMEGALinkInContent:(nullable NSString *)content {
+    if (content.length == 0) {
+        return nil;
+    }
+
+    // Every type matched below needs either the mega:// scheme or a host containing "mega", see
+    // -[NSURL mnz_type]. So content without that substring cannot hold a MEGA link and never has to
+    // reach the detector. This skip is where the win is: data detection tokenises the whole string,
+    // and on CJK content it builds a CoreNLP word tokenizer to do it.
+    if ([content rangeOfString:@"mega" options:NSCaseInsensitiveSearch].location == NSNotFound) {
+        return nil;
+    }
+
+    NSArray<NSTextCheckingResult *> *matches = [linkDetector() matchesInString:content
+                                                                      options:0
+                                                                        range:NSMakeRange(0, content.length)];
+    for (NSTextCheckingResult *match in matches) {
+        URLType type = [match.URL mnz_type];
+        if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink || type == URLTypeContactLink || type == URLTypeCollection) {
+            return match.URL;
+        }
+    }
+
+    return nil;
+}
+
 - (BOOL)containsMEGALink {
     if (self.MEGALink) {
         return YES;
     }
-    if (!self.content) {
+
+    // Only the miss needs remembering: a hit populates MEGALink, which the early return above picks
+    // up on every later call. Without this, a miss re-scanned the whole content once per message
+    // per layout pass.
+    if (objc_getAssociatedObject(self, noMEGALinkTagKey)) {
         return NO;
     }
-    
-    NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-    for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
-        URLType type = [match.URL mnz_type];
-        if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink || type == URLTypeContactLink || type == URLTypeCollection) {
-            self.MEGALink = match.URL;
 
-            return YES;
-        }
+    NSURL *MEGALink = [MEGAChatMessage mnz_firstMEGALinkInContent:self.content];
+    if (MEGALink) {
+        self.MEGALink = MEGALink;
+        return YES;
     }
-    
+
+    objc_setAssociatedObject(self, &noMEGALinkTagKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return NO;
 }
 

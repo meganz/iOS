@@ -9,18 +9,28 @@ public extension MEGASdk {
         static let MEGAGroupIdentifier = "group.mega.ios"
         static let MEGANotificationServiceExtensionCacheFolder =  "Library/Caches/NSE"
         static var userAgent: String {
-            var agent = "MEGAiOS/\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1")"
-            switch AppEnvironmentUseCase.shared.configuration {
-            case .debug:
-                agent.append(" MEGAEnv/Dev")
-            case .qa:
-                agent.append(" MEGAEnv/QA")
-            default:
-                break
-            }
-            
-            return agent
+            MEGASdk.userAgent(for: AppEnvironmentUseCase.shared.configuration)
         }
+    }
+
+    /// Composes the SDK user agent for a given app configuration.
+    ///
+    /// Split out from the shared instances so it can be asserted on directly. Each `shared*Sdk` is a
+    /// lazy `static let` that bakes its user agent in the first time anything touches it and keeps it
+    /// for the life of the process, so a test that configures the environment and then reads an
+    /// instance is really asserting on whoever touched that instance first.
+    internal static func userAgent(for configuration: AppConfigurationEntity) -> String {
+        var agent = "MEGAiOS/\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1")"
+        switch configuration {
+        case .debug:
+            agent.append(" MEGAEnv/Dev")
+        case .qa:
+            agent.append(" MEGAEnv/QA")
+        default:
+            break
+        }
+
+        return agent
     }
     
     /// MEGASdk instance used for the user logged account

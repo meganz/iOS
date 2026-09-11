@@ -2,7 +2,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 
-enum DeeplinkPathKey: String {
+enum DeeplinkPathKey: String, CaseIterable {
     case file = "/file"
     case fileRequest = "/filerequest"
     case folder = "/folder"
