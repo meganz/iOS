@@ -25,15 +25,22 @@ final class NewTimelineViewModel: ObservableObject {
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let tracker: any AnalyticsTracking
 
     private let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)?
     /// Whether the timeline may offer — and query by — the media capture time at all.
     private let isDateTakenSortEnabled: Bool
 
+    /// Both axes of the timeline's order live in its own preferences: the timeline is the only
+    /// screen that can express them (the app-wide "same for all" sort has no capture-time order),
+    /// so writing them to the shared sort preference would re-sort Cloud Drive and every other
+    /// screen with an order the user only chose for the timeline.
     @PreferenceWrapper(key: PreferenceKeyEntity.mediaTimelineSortedByDateTaken, defaultValue: false)
     private var sortsByDateTaken: Bool
+
+    /// `nil` until the timeline has an order of its own — see the migration in `init`.
+    @PreferenceWrapper(key: PreferenceKeyEntity.mediaTimelineSortedOldestFirst, defaultValue: nil)
+    private var sortsOldestFirst: Bool?
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
@@ -90,8 +97,8 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
     
-    /// Order the paginated queries run in: direction from the shared sort preference, timestamp
-    /// from ``timestampBasis``.
+    /// Order the paginated queries run in: direction from ``sortOrder``, timestamp from
+    /// ``timestampBasis``.
     private var mediaTimelineSortOrder: MediaTimelineSortOrderEntity {
         sortOrder.toMediaTimelineSortOrderEntity(basis: timestampBasis)
     }
@@ -105,10 +112,6 @@ final class NewTimelineViewModel: ObservableObject {
         return mediaTimelineSortOrder
     }
 
-    var preferenceDrivenSortOrderUpdates: AnyPublisher<Void, Never> {
-        preferenceDrivenSortOrderSubject.eraseToAnyPublisher()
-    }
-    private let preferenceDrivenSortOrderSubject = PassthroughSubject<Void, Never>()
     private(set) var currentNodeUpdateTask: Task<Void, any Error>? {
         didSet { oldValue?.cancel() }
     }
@@ -144,15 +147,20 @@ final class NewTimelineViewModel: ObservableObject {
         self.photoLibraryUseCase = photoLibraryUseCase
         self.nodeUseCase = nodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.mediaTimelineUseCase = mediaTimelineUseCase
         self.isDateTakenSortEnabled = isDateTakenSortEnabled
         self.tracker = tracker
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         $sortsByDateTaken.useCase = preferenceUseCase
+        $sortsOldestFirst.useCase = preferenceUseCase
         // Read synchronously so the very first load already queries in the stored order,
-        // instead of loading in the default order and reloading once the monitor emits.
-        sortOrder = timelineSortOrder(from: sortOrderPreferenceUseCase.sortOrder(for: .cameraUploadExplorerFeed))
+        // instead of loading in the default order and reloading. On the first launch after the
+        // split the timeline has no order of its own yet, so it inherits — once — the direction it
+        // used to keep in the app-wide sort preference, and never reads that preference again.
+        let oldestFirst = sortsOldestFirst
+            ?? (sortOrderPreferenceUseCase.sortOrder(for: .cameraUploadExplorerFeed) == .modificationAsc)
+        sortsOldestFirst = oldestFirst
+        sortOrder = oldestFirst ? .modificationAsc : .modificationDesc
     }
     
     func onViewDisappear() {
@@ -367,10 +375,13 @@ final class NewTimelineViewModel: ObservableObject {
         cameraUploadsSettingsViewRouter.start()
     }
     
+    /// The menu offers only the two modification-time directions, so anything else normalises to
+    /// newest first — matching what the sort menu displays.
     func updateSortOrder(_ newSortOrder: SortOrderEntity) {
-        guard sortOrder != newSortOrder else { return }
-        sortOrderPreferenceUseCase.save(sortOrder: newSortOrder, for: .cameraUploadExplorerFeed)
-        applySortOrder(newSortOrder)
+        let direction: SortOrderEntity = newSortOrder == .modificationAsc ? .modificationAsc : .modificationDesc
+        guard sortOrder != direction else { return }
+        sortsOldestFirst = direction == .modificationAsc
+        applySortOrder(direction)
     }
 
     func updateMediaTimelineSortOrder(_ newSortOrder: MediaTimelineSortOrderEntity) {
@@ -404,32 +415,8 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
     
-    /// Keeps the timeline in step with the stored sort preference: emits the saved order on
-    /// subscription and again whenever it changes elsewhere — which happens when the user's sorting
-    /// basis is "same for all" and another screen changes the sort. The View owns this task, so it is
-    /// cancelled on disappear.
-    func monitorSortOrder() async {
-        let sortOrders = sortOrderPreferenceUseCase
-            .monitorSortOrder(for: .cameraUploadExplorerFeed)
-            .values
-
-        for await sortOrder in sortOrders {
-            guard applySortOrder(timelineSortOrder(from: sortOrder)) else { continue }
-            preferenceDrivenSortOrderSubject.send()
-        }
-    }
-
-    /// The stored preference can hold an order the timeline menu doesn't offer (its `.defaultAsc`
-    /// fallback, or a "same for all" order set by another screen) — anything but oldest shows as
-    /// newest, matching what the sort menu displays.
-    private func timelineSortOrder(from sortOrder: SortOrderEntity) -> SortOrderEntity {
-        sortOrder == .modificationAsc ? .modificationAsc : .modificationDesc
-    }
-
-    /// Applies `newSortOrder` to the grid, returning whether it actually moved.
-    @discardableResult
-    private func applySortOrder(_ newSortOrder: SortOrderEntity) -> Bool {
-        guard sortOrder != newSortOrder else { return false }
+    /// Applies `newSortOrder` to the grid.
+    private func applySortOrder(_ newSortOrder: SortOrderEntity) {
         sortOrder = newSortOrder
 
         // The skeleton is built from date sections fetched in the requested order;
@@ -437,7 +424,7 @@ final class NewTimelineViewModel: ObservableObject {
         // trigger a reload instead (the eager path can re-sort its real nodes in place).
         guard mediaTimelineUseCase == nil else {
             loadPhotosTaskId = UUID()
-            return true
+            return
         }
 
         let photos = photoLibraryContentViewModel.library.allPhotos
@@ -450,7 +437,6 @@ final class NewTimelineViewModel: ObservableObject {
 
             commitLibrary(updatedPhotoLibrary)
         }
-        return true
     }
     
     func updatePhotoFilter(option: PhotosFilterOptionsEntity) async {

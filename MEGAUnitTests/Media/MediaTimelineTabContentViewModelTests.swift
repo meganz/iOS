@@ -37,27 +37,6 @@ struct MediaTimelineTabContentViewModelTests {
             }
         }
         
-        @MainActor
-        @Test("A sort order applied from the stored preference asks for a navigation bar update, so the sort menu checkmark follows")
-        func navigationBarUpdateOnMonitoredSortOrderChange() async throws {
-            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
-            let timelineViewModel = makeTimelineViewModel(
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
-            let sut = makeSUT(timelineViewModel: timelineViewModel)
-            sortOrderPreferenceUseCase.save(sortOrder: .modificationAsc, for: .homeVideos)
-
-            try await confirmation { confirmation in
-                let subscription = try #require(sut.navigationBarUpdatePublisher)
-                    .sink { confirmation() }
-
-                await timelineViewModel.monitorSortOrder()
-
-                subscription.cancel()
-            }
-
-            #expect(timelineViewModel.sortOrder == .modificationAsc)
-        }
-
         @Test
         @MainActor
         func activeEditMode() {
