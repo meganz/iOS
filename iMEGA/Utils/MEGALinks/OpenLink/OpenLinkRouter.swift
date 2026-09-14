@@ -10,6 +10,7 @@ final class OpenLinkRouter: Routing {
     private static let supportedLinkTypes: Set<URLType> = [
         .fileLink,
         .folderLink,
+        .encryptedLink,
         .collection,
         .contactLink,
         .publicChatLink
