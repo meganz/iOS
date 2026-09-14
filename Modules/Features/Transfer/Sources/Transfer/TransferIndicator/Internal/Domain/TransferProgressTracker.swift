@@ -14,18 +14,28 @@ struct TransferStatusSnapshot: Sendable, Equatable {
     let speedBytesPerSecond: Int64
 }
 
+/// Aggregates the current transfer batch into the snapshot that drives the in-app
+/// indicator and the Live Activity.
+///
+/// Progress is derived, never accumulated — the same arithmetic a Transfer Manager row
+/// does, summed over the batch: `sum(min(transferredBytes, totalBytes)) / sum(totalBytes)`.
+/// The in-flight half is read from the entities on every snapshot so it follows the SDK
+/// back down; only terminal transfers are reduced to running totals. The previous counter
+/// used `completedBytes += max(delta, 0)`, which discarded those rewinds and drifted ahead.
 actor TransferProgressTracker {
     private var activeTransfers: [Int: TransferEntity] = [:]
+    /// Tags that already reached a terminal state, so a late update cannot resurrect one.
     private var finishedTags: Set<Int> = []
-    private var completedBytes: Int = 0
-    private var totalBytes: Int = 0
+    /// What terminal transfers contribute, frozen at the moment they finished
+    private var finishedBytes: Int = 0
+    private var finishedTotalBytes: Int = 0
+    private var finishedFileCount: Int = 0
+    private var completedFileCount: Int = 0
     private var hasError = false
     private var hasOverquota = false
     private var hasCompleted = false
     private var hadTransfers = false
     private var isInitialized = false
-    private var completedFileCount: Int = 0
-    private var totalFileCount: Int = 0
 
     /// Seeds the tracker once from the current transfer inventory so monitoring starts
     /// from the same baseline as existing in-flight transfer work.
@@ -35,15 +45,10 @@ actor TransferProgressTracker {
         let filtered = transfers
             .filter { !$0.isFinished && !$0.isStreamingTransfer && !$0.isFolderTransfer }
         activeTransfers = Dictionary(uniqueKeysWithValues: filtered.map { ($0.tag, $0) })
-        totalBytes = filtered.reduce(0) { $0 + max($1.totalBytes, 0) }
-        completedBytes = filtered.reduce(0) { partialResult, transfer in
-            partialResult + min(max(transfer.transferredBytes, 0), max(transfer.totalBytes, 0))
-        }
         hadTransfers = !filtered.isEmpty
-        totalFileCount = filtered.count
     }
 
-    /// Clears the terminal outcome and cumulative byte counters for the current batch.
+    /// Clears the terminal outcome and drops the batch's transfers.
     ///
     /// This is called only after the terminal state has been consumed, so the next batch
     /// can start from a clean baseline without old completed/error state leaking through.
@@ -52,11 +57,11 @@ actor TransferProgressTracker {
         hasOverquota = false
         hasCompleted = false
         finishedTags.removeAll()
-        completedBytes = 0
-        totalBytes = 0
-        hadTransfers = false
+        finishedBytes = 0
+        finishedTotalBytes = 0
+        finishedFileCount = 0
         completedFileCount = 0
-        totalFileCount = 0
+        hadTransfers = false
     }
 
     /// Records that a transfer has started as part of the current batch.
@@ -83,30 +88,30 @@ actor TransferProgressTracker {
 
     /// Records the terminal outcome of a finished transfer so the batch can later
     /// resolve to completed, warning, or error once no active transfers remain.
+    ///
+    /// This is where a transfer stops being read live and becomes a frozen contribution.
+    /// It must run at most once per tag: unlike the in-flight side, these are running
+    /// sums, so a repeated finish event would bank the same bytes twice.
     func trackFinish(_ transfer: TransferEntity) {
+        guard !finishedTags.contains(transfer.tag) else { return }
         finishedTags.insert(transfer.tag)
+        activeTransfers.removeValue(forKey: transfer.tag)
 
-        if let existingTransfer = activeTransfers[transfer.tag] {
-            completedBytes += max(progressContribution(for: transfer) - progressContribution(for: existingTransfer), 0)
-        } else {
-            completedBytes += progressContribution(for: transfer)
-        }
-
-        if transfer.state == .complete {
+        switch transfer.state {
+        case .cancelled:
+            break
+        case .failed:
+            finishedFileCount += 1
+        case .complete:
             hasCompleted = true
+            finishedFileCount += 1
             completedFileCount += 1
-            return
-        }
-
-        if transfer.state == .cancelled || transfer.state == .failed {
-            completedBytes = max(0, completedBytes - progressContribution(for: transfer))
-            totalBytes = max(0, totalBytes - max(transfer.totalBytes, 0))
-            // Cancellation reflects user intent ("don't count this"), so it's removed
-            // from the total. Failure stays in the total so the visible gap is explained
-            // by the error status icon ("0 of 1" reads as "the 1 thing I tried, failed").
-            if transfer.state == .cancelled {
-                totalFileCount = max(0, totalFileCount - 1)
-            }
+            finishedBytes += progressContribution(for: transfer)
+            finishedTotalBytes += max(transfer.totalBytes, 0)
+        default:
+            finishedFileCount += 1
+            finishedBytes += progressContribution(for: transfer)
+            finishedTotalBytes += max(transfer.totalBytes, 0)
         }
 
         guard transfer.state == .failed, let lastErrorExtended = transfer.lastErrorExtended else {
@@ -123,21 +128,16 @@ actor TransferProgressTracker {
         }
     }
 
-    /// Inserts or updates an active transfer inside the current batch and keeps the
-    /// cumulative progress counters aligned with the latest transferred bytes.
+    /// Inserts or updates an active transfer inside the current batch.
+    ///
+    /// Storing the latest entity is the whole job — the totals are read back from it at
+    /// snapshot time, so a transfer whose reported bytes went down drags the batch down
+    /// with it, exactly like its Transfer Manager row does.
     func upsert(_ transfer: TransferEntity) {
         guard !transfer.isFinished, !transfer.isStreamingTransfer, !transfer.isFolderTransfer,
               !finishedTags.contains(transfer.tag) else {
-            activeTransfers.removeValue(forKey: transfer.tag)
+            remove(tag: transfer.tag)
             return
-        }
-
-        if let existingTransfer = activeTransfers[transfer.tag] {
-            completedBytes += max(progressContribution(for: transfer) - progressContribution(for: existingTransfer), 0)
-        } else {
-            totalBytes += max(transfer.totalBytes, 0)
-            completedBytes += progressContribution(for: transfer)
-            totalFileCount += 1
         }
 
         activeTransfers[transfer.tag] = transfer
@@ -223,13 +223,19 @@ actor TransferProgressTracker {
         )
     }
 
-    /// Calculates cumulative batch progress using total bytes and completed bytes
-    /// across the whole batch, matching the legacy transfer circular widget.
+    private var totalFileCount: Int {
+        activeTransfers.count + finishedFileCount
+    }
+
+    /// The same arithmetic a Transfer Manager row does, summed over the batch:
+    /// `Σ min(transferredBytes, totalBytes) / Σ totalBytes`
     private func calculateProgress() -> CGFloat {
+        let active = activeTransfers.values
+        let totalBytes = finishedTotalBytes + active.reduce(0) { $0 + max($1.totalBytes, 0) }
         guard totalBytes > 0 else { return 0 }
 
-        let progress = CGFloat(completedBytes) / CGFloat(totalBytes)
-        return min(max(progress, 0), 1)
+        let transferredBytes = finishedBytes + active.reduce(0) { $0 + progressContribution(for: $1) }
+        return min(max(CGFloat(transferredBytes) / CGFloat(totalBytes), 0), 1)
     }
 
     private func progressContribution(for transfer: TransferEntity) -> Int {
