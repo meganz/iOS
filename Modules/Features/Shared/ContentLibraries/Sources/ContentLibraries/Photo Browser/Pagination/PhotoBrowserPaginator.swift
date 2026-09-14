@@ -139,7 +139,9 @@ public final class PhotoBrowserPaginator {
     }
 
     private func install(_ context: PhotoBrowserPaginationContext) {
-        nodes = Self.deduplicated(context.nodes)
+        // Already unique by handle: the handover guarantees it, so that the entry point's data
+        // provider and this sequence are the same list and their indices mean the same thing.
+        nodes = context.nodes
         loadedHandles = Set(nodes.map(\.handle))
         globalStartIndex = max(0, context.globalStartIndex)
         totalCount = max(context.totalCount, globalStartIndex + nodes.count)
@@ -382,10 +384,5 @@ public final class PhotoBrowserPaginator {
         guard !updated.isEmpty else { return }
         let byHandle = Dictionary(updated.map { ($0.handle, $0) }, uniquingKeysWith: { _, latest in latest })
         nodes = nodes.map { byHandle[$0.handle] ?? $0 }
-    }
-
-    private static func deduplicated(_ nodes: [NodeEntity]) -> [NodeEntity] {
-        var seen: Set<HandleEntity> = []
-        return nodes.filter { seen.insert($0.handle).inserted }
     }
 }

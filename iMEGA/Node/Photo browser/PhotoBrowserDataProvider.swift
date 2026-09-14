@@ -19,6 +19,7 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     @Atomic private var megaNodes: [MEGANode]?
     @Atomic private var nodeEntities: [NodeEntity]?
     @Atomic @objc var currentIndex: Int = 0
+    @Atomic private var areHandlesUnique: Bool?
 
     private let sdk: MEGASdk
     private let nodeProvider: any MEGANodeProviderProtocol
@@ -68,6 +69,57 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
         return await nodeProvider.node(for: nodeEntity.handle)
     }
     
+    /// Identity of the photo at `index`, or `.invalid` when the index is out of range.
+    ///
+    /// Views, zoom scales and in-flight loads are keyed on this rather than on the index: pages
+    /// prepended above the loaded range shift every index, and a deletion shifts everything after
+    /// it, so an index identifies a slot but not a photo.
+    func handle(at index: Int) -> HandleEntity {
+        if let nodes = megaNodes {
+            return nodes[safe: index]?.handle ?? .invalid
+        }
+        return nodeEntities?[safe: index]?.handle ?? .invalid
+    }
+
+    /// Key for the view and zoom caches, or `nil` when the slot at `index` is empty.
+    ///
+    /// Normally the node's handle, so a page view and a zoom scale follow the photo rather than the
+    /// slot: a page prepended above the loaded range shifts every index, and so does a deletion.
+    ///
+    /// Handles are only unique when the list is, though, and one list is not: chat attachments are
+    /// built one per message, so attaching or forwarding the same node twice puts it in twice. There
+    /// the index is the only thing that tells the two apart, and it is safe to use — that list is
+    /// handed over whole, so nothing ever shifts it.
+    @objc func cacheKey(at index: Int) -> NSNumber? {
+        guard handlesAreUnique else {
+            return (0..<count).contains(index) ? NSNumber(value: index) : nil
+        }
+        let handle = handle(at: index)
+        return handle == .invalid ? nil : NSNumber(value: handle)
+    }
+
+    /// Worked out once: the list only ever shrinks or gains de-duplicated pages after this, so a
+    /// list without repeats cannot grow any.
+    private var handlesAreUnique: Bool {
+        if let areHandlesUnique { return areHandlesUnique }
+        let handles = megaNodes?.map(\.handle) ?? nodeEntities?.map(\.handle) ?? []
+        let unique = Set(handles).count == handles.count
+        $areHandlesUnique.mutate { $0 = unique }
+        return unique
+    }
+
+    @objc var currentCacheKey: NSNumber? {
+        cacheKey(at: $currentIndex.wrappedValue)
+    }
+
+    func photoNode(forHandle handle: HandleEntity) async -> MEGANode? {
+        if let nodes = megaNodes {
+            return nodes.first { $0.handle == handle }
+        }
+        guard nodeEntities?.contains(where: { $0.handle == handle }) == true else { return nil }
+        return await nodeProvider.node(for: handle)
+    }
+
     @objc var count: Int {
         if let nodes = megaNodes {
             return nodes.count
@@ -180,6 +232,39 @@ extension PhotoBrowserDataProvider {
         }
     }
     
+    /// Appends a page fetched beyond the end of the loaded range.
+    ///
+    /// - Returns: how many nodes were actually added. Only the entity-backed providers paginate —
+    ///   the `MEGANode` initialisers serve entry points that are handed their whole list up front.
+    @discardableResult
+    func appendPhotos(_ nodes: [NodeEntity]) -> Int {
+        let added = newPhotos(from: nodes)
+        guard !added.isEmpty else { return 0 }
+        $nodeEntities.mutate { $0?.append(contentsOf: added) }
+        return added.count
+    }
+
+    /// Inserts a page fetched before the start of the loaded range, moving the current photo along
+    /// with it so the user keeps looking at the same thing.
+    ///
+    /// - Returns: how many nodes were actually inserted — the caller needs it to shift the pages
+    ///   already laid out in the scroll view by the same amount.
+    @discardableResult
+    func prependPhotos(_ nodes: [NodeEntity]) -> Int {
+        let added = newPhotos(from: nodes)
+        guard !added.isEmpty else { return 0 }
+        $nodeEntities.mutate { $0?.insert(contentsOf: added, at: 0) }
+        $currentIndex.mutate { $0 += added.count }
+        return added.count
+    }
+
+    private func newPhotos(from nodes: [NodeEntity]) -> [NodeEntity] {
+        guard megaNodes == nil, nodeEntities != nil else { return [] }
+        let loaded = Set(nodeEntities?.map(\.handle) ?? [])
+        var seen: Set<HandleEntity> = []
+        return nodes.filter { !loaded.contains($0.handle) && seen.insert($0.handle).inserted }
+    }
+
     private func removePhotosForNodeEntities(by nodeList: [NodeEntity]) {
         let photosSet = Set(nodeEntities ?? [])
         let updatedSet = Set(nodeList.removedChangeTypeNodes())

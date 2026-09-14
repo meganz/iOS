@@ -505,11 +505,14 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
 extension MEGAPhotoBrowserViewController {
     
     @objc func loadNode(for index: Int) {
+        // Both the photo and its cache key are resolved now, synchronously. Resolving by index after
+        // the await would pick up whatever has moved into that slot meanwhile — a prepended page
+        // shifts every index — and the image would land on the wrong page.
+        let handle = dataProvider.handle(at: index)
+        guard handle != .invalid, let cacheKey = dataProvider.cacheKey(at: index) else { return }
         Task {
-            guard let node = await dataProvider.photoNode(at: index) else {
-                return
-            }
-            configureNode(intoImage: node, nodeIndex: UInt(index))
+            guard let node = await dataProvider.photoNode(forHandle: handle) else { return }
+            configureNode(intoImage: node, cacheKey: cacheKey)
         }
     }
 }
@@ -572,10 +575,14 @@ extension MEGAPhotoBrowserViewController {
             }
             subtitle = self.subtitle(fromDate: creationTime)
         default:
-            let formattedText = Strings.Localizable.Media.Photo.Browser.indexOfTotalFiles(dataProvider.count)
+            // A paginated browser holds only part of the sequence, so neither number can come from
+            // the loaded array; `nil` means this entry point holds all of it, as today.
+            let position = viewModel.titlePosition(forIndex: dataProvider.currentIndex)
+                ?? (index: dataProvider.currentIndex + 1, total: dataProvider.count)
+            let formattedText = Strings.Localizable.Media.Photo.Browser.indexOfTotalFiles(position.total)
             subtitle = formattedText.replacingOccurrences(
                 of: "[A]",
-                with: String(format: "%lu", dataProvider.currentIndex + 1))
+                with: String(format: "%lu", position.index))
         }
 
         let isLiquidGlassSupported = if #available(iOS 26.0, *) {
@@ -803,6 +810,11 @@ extension MEGAPhotoBrowserViewController {
         case .fileLink:
             self.leftToolbarItem?.image = MEGAAssets.UIImage.folderArrow
             self.centerToolbarItem?.image = MEGAAssets.UIImage.photosApp
+        case .photosTimeline:
+            // The picker hands its own index straight back as a browser index, so it cannot work
+            // against a paginated range, and Android has dropped the entry altogether. Hidden for
+            // the whole timeline rather than only the paginated one, so there is one behaviour.
+            hideBarButton(barButtonItem: leftToolbarItem)
         default:
             self.leftToolbarItem?.image = MEGAAssets.UIImage.thumbnailsThin
         }
@@ -823,7 +835,10 @@ extension MEGAPhotoBrowserViewController {
             return nil
         }
         if displayMode == .chatAttachment {
-            return PhotoBrowserDataProvider(currentPhoto: mediaNodes[currentIndex], allPhotos: mediaNodes, sdk: sdk)
+            // By index, not by node: chat builds its list one entry per message, so the same node
+            // can appear twice, and `MEGANode.isEqual:` matches on handle — looking the node up
+            // would land on the first of the two and open the wrong message's attachment.
+            return PhotoBrowserDataProvider(currentIndex: currentIndex, allPhotos: mediaNodes, sdk: sdk)
         } else {
             return PhotoBrowserDataProvider(currentPhoto: mediaNodes[currentIndex].toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
         }
@@ -858,6 +873,18 @@ extension MEGAPhotoBrowserViewController {
     @objc func onViewWillDisappear() {
         viewModel.dispatch(.onViewWillDisappear)
     }
+
+    @objc func didMoveToIndex(_ index: Int) {
+        viewModel.dispatch(.didMoveToIndex(index))
+    }
+
+    @objc func didBeginScrolling() {
+        viewModel.dispatch(.didBeginScrolling)
+    }
+
+    @objc func didSettleScrolling() {
+        viewModel.dispatch(.didSettleScrolling)
+    }
 }
 
 // MARK: - Handle commands
@@ -876,6 +903,20 @@ extension MEGAPhotoBrowserViewController: ViewType {
                     reloadUI()
                 }
             }
+        case .photosAppended(let nodes):
+            let added = dataProvider.appendPhotos(nodes)
+            didAppendPhotos(UInt(added))
+            Task { await reloadTitle() }
+        case .photosPrepended(let nodes):
+            // Order matters: the provider grows and moves its current index first, then the scroll
+            // view is shifted to match it. The view model holds pages back until the scroll view has
+            // settled, so this never runs mid-deceleration.
+            let inserted = dataProvider.prependPhotos(nodes)
+            guard inserted > 0 else { return }
+            didPrependPhotos(UInt(inserted))
+            Task { await reloadTitle() }
+        case .titleNeedsRefresh:
+            Task { await reloadTitle() }
         }
     }
 }

@@ -74,6 +74,7 @@
 		0E42E3352EEF4E0200C3E524 /* MediaTabSharedResourceProvider+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E42E3342EEF4DFB00C3E524 /* MediaTabSharedResourceProvider+Additions.swift */; };
 		0E43E1372B2F8D150079700A /* PhotoBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E1362B2F8D150079700A /* PhotoBrowserViewModel.swift */; };
 		0E43E13D2B2F958E0079700A /* PhotoBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E13C2B2F958E0079700A /* PhotoBrowserViewModelTests.swift */; };
+		CFEAF23C1E4055B94C2CFCFE /* PhotoBrowserViewModelPaginationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A747DC1C88AA2FE9C784F2 /* PhotoBrowserViewModelPaginationTests.swift */; };
 		0E43E1422B2F9CF00079700A /* AVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E1412B2F9CF00079700A /* AVViewModel.swift */; };
 		0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E1452B2F9F860079700A /* AVViewModelTests.swift */; };
 		0E4467112D77B6D200691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */; };
@@ -2930,6 +2931,7 @@
 		0E42E3342EEF4DFB00C3E524 /* MediaTabSharedResourceProvider+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaTabSharedResourceProvider+Additions.swift"; sourceTree = "<group>"; };
 		0E43E1362B2F8D150079700A /* PhotoBrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserViewModel.swift; sourceTree = "<group>"; };
 		0E43E13C2B2F958E0079700A /* PhotoBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserViewModelTests.swift; sourceTree = "<group>"; };
+		D2A747DC1C88AA2FE9C784F2 /* PhotoBrowserViewModelPaginationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserViewModelPaginationTests.swift; sourceTree = "<group>"; };
 		0E43E1412B2F9CF00079700A /* AVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVViewModel.swift; sourceTree = "<group>"; };
 		0E43E1452B2F9F860079700A /* AVViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVViewModelTests.swift; sourceTree = "<group>"; };
 		0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaNodeActionViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -5998,6 +6000,7 @@
 			isa = PBXGroup;
 			children = (
 				0E03CDF52E6E7031004E73F9 /* PhotoBrowserPickerCollectionViewCellViewModelTests.swift */,
+				D2A747DC1C88AA2FE9C784F2 /* PhotoBrowserViewModelPaginationTests.swift */,
 				0E43E13C2B2F958E0079700A /* PhotoBrowserViewModelTests.swift */,
 			);
 			path = PhotoBrowser;
@@ -17088,6 +17091,7 @@
 				160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */,
 				B6A6E1A3287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift in Sources */,
 				0E03CDF62E6E7031004E73F9 /* PhotoBrowserPickerCollectionViewCellViewModelTests.swift in Sources */,
+				CFEAF23C1E4055B94C2CFCFE /* PhotoBrowserViewModelPaginationTests.swift in Sources */,
 				0E43E13D2B2F958E0079700A /* PhotoBrowserViewModelTests.swift in Sources */,
 				258BA6302CCA363000349CD2 /* PhotoLibraryContentViewRouterTests.swift in Sources */,
 				6D98B0992C6318A600CF1558 /* PhotosBrowserViewModelTests.swift in Sources */,

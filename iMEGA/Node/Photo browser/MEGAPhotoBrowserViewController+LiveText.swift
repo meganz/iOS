@@ -1,3 +1,4 @@
+import MEGADomain
 import VisionKit
 
 extension MEGAPhotoBrowserViewController {
@@ -10,7 +11,8 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func currentImageView(from imageViewCache: NSCache<NSNumber, UIScrollView>) -> UIImageView? {
-        let zoomableView = imageViewCache.object(forKey: dataProvider.currentIndex as NSNumber)
+        guard let cacheKey = dataProvider.currentCacheKey else { return nil }
+        let zoomableView = imageViewCache.object(forKey: cacheKey)
         return zoomableView?.subviews.first as? UIImageView
     }
     
@@ -39,8 +41,8 @@ extension MEGAPhotoBrowserViewController {
         imageView.setImageLiveTextSupplementaryInterfaceContentInsets(contentInset)
     }
     
-    @objc func startLiveTextAnalysis(for imageView: UIImageView, in index: Int) {
-        guard index == dataProvider.currentIndex else { return }
+    @objc func startLiveTextAnalysis(for imageView: UIImageView, cacheKey: NSNumber) {
+        guard cacheKey == dataProvider.currentCacheKey else { return }
         imageView.startImageLiveTextAnalysisIfNeeded()
     }
 }

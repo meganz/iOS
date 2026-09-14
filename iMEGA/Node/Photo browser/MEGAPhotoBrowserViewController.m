@@ -29,6 +29,7 @@
 @import MEGAAppSDKRepo;
 
 static const CGFloat GapBetweenPages = 10.0;
+static const CGFloat HiddenPickerSlotWidth = 44.0;
 static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
 static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Don't request the preview and download the original if the photo is smaller than 1 MB
 
@@ -115,9 +116,22 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.rightToolbarItem.accessibilityIdentifier = @"rightToolbarItem";
 
     switch (self.displayMode) {
+        case DisplayModePhotosTimeline:
+            {
+                // The picker is gone from the timeline, but its slot is not: the toolbar is laid out
+                // as [picker, flexible, slideshow, flexible, export], so dropping the item outright
+                // lets the two flexible spaces bunch the remaining buttons against the right edge.
+                // A fixed space of the same footprint keeps the layout it was drawn for.
+                UIBarButtonItem *pickerPlaceholder = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+                pickerPlaceholder.width = HiddenPickerSlotWidth;
+                UIBarButtonItem *leadingSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+                UIBarButtonItem *trailingSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+                [self.toolbar setItems:@[pickerPlaceholder, leadingSpace, self.centerToolbarItem, trailingSpace, self.rightToolbarItem]];
+                [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
+            }
+            break;
         case DisplayModeCloudDrive:
         case DisplayModeSharedItem:
-        case DisplayModePhotosTimeline:
         case DisplayModePhotosAlbum:
         case DisplayModeRecents:
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
@@ -163,6 +177,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewWillAppear:animated];
     [self configureBarButtonImages];
     [self onViewWillAppear];
+    [self didMoveToIndex:self.dataProvider.currentIndex];
     [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     if (self.displayMode != DisplayModeTransfers) {
         [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
@@ -289,11 +304,71 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
     self.scrollView.contentOffset = CGPointMake(self.dataProvider.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
     [self reloadTitleWithCompletionHandler:^{}];
+    // Opening close to either end of the handed-over range should start filling it straight away,
+    // rather than waiting for the user to swipe into the gap.
+    [self didMoveToIndex:self.dataProvider.currentIndex];
+}
+
+/// The zoomable page showing the current photo, or nil if it is not loaded.
+///
+/// Both caches are keyed by node handle (``-[PhotoBrowserDataProvider cacheKeyAt:]``): a page
+/// prepended above the loaded range shifts every index, and so does a deletion, so an index names
+/// a slot rather than a photo. Keying on identity means neither cache is rebuilt when the range
+/// grows or shrinks, and a zoom scale stays with the photo it was pinched on.
+- (UIScrollView *)currentZoomableView {
+    NSNumber *key = self.dataProvider.currentCacheKey;
+    return key == nil ? nil : [self.imageViewsCache objectForKey:key];
+}
+
+/// Makes room for a page appended after the loaded range.
+///
+/// Only the content size grows and no laid-out page moves, so this is safe at any time — mid-drag
+/// and mid-deceleration included.
+- (void)didAppendPhotos:(NSUInteger)count {
+    if (count == 0) {
+        return;
+    }
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.dataProvider.count, self.scrollView.frame.size.height);
+    // The page next to the current one has just become reachable and has no view yet. Waiting for
+    // `scrollViewDidScroll:` to cross into it would leave the newly exposed strip blank for most of
+    // a swipe. Views already cached are kept — this only fills the gap.
+    [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
+}
+
+/// Makes room for a page inserted before the loaded range.
+///
+/// Every page is laid out at an absolute x of `width * index`, so inserting `count` pages at the
+/// front moves all of them right by that much. The content offset has to move with them in the same
+/// non-animated transaction, or the scroll view is left pointing at a different photo. The pages
+/// themselves are untouched, so the current one keeps its image, its zoom scale and its gestures.
+///
+/// The caller is responsible for having grown the data provider and moved its current index first:
+/// changing the content offset re-enters `scrollViewDidScroll:`, which reads both.
+- (void)didPrependPhotos:(NSUInteger)count {
+    if (count == 0) {
+        return;
+    }
+    CGFloat shift = self.scrollView.frame.size.width * count;
+    [UIView performWithoutAnimation:^{
+        for (UIView *page in self.scrollView.subviews) {
+            // Tag 2 is a page; the scroll view's own indicator subviews are left alone.
+            if (page.tag != 2) {
+                continue;
+            }
+            CGRect frame = page.frame;
+            frame.origin.x += shift;
+            page.frame = frame;
+        }
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.dataProvider.count, self.scrollView.frame.size.height);
+        self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x + shift, self.scrollView.contentOffset.y);
+    }];
+    [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
 }
 
 - (void)resetZooms {
     for (NSUInteger i = 0; i < self.dataProvider.count; i++) {
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
+        NSNumber *key = [self.dataProvider cacheKeyAt:i];
+        UIScrollView *zoomableView = key == nil ? nil : [self.imageViewsCache objectForKey:key];
         if (zoomableView && zoomableView.zoomScale != 1.0f) {
             zoomableView.zoomScale = 1.0f;
             [self resizeImageView:(UIImageView *)zoomableView.subviews.firstObject];
@@ -313,7 +388,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
-                UIScrollView *zoomableView = [strongSelf.imageViewsCache objectForKey:@(strongSelf.dataProvider.currentIndex)];
+                UIScrollView *zoomableView = [strongSelf currentZoomableView];
                 if (zoomableView) {
                     zoomableView.subviews.lastObject.hidden = transparent;
                 }
@@ -439,6 +514,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self configLiveTextInterfaceFrom:self.imageViewsCache];
+    if (scrollView.tag == 1) {
+        [self didBeginScrolling];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView.tag == 1 && !decelerate) {
+        [self didSettleScrolling];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -454,6 +538,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         [self configLiveTextLayout];
         
         [self startLiveTextAnalysisFrom:self.imageViewsCache];
+        [self didSettleScrolling];
+        [self didMoveToIndex:self.dataProvider.currentIndex];
     }
 }
 
@@ -466,6 +552,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         NSUInteger newIndex = floor(scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if ([self.dataProvider shouldUpdateCurrentIndexToIndex:newIndex]) {
             [self loadNearbyImagesFromIndex:newIndex];
+            [self didMoveToIndex:newIndex];
         }
     }
 }
@@ -498,7 +585,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return;
     }
     
-    [_imageViewsZoomCache setObject: @(scale) forKey:@(self.dataProvider.currentIndex)];
+    NSNumber *zoomKey = self.dataProvider.currentCacheKey;
+    if (zoomKey != nil) {
+        [self.imageViewsZoomCache setObject:@(scale) forKey:zoomKey];
+    }
     
     [self resizeImageView:(UIImageView *)view];
     [self configLiveTextLayout];
@@ -507,9 +597,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 #pragma mark - Getting the images
 
--(void)configureNodeIntoImage:(MEGANode *) node nodeIndex:(NSUInteger) index {
+-(void)configureNodeIntoImage:(MEGANode *)node cacheKey:(NSNumber *)cacheKey {
     
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(index)];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:cacheKey];
     if(zoomableView == NULL) {
         return;
     }
@@ -534,12 +624,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
             
             [weakSelf resizeImageView:imageView];
-            [weakSelf startLiveTextAnalysisFor:imageView in:index];
+            [weakSelf startLiveTextAnalysisFor:imageView cacheKey:cacheKey];
         }];
     } else {
         BOOL loadOriginalWithMobileData = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
         if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData) && isImageNode && node.size.longLongValue < MaxSizeToDownloadOriginal) {
-            [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
+            [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModeOriginal];
         }
         if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
             imageView.image = [UIImage imageWithContentsOfFile:previewPath];
@@ -547,30 +637,30 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         } else if (node.hasPreview) {
             if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData)) {
                 if (node.size.longLongValue > MinSizeToRequestThePreview) {
-                    [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModePreview];
+                    [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModePreview];
                 }
             } else {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModePreview];
+                [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModePreview];
             }
         } else {
             NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
                 imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
                 [self resizeImageView:imageView];
-                [self startLiveTextAnalysisFor:imageView in:index];
+                [self startLiveTextAnalysisFor:imageView cacheKey:cacheKey];
             } else if (node.hasThumbnail && !isImageNode) {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeThumbnail];
+                [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModeThumbnail];
             }
             if (isImageNode && ![node.name.pathExtension isEqualToString:@"gif"]) {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModeOriginal];
             }
         }
         if ([node.name.pathExtension isEqualToString:@"gif"]) {
-            [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
+            [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModeOriginal];
         }
     }
     
-    NSNumber* cachedZoomValue = [_imageViewsZoomCache objectForKey:@(index)];
+    NSNumber* cachedZoomValue = [self.imageViewsZoomCache objectForKey:cacheKey];
     [zoomableView setZoomScale: (cachedZoomValue != nil ? [cachedZoomValue floatValue] : 1.0f)];
     if (imageView.image != nil) {
         zoomableView.maximumZoomScale = [self maximumZoomScaleForNode:node];
@@ -607,7 +697,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         NSUInteger initialIndex = index == 0 ? 0 : index-1;
         NSUInteger finalIndex = index >= self.dataProvider.count - 1 ? self.dataProvider.count - 1 : index + 1;
         for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
-            if ([self.imageViewsCache objectForKey:@(i)]) {
+            NSNumber *key = [self.dataProvider cacheKeyAt:i];
+            if (key == nil || [self.imageViewsCache objectForKey:key]) {
                 continue;
             }
             
@@ -632,7 +723,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
             [self.scrollView addSubview:zoomableView];
             
-            [self.imageViewsCache setObject:zoomableView forKey:@(i)];
+            [self.imageViewsCache setObject:zoomableView forKey:key];
             
             [self loadNodeFor:i];
             
@@ -645,9 +736,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode addIndicators:(BOOL)shouldAddIndicators {
+- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView cacheKey:(NSNumber *)cacheKey withMode:(MEGAPhotoMode)mode addIndicators:(BOOL)shouldAddIndicators {
     [self removeActivityIndicatorsFromView:imageView];
     
+    // The blocks below hold the image view itself, so an image always lands on the view it was
+    // requested for. The cache key is what decides whether that view is still the one on screen:
+    // it is the page's identity, which an index alone is not once a prepend or a deletion shifts
+    // the range, and a handle alone is not in a list that can hold the same node twice.
     __weak typeof(self) weakSelf = self;
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
         [UIView transitionWithView:imageView
@@ -660,7 +755,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         } completion:nil];
         
         [weakSelf removeActivityIndicatorsFromView:imageView];
-        [weakSelf startLiveTextAnalysisFor:imageView in:index];
+        [weakSelf startLiveTextAnalysisFor:imageView cacheKey:cacheKey];
     };
     
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
@@ -680,18 +775,18 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 [weakSelf resizeImageView:imageView];
             }
 
-            if (weakSelf.dataProvider.currentIndex == index) {
+            if ([weakSelf.dataProvider.currentCacheKey isEqual:cacheKey]) {
                 weakSelf.pieChartView.alpha = 0.0f;
                 [weakSelf activateSlideShowButtonWithBarButtonItem:[weakSelf slideshowButton]];
             }
         } completion:nil];
         
         [weakSelf removeActivityIndicatorsFromView:imageView];
-        [weakSelf startLiveTextAnalysisFor:imageView in:index];
+        [weakSelf startLiveTextAnalysisFor:imageView cacheKey:cacheKey];
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        if (weakSelf.dataProvider.currentIndex == index) {
+        if ([weakSelf.dataProvider.currentCacheKey isEqual:cacheKey]) {
             weakSelf.transferProgress = (double)transfer.transferredBytes / (double)transfer.totalBytes;
             [weakSelf.pieChartView reloadData];
             [weakSelf hideBarButtonWithBarButtonItem:[weakSelf slideshowButton]];
@@ -712,7 +807,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
             } else if (isImageNode) {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal addIndicators:false];
+                [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModeOriginal addIndicators:false];
             }
             
             break;
@@ -725,7 +820,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 [self addActivityIndicatorToView:imageView];
                 [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             } else if (isImageNode) {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal addIndicators:false];
+                [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:MEGAPhotoModeOriginal addIndicators:false];
             }
             
             break;
@@ -744,8 +839,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode {
-    [self setupNode:node forImageView:imageView inIndex:index withMode:mode addIndicators:true];
+- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView cacheKey:(NSNumber *)cacheKey withMode:(MEGAPhotoMode)mode {
+    [self setupNode:node forImageView:imageView cacheKey:cacheKey withMode:mode addIndicators:true];
 }
 
 - (void)setMaximumZoomScaleOnScrollableImageView:(UIImageView *)imageView node:(MEGANode *)node {
@@ -829,7 +924,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
+    UIScrollView *zoomableView = [self currentZoomableView];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
     
@@ -911,7 +1006,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - Gesture recognizers
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
+    UIScrollView *zoomableView = [self currentZoomableView];
     if (zoomableView.zoomScale > 1.0f) {
         return;
     }
@@ -966,7 +1061,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
+    UIScrollView *zoomableView = [self currentZoomableView];
     UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
         CGFloat newScale;
@@ -976,7 +1071,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
         }
 
-        [_imageViewsZoomCache setObject: @(newScale) forKey:@(self.dataProvider.currentIndex)];
+        NSNumber *zoomKey = self.dataProvider.currentCacheKey;
+        if (zoomKey != nil) {
+            [self.imageViewsZoomCache setObject:@(newScale) forKey:zoomKey];
+        }
 
         [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
         [UIView animateWithDuration:0.3 animations:^{
@@ -1251,7 +1349,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
+    UIScrollView *zoomableView = [self currentZoomableView];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
     

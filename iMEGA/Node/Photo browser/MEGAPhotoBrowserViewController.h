@@ -46,7 +46,12 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *forwardToolbarItem;
 
 - (void)reloadUI;
-- (void)configureNodeIntoImage:(MEGANode *) node nodeIndex:(NSUInteger) index;
+/// Makes room for a page appended after the loaded range. Safe at any time.
+- (void)didAppendPhotos:(NSUInteger)count;
+/// Makes room for a page inserted before it, moving every laid-out page and the content offset with
+/// it. The data provider must already have grown and moved its current index.
+- (void)didPrependPhotos:(NSUInteger)count;
+- (void)configureNodeIntoImage:(MEGANode *)node cacheKey:(NSNumber *)cacheKey;
 - (BOOL)isPreviewingVersion;
 - (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender;
 - (void)shareFileLink;

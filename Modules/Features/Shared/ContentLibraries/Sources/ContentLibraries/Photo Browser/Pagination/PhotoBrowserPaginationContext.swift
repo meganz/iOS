@@ -10,6 +10,11 @@ public struct PhotoBrowserPaginationContext: Sendable, Equatable {
     /// The contiguous run of real nodes around the tapped one, in display order. Contiguous is a
     /// requirement, not a preference: the sequence grows only at its two ends, so a gap handed in
     /// here can never be filled.
+    ///
+    /// Unique by handle — repeats are dropped by `init`. Build the browser's data provider from
+    /// this array rather than from whatever was passed in: the paginator counts positions in it,
+    /// and a provider holding one node more would put the two index spaces out of step with
+    /// nothing in either to notice.
     public let nodes: [NodeEntity]
 
     /// Position of `nodes.first` in the source at open time. The browser maintains it locally
@@ -35,7 +40,8 @@ public struct PhotoBrowserPaginationContext: Sendable, Equatable {
         filter: MediaTimelineFilterEntity,
         sortOrder: MediaTimelineSortOrderEntity
     ) {
-        self.nodes = nodes
+        var seen: Set<HandleEntity> = []
+        self.nodes = nodes.filter { seen.insert($0.handle).inserted }
         self.globalStartIndex = globalStartIndex
         self.totalCount = totalCount
         self.filter = filter
