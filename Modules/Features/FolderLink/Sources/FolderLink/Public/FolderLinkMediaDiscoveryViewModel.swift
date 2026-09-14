@@ -182,6 +182,8 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
                 return switch action {
                 case .addToCloudDrive:
                     FolderLinkNodesAction.addToCloudDrive([dependency.handle])
+                case .downloadToFiles:
+                    FolderLinkNodesAction.downloadToFiles([dependency.handle])
                 case .makeAvailableOffline:
                     FolderLinkNodesAction.makeAvailableOffline([dependency.handle])
                 case .sendToChat:

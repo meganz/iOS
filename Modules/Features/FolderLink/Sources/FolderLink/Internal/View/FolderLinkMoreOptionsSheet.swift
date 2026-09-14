@@ -11,6 +11,7 @@ import SwiftUI
 enum FolderLinkMoreOption: Identifiable, Hashable {
     case select
     case saveToMEGA
+    case download
     case saveToPhotos
     case copyToOffline
     case shareLink
@@ -24,6 +25,8 @@ enum FolderLinkMoreOption: Identifiable, Hashable {
             Strings.Localizable.select
         case .saveToMEGA:
             Strings.Localizable.Link.Button.saveToMega
+        case .download:
+            Strings.Localizable.download
         case .saveToPhotos:
             Strings.Localizable.saveToPhotos
         case .copyToOffline:
@@ -35,14 +38,17 @@ enum FolderLinkMoreOption: Identifiable, Hashable {
         }
     }
 
-    /// Save to Photos lands the images and videos in the Photos library, not in the Offline section that
-    /// Copy to Offline fills, so it takes the Photos icon and leaves the cloud-download one to that row.
+    /// Save to Photos lands the images and videos in the Photos library and Download the folder on the
+    /// device itself, neither of which is the Offline section that Copy to Offline fills, so the
+    /// cloud-download icon is left to that row alone.
     var icon: Image {
         switch self {
         case .select:
             MEGAAssets.Image.checkCircle
         case .saveToMEGA:
             MEGAAssets.Image.uploadToCloud
+        case .download:
+            MEGAAssets.Image.downloadToDisk
         case .saveToPhotos:
             MEGAAssets.Image.photosApp
         case .copyToOffline:

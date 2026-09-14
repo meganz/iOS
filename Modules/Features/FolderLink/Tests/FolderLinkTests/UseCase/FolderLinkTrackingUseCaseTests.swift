@@ -75,11 +75,11 @@ struct FolderLinkTrackingUseCaseTests {
         )
     }
 
-    /// Send to chat is reported by the app layer, and Copy to Offline keeps its pre-revamp treatment of
-    /// not being tracked.
+    /// Send to chat is reported by the app layer, Copy to Offline keeps its pre-revamp treatment of not
+    /// being tracked, and Download has no more options event in mobile-analytics yet.
     @Test(
         "Sends nothing for the quick actions that carry no event",
-        arguments: [FolderLinkQuickAction.makeAvailableOffline, .sendToChat]
+        arguments: [FolderLinkQuickAction.makeAvailableOffline, .sendToChat, .downloadToFiles]
     )
     func trackQuickAction_untrackedAction_sendsNothing(action: FolderLinkQuickAction) {
         let sut = FolderLinkTrackingUseCase(tracker: tracker)

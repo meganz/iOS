@@ -236,6 +236,8 @@ package final class FolderLinkResultsViewModel: ObservableObject {
                 return switch action {
                 case .addToCloudDrive:
                     FolderLinkNodesAction.addToCloudDrive([dependency.nodeHandle])
+                case .downloadToFiles:
+                    FolderLinkNodesAction.downloadToFiles([dependency.nodeHandle])
                 case .makeAvailableOffline:
                     FolderLinkNodesAction.makeAvailableOffline([dependency.nodeHandle])
                 case .sendToChat:

@@ -8,6 +8,7 @@ import SwiftUI
 /// Check the ShareLinkButton usage in FolderLinkResultsView
 package enum FolderLinkQuickAction: Sendable {
     case addToCloudDrive
+    case downloadToFiles
     case makeAvailableOffline
     case sendToChat
 }
