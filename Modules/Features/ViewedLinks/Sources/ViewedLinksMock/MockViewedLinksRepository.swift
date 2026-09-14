@@ -12,6 +12,9 @@ package final class MockViewedLinksRepository: ViewedLinksRepositoryProtocol, @u
     package private(set) var removedLinks: [[ViewedLinkEntity]] = []
     package private(set) var removedUnavailableURLs: [URL] = []
     package private(set) var clearHistoryCallCount = 0
+    package private(set) var lastSortKey: ViewedLinksSortKey?
+    package private(set) var lastAscending: Bool?
+    package private(set) var lastTopLimit: Int?
 
     package init(
         viewedLinksResult: [ViewedLinkEntity] = [],
@@ -22,11 +25,14 @@ package final class MockViewedLinksRepository: ViewedLinksRepositoryProtocol, @u
     }
 
     package func viewedLinks(sortedBy sortKey: ViewedLinksSortKey, ascending: Bool) async throws(ViewedLinkErrorEntity) -> [ViewedLinkEntity] {
-        viewedLinksResult
+        lastSortKey = sortKey
+        lastAscending = ascending
+        return viewedLinksResult
     }
 
     package func topViewedLinks(limit: Int) async throws(ViewedLinkErrorEntity) -> [ViewedLinkEntity] {
-        Array(topViewedLinksResult.prefix(limit))
+        lastTopLimit = limit
+        return Array(topViewedLinksResult.prefix(limit))
     }
 
     package func record(_ link: ViewedLinkEntity) async throws(ViewedLinkErrorEntity) {

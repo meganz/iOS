@@ -2698,6 +2698,8 @@
 		D2D3A4016DBB6940AEB7A37B /* PricingRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF3A2387440AC9118F8 /* PricingRequester.swift */; };
 		D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */; };
 		D4597907603A472A68B3B885 /* AppOpenPromoLandingDialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB5898FB2C3FFC3E7875AD /* AppOpenPromoLandingDialogRouter.swift */; };
+		D4A1F0C2B83E47519A6C0E12 /* ViewedLinksDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */; };
+		D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */; };
 		D7B05EB5303C2F11004C5100 /* TransfersTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */; };
@@ -4504,6 +4506,9 @@
 		A52F1E322EBCE55800D3A2E9 /* Accounts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Accounts; sourceTree = "<group>"; };
 		A52F1E332EBCE55800D3A2E9 /* Chat */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Chat; sourceTree = "<group>"; };
 		A52F1E342EBCE55800D3A2E9 /* CloudDrive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudDrive; sourceTree = "<group>"; };
+		CE6DA084000000000000AA01 /* ViewedLinks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewedLinks; sourceTree = "<group>"; };
+		D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksDebugView.swift; sourceTree = "<group>"; };
+		D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksCrashlyticsErrorReporter.swift; sourceTree = "<group>"; };
 		A52F1E352EBCE55800D3A2E9 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
 		A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAVideoPlayer; sourceTree = "<group>"; };
@@ -11024,6 +11029,7 @@
 				A52F1E312EBCE55800D3A2E9 /* Shared */,
 				844A439E2F7D20B600AE5D17 /* Transfer */,
 				A52F1E3C2EBCE55800D3A2E9 /* Video */,
+				CE6DA084000000000000AA01 /* ViewedLinks */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -13022,6 +13028,7 @@
 				B5E9D3F928ACEACD00504F1F /* Feature Flag */,
 				95C4703B78A360C501B9F704 /* PromoDialogQASettings */,
 				BA0BFDAF995076E249EAECF4 /* QuotaEventSimulator */,
+				C4A9FDFF30539DAF00EE4057 /* ViewedLinksQASettings */,
 				BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */,
 				BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */,
 				BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */,
@@ -13474,6 +13481,15 @@
 				C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C4A9FDFF30539DAF00EE4057 /* ViewedLinksQASettings */ = {
+			isa = PBXGroup;
+			children = (
+				D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */,
+				D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */,
+			);
+			path = ViewedLinksQASettings;
 			sourceTree = "<group>";
 		};
 		C4AA896D2F985FBE002A17D0 /* OpenLink */ = {
@@ -16388,6 +16404,8 @@
 				94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				94F3B7572DB00B4D00C285A5 /* VideoUploadsViewModel.swift in Sources */,
+				D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */,
+				D4A1F0C2B83E47519A6C0E12 /* ViewedLinksDebugView.swift in Sources */,
 				94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */,
 				BF9BBB692EAA14C600A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift in Sources */,
 				94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */,

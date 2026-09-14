@@ -14,6 +14,7 @@ import MEGASDKRepo
 import MEGASwiftUI
 import MEGAVideoPlayer
 import SwiftUI
+import ViewedLinks
 
 extension AppDelegate {
     @objc func injectSDKRepoDependencies() {
@@ -41,6 +42,8 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
         
         MEGAAuthentication.DependencyInjection.errorReportingUseCase = ErrorReportingUseCase()
+
+        ViewedLinks.DependencyInjection.errorReporting = ViewedLinksCrashlyticsErrorReporter()
     }
 
     @objc func makeOnboardingViewController() -> UIViewController {

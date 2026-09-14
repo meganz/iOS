@@ -17,6 +17,14 @@
   },
   "testTargets" : [
     {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/ViewedLinks",
+        "identifier" : "ViewedLinksTests",
+        "name" : "ViewedLinksTests"
+      }
+    },
+    {
       "enabled" : false,
       "parallelizable" : true,
       "target" : {
