@@ -378,6 +378,7 @@ extension MEGAAssets {
         public static var monoCheckSquareMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoCheckSquareMediumThinOutline }
         public static var homeDiscountBanner: SwiftUI.Image { MEGAImageBundle.homeDiscountBanner }
         public static var promoBannerIpad: SwiftUI.Image { MEGAImageBundle.promoBannerIpad }
+        public static var monoWaveformMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoWaveformMediumThinOutline }
     }
 }
 
@@ -893,5 +894,6 @@ extension MEGAAssets {
         public static var monoCheckSquareMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCheckSquareMediumThinOutline }
         public static var homeDiscountBanner: UIKit.UIImage { MEGAUIImageBundle.homeDiscountBanner }
         public static var promoBannerIpad: UIKit.UIImage { MEGAUIImageBundle.promoBannerIpad }
+        public static var monoWaveformMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoWaveformMediumThinOutline }
     }
 }
