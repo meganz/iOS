@@ -12,6 +12,7 @@ public typealias VideoPlayerProtocol = PlaybackStateObservable
     & PictureInPictureLoadable
     & PlaybackDebugMessageObservable
     & ExternalPlaybackObservable
+    & AudioTrackSelectable
     & PlayerOptionIdentifiable
 
 // MARK: - Protocols
@@ -100,4 +101,40 @@ public protocol ExternalPlaybackObservable {
 
 public protocol PlayerOptionIdentifiable {
     var option: VideoPlayerOption { get }
+}
+
+/// One selectable audio track of the current item.
+public struct AudioTrack: Identifiable, Equatable, Sendable {
+    /// Index of the matching option within the item's `.audible` media selection group.
+    public let id: Int
+    /// Already localised by AVFoundation from the track's language, so it needs no translation.
+    public let displayName: String
+
+    public init(id: Int, displayName: String) {
+        self.id = id
+        self.displayName = displayName
+    }
+}
+
+/// The alternate audio tracks of the current item, and which one is playing
+public struct AudioTrackSelection: Equatable, Sendable {
+    public let tracks: [AudioTrack]
+    public let selectedIndex: Int
+
+    /// `nil` unless the item carries more than one track and `selectedIndex` points into `tracks`.
+    public init?(tracks: [AudioTrack], selectedIndex: Int) {
+        guard tracks.count > 1, tracks.indices.contains(selectedIndex) else { return nil }
+        self.tracks = tracks
+        self.selectedIndex = selectedIndex
+    }
+
+    public var selected: AudioTrack { tracks[selectedIndex] }
+}
+
+@MainActor
+public protocol AudioTrackSelectable {
+    /// `nil` unless the current item carries more than one audio track.
+    var audioTrackSelectionPublisher: AnyPublisher<AudioTrackSelection?, Never> { get }
+
+    func selectAudioTrack(_ track: AudioTrack)
 }

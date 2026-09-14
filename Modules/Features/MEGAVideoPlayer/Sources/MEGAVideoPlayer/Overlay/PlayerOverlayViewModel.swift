@@ -30,7 +30,10 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var showSnapshotSuccessMessage: Bool = false
     @Published var bufferRange: (start: Duration, end: Duration)?
     @Published var isExternalPlaybackActive: Bool = false
+    @Published var audioTrackSelection: AudioTrackSelection?
+    @Published var isAudioTrackMenuPresented: Bool = false
     private(set) var shouldShowPhotoPermissionAlert = false
+    private var shouldShowAudioTrackMenu = false
     private var isHoldToSpeed = false
     /// Whether a finger is currently on the seek bar
     private(set) var isScrubbing = false
@@ -85,6 +88,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         observeNodeName()
         observeBufferRange()
         observeExternalPlayback()
+        observeAudioTracks()
     }
 
     private func observeState() {
@@ -140,6 +144,20 @@ public final class PlayerOverlayViewModel: ObservableObject {
         player
             .isExternalPlaybackActivePublisher
             .assign(to: &$isExternalPlaybackActive)
+    }
+
+    private func observeAudioTracks() {
+        player
+            .audioTrackSelectionPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] selection in
+                guard let self else { return }
+                audioTrackSelection = selection
+                if selection == nil {
+                    isAudioTrackMenuPresented = false
+                }
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -396,6 +414,35 @@ extension PlayerOverlayViewModel {
         isBottomMoreSheetPresented = false
     }
 
+    var hasMultipleAudioTracks: Bool {
+        audioTrackSelection != nil
+    }
+
+    func didTapAudioTrack() {
+        shouldShowAudioTrackMenu = true
+        isBottomMoreSheetPresented = false
+    }
+
+    /// The menu is an overlay on the player itself
+    func checkToShowAudioTrackMenu() {
+        defer { shouldShowAudioTrackMenu = false }
+        // `hasMultipleAudioTracks` is rechecked because the video can move on to the next node
+        // while the more sheet is still dismissing, leaving nothing to list.
+        guard shouldShowAudioTrackMenu, hasMultipleAudioTracks else { return }
+        isAudioTrackMenuPresented = true
+    }
+
+    func dismissAudioTrackMenu() {
+        isAudioTrackMenuPresented = false
+        resetAutoHide()
+    }
+
+    func didSelectAudioTrack(_ track: AudioTrack) {
+        player.selectAudioTrack(track)
+        isAudioTrackMenuPresented = false
+        resetAutoHide()
+    }
+
     func handlePinchGesture(scale: CGFloat) {
         let threshold: CGFloat = 1.0
         
@@ -424,6 +471,7 @@ extension PlayerOverlayViewModel {
     private func activateLock() {
         isLocked = true
         isLockOverlayVisible = true
+        isAudioTrackMenuPresented = false
         hideControls()
         startLockOverlayTimer()
     }

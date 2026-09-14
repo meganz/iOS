@@ -17,6 +17,8 @@ public struct PlayerOverlayView: View {
     enum Constants {
         static let bottomSheetRowHeight: CGFloat = 58
         static let bottomSheetTopPadding: CGFloat = 21
+        static let audioTrackMenuBottomInset: CGFloat = 144
+        static let audioTrackMenuBottomInsetLandscape: CGFloat = TokenSpacing._17
     }
 
     public var body: some View {
@@ -109,6 +111,8 @@ public struct PlayerOverlayView: View {
                     if viewModel.showSnapshotSuccessMessage {
                         snapshotSuccessSnackBar(isLandscape: isLandscape)
                     }
+
+                    audioTrackMenuOverlay(isLandscape: isLandscape)
                 }
             }
         }
@@ -131,6 +135,7 @@ public struct PlayerOverlayView: View {
             cornerRadius: TokenRadius.large
         ) {
             viewModel.checkToShowPhotoPermissionAlert()
+            viewModel.checkToShowAudioTrackMenu()
         } content: {
             bottomMoreSheetView
         }
@@ -508,7 +513,8 @@ extension PlayerOverlayView {
     }
 
     private var bottomMoreSheetHeight: Int {
-        4 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
+        let rowCount = viewModel.hasMultipleAudioTracks ? 5 : 4
+        return rowCount * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
     }
 
     private var playbackSpeedsSelectionListView: some View {
@@ -551,6 +557,28 @@ extension PlayerOverlayView {
         .padding(.horizontal, TokenSpacing._5)
     }
 
+    /// Centres the track menu above the bottom edge, dismissing on a tap outside it
+    @ViewBuilder
+    private func audioTrackMenuOverlay(isLandscape: Bool) -> some View {
+        if viewModel.isAudioTrackMenuPresented, let selection = viewModel.audioTrackSelection {
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture { viewModel.dismissAudioTrackMenu() }
+
+            AudioTrackMenu(
+                selection: selection,
+                onSelect: viewModel.didSelectAudioTrack
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .padding(
+                .bottom,
+                isLandscape
+                    ? Constants.audioTrackMenuBottomInsetLandscape
+                    : Constants.audioTrackMenuBottomInset
+            )
+        }
+    }
+
     private var bottomMoreSheetView: some View {
         VStack(spacing: .zero) {
             bottomMoreSheetRowView(
@@ -567,6 +595,14 @@ extension PlayerOverlayView {
                 }
             }
             
+            if viewModel.hasMultipleAudioTracks {
+                bottomMoreSheetRowView(
+                    image: MEGAAssets.Image.monoWaveformMediumThinOutline,
+                    title: Strings.Localizable.VideoPlayer.AudioTrack.BottomSheet.title,
+                    action: viewModel.didTapAudioTrack
+                )
+            }
+
             bottomMoreSheetRowView(
                 icon: "pictureInPicture",
                 title: Strings.Localizable.VideoPlayer.Pip.BottomSheet.title,

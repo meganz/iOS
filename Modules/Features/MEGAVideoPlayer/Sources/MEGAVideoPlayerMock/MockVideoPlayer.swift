@@ -16,6 +16,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var bufferRange: (start: Duration, end: Duration)?
     @Published public var itemStatus: AVPlayerItem.Status = .unknown
     @Published public var isExternalPlaybackActive: Bool = false
+    @Published public var audioTrackSelection: AudioTrackSelection?
 
     public var currentNode: (any PlayableNode)?
     public var onNodeDeleted: (() -> Void)?
@@ -53,6 +54,10 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
 
     public var isExternalPlaybackActivePublisher: AnyPublisher<Bool, Never> {
         $isExternalPlaybackActive.eraseToAnyPublisher()
+    }
+
+    public var audioTrackSelectionPublisher: AnyPublisher<AudioTrackSelection?, Never> {
+        $audioTrackSelection.eraseToAnyPublisher()
     }
 
     public nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
@@ -95,6 +100,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var resumePlaybackPositionUseCase: (any ResumePlaybackPositionUseCaseProtocol)?
     public var nodes: [any PlayableNode] = []
     public var streamVideoNodesCallCount: Int = 0
+    public var selectAudioTrackCallCount: Int = 0
+    public var selectedAudioTrackValue: AudioTrack?
 
     public init(
         option: VideoPlayerOption = .avPlayer,
@@ -116,6 +123,15 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         self.nodes = nodes
         self.canPlayNext = canPlayNext
         self.bufferRange = bufferRange
+    }
+
+    public func selectAudioTrack(_ track: AudioTrack) {
+        selectAudioTrackCallCount += 1
+        selectedAudioTrackValue = track
+        audioTrackSelection = AudioTrackSelection(
+            tracks: audioTrackSelection?.tracks ?? [],
+            selectedIndex: track.id
+        )
     }
 
     public func play() {

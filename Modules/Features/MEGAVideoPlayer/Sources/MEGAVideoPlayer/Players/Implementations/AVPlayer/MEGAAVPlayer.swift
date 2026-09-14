@@ -28,6 +28,7 @@ public final class MEGAAVPlayer {
     private let bufferRangeSubject: CurrentValueSubject<(start: Duration, end: Duration)?, Never> = .init(nil)
     private let itemStatusSubject: CurrentValueSubject<AVPlayerItem.Status, Never> = .init(.unknown)
     private let isExternalPlaybackActiveSubject: CurrentValueSubject<Bool, Never> = .init(false)
+    private let audioTrackSelectionSubject: CurrentValueSubject<AudioTrackSelection?, Never> = .init(nil)
 
     public let statePublisher: AnyPublisher<PlaybackState, Never>
     public let currentTimePublisher: AnyPublisher<Duration, Never>
@@ -37,6 +38,7 @@ public final class MEGAAVPlayer {
     public let bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never>
     public let itemStatusPublisher: AnyPublisher<AVPlayerItem.Status, Never>
     public let isExternalPlaybackActivePublisher: AnyPublisher<Bool, Never>
+    public let audioTrackSelectionPublisher: AnyPublisher<AudioTrackSelection?, Never>
 
     public var onNodeDeleted: (() -> Void)?
 
@@ -50,6 +52,9 @@ public final class MEGAAVPlayer {
 
     private var throttleRateCancellable: AnyCancellable?
     private var throttleConfigurationTask: Task<Void, Never>?
+
+    private var loadedAudioTracks: LoadedAudioTracks?
+    private var audioTrackTask: Task<Void, Never>?
 
     private let streamingUseCase: any StreamingUseCaseProtocol
     private let localFileURL: @Sendable (any PlayableNode) -> URL?
@@ -81,6 +86,7 @@ public final class MEGAAVPlayer {
         self.bufferRangePublisher = bufferRangeSubject.eraseToAnyPublisher()
         self.itemStatusPublisher = itemStatusSubject.eraseToAnyPublisher()
         self.isExternalPlaybackActivePublisher = isExternalPlaybackActiveSubject.eraseToAnyPublisher()
+        self.audioTrackSelectionPublisher = audioTrackSelectionSubject.eraseToAnyPublisher()
 
         observePlayerTimeControlStatus()
         observePlayerPeriodicTime()
@@ -91,6 +97,7 @@ public final class MEGAAVPlayer {
     deinit {
         monitorVideoNodesUpdateTask?.cancel()
         throttleConfigurationTask?.cancel()
+        audioTrackTask?.cancel()
     }
 }
 
@@ -462,6 +469,7 @@ extension MEGAAVPlayer: NodeLoadable {
         observeDidPlayToEndTime(for: playerItem)
         observePlaybackStalledNotification(for: playerItem)
         observeBufferRange(for: playerItem)
+        loadAudioTracks(for: playerItem)
     }
 
     private func observePlaybackBufferStatus(for item: AVPlayerItem) {
@@ -549,6 +557,69 @@ extension MEGAAVPlayer: NodeLoadable {
             if canPlayNext {
                 playNext()
             }
+        }
+    }
+}
+
+// MARK: - Audio track selection
+
+extension MEGAAVPlayer {
+    /// The loaded `.audible` group and the tracks derived from it, kept together so the AVFoundation
+    /// handle and the published list can never drift apart.
+    fileprivate struct LoadedAudioTracks {
+        let group: AVMediaSelectionGroup
+        let tracks: [AudioTrack]
+
+        /// `nil` unless the group carries more than one option.
+        init?(group: AVMediaSelectionGroup) {
+            guard group.options.count > 1 else { return nil }
+            self.group = group
+            self.tracks = group.options.enumerated().map {
+                AudioTrack(id: $0.offset, displayName: $0.element.displayName)
+            }
+        }
+
+        func option(for track: AudioTrack) -> AVMediaSelectionOption? {
+            group.options.indices.contains(track.id) ? group.options[track.id] : nil
+        }
+
+        func selection(selectedIndex: Int) -> AudioTrackSelection? {
+            AudioTrackSelection(tracks: tracks, selectedIndex: selectedIndex)
+        }
+    }
+}
+
+extension MEGAAVPlayer: AudioTrackSelectable {
+    public func selectAudioTrack(_ track: AudioTrack) {
+        guard let loadedAudioTracks,
+              let item = player.currentItem,
+              let option = loadedAudioTracks.option(for: track) else { return }
+
+        item.select(option, in: loadedAudioTracks.group)
+        audioTrackSelectionSubject.send(loadedAudioTracks.selection(selectedIndex: track.id))
+        playbackDebugMessage("Selected audio track: \(track.displayName)")
+    }
+
+    /// Exposes the item's alternate audio tracks, the same selection AVKit's own player UI drives
+    private func loadAudioTracks(for item: AVPlayerItem) {
+        audioTrackTask?.cancel()
+        loadedAudioTracks = nil
+        audioTrackSelectionSubject.send(nil)
+
+        audioTrackTask = Task { [weak self] in
+            guard let group = try? await item.asset.loadMediaSelectionGroup(for: .audible),
+                  !Task.isCancelled,
+                  let self,
+                  item === player.currentItem,
+                  let loaded = LoadedAudioTracks(group: group) else { return }
+
+            loadedAudioTracks = loaded
+
+            let currentOption = item.currentMediaSelection.selectedMediaOption(in: group) ?? group.defaultOption
+            let currentIndex = currentOption.flatMap { group.options.firstIndex(of: $0) } ?? 0
+            audioTrackSelectionSubject.send(loaded.selection(selectedIndex: currentIndex))
+
+            playbackDebugMessage("Loaded \(loaded.tracks.count) audio tracks")
         }
     }
 }
