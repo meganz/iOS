@@ -285,7 +285,7 @@ final public class AdsSlotViewModel: ObservableObject {
             showCloseButton = accountUseCase.isLoggedIn()
         case .failure(let error):
             adsLoadingState = .failed
-            MEGALogError("[AdMob] Ads Banner failed to receive ad with error \(error.localizedDescription)")
+            MEGALogWarning("[AdMob] Ads Banner failed to receive ad with error \(error.localizedDescription)")
         }
     }
     
