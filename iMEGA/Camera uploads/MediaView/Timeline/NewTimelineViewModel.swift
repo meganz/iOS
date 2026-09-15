@@ -183,8 +183,13 @@ final class NewTimelineViewModel: ObservableObject {
             if !isInitialLoadComplete {
                 try await loadSavedFilters()
             }
+            let taskId = loadPhotosTaskId
+            let query = paginationQuery
             let (library, sections) = try await loadTimelineLibrary()
-            commitProjection(library, sections: sections)
+            // A filter or sort change replaces this task. A pass already past the fetch would
+            // otherwise put the outgoing query's content back, now stamped with its query.
+            guard !Task.isCancelled, loadPhotosTaskId == taskId else { return }
+            commitProjection(library, sections: sections, query: query)
         } catch is CancellationError {
             MEGALogError("[\(type(of: self))] loadPhotos cancelled")
         } catch {
@@ -214,15 +219,37 @@ final class NewTimelineViewModel: ObservableObject {
     ///
     /// - Parameter sections: the new layout, or `nil` for a commit that cannot change the shape
     ///   (metadata patch, sort application, first load), where every delta is zero.
-    private func commitProjection(_ library: PhotoLibrary, sections: [MediaDateSectionEntity]?) {
+    /// - Parameter query: the query the content being committed was fetched under, for the commits
+    ///   that fetched it; `nil` leaves the published one alone.
+    private func commitProjection(
+        _ library: PhotoLibrary,
+        sections: [MediaDateSectionEntity]?,
+        query: MediaTimelineQuery? = nil
+    ) {
         if let sections {
             let deltas = countDeltas(from: dateSections, to: sections)
             bumpVersions(for: deltas)
             dateSections = sections
         }
         libraryRevision &+= 1
+        // Published in the same hop as the content it describes, and only by the commits that
+        // fetched that content. A metadata patch comes through `commitLibrary` with none: its
+        // library is the one already on record, and stamping it with a query the user has since
+        // chosen — whose sections have not arrived yet — would claim content was fetched under a
+        // query it never was.
+        if let query { photoLibraryContentViewModel.mediaTimelineQuery = query }
         photoLibraryContentViewModel.library = library
         projectionRevision &+= 1
+    }
+
+    /// The query as it stands now, to be snapshotted by whoever is about to fetch content under
+    /// it. `nil` when the timeline is not paginated — a browser opened from it then stays on the
+    /// whole-sequence path it is on today.
+    private var paginationQuery: MediaTimelineQuery? {
+        guard mediaTimelineUseCase != nil else { return nil }
+        return MediaTimelineQuery(
+            filter: photoFilterOptions.toMediaTimelineFilterEntity(),
+            sortOrder: mediaTimelineSortOrder)
     }
 
     /// The projection the user is currently looking at.
@@ -255,6 +282,11 @@ final class NewTimelineViewModel: ObservableObject {
     /// change. No-op unless the skeleton path is active.
     func monitorTimelineSections() async {
         guard let mediaTimelineUseCase else { return }
+        // Snapshot once: every section this subscription yields was counted under it, however long
+        // the loop runs and whatever the screen's filter has moved on to. A change re-keys
+        // `timelineQueryId`, which replaces this task and with it the snapshot.
+        let queryId = timelineQueryId
+        let query = paginationQuery
         let sectionUpdates = await mediaTimelineUseCase.monitorDateSections(
             filter: photoFilterOptions.toMediaTimelineFilterEntity(),
             granularity: .day,
@@ -303,7 +335,11 @@ final class NewTimelineViewModel: ObservableObject {
                     return true
                 }
             }
-            commitProjection(assembled, sections: sections)
+            // The awaits above outlast a query change: replacing the task cancels it, but a pass
+            // already past them would still publish sections counted under the query the user has
+            // left — and now stamp them with it.
+            guard !Task.isCancelled, timelineQueryId == queryId else { return }
+            commitProjection(assembled, sections: sections, query: query)
         }
     }
     

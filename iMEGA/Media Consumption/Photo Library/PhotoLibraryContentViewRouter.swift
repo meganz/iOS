@@ -11,10 +11,16 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     private let contentMode: PhotoLibraryContentMode
     private let tracker: any AnalyticsTracking
     
+    /// Present only where the library paginates, injected by the same composition root that reads
+    /// the flag. Without it a paginated handover still opens, on its run alone.
+    private let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)?
+    
     init(contentMode: PhotoLibraryContentMode = .library,
-         tracker: some AnalyticsTracking = DIContainer.tracker) {
+         tracker: some AnalyticsTracking = DIContainer.tracker,
+         mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil) {
         self.contentMode = contentMode
         self.tracker = tracker
+        self.mediaTimelineUseCase = mediaTimelineUseCase
     }
     
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
@@ -48,22 +54,40 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity]) {
-        tracker.trackAnalyticsEvent(with: DIContainer.singlePhotoSelectedEvent)
-        
-        guard let topController = topViewController() else { return }
-        
-        if topController.definesPresentationContext == false && topController.children.isEmpty { return }
-        
-        let displayMode = contentMode.displayMode
-        let photoBrowser = MEGAPhotoBrowserViewController
-            .photoBrowser(
+        present {
+            MEGAPhotoBrowserViewController.photoBrowser(
                 currentPhoto: photo,
                 allPhotos: allPhotos,
-                displayMode: displayMode,
+                displayMode: contentMode.displayMode,
                 isFromSharedItem: contentMode == .mediaDiscoverySharedItems)
-        
+        }
+    }
+    
+    func openPhotoBrowser(for photo: NodeEntity, in context: PhotoBrowserPaginationContext) {
+        guard let mediaTimelineUseCase else {
+            // The library paginates and this router cannot: opening on the run alone is the same
+            // browser the non-paginated entry points get, only shorter.
+            openPhotoBrowser(for: photo, allPhotos: context.nodes)
+            return
+        }
+        present {
+            MEGAPhotoBrowserViewController.photoBrowser(
+                currentPhoto: photo,
+                context: context,
+                mediaTimelineUseCase: mediaTimelineUseCase,
+                displayMode: contentMode.displayMode)
+        }
+    }
+    
+    private func present(_ makeBrowser: () -> MEGAPhotoBrowserViewController) {
+        tracker.trackAnalyticsEvent(with: DIContainer.singlePhotoSelectedEvent)
+
+        guard let topController = topViewController() else { return }
+
+        if topController.definesPresentationContext == false && topController.children.isEmpty { return }
+
         topController.modalPresentationStyle = .popover
-        topController.present(photoBrowser, animated: true)
+        topController.present(makeBrowser(), animated: true)
     }
     
     func openCameraUploadSettings(viewModel: PhotoLibraryModeAllViewModel) {

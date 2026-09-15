@@ -16,8 +16,6 @@ enum MediaTabTimelineFactory {
             library: PhotoLibrary(),
             contentMode: .library,
             configuration: configuration)
-        let photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(
-            contentMode: .library)
         let cameraUploadsSettingsViewRouter = CameraUploadsSettingsViewRouter(presenter: navigationController) { }
         
         let photoLibraryRepository = PhotoLibraryRepository(
@@ -34,6 +32,26 @@ enum MediaTabTimelineFactory {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
         
+        // The `imtp` remote flag is read here, at the composition root, and nowhere else:
+        // when on we inject the use case, whose presence switches the view model to the
+        // skeleton path. Off = the use case is nil = unchanged eager path. The router takes the
+        // same instance: a browser opened from a paginated timeline goes on paging with it.
+        let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? =
+            DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaTimelinePagination)
+            ? MediaTimelineUseCase(
+                repository: MediaTimelineRepository(
+                    sdk: .shared,
+                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared,
+                    mediaUploadNodeAccess: MediaUploadNodeAccess.shared,
+                    nodeUpdatesProvider: NodeUpdatesProvider()),
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase)
+            : nil
+
+        let photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(
+            contentMode: .library,
+            mediaTimelineUseCase: mediaTimelineUseCase)
+
         let photoLibraryUseCase =  PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
@@ -57,21 +75,6 @@ enum MediaTabTimelineFactory {
             preferenceUseCase: PreferenceUseCase.default
         )
         
-        // The `imtp` remote flag is read here, at the composition root, and nowhere else:
-        // when on we inject the use case, whose presence switches the view model to the
-        // skeleton path. Off = the use case is nil = unchanged eager path.
-        let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? =
-            DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaTimelinePagination)
-            ? MediaTimelineUseCase(
-                repository: MediaTimelineRepository(
-                    sdk: .shared,
-                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared,
-                    mediaUploadNodeAccess: MediaUploadNodeAccess.shared,
-                    nodeUpdatesProvider: NodeUpdatesProvider()),
-                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-                sensitiveNodeUseCase: sensitiveNodeUseCase)
-            : nil
-
         // Read here, at the composition root, like the pagination flag above. It alone decides
         // whether the timeline offers a capture-time order: both paths honour one, the paginated
         // by having the SDK order and bucket by it, the eager by grouping its loaded nodes by it.

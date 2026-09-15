@@ -1,4 +1,5 @@
 import Accounts
+import ContentLibraries
 import FirebaseCrashlytics
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
@@ -19,7 +20,13 @@ import UIKit
 
 extension MEGAPhotoBrowserViewController {
     @objc func makeViewModel() -> PhotoBrowserViewModel {
-        let viewModel = PhotoBrowserViewModel(photoBrowserUseCase: PhotoBrowserUseCase(nodeRepository: NodeRepository.newRepo))
+        makeViewModel(paginator: nil)
+    }
+
+    func makeViewModel(paginator: PhotoBrowserPaginator?) -> PhotoBrowserViewModel {
+        let viewModel = PhotoBrowserViewModel(
+            photoBrowserUseCase: PhotoBrowserUseCase(nodeRepository: NodeRepository.newRepo),
+            paginator: paginator)
         viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
         return viewModel
     }
@@ -522,33 +529,73 @@ extension MEGAPhotoBrowserViewController {
                              allPhotos: [NodeEntity],
                              displayMode: DisplayMode,
                              isFromSharedItem: Bool = false) -> MEGAPhotoBrowserViewController {
-        
-        let sdk: MEGASdk
-        let nodeProvider: any MEGANodeProviderProtocol
-        switch displayMode {
-        case .nodeInsideFolderLink:
-            sdk = .sharedFolderLink
-            nodeProvider = FolderLinkMEGANodeProvider(sdk: sdk)
-        case .albumLink:
-            sdk = .shared
-            nodeProvider = PublicAlbumNodeProvider.shared
-        default:
-            sdk = .shared
-            nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
-        }
-        
-        let browser = MEGAPhotoBrowserViewController.photoBrowser(
+        let (sdk, nodeProvider) = nodeAccess(for: displayMode)
+        return photoBrowser(
             with: PhotoBrowserDataProvider(
                 currentPhoto: currentPhoto,
                 allPhotos: allPhotos,
                 sdk: sdk,
                 nodeProvider: nodeProvider),
+            sdk: sdk,
+            displayMode: displayMode,
+            isFromSharedItem: isFromSharedItem,
+            paginator: nil)
+    }
+
+    /// Opens on a paginated sequence: the browser is handed the contiguous run around the tapped
+    /// photo and grows it from its own cursors.
+    ///
+    /// Provider and paginator are both built from `context.nodes`, here and nowhere else. They
+    /// count positions in the same array, and a provider built from anything else — the caller's
+    /// own copy, say — would put the two index spaces out of step with nothing in either to notice.
+    static func photoBrowser(currentPhoto: NodeEntity,
+                             context: PhotoBrowserPaginationContext,
+                             mediaTimelineUseCase: some MediaTimelineUseCaseProtocol,
+                             displayMode: DisplayMode) -> MEGAPhotoBrowserViewController {
+        let (sdk, nodeProvider) = nodeAccess(for: displayMode)
+        return photoBrowser(
+            with: PhotoBrowserDataProvider(
+                currentPhoto: currentPhoto,
+                allPhotos: context.nodes,
+                sdk: sdk,
+                nodeProvider: nodeProvider),
+            sdk: sdk,
+            displayMode: displayMode,
+            isFromSharedItem: false,
+            paginator: PhotoBrowserPaginator(context: context, useCase: mediaTimelineUseCase))
+    }
+
+    private static func photoBrowser(
+        with dataProvider: PhotoBrowserDataProvider,
+        sdk: MEGASdk,
+        displayMode: DisplayMode,
+        isFromSharedItem: Bool,
+        paginator: PhotoBrowserPaginator?
+    ) -> MEGAPhotoBrowserViewController {
+        let browser = MEGAPhotoBrowserViewController.photoBrowser(
+            with: dataProvider,
             api: sdk,
-            displayMode: displayMode, 
+            displayMode: displayMode,
             isFromSharedItem: isFromSharedItem
         )
+        // Ahead of the lazy getter that would otherwise make one without it. Nothing has read the
+        // view model at this point: the storyboard has only been instantiated.
+        if let paginator {
+            browser.viewModel = browser.makeViewModel(paginator: paginator)
+        }
         browser.needsReload = true
         return browser
+    }
+
+    private static func nodeAccess(for displayMode: DisplayMode) -> (MEGASdk, any MEGANodeProviderProtocol) {
+        switch displayMode {
+        case .nodeInsideFolderLink:
+            (.sharedFolderLink, FolderLinkMEGANodeProvider(sdk: .sharedFolderLink))
+        case .albumLink:
+            (.shared, PublicAlbumNodeProvider.shared)
+        default:
+            (.shared, DefaultMEGANodeProvider(sdk: .shared))
+        }
     }
 }
 

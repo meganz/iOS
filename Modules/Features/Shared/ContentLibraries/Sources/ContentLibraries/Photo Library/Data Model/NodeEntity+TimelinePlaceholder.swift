@@ -76,3 +76,29 @@ extension NodeEntity {
         )
     }
 }
+
+extension Array where Element == NodeEntity {
+    /// The run of real nodes around `index`, clamped to `radius` items on either side.
+    ///
+    /// The photo browser grows a handed-over run from its two ends only, so a gap inside one could
+    /// never be filled: the run stops at the first placeholder on each side. It is clamped as well
+    /// as cut, because a user who has scrolled for a while leaves a long hydrated stretch behind,
+    /// and handing all of it over would differ little from handing over the whole projection —
+    /// the paging paths would then hardly ever be reached.
+    ///
+    /// - Returns: the nodes and the position of the first of them, or `nil` when `index` is out of
+    ///   range or is a placeholder itself.
+    func contiguousRealRun(around index: Int, radius: Int) -> (nodes: [NodeEntity], startIndex: Int)? {
+        guard indices.contains(index), !self[index].isTimelinePlaceholder else { return nil }
+
+        var start = index
+        let lowerLimit = Swift.max(0, index - radius)
+        while start > lowerLimit, !self[start - 1].isTimelinePlaceholder { start -= 1 }
+
+        var end = index
+        let upperLimit = Swift.min(count - 1, index + radius)
+        while end < upperLimit, !self[end + 1].isTimelinePlaceholder { end += 1 }
+
+        return (Array(self[start...end]), start)
+    }
+}

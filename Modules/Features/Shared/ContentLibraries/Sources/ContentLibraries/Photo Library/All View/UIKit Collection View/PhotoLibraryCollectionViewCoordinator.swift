@@ -583,8 +583,54 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
         if photo.isTakenDown {
             router.showTakenDownNodeAlert()
         } else {
-            router.openPhotoBrowser(for: photo, allPhotos: photoLibraryDataSource.hydratedPhotos)
+            openPhotoBrowser(for: photo)
         }
+    }
+
+    private func openPhotoBrowser(for photo: NodeEntity) {
+        guard let query = viewModel.libraryViewModel.mediaTimelineQuery else {
+            router.openPhotoBrowser(for: photo, allPhotos: photoLibraryDataSource.hydratedPhotos)
+            return
+        }
+        // Nil means the committed library no longer holds this photo: the grid renders a debounce
+        // behind, so one the query has just excluded stays tappable for a moment. Opening it on the
+        // outgoing array would show content the filter dropped, in a browser that could not page
+        // for the rest of the session. The cell goes on its own.
+        guard let context = paginationContext(for: photo, query: query) else { return }
+        router.openPhotoBrowser(for: photo, in: context)
+    }
+
+    /// The handover for a browser opened on `photo`, or `nil` when the committed library does not
+    /// hold it.
+    ///
+    /// The run is read from the same library the caller read `query` from, in the one turn, rather
+    /// than from the grid: the grid lags a debounce behind, so just after a filter or sort change
+    /// the two describe different queries, and a browser handed that pair would page from cursors
+    /// its nodes never came from. The tapped photo is located in the committed library instead of
+    /// by its index path for the same reason.
+    ///
+    /// `hydratedPhotos` could not serve as the run in any case: it drops placeholders wherever
+    /// they fall, welding the stretches either side of an unloaded region into one array with
+    /// nothing left to say a region was skipped. A run grows at its two ends only, so what is
+    /// handed over has to be contiguous.
+    ///
+    /// The count is the whole projection, placeholders included: the skeleton holds one slot per
+    /// item in the source, so its length is the total the title starts from.
+    private func paginationContext(
+        for photo: NodeEntity,
+        query: MediaTimelineQuery
+    ) -> PhotoBrowserPaginationContext? {
+        let photos = viewModel.libraryViewModel.library.allPhotos
+        guard let index = photos.firstIndex(of: photo),
+              let run = photos.contiguousRealRun(
+                around: index,
+                radius: PhotoBrowserPaginationContext.defaultInitialRadius) else { return nil }
+        return PhotoBrowserPaginationContext(
+            nodes: run.nodes,
+            globalStartIndex: run.startIndex,
+            totalCount: photos.count,
+            filter: query.filter,
+            sortOrder: query.sortOrder)
     }
     
     func collectionView(

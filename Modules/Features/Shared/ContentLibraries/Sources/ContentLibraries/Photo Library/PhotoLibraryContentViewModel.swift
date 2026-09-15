@@ -12,6 +12,12 @@ import SwiftUI
     @Published public var isLoading = true
     
     public let visiblePhotoIndexRange = CurrentValueSubject<Range<Int>?, Never>(nil)
+
+    /// The query behind the content currently committed, set by the screen that owns it when that
+    /// screen paginates. Its presence is what tells a photo browser opened from here that it has
+    /// to page for the rest of the sequence rather than being handed all of it.
+    public var mediaTimelineQuery: MediaTimelineQuery?
+
     @Published public var selectedMode: PhotoLibraryViewMode = .all {
         didSet {
             guard selectedMode != oldValue, tracksViewModeChange else { return }

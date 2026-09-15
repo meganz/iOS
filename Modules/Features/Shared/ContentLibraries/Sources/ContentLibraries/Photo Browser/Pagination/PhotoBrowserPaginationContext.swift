@@ -33,6 +33,12 @@ public struct PhotoBrowserPaginationContext: Sendable, Equatable {
     /// Order of the query the sequence continues, including which timestamp it sorts by.
     public let sortOrder: MediaTimelineSortOrderEntity
 
+    /// How far either side of the tapped item the handed-over run is cut. Provisional until
+    /// measured on device: wide enough that the first swipes stay inside it, narrow enough that a
+    /// long hydrated stretch is not handed over whole — doing that would leave the paging paths
+    /// unreached in ordinary use.
+    public static let defaultInitialRadius = 100
+
     public init(
         nodes: [NodeEntity],
         globalStartIndex: Int,
