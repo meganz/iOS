@@ -2,11 +2,10 @@ import FirebaseCrashlytics
 import Foundation
 import ViewedLinks
 
-/// Logs an unrecoverable Viewed Links store failure to Crashlytics and terminates the app.
+/// Logs a Viewed Links store failure to Crashlytics.
 struct ViewedLinksCrashlyticsErrorReporter: ViewedLinksErrorReporting {
-    func reportFatalError(_ error: any Error) -> Never {
-        Crashlytics.crashlytics().log("Aborting app due to ViewedLinks store error \(error)")
+    func reportError(_ error: any Error) {
+        Crashlytics.crashlytics().log("ViewedLinks store unreadable, continuing in memory: \(error)")
         Crashlytics.crashlytics().record(error: error)
-        exit(0)
     }
 }

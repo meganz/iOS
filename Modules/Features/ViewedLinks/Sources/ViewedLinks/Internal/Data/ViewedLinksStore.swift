@@ -7,6 +7,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
     package nonisolated let modelContainer: ModelContainer
     package nonisolated let modelExecutor: any ModelExecutor
     private let maxEntries: Int
+    private var didPruneHistory = false
 
     private static let didChangeNotification = Notification.Name("mega.viewedlinks.store.didChange")
 
@@ -34,7 +35,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
     /// Upserts by handle, then evicts the oldest rows beyond `maxEntries`.
     package func record(_ link: ViewedLinkEntity) async throws {
         let stored = Int64(bitPattern: link.handle)
-        let cap = maxEntries
+        let maxEntries = maxEntries
         try write { context in
             if let existing = try Self.modelForHandle(stored, in: context) {
                 existing.linkURL = link.linkURL.absoluteString
@@ -53,7 +54,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
             let all = try context.fetch(FetchDescriptor<ViewedLinkModel>(
                 sortBy: [SortDescriptor(\.lastAccessed, order: .reverse)]
             ))
-            for stale in all.dropFirst(cap) { context.delete(stale) }
+            for stale in all.dropFirst(maxEntries) { context.delete(stale) }
         }
     }
 
@@ -79,7 +80,9 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
         }
     }
 
-    /// Emits per persisted mutation via a private notification scoped to this store instance, so parallel stores never cross-signal.
+    /// Emits a signal each time a write persists a change to stored rows (record, remove, removeUnavailable, clearHistory).
+    /// A delete that matches no row emits nothing. A record always emits, because the upsert rewrites the row.
+    /// The notification is scoped to this store instance, so parallel stores never cross-signal.
     package nonisolated func changesSignalSequence() -> AnyAsyncSequence<Void> {
         NotificationCenter.default
             .notifications(named: Self.didChangeNotification, object: self)
@@ -91,6 +94,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
 
     /// Runs the mutations as one transaction, rolling back on a thrown error, then signals if anything persisted.
     func write(_ block: @Sendable (ModelContext) throws -> Void) throws {
+        pruneStaleHistory()
         var didChange = false
         do {
             try modelContext.transaction {
@@ -102,6 +106,14 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
             throw error
         }
         if didChange { postChange() }
+    }
+
+    /// Purges accumulated persistent-history transactions once per store lifetime; nothing here consumes history tokens.
+    /// Available on iOS 18 and later; earlier systems accrue history that this store never reads.
+    private func pruneStaleHistory() {
+        guard #available(iOS 18, *), !didPruneHistory else { return }
+        didPruneHistory = true
+        try? modelContext.deleteHistory(HistoryDescriptor<DefaultHistoryTransaction>())
     }
 
     private static func modelForHandle(_ handle: Int64, in context: ModelContext) throws -> ViewedLinkModel? {

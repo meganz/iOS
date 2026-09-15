@@ -1,4 +1,4 @@
 public protocol ViewedLinksErrorReporting: Sendable {
-    /// Reports an unrecoverable Viewed Links store failure.
-    func reportFatalError(_ error: any Error) -> Never
+    /// Reports a Viewed Links store failure the module recovered from.
+    func reportError(_ error: any Error)
 }

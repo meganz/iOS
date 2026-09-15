@@ -13,7 +13,7 @@ package protocol ViewedLinksStoreProtocol: Sendable {
     func removeUnavailable(linkURL: URL) async throws
     func clearHistory() async throws
 
-    /// Emits once per persisted mutation, driving the v1 re-fetch refresh.
+    /// Emits once per persisted mutation; consumers re-fetch the list in response.
     /// Never finishes on its own; consumers cancel the iterating task when done.
     func changesSignalSequence() -> AnyAsyncSequence<Void>
 }
