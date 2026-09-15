@@ -1,7 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
-import MEGAUIComponent
 import SwiftUI
 
 /// Unavailable state of an album link.
@@ -35,17 +34,15 @@ struct AlbumLinkUnavailableView: View {
     @ViewBuilder
     private var unavailableContent: some View {
         if isLinkRevampEnabled {
-            // The design draws the bar as transparent page background, with only the close button
-            // carrying a glass capsule.
             fullScreenContent
-                .hideNavigationToolbarBackground()
         } else {
             legacyContent
         }
     }
 
     /// Centres the unavailable state on the whole screen rather than on the area below the
-    /// navigation bar, which is transparent here. Same treatment as the file link.
+    /// navigation bar, so that it stays optically centred under the translucent bar. Same treatment
+    /// as the file link.
     private var fullScreenContent: some View {
         GeometryReader { proxy in
             let topOffset = proxy.frame(in: .global).minY
