@@ -69,3 +69,9 @@ public struct TransferEntity: Sendable {
         self.stage = stage
     }
 }
+
+public extension TransferEntity {
+    var isSavedToPhotos: Bool {
+        appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false
+    }
+}

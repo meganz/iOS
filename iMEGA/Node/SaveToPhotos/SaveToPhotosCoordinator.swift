@@ -43,7 +43,9 @@ final class SaveToPhotosCoordinator: SaveToPhotosCoordinatorProtocol {
         self.messageDisplay = messageDisplay
         self.downloadFileRepository = DownloadFileRepository(
             sdk: MEGASdk.sharedSdk,
-            sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil)
+            sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil,
+            chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
+        )
     }
 
     init(
@@ -55,7 +57,9 @@ final class SaveToPhotosCoordinator: SaveToPhotosCoordinatorProtocol {
         self.downloadFileRepository = DownloadFileRepository(
             sdk: MEGASdk.sharedSdk,
             sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil,
-            nodeProvider: nodeProvider)
+            nodeProvider: nodeProvider,
+            chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
+        )
     }
     
     func saveToPhotos(nodes: [NodeEntity], onComplete: (() -> Void)? = nil) {

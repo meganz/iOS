@@ -20,7 +20,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
 
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(
         downloadFileRepository: DownloadFileRepository(
-            sdk: MEGASdk.shared
+            sdk: MEGASdk.shared,
+            chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
         ),
         fileCacheRepository: FileCacheRepository.newRepo,
         nodeRepository: NodeRepository.newRepo, 

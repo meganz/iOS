@@ -13,11 +13,11 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     private let downloadBatchResult: Result<[TransferEventEntity], any Error>?
     private let downloadBatchEventsError: (any Error)?
 
-    /// Every batch `download(batch:)` was handed, in call order.
+    /// Every batch `downloadProgress(batch:)` was handed, in call order.
     @Atomic public var startedDownloadBatches = [[DownloadBatchItemEntity]]()
     @Atomic public var cancelDownloadTransfers_calledTimes = 0
 
-    /// Fires for every batch handed to `download(batch:)`, for a test that has to wait for the
+    /// Fires for every batch handed to `downloadProgress(batch:)`, for a test that has to wait for the
     /// hand over instead of assuming it already happened.
     public var handedOverBatches: AnyAsyncSequence<[DownloadBatchItemEntity]> {
         handOverStream.eraseToAnyAsyncSequence()
@@ -27,7 +27,7 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     private let handOverContinuation: AsyncStream<[DownloadBatchItemEntity]>.Continuation
 
     /// - Parameters:
-    ///   - downloadBatchResult: The events `download(batch:)` emits, or the error it throws
+    ///   - downloadBatchResult: The events `downloadProgress(batch:)` emits, or the error it throws
     ///     instead of handing the batch over at all. `nil` falls back to `completionResult`.
     ///   - downloadBatchEventsError: An error to end the event sequence with, after the events of
     ///     `downloadBatchResult`.
@@ -58,7 +58,7 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
         try folderDownloadResult.get()
     }
 
-    public func download(batch: [DownloadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+    public func downloadProgress(batch: [DownloadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
         $startedDownloadBatches.mutate { $0.append(batch) }
         handOverContinuation.yield(batch)
         let events = downloadBatchEvents()
@@ -72,6 +72,12 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
                 continuation.finish(throwing: error)
             }
         }.eraseToAnyAsyncThrowingSequence()
+    }
+
+    /// Mirrors the repository: the batch is handed over exactly as `downloadProgress(batch:)` does,
+    /// and the call returns on the batch's `finish` or throws what ended the sequence before it.
+    public func download(batch: [DownloadBatchItemEntity]) async throws {
+        _ = try await downloadProgress(batch: batch).first(where: \.isTerminal)
     }
 
     public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {

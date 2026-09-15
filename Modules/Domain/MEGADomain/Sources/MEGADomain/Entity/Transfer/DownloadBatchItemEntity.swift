@@ -1,8 +1,6 @@
 import Foundation
 
 /// One item of a batch download: what to download, where it is stored and how it is queued.
-///
-/// Handed to `DownloadFileRepositoryProtocol.download(batch:)`, which downloads the whole selection as a single transfer
 public struct DownloadBatchItemEntity: Sendable {
     /// What the item downloads, and with it what the data layer has to resolve to reach the node.
     public enum Source: Sendable {
@@ -16,21 +14,19 @@ public struct DownloadBatchItemEntity: Sendable {
     }
 
     public let source: Source
-    public let destinationFolder: URL
-    public let name: String?
+    /// Where the item is stored, and under what name.
+    public let destination: DownloadDestinationEntity
     public let appData: String?
     public let startFirst: Bool
 
     public init(
         source: Source,
-        destinationFolder: URL,
-        name: String? = nil,
+        destination: DownloadDestinationEntity,
         appData: String? = nil,
         startFirst: Bool = false
     ) {
         self.source = source
-        self.destinationFolder = destinationFolder
-        self.name = name
+        self.destination = destination
         self.appData = appData
         self.startFirst = startFirst
     }

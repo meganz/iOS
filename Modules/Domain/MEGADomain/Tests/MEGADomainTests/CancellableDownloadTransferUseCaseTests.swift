@@ -99,7 +99,7 @@ struct CancellableDownloadTransferUseCaseTests {
         ])
 
         let batch = try #require(repository.startedDownloadBatches.first)
-        #expect(batch.map(\.destinationFolder) == [Self.documentsDirectory, Self.documentsDirectory])
+        #expect(batch.map(\.destination) == [.folder(Self.documentsDirectory), .folder(Self.documentsDirectory)])
     }
 
     @Test("What to store the item as, and how to queue it, is handed over with it")
@@ -111,7 +111,7 @@ struct CancellableDownloadTransferUseCaseTests {
         ])
 
         let item = try #require(repository.startedDownloadBatches.first?.first)
-        #expect(item.name == "photo.jpg")
+        #expect(item.destination == .folder(Self.documentsDirectory, name: "photo.jpg"))
         #expect(item.appData == "appData")
         #expect(item.startFirst)
     }

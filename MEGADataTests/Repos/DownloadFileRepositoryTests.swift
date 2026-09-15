@@ -51,6 +51,7 @@ class DownloadFileRepositoryTests: XCTestCase {
         DownloadFileRepository(
             sdk: sdk,
             sharedFolderSdk: folderLinksSDK,
-            nodeProvider: nodeProvider)
+            nodeProvider: nodeProvider,
+            chatNodeProvider: MockChatMEGANodeProvider())
     }
 }

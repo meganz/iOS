@@ -941,6 +941,37 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         delegate.onTransferFinish?(self, transfer: transfer, error: error)
     }
 
+    private let downloadBatchRecords = MockDownloadBatchRecords()
+
+    /// The batches handed to `startDownloadBatch`, in the order they arrived, each item as the SDK
+    /// received it.
+    public var startedDownloadBatches: [[MockDownloadBatchItem]] { downloadBatchRecords.startedBatches }
+    /// The cancel tokens handed to `startDownloadBatch`, in the order they arrived.
+    public var startedDownloadBatchCancelTokens: [MEGACancelToken] { downloadBatchRecords.startedCancelTokens }
+
+    public override func startDownloadBatch(withItems items: MEGADownloadItemList, cancelToken: MEGACancelToken?, collisionCheck: CollisionCheck, collisionResolution: CollisionResolution, delegate: any MEGATransferDelegate) {
+        downloadBatchRecords.record(items, cancelToken: cancelToken)
+
+        // A batch is one transfer to the caller, so it answers once, the way `startDownloadNode` does.
+        let transfer: MockTransfer
+        let error: MockError
+
+        switch stubbedDownloadTransferResult {
+        case .success(let stubbedTransfer):
+            transfer = stubbedTransfer
+            error = MockError(errorType: .apiOk)
+        case .failure(let stubbedError):
+            transfer = MockTransfer(type: .download)
+            error = stubbedError
+        case nil:
+            transfer = MockTransfer(type: .download)
+            error = MockError(errorType: .apiOk)
+        }
+
+        delegate.onTransferStart?(self, transfer: transfer)
+        delegate.onTransferFinish?(self, transfer: transfer, error: error)
+    }
+
     /// The delegate callbacks each upload fires, keyed by the local path it was started with, or
     /// by that path's last component when the items of a batch are told apart by name alone.
     public var stubbedUploadScripts: [String: MockUploadScript] = [:]

@@ -76,7 +76,8 @@ final class ExportFileRouter: ExportFileViewRouting {
             downloadFileRepository: DownloadFileRepository(
                 sdk: .sharedSdk,
                 sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil,
-                nodeProvider: nodeProvider
+                nodeProvider: nodeProvider,
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
             ),
             offlineFilesRepository: OfflineFilesRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,

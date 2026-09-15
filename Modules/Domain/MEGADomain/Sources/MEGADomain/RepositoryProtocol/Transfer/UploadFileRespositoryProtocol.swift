@@ -75,7 +75,7 @@ public protocol UploadFileRepositoryProtocol: Sendable {
     
     /// Uploads a batch of files and folders and reports the state of that batch.
     ///
-    /// The mirror of `DownloadFileRepositoryProtocol.download(batch:)` and, until the SDK gains a
+    /// The mirror of `DownloadFileRepositoryProtocol.downloadProgress(batch:)` and, until the SDK gains a
     /// batch upload of its own, the stand-in for one: the events of the batch's items are folded
     /// here into the events of a single transfer, so that a caller reads an upload batch exactly
     /// as it reads a download one: folder updates that count the whole batch, and a

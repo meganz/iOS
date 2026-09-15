@@ -105,7 +105,9 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             saveMediaUseCase: SaveMediaToPhotosUseCase(
                 downloadFileRepository: DownloadFileRepository(
                     sdk: sdk,
-                    nodeProvider: nodeProvider),
+                    nodeProvider: nodeProvider,
+                    chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
+                ),
                 fileCacheRepository: FileCacheRepository.newRepo,
                 nodeRepository: nodeRepository,
                 chatNodeRepository: ChatNodeRepository.newRepo,

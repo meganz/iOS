@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -56,13 +57,20 @@ struct SlideShowRouter: Routing {
     }
 
     private func slideShowDataSource(photos: [NodeEntity]) -> SlideShowDataSource {
-        SlideShowDataSource(
+        let downloadRepository = DownloadFileRepository(
+            sdk: MEGASdk.shared,
+            chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
+        )
+        
+        return SlideShowDataSource(
             currentPhoto: dataProvider.currentPhotoNodeEntity,
             nodeEntities: photos,
             thumbnailUseCase: dataProvider.makeThumbnailUseCase(),
-            fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: FileCacheRepository.newRepo,
-                                                     fileSystemRepository: FileSystemRepository.sharedRepo,
-                                                     downloadFileRepository: DownloadFileRepository.newRepo),
+            fileDownloadUseCase: FileDownloadUseCase(
+                fileCacheRepository: FileCacheRepository.newRepo,
+                fileSystemRepository: FileSystemRepository.sharedRepo,
+                downloadFileRepository: downloadRepository
+            ),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             advanceNumberOfPhotosToLoad: 10
         )

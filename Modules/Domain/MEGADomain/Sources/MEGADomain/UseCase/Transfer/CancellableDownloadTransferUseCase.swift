@@ -25,14 +25,14 @@ public struct CancellableDownloadTransferUseCase: CancellableTransferUseCaseProt
     }
 
     public func start(transfers: [CancellableTransferEntity]) -> AnyAsyncSequence<CancellableTransferStateEntity> {
-        let destinationFolder = fileSystemRepository.documentsDirectory()
+        let offlineFolder = fileSystemRepository.documentsDirectory()
         let batch = transfers.compactMap {
-            $0.downloadBatchItemEntity(destinationFolder: destinationFolder)
+            $0.downloadBatchItemEntity(in: offlineFolder)
         }
         
         MEGALog.log(level: .info, message: "[CancellableTransfer] downloading batch of \(batch.count) item(s)")
 
-        return mapper.map(from: { [downloadFileRepository] in downloadFileRepository.download(batch: batch) })
+        return mapper.map(from: { [downloadFileRepository] in downloadFileRepository.downloadProgress(batch: batch) })
     }
     
     public func cancel() {
@@ -42,7 +42,7 @@ public struct CancellableDownloadTransferUseCase: CancellableTransferUseCaseProt
 }
 
 private extension CancellableTransferEntity {
-    func downloadBatchItemEntity(destinationFolder: URL) -> DownloadBatchItemEntity? {
+    func downloadBatchItemEntity(in offlineFolder: URL) -> DownloadBatchItemEntity? {
         let source: DownloadBatchItemEntity.Source? = switch type {
         case .download:
             .node(handle)
@@ -61,8 +61,7 @@ private extension CancellableTransferEntity {
         guard let source else { return nil }
         return DownloadBatchItemEntity(
             source: source,
-            destinationFolder: destinationFolder,
-            name: name,
+            destination: .folder(offlineFolder, name: name),
             appData: appData,
             startFirst: startFirst
         )

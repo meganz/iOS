@@ -19,7 +19,7 @@ struct DownloadFileRepositoryTests {
         sdk.stubbedDownloadTransferResult = .failure(MockError(errorType: .apiEWrite))
         sdk.stubbedFolderTransferUpdates = folderUpdates
 
-        return DownloadFileRepository(sdk: sdk, nodeProvider: MockMEGANodeProvider(node: folderNode))
+        return DownloadFileRepository(sdk: sdk, nodeProvider: MockMEGANodeProvider(node: folderNode), chatNodeProvider: MockChatMEGANodeProvider())
     }
 
     /// The transfer only reports the size of the tree once it starts building the local one, so a failure
@@ -62,7 +62,7 @@ struct DownloadFileRepositoryNodeResolutionTests {
         accountNodes: [MEGANode] = [],
         preresolvedNodes: [HandleEntity: MEGANode] = [:]
     ) -> DownloadFileRepository {
-        DownloadFileRepository(sdk: MockSdk(nodes: accountNodes), preresolvedNodes: preresolvedNodes)
+        DownloadFileRepository(sdk: MockSdk(nodes: accountNodes), chatNodeProvider: MockChatMEGANodeProvider(), preresolvedNodes: preresolvedNodes)
     }
 
     @Test("a node that is only in the resolved nodes is downloaded rather than looked up")
@@ -133,7 +133,8 @@ struct DownloadFileRepositoryFileLinkTests {
     private static func makeSUT(fileLinkNode: MEGANode?) -> DownloadFileRepository {
         DownloadFileRepository(
             sdk: MockSdk(fileLinkNode: fileLinkNode),
-            nodeProvider: MockMEGANodeProvider(node: fileLinkNode)
+            nodeProvider: MockMEGANodeProvider(node: fileLinkNode),
+            chatNodeProvider: MockChatMEGANodeProvider()
         )
     }
 
@@ -169,5 +170,122 @@ struct DownloadFileRepositoryFileLinkTests {
         let events = try await Self.downloadEvents(from: sut)
 
         #expect(events.isEmpty)
+    }
+}
+
+/// Covers the batch download: what of each item reaches the SDK, and what the awaiting overload --
+/// the one a caller with nothing to show for progress uses -- reports back.
+@Suite("DownloadFileRepository batch downloads")
+struct DownloadFileRepositoryBatchTests {
+    private static let photoNode = MockNode(handle: 5, name: "photo.jpg")
+    private static let destination = URL(fileURLWithPath: "/tmp/Documents")
+
+    private static func makeSUT(
+        transferResult: Result<MockTransfer, MockError>? = nil
+    ) -> (sut: DownloadFileRepository, sdk: MockSdk) {
+        let sdk = MockSdk(nodes: [photoNode])
+        sdk.stubbedDownloadTransferResult = transferResult
+        return (
+            DownloadFileRepository(
+                sdk: sdk,
+                nodeProvider: MockMEGANodeProvider(node: photoNode),
+                chatNodeProvider: MockChatMEGANodeProvider()
+            ),
+            sdk
+        )
+    }
+
+    private static func batchItem(
+        destination: DownloadDestinationEntity = .folder(destination),
+        appData: String? = nil,
+        startFirst: Bool = false
+    ) -> DownloadBatchItemEntity {
+        DownloadBatchItemEntity(
+            source: .node(photoNode.handle),
+            destination: destination,
+            appData: appData,
+            startFirst: startFirst
+        )
+    }
+
+    @Test("a destination folder reaches the SDK as a folder rather than as a file path")
+    func startedBatch_carriesTheFolderAsAFolder() async throws {
+        let (sut, sdk) = Self.makeSUT()
+
+        try await sut.download(batch: [Self.batchItem()])
+
+        let item = try #require(sdk.startedDownloadBatches.first?.first)
+        // Without the separator the SDK reads the path as the file to write, landing the node in
+        // /tmp under the name Documents.
+        #expect(item.localPath == "/tmp/Documents/")
+        #expect(item.customName == nil, "Nothing was renamed, so the node keeps the name it has on MEGA.")
+    }
+
+    @Test("a destination file reaches the SDK as the folder holding it and the name to store it under")
+    func startedBatch_carriesTheFileAsAFolderAndName() async throws {
+        let (sut, sdk) = Self.makeSUT()
+
+        try await sut.download(
+            batch: [Self.batchItem(destination: .file(Self.destination.appendingPathComponent("photo.jpg")))]
+        )
+
+        let item = try #require(sdk.startedDownloadBatches.first?.first)
+        #expect(item.localPath == "/tmp/Documents/")
+        #expect(item.customName == "photo.jpg")
+    }
+
+    @Test("what the item was to be tagged and queued as is handed to the SDK with it")
+    func startedBatch_carriesTheItemsOptions() async throws {
+        let (sut, sdk) = Self.makeSUT()
+
+        try await sut.download(batch: [Self.batchItem(appData: ">SaveInPhotosApp", startFirst: true)])
+
+        let batch = try #require(sdk.startedDownloadBatches.first)
+        let item = try #require(batch.first)
+        #expect(sdk.startedDownloadBatches.count == 1, "One batch, however many items it holds.")
+        #expect(batch.count == 1)
+        #expect(item.appData == ">SaveInPhotosApp")
+        #expect(item.startFirst)
+        #expect(item.undelete == false)
+    }
+
+    @Test("every item of one batch is started under the same cancel token")
+    func startedBatch_sharesOneCancelToken() async throws {
+        let (sut, sdk) = Self.makeSUT()
+
+        try await sut.download(batch: [Self.batchItem(), Self.batchItem()])
+
+        // The batch is cancelled as a whole, which only works while one token covers all of it.
+        #expect(sdk.startedDownloadBatchCancelTokens.count == 1)
+    }
+
+    @Test("awaiting a batch returns once the transfer has finished")
+    func awaitedBatch_returnsOnFinish() async throws {
+        let (sut, _) = Self.makeSUT(transferResult: .success(MockTransfer(type: .download)))
+
+        try await sut.download(batch: [Self.batchItem()])
+    }
+
+    @Test("awaiting a batch that failed throws rather than returning as if it had finished")
+    func awaitedBatch_throwsOnFailure() async {
+        let (sut, _) = Self.makeSUT(transferResult: .failure(MockError(errorType: .apiEWrite)))
+
+        await #expect(throws: (any Error).self) {
+            try await sut.download(batch: [Self.batchItem()])
+        }
+    }
+
+    @Test("awaiting a batch whose items resolve to no node still returns rather than hanging")
+    func awaitedBatch_withNothingToDownload_returns() async throws {
+        let sdk = MockSdk()
+        let sut = DownloadFileRepository(
+            sdk: sdk,
+            nodeProvider: MockMEGANodeProvider(),
+            chatNodeProvider: MockChatMEGANodeProvider()
+        )
+
+        try await sut.download(batch: [Self.batchItem()])
+
+        #expect(try #require(sdk.startedDownloadBatches.first).isEmpty)
     }
 }

@@ -214,7 +214,9 @@ extension PhotoBrowserDataProvider {
             downloadFileRepository: DownloadFileRepository(
                 sdk: .shared,
                 sharedFolderSdk: displayMode == .nodeInsideFolderLink ? sdk : nil,
-                nodeProvider: nodeProvider),
+                nodeProvider: nodeProvider,
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
+            ),
             fileCacheRepository: FileCacheRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
             chatNodeRepository: ChatNodeRepository.newRepo,

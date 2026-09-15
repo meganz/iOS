@@ -69,9 +69,12 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     }
     
     private func makeDownloadFileRepository(sdk: MEGASdk) -> DownloadFileRepository {
-        DownloadFileRepository(sdk: sdk,
-                               sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil,
-                               preresolvedNodes: preresolvedNodes)
+        DownloadFileRepository(
+            sdk: sdk,
+            sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil,
+            chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared),
+            preresolvedNodes: preresolvedNodes
+        )
     }
     
     func build() -> UIViewController {

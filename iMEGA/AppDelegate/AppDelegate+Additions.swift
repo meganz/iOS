@@ -78,6 +78,8 @@ extension AppDelegate {
 
     @objc func startTransferQuotaWarningMonitoring() {
         guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningRevampPhaseTwo) else { return }
+        BatchDownloadFeatureFlag.isEnabled = true
+        
         Task {
             await TransferQuotaWarningMonitor(
                 presentDialog: { QuotaWarningsRouter().presentTransferDialog(severity: $0) }

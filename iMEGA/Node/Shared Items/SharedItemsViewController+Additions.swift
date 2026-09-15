@@ -26,7 +26,11 @@ extension SharedItemsViewController {
     }
 
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
-        SharedItemsViewModel(
+        let downloadRepository = DownloadFileRepository(
+            sdk: MEGASdk.shared,
+            chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: MEGASdk.shared)
+        )
+        return SharedItemsViewModel(
             shareUseCase: ShareUseCase(
                 shareRepository: ShareRepository.newRepo,
                 filesSearchRepository: FilesSearchRepository.newRepo,
@@ -40,7 +44,7 @@ extension SharedItemsViewController {
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
-                downloadFileRepository: DownloadFileRepository.newRepo,
+                downloadFileRepository: downloadRepository,
                 fileCacheRepository: FileCacheRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo,
                 chatNodeRepository: ChatNodeRepository.newRepo,
