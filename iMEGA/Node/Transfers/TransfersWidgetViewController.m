@@ -312,7 +312,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    if (MEGAReachabilityManager.isReachable) {
+    if (MEGAReachabilityManager.isReachable || self.isNewOfflineModeEnabled) {
         if (self.inProgressButton.selected) {
             numberOfRows = self.transfers.count;
         } else {
@@ -444,7 +444,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
-    if (MEGAReachabilityManager.isReachable) {
+    if (MEGAReachabilityManager.isReachable || self.isNewOfflineModeEnabled) {
         numberOfSections = 1;
     }
     

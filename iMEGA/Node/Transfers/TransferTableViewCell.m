@@ -104,7 +104,7 @@
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %% of %@ ", percentage  * 100, fileSize];
     NSMutableAttributedString *percentageAttributedString = [NSMutableAttributedString.alloc initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:percentageColor}];
     
-    if (transfer.state == MEGATransferStateActive && ![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+    if (transfer.state == MEGATransferStateActive && ![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"] && !self.isNetworkOffline) {
         NSString *speed = [NSString stringWithFormat:@"%@/s ", [NSString memoryStyleStringFromByteCount:transfer.speed]];
         NSAttributedString *speedAttributedString = [NSAttributedString.alloc initWithString:speed attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_secondaryTextColor]}];
         [percentageAttributedString appendAttributedString:speedAttributedString];
@@ -125,7 +125,12 @@
 
 #pragma mark - Private
 - (void)configureCellWithTransferState:(MEGATransferState)transferState {
-    if (self.overquota && self.transfer.type == MEGATransferTypeDownload) {
+    BOOL isOffline = self.isNetworkOffline;
+    if (isOffline && [self isInFlightTransferState:transferState]) {
+        transferState = MEGATransferStatePaused;
+    }
+    
+    if (!isOffline && self.overquota && self.transfer.type == MEGATransferTypeDownload) {
         UIImage *image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingOverquotaTransferImage : UIImage.mnz_uploadingOverquotaTransferImage;
         [self setTransferStateIcon:image color:[self transferStateOverQuotaIconColor]];
         
@@ -133,6 +138,7 @@
         self.infoLabel.textColor = [self transferStateOverQuotaTextColor];
         
         self.pauseButton.hidden = NO;
+        self.pauseButton.enabled = YES;
         return;
     }
     switch (transferState) {
@@ -267,6 +273,18 @@
         }
     }
     [self updatePauseButtonTintColor];
+}
+
+- (BOOL)isInFlightTransferState:(MEGATransferState)transferState {
+    switch (transferState) {
+        case MEGATransferStateComplete:
+        case MEGATransferStateCancelled:
+        case MEGATransferStateFailed:
+            return NO;
+            
+        default:
+            return YES;
+    }
 }
 
 #pragma mark - IBActions

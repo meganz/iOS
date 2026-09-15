@@ -48,9 +48,16 @@ extension TransferTableViewCell {
         UserDefaults.standard.bool(forKey: "TransfersPaused")
     }
     
+    @objc var isNetworkOffline: Bool {
+        !MEGAReachabilityManager.isReachable() && DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+    }
+
     @objc func updatePauseButtonTintColor() {
-        let color = Self.areTransfersPaused ? TokenColors.Icon.disabled : TokenColors.Icon.primary
-        pauseButton.tintColor = color
+        let isInert = isNetworkOffline
+        pauseButton.tintColor = Self.areTransfersPaused || isInert
+            ? TokenColors.Icon.disabled
+            : TokenColors.Icon.primary
+        pauseButton.isEnabled = !isInert
     }
 }
 
