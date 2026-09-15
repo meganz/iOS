@@ -3,7 +3,6 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
-import MEGAUIComponent
 import Search
 import SwiftUI
 import Transfer
@@ -175,9 +174,6 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 }
         case let .error(reason):
             fullScreenLinkUnavailableContent(reason)
-                // The design draws the bar as transparent page background, with only the close
-                // button carrying a glass capsule.
-                .hideNavigationToolbarBackground()
                 .noNetworkConnection()
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {

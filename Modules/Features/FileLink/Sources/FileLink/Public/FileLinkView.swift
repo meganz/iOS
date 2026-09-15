@@ -4,7 +4,6 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
-import MEGAUIComponent
 import SwiftUI
 import Transfer
 
@@ -163,15 +162,13 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
             .toolbar { toolbarContent }
         case let .error(reason):
             fullScreenLinkUnavailableContent(reason)
-                // The design draws the bar as transparent page background, with only the close
-                // button carrying a glass capsule.
-                .hideNavigationToolbarBackground()
                 .toolbar { toolbarContent }
         }
     }
 
     /// Centres the unavailable state on the whole screen rather than on the area below the
-    /// navigation bar, which is transparent here. Same treatment as the folder link.
+    /// navigation bar, so that it stays optically centred under the translucent bar. Same treatment
+    /// as the folder link.
     private func fullScreenLinkUnavailableContent(_ reason: LinkUnavailableReason) -> some View {
         GeometryReader { proxy in
             let topOffset = proxy.frame(in: .global).minY
