@@ -1882,6 +1882,8 @@
 		AA12423B0002000000000002 /* IncompleteDownloadAlertRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12423B0001000000000001 /* IncompleteDownloadAlertRouterTests.swift */; };
 		AB123720000000000000F002 /* PromoDialogBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F001 /* PromoDialogBlocking.swift */; };
 		AB123720000000000000F004 /* PromoDialogInterruptibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */; };
+		ABCD12550000000000000001 /* MEGAPDFViewer in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD12550000000000000002 /* MEGAPDFViewer */; };
+		ABCD12550000000000000005 /* PDFViewerRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCD12550000000000000006 /* PDFViewerRevampRouter.swift */; };
 		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
@@ -4771,6 +4773,8 @@
 		AA12423B0001000000000001 /* IncompleteDownloadAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteDownloadAlertRouterTests.swift; sourceTree = "<group>"; };
 		AB123720000000000000F001 /* PromoDialogBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoDialogBlocking.swift; sourceTree = "<group>"; };
 		AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoDialogInterruptibilityTests.swift; sourceTree = "<group>"; };
+		ABCD12550000000000000003 /* MEGAPDFViewer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPDFViewer; sourceTree = "<group>"; };
+		ABCD12550000000000000006 /* PDFViewerRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouter.swift; sourceTree = "<group>"; };
 		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
@@ -5719,6 +5723,7 @@
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
 				169ADFCE2DD5BAA500AB80F1 /* MEGAInfrastructure in Frameworks */,
 				BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */,
+				ABCD12550000000000000001 /* MEGAPDFViewer in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */,
 				6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */,
@@ -8052,6 +8057,7 @@
 			isa = PBXGroup;
 			children = (
 				5B59B4CE236726D100A57229 /* DocumentPreviewer.storyboard */,
+				ABCD12550000000000000006 /* PDFViewerRevampRouter.swift */,
 				837B179428815E4400A4D01B /* PreviewDocumentViewController+Additions.swift */,
 				41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */,
 				41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */,
@@ -11018,6 +11024,7 @@
 				BF7758C92F21D6F40091DE2A /* Home */,
 				A83E525D2F8508EA002A37C3 /* MediaImport */,
 				14C12FCD2FA343D30021D501 /* MEGAAudioPlayer */,
+				ABCD12550000000000000003 /* MEGAPDFViewer */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
 				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
@@ -13926,6 +13933,7 @@
 				16F95A2D2DDF129A00A14DDE /* DeviceKit */,
 				995403F72E3CD0F500468F84 /* KMTransferUtils */,
 				994890EA2E4D70B100CBDC33 /* MEGAVideoPlayer */,
+				ABCD12550000000000000002 /* MEGAPDFViewer */,
 				A5DF52D82EB1BAB9003E890F /* MEGAUIComponent */,
 				A5E136852EB4FF9A004BDD4F /* MEGASdk */,
 				A5E136882EB4FFB3004BDD4F /* MEGAChatSdk */,
@@ -14338,6 +14346,7 @@
 				A5EA94182EB5ED21009778D3 /* XCLocalSwiftPackageReference "Modules/MEGASharedRepo/MEGAAuthentication" */,
 				A5EA94192EB5EDBF009778D3 /* XCLocalSwiftPackageReference "Modules/Features/MEGAPhotos" */,
 				A5EA941A2EB5EDF6009778D3 /* XCLocalSwiftPackageReference "Modules/Features/MEGAVideoPlayer" */,
+				ABCD12550000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGAPDFViewer" */,
 				A5EA941B2EB5EE27009778D3 /* XCLocalSwiftPackageReference "Modules/MEGASharedRepo/MEGAStoreKit" */,
 				A5EA941C2EB5EE55009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Notifications" */,
 				5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */,
@@ -15916,6 +15925,7 @@
 				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,
 				2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */,
 				2F26B3282578396E00486C40 /* PasteImagePreviewViewModel.swift in Sources */,
+				ABCD12550000000000000005 /* PDFViewerRevampRouter.swift in Sources */,
 				25D8406C2A9EE2860026D288 /* PermissionAlertModel.swift in Sources */,
 				9495DBB72A40870C00FA22EE /* PermissionAlertRouter.swift in Sources */,
 				9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */,
@@ -19123,6 +19133,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/Transfer;
 		};
+		ABCD12550000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGAPDFViewer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/MEGAPDFViewer;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -19644,6 +19658,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayoutYogaKit;
+		};
+		ABCD12550000000000000002 /* MEGAPDFViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPDFViewer;
 		};
 		B51616482B83361900C6E842 /* Notifications */ = {
 			isa = XCSwiftPackageProductDependency;
