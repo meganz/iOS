@@ -1,3 +1,6 @@
+import ChatRepo
+import MEGADomain
+
 /// The app-open trigger for the promotional offer landing dialog.
 ///
 /// Called from two places, because a launch and a return from the background are not the same event:
@@ -17,5 +20,10 @@ extension AppDelegate {
         Task { @MainActor in
             PromoLandingDialogLaunchPresenter.shared.cancel()
         }
+    }
+
+    @objc func shouldIgnoreUpgradeLink(_ url: URL) -> Bool {
+        guard url.mnz_isUpgradeLink else { return false }
+        return !PromoDialogInterruptibility(chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo)).canInterruptUser
     }
 }
