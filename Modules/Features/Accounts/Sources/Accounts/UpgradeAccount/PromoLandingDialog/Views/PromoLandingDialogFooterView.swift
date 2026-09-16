@@ -8,6 +8,7 @@ struct PromoLandingDialogFooterView: View {
     let title: String
     let productIdentifier: String
     let isOfferExpired: Bool
+    let isSideBySide: Bool
     let viewAllPlans: PromoLandingDialogContentViewModel.ViewAllPlans
 
     @StateObject private var purchaseViewModel: PlanPurchaseViewModel
@@ -16,6 +17,7 @@ struct PromoLandingDialogFooterView: View {
         title: String,
         productIdentifier: String,
         isOfferExpired: Bool,
+        isSideBySide: Bool,
         planPurchaser: some PlanPurchasing,
         purchaseTracker: some PlanPurchaseTracking,
         onPurchased: @escaping @MainActor () -> Void,
@@ -24,6 +26,7 @@ struct PromoLandingDialogFooterView: View {
         self.title = title
         self.productIdentifier = productIdentifier
         self.isOfferExpired = isOfferExpired
+        self.isSideBySide = isSideBySide
         self.viewAllPlans = viewAllPlans
         _purchaseViewModel = StateObject(
             wrappedValue: PlanPurchaseViewModel(
@@ -46,7 +49,7 @@ struct PromoLandingDialogFooterView: View {
             }
             viewAllPlansButton
         }
-        .maxWidthForWideScreen()
+        .if(!isSideBySide) { $0.maxWidthForWideScreen() }
         .padding(.horizontal, TokenSpacing._5)
         .padding(.vertical, TokenSpacing._7)
         .frame(maxWidth: .infinity)
