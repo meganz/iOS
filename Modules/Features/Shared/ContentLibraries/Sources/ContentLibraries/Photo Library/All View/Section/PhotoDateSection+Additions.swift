@@ -43,12 +43,6 @@ extension Array where Element: PhotoDateSection {
         return PhotoScrollPosition(handle: photo.handle, date: dayDate)
     }
 
-    /// Identity of the item at `indexPath` for change tracking: the node's *own* position, which
-    /// is the key ``changedItemIndexPaths(to:visiblePositions:)`` and `shouldRefresh` look up.
-    func nodePosition(at indexPath: IndexPath) -> PhotoScrollPosition? {
-        photo(at: indexPath).flatMap(\.position)
-    }
-
     /// `categoryDate` of the day bucket holding the item at `indexPath`. A section's
     /// `contentList` is its `photoByDayList` concatenated in order, so the item index is
     /// resolved by walking the days' counts.

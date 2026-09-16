@@ -133,23 +133,45 @@ struct NewTimelineViewModelTests {
             return result
         }
 
-        private static func sectionStream(
-            _ sections: [MediaDateSectionEntity]
-        ) -> AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> {
-            SingleItemAsyncSequence(item: .success(sections)).eraseToAnyAsyncSequence()
+        /// One stream per section pass, in the order the monitor subscribes to them. The paginated
+        /// skeleton is no longer built by `loadPhotos()`: production's `monitorDateSections` stream
+        /// prepends a full load of the same query, so the monitor's *first* emission is the initial
+        /// load and every later one is a reshape. Spelling the passes out is what lets a test act
+        /// between them.
+        private static func sectionStreams(
+            _ passes: [[MediaDateSectionEntity]]
+        ) -> [AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>] {
+            passes.map { SingleItemAsyncSequence(item: .success($0)).eraseToAnyAsyncSequence() }
+        }
+
+        /// Drive the initial load the way the View does: `loadPhotos()` — which on this path only
+        /// applies the saved filter — followed by one section pass.
+        private static func buildSkeleton(_ sut: NewTimelineViewModel) async {
+            await sut.loadPhotos()
+            await sut.monitorTimelineSections()
+        }
+
+        /// The same, with the grid reporting nothing on screen. The pass then plans no hydration,
+        /// leaving a pure skeleton for a scroll-driven window to act on in isolation.
+        private static func buildColdSkeleton(_ sut: NewTimelineViewModel) async {
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(0..<0)
+            await buildSkeleton(sut)
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(nil)
         }
 
         @Test("Builds a placeholder skeleton from date-section counts without touching the eager use case")
         func buildsSkeletonFromDateSections() async throws {
+            let recorder = MediaTimelineUseCaseRecorder()
             let photoLibraryUseCase = MockPhotoLibraryUseCase(allPhotos: [
                 NodeEntity(name: "real.jpg", handle: 1, hasThumbnail: true)
             ])
             let sut = makeSUT(
                 photoLibraryUseCase: photoLibraryUseCase,
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections())))
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.makeSections()]),
+                    recorder: recorder))
 
-            await sut.loadPhotos()
+            await Self.buildColdSkeleton(sut)
 
             let photos = sut.photoLibraryContentViewModel.library.allPhotos
             let allArePlaceholders = photos.allSatisfy(\.isTimelinePlaceholder)
@@ -158,44 +180,50 @@ struct NewTimelineViewModelTests {
             #expect(!sut.showEmptyStateView)
             // The eager media(...) path must not run when the skeleton use case is present.
             await #expect(photoLibraryUseCase.messages == [])
+            // The shape arrived on the monitor's prepended first emission, so nothing on this path
+            // may run a query for it a second time.
+            #expect(await recorder.dateSectionsCalls == 0)
         }
 
         @Test("Empty date sections show the empty state and an empty library")
         func emptySectionsShowEmptyState() async throws {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success([])))
+                    monitorDateSectionsSequences: Self.sectionStreams([[]])))
 
-            await sut.loadPhotos()
+            await Self.buildSkeleton(sut)
 
             #expect(sut.showEmptyStateView)
             #expect(sut.photoLibraryContentViewModel.library.allPhotos.isEmpty)
         }
 
-        @Test("The initial load hydrates the first window up front, so the top screen shows real nodes without a scroll")
-        func initialLoadEagerlyHydratesFirstWindow() async {
+        @Test("The first section pass hydrates the top window up front, so the top screen shows real nodes without a scroll")
+        func initialPassEagerlyHydratesFirstWindow() async {
+            // Nothing has been displayed yet, so the pass names the top window itself rather than
+            // committing a wall of placeholders that only fills in once the grid reports a range.
             let recorder = MediaTimelineUseCaseRecorder()
-            let firstPage = [
+            let sections = Self.makeSections()
+            let firstWindow = [
                 NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
                 NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
             ]
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
-                    mediaPageResult: .success(firstPage),
+                    mediaWindowResult: .success(firstWindow),
+                    monitorDateSectionsSequences: Self.sectionStreams([sections]), // counts 2 + 1 = 3
                     recorder: recorder))
 
-            await sut.loadPhotos()
+            await Self.buildSkeleton(sut)
 
             let photos = sut.photoLibraryContentViewModel.library.allPhotos
             #expect(photos.count == 3) // total sized from the counts
-            #expect(photos[0].handle == 10) // first page spliced at the top *before* the initial commit
+            #expect(photos[0].handle == 10) // spliced in *before* the initial commit
             #expect(photos[1].handle == 11)
-            #expect(photos[2].isTimelinePlaceholder) // beyond the fetched page → still a placeholder
-            // The first window is fetched once, as a forward page from the very top (after: nil).
-            let pageAfterCalls = await recorder.pageAfterCalls
-            #expect(pageAfterCalls.count == 1)
-            #expect(pageAfterCalls.first?.after == nil)
+            #expect(photos[2].isTimelinePlaceholder) // beyond the fetched window → still a placeholder
+            // A cold tree holds no real node to anchor a cursor on, so the top window teleports in
+            // by one offset fetch sized to the whole window, never a forward page.
+            #expect(await recorder.windowCalls == [.init(section: sections[0], offset: 0, limit: 3)])
+            #expect(await recorder.pageAfterCalls.isEmpty)
         }
 
         @Test("Hydrating a visible window splices fetched real nodes into the skeleton in place")
@@ -206,9 +234,9 @@ struct NewTimelineViewModelTests {
             ]
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
-                    mediaWindowResult: .success(reals)))
-            await sut.loadPhotos() // builds the 3-slot skeleton and stores the sections
+                    mediaWindowResult: .success(reals),
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.makeSections()]))) // 2 + 1 = 3
+            await Self.buildColdSkeleton(sut)
 
             await sut.hydrateVisibleWindow(0..<2)
 
@@ -225,14 +253,14 @@ struct NewTimelineViewModelTests {
             let realSlot0 = NodeEntity(name: "first.jpg", handle: 10, hasThumbnail: true)
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
                     // The gap borders a real node, so it must page forward from it (cursor),
                     // not teleport by offset — the offset result must stay unused.
                     mediaPageResult: .success([NodeEntity(name: "gap.jpg", handle: 99, hasThumbnail: true)]),
                     mediaWindowResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.makeSections()]), // 2 + 1 = 3
                     recorder: recorder))
-            await sut.loadPhotos() // 3-slot skeleton (eagerly hydrates the first window)
-            await recorder.reset() // ignore the initial eager fetch; assert only the scroll hydration below
+            await Self.buildColdSkeleton(sut) // a pure 3-slot skeleton: no window was planned
+            await recorder.reset()
 
             // Pre-hydrate slot 0 so the next visible window overlaps an already-real slot.
             let library = sut.photoLibraryContentViewModel.library
@@ -257,12 +285,12 @@ struct NewTimelineViewModelTests {
             let realSlot2 = NodeEntity(name: "last.jpg", handle: 20, hasThumbnail: true)
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
                     mediaPageBeforeResult: .success([NodeEntity(name: "up.jpg", handle: 77, hasThumbnail: true)]),
                     mediaWindowResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.makeSections()]), // 2 + 1 = 3
                     recorder: recorder))
-            await sut.loadPhotos() // 3-slot skeleton (eagerly hydrates the first window)
-            await recorder.reset() // ignore the initial eager fetch; assert only the scroll hydration below
+            await Self.buildColdSkeleton(sut) // a pure 3-slot skeleton: no window was planned
+            await recorder.reset()
 
             // Pre-hydrate the LAST slot so the gap above it has a real lower neighbour and no real
             // upper neighbour → backward paging.
@@ -286,15 +314,15 @@ struct NewTimelineViewModelTests {
             let sections = Self.makeSections()
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(sections), // counts 2 + 1 = 3
                     mediaWindowResult: .success([
                         NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
                     ]),
+                    monitorDateSectionsSequences: Self.sectionStreams([sections]), // counts 2 + 1 = 3
                     recorder: recorder))
-            await sut.loadPhotos() // eagerly hydrates the first window
-            await recorder.reset() // ignore the eager fetch; the empty pageAfterCalls below proves
-                                   // the isolated run teleported by offset, not by a cursor page
+            await Self.buildColdSkeleton(sut)
+            await recorder.reset() // the empty pageAfterCalls below proves the isolated run
+                                   // teleported by offset, not by a cursor page
 
             await sut.hydrateVisibleWindow(0..<2) // both neighbours are placeholders → offset
 
@@ -306,6 +334,35 @@ struct NewTimelineViewModelTests {
             #expect(await recorder.windowCalls == [.init(section: sections[0], offset: 0, limit: 2)])
             #expect(await recorder.pageAfterCalls.isEmpty)
             #expect(await recorder.pageBeforeCalls.isEmpty)
+        }
+
+        @Test("A reshape that drops the grid's reported range off the end hydrates the top instead of nothing")
+        func reshapePastReportedRangeFallsBackToTopWindow() async {
+            // The grid keeps reporting the last range it displayed — nothing ever clears it — so a
+            // filter change down to a much shorter set leaves that range pointing past the end of
+            // the new one. Hydrating nothing there would publish a screen of placeholders until the
+            // collection view reported again.
+            let recorder = MediaTimelineUseCaseRecorder()
+            let big = Self.sections(day1: 200, day2: 0)
+            let small = Self.sections(day1: 3, day2: 0)
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    mediaWindowResult: .success([
+                        NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                        NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true),
+                        NodeEntity(name: "c.jpg", handle: 12, hasThumbnail: true)
+                    ]),
+                    monitorDateSectionsSequences: Self.sectionStreams([big, small]),
+                    recorder: recorder))
+
+            await Self.buildSkeleton(sut)
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(150..<170)
+            await recorder.reset()
+
+            await sut.monitorTimelineSections() // the reshape down to 3 items
+
+            #expect(await recorder.windowCalls == [.init(section: small[0], offset: 0, limit: 3)])
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos.map(\.handle) == [10, 11, 12])
         }
 
         @Test("A cold run spanning two sections is filled by ONE offset window across the boundary")
@@ -322,10 +379,11 @@ struct NewTimelineViewModelTests {
             ]
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(sections), // counts 2 + 1 = 3
                     mediaWindowResult: .success(reals),
+                    monitorDateSectionsSequences: Self.sectionStreams([sections]), // counts 2 + 1 = 3
                     recorder: recorder))
-            await sut.loadPhotos()
+            await Self.buildColdSkeleton(sut)
+            await recorder.reset()
 
             await sut.hydrateVisibleWindow(0..<3) // one isolated run spanning both sections
 
@@ -335,8 +393,8 @@ struct NewTimelineViewModelTests {
         }
 
         /// Runs a reactive section pass from inside a mock fetch, exactly once. Must be armed
-        /// explicitly: the initial load issues its own first-page fetch, and the reactive pass this
-        /// triggers issues another — neither should consume the shot.
+        /// explicitly: the pass that builds the initial skeleton issues fetches of its own, and the
+        /// reactive pass this triggers issues another — none of them should consume the shot.
         @MainActor
         private final class ReactivePassTrigger {
             var sut: NewTimelineViewModel?
@@ -364,8 +422,7 @@ struct NewTimelineViewModelTests {
             let sut = makeSUT(
                 contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
                     timelineUserAttributeEntity: saved),
-                mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections())))
+                mediaTimelineUseCase: MockMediaTimelineUseCase())
             let queryIdBefore = sut.timelineQueryId
 
             await sut.loadPhotos()
@@ -376,9 +433,7 @@ struct NewTimelineViewModelTests {
 
         @Test("A sort-order change re-keys the section monitor")
         func sortOrderChangeRekeysTheSectionMonitor() {
-            let sut = makeSUT(
-                mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections())))
+            let sut = makeSUT(mediaTimelineUseCase: MockMediaTimelineUseCase())
             let queryIdBefore = sut.timelineQueryId
 
             sut.updateSortOrder(.modificationAsc)
@@ -397,16 +452,18 @@ struct NewTimelineViewModelTests {
             let trigger = ReactivePassTrigger()
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 2)), // 4 slots
                     mediaWindowResult: .success([
                         NodeEntity(name: "d2a.jpg", handle: 20, hasThumbnail: true),
                         NodeEntity(name: "d2b.jpg", handle: 21, hasThumbnail: true)
                     ]),
-                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 3, day2: 2)),
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 2), // 4 slots
+                        Self.sections(day1: 3, day2: 2)  // the reactive reshape
+                    ]),
                     onFetch: { await trigger.fireOnce() }))
             trigger.sut = sut
-            await sut.loadPhotos()
-            trigger.arm() // only race the scroll-driven hydration, not the initial load
+            await Self.buildColdSkeleton(sut) // pure skeleton, so the window below is an isolated run
+            trigger.arm() // only race the scroll-driven hydration, not the initial pass
 
             // 2..<4 lies entirely inside day2, so the day1-only reshape bumps no version this
             // hydration captured: `versionsStillValid` passes and only the library-revision check
@@ -426,12 +483,12 @@ struct NewTimelineViewModelTests {
             // consumers (e.g. the collection view's visible-position lookup).
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 2)), // 4 slots
                     mediaWindowResult: .success([
                         NodeEntity(name: "stale.jpg", handle: 10, hasThumbnail: true), // already at slot 0
                         NodeEntity(name: "new.jpg", handle: 99, hasThumbnail: true)
-                    ])))
-            await sut.loadPhotos() // an empty first page leaves a pure 4-slot skeleton
+                    ]),
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 2)])))
+            await Self.buildColdSkeleton(sut) // a pure 4-slot skeleton
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true)])
 
@@ -455,13 +512,15 @@ struct NewTimelineViewModelTests {
             ]
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1
-                    mediaWindowResult: .success(reals)))
-            await sut.loadPhotos()
+                    mediaWindowResult: .success(reals),
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.makeSections(), // counts 2 + 1
+                        Self.makeSections()  // a node-update-style reload: same shape, same filter
+                    ])))
+            await Self.buildColdSkeleton(sut)
             await sut.hydrateVisibleWindow(0..<2) // slots 0, 1 now real
 
-            // A node-update-style reload fetches the same sections (same shape, same filter).
-            await sut.loadPhotos()
+            await sut.monitorTimelineSections()
 
             let photos = sut.photoLibraryContentViewModel.library.allPhotos
             #expect(photos[0].handle == 10) // hydrated content preserved, not wiped
@@ -473,16 +532,22 @@ struct NewTimelineViewModelTests {
         func filterChangeRebuildsSkeletonDiscardingHydration() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()),
                     mediaWindowResult: .success([
                         NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+                    ]),
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.makeSections(),
+                        Self.makeSections() // the re-subscription the filter change forces
                     ])))
-            await sut.loadPhotos()
+            await Self.buildColdSkeleton(sut)
             await sut.hydrateVisibleWindow(0..<2) // hydrate under the initial filter
 
             await sut.updatePhotoFilter(option: .images) // a different dataset
-            await sut.loadPhotos()
+            // Nothing is on screen across the switch, so the rebuilt skeleton is asserted as it is
+            // committed rather than after the pass has hydrated its top window back in.
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(0..<0)
+            await sut.monitorTimelineSections()
 
             let photos = sut.photoLibraryContentViewModel.library.allPhotos
             let allArePlaceholders = photos.allSatisfy(\.isTimelinePlaceholder)
@@ -491,9 +556,7 @@ struct NewTimelineViewModelTests {
 
         @Test("Changing sort order reloads (re-fetches sections) instead of locally re-sorting placeholders")
         func sortOrderChangeReloads() async throws {
-            let sut = makeSUT(
-                mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections())))
+            let sut = makeSUT(mediaTimelineUseCase: MockMediaTimelineUseCase())
             let taskId = sut.loadPhotosTaskId
 
             sut.updateSortOrder(.modificationAsc)
@@ -506,13 +569,15 @@ struct NewTimelineViewModelTests {
         func reactiveShapeChangePreservesHydrationByIdentity() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()), // day1: 2, day2: 1
                     mediaWindowResult: .success([
                         NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
                     ]),
-                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 2, day2: 2))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.makeSections(),            // day1: 2, day2: 1
+                        Self.sections(day1: 2, day2: 2) // day2 grows by one
+                    ])))
+            await Self.buildColdSkeleton(sut)
             await sut.hydrateVisibleWindow(0..<2) // day1 slots 0, 1 now real (10, 11)
 
             await sut.monitorTimelineSections() // day2 grows by one → reshape + re-project
@@ -529,9 +594,11 @@ struct NewTimelineViewModelTests {
         func reactiveEarlierBucketGrowthRelocatesHydratedNode() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 1, day2: 1)), // 2 slots
-                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 2, day2: 1))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 1, day2: 1), // 2 slots
+                        Self.sections(day1: 2, day2: 1)  // day1 grows 1 → 2
+                    ])))
+            await Self.buildColdSkeleton(sut)
             // Pre-hydrate the day2 slot (index 1, local offset 0 within day2).
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 1, with: [NodeEntity(name: "d2.jpg", handle: 20, hasThumbnail: true)])
@@ -549,9 +616,11 @@ struct NewTimelineViewModelTests {
         func reactiveCountChangeDropsBucketToPlaceholders() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 0)), // single bucket, 2 slots
-                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 1, day2: 0))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 0), // single bucket, 2 slots
+                        Self.sections(day1: 1, day2: 0)  // its count changes
+                    ])))
+            await Self.buildColdSkeleton(sut)
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [
                     NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
@@ -575,7 +644,6 @@ struct NewTimelineViewModelTests {
             // a node already carried elsewhere — the duplicate that crashes duplicate-key consumers.
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1)),
                     // day1 dropped to placeholders → re-hydrated by paging backward from the day2 anchor.
                     mediaPageResult: .success([NodeEntity(name: "spill.jpg", handle: 12, hasThumbnail: true)]),
                     mediaPageBeforeResult: .success([
@@ -583,8 +651,11 @@ struct NewTimelineViewModelTests {
                         NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "p1.jpg", handle: 11, hasThumbnail: true)
                     ]),
-                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 3, day2: 1))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 3, day2: 1) // day1 grew at the front
+                    ])))
+            await Self.buildColdSkeleton(sut)
             // Fully hydrate the initial 3 slots: day1 [10, 11], day2 [12].
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [
@@ -607,14 +678,16 @@ struct NewTimelineViewModelTests {
         func reactiveTwoPhaseCommitHydratesVisibleWindowInline() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1)),
                     mediaPageBeforeResult: .success([
                         NodeEntity(name: "n.jpg", handle: 99, hasThumbnail: true),  // the new upload
                         NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "p1.jpg", handle: 11, hasThumbnail: true)
                     ]),
-                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 3, day2: 1))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 3, day2: 1) // day1 grows at the front
+                    ])))
+            await Self.buildColdSkeleton(sut)
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [
                     NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
@@ -637,13 +710,15 @@ struct NewTimelineViewModelTests {
         func reactiveSameShapePreservesHydration() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()),
                     mediaWindowResult: .success([
                         NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
                     ]),
-                    monitorDateSectionsSequence: Self.sectionStream(Self.makeSections()))) // identical shape
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.makeSections(),
+                        Self.makeSections() // identical shape
+                    ])))
+            await Self.buildColdSkeleton(sut)
             await sut.hydrateVisibleWindow(0..<2)
 
             await sut.monitorTimelineSections() // same shape → keep the hydrated library untouched
@@ -658,9 +733,8 @@ struct NewTimelineViewModelTests {
         func reactiveEmptySectionsShowEmptyState() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()),
-                    monitorDateSectionsSequence: Self.sectionStream([])))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.makeSections(), []])))
+            await Self.buildColdSkeleton(sut)
             #expect(!sut.showEmptyStateView)
 
             await sut.monitorTimelineSections()
@@ -681,8 +755,8 @@ struct NewTimelineViewModelTests {
                         item: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true)])
                         .eraseToAnyAsyncSequence()),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)])))
+            await Self.buildColdSkeleton(sut)
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: false)])
 
@@ -701,8 +775,8 @@ struct NewTimelineViewModelTests {
                         item: [NodeEntity(name: "other.jpg", handle: 999, hasThumbnail: true)])
                         .eraseToAnyAsyncSequence()),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1))))
-            await sut.loadPhotos()
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)])))
+            await Self.buildColdSkeleton(sut)
             let hydrated = NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: false)
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [hydrated])
@@ -723,9 +797,9 @@ struct NewTimelineViewModelTests {
                         item: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: true)])
                         .eraseToAnyAsyncSequence()),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1)),
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)]),
                     excludeSensitivesResult: true))
-            await sut.loadPhotos()
+            await Self.buildColdSkeleton(sut)
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [
                     NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
@@ -746,9 +820,9 @@ struct NewTimelineViewModelTests {
                         item: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: true)])
                         .eraseToAnyAsyncSequence()),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1)),
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)]),
                     excludeSensitivesResult: false))
-            await sut.loadPhotos()
+            await Self.buildColdSkeleton(sut)
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [
                     NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
@@ -1036,6 +1110,17 @@ struct NewTimelineViewModelTests {
                 count: 2)]
         }
 
+        private static func sectionStreams() -> [AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>] {
+            [SingleItemAsyncSequence(item: .success(makeSections())).eraseToAnyAsyncSequence()]
+        }
+
+        /// The paginated path queries under the sort order from the section monitor, not from
+        /// `loadPhotos()` — so drive both, the way the View does.
+        private static func loadUnderCurrentSortOrder(_ sut: NewTimelineViewModel) async {
+            await sut.loadPhotos()
+            await sut.monitorTimelineSections()
+        }
+
         @Test("The menu offers nothing while the flag is off, even on the paginated path")
         func sortTypeIsNilWhenFlagIsOff() {
             let sut = makeSUT(
@@ -1129,11 +1214,11 @@ struct NewTimelineViewModelTests {
             let sut = makeSUT(
                 preferenceUseCase: preferenceUseCase,
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()),
+                    monitorDateSectionsSequences: Self.sectionStreams(),
                     recorder: recorder),
                 isDateTakenSortEnabled: false)
 
-            await sut.loadPhotos()
+            await Self.loadUnderCurrentSortOrder(sut)
 
             let queried = await recorder.sortOrders
             #expect(!queried.isEmpty)
@@ -1148,11 +1233,11 @@ struct NewTimelineViewModelTests {
             let sut = makeSUT(
                 preferenceUseCase: MockPreferenceUseCase(dict: [Self.dateTakenKey: true]),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.makeSections()),
+                    monitorDateSectionsSequences: Self.sectionStreams(),
                     recorder: recorder),
                 isDateTakenSortEnabled: true)
 
-            await sut.loadPhotos()
+            await Self.loadUnderCurrentSortOrder(sut)
 
             let queried = await recorder.sortOrders
             #expect(!queried.isEmpty)

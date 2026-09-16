@@ -76,11 +76,6 @@ final class NewTimelineViewModel: ObservableObject {
     /// fetches targeting the reshaped bucket, never hydration for the bucket the user is viewing.
     private var sectionVersions: [String: UInt] = [:]
 
-    /// The latest settled visible flat-index range, captured on each scroll-driven hydration so the
-    /// reactive path can hydrate that same window against a freshly-rebuilt skeleton *before*
-    /// committing (two-phase commit) — showing real content directly instead of a placeholder flash.
-    private var lastVisibleRange: Range<Int>?
-
     /// Bumped on every library commit made through ``commitLibrary(_:)``. The reactive section pass
     /// captures it before its `await`s and re-checks it before committing: if it changed, a metadata
     /// patch (or other commit) landed while the pass was suspended, so the pass — built from a now
@@ -183,13 +178,16 @@ final class NewTimelineViewModel: ObservableObject {
             if !isInitialLoadComplete {
                 try await loadSavedFilters()
             }
+            // The skeleton path publishes from ``monitorTimelineSections()``, whose stream prepends
+            // a first full load of the very same query. Running a second one here does not race it:
+            // the SDK serialises the two, so the duplicate waits out the first and then repeats it.
+            guard mediaTimelineUseCase == nil else { return }
             let taskId = loadPhotosTaskId
-            let query = paginationQuery
-            let (library, sections) = try await loadTimelineLibrary()
+            let library = try await timelinePhotoLibrary()
             // A filter or sort change replaces this task. A pass already past the fetch would
-            // otherwise put the outgoing query's content back, now stamped with its query.
+            // otherwise put the outgoing query's content back.
             guard !Task.isCancelled, loadPhotosTaskId == taskId else { return }
-            commitProjection(library, sections: sections, query: query)
+            commitProjection(library, sections: nil)
         } catch is CancellationError {
             MEGALogError("[\(type(of: self))] loadPhotos cancelled")
         } catch {
@@ -318,7 +316,17 @@ final class NewTimelineViewModel: ObservableObject {
             // This hydration plans against the *prospective* projection — the rebuilt library and
             // the sections that describe it — because `dateSections` still describes what is on
             // screen and does not move until `commitProjection`.
-            let range = photoLibraryContentViewModel.visiblePhotoIndexRange.value ?? lastVisibleRange
+            // The window is the grid's last reported range, which survives a reshape: the reload
+            // keeps the content offset, so the user is still near the same flat index. Fall back to
+            // the top when it no longer reaches — a much shorter query, or nothing displayed yet.
+            let total = sections.reduce(0) { $0 + $1.count }
+            let topWindow = total > 0 ? 0..<min(initialHydrationWindowSize, total) : nil
+            let reported = photoLibraryContentViewModel.visiblePhotoIndexRange.value
+            let range = reported.flatMap { visible -> Range<Int>? in
+                // An empty range is an answer ("nothing on screen"); past the end is a stale query.
+                guard visible.isEmpty || visible.lowerBound < total else { return nil }
+                return visible.clamped(to: 0..<total)
+            } ?? topWindow
             let prospective = TimelineProjection(library: rebuilt, sections: sections)
             var assembled = rebuilt
             if let range, let hydrated = await hydratedVisibleWindow(in: prospective, range: range) {
@@ -581,49 +589,9 @@ final class NewTimelineViewModel: ObservableObject {
         return filterLocation == .cloudDrive
     }
     
-    private func loadTimelineLibrary() async throws -> (PhotoLibrary, [MediaDateSectionEntity]?) {
-        if let mediaTimelineUseCase {
-            try await skeletonPhotoLibrary(using: mediaTimelineUseCase)
-        } else {
-            (try await timelinePhotoLibrary(), nil)
-        }
-    }
-
-    /// Builds the count-sized skeleton *and* hydrates its first window in one step, so the initial
-    /// commit already shows real thumbnails for the top screen rather than a wall of placeholders
-    /// that fills in a moment later.
-    private func skeletonPhotoLibrary(
-        using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
-    ) async throws -> (PhotoLibrary, [MediaDateSectionEntity]?) {
-        let filter = photoFilterOptions.toMediaTimelineFilterEntity()
-        let order = mediaTimelineSortOrder
-
-        async let firstPageTask = mediaTimelineUseCase.mediaPage(
-            filter: filter, sortOrder: order, after: nil, limit: initialHydrationWindowSize)
-        let sections = try await mediaTimelineUseCase.dateSections(
-            filter: filter, granularity: .day, sortOrder: order)
-
-        try Task.checkCancellation()
-
-        showEmptyStateView = sections.isEmpty
-        guard let skeleton = await resolveSkeletonLibrary(for: sections) else {
-            // Shape unchanged (a no-op reload): keep the current — possibly already hydrated —
-            // library rather than dropping it back to a placeholder skeleton.
-            return (photoLibraryContentViewModel.library, nil)
-        }
-
-        // A failed / cancelled first page just means the top screen hydrates on scroll instead —
-        // never block the skeleton on it. `try?` swallows the first-page error, so re-check
-        // cancellation afterwards: a filter/sort switch cancels this `.task`, and without this a
-        // stale skeleton could fall through and be committed over the newer query's result.
-        let firstPage = (try? await firstPageTask) ?? []
-        try Task.checkCancellation()
-        guard firstPage.isNotEmpty else { return (skeleton, sections) }
-        return (skeleton.replacingPhotos(from: 0, with: firstPage), sections)
-    }
-
     /// Fold freshly-fetched date sections into a rebuilt library, or return `nil` when nothing needs
-    /// rebuilding. Shared by the initial / filter-driven load and the reactive section monitor.
+    /// rebuilding. The reactive section monitor is the only caller: its stream prepends the first
+    /// full load, so the initial skeleton and every later reshape come through the same place.
     ///
     /// - Same filter/sort AND structurally-identical shape → every position still maps to the same
     ///   bucket, so there is nothing to rebuild; returns `nil`. The current (possibly hydrated)
@@ -773,7 +741,6 @@ final class NewTimelineViewModel: ObservableObject {
     }
 
     func hydrateVisibleWindow(_ range: Range<Int>) async {
-        lastVisibleRange = range
         let revisionBefore = libraryRevision
         guard let hydrated = await hydratedVisibleWindow(in: publishedProjection, range: range) else { return }
         guard libraryRevision == revisionBefore else { return }

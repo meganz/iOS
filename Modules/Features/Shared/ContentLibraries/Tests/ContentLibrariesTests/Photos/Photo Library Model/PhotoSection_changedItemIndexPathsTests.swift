@@ -36,11 +36,10 @@ struct PhotoSection_changedItemIndexPathsTests {
         #expect(old.changedItemIndexPaths(to: new) == nil)
     }
 
-    /// The visibility lookup and the key it is looked up by must agree. `changedItemIndexPaths`
-    /// keys on `NodeEntity.position` (the node's own timestamp), so the caller has to build the
-    /// dictionary from `nodePosition(at:)`
+    /// A thumbnail arriving is only visible to the on-screen comparison, so it is seen when — and
+    /// only when — the cell is named as visible.
     @Test
-    func testChangedItemIndexPaths_visibleThumbnailFlip_isDetectedWhenKeyedByNodePosition() throws {
+    func testChangedItemIndexPaths_visibleThumbnailFlip_isDetectedOnlyForVisibleCells() {
         let skeleton = makeSkeleton(counts: [2, 1])
         let hydrated = NodeEntity(
             // 2022-08-18T12:00:45Z — no time zone offset makes that a local midnight.
@@ -51,16 +50,27 @@ struct PhotoSection_changedItemIndexPathsTests {
         let new = skeleton.replacingPhotos(from: 1, with: [withThumbnail]).photoDaySections
         let indexPath = IndexPath(item: 1, section: 0)
 
-        // Only `hasThumbnail` moved, so it is seen through the visible-cell comparison alone.
         #expect(old.changedItemIndexPaths(to: new) == [])
+        #expect(old.changedItemIndexPaths(to: new, visibleIndexPaths: [indexPath]) == [indexPath])
+        // A different cell being on screen says nothing about this one.
+        #expect(old.changedItemIndexPaths(to: new, visibleIndexPaths: [IndexPath(item: 0, section: 1)]) == [])
+    }
 
-        let nodeKeyed = try #require(old.nodePosition(at: indexPath))
-        #expect(old.changedItemIndexPaths(to: new, visiblePositions: [nodeKeyed: true]) == [indexPath])
+    /// The old node-derived key could not tell two cells apart while a splice had one node in two
+    /// slots. Index paths are unique by construction, so both cells compare independently.
+    @Test
+    func testChangedItemIndexPaths_sameNodeInTwoSlots_comparesEachCellIndependently() {
+        let skeleton = makeSkeleton(counts: [2, 1])
+        let duplicated = NodeEntity(handle: 99, modificationTime: Date(timeIntervalSince1970: 1_660_824_045))
+        let old = skeleton.replacingPhotos(at: [0: duplicated, 1: duplicated]).photoDaySections
+        let withThumbnail = NodeEntity(
+            handle: 99, hasThumbnail: true, modificationTime: duplicated.modificationTime)
+        let new = skeleton.replacingPhotos(at: [0: duplicated, 1: withThumbnail]).photoDaySections
 
-        // The scroll-restore position is a different key by design, and must not be used here.
-        let bucketKeyed = try #require(old.position(at: indexPath))
-        #expect(bucketKeyed != nodeKeyed)
-        #expect(old.changedItemIndexPaths(to: new, visiblePositions: [bucketKeyed: true]) == [])
+        #expect(
+            old.changedItemIndexPaths(
+                to: new, visibleIndexPaths: [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0)])
+            == [IndexPath(item: 1, section: 0)])
     }
 
     @Test

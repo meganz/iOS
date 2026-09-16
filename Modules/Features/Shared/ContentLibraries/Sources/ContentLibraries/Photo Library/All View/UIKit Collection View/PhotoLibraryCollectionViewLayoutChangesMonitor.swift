@@ -80,27 +80,17 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
 
     private func refreshPlan(to sections: [PhotoDateSection]) -> RefreshPlan {
         guard let collectionView else { return .none }
-        // A visibility lookup — "is this position on screen right now" has one answer, so a repeated
-        // key must never trap. The library can transiently hold the same node in two slots (a splice
-        // writing an already-hydrated node into a second placeholder), and a zoom-in makes both
-        // copies visible at once; `uniqueKeysWithValues` turned that into a crash.
-        let visiblePositions = Dictionary(
-            collectionView.indexPathsForVisibleItems.compactMap {
-                // The item's own position, not `position(at:)`: that one is dated by the day bucket
-                // so a scroll position can be resolved back to an index path, while
-                // `changedItemIndexPaths` looks the key up as `NodeEntity.position`.
-                photoLibraryDataSource.nodePosition(at: $0)
-            }.map {
-                ($0, true)
-            },
-            uniquingKeysWith: { first, _ in first }
-        )
+        // Index paths, not node-derived positions: the collection view already answers "which cells
+        // are on screen" in exactly the coordinates `changedItemIndexPaths` compares in, and they
+        // are unique by construction. Deriving keys from nodes needed de-duplication, because a
+        // splice can leave one node in two slots at once and a zoom-in makes both visible.
+        let visibleIndexPaths = Set(collectionView.indexPathsForVisibleItems)
 
         // A structural change (section add/remove, header/date change, or item-count change) needs
         // a full reload; a content-only change (placeholder → real node, thumbnail/favourite/
         // sensitive flips) reconfigures just the affected cells in place.
         guard let changed = photoLibraryDataSource.changedItemIndexPaths(
-            to: sections, visiblePositions: visiblePositions) else {
+            to: sections, visibleIndexPaths: visibleIndexPaths) else {
             return .reload
         }
         return changed.isEmpty ? .none : .reconfigure(changed)

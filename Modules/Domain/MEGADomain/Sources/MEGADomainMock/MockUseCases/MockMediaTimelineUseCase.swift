@@ -36,6 +36,9 @@ public actor MediaTimelineUseCaseRecorder {
     public private(set) var pageBeforeCalls: [PageBeforeCall] = []
     public private(set) var windowCalls: [WindowCall] = []
     public private(set) var sortOrders: [MediaTimelineSortOrderEntity] = []
+    /// Direct `dateSections(...)` calls. The paginated timeline must make none: its sections come
+    /// from `monitorDateSections`, whose stream prepends that same load.
+    public private(set) var dateSectionsCalls = 0
 
     public init() {}
 
@@ -43,15 +46,30 @@ public actor MediaTimelineUseCaseRecorder {
     func record(_ call: PageBeforeCall) { pageBeforeCalls.append(call) }
     func record(_ call: WindowCall) { windowCalls.append(call) }
     func record(sortOrder: MediaTimelineSortOrderEntity) { sortOrders.append(sortOrder) }
+    func recordDateSections() { dateSectionsCalls += 1 }
 
-    /// Drop everything recorded so far. The initial load eagerly fetches the first window
-    /// (`mediaPage(after: nil)`); call this after it to assert on a later, scroll-driven
-    /// hydration in isolation.
+    /// Drop everything recorded so far. The first section pass hydrates the top window, so call
+    /// this after it to assert on a later, scroll-driven hydration in isolation.
     public func reset() {
         pageAfterCalls.removeAll()
         pageBeforeCalls.removeAll()
         windowCalls.removeAll()
         sortOrders.removeAll()
+        dateSectionsCalls = 0
+    }
+}
+
+/// Serves one `monitorDateSections` sequence per subscription, in order; once the list runs out
+/// every further subscription repeats the last one. The production use case re-subscribes whenever
+/// the query changes, and its stream prepends a full load of that query — so the paginated
+/// timeline's *initial* skeleton is the first subscription's first emission, and a reactive reshape
+/// is a later one. Spelling the passes out as a list is what lets a test act between them.
+private actor SubscriptionCursor {
+    private var index = 0
+
+    func next() -> Int {
+        defer { index += 1 }
+        return index
     }
 }
 
@@ -60,7 +78,8 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
     private let mediaPageResult: Result<[NodeEntity], any Error>
     private let mediaPageBeforeResult: Result<[NodeEntity], any Error>
     private let mediaWindowResult: Result<[NodeEntity], any Error>
-    private let monitorDateSectionsSequence: AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>
+    private let monitorDateSectionsSequences: [AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>]
+    private let subscriptionCursor = SubscriptionCursor()
     private let excludeSensitivesResult: Bool
     private let recorder: MediaTimelineUseCaseRecorder?
     /// Runs inside every media fetch, just before the stubbed result is returned, so a test can
@@ -74,7 +93,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         mediaPageResult: Result<[NodeEntity], any Error> = .success([]),
         mediaPageBeforeResult: Result<[NodeEntity], any Error> = .success([]),
         mediaWindowResult: Result<[NodeEntity], any Error> = .success([]),
-        monitorDateSectionsSequence: AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> = EmptyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>().eraseToAnyAsyncSequence(),
+        monitorDateSectionsSequences: [AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>] = [],
         excludeSensitivesResult: Bool = true,
         recorder: MediaTimelineUseCaseRecorder? = nil,
         onFetch: (@MainActor () async -> Void)? = nil
@@ -83,7 +102,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         self.mediaPageResult = mediaPageResult
         self.mediaPageBeforeResult = mediaPageBeforeResult
         self.mediaWindowResult = mediaWindowResult
-        self.monitorDateSectionsSequence = monitorDateSectionsSequence
+        self.monitorDateSectionsSequences = monitorDateSectionsSequences
         self.excludeSensitivesResult = excludeSensitivesResult
         self.recorder = recorder
         self.onFetch = onFetch
@@ -95,6 +114,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         sortOrder: MediaTimelineSortOrderEntity
     ) async throws -> [MediaDateSectionEntity] {
         await recorder?.record(sortOrder: sortOrder)
+        await recorder?.recordDateSections()
         return try dateSectionsResult.get()
     }
 
@@ -141,7 +161,11 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         sortOrder: MediaTimelineSortOrderEntity
     ) async -> AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> {
         await recorder?.record(sortOrder: sortOrder)
-        return monitorDateSectionsSequence
+        guard monitorDateSectionsSequences.isNotEmpty else {
+            return EmptyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>().eraseToAnyAsyncSequence()
+        }
+        let index = await subscriptionCursor.next()
+        return monitorDateSectionsSequences[min(index, monitorDateSectionsSequences.count - 1)]
     }
 
     public func excludeSensitives() async -> Bool {

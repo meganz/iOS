@@ -43,14 +43,19 @@ extension Array where Element: PhotoSection {
     /// counts). Returns the item index paths whose content changed — so the caller can
     /// `reconfigureItems(at:)` exactly those cells in place instead of reloading the whole grid.
     /// Returns `nil` when the structure differs, signalling the caller to fall back to a full
-    /// reload. Mirrors `shouldRefresh(to:visiblePositions:)`: thumbnail-aware comparison for
-    /// on-screen items, the lighter comparison elsewhere.
+    /// reload. Thumbnail-aware comparison for on-screen items, the lighter comparison elsewhere.
+    ///
+    /// Visibility is keyed by index path, which is sound precisely because the structural guards
+    /// below run first: by the time any item is compared, both sides have the same sections in the
+    /// same order with the same counts, so an index path names the same cell in each. A node-derived
+    /// key does not have that property — the library can transiently hold one node in two slots
+    /// while a splice is in flight, and two visible cells then collapse onto one key.
     ///
     /// - Note: The `nil` → full-reload branch is an interim fallback — any structural change (e.g.
     ///   a Camera-Upload insert growing the top day bucket) reloads the whole grid and can jump the
     ///   scroll position. The reactive-updates work replaces it with an identity-keyed incremental
     ///   applier (`performBatchUpdates` + `contentOffset` preservation).
-    func changedItemIndexPaths(to sections: [Element], visiblePositions: [PhotoScrollPosition?: Bool] = [:]) -> [IndexPath]? {
+    func changedItemIndexPaths(to sections: [Element], visibleIndexPaths: Set<IndexPath> = []) -> [IndexPath]? {
         guard count == sections.count else { return nil }
         var changed = [IndexPath]()
         for (sectionIndex, pair) in zip(self, sections).enumerated() {
@@ -61,11 +66,12 @@ extension Array where Element: PhotoSection {
                 return nil
             }
             for (itemIndex, items) in zip(old.contentList, new.contentList).enumerated() {
-                let didChange = visiblePositions[items.0.position] == true
+                let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
+                let didChange = visibleIndexPaths.contains(indexPath)
                     ? items.0 ↻↻⏿ items.1
                     : items.0 ↻↻ items.1
                 if didChange {
-                    changed.append(IndexPath(item: itemIndex, section: sectionIndex))
+                    changed.append(indexPath)
                 }
             }
         }
