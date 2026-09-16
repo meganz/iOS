@@ -4,6 +4,8 @@ import MEGAL10n
 import SwiftUI
 
 struct PDFThumbnailsToggleView: View {
+    private let iconDimension: CGFloat = 24
+
     let isActive: Bool
     let action: () -> Void
 
@@ -22,11 +24,12 @@ struct PDFThumbnailsToggleView: View {
                         ? TokenColors.Icon.inverseAccent.swiftUI
                         : TokenColors.Icon.primary.swiftUI
                 )
-                .frame(width: dimension, height: dimension)
-                .background(
-                    isActive ? TokenColors.Icon.accent.swiftUI : .clear,
-                    in: Circle()
-                )
+                .frame(width: iconDimension, height: iconDimension)
+                .background {
+                    Circle()
+                        .fill(isActive ? TokenColors.Icon.accent.swiftUI : .clear)
+                        .frame(width: dimension, height: dimension)
+                }
         }
         .accessibilityLabel(Strings.Localizable.thumbnailView)
     }

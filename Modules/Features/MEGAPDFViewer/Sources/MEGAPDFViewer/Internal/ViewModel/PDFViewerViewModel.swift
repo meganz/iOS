@@ -33,6 +33,7 @@ final class PDFViewerViewModel {
 
     private(set) var state: ViewState = .loading(progress: nil)
     var isChromeHidden = false
+    var isShowingThumbnails = false
 
     private let dependency: Dependency
 

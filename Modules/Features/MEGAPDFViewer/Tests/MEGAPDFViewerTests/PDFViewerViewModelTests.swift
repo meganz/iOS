@@ -183,6 +183,19 @@ struct PDFViewerViewModelTests {
         #expect(!sut.isChromeHidden)
     }
 
+    @Test func thumbnailVisibility_startsHiddenAndChangesIndependently() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+
+        #expect(!sut.isShowingThumbnails)
+        sut.isShowingThumbnails = true
+        #expect(sut.isShowingThumbnails)
+        #expect(!sut.isChromeHidden)
+    }
+
     @Test func loadDocumentURL_readyEvent_setsPageState() async {
         let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
         let (stream, continuation) = AsyncThrowingStream.makeStream(

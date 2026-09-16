@@ -96,6 +96,17 @@ public struct PDFViewerView: View {
                         }
                     )
                     .ignoresSafeArea()
+                    // Makes Liquid Glass navbar/toolbar appearance update more
+                    // likely when dismissing thumbnails view.
+                    .opacity(viewModel.isShowingThumbnails ? 0 : 1)
+
+                    if viewModel.isShowingThumbnails {
+                        PDFThumbnailGridView(
+                            document: document,
+                            currentPage: viewModel.currentPageIndex
+                        )
+                        .transition(.opacity)
+                    }
                 }
 
                 switch viewModel.state {
@@ -162,14 +173,21 @@ public struct PDFViewerView: View {
 
         if viewModel.state.isReady {
             ToolbarItemGroup(placement: .bottomBar) {
-                Button {} label: {
-                    MEGAAssets.Image.listSmallMediumThinSolid
-                }
-                .accessibilityLabel(Strings.Localizable.PdfPreview.contents)
+                HStack(spacing: TokenSpacing._7) {
+                    Button {} label: {
+                        MEGAAssets.Image.listSmallMediumThinSolid
+                    }
+                    .accessibilityLabel(Strings.Localizable.PdfPreview.contents)
 
-                // Will be configured with thumbnail toggle state and handling
-                // in an upcoming MR.
-                PDFThumbnailsToggleView(isActive: false) {}
+                    PDFThumbnailsToggleView(
+                        isActive: viewModel.isShowingThumbnails
+                    ) {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            viewModel.isShowingThumbnails.toggle()
+                        }
+                    }
+                }
+                .padding(.horizontal, TokenSpacing._2 + TokenSpacing._1)
 
                 Spacer()
 
