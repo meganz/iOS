@@ -1,10 +1,12 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGADomain
 import SwiftUI
 
 public struct PDFViewerView: View {
     public struct Dependency {
         let pdfDocumentSource: PDFViewerDocumentSource
+        let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoader: any PDFDocumentLoading
         let fileName: String
         /// Invoked when the user taps a link inside the document.
@@ -12,11 +14,13 @@ public struct PDFViewerView: View {
 
         public init(
             pdfDocumentSource: PDFViewerDocumentSource,
+            downloadUseCase: some DownloadNodeUseCaseProtocol,
             fileName: String,
             onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in }
         ) {
             self.init(
                 pdfDocumentSource: pdfDocumentSource,
+                documentURLUseCase: PDFDocumentURLUseCase(downloadUseCase: downloadUseCase),
                 documentLoader: PDFDocumentLoader(),
                 fileName: fileName,
                 onLinkTapped: onLinkTapped
@@ -25,11 +29,13 @@ public struct PDFViewerView: View {
 
         init(
             pdfDocumentSource: PDFViewerDocumentSource,
+            documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
             documentLoader: some PDFDocumentLoading,
             fileName: String,
             onLinkTapped: @escaping @MainActor (URL) -> Void
         ) {
             self.pdfDocumentSource = pdfDocumentSource
+            self.documentURLUseCase = documentURLUseCase
             self.documentLoader = documentLoader
             self.fileName = fileName
             self.onLinkTapped = onLinkTapped
@@ -46,6 +52,7 @@ public struct PDFViewerView: View {
             initialValue: PDFViewerViewModel(
                 dependency: PDFViewerViewModel.Dependency(
                     pdfDocumentSource: dependency.pdfDocumentSource,
+                    documentURLUseCase: dependency.documentURLUseCase,
                     documentLoader: dependency.documentLoader,
                     fileName: dependency.fileName
                 )

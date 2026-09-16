@@ -125,6 +125,14 @@
     {
       "parallelizable" : true,
       "target" : {
+        "containerPath" : "container:Modules\/Features\/MEGAPDFViewer",
+        "identifier" : "MEGAPDFViewerTests",
+        "name" : "MEGAPDFViewerTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGAIntentDomain",
         "identifier" : "MEGAIntentDomainTests",
         "name" : "MEGAIntentDomainTests"

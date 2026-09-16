@@ -7,6 +7,7 @@ import Observation
 final class PDFViewerViewModel {
     struct Dependency {
         let pdfDocumentSource: PDFViewerDocumentSource
+        let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoader: any PDFDocumentLoading
         let fileName: String
     }
@@ -42,10 +43,20 @@ extension PDFViewerViewModel {
     /// already parsed is not resolved again.
     func loadDocumentFromSource() async {
         guard pdfDocument == nil else { return }
-        // Loading from a `MEGANode` will be added in an upcoming MR.
-        switch dependency.pdfDocumentSource {
-        case .local(let url):
-            loadDocument(at: url)
+        let events = dependency.documentURLUseCase.localDocumentURL(for: dependency.pdfDocumentSource)
+        do {
+            for try await event in events {
+                guard !Task.isCancelled else { return }
+                switch event {
+                case .progress(let progress):
+                    state = .loading(progress: progress)
+                case .ready(let url):
+                    loadDocument(at: url)
+                }
+            }
+        } catch {
+            guard !Task.isCancelled else { return }
+            state = .failed
         }
     }
 

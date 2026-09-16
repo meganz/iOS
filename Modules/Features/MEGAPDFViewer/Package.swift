@@ -18,8 +18,10 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
@@ -27,8 +29,18 @@ let package = Package(
             name: "MEGAPDFViewer",
             dependencies: [
                 "MEGAAssets",
+                "MEGADomain",
                 "MEGAL10n",
                 "MEGADesignToken",
+            ],
+            swiftSettings: settings
+        ),
+        .testTarget(
+            name: "MEGAPDFViewerTests",
+            dependencies: [
+                "MEGAPDFViewer",
+                "MEGATest",
+                .product(name: "MEGADomainMock", package: "MEGADomain")
             ],
             swiftSettings: settings
         )

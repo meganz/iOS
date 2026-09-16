@@ -133,6 +133,10 @@
                 return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:self presenter:viewController.navigationController] build];
             }
             
+            if ([self.name.pathExtension.lowercaseString isEqualToString:@"pdf"] && !isFolderLink && fileLink == nil && PDFViewerRevampRouter.isEnabled) {
+                return [PDFViewerRevampRouter viewControllerWithNode:self isLink:NO isFromSharedItem:isFromSharedItem];
+            }
+
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
