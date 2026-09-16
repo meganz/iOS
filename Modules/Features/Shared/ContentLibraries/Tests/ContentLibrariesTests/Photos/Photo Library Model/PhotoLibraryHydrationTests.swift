@@ -21,6 +21,16 @@ struct PhotoLibraryHydrationTests {
             .flatMap(\.contentList).flatMap(\.contentList).map(\.contentList.count)
     }
 
+    /// True when the two categories hand out the same storage buffer, i.e. the second was carried
+    /// over rather than rebuilt. An equality check cannot tell the two apart.
+    private func sharesStorage<T: PhotoChronologicalCategory>(_ lhs: T, _ rhs: T) -> Bool {
+        lhs.contentList.withUnsafeBufferPointer { left in
+            rhs.contentList.withUnsafeBufferPointer { right in
+                left.baseAddress == right.baseAddress
+            }
+        }
+    }
+
     @Test
     func testReplacingPhotos_swapsWindowInPlacePreservingStructure() {
         let skeleton = makeSkeleton()
@@ -65,11 +75,35 @@ struct PhotoLibraryHydrationTests {
         #expect(dayBucketCounts(hydrated) == [2, 3]) // shape preserved
     }
 
+    @Test("Only the day bucket the replacement lands in is rebuilt")
+    func testReplacingPhotosAt_carriesUntouchedDayBucketsOver() {
+        let skeleton = makeSkeleton() // two day buckets, in two different months
+        let hydrated = skeleton.replacingPhotos(at: [0: NodeEntity(handle: 10)])
+
+        let before = skeleton.photosByDayList
+        let after = hydrated.photosByDayList
+        #expect(!sharesStorage(before[0], after[0])) // rebuilt — the replacement landed here
+        #expect(sharesStorage(before[1], after[1]))
+    }
+
+    @Test("A month with no replacement in it is carried over whole, not just its days")
+    func testReplacingPhotosAt_carriesUntouchedMonthsOver() {
+        let skeleton = makeSkeleton()
+        let hydrated = skeleton.replacingPhotos(at: [0: NodeEntity(handle: 10)])
+
+        let before = skeleton.photosByMonthList
+        let after = hydrated.photosByMonthList
+        #expect(!sharesStorage(before[0], after[0]))
+        #expect(sharesStorage(before[1], after[1]))
+    }
+
     @Test
     func testReplacingPhotosAt_ignoresOutOfRangeIndices() {
         let skeleton = makeSkeleton()
         let hydrated = skeleton.replacingPhotos(at: [99: NodeEntity(handle: 10)])
         #expect(hydrated == skeleton)
+        // Nothing landed anywhere, so no bucket was rebuilt.
+        #expect(zip(skeleton.photosByDayList, hydrated.photosByDayList).allSatisfy { sharesStorage($0, $1) })
     }
 
     @Test
