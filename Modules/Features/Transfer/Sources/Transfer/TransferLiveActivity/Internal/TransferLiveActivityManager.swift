@@ -310,7 +310,7 @@ final class TransferLiveActivityManager {
             statusText: Self.makeStatusText(status: status, direction: direction),
             percentageText: Self.makePercentageText(progressFraction: progressFraction),
             fileCountText: Self.makeFileCountText(
-                completed: snapshot.completedFileCount,
+                completed: Self.displayedCompletedFileCount(from: snapshot),
                 total: snapshot.totalFileCount
             ),
             formattedSpeed: Self.makeFormattedSpeed(for: status, bytesPerSecond: snapshot.speedBytesPerSecond)
@@ -391,6 +391,17 @@ final class TransferLiveActivityManager {
         Strings.localized("%1 of %2", comment: "")
             .replacingOccurrences(of: "%1", with: "\(completed)")
             .replacingOccurrences(of: "%2", with: "\(total)")
+    }
+
+    /// The file currently in flight counts as the one being worked on, so a batch that has not
+    /// finished anything yet reads "1 of x" rather than "0 of x" — a single-file transfer would
+    /// otherwise show "0 of 1" for its entire duration, which reads as "nothing is happening"
+    private static func displayedCompletedFileCount(from snapshot: TransferStatusSnapshot) -> Int {
+        let hasActiveTransfers = snapshot.activeUploadCount + snapshot.activeDownloadCount > 0
+        guard hasActiveTransfers, snapshot.completedFileCount == 0 else {
+            return snapshot.completedFileCount
+        }
+        return min(1, snapshot.totalFileCount)
     }
 
     private static let speedFormatter: ByteCountFormatter = {

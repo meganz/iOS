@@ -280,6 +280,71 @@ struct TransferLiveActivityManagerTests {
         #expect(env.provider.requestCalls.first?.state.formattedSpeed == "")
     }
 
+    // MARK: - File count text
+
+    @Test
+    func activeSnapshotWithNothingCompleted_countsTheInFlightFileAsTheFirst() async {
+        let env = makeSUT()
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture(activeUploadCount: 1, completedFileCount: 0, totalFileCount: 3))
+        await waitForTasks()
+
+        #expect(env.provider.requestCalls.first?.state.fileCountText == "1 of 3")
+    }
+
+    @Test
+    func pausedSnapshotWithNothingCompleted_stillCountsTheInFlightFile() async {
+        let env = makeSUT()
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture(isPaused: true, activeUploadCount: 1, completedFileCount: 0, totalFileCount: 3))
+        await waitForTasks()
+
+        #expect(env.provider.requestCalls.first?.state.fileCountText == "1 of 3")
+    }
+
+    @Test
+    func activeSnapshotWithCompletedFiles_showsTheRealCompletedCount() async {
+        let env = makeSUT()
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture(activeUploadCount: 1, completedFileCount: 2, totalFileCount: 3))
+        await waitForTasks()
+
+        #expect(env.provider.requestCalls.first?.state.fileCountText == "2 of 3")
+    }
+
+    @Test
+    func terminalErrorSnapshotWithNothingCompleted_keepsZero() async {
+        let env = makeSUT()
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(
+            .fixture(
+                hasError: true,
+                activeUploadCount: 0,
+                activeDownloadCount: 0,
+                completedFileCount: 0,
+                totalFileCount: 2
+            )
+        )
+        await waitForTasks()
+
+        #expect(env.provider.requestCalls.first?.state.fileCountText == "0 of 2")
+    }
+
+    @Test
+    func activeSnapshotWithNoKnownTotal_doesNotInventAFile() async {
+        let env = makeSUT()
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture(activeUploadCount: 1, completedFileCount: 0, totalFileCount: 0))
+        await waitForTasks()
+
+        #expect(env.provider.requestCalls.first?.state.fileCountText == "0 of 0")
+    }
+
     // MARK: - Race / lifecycle / recovery
 
     @Test
