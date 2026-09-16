@@ -10,6 +10,7 @@ import MEGAPermissions
 import MEGAPreference
 import MEGARepo
 import MEGASdk
+import MEGASwift
 import SwiftUI
 import UserNotifications
 
@@ -350,22 +351,46 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
     @objc class func processUpgradeLink(_ url: URL?) {
         Task { @MainActor in
             let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-
-            if url?.mnz_deeplinkQueryValue(for: .offer) == "1",
-               await DIContainer.remoteFeatureFlagUseCase
-                .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp),
-               accountUseCase.currentAccountDetails != nil {
-                await PromoLandingOrUpgradeRouter
-                    .makeDefault(
-                        presenter: { UIApplication.mnz_visibleViewController() },
-                        showUpgradeScreen: { showUpgradeDestination(for: accountUseCase) }
-                    )
-                    .start()
+            guard url?.mnz_deeplinkQueryValue(for: .offer) == "1",
+                  await DIContainer.remoteFeatureFlagUseCase
+                    .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp),
+                  await waitForAccountDetails(with: accountUseCase) != nil else {
+                showUpgradeDestination(for: accountUseCase)
                 return
             }
 
-            showUpgradeDestination(for: accountUseCase)
+            await PromoLandingOrUpgradeRouter
+                .makeDefault(
+                    presenter: { UIApplication.mnz_visibleViewController() },
+                    showUpgradeScreen: { showUpgradeDestination(for: accountUseCase) }
+                )
+                .start()
         }
+    }
+
+    /// `processUpgradeLink` can be invoked during a cold launch, at which time `currentAccountDetails` is not readily available
+    /// We need to wait until account details is available before we can process further
+    private static func waitForAccountDetails(with accountUseCase: some AccountUseCaseProtocol) async -> AccountDetailsEntity? {
+        if let result = accountUseCase.currentAccountDetails {
+            return result
+        }
+
+        // wait for 10 seconds max for accountDetails to become available via accountDidFinishFetchAccountDetails,
+        // if account details still is not available,
+        // we'll force-fetch it using `refreshCurrentAccountDetails`
+        let fetchedDetails = try? await withTimeout(seconds: 10) {
+            for await notification in NotificationCenter.default.notifications(named: .accountDidFinishFetchAccountDetails) {
+                return notification.object as? AccountDetailsEntity
+            }
+            return nil
+        }
+
+        // check both fetchedDetails and `accountUseCase.currentAccountDetails` to get better chance for
+        // the currentAccountDetails to be available at this point
+        if let result = fetchedDetails ?? accountUseCase.currentAccountDetails {
+            return result
+        }
+        return try? await accountUseCase.refreshCurrentAccountDetails()
     }
 
     private static func showUpgradeDestination(for accountUseCase: some AccountUseCaseProtocol) {

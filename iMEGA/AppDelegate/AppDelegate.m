@@ -643,6 +643,15 @@
     if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
         [MEGALinkManager processLinkURL:url];
     } else {
+        // For `URLTypeUpgrade` link, we need to eagerly check whether the upgrade link can interrupt
+        // user's current screen first, if not we ignore the link and return.
+        // if we don't check this, `dismissPresentedViewsAndDo` may dismiss user's current screen
+        // which can be a blocking screen of URLTypeUpgrade.
+        if ([self shouldIgnoreUpgradeLink:url]) {
+            [MEGALinkManager resetLinkAndURLType];
+            return;
+        }
+
         [self dismissPresentedViewsAndDo:^{
             [MEGALinkManager processLinkURL:url];
         }];

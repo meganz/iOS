@@ -90,6 +90,17 @@ enum DeeplinkQueryKey: String {
 }
 
 extension URL {
+    var mnz_isUpgradeLink: Bool {
+        switch DeeplinkSchemeKey(rawValue: scheme ?? "") {
+        case .mega:
+            host == DeeplinkHostKey.upgrade.rawValue
+        case .http:
+            host?.lowercased().contains("mega") == true && path.hasPrefix(DeeplinkPathKey.pro.rawValue)
+        default:
+            false
+        }
+    }
+
     func mnz_deeplinkQueryValue(for key: DeeplinkQueryKey) -> String? {
         URLComponents(url: self, resolvingAgainstBaseURL: false)?
             .queryItems?
