@@ -7,6 +7,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAFoundation
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
@@ -739,9 +740,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         if Calendar.current.isDateInToday(date) {
             return Strings.Localizable.today
         } else {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE, d MMM"
-            return dateFormatter.string(from: date)
+            return DateFormatter.fromTemplate("EEEEdMMM").localisedString(from: date)
         }
     }
     

@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAFoundation
 import MEGAL10n
 import MessageKit
 
@@ -23,7 +24,7 @@ extension ChatViewController: MessagesDataSource {
         }
         
         if isTimeLabelVisible(at: indexPath) {
-            let dateString = chatMessage.sentDate.string(withDateFormat: "HH:mm")
+            let dateString = DateFormatter.fromTemplate("jm").localisedString(from: chatMessage.sentDate)
             let displayName = if !senderIsMyself(message: chatMessage) && chatRoom.isGroup {
                 !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
             } else {
@@ -54,8 +55,17 @@ extension ChatViewController: MessagesDataSource {
     
     func cellTopLabelAttributedText(for message: any MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
+            let calendar = Calendar.current
+            let dateString = if calendar.isDateInToday(message.sentDate) {
+                Strings.Localizable.today
+            } else if calendar.isDateInYesterday(message.sentDate) {
+                Strings.Localizable.yesterday
+            } else {
+                DateFormatter.fromTemplate("EEEdMMM").localisedString(from: message.sentDate)
+            }
+
             return NSAttributedString(
-                string: NSCalendar.current.isDateInToday(message.sentDate) ? Strings.Localizable.today : message.sentDate.string(withDateFormat: "E dd MMM"),
+                string: dateString,
                 attributes: [
                     NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .bold),
                     NSAttributedString.Key.foregroundColor: TokenColors.Text.primary

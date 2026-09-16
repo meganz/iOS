@@ -5,6 +5,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
+import MEGAFoundation
 import MEGAL10n
 import MEGAPermissions
 import MEGASwift
@@ -313,11 +314,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to: Date()) else { return nil }
         
         if Calendar.autoupdatingCurrent.isDateInToday(chatListItem.lastMessageDate) {
-            return chatListItem.lastMessageDate.string(withDateFormat: "HH:mm")
+            return DateFormatter.fromTemplate("jm").localisedString(from: chatListItem.lastMessageDate)
         } else if chatListItem.lastMessageDate.compare(seventhDayPriorDate) == .orderedDescending {
-            return chatListItem.lastMessageDate.string(withDateFormat: "EEE")
+            return DateFormatter.fromTemplate("EEE").localisedString(from: chatListItem.lastMessageDate)
         } else {
-            return chatListItem.lastMessageDate.string(withDateFormat: "dd/MM/yy")
+            return DateFormatter.fromTemplate("ddMMyy").localisedString(from: chatListItem.lastMessageDate)
         }
     }
     
