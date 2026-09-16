@@ -33,7 +33,7 @@ public struct PromoLandingDialogContentView: View {
     }
 
     private var footerIgnoredEdges: Edge.Set {
-        isSideBySide ? .leading : []
+        isSideBySide ? .horizontal : []
     }
 
     public var body: some View {
@@ -51,6 +51,7 @@ public struct PromoLandingDialogContentView: View {
                 title: viewModel.card.buttonTitle,
                 productIdentifier: viewModel.card.productIdentifier,
                 isOfferExpired: viewModel.isOfferExpired,
+                isSideBySide: isSideBySide,
                 planPurchaser: viewModel.planPurchaser,
                 purchaseTracker: viewModel.purchaseTracker,
                 onPurchased: { viewModel.purchaseCompleted() },
@@ -69,6 +70,7 @@ public struct PromoLandingDialogContentView: View {
     private var layoutView: some View {
         scrollContent
             .padding(.leading, isSideBySide ? contentLeadingPadding : 0)
+            .frame(maxWidth: .infinity)
             .background(alignment: .topLeading) {
                 leadingHeaderBackground.opacity(isSideBySide ? 1 : 0)
             }
@@ -111,7 +113,7 @@ public struct PromoLandingDialogContentView: View {
                         .padding(.vertical, TokenSpacing._4)
                 }
                 .padding(.horizontal, TokenSpacing._5)
-                .if(!isPadLandscape) { $0.maxWidthForWideScreen() }
+                .if(!isSideBySide) { $0.maxWidthForWideScreen() }
             }
             .padding(.top, sideBySideTopInset)
             .padding(.bottom, TokenSpacing._2)
