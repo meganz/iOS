@@ -39,7 +39,6 @@ extension PhotoLibrary {
 
     var photoMasonrySection: PhotoDateSection {
         PhotoDateSection(
-            contentList: allPhotos,
             photoByDayList: photosByDayList,
             categoryDate: photoByYearList.first?.categoryDate ?? Date()
         )

@@ -8,8 +8,7 @@ final class PhotoMonthSection: PhotoDateSection {
         let formatter: any DateFormatting = isCurrentYear ? DateFormatter.monthOnlyTemplate() : DateFormatter.monthTemplate()
         let title = formatter.localisedString(from: photoByMonth.categoryDate)
 
-        super.init(contentList: photoByMonth.allPhotos,
-                   photoByDayList: photoByMonth.contentList,
+        super.init(photoByDayList: photoByMonth.contentList,
                    categoryDate: photoByMonth.categoryDate,
                    title: title)
     }

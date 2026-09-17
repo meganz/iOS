@@ -37,7 +37,7 @@ extension Array where Element: PhotoChronologicalCategory {
     }
 }
 
-extension Array where Element: PhotoSection {
+extension Array where Element: PhotoDateSection {
     /// A precise refresh plan for moving from the receiver to `sections`, valid only while the
     /// section *structure* is unchanged (same section count, titles, dates and per-section item
     /// counts). Returns the item index paths whose content changed — so the caller can
@@ -62,10 +62,10 @@ extension Array where Element: PhotoSection {
             let (old, new) = pair
             guard old.title == new.title,
                   old.categoryDate == new.categoryDate,
-                  old.contentList.count == new.contentList.count else {
+                  old.itemCount == new.itemCount else {
                 return nil
             }
-            for (itemIndex, items) in zip(old.contentList, new.contentList).enumerated() {
+            for (itemIndex, items) in zip(old.nodes, new.nodes).enumerated() {
                 let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
                 let didChange = visibleIndexPaths.contains(indexPath)
                     ? items.0 ↻↻⏿ items.1
@@ -77,7 +77,9 @@ extension Array where Element: PhotoSection {
         }
         return changed
     }
-    
+}
+
+extension Array where Element: PhotoSection {
     func shouldRefresh(to categories: [Element], visiblePositions: [PhotoScrollPosition?: Bool] = [:]) -> Bool {
         guard count == categories.count else { return true }
         for zip in zip(self, categories) {

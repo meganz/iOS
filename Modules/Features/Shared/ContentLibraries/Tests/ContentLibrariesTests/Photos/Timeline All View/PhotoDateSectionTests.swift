@@ -114,6 +114,94 @@ final class PhotoDateSectionTests: XCTestCase {
         XCTAssertEqual(dateSections.indexPath(of: position), IndexPath(item: 1, section: 0))
     }
     
+    // MARK: - Item access without flattening
+
+    func testItemCount_matchesTheFlattenedItems() throws {
+        let (monthSections, _) = try makeSut(path: \.photoMonthSections)
+        let (daySections, _) = try makeSut(path: \.photoDaySections)
+
+        XCTAssertEqual(monthSections.map(\.itemCount), monthSections.map { $0.contentList.count })
+        XCTAssertEqual(daySections.map(\.itemCount), daySections.map { $0.contentList.count })
+    }
+
+    /// The items of a section are its days concatenated, so a month section has to resolve an
+    /// index into the right day — the second day of August 2022 starts at item 1.
+    func testNodeAt_monthSectionSpanningDays_resolvesEveryItem() throws {
+        let (monthSections, _) = try makeSut(path: \.photoMonthSections)
+        let august = monthSections[1]
+
+        XCTAssertEqual(august.itemCount, 2)
+        XCTAssertEqual(august.node(at: 0), NodeEntity(handle: 1))
+        XCTAssertEqual(august.node(at: 1), NodeEntity(handle: 2))
+    }
+
+    func testNodeAt_outOfBounds_returnsNil() throws {
+        let (monthSections, _) = try makeSut(path: \.photoMonthSections)
+        let august = monthSections[1]
+
+        XCTAssertNil(august.node(at: -1))
+        XCTAssertNil(august.node(at: august.itemCount))
+    }
+
+    func testCoverPhoto_isTheFirstItemOfTheFirstDay() throws {
+        let (monthSections, testNodes) = try makeSut(path: \.photoMonthSections)
+
+        XCTAssertEqual(monthSections[1].coverPhoto, testNodes[1])
+    }
+
+    /// `PhotoByDay` does not forbid an empty bucket, and a section that opens with one still has
+    /// a cover: the first item further down, dated by the day actually holding it.
+    func testCover_leadingEmptyDay_takesTheFirstItemOfTheNextDay() throws {
+        let emptyDay = try "2022-08-18T00:00:00Z".date
+        let filledDay = try "2022-08-10T00:00:00Z".date
+        let node = NodeEntity(name: "a.jpg", handle: 1, modificationTime: filledDay)
+        let section = PhotoDateSection(
+            photoByDayList: [
+                PhotoByDay(categoryDate: emptyDay, contentList: []),
+                PhotoByDay(categoryDate: filledDay, contentList: [node])
+            ],
+            categoryDate: emptyDay)
+
+        XCTAssertEqual(section.coverPhoto, node)
+        XCTAssertEqual(section.coverDayDate, filledDay)
+        XCTAssertEqual(section.node(at: 0), node)
+    }
+
+    func testCover_sectionWithNoItems_isNil() throws {
+        let day = try "2022-08-18T00:00:00Z".date
+        let section = PhotoDateSection(
+            photoByDayList: [PhotoByDay(categoryDate: day, contentList: [])], categoryDate: day)
+
+        XCTAssertEqual(section.itemCount, 0)
+        XCTAssertNil(section.coverPhoto)
+        XCTAssertNil(section.coverDayDate)
+    }
+
+    /// The masonry section holds the whole library in one section, so building it must not copy
+    /// the day buckets — it keeps the library's own arrays.
+    func testMasonrySection_spansTheLibraryAndKeepsItsDayBuckets() throws {
+        let (_, testNodes) = try makeSut(path: \.photoDaySections)
+        let library = testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+
+        let section = library.photoMasonrySection
+
+        XCTAssertEqual(section.itemCount, testNodes.count)
+        XCTAssertEqual((0..<section.itemCount).compactMap { section.node(at: $0) }, testNodes)
+        for (source, held) in zip(library.photosByDayList, section.photoByDayList) {
+            XCTAssertTrue(sharesStorage(source, held))
+        }
+    }
+
+    /// True when the two buckets hand out one storage buffer, i.e. the section took the library's
+    /// array rather than a copy of it. An equality check cannot tell the two apart.
+    private func sharesStorage(_ lhs: PhotoByDay, _ rhs: PhotoByDay) -> Bool {
+        lhs.contentList.withUnsafeBufferPointer { left in
+            rhs.contentList.withUnsafeBufferPointer { right in
+                left.baseAddress == right.baseAddress
+            }
+        }
+    }
+
     func testIndexPathOfPosition_monthSection_found() throws {
         let (dateSections, _) =  try makeSut(path: \.photoMonthSections)
         let position = PhotoScrollPosition(handle: 4, date: try "2020-04-18T12:01:04Z".date)

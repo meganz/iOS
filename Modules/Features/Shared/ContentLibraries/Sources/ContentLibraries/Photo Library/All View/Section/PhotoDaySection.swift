@@ -9,8 +9,7 @@ final class PhotoDaySection: PhotoDateSection {
             title = DateFormatter.fromTemplate("MMMMdyyyy").localisedString(from: photoByDay.categoryDate)
         }
         
-        super.init(contentList: photoByDay.contentList,
-                   photoByDayList: [photoByDay],
+        super.init(photoByDayList: [photoByDay],
                    categoryDate: photoByDay.categoryDate,
                    title: title)
     }

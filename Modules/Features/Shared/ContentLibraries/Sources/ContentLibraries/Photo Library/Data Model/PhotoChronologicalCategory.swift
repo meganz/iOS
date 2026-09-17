@@ -66,10 +66,6 @@ public struct PhotoByMonth: PhotoChronologicalCategory, Sendable {
         self.categoryDate = categoryDate
         self.contentList = contentList
     }
-    
-    var allPhotos: [NodeEntity] {
-        contentList.flatMap { $0.contentList }
-    }
 }
 
 public struct PhotoByDay: PhotoChronologicalCategory, Sendable {

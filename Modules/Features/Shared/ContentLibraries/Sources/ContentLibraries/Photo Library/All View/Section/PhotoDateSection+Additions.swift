@@ -4,11 +4,11 @@ import UIKit
 
 extension Array where Element: PhotoDateSection {
     func photo(at indexPath: IndexPath) -> NodeEntity? {
-        self[safe: indexPath.section]?.contentList[safe: indexPath.item]
+        self[safe: indexPath.section]?.node(at: indexPath.item)
     }
     
     var allPhotos: [NodeEntity] {
-        flatMap { $0.contentList }
+        flatMap { $0.nodes }
     }
     
     var hydratedPhotos: [NodeEntity] {
@@ -17,7 +17,7 @@ extension Array where Element: PhotoDateSection {
     
     func indexPath(of position: PhotoScrollPosition, in timeZone: TimeZone? = nil) -> IndexPath? {
         for (sectionIndex, section) in self.enumerated() where section.photoByDayList.contains(where: { $0.categoryDate == position.date.removeTimestamp(timeZone: timeZone) }) {
-            for (itemIndex, photo) in section.contentList.enumerated() where photo.handle == position.handle {
+            for (itemIndex, photo) in section.nodes.enumerated() where photo.handle == position.handle {
                 return IndexPath(item: itemIndex, section: sectionIndex)
             }
             
@@ -43,17 +43,9 @@ extension Array where Element: PhotoDateSection {
         return PhotoScrollPosition(handle: photo.handle, date: dayDate)
     }
 
-    /// `categoryDate` of the day bucket holding the item at `indexPath`. A section's
-    /// `contentList` is its `photoByDayList` concatenated in order, so the item index is
-    /// resolved by walking the days' counts.
+    /// `categoryDate` of the day bucket holding the item at `indexPath`.
     private func dayCategoryDate(at indexPath: IndexPath) -> Date? {
-        guard let section = self[safe: indexPath.section] else { return nil }
-        var remaining = indexPath.item
-        for day in section.photoByDayList {
-            if remaining < day.contentList.count { return day.categoryDate }
-            remaining -= day.contentList.count
-        }
-        return nil
+        self[safe: indexPath.section]?.dayCategoryDate(at: indexPath.item)
     }
 
     /// Flat position of an index path within the flattened `allPhotos` order: the sum of all
@@ -61,7 +53,7 @@ extension Array where Element: PhotoDateSection {
     /// section split but not the flat order). Returns nil for an out-of-bounds section.
     func flatIndex(of indexPath: IndexPath) -> Int? {
         guard indices.contains(indexPath.section) else { return nil }
-        let itemsBeforeSection = self[..<indexPath.section].reduce(0) { $0 + $1.contentList.count }
+        let itemsBeforeSection = self[..<indexPath.section].reduce(0) { $0 + $1.itemCount }
         return itemsBeforeSection + indexPath.item
     }
     
@@ -71,10 +63,10 @@ extension Array where Element: PhotoDateSection {
         
         var indexPaths = [IndexPath]()
         for section in first.section...last.section {
-            guard let sectionContent = self[safe: section]?.contentList else { continue }
+            guard let itemCount = self[safe: section]?.itemCount else { continue }
             
             let startItem = (section == first.section) ? first.item : 0
-            let endItem = (section == last.section) ? last.item : sectionContent.count - 1
+            let endItem = (section == last.section) ? last.item : itemCount - 1
             
             guard startItem <= endItem else { continue }
             for item in startItem...endItem {
