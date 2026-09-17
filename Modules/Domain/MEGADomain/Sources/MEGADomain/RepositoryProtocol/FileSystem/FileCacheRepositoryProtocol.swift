@@ -2,6 +2,8 @@ import Foundation
 
 public protocol FileCacheRepositoryProtocol: RepositoryProtocol, Sendable {
     var tempFolder: URL { get }
+    var exportFolder: URL { get }
+    func tempExportFolder(name: String) -> URL
     var tempUploadURL: URL { get }
     func tempFileURL(for node: NodeEntity) -> URL
     func stagingTempFileURL(for node: NodeEntity) -> URL

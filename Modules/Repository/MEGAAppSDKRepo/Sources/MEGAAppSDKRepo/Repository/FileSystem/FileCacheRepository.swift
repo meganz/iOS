@@ -12,6 +12,7 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
         /// Appended to the containing folder rather than to the node's own name, so that a staged copy
         /// keeps the name the user knows it by.
         static let stagingDirectorySuffix = ".incomplete"
+        static let exportDirectory = "ExportFile"
     }
     
     private let fileManager: FileManager
@@ -19,6 +20,20 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
 
     public var tempFolder: URL {
         fileManager.temporaryDirectory
+    }
+
+    public var exportFolder: URL {
+        let directoryURL = tempFolder.appendingPathComponent(Constants.exportDirectory, isDirectory: true)
+        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+
+        return directoryURL
+    }
+
+    public func tempExportFolder(name: String) -> URL {
+        let directoryURL = exportFolder.appendingPathComponent(name, isDirectory: true)
+        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+
+        return directoryURL
     }
 
     public let tempUploadURL: URL

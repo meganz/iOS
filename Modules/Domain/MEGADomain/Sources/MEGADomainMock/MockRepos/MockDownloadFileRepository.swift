@@ -12,6 +12,7 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     private let folderDownloadResult: Result<FolderDownloadResultEntity, TransferErrorEntity>
     private let downloadBatchResult: Result<[TransferEventEntity], any Error>?
     private let downloadBatchEventsError: (any Error)?
+    private let batchDownloadResult: BatchDownloadResultEntity
 
     /// Every batch `downloadProgress(batch:)` was handed, in call order.
     @Atomic public var startedDownloadBatches = [[DownloadBatchItemEntity]]()
@@ -30,19 +31,22 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     ///   - downloadBatchResult: The events `downloadProgress(batch:)` emits, or the error it throws
     ///     instead of handing the batch over at all. `nil` falls back to `completionResult`.
     ///   - downloadBatchEventsError: An error to end the event sequence with, after the events of
-    ///     `downloadBatchResult`.
+    ///     `downloadBatchResult`. Also what `downloadResult(batch:)` throws instead of returning.
+    ///   - batchDownloadResult: What `downloadResult(batch:)` reports for the batch as a whole.
     public init(completionResult: Result<TransferEntity, TransferErrorEntity> = .failure(.generic),
                 error: TransferErrorEntity = .generic,
                 transferEntity: TransferEntity? = nil,
                 folderDownloadResult: Result<FolderDownloadResultEntity, TransferErrorEntity> = .failure(.generic),
                 downloadBatchResult: Result<[TransferEventEntity], any Error>? = nil,
-                downloadBatchEventsError: (any Error)? = nil) {
+                downloadBatchEventsError: (any Error)? = nil,
+                batchDownloadResult: BatchDownloadResultEntity = .completed(fileCount: 0)) {
         self.completionResult = completionResult
         self.error = error
         self.transferEntity = transferEntity
         self.folderDownloadResult = folderDownloadResult
         self.downloadBatchResult = downloadBatchResult
         self.downloadBatchEventsError = downloadBatchEventsError
+        self.batchDownloadResult = batchDownloadResult
         (handOverStream, handOverContinuation) = AsyncStream.makeStream(of: [DownloadBatchItemEntity].self)
     }
 
@@ -78,6 +82,16 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     /// and the call returns on the batch's `finish` or throws what ended the sequence before it.
     public func download(batch: [DownloadBatchItemEntity]) async throws {
         _ = try await downloadProgress(batch: batch).first(where: \.isTerminal)
+    }
+
+    /// Hands the batch over the same way, and reports the result set up for it.
+    public func downloadResult(batch: [DownloadBatchItemEntity]) async throws -> BatchDownloadResultEntity {
+        $startedDownloadBatches.mutate { $0.append(batch) }
+        handOverContinuation.yield(batch)
+        if let downloadBatchEventsError {
+            throw downloadBatchEventsError
+        }
+        return batchDownloadResult
     }
 
     public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {

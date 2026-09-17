@@ -1,17 +1,23 @@
 import Foundation
+import MEGAFoundation
 
 // MARK: - Use case protocol -
 public protocol ExportFileNodeUseCaseProtocol: Sendable {
-    func export(node: NodeEntity) async throws -> URL
+    /// Exports a file node, reporting how much of it arrived.
+    func export(node: NodeEntity) async throws -> ExportedSelectionEntity
     /// Exports a selection of nodes, reporting how much of it arrived.
     func export(nodes: [NodeEntity]) async throws -> ExportedSelectionEntity
     /// Exports a folder node, reporting how much of it arrived.
-    func exportFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity
+    func exportFolder(_ node: NodeEntity) async throws -> ExportedSelectionEntity
+    /// Removes the folder an export downloaded into, once the share activity is done.
+    func cleanUp(for selection: ExportedSelectionEntity) async
 }
 
 public protocol ExportFileChatMessageUseCaseProtocol: Sendable {
-    func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL]
-    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL
+    /// Exports the files behind a selection of messages, reporting how much of it arrived.
+    func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> ExportedSelectionEntity
+    /// Exports the file behind one message, reporting how much of it arrived.
+    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> ExportedSelectionEntity
 }
 
 public typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
@@ -40,6 +46,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     private let offlineFileFetcherRepository: G
     private let userStoreRepository: H
     private let handsOverIncompleteFolders: Bool
+    private let isBatchDownloadEnabled: Bool
     
     public init(
         downloadFileRepository: T,
@@ -53,7 +60,8 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         mediaUseCase: M,
         offlineFileFetcherRepository: G,
         userStoreRepository: H,
-        handsOverIncompleteFolders: Bool = false
+        handsOverIncompleteFolders: Bool = false,
+        isBatchDownloadEnabled: Bool = BatchDownloadFeatureFlag.isEnabled
     ) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
@@ -67,6 +75,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         self.offlineFileFetcherRepository = offlineFileFetcherRepository
         self.userStoreRepository = userStoreRepository
         self.handsOverIncompleteFolders = handsOverIncompleteFolders
+        self.isBatchDownloadEnabled = isBatchDownloadEnabled
     }
     
     // MARK: - Private
@@ -201,20 +210,27 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
             fileCount: result.fileCount,
             downloadedFileCount: result.downloadedFileCount
         )
+        
     }
-}
 
-// MARK: - ExportFileNodeUseCaseProtocol implementation -
-extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
-    public func export(node: NodeEntity) async throws -> URL {
-        if let nodeUrl = await nodeUrl(node) {
-            return nodeUrl
-        } else {
-            return try await downloadNode(node)
+    public func cleanUp(for selection: ExportedSelectionEntity) async {
+        guard let folder = selection.temporaryFolder else { return }
+        do {
+            try await fileSystemRepository.removeItem(at: folder)
+            MEGALog.log(level: .info, message: "[ExportFileUseCase] cleanUp removed folder \(folder)")
+        } catch {
+            MEGALog.log(level: .error, message: "[ExportFileUseCase] cleanUp failed to remove folder \(folder)")
         }
     }
-    
-    public func exportFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity {
+
+    private func legacyExportURL(_ node: NodeEntity) async throws -> URL {
+        if let nodeUrl = await nodeUrl(node) {
+            return nodeUrl
+        }
+        return try await downloadNode(node)
+    }
+
+    private func legacyExportFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity {
         if let nodeUrl = await nodeUrl(node) {
             // A cached copy is only ever a finished one, so what is in it is both everything that was asked
             // for and everything that arrived. Counted rather than left at zero, because a selection reports in files
@@ -224,26 +240,144 @@ extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
         return try await downloadFolder(node)
     }
 
-    public func export(nodes: [NodeEntity]) async throws -> ExportedSelectionEntity {
-        await withTaskGroup(of: ExportedNodeEntity.self) { group in
-            for node in nodes {
-                group.addTask { await exportCounted(node) }
-            }
+    private func exportInBatch(_ batch: [(source: DownloadBatchItemEntity.Source, node: NodeEntity)]) async throws -> ExportedSelectionEntity {
+        guard !batch.isEmpty else { return .nothing }
 
-            var selection = ExportedSelectionEntity.nothing
-            for await node in group {
-                selection = selection.adding(node)
-            }
-            return selection
+        let tempExportFolder = fileCacheRepository.tempExportFolder(name: UUID().uuidString)
+        
+        let exportId = tempExportFolder.lastPathComponent
+
+        MEGALog.log(
+            level: .info,
+            message: "[ExportFileUseCase] export \(exportId) started: \(batch.count) node(s), "
+                + "handsOverIncompleteFolders \(handsOverIncompleteFolders)"
+        )
+
+        let downloadBatchItemEntity = batch.map { (source, node) in
+            DownloadBatchItemEntity(
+                source: source,
+                destination: .folder(tempExportFolder),
+                appData: TransferMetaDataEntity.exportFile.rawValue,
+                startFirst: node.isFile
+            )
         }
+
+        let result: BatchDownloadResultEntity
+        do {
+            result = try await downloadFileRepository.downloadResult(batch: downloadBatchItemEntity)
+        } catch let error as CancellationError {
+            MEGALog.log(
+                level: .error,
+                message: "[ExportFileUseCase] export \(exportId) cancelled, cancelling download transfers"
+            )
+            downloadFileRepository.cancelDownloadTransfers()
+            throw error
+        } catch {
+            MEGALog.log(
+                level: .error,
+                message: "[ExportFileUseCase] export \(exportId) threw \(error), tempExportFolder kept"
+            )
+            throw error
+        }
+
+        let (requested, downloaded): (Int, Int) = switch result {
+        case let .completed(fileCount):
+            (fileCount, fileCount)
+        case let .partiallyFailed(downloadedFileCount, failedFileCount):
+            (downloadedFileCount + failedFileCount, downloadedFileCount)
+        case .failed:
+            (batch.count, 0)
+        }
+
+        MEGALog.log(
+            level: .info,
+            message: "[ExportFileUseCase] export \(exportId) result \(result), requested \(requested), downloaded \(downloaded)"
+        )
+
+        let urls = await fileSystemRepository.contentsOfDirectory(at: tempExportFolder)
+
+        guard !urls.isEmpty else {
+            do {
+                try await fileSystemRepository.removeItem(at: tempExportFolder)
+                MEGALog.log(level: .debug, message: "[ExportFileUseCase] exportInBatch removed tempExportFolder \(tempExportFolder)")
+            } catch {
+                MEGALog.log(level: .debug, message: "[ExportFileUseCase] exportInBatch failed to remove tempExportFolder \(tempExportFolder) with error \(error)")
+            }
+            return ExportedSelectionEntity(
+                urls: [],
+                requestedFileCount: requested,
+                downloadedFileCount: downloaded
+            )
+        }
+
+        return ExportedSelectionEntity(
+            urls: urls,
+            requestedFileCount: requested,
+            downloadedFileCount: downloaded,
+            temporaryFolder: tempExportFolder
+        )
+    }
+}
+
+// MARK: - ExportFileNodeUseCaseProtocol implementation -
+extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
+    public func export(node: NodeEntity) async throws -> ExportedSelectionEntity {
+        guard isBatchDownloadEnabled else {
+            let url = try await legacyExportURL(node)
+            return ExportedSelectionEntity(urls: [url], requestedFileCount: 1, downloadedFileCount: 1)
+        }
+
+        let selection = try await export(nodes: [node])
+        guard !selection.urls.isEmpty else {
+            throw ExportFileErrorEntity.downloadFailed
+        }
+        return selection
+    }
+    
+    public func exportFolder(_ node: NodeEntity) async throws -> ExportedSelectionEntity {
+        guard isBatchDownloadEnabled else {
+            return .nothing.adding(try await legacyExportFolder(node))
+        }
+
+        let selection = try await export(nodes: [node])
+        
+        let isComplete = selection.downloadedFileCount == selection.requestedFileCount
+        guard isComplete || (handsOverIncompleteFolders && selection.downloadedFileCount > 0) else {
+            return ExportedSelectionEntity(
+                urls: [],
+                requestedFileCount: selection.requestedFileCount,
+                downloadedFileCount: 0,
+                temporaryFolder: selection.temporaryFolder
+            )
+        }
+
+        return selection
+    }
+
+    public func export(nodes: [NodeEntity]) async throws -> ExportedSelectionEntity {
+        guard isBatchDownloadEnabled else {
+            return await withTaskGroup(of: ExportedNodeEntity.self) { group in
+                for node in nodes {
+                    group.addTask { await exportCounted(node) }
+                }
+                
+                var selection = ExportedSelectionEntity.nothing
+                for await node in group {
+                    selection = selection.adding(node)
+                }
+                return selection
+            }
+        }
+        
+        return try await exportInBatch(nodes.map { (source: .node($0.handle), node: $0) })
     }
 
     /// What one node of a selection amounts to, so that a folder is counted by the files inside it while a
     /// file counts as itself.
     private func exportCounted(_ node: NodeEntity) async -> ExportedNodeEntity {
         do {
-            guard node.isFile else { return try await exportFolder(node) }
-            return ExportedNodeEntity(url: try await export(node: node), fileCount: 1, downloadedFileCount: 1)
+            guard node.isFile else { return try await legacyExportFolder(node) }
+            return ExportedNodeEntity(url: try await legacyExportURL(node), fileCount: 1, downloadedFileCount: 1)
         } catch {
             print("Failed to export node with error: \(error)")
             // No count came back either, so this leaves the node speaking for itself — see
@@ -287,7 +421,10 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
             guard let node = message.nodes?.first else {
                 throw ExportFileErrorEntity.nonExportableMessage
             }
-            return try await exportNode(node, messageId: message.messageId, chatId: chatId)
+            guard let url = try await exportNode(node, messageId: message.messageId, chatId: chatId).urls.first else {
+                throw ExportFileErrorEntity.downloadFailed
+            }
+            return url
             
         default:
             print("Failed to export a non compatible message type \(message.type)")
@@ -295,7 +432,61 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
         }
     }
     
-    public func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL] {
+    public func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> ExportedSelectionEntity {
+        guard isBatchDownloadEnabled else {
+            let urls = await legacyExport(messages: messages, chatId: chatId)
+            return ExportedSelectionEntity(
+                urls: urls,
+                requestedFileCount: messages.count,
+                downloadedFileCount: urls.count
+            )
+        }
+
+        var attachments = [(DownloadBatchItemEntity.Source, NodeEntity)]()
+        var others = [ChatMessageEntity]()
+        var urls = [URL]()
+        for message in messages {
+            switch message.type {
+            case .attachment, .voiceClip:
+                guard let node = message.nodes?.first else { continue }
+                attachments.append((.chatNode(handle: node.handle, messageId: message.messageId, chatId: chatId), node))
+            default:
+                others.append(message)
+            }
+        }
+
+        let batch: ExportedSelectionEntity
+        do {
+            batch = try await exportInBatch(attachments)
+        } catch {
+            MEGALog.log(
+                level: .error,
+                message: "[ExportFileUseCase] export messages: batch of \(attachments.count) attachment(s) failed with \(error)"
+            )
+            batch = .nothing
+        }
+
+        urls += batch.urls
+        for message in others {
+            guard let url = try? await export(message: message, chatId: chatId) else { continue }
+            urls.append(url)
+        }
+
+        MEGALog.log(
+            level: .info,
+            message: "[ExportFileUseCase] export messages: \(attachments.count) attachment(s), "
+                + "\(others.count) other(s), handing over \(urls.count) of \(messages.count)"
+        )
+        
+        return ExportedSelectionEntity(
+            urls: urls,
+            requestedFileCount: messages.count,
+            downloadedFileCount: urls.count,
+            temporaryFolder: batch.temporaryFolder
+        )
+    }
+
+    private func legacyExport(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL] {
         var urlsArray = [URL]()
         return await withTaskGroup(of: URL?.self) { group in
             for message in messages {
@@ -316,11 +507,21 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
         }
     }
     
-    public func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL {
-        if let nodeUrl = await nodeUrl(node) {
-            return nodeUrl
-        } else {
-            return try await importNodeToDownload(node, messageId: messageId, chatId: chatId)
+    public func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> ExportedSelectionEntity {
+        guard isBatchDownloadEnabled else {
+            let url = if let nodeUrl = await nodeUrl(node) {
+                nodeUrl
+            } else {
+                try await importNodeToDownload(node, messageId: messageId, chatId: chatId)
+            }
+            return ExportedSelectionEntity(urls: [url], requestedFileCount: 1, downloadedFileCount: 1)
         }
+
+        let source = DownloadBatchItemEntity.Source.chatNode(handle: node.handle, messageId: messageId, chatId: chatId)
+        let selection = try await exportInBatch([(source, node)])
+        guard !selection.urls.isEmpty else {
+            throw ExportFileErrorEntity.downloadFailed
+        }
+        return selection
     }
 }

@@ -275,6 +275,149 @@ struct DownloadFileRepositoryBatchTests {
         }
     }
 
+    // MARK: - Batch result
+
+    /// What the batch's wrapper transfer reports as its tag, and so what its file transfers carry as
+    /// their `folderTransferTag`.
+    private static let batchTag = 42
+    /// Another batch's tag, for a file transfer that must not be counted into this one.
+    private static let otherBatchTag = 99
+
+    private static func makeBatchResultSUT(
+        subTransfers: [(transfer: MockTransfer, error: MockError)],
+        transferResult: Result<MockTransfer, MockError>? = nil
+    ) -> (sut: DownloadFileRepository, sdk: MockSdk) {
+        let (sut, sdk) = makeSUT(transferResult: transferResult)
+        sdk.stubbedDownloadBatchTag = batchTag
+        sdk.stubbedDownloadBatchSubTransfers = subTransfers
+        return (sut, sdk)
+    }
+
+    /// One file transfer of the batch, whatever item of it the file came from: nothing on a file transfer
+    /// names the item, and the counts do not need it to.
+    private static func file(
+        succeeded: Bool = true,
+        folderTransferTag: Int = batchTag
+    ) -> (transfer: MockTransfer, error: MockError) {
+        (
+            MockTransfer(type: .download, folderTransferTag: folderTransferTag, appData: ">exportFile"),
+            MockError(errorType: succeeded ? .apiOk : .apiEWrite)
+        )
+    }
+
+    @Test("every file transfer under the batch is reported, and the successful ones counted")
+    func batchResult_reportsEveryFileTransfer() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(
+            subTransfers: [Self.file(), Self.file(), Self.file(succeeded: false)]
+        )
+
+        let result = try await sut.downloadResult(batch: [Self.batchItem()])
+
+        #expect(result == .partiallyFailed(downloadedFileCount: 2, failedFileCount: 1))
+    }
+
+    /// Nothing was queued, so nothing of the batch reached the transfer manager and there is no count to
+    /// report — only that it did not get anywhere.
+    @Test("a batch that ended before queuing a file transfer reports failure")
+    func batchResult_abortedBeforeQueuing_reportsFailed() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(
+            subTransfers: [],
+            transferResult: .failure(MockError(errorType: .apiEIncomplete))
+        )
+
+        let result = try await sut.downloadResult(batch: [Self.batchItem()])
+
+        #expect(result == .failed)
+    }
+
+    /// An empty folder downloads no files at all, and the SDK finishes that batch without error. There is
+    /// nothing to count, and nothing missing either.
+    @Test("a batch that downloaded no files reports no counts rather than failing")
+    func batchResult_noFiles_reportsNothing() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(subTransfers: [])
+
+        let result = try await sut.downloadResult(batch: [Self.batchItem()])
+
+        #expect(result == .completed(fileCount: 0))
+    }
+
+    /// A batch comes back with an error whether one file inside it failed or none of them ever started, and
+    /// only the counts tell those apart — so throwing would discard what did arrive.
+    @Test("a batch that came back short reports what arrived rather than throwing")
+    func batchResult_failedBatch_reportsWhatArrived() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(
+            subTransfers: [Self.file(), Self.file(succeeded: false)],
+            transferResult: .failure(MockError(errorType: .apiEIncomplete))
+        )
+
+        let result = try await sut.downloadResult(batch: [Self.batchItem(), Self.batchItem()])
+
+        #expect(result == .partiallyFailed(downloadedFileCount: 1, failedFileCount: 1))
+    }
+
+    /// The item is handed to the SDK exactly as the caller described it: nothing is appended to its tag,
+    /// which every reader of those tags matches with `contains`.
+    @Test("the item's own tag reaches the SDK untouched")
+    func batchResult_keepsTheItemsOwnAppData() async throws {
+        let (sut, sdk) = Self.makeBatchResultSUT(subTransfers: [])
+
+        _ = try await sut.downloadResult(batch: [Self.batchItem(appData: ">exportFile")])
+
+        let item = try #require(sdk.startedDownloadBatches.first?.first)
+        #expect(item.appData == ">exportFile")
+    }
+
+    /// Every download reports to the same globally registered delegates, so a batch is told apart from
+    /// whatever else is running only by the tag its own wrapper transfer carries.
+    @Test("a file transfer of another batch is not counted into this one")
+    func batchResult_ignoresAnotherBatchsFileTransfers() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(
+            subTransfers: [
+                Self.file(),
+                Self.file(folderTransferTag: Self.otherBatchTag),
+                Self.file(succeeded: false, folderTransferTag: Self.otherBatchTag)
+            ]
+        )
+
+        let result = try await sut.downloadResult(batch: [Self.batchItem()])
+
+        #expect(result == .completed(fileCount: 1), "Only the one file transfer started under this batch.")
+    }
+
+    /// A transfer belonging to no batch at all reports `0`, which must not be read as this batch's tag.
+    @Test("a transfer belonging to no batch is not counted into one")
+    func batchResult_ignoresTransfersOutsideAnyBatch() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(subTransfers: [Self.file(folderTransferTag: 0)])
+
+        let result = try await sut.downloadResult(batch: [Self.batchItem()])
+
+        #expect(result == .completed(fileCount: 0))
+    }
+
+    /// A cancelled consumer sees the event stream finish rather than throw, so the counts taken from it
+    /// describe a batch that stopped rather than one that completed. Without the check they would be
+    /// handed back as `.completed`, telling the caller everything it asked for arrived.
+    @Test("a batch whose caller was cancelled throws rather than reporting a completed batch")
+    func batchResult_cancelledCaller_throwsRatherThanReportingCompleted() async throws {
+        let nodeProvider = ParkingNodeProvider()
+        let sut = DownloadFileRepository(
+            sdk: MockSdk(),
+            nodeProvider: nodeProvider,
+            chatNodeProvider: MockChatMEGANodeProvider()
+        )
+
+        let batch = Task { try await sut.downloadResult(batch: [Self.batchItem()]) }
+        // Waited for rather than assumed: the cancellation has to land on a caller that is already
+        // waiting on the batch, which is the case the check is there for.
+        var calls = nodeProvider.calls.makeAsyncIterator()
+        await calls.next()
+        batch.cancel()
+
+        await #expect(throws: CancellationError.self) {
+            _ = try await batch.value
+        }
+    }
+
     @Test("awaiting a batch whose items resolve to no node still returns rather than hanging")
     func awaitedBatch_withNothingToDownload_returns() async throws {
         let sdk = MockSdk()
@@ -287,5 +430,24 @@ struct DownloadFileRepositoryBatchTests {
         try await sut.download(batch: [Self.batchItem()])
 
         #expect(try #require(sdk.startedDownloadBatches.first).isEmpty)
+    }
+}
+
+/// A node provider that parks instead of answering, so a batch is still being built when the test cancels
+/// the caller waiting on it.
+private final class ParkingNodeProvider: MEGANodeProviderProtocol, @unchecked Sendable {
+    let calls: AsyncStream<Void>
+
+    private let callsContinuation: AsyncStream<Void>.Continuation
+
+    init() {
+        (calls, callsContinuation) = AsyncStream.makeStream()
+    }
+
+    func node(for handle: HandleEntity) async -> MEGANode? {
+        callsContinuation.yield()
+        // Only cancellation ends this, which is what the test drives.
+        try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 60)
+        return nil
     }
 }

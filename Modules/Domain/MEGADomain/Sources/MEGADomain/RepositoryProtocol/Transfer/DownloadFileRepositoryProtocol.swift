@@ -75,6 +75,15 @@ public protocol DownloadFileRepositoryProtocol: Sendable {
     /// - Note: Cancel the calling does not cancel the transfer, call the `cancelDownloadTransfers` instead.
     func download(batch: [DownloadBatchItemEntity]) async throws
     
+    /// Downloads a batch of nodes and reports result of all its file transfers.
+    /// - Parameter batch: Every item of the batch
+    /// - Returns: `BatchDownloadResultEntity`, counted in the file transfers the batch queued. A single empty
+    ///   folder queues nothing but it is still created in filesystem, so it comes back as `.completed(fileCount: 0)`.
+    /// - Throws: when the batch was cancelled, when the calling task cancelled before the batch is submitted
+    ///   to SDK, or nothing was submitted.
+    /// - Note: Cancel the calling does not cancel the transfer, call the `cancelDownloadTransfers` instead.
+    func downloadResult(batch: [DownloadBatchItemEntity]) async throws -> BatchDownloadResultEntity
+    
     // MARK: - cancel download
     func cancelDownloadTransfers()
 }

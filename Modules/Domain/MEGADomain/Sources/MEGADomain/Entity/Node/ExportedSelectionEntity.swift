@@ -14,11 +14,16 @@ public struct ExportedSelectionEntity: Sendable, Equatable {
     public let requestedFileCount: Int
     /// How many of those files are under `urls`.
     public let downloadedFileCount: Int
+    /// The folder an export operation downloaded files into, each export operation has an unique one.
+    /// Used to clean up the folder once export operation completed.
+    /// `nil` when there is nothing to clear. Legacy has no such clean up logic
+    public let temporaryFolder: URL?
 
-    public init(urls: [URL], requestedFileCount: Int, downloadedFileCount: Int) {
+    public init(urls: [URL], requestedFileCount: Int, downloadedFileCount: Int, temporaryFolder: URL? = nil) {
         self.urls = urls
         self.requestedFileCount = requestedFileCount
         self.downloadedFileCount = downloadedFileCount
+        self.temporaryFolder = temporaryFolder
     }
 }
 
@@ -31,7 +36,8 @@ public extension ExportedSelectionEntity {
         ExportedSelectionEntity(
             urls: node.url.map { urls + [$0] } ?? urls,
             requestedFileCount: requestedFileCount + node.requestedFileCount,
-            downloadedFileCount: downloadedFileCount + node.downloadedFileCount
+            downloadedFileCount: downloadedFileCount + node.downloadedFileCount,
+            temporaryFolder: temporaryFolder
         )
     }
 }

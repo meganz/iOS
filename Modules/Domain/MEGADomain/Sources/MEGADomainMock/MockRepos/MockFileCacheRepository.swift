@@ -31,6 +31,15 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
         self.tempUploadURL = tempUploadURL
     }
 
+    public var exportFolder: URL {
+        tempFolder.appendingPathComponent("ExportFile")
+    }
+
+    /// The name is ignored so that a caller passing a random one still lands on a predictable URL.
+    public func tempExportFolder(name: String) -> URL {
+        exportFolder.appendingPathComponent("run")
+    }
+
     public func tempFileURL(for node: NodeEntity) -> URL {
         tempFolder.appendingPathComponent(name)
     }

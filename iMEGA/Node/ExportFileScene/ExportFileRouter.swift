@@ -106,8 +106,14 @@ final class ExportFileRouter: ExportFileViewRouting {
     }
     
     // MARK: - ExportFileViewRouting -
-    func exportedFiles(urls: [URL]) {
+    func exportedFiles(urls: [URL], completion: (@Sendable () async -> Void)?) {
         let activityViewController = UIActivityViewController.init(activityItems: urls, applicationActivities: nil)
+
+        if let completion {
+            activityViewController.completionWithItemsHandler = { _, _, _, _ in
+                Task { await completion() }
+            }
+        }
         
         if let viewSender = sender as? UIView {
             activityViewController.popoverPresentationController?.sourceView = viewSender

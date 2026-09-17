@@ -152,6 +152,132 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     public func download(batch: [DownloadBatchItemEntity]) async throws {
         _ = try await downloadProgress(batch: batch).first(where: \.isTerminal)
     }
+    
+    public func downloadResult(batch: [DownloadBatchItemEntity]) async throws -> BatchDownloadResultEntity {
+        var responses = [TransferResponseEntity]()
+        var batchFailed = false
+
+        for try await event in batchDownloadResultEvents(batch: batch) {
+            switch event {
+            case let .fileFinished(response):
+                responses.append(response)
+            case .batchFailed:
+                batchFailed = true
+            }
+        }
+
+        let batchId = batch.first?.destination.folder.lastPathComponent ?? "unknown"
+        let downloaded = responses.filter(\.isSuccess).count
+        let failed = responses.count - downloaded
+        // `batchFailed` with nothing failing under it is the case that reads as a clean `.completed`: the
+        // batch stopped before queuing the rest, and there is no count of what it never got to.
+        MEGALog.log(
+            level: batchFailed ? .warning : .info,
+            message: "[DownloadFileRepository] download batch \(batchId) counted \(downloaded) downloaded, "
+                + "\(failed) failed, batch failed \(batchFailed)"
+        )
+
+        // When the caller is cancelled the stream just ends, it does not throw. But the SDK transfer is not cancelled yet.
+        // Without this check a cancelled batch would return,
+        // So caller see this batch as completed, and perform cleanup on the folder SDK is writing transfer to.
+        try Task.checkCancellation()
+
+        guard !responses.isEmpty else { return batchFailed ? .failed : .completed(fileCount: 0) }
+
+        return failed == 0
+            ? .completed(fileCount: downloaded)
+            : .partiallyFailed(downloadedFileCount: downloaded, failedFileCount: failed)
+    }
+    
+    private func batchDownloadResultEvents(batch: [DownloadBatchItemEntity]) -> AsyncThrowingStream<BatchDownloadEvent, any Error> {
+        AsyncThrowingStream { continuation in
+            let task = Task {
+                // The destination folder every item of this batch was given. The caller names it after the
+                // work it is doing, so it is what ties these lines to the ones that caller writes.
+                let batchId = batch.first?.destination.folder.lastPathComponent ?? "unknown"
+                let itemList = await buildDownloadItemList(from: batch)
+
+                guard !Task.isCancelled else {
+                    MEGALog.log(level: .debug, message: "[DownloadFileRepository] download batch \(batchId) cancelled")
+                    continuation.finish(throwing: TransferErrorEntity.cancelled)
+                    return
+                }
+
+                guard itemList.size > 0 else {
+                    MEGALog.log(
+                        level: .error,
+                        message: "[DownloadFileRepository] download batch \(batchId) resolved no node of \(batch.count) item(s)"
+                    )
+                    continuation.finish(throwing: TransferErrorEntity.couldNotFindNodeByHandle)
+                    return
+                }
+
+                // Said whether or not any item was dropped: a resolved count short of the batch count is a
+                // node that never made it into the transfer and so is never counted as having failed.
+                MEGALog.log(
+                    level: itemList.size < batch.count ? .warning : .info,
+                    message: "[DownloadFileRepository] download batch \(batchId): \(itemList.size) of \(batch.count) item(s) resolved"
+                )
+
+                let startedAt = Date()
+
+                let transferItemDelegate = BatchDownloadTransferDelegate { response in
+                    // Only the failures: a folder export can run thousands of file transfers, and the
+                    // successful ones are already summed up when the batch ends.
+                    if !response.isSuccess {
+                        MEGALog.log(
+                            level: .error,
+                            message: "[DownloadFileRepository] download batch \(batchId) file failed: \(response.error.type)"
+                        )
+                    }
+                    continuation.yield(.fileFinished(response))
+                }
+
+                sdk.add(transferItemDelegate)
+
+                let transferDelegate = TransferDelegate(
+                    start: { transferEntity in
+                        MEGALog.log(
+                            level: .info,
+                            message: "[DownloadFileRepository] download batch \(batchId) started with tag \(transferEntity.tag)"
+                        )
+                        transferItemDelegate.setBatchTag(transferEntity.tag)
+                    }, completion: { result in
+                        sdk.remove(transferItemDelegate)
+                        MEGALog.log(
+                            level: .info,
+                            message: "[DownloadFileRepository] download batch \(batchId) finished in "
+                                + "\(Int(Date().timeIntervalSince(startedAt) * 1000))ms"
+                        )
+                        switch result {
+                        case .success:
+                            continuation.finish()
+                        case .failure(.cancelled):
+                            continuation.finish(throwing: TransferErrorEntity.cancelled)
+                        case let .failure(error):
+                            MEGALog.log(level: .error, message: "[DownloadFileRepository] download batch \(batchId) transfer failed: \(error)")
+                            continuation.yield(.batchFailed)
+                            continuation.finish()
+                        }
+                    },
+                    transferQuotaState: { [transferQuotaNotifier] state in
+                        MEGALog.log(level: .info, message: "[DownloadFileRepository] download batch predicted transfer quota state: \(state)")
+                        transferQuotaNotifier.notify(state: state)
+                    }
+                )
+
+                sdk.startDownloadBatch(
+                    withItems: itemList,
+                    cancelToken: cancelToken.value,
+                    collisionCheck: CollisionCheck.fingerprint,
+                    collisionResolution: CollisionResolution.newWithN,
+                    delegate: transferDelegate
+                )
+            }
+
+            continuation.onTermination = { _ in task.cancel() }
+        }
+    }
 
     private func fileCount(of node: MEGANode) async -> Int {
         // Whichever SDK the node came from, since only that one has it in its tree — see `megaNode(for:)`.

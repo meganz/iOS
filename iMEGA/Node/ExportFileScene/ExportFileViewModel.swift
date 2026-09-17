@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppPresentation
 import MEGADomain
+import MEGAFoundation
 
 enum ExportFileAction: ActionType {
     case exportFileFromNode(NodeEntity)
@@ -26,7 +27,7 @@ private extension ExportFileAction {
 
 @MainActor
 protocol ExportFileViewRouting {
-    func exportedFiles(urls: [URL])
+    func exportedFiles(urls: [URL], completion: (@Sendable () async -> Void)?)
     func showProgressView()
     func hideProgressView()
     func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async
@@ -84,9 +85,7 @@ final class ExportFileViewModel: ViewModelType {
         // alone, the cancellation propagates and a user who stopped it themselves is left alone.
         if let folder = action.singleFolderNode {
             await performExport(errorMessage: "[ExportFile] Failed to export folder") {
-                // Folded through `adding` rather than built by hand, so that a folder on its own is counted
-                // by exactly the rule a folder inside a selection is counted by.
-                .nothing.adding(try await exportFileUseCase.exportFolder(folder))
+                try await exportFileUseCase.exportFolder(folder)
             }
             return
         }
@@ -94,8 +93,7 @@ final class ExportFileViewModel: ViewModelType {
         switch action {
         case let .exportFileFromNode(node):
             await performExport(errorMessage: "[ExportFile] Failed to export file from node") {
-                let url = try await exportFileUseCase.export(node: node)
-                return ExportedSelectionEntity(urls: [url], requestedFileCount: 1, downloadedFileCount: 1)
+                try await exportFileUseCase.export(node: node)
             }
         case let .exportFilesFromNodes(nodes):
             await performExport(errorMessage: "[ExportFile] Failed to export nodes") {
@@ -103,23 +101,15 @@ final class ExportFileViewModel: ViewModelType {
             }
         case let .exportFilesFromMessages(messages, chatId):
             await performExport(errorMessage: "[ExportFile] Failed to export files from messages") {
-                // One URL per message, dropping whatever could not be exported, so what arrived is countable
-                // from `urls` alone.
-                let urls = await exportFileUseCase.export(messages: messages, chatId: chatId)
-                return ExportedSelectionEntity(
-                    urls: urls,
-                    requestedFileCount: messages.count,
-                    downloadedFileCount: urls.count
-                )
+                await exportFileUseCase.export(messages: messages, chatId: chatId)
             }
         case let .exportFileFromMessageNode(node, messageId, chatId):
             await performExport(errorMessage: "[ExportFile] Failed to export file from a message node") {
-                let url = try await exportFileUseCase.exportNode(
+                try await exportFileUseCase.exportNode(
                     node.toNodeEntity(),
                     messageId: messageId,
                     chatId: chatId
                 )
-                return ExportedSelectionEntity(urls: [url], requestedFileCount: 1, downloadedFileCount: 1)
             }
         }
     }
@@ -128,18 +118,34 @@ final class ExportFileViewModel: ViewModelType {
         guard !Task.isCancelled else { return }
         do {
             let selection = try await exportBlock()
-            guard !Task.isCancelled else { return }
-
+            guard !Task.isCancelled else {
+                await exportFileUseCase.cleanUp(for: selection)
+                return
+            }
+            
             await warnIfIncomplete(
                 downloadedCount: selection.downloadedFileCount,
                 requestedCount: selection.requestedFileCount
             )
-
-            if selection.urls.isEmpty {
-                MEGALogError(errorMessage)
-            } else if !Task.isCancelled {
+            MEGALogInfo(
+                "[ExportFile] \(selection.temporaryFolder?.lastPathComponent ?? "no-folder") downloaded \(selection.downloadedFileCount) "
+                + "of \(selection.requestedFileCount), handing over \(selection.urls.count) item(s)"
+            )
+            
+            if selection.urls.isEmpty || Task.isCancelled {
+                if selection.urls.isEmpty {
+                    MEGALogError(errorMessage)
+                }
+                
+                await exportFileUseCase.cleanUp(for: selection)
+            } else {
                 analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
-                router.exportedFiles(urls: selection.urls)
+                router.exportedFiles(urls: selection.urls) { [exportFileUseCase] in
+                    MEGALogInfo("[ExportFile] \(selection.temporaryFolder?.lastPathComponent ?? "no-folder") share activity finished, cleaning up")
+                    Task {
+                        await exportFileUseCase.cleanUp(for: selection)
+                    }
+                }
             }
         } catch is CancellationError {
             MEGALogError("[ExportFile] Cancelled task: \(errorMessage)")

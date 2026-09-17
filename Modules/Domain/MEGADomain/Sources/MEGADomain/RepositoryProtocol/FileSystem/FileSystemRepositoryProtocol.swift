@@ -33,6 +33,10 @@ public protocol FileSystemRepositoryProtocol: SharedRepositoryProtocol {
     /// - Parameter url: The url of the folder whose contents will be removed.
     /// - Throws: An error if the removal of any item fails.
     func removeFolderContents(atURL url: URL) async throws
+    /// The items directly inside a folder, files and folders.
+    /// - Parameter url: The URL of the folder.
+    /// - Returns: One URL per item, or an empty array when there is nothing at the URL.
+    func contentsOfDirectory(at url: URL) async -> [URL]
     /// Counts the files held at the specified URL: a file counts as itself, and a folder as however many
     /// files it holds at any depth.
     /// - Parameter url: The URL of the file or folder.

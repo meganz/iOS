@@ -15,6 +15,9 @@ public final class MockTransfer: MEGATransfer, @unchecked Sendable {
     private let _isFolderTransfer: Bool
     private let _stage: MEGATransferStage
     private let _state: MEGATransferState
+    private let _tag: Int
+    private let _folderTransferTag: Int
+    private let _appData: String?
     
     public init(type: MEGATransferType = .download,
                 nodeHandle: UInt64 = 0,
@@ -28,7 +31,10 @@ public final class MockTransfer: MEGATransfer, @unchecked Sendable {
                 fileName: String? = nil,
                 isFolderTransfer: Bool = false,
                 stage: MEGATransferStage = .none,
-                state: MEGATransferState = .none) {
+                state: MEGATransferState = .none,
+                tag: Int = 0,
+                folderTransferTag: Int = 0,
+                appData: String? = nil) {
         self._type = type
         self._nodeHandle = nodeHandle
         self._parentHandle = parentHandle
@@ -42,6 +48,9 @@ public final class MockTransfer: MEGATransfer, @unchecked Sendable {
         self._isFolderTransfer = isFolderTransfer
         self._stage = stage
         self._state = state
+        self._tag = tag
+        self._folderTransferTag = folderTransferTag
+        self._appData = appData
     }
     
     public override var type: MEGATransferType {
@@ -94,5 +103,19 @@ public final class MockTransfer: MEGATransfer, @unchecked Sendable {
     
     public override var state: MEGATransferState {
         _state
+    }
+
+    public override var tag: Int {
+        _tag
+    }
+
+    /// The tag of the folder or batch transfer this one was created under. `0` for a transfer that
+    /// belongs to no such group.
+    public override var folderTransferTag: Int {
+        _folderTransferTag
+    }
+
+    public override var appData: String? {
+        _appData
     }
 }

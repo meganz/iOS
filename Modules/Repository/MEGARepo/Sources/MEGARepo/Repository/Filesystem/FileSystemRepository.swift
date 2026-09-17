@@ -54,9 +54,9 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     }
     
     public func removeItem(at url: URL) async throws {
-        try await withAsyncThrowingValue { completion in
+        try await withCheckedThrowingContinuation { continuation in
             removeItemAsync(at: url) { result in
-                completion(result)
+                continuation.resume(with: result)
             }
         }
     }
@@ -69,6 +69,20 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
         }
     }
     
+    public func contentsOfDirectory(at url: URL) async -> [URL] {
+        await withAsyncValue { [fileManager] completion in
+            queue.async {
+                do {
+                    let children = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
+                    completion(.success(children))
+                } catch {
+                    completion(.success([]))
+                }
+                
+            }
+        }
+    }
+
     public func fileCount(at url: URL) async -> Int {
         await withAsyncValue { completion in
             // Off the caller's thread: a folder that was downloaded whole can hold thousands of files, and

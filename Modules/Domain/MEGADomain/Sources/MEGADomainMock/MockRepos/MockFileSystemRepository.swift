@@ -11,6 +11,9 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     private let containsOriginalsDirectory: Bool
     private let fileSize: UInt64
     private let fileCount: Int
+    private let directoryContents: [URL]
+    /// What `removeItem(at:)` throws instead of recording the removal. `nil` lets every removal succeed.
+    private let removeItemError: (any Error)?
     private let creationDate: Date
     private let relativePath: String
     private let _offlineDirectoryURL: URL?
@@ -27,6 +30,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
                 containsOriginalsDirectory: Bool = false,
                 fileSize: UInt64 = 0,
                 fileCount: Int = 0,
+                directoryContents: [URL] = [],
+                removeItemError: (any Error)? = nil,
                 creationDate: Date = Date(),
                 relativePath: String = "relativePath",
                 offlineDirectoryURL: URL? = nil) {
@@ -36,6 +41,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
         self.containsOriginalsDirectory = containsOriginalsDirectory
         self.fileSize = fileSize
         self.fileCount = fileCount
+        self.directoryContents = directoryContents
+        self.removeItemError = removeItemError
         self.creationDate = creationDate
         self.relativePath = relativePath
         _offlineDirectoryURL = offlineDirectoryURL
@@ -59,9 +66,18 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     }
     
     public func removeItem(at url: URL) throws {
+        // Recorded before the throw, so a test can tell a removal that was attempted and failed from one
+        // that was never asked for.
         $removeFileURLs.mutate { $0.append(url) }
+        if let removeItemError {
+            throw removeItemError
+        }
     }
     
+    public func contentsOfDirectory(at url: URL) async -> [URL] {
+        directoryContents
+    }
+
     public func fileCount(at url: URL) -> Int {
         fileCount
     }

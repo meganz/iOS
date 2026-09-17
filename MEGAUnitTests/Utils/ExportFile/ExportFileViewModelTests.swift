@@ -29,22 +29,23 @@ struct ExportFileViewModelTestSuite {
     private static func makeSUT(
         urls: [URL] = [],
         selection: ExportedSelectionEntity? = nil,
-        folderResult: ExportedNodeEntity? = nil,
+        folderResult: ExportedSelectionEntity? = nil,
         isPaywalled: Bool = false
     ) -> (ExportFileViewModel, MockExportFileViewRouter, MockExportFileUseCase, MockAnalyticsEventUseCase, MockOverDiskQuotaChecker) {
         let router = MockExportFileViewRouter()
+        // Complete unless a test says otherwise, so that only the tests about a shortfall have to spell
+        // the counts out.
+        let exported = ExportedSelectionEntity(
+            urls: urls,
+            requestedFileCount: urls.count,
+            downloadedFileCount: urls.count
+        )
         let exportUseCase = MockExportFileUseCase(
-            exportNodeResult: urls.first,
-            // Complete unless a test says otherwise, so that only the tests about a shortfall have to
-            // spell the counts out.
-            exportNodesResult: selection ?? ExportedSelectionEntity(
-                urls: urls,
-                requestedFileCount: urls.count,
-                downloadedFileCount: urls.count
-            ),
+            exportNodeResult: urls.isEmpty ? nil : exported,
+            exportNodesResult: selection ?? exported,
             exportFolderResult: folderResult,
-            exportMessagesResult: urls,
-            exportNodeFromMessageResult: urls.first
+            exportMessagesResult: exported,
+            exportNodeFromMessageResult: urls.isEmpty ? nil : exported
         )
         let analyticsUseCase = MockAnalyticsEventUseCase()
         let overDiskQuotaChecker = MockOverDiskQuotaChecker(isPaywalled: isPaywalled)
@@ -228,7 +229,7 @@ struct ExportFileViewModelTestSuite {
         @MainActor
         func partialFolder_warnsWithFileCounts() async {
             let (sut, router, useCase, _, _) = makeSUT(
-                folderResult: ExportedNodeEntity(url: Self.folderURL, fileCount: 5, downloadedFileCount: 3)
+                folderResult: ExportedSelectionEntity(urls: [Self.folderURL], requestedFileCount: 5, downloadedFileCount: 3)
             )
 
             sut.dispatch(.exportFileFromNode(Self.folder))
@@ -248,7 +249,7 @@ struct ExportFileViewModelTestSuite {
         @MainActor
         func completeFolder_doesNotWarn() async {
             let (sut, router, _, _, _) = makeSUT(
-                folderResult: ExportedNodeEntity(url: Self.folderURL, fileCount: 4, downloadedFileCount: 4)
+                folderResult: ExportedSelectionEntity(urls: [Self.folderURL], requestedFileCount: 4, downloadedFileCount: 4)
             )
 
             sut.dispatch(.exportFileFromNode(Self.folder))
@@ -262,7 +263,7 @@ struct ExportFileViewModelTestSuite {
         @MainActor
         func emptyResultFolder_warnsWithoutExporting() async {
             let (sut, router, _, _, _) = makeSUT(
-                folderResult: ExportedNodeEntity(url: nil, fileCount: 5, downloadedFileCount: 0)
+                folderResult: ExportedSelectionEntity(urls: [], requestedFileCount: 5, downloadedFileCount: 0)
             )
 
             sut.dispatch(.exportFileFromNode(Self.folder))
@@ -278,7 +279,7 @@ struct ExportFileViewModelTestSuite {
         @MainActor
         func unscannedFolder_warnsAboutTheFolderItself() async {
             let (sut, router, _, _, _) = makeSUT(
-                folderResult: ExportedNodeEntity(url: nil, fileCount: 0, downloadedFileCount: 0)
+                folderResult: ExportedSelectionEntity(urls: [], requestedFileCount: 1, downloadedFileCount: 0)
             )
 
             sut.dispatch(.exportFileFromNode(Self.folder))
@@ -293,7 +294,7 @@ struct ExportFileViewModelTestSuite {
         @MainActor
         func emptyFolder_doesNotWarn() async {
             let (sut, router, _, _, _) = makeSUT(
-                folderResult: ExportedNodeEntity(url: Self.folderURL, fileCount: 0, downloadedFileCount: 0)
+                folderResult: ExportedSelectionEntity(urls: [Self.folderURL], requestedFileCount: 0, downloadedFileCount: 0)
             )
 
             sut.dispatch(.exportFileFromNode(Self.folder))
@@ -309,7 +310,7 @@ struct ExportFileViewModelTestSuite {
         @MainActor
         func loneFolderInSelection_takesFolderPath() async {
             let (sut, _, useCase, _, _) = makeSUT(
-                folderResult: ExportedNodeEntity(url: Self.folderURL, fileCount: 1, downloadedFileCount: 1)
+                folderResult: ExportedSelectionEntity(urls: [Self.folderURL], requestedFileCount: 1, downloadedFileCount: 1)
             )
 
             sut.dispatch(.exportFilesFromNodes([Self.folder]))
@@ -332,6 +333,205 @@ struct ExportFileViewModelTestSuite {
             #expect(useCase.exportNodes_calledTimes == 1)
             #expect(useCase.exportFolder_calledTimes == 0)
         }
+    }
+
+    @Suite("Clean Up Tests - Verifies the folder an export downloaded into is cleared exactly once, and never early.")
+    struct CleanUpTests {
+        private static let exportFolder = URL(string: "mock://ExportFile/run")!
+        private static let fileURL = URL(string: "mock://ExportFile/run/file1")!
+
+        private static func selection(
+            urls: [URL] = [fileURL],
+            requestedFileCount: Int = 1,
+            downloadedFileCount: Int = 1,
+            temporaryFolder: URL? = exportFolder
+        ) -> ExportedSelectionEntity {
+            ExportedSelectionEntity(
+                urls: urls,
+                requestedFileCount: requestedFileCount,
+                downloadedFileCount: downloadedFileCount,
+                temporaryFolder: temporaryFolder
+            )
+        }
+
+        /// The view model clears the happy path's folder inside a task of its own, so the share sheet's
+        /// completion returns before the clean up has run. Waits for it rather than assuming it has
+        /// already happened, and gives up rather than hanging when it never does.
+        ///
+        /// Dropping that task would make awaiting the completion enough, and this helper unnecessary.
+        private static func awaitClearedFolder(_ useCase: MockExportFileUseCase) async -> URL? {
+            await withTaskGroup(of: URL?.self) { group in
+                group.addTask {
+                    var updates = useCase.cleanUpUpdates.makeAsyncIterator()
+                    return await updates.next()
+                }
+                group.addTask {
+                    try? await Task.sleep(nanoseconds: 2_000_000_000)
+                    return nil
+                }
+                let cleared = await group.next() ?? nil
+                group.cancelAll()
+                return cleared
+            }
+        }
+
+        /// The files are handed to the share sheet, which reads them for as long as it is open. Clearing
+        /// the folder before it closes would take them out from under it.
+        @Test("nothing is cleared while the share sheet still has the files")
+        @MainActor
+        func handedOver_clearsNothingYet() async {
+            let (sut, router, useCase, _, _) = makeSUT(selection: Self.selection())
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity()]))
+            await sut.currentTask?.value
+
+            #expect(router.exportedFiles_calledTimes == 1)
+            #expect(useCase.removedTemporaryExportFolders.isEmpty, "The share sheet is still reading them.")
+        }
+
+        @Test("the folder is cleared once the user is done with the share sheet")
+        @MainActor
+        func shareSheetFinished_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT(selection: Self.selection())
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity()]))
+            await sut.currentTask?.value
+            await router.exportedFilesCompletion?()
+
+            #expect(await Self.awaitClearedFolder(useCase) == Self.exportFolder)
+        }
+
+        /// There is no share sheet to wait on, so the folder — which the SDK may still have created — is
+        /// cleared straight away rather than left for nothing.
+        @Test("an export with nothing to hand over clears its folder immediately")
+        @MainActor
+        func nothingToHandOver_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT(
+                selection: Self.selection(urls: [], requestedFileCount: 2, downloadedFileCount: 0)
+            )
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity(), NodeEntity()]))
+            await sut.currentTask?.value
+
+            #expect(router.exportedFiles_calledTimes == 0)
+            #expect(useCase.removedTemporaryExportFolders == [Self.exportFolder])
+        }
+
+        /// The warning is awaited, which holds the export open long enough to be called off. What arrived
+        /// is then not worth keeping, and the folder goes with it.
+        @Test("an export cancelled while the warning is on screen clears its folder")
+        @MainActor
+        func cancelledDuringWarning_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT(
+                selection: Self.selection(requestedFileCount: 2, downloadedFileCount: 1)
+            )
+            router.onWarnDownloadIncomplete = { sut.cancelCurrentTask() }
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity(), NodeEntity()]))
+            // Taken before the task body runs, because cancelling clears it.
+            let task = sut.currentTask
+            await task?.value
+
+            #expect(router.exportedFiles_calledTimes == 0)
+            #expect(useCase.removedTemporaryExportFolders == [Self.exportFolder])
+        }
+
+        /// The download is over by the time the cancellation lands, so a folder full of files exists with
+        /// nobody to hand it to. This is the path that leaves it behind if the clean up is skipped.
+        @Test("an export cancelled while it was still running clears its folder")
+        @MainActor
+        func cancelledDuringExport_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT(selection: Self.selection())
+            let box = TaskBox()
+            useCase.onExport = { box.task?.cancel() }
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity()]))
+            // Set before the task body runs, so the export cancels itself from the inside.
+            box.task = sut.currentTask
+            await box.task?.value
+
+            #expect(router.exportedFiles_calledTimes == 0)
+            #expect(useCase.removedTemporaryExportFolders == [Self.exportFolder])
+        }
+
+        /// The legacy path downloads into the shared cache, which later exports read, so there is no
+        /// folder of this export's own and nothing may be removed.
+        @Test("an export that downloaded into the shared cache clears nothing")
+        @MainActor
+        func noTemporaryFolder_clearsNothing() async {
+            let (sut, router, useCase, _, _) = makeSUT(
+                selection: Self.selection(temporaryFolder: nil)
+            )
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity()]))
+            await sut.currentTask?.value
+            await router.exportedFilesCompletion?()
+
+            #expect(router.exportedFiles_calledTimes == 1)
+            #expect(useCase.removedTemporaryExportFolders.isEmpty)
+        }
+
+        /// A throw carries no selection, so there is nothing here that names a folder to clear. Said out
+        /// loud because it is the one path where a folder can be left behind.
+        @Test("an export that threw has no folder to clear")
+        @MainActor
+        func exportThrew_clearsNothing() async {
+            // No result set up for a lone node, so the mock throws.
+            let (sut, router, useCase, _, _) = makeSUT()
+
+            sut.dispatch(.exportFileFromNode(NodeEntity(isFile: true)))
+            await sut.currentTask?.value
+
+            #expect(router.exportedFiles_calledTimes == 0)
+            #expect(useCase.removedTemporaryExportFolders.isEmpty)
+        }
+
+        @Test("a chat export clears the folder its attachments were downloaded into")
+        @MainActor
+        func chatExport_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT()
+            useCase.exportMessagesResult = Self.selection()
+
+            sut.dispatch(.exportFilesFromMessages([ChatMessageEntity()], HandleEntity(123)))
+            await sut.currentTask?.value
+            await router.exportedFilesCompletion?()
+
+            #expect(useCase.exportMessages_calledTimes == 1)
+            #expect(await Self.awaitClearedFolder(useCase) == Self.exportFolder)
+        }
+
+        @Test("exporting one message's node clears the folder it was downloaded into")
+        @MainActor
+        func chatNodeExport_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT()
+            useCase.exportNodeFromMessageResult = Self.selection()
+
+            sut.dispatch(.exportFileFromMessageNode(MEGANode(), HandleEntity(123), HandleEntity(234)))
+            await sut.currentTask?.value
+            await router.exportedFilesCompletion?()
+
+            #expect(useCase.exportNodeFromMessage_calledTimes == 1)
+            #expect(await Self.awaitClearedFolder(useCase) == Self.exportFolder)
+        }
+
+        @Test("a lone folder export clears the folder it was downloaded into")
+        @MainActor
+        func folderExport_clearsTheFolder() async {
+            let (sut, router, useCase, _, _) = makeSUT(folderResult: Self.selection())
+
+            sut.dispatch(.exportFileFromNode(NodeEntity(name: "MyFolder", isFolder: true)))
+            await sut.currentTask?.value
+            await router.exportedFilesCompletion?()
+
+            #expect(useCase.exportFolder_calledTimes == 1)
+            #expect(await Self.awaitClearedFolder(useCase) == Self.exportFolder)
+        }
+    }
+
+    /// Holds the export's own task so a mock can cancel it from inside the export, which is the only way
+    /// to have the cancellation land while the export is still running.
+    private final class TaskBox: @unchecked Sendable {
+        var task: Task<Void, Never>?
     }
 
     // MARK: - Cancel Task Tests

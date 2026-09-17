@@ -943,6 +943,16 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
 
     private let downloadBatchRecords = MockDownloadBatchRecords()
 
+    /// The file transfers a batch reports under it, in the order they finish. A transfer belongs to the
+    /// batch when its `folderTransferTag` is `stubbedDownloadBatchTag`; give one anything else to stand
+    /// for a transfer of another batch, which must not be counted into this one.
+    public var stubbedDownloadBatchSubTransfers: [(transfer: MockTransfer, error: MockError)] = []
+
+    /// The tag the batch's wrapper transfer reports, which is what tells its file transfers apart from
+    /// every other transfer running at the same time. Non zero so that a sub transfer left at
+    /// `MockTransfer`'s default tag is excluded rather than silently matching.
+    public var stubbedDownloadBatchTag: Int = 1
+
     /// The batches handed to `startDownloadBatch`, in the order they arrived, each item as the SDK
     /// received it.
     public var startedDownloadBatches: [[MockDownloadBatchItem]] { downloadBatchRecords.startedBatches }
@@ -961,14 +971,38 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
             transfer = stubbedTransfer
             error = MockError(errorType: .apiOk)
         case .failure(let stubbedError):
-            transfer = MockTransfer(type: .download)
+            transfer = MockTransfer(type: .download, tag: stubbedDownloadBatchTag)
             error = stubbedError
         case nil:
-            transfer = MockTransfer(type: .download)
+            transfer = MockTransfer(type: .download, tag: stubbedDownloadBatchTag)
             error = MockError(errorType: .apiOk)
         }
 
         delegate.onTransferStart?(self, transfer: transfer)
+
+        // A batch reports how much it took on the same way a folder download does, and only to its own
+        // delegate.
+        for update in stubbedFolderTransferUpdates {
+            delegate.onFolderTransferUpdate?(
+                self,
+                transfer: transfer,
+                stage: update.stage,
+                folderCount: 1,
+                createdFolderCount: 0,
+                fileCount: update.fileCount,
+                currentFolder: "",
+                currentFileLeafName: ""
+            )
+        }
+
+        // A batch's file transfers reach the app only through globally registered delegates, and all of
+        // them land before the batch's own finish. Fired in that order so a test sees what the app sees.
+        for subTransfer in stubbedDownloadBatchSubTransfers {
+            transferDelegates.forEach {
+                $0.onTransferFinish?(self, transfer: subTransfer.transfer, error: subTransfer.error)
+            }
+        }
+
         delegate.onTransferFinish?(self, transfer: transfer, error: error)
     }
 
