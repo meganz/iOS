@@ -15,7 +15,7 @@ protocol PermissionAppLaunchRouterProtocol {
 struct PermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
 
     func setRootViewController(shouldShowLoadingScreen: Bool) {
-        guard let window = UIApplication.shared.keyWindow else { return }
+        guard let window = UIApplication.mnz_keyWindow() else { return }
         Task { @MainActor in
             routeInitialFlow(in: window, shouldShowLoadingScreen: shouldShowLoadingScreen)
         }
