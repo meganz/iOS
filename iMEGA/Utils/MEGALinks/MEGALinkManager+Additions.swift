@@ -506,4 +506,23 @@ extension MEGALinkManager {
     static func buildFileLink(_ link: String, with key: String) -> String {
         MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: false)
     }
+
+    /// Records a file link that resolved straight into the photo browser or the player, which never
+    /// reach `FileLinkViewController` and so are not covered by its own recording hook.
+    /// `link` is the link the user received, resolved by the caller.
+    @objc static func recordViewedFileLink(_ node: MEGANode, link: String) {
+        guard let linkURL = URL(string: link) else { return }
+
+        let handle = node.handle
+        let name = node.nameAfterDecryptionCheck()
+
+        Task { @MainActor in
+            ViewedLinksRecorder.shared.record(
+                handle: handle,
+                name: name,
+                linkURL: linkURL,
+                isFolder: false
+            )
+        }
+    }
 }

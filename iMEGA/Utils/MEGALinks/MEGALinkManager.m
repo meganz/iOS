@@ -644,6 +644,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)showFileLinkView {
     NSString *fileLinkURLString = MEGALinkManager.linkURL.mnz_MEGAURL;
+    // Captured before the request starts: another link can overwrite the static while this one resolves.
+    NSString *encryptedLinkString = MEGALinkManager.secondaryLinkURL.absoluteString;
+    NSString *receivedLinkString = encryptedLinkString ?: fileLinkURLString;
 
     if (MEGALinkManager.isLinkRevampEnabled) {
         // The new screen is presented before the link is resolved, so its skeleton covers the wait.
@@ -668,8 +671,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.sharedFolderLink displayMode:DisplayModeFileLink isFromSharedItem:NO presentingNode:node];
                 photoBrowserVC.publicLink = fileLinkURLString;
-                photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
+                photoBrowserVC.encryptedLink = encryptedLinkString;
                 photoBrowserVC.needsReload = YES;
+
+                [MEGALinkManager recordViewedFileLink:node link:receivedLinkString];
 
                 [self presentViewControllerWithAds:photoBrowserVC
                                         publicLink:fileLinkURLString
@@ -677,6 +682,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                              adsSlotViewController:photoBrowserVC
                                  presentationStyle:UIModalPresentationFullScreen];
             } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
+                [MEGALinkManager recordViewedFileLink:node link:receivedLinkString];
+
+                // The player is the one destination that never clears this, unlike the photo browser
+                // and both link screens, so an encrypted link would leak into the next link opened.
+                MEGALinkManager.secondaryLinkURL = nil;
+
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO isFromSharedItem:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
                 [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];

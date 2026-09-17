@@ -134,3 +134,36 @@ extension FileLinkViewController {
         navigationController?.isToolbarHidden = true
     }
 }
+
+// MARK: - Viewed Links
+extension FileLinkViewController {
+    @objc func recordViewedLinkIfResolved() {
+        Task { @MainActor in
+            guard let node, let linkURL = receivedLinkURL else { return }
+
+            ViewedLinksRecorder.shared.record(
+                handle: node.handle,
+                name: node.nameAfterDecryptionCheck(),
+                linkURL: linkURL,
+                isFolder: false
+            )
+        }
+    }
+
+    @objc func removeUnavailableViewedLink() {
+        Task { @MainActor in
+            guard let linkURL = receivedLinkURL else { return }
+
+            ViewedLinksRecorder.shared.removeUnavailable(linkURL: linkURL)
+        }
+    }
+
+    /// The link that was shared to user, never a secret they typed,
+    /// For example: a standard link carries its key in `publicLinkString`,
+    /// a manually keyed one leaves it key-less, and a password-protected one keeps
+    /// its original `#P!` form in `linkEncryptedString`.
+    private var receivedLinkURL: URL? {
+        guard let link = linkEncryptedString ?? publicLinkString else { return nil }
+        return URL(string: link)
+    }
+}

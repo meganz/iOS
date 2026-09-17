@@ -273,6 +273,7 @@
         }
     }
 
+    [self startObservingViewedLinksLogout];
     [self listenToDomainUpdates];
     [self listenToLoggedOutStreamingOverQuota];
     [self startTransferQuotaWarningMonitoring];

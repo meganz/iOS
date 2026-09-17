@@ -41,3 +41,13 @@ public enum FileLinkAction: Equatable, Sendable {
 public protocol FileLinkActionHandlerProtocol {
     func handle(_ action: FileLinkAction, nodeHandle: HandleEntity) async
 }
+
+/// Reports the outcome of link resolution, so the app layer can keep a record of the links the
+/// user has opened.
+///
+/// Note: `receivedLink` should the link the user is shared with, never one rebuilt after a typed-in secret
+@MainActor
+public protocol FileLinkResolutionReporting {
+    func linkResolved(node: NodeEntity, receivedLink: String)
+    func linkUnavailable(receivedLink: String)
+}

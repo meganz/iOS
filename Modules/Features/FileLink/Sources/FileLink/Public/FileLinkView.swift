@@ -25,6 +25,7 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
         let actionHandler: any FileLinkActionHandlerProtocol
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
+        let linkResolutionReporter: any FileLinkResolutionReporting
         /// Shared by the link resolution, which stores the node it resolved, and everything that needs
         /// that node afterwards: the preview loader in here, `fileNodeOpener` and `actionHandler` out
         /// there. See `FileLinkNodeProvider`.
@@ -40,7 +41,8 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
             actionHandler: some FileLinkActionHandlerProtocol,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             nodeProvider: FileLinkNodeProvider,
-            onClose: @escaping @MainActor () -> Void
+            linkResolutionReporter: (any FileLinkResolutionReporting),
+            onClose: @escaping @MainActor () -> Void,
         ) {
             self.link = link
             self.encryptedLink = encryptedLink
@@ -50,6 +52,7 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.nodeProvider = nodeProvider
             self.onClose = onClose
+            self.linkResolutionReporter = linkResolutionReporter
         }
     }
 
@@ -80,7 +83,8 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
                     link: dependency.link,
                     encryptedLink: dependency.encryptedLink,
                     fileLinkBuilder: dependency.fileLinkBuilder,
-                    nodeProvider: dependency.nodeProvider
+                    nodeProvider: dependency.nodeProvider,
+                    linkResolutionReporter: dependency.linkResolutionReporter
                 )
             )
         )

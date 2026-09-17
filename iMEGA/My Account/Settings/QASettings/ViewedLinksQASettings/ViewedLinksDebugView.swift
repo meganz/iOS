@@ -1,4 +1,5 @@
 import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 import ViewedLinks
 
@@ -18,7 +19,10 @@ struct ViewedLinksDebugView: View {
                 statusSection
             }
             .navigationTitle("Viewed Links Debug")
-            .task { await viewModel.observeChanges() }
+            // `.task`, not `.onFirstLoad`: opening a link takes this screen off screen, which cancels
+            // the task and ends the change subscription. This has to re-fetch and re-subscribe on
+            // every appear, and `onFirstLoad` would refuse to run a second time.
+            .task { await viewModel.start() }
         }
     }
 
@@ -62,15 +66,21 @@ struct ViewedLinksDebugView: View {
                 Text("No links").foregroundStyle(.secondary)
             }
             ForEach(viewModel.links, id: \.handle) { link in
-                row(for: link)
-                    .swipeActions {
-                        Button("Delete", role: .destructive) {
-                            Task { await viewModel.remove(link) }
-                        }
-                        Button("By URL") {
-                            Task { await viewModel.removeUnavailable(link) }
-                        }
+                Button {
+                    viewModel.open(link)
+                } label: {
+                    row(for: link)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .swipeActions {
+                    Button("Delete", role: .destructive) {
+                        Task { await viewModel.remove(link) }
                     }
+                    Button("By URL") {
+                        Task { await viewModel.removeUnavailable(link) }
+                    }
+                }
             }
         }
     }
@@ -80,6 +90,8 @@ struct ViewedLinksDebugView: View {
             Image(systemName: link.isFolder ? "folder" : "doc")
             VStack(alignment: .leading, spacing: 2) {
                 Text(link.name).font(.body)
+                Text(link.linkURL.absoluteString)
+                    .font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
                 Text("handle \(link.handle)").font(.caption).foregroundStyle(.secondary)
                 Text(link.lastAccessed.formatted(date: .abbreviated, time: .standard))
                     .font(.caption2).foregroundStyle(.secondary)
@@ -104,13 +116,26 @@ final class ViewedLinksDebugViewModel: ObservableObject {
     @Published var ascending = false
     @Published private(set) var links: [ViewedLinkEntity] = []
     @Published private(set) var status = "Idle"
-
+    private var changesObserverTask: Task<Void, Never>?
+    
+    /// Mirrors `OpenLinkRouter.supportedLinkTypes`. `.encryptedLink` matters here because a
+    /// password-protected link is stored in its original `#P!` form, so re-opening it re-prompts
+    /// for the password rather than handing back a decrypted link.
+    private static let supportedLinkTypes: Set<URLType> = [
+        .fileLink,
+        .folderLink,
+        .encryptedLink,
+        .collection,
+        .contactLink,
+        .publicChatLink
+    ]
+    
     private let useCase: any ViewedLinksUseCaseProtocol
-
+    
     init(useCase: some ViewedLinksUseCaseProtocol = ViewedLinksFactory.makeUseCase()) {
         self.useCase = useCase
     }
-
+    
     func record() async {
         guard let url = URL(string: urlString) else {
             status = "Invalid URL"
@@ -132,7 +157,7 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             status = "Record failed: \(error)"
         }
     }
-
+    
     func refreshAll() async {
         do {
             links = try await useCase.viewedLinks(sortedBy: sortKey, ascending: ascending)
@@ -141,7 +166,7 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             status = "Fetch failed: \(error)"
         }
     }
-
+    
     func fetchTop(limit: Int) async {
         do {
             links = try await useCase.topViewedLinks(limit: limit)
@@ -150,7 +175,21 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             status = "Top fetch failed: \(error)"
         }
     }
-
+    
+    /// Opens the stored link exactly as `OpenLinkRouter.processLink(_:)` does, so a tap here goes
+    /// through the same routing the app uses for a link typed into Open link.
+    func open(_ link: ViewedLinkEntity) {
+        let url = link.linkURL
+        guard Self.supportedLinkTypes.contains((url as NSURL).mnz_type()) else {
+            status = "Unsupported link type \((url as NSURL).mnz_type().rawValue): \(url.absoluteString)"
+            return
+        }
+        
+        MEGALinkManager.adapterLinkURL = url
+        MEGALinkManager.processLinkURL(url)
+        status = "Opening \(url.absoluteString)"
+    }
+    
     func remove(_ link: ViewedLinkEntity) async {
         do {
             try await useCase.remove([link])
@@ -160,7 +199,7 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             status = "Remove failed: \(error)"
         }
     }
-
+    
     func removeUnavailable(_ link: ViewedLinkEntity) async {
         do {
             try await useCase.removeUnavailable(linkURL: link.linkURL)
@@ -170,7 +209,7 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             status = "Remove by URL failed: \(error)"
         }
     }
-
+    
     func clearHistory() async {
         do {
             try await useCase.clearHistory()
@@ -180,11 +219,28 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             status = "Clear failed: \(error)"
         }
     }
+    
+    /// Loads the current contents, then follows the store for as long as the screen is up. The signal
+    /// sequence never finishes, so the fetch has to come first, and the `.task` the view starts this
+    /// on is what ends it.
+    func start() async {
+        await refreshAll()
+        await observeChanges()
+    }
 
-    func observeChanges() async {
-        for await _ in useCase.changesSignalSequence() {
-            await refreshAll()
+    private func observeChanges() async {
+        guard changesObserverTask == nil else { return }
+
+        changesObserverTask = Task { [weak self, useCase] in
+            for await _ in useCase.changesSignalSequence() {
+                await self?.refreshAll()
+            }
         }
+    }
+
+    deinit {
+        changesObserverTask?.cancel()
+        changesObserverTask = nil
     }
 }
 

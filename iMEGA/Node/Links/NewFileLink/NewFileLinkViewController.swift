@@ -69,6 +69,7 @@ final class NewFileLinkViewController: UIViewController {
             ),
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             nodeProvider: nodeProvider,
+            linkResolutionReporter: ViewedLinksRecorder.shared,
             onClose: { [weak self] in
                 self?.close()
             }

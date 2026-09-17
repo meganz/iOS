@@ -16,12 +16,14 @@ package final class FileLinkViewModel: ObservableObject {
         let encryptedLink: String?
         let fileLinkFlowUseCase: any FileLinkFlowUseCaseProtocol
         let networkUseCase: any NetworkMonitorUseCaseProtocol
+        let linkResolutionReporter: (any FileLinkResolutionReporting)
 
         init(
             link: String,
             encryptedLink: String?,
             fileLinkBuilder: some FileLinkBuilderProtocol,
-            nodeProvider: FileLinkNodeProvider
+            nodeProvider: FileLinkNodeProvider,
+            linkResolutionReporter: some FileLinkResolutionReporting
         ) {
             self.init(
                 link: link,
@@ -30,7 +32,8 @@ package final class FileLinkViewModel: ObservableObject {
                     fileLinkRepository: FileLinkRepository.newRepo(nodeProvider: nodeProvider),
                     fileLinkBuilder: fileLinkBuilder
                 ),
-                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                linkResolutionReporter: linkResolutionReporter
             )
         }
 
@@ -38,12 +41,14 @@ package final class FileLinkViewModel: ObservableObject {
             link: String,
             encryptedLink: String? = nil,
             fileLinkFlowUseCase: some FileLinkFlowUseCaseProtocol,
-            networkUseCase: some NetworkMonitorUseCaseProtocol
+            networkUseCase: some NetworkMonitorUseCaseProtocol,
+            linkResolutionReporter: some FileLinkResolutionReporting
         ) {
             self.link = link
             self.encryptedLink = encryptedLink
             self.fileLinkFlowUseCase = fileLinkFlowUseCase
             self.networkUseCase = networkUseCase
+            self.linkResolutionReporter = linkResolutionReporter
         }
     }
 
@@ -86,6 +91,13 @@ package final class FileLinkViewModel: ObservableObject {
     /// keyless one would leave whoever receives it unable to open the file.
     package var shareLink: String {
         dependency.encryptedLink ?? resolvedLink ?? dependency.link
+    }
+
+    /// The link that can be saved to store for user to open later
+    /// Unlike `shareLink`, for `recordableLink` we don't allow `resolvedLink` as it's not the
+    /// original link that was publicly shared.
+    private var recordableLink: String {
+        dependency.encryptedLink ?? dependency.link
     }
 
     private let dependency: Dependency
@@ -158,6 +170,7 @@ package final class FileLinkViewModel: ObservableObject {
         resolvedLink = resolvedFileLink.link
         viewState = .loaded(resolvedFileLink.node)
         trackingUseCase.trackFileLinkOpened()
+        dependency.linkResolutionReporter.linkResolved(node: resolvedFileLink.node, receivedLink: recordableLink)
     }
 
     private func handleFileLinkFlowError(_ error: FileLinkFlowErrorEntity) {
@@ -169,6 +182,7 @@ package final class FileLinkViewModel: ObservableObject {
             askingForDecryptionKey = true
         case let .linkUnavailable(reason):
             viewState = .error(reason)
+            dependency.linkResolutionReporter.linkUnavailable(receivedLink: recordableLink)
         }
     }
 }

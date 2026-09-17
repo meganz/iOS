@@ -53,6 +53,14 @@ extension AppDelegate {
         MEGAAudioPlayerSession.appWillTerminate()
     }
 
+    /// The viewed-links history must be dropped on logout even in a session where no link was opened,
+    /// so the observation is started here rather than left to the first recording.
+    @objc func startObservingViewedLinksLogout() {
+        Task { @MainActor in
+            ViewedLinksRecorder.shared.startObservingLogout()
+        }
+    }
+
     @objc func listenToDomainUpdates() {
         Task {
             for await _ in MEGAAccountManagement.DependencyInjection.appDomainUpdatesUseCase.events {

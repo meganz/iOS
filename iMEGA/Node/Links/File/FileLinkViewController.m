@@ -169,6 +169,8 @@
     
     self.node = self.request.publicNode;
 
+    [self recordViewedLinkIfResolved];
+
     [self trackShareLinkOpened];
 
     if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.node.name]) {
@@ -209,6 +211,8 @@
 }
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
+    [self removeUnavailableViewedLink];
+
     self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
     [self hideActionButtons];
     

@@ -290,19 +290,140 @@ struct FileLinkViewModelTests {
         #expect(trackingUseCase.trackFileLinkOpenedCallCount == 0)
     }
 
+    // MARK: - Link resolution reporting
+
+    @Test("a resolved link is reported with the link the screen was opened with")
+    func startLoading_success_reportsLinkResolved() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let sut = makeSUT(
+            link: "https://mega.nz/file/abc#key",
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(initialStartResult: .success(NodeEntity(handle: 42))),
+            linkResolutionReporter: reporter
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(reporter.linkResolvedCalledArguments.map(\.node) == [NodeEntity(handle: 42)])
+        #expect(reporter.linkResolvedCalledArguments.map(\.receivedLink) == ["https://mega.nz/file/abc#key"])
+        #expect(reporter.linkUnavailableCalledLinks.isEmpty)
+    }
+
+    /// The encrypted link is the form the file was published in, so it is the form worth keeping.
+    @Test("an encrypted link is reported as it was published")
+    func startLoading_encryptedLink_reportsThePublishedLink() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let sut = makeSUT(
+            link: "https://mega.nz/file/abc#key",
+            encryptedLink: "https://mega.nz/#P!encrypted",
+            linkResolutionReporter: reporter
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(reporter.linkResolvedCalledArguments.map(\.receivedLink) == ["https://mega.nz/#P!encrypted"])
+    }
+
+    /// Unlike `FileLinkViewModel.shareLink`, what gets reported must never be the link rebuilt around the
+    /// key the user typed in, because that would keep a secret they were never given.
+    @Test("a link resolved from a typed key is reported without that key")
+    func confirmDecryptionKey_success_reportsTheKeylessLink() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let sut = makeSUT(
+            link: "https://mega.nz/file/abc",
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(resolvedLink: "https://mega.nz/file/abc#typed-key"),
+            linkResolutionReporter: reporter
+        )
+
+        await sut.confirmDecryptionKey("typed-key")
+
+        #expect(reporter.linkResolvedCalledArguments.map(\.receivedLink) == ["https://mega.nz/file/abc"])
+    }
+
+    @Test("an unavailable link is reported as unavailable")
+    func startLoading_unavailable_reportsLinkUnavailable() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let sut = makeSUT(
+            link: "https://mega.nz/file/abc#key",
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(initialStartResult: .failure(.linkUnavailable(.expired))),
+            linkResolutionReporter: reporter
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(reporter.linkUnavailableCalledLinks == ["https://mega.nz/file/abc#key"])
+        #expect(reporter.linkResolvedCalledArguments.isEmpty)
+    }
+
+    /// A key prompt is not a link that failed to load, so a record of it has to survive one.
+    @Test("a link waiting on its decryption key is reported neither way")
+    func startLoading_missingKey_reportsNothing() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(initialStartResult: .failure(.missingDecryptionKey)),
+            linkResolutionReporter: reporter
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(reporter.linkUnavailableCalledLinks.isEmpty)
+        #expect(reporter.linkResolvedCalledArguments.isEmpty)
+    }
+
+    @Test("a wrong decryption key is reported neither way")
+    func confirmDecryptionKey_invalidKey_reportsNothing() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(confirmDecryptionKeyResult: .failure(.invalidDecryptionKey)),
+            linkResolutionReporter: reporter
+        )
+
+        await sut.confirmDecryptionKey("key")
+
+        #expect(reporter.linkUnavailableCalledLinks.isEmpty)
+        #expect(reporter.linkResolvedCalledArguments.isEmpty)
+    }
+
+    @Test("a link that resolves after the screen was closed is not reported")
+    func startLoading_closedWhileInFlight_reportsNothing() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let fileLinkFlowUseCase = MockFileLinkFlowUseCase(initialStartResult: .success(NodeEntity(handle: 42)))
+        let sut = makeSUT(fileLinkFlowUseCase: fileLinkFlowUseCase, linkResolutionReporter: reporter)
+        fileLinkFlowUseCase.whileInFlight = { sut.stopLoadingFileLink() }
+
+        await sut.startLoadingFileLink()
+
+        #expect(reporter.linkResolvedCalledArguments.isEmpty)
+    }
+
+    @Test("an error that arrives after the screen was closed is not reported")
+    func startLoading_closedWhileInFlight_doesNotReportLinkUnavailable() async {
+        let reporter = MockFileLinkResolutionReporter()
+        let fileLinkFlowUseCase = MockFileLinkFlowUseCase(
+            initialStartResult: .failure(.linkUnavailable(.generic))
+        )
+        let sut = makeSUT(fileLinkFlowUseCase: fileLinkFlowUseCase, linkResolutionReporter: reporter)
+        fileLinkFlowUseCase.whileInFlight = { sut.stopLoadingFileLink() }
+
+        await sut.startLoadingFileLink()
+
+        #expect(reporter.linkUnavailableCalledLinks.isEmpty)
+    }
+
     private func makeSUT(
         link: String = "link",
         encryptedLink: String? = nil,
         fileLinkFlowUseCase: MockFileLinkFlowUseCase = MockFileLinkFlowUseCase(),
         networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
-        trackingUseCase: MockFileLinkTrackingUseCase = MockFileLinkTrackingUseCase()
+        trackingUseCase: MockFileLinkTrackingUseCase = MockFileLinkTrackingUseCase(),
+        linkResolutionReporter: MockFileLinkResolutionReporter = MockFileLinkResolutionReporter()
     ) -> FileLinkViewModel {
         FileLinkViewModel(
             dependency: FileLinkViewModel.Dependency(
                 link: link,
                 encryptedLink: encryptedLink,
                 fileLinkFlowUseCase: fileLinkFlowUseCase,
-                networkUseCase: networkUseCase
+                networkUseCase: networkUseCase,
+                linkResolutionReporter: linkResolutionReporter
             ),
             trackingUseCase: trackingUseCase
         )

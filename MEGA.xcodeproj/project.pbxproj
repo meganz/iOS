@@ -2701,6 +2701,7 @@
 		D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */; };
 		D4597907603A472A68B3B885 /* AppOpenPromoLandingDialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB5898FB2C3FFC3E7875AD /* AppOpenPromoLandingDialogRouter.swift */; };
 		D4A1F0C2B83E47519A6C0E12 /* ViewedLinksDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */; };
+		D4A1F0C2B83E47519A6C0E32 /* ViewedLinksRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */; };
 		D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */; };
 		D7B05EB5303C2F11004C5100 /* TransfersTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
@@ -4510,6 +4511,7 @@
 		A52F1E342EBCE55800D3A2E9 /* CloudDrive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudDrive; sourceTree = "<group>"; };
 		CE6DA084000000000000AA01 /* ViewedLinks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewedLinks; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksDebugView.swift; sourceTree = "<group>"; };
+		D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksRecorder.swift; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksCrashlyticsErrorReporter.swift; sourceTree = "<group>"; };
 		A52F1E352EBCE55800D3A2E9 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
@@ -10382,10 +10384,19 @@
 			path = Spotlight;
 			sourceTree = "<group>";
 		};
+		D4A1F0C2B83E47519A6C0E33 /* ViewedLinks */ = {
+			isa = PBXGroup;
+			children = (
+				D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */,
+			);
+			path = ViewedLinks;
+			sourceTree = "<group>";
+		};
 		941A01902CB439520057C99D /* MEGALinks */ = {
 			isa = PBXGroup;
 			children = (
 				C4AA896D2F985FBE002A17D0 /* OpenLink */,
+				D4A1F0C2B83E47519A6C0E33 /* ViewedLinks */,
 				837B179F288184F900A4D01B /* MEGALinkManager+Additions.swift */,
 				5B20B00B20E61DFB00511C0F /* MEGALinkManager.h */,
 				5B20B00920E61DDF00511C0F /* MEGALinkManager.m */,
@@ -16416,6 +16427,7 @@
 				94F3B7572DB00B4D00C285A5 /* VideoUploadsViewModel.swift in Sources */,
 				D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */,
 				D4A1F0C2B83E47519A6C0E12 /* ViewedLinksDebugView.swift in Sources */,
+				D4A1F0C2B83E47519A6C0E32 /* ViewedLinksRecorder.swift in Sources */,
 				94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */,
 				BF9BBB692EAA14C600A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift in Sources */,
 				94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */,
