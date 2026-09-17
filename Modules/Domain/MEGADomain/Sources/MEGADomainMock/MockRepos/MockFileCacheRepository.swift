@@ -12,6 +12,9 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     /// The nodes that have a cached copy, by name, for when only some of them should. `nil` leaves
     /// `hasExistingTempFile` to speak for every node, which is what most callers want.
     private let cachedNodeNames: Set<String>?
+    /// Whether the original image copy is already on disk. Kept apart from `hasExistingTempFile` so that a
+    /// caller can ask for an uncached original without losing the cached temp file.
+    private let hasExistingOriginalImage: Bool
     public var tempFolder: URL
     public var tempUploadURL: URL
 
@@ -20,6 +23,7 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
         name: String = "",
         hasExistingTempFile: Bool = true,
         cachedNodeNames: Set<String>? = nil,
+        hasExistingOriginalImage: Bool = true,
         tempFolder: URL = URL(fileURLWithPath: "temp/"),
         tempUploadURL: URL = URL(fileURLWithPath: "temp/upload")
     ) {
@@ -27,6 +31,7 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
         self.name = name
         self.hasExistingTempFile = hasExistingTempFile
         self.cachedNodeNames = cachedNodeNames
+        self.hasExistingOriginalImage = hasExistingOriginalImage
         self.tempFolder = tempFolder
         self.tempUploadURL = tempUploadURL
     }
@@ -67,7 +72,7 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     }
     
     public func existingOriginalImageURL(for node: NodeEntity) -> URL? {
-        URL(fileURLWithPath: "originalV3/" + base64Handle)
+        hasExistingOriginalImage ? URL(fileURLWithPath: "originalV3/" + base64Handle) : nil
     }
     
     public func cachedOriginalURL(for base64Handle: Base64HandleEntity, name: String) -> URL {

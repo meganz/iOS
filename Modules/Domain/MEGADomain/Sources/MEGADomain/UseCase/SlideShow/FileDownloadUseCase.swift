@@ -38,6 +38,24 @@ extension FileDownloadUseCase: FileDownloadUseCaseProtocol {
         }
         
         let url = fileCacheRepository.cachedOriginalImageURL(for: node)
+        
+        guard BatchDownloadFeatureFlag.isEnabled else {
+            return try await legacyDownloadNode(node, to: url)
+        }
+        
+        try await downloadFileRepository.download(batch: [
+            DownloadBatchItemEntity(
+                source: .node(node.handle),
+                destination: .file(url),
+                startFirst: true
+            )
+        ])
+        
+        return url
+    }
+    
+    // MARK: - Private
+    private func legacyDownloadNode(_ node: NodeEntity, to url: URL) async throws -> URL {
         let downloadedFile = try await downloadFileRepository.download(
             nodeHandle: node.handle,
             to: url,
