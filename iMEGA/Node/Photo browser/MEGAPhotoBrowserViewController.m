@@ -758,19 +758,19 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         [weakSelf startLiveTextAnalysisFor:imageView cacheKey:cacheKey];
     };
     
-    void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
+    void (^transferCompletion)(NSString *path) = ^(NSString *path) {
         [UIView transitionWithView:imageView
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
             if ([[node.name.pathExtension lowercaseString] isEqualToString:@"gif"]) {
-                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:transfer.path]
+                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:path]
                                     completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
                     [weakSelf resizeImageView:imageView];
                 }];
             } else {
-                imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                imageView.image = [UIImage imageWithContentsOfFile:path];
                 [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
                 [weakSelf resizeImageView:imageView];
             }
@@ -785,9 +785,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         [weakSelf startLiveTextAnalysisFor:imageView cacheKey:cacheKey];
     };
     
-    void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
+    void (^transferProgress)(float progress) = ^(float progress) {
         if ([weakSelf.dataProvider.currentCacheKey isEqual:cacheKey]) {
-            weakSelf.transferProgress = (double)transfer.transferredBytes / (double)transfer.totalBytes;
+            weakSelf.transferProgress = progress;
             [weakSelf.pieChartView reloadData];
             [weakSelf hideBarButtonWithBarButtonItem:[weakSelf slideshowButton]];
             if (weakSelf.pieChartView.alpha < 1.0f) {
@@ -826,14 +826,33 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MEGAPhotoModeOriginal: {
-            MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
-            NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (shouldAddIndicators) {
                 [self addActivityIndicatorToView:imageView];
             }
-            
-            [MEGASdk.shared startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:nil collisionCheck: CollisionCheckFingerprint collisionResolution:CollisionResolutionNewWithN delegate:delegate];
-            
+
+            NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+
+            if (self.viewModel.isBatchDownloadEnabled) {
+                [self.viewModel startOriginalDownloadFor:node
+                                         destinationPath:temporaryImagePath
+                                              onProgress:transferProgress
+                                                onFinish:transferCompletion];
+            } else {
+                MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:^(MEGATransfer *transfer) {
+                    float progress;
+                    if (transfer.totalBytes > 0) {
+                        progress = (float)transfer.transferredBytes / (float)transfer.totalBytes;
+                    } else {
+                        progress = 0;
+                    }
+                    transferProgress(progress);
+                } completion:^(MEGATransfer *transfer) {
+                    transferCompletion(transfer.path);
+                } onError:nil];
+
+                [MEGASdk.shared startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:nil collisionCheck: CollisionCheckFingerprint collisionResolution:CollisionResolutionNewWithN delegate:delegate];
+            }
+
             break;
         }
     }

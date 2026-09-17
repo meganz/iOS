@@ -1,9 +1,11 @@
+import ChatRepo
 import ContentLibraries
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAFoundation
 import MEGARepo
 import NodeBackgroundDownloader
 
@@ -116,15 +118,23 @@ import NodeBackgroundDownloader
     }
     
     private let tracker: any AnalyticsTracking
+
+    /// Built per node: a node reached through a folder link or a link preview is already authorized and
+    /// must not be looked up again, which is what `preresolvedNodes` in the repository is for.
+    private let makeDownloadUseCase: (MEGANode) -> any PhotoBrowserNodeDownloadUseCaseProtocol
     
     init(
         tracker: some AnalyticsTracking = DIContainer.tracker,
         photoBrowserUseCase: some PhotoBrowserUseCaseProtocol,
-        paginator: PhotoBrowserPaginator? = nil
+        paginator: PhotoBrowserPaginator? = nil,
+        makeDownloadUseCase: @escaping (MEGANode) -> any PhotoBrowserNodeDownloadUseCaseProtocol = {
+            PhotoBrowserViewModel.makeDownloadUseCase(megaNode: $0)
+        }
     ) {
         self.tracker = tracker
         self.photoBrowserUseCase = photoBrowserUseCase
         self.paginator = paginator
+        self.makeDownloadUseCase = makeDownloadUseCase
     }
 
     /// `i of n` for the title, or `nil` when this browser does not paginate — the caller then falls
@@ -404,5 +414,57 @@ import NodeBackgroundDownloader
                 MEGALogWarning("[Photo Browser] Failed to get node for file link: \(url) with error: \(error)")
             }
         }
+    }
+
+    // MARK: - Original photo download
+
+    @objc var isBatchDownloadEnabled: Bool {
+        BatchDownloadFeatureFlag.isEnabled
+    }
+
+    /// Downloads the full size image a page shows, to `destinationPath` which is a file path.
+    ///
+    /// Not cancelled as aligned with legacy flow. The download still runs to completion and available at the cache for next use.
+    @objc func startOriginalDownload(
+        for megaNode: MEGANode,
+        destinationPath: String,
+        onProgress: @escaping (Float) -> Void,
+        onFinish: @escaping (String) -> Void
+    ) {
+        let events = makeDownloadUseCase(megaNode).downloadOriginalImage(
+            for: megaNode.toNodeEntity(),
+            to: URL(fileURLWithPath: destinationPath)
+        )
+
+        Task { @MainActor in
+            do {
+                for try await event in events {
+                    switch event {
+                    case .update(let transfer):
+                        guard transfer.totalBytes > 0 else { continue }
+                        onProgress(Float(transfer.transferredBytes) / Float(transfer.totalBytes))
+                    case .finish(let transfer):
+                        guard let path = transfer.path else { return }
+                        onFinish(path)
+                        return
+                    default:
+                        break
+                    }
+                }
+            } catch {
+                MEGALog.log(level: .error, message: "[Photo Browser] Failed to download original image: \(error)")
+            }
+        }
+    }
+
+    private static func makeDownloadUseCase(megaNode: MEGANode) -> any PhotoBrowserNodeDownloadUseCaseProtocol {
+        let sdk = MEGASdk.shared
+        return PhotoBrowserNodeDownloadUseCase(
+            downloadFileRepository: DownloadFileRepository(
+                sdk: sdk,
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: .sharedChatSdk, sdk: sdk),
+                preresolvedNodes: [megaNode.handle: megaNode]
+            )
+        )
     }
 }
