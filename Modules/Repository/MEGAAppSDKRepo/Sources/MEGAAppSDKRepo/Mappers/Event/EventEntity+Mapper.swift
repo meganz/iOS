@@ -125,6 +125,7 @@ extension Event {
         case .transfersResumed: EventEntity.EventType.transfersResumed
         case .lastPurge: EventEntity.EventType.lastPurge
         case .streamOverquota: EventEntity.EventType.streamingOverQuota
+        case .transferQuotaState: EventEntity.EventType.transferQuotaState
         @unknown default:  nil
         }
     }

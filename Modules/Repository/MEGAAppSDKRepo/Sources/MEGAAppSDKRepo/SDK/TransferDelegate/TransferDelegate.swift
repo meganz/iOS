@@ -82,8 +82,3 @@ public final class TransferDelegate: NSObject, MEGATransferDelegate {
         transferQuotaState?(transferQuotaStateEntity)
     }
 }
-
-// To be deleted once SDK submodule is updated
-public enum MEGATransferQuotaState {
-    case unknown, green, orange, red
-}
