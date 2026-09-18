@@ -91,15 +91,33 @@ enum PlaybackBlockedReason: Equatable {
 // MARK: - Status
 
 /// Why a playback attempt failed
-enum AudioPlaybackFailureReason: String {
+enum AudioPlaybackFailureReason: Equatable {
     /// The track resolved to no playable URL.
     case urlUnresolved
     /// `AVPlayerItem` reported `.failed` — the engine had a URL but could not play it.
-    case itemFailed
+    case itemFailed(reason: String?)
     /// The track was taken down
     case takenDown
     /// `playCurrent()` ran with nothing in the queue
     case queueEmpty
+
+    var eventReason: String {
+        switch self {
+        case .urlUnresolved: "urlUnresolved"
+        case .itemFailed(let reason): "itemFailed:\(Self.sanitized(reason) ?? Self.unknownError)"
+        case .takenDown: "takenDown"
+        case .queueEmpty: "queueEmpty"
+        }
+    }
+
+    private static func sanitized(_ reason: String?) -> String? {
+        guard let trimmed = reason?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !trimmed.isEmpty else { return nil }
+        return String(trimmed.prefix(maxReasonLength))
+    }
+
+    private static let maxReasonLength = 200
+    private static let unknownError = "Unknown error"
 }
 
 enum PlaybackStatus: Equatable {

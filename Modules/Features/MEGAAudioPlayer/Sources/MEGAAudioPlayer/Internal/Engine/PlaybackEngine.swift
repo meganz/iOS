@@ -368,13 +368,13 @@ extension PlaybackEngine {
             .filter { $0 == .failed }
             .receive(on: DispatchQueue.main)
             .sink { [weak self, weak item] _ in
-                self?.reportFailure(.itemFailed, message: item?.error?.localizedDescription)
+                self?.reportFailure(.itemFailed(reason: item?.error?.localizedDescription))
             }
             .store(in: &itemObservations)
     }
 
-    private func reportFailure(_ reason: AudioPlaybackFailureReason, message: String?) {
-        MEGALogError("[AudioPlayer] playback failed: \(reason.rawValue) — \(message ?? "no error description")")
+    private func reportFailure(_ reason: AudioPlaybackFailureReason) {
+        MEGALogError("[AudioPlayer] playback failed: \(reason.eventReason)")
         playbackStatusSubject.send(.error(reason))
     }
 

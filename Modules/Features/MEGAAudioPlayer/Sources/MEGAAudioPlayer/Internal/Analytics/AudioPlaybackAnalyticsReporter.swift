@@ -59,7 +59,7 @@ final class AudioPlaybackAnalyticsReporter {
         tracker.trackAnalyticsEvent(
             with: AudioPlaybackFailedEvent(
                 sourceType: track?.analyticsSourceType ?? "none",
-                reason: reason.rawValue,
+                reason: reason.eventReason,
                 authStatus: accountUseCase.isLoggedIn() ? .loggedin : .loggedout
             )
         )
