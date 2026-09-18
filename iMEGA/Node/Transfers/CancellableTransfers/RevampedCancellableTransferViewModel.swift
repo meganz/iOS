@@ -15,6 +15,7 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
     
     private let router: any RoutingProtocols
     private let cancellableTransferUseCase: any CancellableTransferUseCaseProtocol
+    private let recordOfflineFolderUseCase: any RecordOfflineFolderUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private let alertScheduler: any CancellableTransferAlertScheduling
     private let transfers: [CancellableTransfer]
@@ -29,6 +30,7 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
     init(
         router: some RoutingProtocols,
         cancellableTransferUseCase: some CancellableTransferUseCaseProtocol,
+        recordOfflineFolderUseCase: some RecordOfflineFolderUseCaseProtocol,
         overDiskQuotaChecker: some OverDiskQuotaChecking,
         alertScheduler: some CancellableTransferAlertScheduling,
         transfers: [CancellableTransfer],
@@ -36,6 +38,7 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
     ) {
         self.router = router
         self.cancellableTransferUseCase = cancellableTransferUseCase
+        self.recordOfflineFolderUseCase = recordOfflineFolderUseCase
         self.overDiskQuotaChecker = overDiskQuotaChecker
         self.alertScheduler = alertScheduler
         self.transfers = transfers
@@ -115,6 +118,8 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
             invokeCommand?(.creatingFolders(createdFolders: created, totalFolders: total))
             shouldFinish = false
         case .transferringFiles:
+            // Alread pased the creatingFolders stage, so the batch has recreated the folder tree on disk
+            recordOfflineFolderUseCase.recordFolders(in: transfers.map(\.cancellableTransferEntity))
             transferOutcome = .startedTransferring
             shouldFinish = true
         case .failed:

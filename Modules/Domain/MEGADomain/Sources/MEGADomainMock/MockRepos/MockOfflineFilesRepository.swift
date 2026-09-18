@@ -9,6 +9,8 @@ public final class MockOfflineFilesRepository: OfflineFilesRepositoryProtocol, @
     private let _offlineSize: UInt64
     
     public var removeAllOfflineNodesCalledTimes = 0
+    /// Every offline file created, in call order, as the (name, handle) pair it was created with.
+    public private(set) var createdOfflineFiles = [(name: String, handle: HandleEntity)]()
     
     public init(
         offlineFileEntities: [OfflineFileEntity] = [],
@@ -30,7 +32,9 @@ public final class MockOfflineFilesRepository: OfflineFilesRepositoryProtocol, @
         offlineFileEntity
     }
     
-    public func createOfflineFile(name: String, for handle: HandleEntity) {}
+    public func createOfflineFile(name: String, for handle: HandleEntity) {
+        createdOfflineFiles.append((name, handle))
+    }
     
     public func removeAllStoredOfflineNodes() {
         removeAllOfflineNodesCalledTimes += 1

@@ -545,9 +545,60 @@ struct RevampedCancellableTransferViewModelTests {
         return invokedCommands
     }
 
+    // MARK: - Recording a downloaded folder offline
+
+    @Test("Reaching the transferring stage records the batch's folders offline")
+    func transferringFilesRecordsTheOfflineFolders() async {
+        // The batch reports no transfer of its own for a folder, so this is the only place the
+        // folder is marked as downloaded.
+        let recordUseCase = MockRecordOfflineFolderUseCase()
+        let sut = makeSUT(
+            cancellableTransferUseCase: MockCancellableTransferUseCase(states: [.transferringFiles]),
+            recordOfflineFolderUseCase: recordUseCase,
+            transfers: [CancellableTransfer(handle: 1, name: "Docs", isFile: false, type: .download)],
+            transferType: .download)
+
+        sut.dispatch(.onViewReady)
+        await Task.megaYield()
+
+        #expect(recordUseCase.recordedBatches.map { $0.map(\.name) } == [["Docs"]])
+    }
+
+    @Test("A batch that failed records nothing offline")
+    func failedBatchRecordsNothing() async {
+        let recordUseCase = MockRecordOfflineFolderUseCase()
+        let sut = makeSUT(
+            cancellableTransferUseCase: MockCancellableTransferUseCase(states: [.failed]),
+            recordOfflineFolderUseCase: recordUseCase,
+            transfers: [CancellableTransfer(handle: 1, name: "Docs", isFile: false, type: .download)],
+            transferType: .download)
+
+        sut.dispatch(.onViewReady)
+        await Task.megaYield()
+
+        #expect(recordUseCase.recordedBatches.isEmpty)
+    }
+
+    @Test("A batch still scanning records nothing offline")
+    func scanningRecordsNothing() async {
+        let recordUseCase = MockRecordOfflineFolderUseCase()
+        let sut = makeSUT(
+            cancellableTransferUseCase: MockCancellableTransferUseCase(
+                states: [.scanning(name: "Docs", folderCount: 1, fileCount: 1)]),
+            recordOfflineFolderUseCase: recordUseCase,
+            transfers: [CancellableTransfer(handle: 1, name: "Docs", isFile: false, type: .download)],
+            transferType: .download)
+
+        sut.dispatch(.onViewReady)
+        await Task.megaYield()
+
+        #expect(recordUseCase.recordedBatches.isEmpty)
+    }
+
     private func makeSUT(
         router: MockRevampedCancellableTransferRouter = MockRevampedCancellableTransferRouter(),
         cancellableTransferUseCase: some CancellableTransferUseCaseProtocol = MockCancellableTransferUseCase(),
+        recordOfflineFolderUseCase: MockRecordOfflineFolderUseCase = MockRecordOfflineFolderUseCase(),
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         alertScheduler: MockCancellableTransferAlertScheduler = MockCancellableTransferAlertScheduler(),
         transfers: [CancellableTransfer] = [CancellableTransfer(handle: 1, name: "node.txt", type: .download)],
@@ -556,6 +607,7 @@ struct RevampedCancellableTransferViewModelTests {
         RevampedCancellableTransferViewModel(
             router: router,
             cancellableTransferUseCase: cancellableTransferUseCase,
+            recordOfflineFolderUseCase: recordOfflineFolderUseCase,
             overDiskQuotaChecker: overDiskQuotaChecker,
             alertScheduler: alertScheduler,
             transfers: transfers,

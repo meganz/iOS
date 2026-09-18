@@ -111,11 +111,19 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
         RevampedCancellableTransferViewModel(
             router: self,
             cancellableTransferUseCase: makeCancellableTransferUseCase(),
+            recordOfflineFolderUseCase: makeRecordOfflineFolderUseCase(),
             overDiskQuotaChecker: makeOverDiskQuotaChecker(),
             alertScheduler: CancellableTransferAlertScheduler(
                 presentHandler: { [weak self] in self?.showTransfersAlert() }),
             transfers: transfers,
             transferType: transferType
+        )
+    }
+
+    private func makeRecordOfflineFolderUseCase() -> some RecordOfflineFolderUseCaseProtocol {
+        RecordOfflineFolderUseCase(
+            offlineFilesRepository: OfflineFilesRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
         )
     }
 
