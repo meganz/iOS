@@ -19,6 +19,8 @@ final class TextEditorViewRouter: NSObject {
     private let isFromSharedItem: Bool
     private var parentHandle: HandleEntity?
     private var nodeEntity: NodeEntity?
+    /// Kept alongside `nodeEntity` so a link node, which is in no SDK tree, can still be downloaded.
+    private var megaNode: MEGANode?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
@@ -34,6 +36,7 @@ final class TextEditorViewRouter: NSObject {
                   isFromSharedItem: isFromSharedItem,
                   nodeEntity: node?.toNodeEntity(),
                   presenter: presenter)
+        self.megaNode = node
     }
     
     init(
@@ -74,16 +77,15 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let downloadUC = DownloadNodeUseCase(
             downloadFileRepository: DownloadFileRepository(
                 sdk: sdk,
-                chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: sdk)
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: MEGAChatSdk.sharedChatSdk, sdk: sdk),
+                preresolvedNodes: megaNode.map { [$0.handle: $0] } ?? [:]
             ),
-            offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk, folderSizeCalculator: FolderSizeCalculator()),
             fileSystemRepository: fileSystemRepository,
             nodeRepository: nodeRepository,
             nodeDataRepository: NodeDataRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
-            preferenceRepository: PreferenceRepository.newRepo,
-            offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo, 
+            preferenceRepository: PreferenceRepository.newRepo, 
             chatNodeRepository: ChatNodeRepository.newRepo,
             downloadChatRepository: DownloadChatRepository.newRepo)
         let nodeDataUC = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
@@ -210,11 +212,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         
         let transfer = CancellableTransfer(handle: node.handle, name: node.name, appData: nil, priority: false, isFile: node.isFile, type: .download)
 
-        let transferRouter = CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download, isFolderLink: false)
-        transferRouter.onDownloadCompleted = { outcome in
-            UIApplication.mnz_visibleViewController().showSnackBar(message: outcome.message)
-        }
-        transferRouter.start()
+        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download, isFolderLink: false).start()
     }
     
     func sendToChat(node: MEGANode) {

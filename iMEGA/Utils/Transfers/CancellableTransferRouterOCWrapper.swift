@@ -3,23 +3,11 @@ import MEGADomain
 @MainActor
 @objc final class CancellableTransferRouterOCWrapper: NSObject {
     @objc func downloadNodes(_ nodes: [MEGANode], presenter: UIViewController, isFolderLink: Bool = false) {
-        downloadNodes(nodes, presenter: presenter, isFolderLink: isFolderLink, completion: nil)
-    }
-
-    @objc func downloadNodes(_ nodes: [MEGANode], presenter: UIViewController, isFolderLink: Bool, completion: (@MainActor (CancellableDownloadOutcome) -> Void)?) {
-        let router = CancellableTransferRouter(presenter: presenter, transfers: transferViewEntities(fromNodes: nodes), transferType: .download, isFolderLink: isFolderLink)
-        router.onDownloadCompleted = completion
-        router.start()
+        CancellableTransferRouter(presenter: presenter, transfers: transferViewEntities(fromNodes: nodes), transferType: .download, isFolderLink: isFolderLink).start()
     }
 
     @objc func downloadChatNodes(_ nodes: [MEGANode], messageId: HandleEntity, chatId: HandleEntity, presenter: UIViewController) {
-        downloadChatNodes(nodes, messageId: messageId, chatId: chatId, presenter: presenter, completion: nil)
-    }
-
-    @objc func downloadChatNodes(_ nodes: [MEGANode], messageId: HandleEntity, chatId: HandleEntity, presenter: UIViewController, completion: (@MainActor (CancellableDownloadOutcome) -> Void)?) {
-        let router = CancellableTransferRouter(presenter: presenter, transfers: chatTransferViewEntities(fromNodes: nodes, messageId: messageId, chatId: chatId), transferType: .downloadChat, isFolderLink: false)
-        router.onDownloadCompleted = completion
-        router.start()
+        CancellableTransferRouter(presenter: presenter, transfers: chatTransferViewEntities(fromNodes: nodes, messageId: messageId, chatId: chatId), transferType: .downloadChat, isFolderLink: false).start()
     }
     
     @objc func uploadFiles(_ transfers: [CancellableTransfer], presenter: UIViewController, type: CancellableTransferType) {

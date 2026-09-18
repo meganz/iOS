@@ -69,6 +69,15 @@ public protocol DownloadFileRepositoryProtocol: Sendable {
     /// - Note: Cancel the calling task does not cancel the transfer, call the `cancelDownloadTransfers` instead.
     func downloadProgress(batch: [DownloadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error>
     
+    /// Downloads a single file node through the batch API and reports that file's own transfer
+    ///
+    /// - Parameter item: The only single file node of the batch.
+    /// - Returns: The file's own transfer events.
+    /// The sequence throws when the download completed with error, when the node could not be
+    ///   resolved, or when the calling task cancelled before the batch is submitted to SDK.
+    /// - Note: Cancel the calling task does not cancel the transfer, call the `cancelDownloadTransfers` instead.
+    func downloadBatchFileItemProgress(item: DownloadBatchItemEntity) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error>
+    
     /// Downloads a batch of nodes and returns when the batch completed
     /// - Parameter batch: Every item of the batch
     /// - Throws: when the batch completed with error or the calling task cancelled before the batch is submitted to SDK.

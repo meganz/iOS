@@ -1873,6 +1873,7 @@
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F662322DE7048D00D70F4A /* MEGAQLPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F662312DE7048D00D70F4A /* MEGAQLPreviewController.swift */; };
 		A8F6624E2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6624D2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift */; };
+		B4A4ADA7222B427E986C38DE /* PreviewDocumentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770E96755EE94E78BEAA9687 /* PreviewDocumentViewModelTests.swift */; };
 		AA119032BBBBBBBBBBBBBB02 /* PortraitNodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA119031AAAAAAAAAAAAAA01 /* PortraitNodeActionViewController.swift */; };
 		AA11B0010000000000000002 /* DefaultLaunchDestinationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11B0010000000000000001 /* DefaultLaunchDestinationRepository.swift */; };
 		AA11B0010000000000000004 /* DefaultLaunchDestinationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11B0010000000000000003 /* DefaultLaunchDestinationRepositoryTests.swift */; };
@@ -1884,6 +1885,7 @@
 		AB123720000000000000F004 /* PromoDialogInterruptibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */; };
 		ABCD12550000000000000001 /* MEGAPDFViewer in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD12550000000000000002 /* MEGAPDFViewer */; };
 		ABCD12550000000000000005 /* PDFViewerRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCD12550000000000000006 /* PDFViewerRevampRouter.swift */; };
+		ABCD12560000000000000007 /* PreviewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */; };
 		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
@@ -4762,6 +4764,7 @@
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
 		A8F662312DE7048D00D70F4A /* MEGAQLPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAQLPreviewController.swift; sourceTree = "<group>"; };
 		A8F6624D2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAQLPreviewControllerTests.swift; sourceTree = "<group>"; };
+		770E96755EE94E78BEAA9687 /* PreviewDocumentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDocumentViewModelTests.swift; sourceTree = "<group>"; };
 		A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -4777,6 +4780,7 @@
 		AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoDialogInterruptibilityTests.swift; sourceTree = "<group>"; };
 		ABCD12550000000000000003 /* MEGAPDFViewer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPDFViewer; sourceTree = "<group>"; };
 		ABCD12550000000000000006 /* PDFViewerRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouter.swift; sourceTree = "<group>"; };
+		ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDocumentViewModel.swift; sourceTree = "<group>"; };
 		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
@@ -6692,6 +6696,7 @@
 				248A03192A79025200F183A2 /* Shared Controls */,
 				A8F6624D2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift */,
 				94A1445D2C9DE47000C34A98 /* PasteImagePreviewViewModelTests.swift */,
+				770E96755EE94E78BEAA9687 /* PreviewDocumentViewModelTests.swift */,
 			);
 			path = "Shared Views";
 			sourceTree = "<group>";
@@ -8063,6 +8068,7 @@
 				837B179428815E4400A4D01B /* PreviewDocumentViewController+Additions.swift */,
 				41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */,
 				41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */,
+				ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */,
 				836B956D2063EADE003E279B /* SearchInPdfViewController.h */,
 				836B956E2063EADE003E279B /* SearchInPdfViewController.m */,
 			);
@@ -15997,6 +16003,7 @@
 				24C4150A2B8492D400804D8D /* Preview_ThumbnailUseCase.swift in Sources */,
 				837B179528815E4400A4D01B /* PreviewDocumentViewController+Additions.swift in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
+				ABCD12560000000000000007 /* PreviewDocumentViewModel.swift in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */,
 				D2D3A4016DBB6940AEB7A37B /* PricingRequester.swift in Sources */,
@@ -17138,6 +17145,7 @@
 				258BA6322CCA36C400349CD2 /* PhotosViewModelTests.swift in Sources */,
 				4C3ECC662EF54822005830F9 /* PlaylistTabViewModelTests.swift in Sources */,
 				53A2552D2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift in Sources */,
+				B4A4ADA7222B427E986C38DE /* PreviewDocumentViewModelTests.swift in Sources */,
 				D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
 				A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */,

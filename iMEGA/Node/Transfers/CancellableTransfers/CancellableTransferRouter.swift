@@ -48,7 +48,6 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var wrapper: (any CancellableTransferControllerWrapping)?
     private weak var presentedAlert: UIAlertController?
-    var onDownloadCompleted: (@MainActor (CancellableDownloadOutcome) -> Void)?
     private var isFinishing = false
 
     /// - Parameter preresolvedNodes: The transfers' nodes, for a source that cannot look them up in any
@@ -158,14 +157,12 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
             uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo),
             downloadNodeUseCase: DownloadNodeUseCase(
                 downloadFileRepository: makeDownloadFileRepository(sdk: sdk),
-                offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk, folderSizeCalculator: FolderSizeCalculator()),
                 fileSystemRepository: fileSystemRepository,
                 nodeRepository: nodeRepository,
                 nodeDataRepository: NodeDataRepository.newRepo,
                 fileCacheRepository: FileCacheRepository.newRepo,
                 mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
                 preferenceRepository: PreferenceRepository.newRepo,
-                offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo,
                 chatNodeRepository: ChatNodeRepository.newRepo,
                 downloadChatRepository: DownloadChatRepository.newRepo), 
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
@@ -199,22 +196,10 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
         return presented.presentedViewController == nil
     }
     
-    func transferSuccess(with message: String, dismiss: Bool, downloadOutcome: CancellableDownloadOutcome?) {
-        guard dismiss, canDismissTransfersAlert else {
-            report(downloadOutcome)
-            return
-        }
+    func transferSuccess(with message: String, dismiss: Bool) {
+        guard dismiss, canDismissTransfersAlert else { return }
 
-        // The alert stays the topmost view controller until its animation ends, so a listener
-        // presenting on it would lose its UI with the alert.
-        presenter?.dismiss(animated: true) { [weak self] in
-            self?.report(downloadOutcome)
-        }
-    }
-
-    private func report(_ downloadOutcome: CancellableDownloadOutcome?) {
-        guard let downloadOutcome else { return }
-        onDownloadCompleted?(downloadOutcome)
+        presenter?.dismiss(animated: true)
     }
     
     func transferCancelled(with message: String, dismiss: Bool) {

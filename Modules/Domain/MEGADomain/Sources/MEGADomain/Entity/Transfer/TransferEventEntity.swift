@@ -3,6 +3,7 @@ public enum TransferEventEntity: Sendable {
     case folderUpdate(FolderTransferUpdateEntity)
     case update(TransferEntity)
     case finish(TransferEntity)
+    case temporaryError(TransferEntity, ErrorEntity)
 }
 
 public extension TransferEventEntity {

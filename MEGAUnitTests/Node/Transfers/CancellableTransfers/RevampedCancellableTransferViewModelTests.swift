@@ -605,7 +605,7 @@ final class MockRevampedCancellableTransferRouter: CancellableTransferRouting, C
         showTransfersAlert_calledTimes += 1
     }
 
-    func transferSuccess(with message: String, dismiss: Bool, downloadOutcome _: CancellableDownloadOutcome?) {
+    func transferSuccess(with message: String, dismiss: Bool) {
         transferSuccessMessages.append(message)
         didRoute(dismiss: dismiss)
     }

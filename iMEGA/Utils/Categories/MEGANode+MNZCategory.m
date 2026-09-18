@@ -109,7 +109,6 @@
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        previewController.api = api;
         previewController.filePath = previewDocumentPath;
         previewController.node = isFolderLink ? [api authorizeNode:self] : self;
         previewController.isLink = isFolderLink;
@@ -130,7 +129,9 @@
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
             if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name]) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:self presenter:viewController.navigationController] build];
+                // Authorized up front: the download goes through MEGASdk.shared, which has no link node in its tree.
+                MEGANode *nodeToLoad = isFolderLink ? [api authorizeNode:self] : self;
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:nodeToLoad presenter:viewController.navigationController] build];
             }
             
             if ([self.name.pathExtension.lowercaseString isEqualToString:@"pdf"] && !isFolderLink && fileLink == nil && PDFViewerRevampRouter.isEnabled) {
@@ -141,7 +142,6 @@
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
             previewController.node = isFolderLink ? [api authorizeNode:self] : self;
-            previewController.api = api;
             previewController.isLink = isFolderLink;
             previewController.fileLink = fileLink;
             previewController.isFromSharedItem = isFromSharedItem;

@@ -999,8 +999,13 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         // them land before the batch's own finish. Fired in that order so a test sees what the app sees.
         for subTransfer in stubbedDownloadBatchSubTransfers {
             transferDelegates.forEach {
+                $0.onTransferStart?(self, transfer: subTransfer.transfer)
+                $0.onTransferUpdate?(self, transfer: subTransfer.transfer)
                 $0.onTransferFinish?(self, transfer: subTransfer.transfer, error: subTransfer.error)
             }
+            // The batch adds what the file transferred to its own total and reports that, after the file
+            // has already been reported as finished.
+            delegate.onTransferUpdate?(self, transfer: transfer)
         }
 
         delegate.onTransferFinish?(self, transfer: transfer, error: error)

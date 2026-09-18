@@ -149,6 +149,68 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         }.eraseToAnyAsyncThrowingSequence()
     }
     
+    public func downloadBatchFileItemProgress(item: DownloadBatchItemEntity) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+        return AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            let task = Task {
+                let itemList = await buildDownloadItemList(from: [item])
+
+                guard !Task.isCancelled else {
+                    MEGALog.log(level: .debug, message: "[DownloadFileRepository] single item download cancelled")
+                    continuation.finish(throwing: TransferErrorEntity.cancelled)
+                    return
+                }
+
+                guard itemList.size > 0 else {
+                    MEGALog.log(level: .error, message: "[DownloadFileRepository] single item download resolved no node")
+                    continuation.finish(throwing: TransferErrorEntity.couldNotFindNodeByHandle)
+                    return
+                }
+
+                MEGALog.log(level: .info, message: "[DownloadFileRepository] starting single item download")
+
+                let fileDelegate = BatchItemDownloadTransferDelegate { result in
+                    switch result {
+                    case .success(let event):
+                        continuation.yield(event)
+                    case .failure(let error):
+                        MEGALog.log(level: .error, message: "[DownloadFileRepository] single item download file failed: \(error)")
+                        continuation.finish(throwing: error)
+                    }
+                }
+
+                sdk.add(fileDelegate)
+
+                let batchDelegate = TransferDelegate(
+                    start: { transfer in fileDelegate.setBatchTag(transfer.tag) },
+                    completion: { result in
+                        sdk.remove(fileDelegate)
+                        switch result {
+                        case .success:
+                            continuation.finish()
+                        case .failure(let error):
+                            MEGALog.log(level: .error, message: "[DownloadFileRepository] single item download failed: \(error)")
+                            continuation.finish(throwing: error)
+                        }
+                    },
+                    transferQuotaState: { [transferQuotaNotifier] state in
+                        MEGALog.log(level: .info, message: "[DownloadFileRepository] single item download predicted transfer quota state: \(state)")
+                        transferQuotaNotifier.notify(state: state)
+                    }
+                )
+
+                sdk.startDownloadBatch(
+                    withItems: itemList,
+                    cancelToken: cancelToken.value,
+                    collisionCheck: CollisionCheck.fingerprint,
+                    collisionResolution: CollisionResolution.newWithN,
+                    delegate: batchDelegate
+                )
+            }
+
+            continuation.onTermination = { _ in task.cancel() }
+        }.eraseToAnyAsyncThrowingSequence()
+    }
+    
     public func download(batch: [DownloadBatchItemEntity]) async throws {
         _ = try await downloadProgress(batch: batch).first(where: \.isTerminal)
     }
@@ -417,8 +479,9 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
 
     public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
-        guard let node = sdk.node(forHandle: nodeHandle),
-              let base64Handle = node.base64Handle else {
+        let node = try resolvedMEGANode(for: nodeHandle)
+        
+        guard let base64Handle = node.base64Handle else {
             throw TransferErrorEntity.couldNotFindNodeByHandle
         }
         
@@ -428,7 +491,7 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         
         let nodeFolderPath = url.path.append(pathComponent: base64Handle)
         let nodeFilePath = nodeFolderPath.append(pathComponent: name)
-
+        
         do {
             try FileManager.default.createDirectory(
                 atPath: nodeFolderPath,
@@ -453,6 +516,10 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             
             transferDelegate.progress = { transferEntity in
                 continuation.yield(.update(transferEntity))
+            }
+
+            transferDelegate.temporaryError = { transferEntity, error in
+                continuation.yield(.temporaryError(transferEntity, error))
             }
             
             sdk.startDownloadNode(

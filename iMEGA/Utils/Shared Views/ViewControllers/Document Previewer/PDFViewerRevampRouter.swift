@@ -19,7 +19,8 @@ import MEGARepo
     @objc @MainActor static func viewController(node: MEGANode, isLink: Bool, isFromSharedItem: Bool) -> UIViewController {
         makeViewController(
             fileName: node.name ?? "",
-            pdfDocumentSource: .node(handle: node.handle)
+            pdfDocumentSource: .node(node.toNodeEntity()),
+            isLink: isLink
         )
     }
 
@@ -27,7 +28,8 @@ import MEGARepo
     @objc @MainActor static func viewController(filePath: String, node: MEGANode?, isLink: Bool, isFromSharedItem: Bool) -> UIViewController {
         makeViewController(
             fileName: node?.name ?? filePath.lastPathComponent,
-            pdfDocumentSource: .local(URL(fileURLWithPath: filePath))
+            pdfDocumentSource: .local(URL(fileURLWithPath: filePath)),
+            isLink: isLink
         )
     }
 
@@ -36,11 +38,12 @@ import MEGARepo
     @MainActor
     private static func makeViewController(
         fileName: String,
-        pdfDocumentSource: PDFViewerDocumentSource
+        pdfDocumentSource: PDFViewerDocumentSource,
+        isLink: Bool
     ) -> UIViewController {
         let dependency = PDFViewerView.Dependency(
             pdfDocumentSource: pdfDocumentSource,
-            downloadUseCase: makeDownloadNodeUseCase(),
+            downloadUseCase: makeDownloadNodeUseCase(isLink: isLink),
             fileName: fileName,
             onLinkTapped: { url in
                 MEGALinkManager.linkURL = url
@@ -53,18 +56,14 @@ import MEGARepo
         return viewer
     }
 
-    private static func makeDownloadNodeUseCase() -> some DownloadNodeUseCaseProtocol {
+    private static func makeDownloadNodeUseCase(isLink: Bool) -> some DownloadNodeUseCaseProtocol {
         let sdk = MEGASdk.shared
         let chatSdk = MEGAChatSdk.sharedChatSdk
         return DownloadNodeUseCase(
             downloadFileRepository: DownloadFileRepository(
                 sdk: sdk,
+                sharedFolderSdk: isLink ? MEGASdk.sharedFolderLink : nil,
                 chatNodeProvider: ChatMEGANodeProvider(chatSdk: chatSdk, sdk: sdk)
-            ),
-            offlineFilesRepository: OfflineFilesRepository(
-                store: MEGAStore.shareInstance(),
-                sdk: sdk,
-                folderSizeCalculator: FolderSizeCalculator()
             ),
             fileSystemRepository: FileSystemRepository.sharedRepo,
             nodeRepository: NodeRepository.newRepo,
@@ -72,7 +71,6 @@ import MEGARepo
             fileCacheRepository: FileCacheRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceRepository: PreferenceRepository.newRepo,
-            offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo,
             chatNodeRepository: ChatNodeRepository.newRepo,
             downloadChatRepository: DownloadChatRepository.newRepo
         )

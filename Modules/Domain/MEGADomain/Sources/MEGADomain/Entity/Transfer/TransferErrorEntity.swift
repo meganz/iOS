@@ -9,8 +9,6 @@ public enum TransferErrorEntity: Error, CaseIterable {
     case overquota
     case noInternetConnection
     case inboxFolderNameNotAllowed
-    case alreadyDownloaded
-    case copiedFromTempFolder
     case moveFileToUploadsFolderFailed
     case cancelled
     case authorizeNodeFailed

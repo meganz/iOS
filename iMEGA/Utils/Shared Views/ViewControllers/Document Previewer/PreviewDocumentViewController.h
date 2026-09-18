@@ -4,7 +4,6 @@
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic) uint64_t nodeHandle;
-@property (nonatomic, strong) MEGASdk *api;
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic) BOOL isLink;
 @property (nonatomic) NSString *fileLink;
@@ -21,5 +20,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 
 - (void)sendToChatWhenLogin;
+
+- (void)previewDownloadDidUpdateProgress:(float)progress;
+- (void)previewDownloadDidStall;
+- (void)previewDownloadDidFinishAtPath:(NSString *)localPath;
 
 @end

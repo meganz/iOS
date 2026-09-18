@@ -20,9 +20,7 @@
 #import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
-    MEGATransfer *previewDocumentTransfer;
-}
+@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -42,6 +40,8 @@
 
 @property (nonatomic) UIButton *openZipButton;
 
+@property (nonatomic) PreviewDocumentViewModel *viewModel;
+
 @end
 
 @implementation PreviewDocumentViewController
@@ -55,9 +55,12 @@
         self.node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
     }
     
+    self.viewModel = [[PreviewDocumentViewModel alloc] initWithNode:self.node];
+    
     self.thumbnailCache = [[NSCache alloc] init];
     
     [self configureNavigation];
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     [self updateAppearance];
     [self registerForAppearanceChanges];
 
@@ -81,15 +84,17 @@
     if (self.filePath) {
         [self loadPreview];
     } else {
-        NSError * error = nil;
         NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
-        
-        if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            [MEGASdk.shared startDownloadNode:self.node localPath:self.nodeFilePath fileName:nil appData:nil startFirst:YES cancelToken:nil collisionCheck: CollisionCheckFingerprint collisionResolution:CollisionResolutionNewWithN delegate:self];
-        } else {
-            MEGALogError(@"Create directory at path failed with error: %@", error);
-        }
+
+        __weak typeof(self) weakSelf = self;
+        [self.viewModel startOnProgress:^(float progress) {
+            [weakSelf previewDownloadDidUpdateProgress:progress];
+        } onStalled:^{
+            [weakSelf previewDownloadDidStall];
+        } onFinish:^(NSString * localPath) {
+            [weakSelf previewDownloadDidFinishAtPath:localPath];
+        }];
     }
     [MEGASdk.shared addMEGAGlobalDelegate:self];
 }
@@ -97,10 +102,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    if (previewDocumentTransfer) {
-        [MEGASdk.shared cancelTransfer:previewDocumentTransfer];
-    }
-    
+    [self.viewModel cancel];
+
     if (!self.pdfView.hidden) {
         CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
         size_t page = CGPDFPageGetPageNumber(pageRef);
@@ -171,9 +174,7 @@
 }
 
 - (NSURL *)documentUrl {
-    if (previewDocumentTransfer.path) {
-        return [NSURL fileURLWithPath:previewDocumentTransfer.path];
-    } else if (self.node && self.nodeFilePath){
+    if (self.node && self.nodeFilePath){
         return [NSURL fileURLWithPath:self.nodeFilePath];
     } else {
         self.title = self.filePath.lastPathComponent;
@@ -235,13 +236,9 @@
     } else if (self.isLink && self.node) {
         [self downloadFromFolderLink:@[self.node]];
     } else if (self.chatId && self.messageId) {
-        [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[self.node] messageId:self.messageId chatId:self.chatId presenter:self completion:^(enum CancellableDownloadOutcome outcome) {
-            [PreviewDocumentViewController showDownloadOutcome:outcome];
-        }];
+        [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[self.node] messageId:self.messageId chatId:self.chatId presenter:self];
     } else if (self.node != nil) {
-        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.node] presenter:self isFolderLink:self.isLink completion:^(enum CancellableDownloadOutcome outcome) {
-            [PreviewDocumentViewController showDownloadOutcome:outcome];
-        }];
+        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.node] presenter:self isFolderLink:self.isLink];
     }
 }
 
@@ -353,18 +350,20 @@
     if (self.filePath) {
         return [NSURL fileURLWithPath:self.filePath];
     } else {
-        if (previewDocumentTransfer.path) {
-            return [NSURL fileURLWithPath:previewDocumentTransfer.path];
-        } else {
-            return [NSURL fileURLWithPath:self.nodeFilePath];
-        }
+        return [NSURL fileURLWithPath:self.nodeFilePath];
     }
 }
 
-#pragma mark - QLPreviewControllerDelegate
+#pragma mark - Preview download
 
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    previewDocumentTransfer = nil;
+- (void)previewDownloadDidUpdateProgress:(float)progress {
+    [self.activityIndicator stopAnimating];
+    [self.progressView setHidden:NO];
+    [self.progressView setProgress:progress];
+}
+
+- (void)previewDownloadDidStall {
+    [self hideProgressIndicator];
 }
 
 - (void)hideProgressIndicator {
@@ -373,30 +372,9 @@
     self.progressView.hidden = YES;
 }
 
-#pragma mark - MEGATransferDelegate
+- (void)previewDownloadDidFinishAtPath:(NSString *)localPath {
+    self.nodeFilePath = localPath;
 
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    previewDocumentTransfer = transfer;
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [self.activityIndicator stopAnimating];
-    [self.progressView setHidden:NO];
-    float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
-    [self.progressView setProgress:percentage];
-}
-
-- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (error.type == MEGAErrorTypeApiEOverQuota) {
-        [self hideProgressIndicator];
-    }
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (error.type != MEGAErrorTypeApiOk) {
-        return;
-    }
-    
     if (self.isViewLoaded && self.view.window) {
         [self loadPreview];
     }

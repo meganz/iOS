@@ -41,6 +41,8 @@ struct BatchUploadItemStatus: Sendable {
                 return isFile || transferEntity.stage >= .transferringFiles
             case .finish:
                 return true
+            case .temporaryError:
+                return isFile
             }
         case .failed:
             return true
@@ -59,7 +61,7 @@ struct BatchUploadItemStatus: Sendable {
             return false
         case let .transferring(event):
             switch event {
-            case .start, .folderUpdate, .update:
+            case .start, .folderUpdate, .update, .temporaryError:
                 return false
             case .finish:
                 return true

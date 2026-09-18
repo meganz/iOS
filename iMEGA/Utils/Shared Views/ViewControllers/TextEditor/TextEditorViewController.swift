@@ -205,8 +205,10 @@ extension TextEditorViewController: ViewType {
             
             navigationItem.rightBarButtonItem = saveButton
         }
+
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
-    
+
     private func setUpLoadViews() {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

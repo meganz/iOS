@@ -31,8 +31,6 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
 
     private var transferErrors = [TransferErrorEntity]()
 
-    private var savedWithoutTransferCount = 0
-
     private var alertSubscription: AnyCancellable?
     
     private var alertPresented = false
@@ -155,18 +153,6 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
             && folderTransfersStartedTransferring()
     }
     
-    private func recordDownloadOutcome(for error: TransferErrorEntity) {
-        if error == .copiedFromTempFolder || error == .alreadyDownloaded {
-            savedWithoutTransferCount += 1
-        }
-    }
-
-    /// A batch is only "saved" when nothing queued an SDK transfer, otherwise the caller would
-    /// announce "Saved" over downloads that are still running.
-    private func resolvedDownloadOutcome() -> CancellableDownloadOutcome {
-        savedWithoutTransferCount >= transfers.count ? .saved : .transferQueued
-    }
-
     private func fileTransfersStarted() -> Bool {
         fileTransfers.filter({ $0.state != .none }).count == fileTransfers.count
     }
@@ -217,9 +203,9 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
         } else if transferErrors.isEmpty {
             switch transferType {
             case .download, .downloadChat, .downloadFileLink:
-                router.transferSuccess(with: Strings.Localizable.downloadStarted, dismiss: alertPresented, downloadOutcome: resolvedDownloadOutcome())
+                router.transferSuccess(with: Strings.Localizable.downloadStarted, dismiss: alertPresented)
             case .upload:
-                router.transferSuccess(with: Strings.Localizable.uploadStartedMessage, dismiss: alertPresented, downloadOutcome: nil)
+                router.transferSuccess(with: Strings.Localizable.uploadStartedMessage, dismiss: alertPresented)
             }
         } else if transferErrors.count < transfers.count {
             router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong, dismiss: alertPresented)
@@ -315,6 +301,8 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                     continue
                 case .folderUpdate:
                     continue
+                case .temporaryError:
+                    continue
                 case .finish(let transferEntity):
                     transferViewEntity.setState(transferEntity.state)
                 }
@@ -325,10 +313,7 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
             }
         } catch let error as TransferErrorEntity {
             transferViewEntity.setState(.failed)
-            if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                transferErrors.append(error)
-            }
-            recordDownloadOutcome(for: error)
+            transferErrors.append(error)
             continueFolderTransfersIfNeeded()
         } catch {
             MEGALogError("Download chat file failed: \(error.localizedDescription)")
@@ -358,7 +343,7 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                         case .start(let transferEntity):
                             transferViewEntity.setState(transferEntity.state)
                             continueFolderTransfersIfNeeded()
-                        case .update, .folderUpdate:
+                        case .update, .folderUpdate, .temporaryError:
                             break
                         case .finish(let transferEntity):
                             transferViewEntity.setState(transferEntity.state)
@@ -397,21 +382,9 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
         }
     }
     
-    /// A file already in Offline, or one recovered from the temp folder, is not a failed download: the
-    /// user asked for it to be there and it is. Everything else is a failure to report.
     private func recordOfflineDownloadFailure(_ error: any Error, for transferViewEntity: CancellableTransfer) {
-        let transferError = error as? TransferErrorEntity
-        
-        if transferError == .alreadyDownloaded || transferError == .copiedFromTempFolder {
-            transferViewEntity.setState(.complete)
-        } else {
-            transferViewEntity.setState(.failed)
-            transferErrors.append(transferError ?? .generic)
-        }
-
-        if let transferError {
-            recordDownloadOutcome(for: transferError)
-        }
+        transferViewEntity.setState(.failed)
+        transferErrors.append(error as? TransferErrorEntity ?? .generic)
     }
     
     private func startFileLinkDownload() async {
@@ -440,7 +413,7 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                 case .start(let transferEntity):
                     transferViewEntity.setState(transferEntity.state)
                     manageTransfersCompletion()
-                case .folderUpdate, .update:
+                case .folderUpdate, .update, .temporaryError:
                     break
                 case .finish(let transferEntity):
                     transferViewEntity.setState(transferEntity.state)
@@ -453,10 +426,7 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
         } catch {
             transferViewEntity.setState(.failed)
             if let error = error as? TransferErrorEntity {
-                if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                    transferErrors.append(error)
-                }
-                recordDownloadOutcome(for: error)
+                transferErrors.append(error)
             }
             manageTransfersCompletion()
         }
@@ -470,7 +440,7 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                     for await event in downloadStream {
                         guard !Task.isCancelled else { return }
                         switch event {
-                        case .start:
+                        case .start, .temporaryError:
                             break
                         case .folderUpdate(let folderTransferUpdateEntity):
                             handleFolderUpdateWhileDownloadingFolder(folderTransferUpdateEntity)

@@ -14,8 +14,24 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     private let downloadBatchEventsError: (any Error)?
     private let batchDownloadResult: BatchDownloadResultEntity
 
+    /// One `downloadTo(_:nodeHandle:appData:)` call, kept so a test can tell the legacy single
+    /// download apart from the batch one.
+    public struct DownloadToCall: Equatable, Sendable {
+        public let url: URL
+        public let nodeHandle: HandleEntity
+        public let appData: String?
+
+        public init(url: URL, nodeHandle: HandleEntity, appData: String?) {
+            self.url = url
+            self.nodeHandle = nodeHandle
+            self.appData = appData
+        }
+    }
+
     /// Every batch `downloadProgress(batch:)` was handed, in call order.
     @Atomic public var startedDownloadBatches = [[DownloadBatchItemEntity]]()
+    /// Every `downloadTo(_:nodeHandle:appData:)` call, in call order.
+    @Atomic public var downloadToCalls = [DownloadToCall]()
     @Atomic public var cancelDownloadTransfers_calledTimes = 0
 
     /// Fires for every batch handed to `downloadProgress(batch:)`, for a test that has to wait for the
@@ -78,6 +94,11 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
         }.eraseToAnyAsyncThrowingSequence()
     }
 
+    /// The one file of the batch is handed over as a one item batch, so a test sets it up the same way.
+    public func downloadBatchFileItemProgress(item: DownloadBatchItemEntity) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+        downloadProgress(batch: [item])
+    }
+
     /// Mirrors the repository: the batch is handed over exactly as `downloadProgress(batch:)` does,
     /// and the call returns on the batch's `finish` or throws what ended the sequence before it.
     public func download(batch: [DownloadBatchItemEntity]) async throws {
@@ -95,7 +116,8 @@ public final class MockDownloadFileRepository: DownloadFileRepositoryProtocol, @
     }
 
     public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
-        EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        $downloadToCalls.mutate { $0.append(DownloadToCall(url: url, nodeHandle: nodeHandle, appData: appData)) }
+        return EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
     
     public func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool) throws -> AnyAsyncSequence<TransferEventEntity> {

@@ -137,8 +137,7 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
         case .cancelledByUser:
             router.transferCancelled(with: Strings.Localizable.transferCancelled, dismiss: presented)
         case .startedTransferring:
-            // Download outcome will be handled in next MR
-            router.transferSuccess(with: transfersStartedMessage, dismiss: presented, downloadOutcome: nil)
+            router.transferSuccess(with: transfersStartedMessage, dismiss: presented)
         case .failed:
             router.transferFailed(
                 error: String(format: "%@ %@", Strings.Localizable.transferFailed, Strings.Localizable.somethingWentWrong),

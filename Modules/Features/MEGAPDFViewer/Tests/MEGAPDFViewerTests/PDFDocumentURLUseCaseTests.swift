@@ -23,7 +23,7 @@ struct PDFDocumentURLUseCaseTests {
         let sut = PDFDocumentURLUseCase(downloadUseCase: MockDownloadNodeUseCase(result: .success(transfer)))
 
         var events: [PDFDocumentLoadEvent] = []
-        for try await event in sut.localDocumentURL(for: .node(handle: 1)) {
+        for try await event in sut.localDocumentURL(for: .node(NodeEntity(handle: 1))) {
             events.append(event)
         }
 
@@ -35,7 +35,7 @@ struct PDFDocumentURLUseCaseTests {
         let sut = PDFDocumentURLUseCase(downloadUseCase: MockDownloadNodeUseCase(result: .success(transfer)))
 
         var events: [PDFDocumentLoadEvent] = []
-        for try await event in sut.localDocumentURL(for: .node(handle: 1)) {
+        for try await event in sut.localDocumentURL(for: .node(NodeEntity(handle: 1))) {
             events.append(event)
         }
 
@@ -47,7 +47,7 @@ struct PDFDocumentURLUseCaseTests {
         let sut = PDFDocumentURLUseCase(downloadUseCase: MockDownloadNodeUseCase(result: .success(transfer)))
 
         await #expect(throws: PDFDocumentLoadError.missingDownloadPath) {
-            for try await _ in sut.localDocumentURL(for: .node(handle: 1)) {}
+            for try await _ in sut.localDocumentURL(for: .node(NodeEntity(handle: 1))) {}
         }
     }
 
@@ -55,7 +55,7 @@ struct PDFDocumentURLUseCaseTests {
         let sut = PDFDocumentURLUseCase(downloadUseCase: MockDownloadNodeUseCase(result: .failure(.generic)))
 
         await #expect(throws: PDFDocumentLoadError.transferFailed) {
-            for try await _ in sut.localDocumentURL(for: .node(handle: 1)) {}
+            for try await _ in sut.localDocumentURL(for: .node(NodeEntity(handle: 1))) {}
         }
     }
 }

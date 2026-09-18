@@ -289,13 +289,13 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func downloadToTempFolder() {
-        guard let nodeHandle = nodeEntity?.handle else { return }
+        guard let nodeEntity else { return }
         
         downloadTask?.cancel()
         downloadTask = Task { @MainActor in
             do {
                 let downloadStream = try downloadNodeUseCase.downloadFileToTempFolder(
-                    nodeHandle: nodeHandle,
+                    node: nodeEntity,
                     appData: nil
                 )
                 

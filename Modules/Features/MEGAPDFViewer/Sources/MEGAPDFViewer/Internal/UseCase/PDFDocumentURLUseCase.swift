@@ -31,8 +31,8 @@ struct PDFDocumentURLUseCase: PDFDocumentURLUseCaseProtocol {
         switch pdfDocumentSource {
         case .local(let url):
             existingFileEvents(url)
-        case .node(let handle):
-            downloadEvents(handle: handle)
+        case .node(let node):
+            downloadEvents(node: node)
         }
     }
 
@@ -48,14 +48,14 @@ struct PDFDocumentURLUseCase: PDFDocumentURLUseCaseProtocol {
         return stream
     }
 
-    private func downloadEvents(handle: HandleEntity) -> AsyncThrowingStream<PDFDocumentLoadEvent, any Error> {
+    private func downloadEvents(node: NodeEntity) -> AsyncThrowingStream<PDFDocumentLoadEvent, any Error> {
         let (stream, continuation) = AsyncThrowingStream.makeStream(
             of: PDFDocumentLoadEvent.self,
             throwing: (any Error).self
         )
         let task = Task { [downloadUseCase] in
             guard let transferEvents = try? downloadUseCase.downloadFileToTempFolder(
-                nodeHandle: handle,
+                node: node,
                 appData: nil
             ) else {
                 continuation.finish(throwing: PDFDocumentLoadError.transferFailed)

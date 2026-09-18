@@ -32,6 +32,11 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
         guard let node = sdk.node(forHandle: handle) else {
             return
         }
+        // The SDK completes an already-downloaded transfer with API_OK, so this runs again
+        // for a node already saved at this path. Same node, same path means the same row.
+        guard !store.fetchOfflineNodes(withPath: name).contains(where: { $0.base64Handle == node.base64Handle }) else {
+            return
+        }
         store.insertOfflineNode(node, api: sdk, path: name)
     }
     

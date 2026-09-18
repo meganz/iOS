@@ -405,16 +405,62 @@ struct DownloadFileRepositoryBatchTests {
             nodeProvider: nodeProvider,
             chatNodeProvider: MockChatMEGANodeProvider()
         )
-
+        
         let batch = Task { try await sut.downloadResult(batch: [Self.batchItem()]) }
         // Waited for rather than assumed: the cancellation has to land on a caller that is already
         // waiting on the batch, which is the case the check is there for.
         var calls = nodeProvider.calls.makeAsyncIterator()
         await calls.next()
         batch.cancel()
-
+        
         await #expect(throws: CancellationError.self) {
             _ = try await batch.value
+        }
+    }
+    // MARK: - One file item
+
+    /// The batch keeps reporting itself while its file runs, and reports itself once more after that
+    /// file has finished. A caller that opens the file it just downloaded must hear none of it.
+    @Test("a one file batch reports the file's own transfer and nothing of the batch")
+    func fileItemProgress_reportsTheFileOnly() async throws {
+        let (sut, _) = Self.makeBatchResultSUT(subTransfers: [Self.file()])
+
+        var events: [String] = []
+        for try await event in sut.downloadBatchFileItemProgress(item: Self.batchItem()) {
+            switch event {
+            case .start: events.append("start")
+            case .folderUpdate: events.append("folderUpdate")
+            case .update: events.append("update")
+            case .finish: events.append("finish")
+            case .temporaryError: events.append("temporaryError")
+            }
+        }
+
+        // Nothing follows the finish, so a caller can act on it and stop there.
+        #expect(events == ["start", "update", "finish"])
+    }
+
+    /// The batch itself comes back clean when one of its files failed, so a caller waiting on the file
+    /// would otherwise be left with a sequence that ended without ever saying what happened.
+    @Test("a one file batch whose file failed throws rather than ending as if the file had arrived")
+    func fileItemProgress_throwsWhenTheFileFailed() async {
+        let (sut, _) = Self.makeBatchResultSUT(subTransfers: [Self.file(succeeded: false)])
+
+        await #expect(throws: TransferErrorEntity.download) {
+            for try await _ in sut.downloadBatchFileItemProgress(item: Self.batchItem()) {}
+        }
+    }
+
+    @Test("a one file batch whose file was cancelled throws cancelled rather than a download failure")
+    func fileItemProgress_throwsCancelledWhenTheFileWasCancelled() async {
+        let cancelledFile = (
+            MockTransfer(type: .download, state: .cancelled, folderTransferTag: Self.batchTag),
+            MockError(errorType: .apiEIncomplete)
+        )
+        let (sut, _) = Self.makeBatchResultSUT(subTransfers: [cancelledFile])
+
+        await #expect(throws: TransferErrorEntity.cancelled) {
+            for try await _ in sut.downloadBatchFileItemProgress(item: Self.batchItem()) {}
         }
     }
 

@@ -31,7 +31,7 @@ public protocol DownloadNodeUseCaseProtocol: Sendable {
         startFirst: Bool
     ) async throws -> AnyAsyncSequence<TransferEventEntity>
     
-    func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity>
+    func downloadFileToTempFolder(node: NodeEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity>
     
     func downloadFileLinkToOffline(
         _ fileLink: FileLinkEntity,
@@ -43,16 +43,14 @@ public protocol DownloadNodeUseCaseProtocol: Sendable {
     func cancelDownloadTransfers()
 }
 
-public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol, G: OfflineFileFetcherRepositoryProtocol, H: ChatNodeRepositoryProtocol, I: DownloadChatRepositoryProtocol>: DownloadNodeUseCaseProtocol {
+public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol, H: ChatNodeRepositoryProtocol, I: DownloadChatRepositoryProtocol>: DownloadNodeUseCaseProtocol {
     private let downloadFileRepository: T
-    private let offlineFilesRepository: U
     private let fileSystemRepository: V
     private let nodeRepository: W
     private let nodeDataRepository: Y
     private let fileCacheRepository: Z
     private let mediaUseCase: M
     private let preferenceRepository: P
-    private let offlineFileFetcherRepository: G
     private let chatNodeRepository: H
     private let downloadChatRepository: I
     
@@ -61,16 +59,14 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     @PreferenceWrapper(key: PreferenceKeyEntity.saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
-    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P, offlineFileFetcherRepository: G, chatNodeRepository: H, downloadChatRepository: I) {
+    public init(downloadFileRepository: T, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P, chatNodeRepository: H, downloadChatRepository: I) {
         self.downloadFileRepository = downloadFileRepository
-        self.offlineFilesRepository = offlineFilesRepository
         self.fileSystemRepository = fileSystemRepository
         self.nodeRepository = nodeRepository
         self.nodeDataRepository = nodeDataRepository
         self.fileCacheRepository = fileCacheRepository
         self.mediaUseCase = mediaUseCase
         self.preferenceRepository = preferenceRepository
-        self.offlineFileFetcherRepository = offlineFileFetcherRepository
         self.chatNodeRepository = chatNodeRepository
         self.downloadChatRepository = downloadChatRepository
         $savePhotoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
@@ -86,24 +82,9 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     }
     
     public func downloadFileToOffline(_ node: NodeEntity, filename: String?, appData: String?, startFirst: Bool) throws -> AnyAsyncSequence<TransferEventEntity> {
-        if !shouldDownloadToGallery(name: node.name) {
-            if node.isFile {
-                guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
-                    throw TransferErrorEntity.alreadyDownloaded
-                }
-                
-                let tempUrl = tempURL(for: node)
-                if fileSystemRepository.fileExists(at: tempUrl) {
-                    let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
-                    if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
-                        offlineFilesRepository.createOfflineFile(name: node.name, for: node.handle)
-                        throw TransferErrorEntity.copiedFromTempFolder
-                    }
-                }
-            } else {
-                guard node.name != "Inbox" else {
-                    throw TransferErrorEntity.inboxFolderNameNotAllowed
-                }
+        if !shouldDownloadToGallery(name: node.name), !node.isFile {
+            guard node.name != "Inbox" else {
+                throw TransferErrorEntity.inboxFolderNameNotAllowed
             }
         }
 
@@ -126,23 +107,8 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         startFirst: Bool
     ) async throws -> AnyAsyncSequence<TransferEventEntity> {
         
-        guard let node = await chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
+        guard await chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) != nil else {
             throw TransferErrorEntity.couldNotFindNodeByHandle
-        }
-                
-        if !shouldDownloadToGallery(name: node.name) {
-            guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
-                throw TransferErrorEntity.alreadyDownloaded
-            }
-            
-            let tempUrl = tempURL(for: node)
-            if fileSystemRepository.fileExists(at: tempUrl) {
-                let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
-                if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
-                    offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
-                    throw TransferErrorEntity.copiedFromTempFolder
-                }
-            }
         }
 
         return try downloadChatRepository.downloadChatFile(
@@ -156,10 +122,25 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         )
     }
 
-    public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
-        try downloadFileRepository.downloadTo(fileCacheRepository.tempFolder, nodeHandle: nodeHandle, appData: appData)
+    public func downloadFileToTempFolder(node: NodeEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
+        guard BatchDownloadFeatureFlag.isEnabled else {
+            return try downloadFileRepository.downloadTo(fileCacheRepository.tempFolder, nodeHandle: node.handle, appData: appData)
+        }
+
+        return downloadFileToTempFolderInBatch(node: node, appData: appData)
     }
     
+    private func downloadFileToTempFolderInBatch(node: NodeEntity, appData: String?) -> AnyAsyncSequence<TransferEventEntity> {
+        let item = DownloadBatchItemEntity(
+            source: .node(node.handle),
+            destination: .folder(fileCacheRepository.base64HandleTempFolder(for: node.base64Handle)),
+            appData: appData,
+            startFirst: true
+        )
+
+        return downloadFileRepository.downloadBatchFileItemProgress(item: item).eraseToAnyAsyncSequence()
+    }
+
     public func downloadFileLinkToOffline(
         _ fileLink: FileLinkEntity,
         filename: String?,
@@ -182,10 +163,6 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     }
 
     // MARK: - Private
-    private func tempURL(for node: NodeEntity) -> URL {
-        mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalURL(for: node.base64Handle, name: node.name) : fileCacheRepository.tempFileURL(for: node)
-    }
-    
     private func shouldDownloadToGallery(name: String?) -> Bool {
         guard let name = name else {
             return false

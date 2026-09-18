@@ -7,19 +7,23 @@ public final class TransferDelegate: NSObject, MEGATransferDelegate {
     var completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     public var folderUpdate: ((FolderTransferUpdateEntity) -> Void)?
     public var transferQuotaState: ((TransferQuotaStateEntity) -> Void)?
+    /// The transfer stalled but has not failed. The SDK keeps retrying it.
+    public var temporaryError: ((TransferEntity, ErrorEntity) -> Void)?
     
     public init(
         start: ((TransferEntity) -> Void)? = nil,
         progress: ((TransferEntity) -> Void)? = nil,
         completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void,
         folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil,
-        transferQuotaState: ((TransferQuotaStateEntity) -> Void)? = nil
+        transferQuotaState: ((TransferQuotaStateEntity) -> Void)? = nil,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)? = nil
     ) {
         self.start = start
         self.progress = progress
         self.completion = completion
         self.folderUpdate = folderUpdate
         self.transferQuotaState = transferQuotaState
+        self.temporaryError = temporaryError
     }
     
     public init(completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -80,5 +84,11 @@ public final class TransferDelegate: NSObject, MEGATransferDelegate {
                                      state: MEGATransferQuotaState) {
         guard let transferQuotaStateEntity = TransferQuotaStateEntity(transferQuotaState: state) else { return }
         transferQuotaState?(transferQuotaStateEntity)
+    }
+
+    public func onTransferTemporaryError(_ api: MEGASdk,
+                                         transfer: MEGATransfer,
+                                         error: MEGAError) {
+        temporaryError?(transfer.toTransferEntity(), error.toErrorEntity())
     }
 }
