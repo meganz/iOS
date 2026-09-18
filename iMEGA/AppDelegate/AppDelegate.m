@@ -994,7 +994,7 @@
     if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
         [SVProgressHUD dismiss];
         if (error.value == 0) {
-            [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithError:error legacyMode:CustomModalAlertModeStorageUploadQuotaError];
+            [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningForBlockedUpload:error];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
         }
     }
@@ -1446,7 +1446,7 @@
                     }
                 } else {
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
-                    [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithError:error legacyMode:CustomModalAlertModeStorageQuotaError];
+                    [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningForNodeRequestError:error];
                 }
                 break;
             }

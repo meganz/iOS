@@ -13,12 +13,6 @@ struct CustomModalAlertView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> CustomModalAlertViewController {
         let controller = CustomModalAlertViewController()
         switch mode {
-        case .storageQuotaError:
-            controller.configureForStorageQuotaError(false)
-        case .storageUploadQuotaError:
-            controller.configureForStorageQuotaError(true)
-        case .transferQuotaError(let displayMode):
-            controller.configureForTransferQuotaError(for: displayMode)
         case .businessGracePeriod:
             controller.configureForBusinessGracePeriod()
         case .enableKeyRotation(let chatId):
@@ -27,8 +21,6 @@ struct CustomModalAlertView: UIViewControllerRepresentable {
             controller.configureForUpgradeSecurity()
         case .pendingUnverifiedOutShare(let outShareEmail):
             controller.configureForPendingUnverifiedOutshare(for: outShareEmail)
-        case .storageQuotaWillExceed(let displayMode):
-            controller.configureForStorageQuotaWillExceed(for: displayMode)
         }
         
         return controller
@@ -41,25 +33,13 @@ struct CustomModalAlertView: UIViewControllerRepresentable {
 extension CustomModalAlertView {
     
     enum Mode {
-        case storageQuotaError
-        case storageUploadQuotaError
-        case transferQuotaError(displayMode: TransferQuotaErrorDisplayMode)
         case businessGracePeriod
         case enableKeyRotation(chatId: ChatIdEntity)
         case upgradeSecurity
         case pendingUnverifiedOutShare(outShareEmail: String)
-        case storageQuotaWillExceed(displayMode: StorageQuotaWillExceedDisplayMode)
-        
-        enum StorageQuotaWillExceedDisplayMode {
-            case albumLink
-        }
-        
-        enum TransferQuotaErrorDisplayMode {
-            case limitedDownload, downloadExceeded, streamingExceeded
-        }
     }
 }
 
 #Preview {
-    CustomModalAlertView(mode: .storageQuotaError)
+    CustomModalAlertView(mode: .upgradeSecurity)
 }

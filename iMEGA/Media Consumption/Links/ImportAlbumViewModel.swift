@@ -32,6 +32,8 @@ final class ImportAlbumViewModel: ObservableObject {
     private let exportRouter: any AlbumLinkExportRouting
     private let onboardingRouter: any AlbumLinkImportOnboardingRouting
     private let offlineRouter: any AlbumLinkOfflineRouting
+    /// Injected so tests do not reach the real `QuotaWarningsRouter`, which touches UIKit.
+    private let presentStorageQuotaDialog: @MainActor () -> Void
     
     private var publicLinkWithDecryptionKey: URL?
     /// The album's nodes as they came off the link, kept so a sort change can re-map the library
@@ -82,13 +84,9 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showInvalidDecryptionKeyAlert = false
     @Published var showShareLink = false
     @Published var showImportAlbumLocation = false
-    @Published var showStorageQuotaWillExceed = false
     @Published var showMoreOptions = false
     @Published private(set) var albumCover: Image?
 
-    private var isQuotaWarningsRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevamp)
-    }
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
     @Published var showPhotoPermissionAlert = false
@@ -218,7 +216,10 @@ final class ImportAlbumViewModel: ObservableObject {
          exportRouter: some AlbumLinkExportRouting,
          onboardingRouter: some AlbumLinkImportOnboardingRouting = AlbumLinkImportOnboardingRouter(),
          offlineRouter: some AlbumLinkOfflineRouting,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+         presentStorageQuotaDialog: @escaping @MainActor () -> Void = {
+             QuotaWarningsRouter().presentStorageDialog(severity: .full(.uploadAttempt))
+         }) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
         self.albumNameUseCase = albumNameUseCase
@@ -235,6 +236,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.exportRouter = exportRouter
         self.onboardingRouter = onboardingRouter
         self.offlineRouter = offlineRouter
+        self.presentStorageQuotaDialog = presentStorageQuotaDialog
         isLinkRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosLinkRevamp)
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
@@ -344,17 +346,7 @@ final class ImportAlbumViewModel: ObservableObject {
         }
         
         guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.photosToAction) else {
-            if isQuotaWarningsRevampEnabled {
-                // By right, the ImportAlbumView is SwiftUI view so StorageQuotaDiaglogView can be used with .sheet modifier directly in ImportAlbumView.
-                // However, since the the dialog is used in different places with UIKit via QuotaWarningsRouter.
-                // QuotaWarningsRouter has a critical logic that skips another dialog presentation when a quota dialog is already visible
-                // As a result, QuotaWarningsRouter is used here for that reason.
-                QuotaWarningsRouter().presentStorageDialog(
-                    severity: .full(.uploadAttempt)
-                )
-            } else {
-                showStorageQuotaWillExceed = true
-            }
+            presentStorageQuotaDialog()
             return
         }
         

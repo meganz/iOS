@@ -51,10 +51,10 @@ final class DebugQuotaEventSimulator {
             }
         }
 
-        var displayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode {
+        var severity: TransferQuotaSeverity {
             switch self {
             case .limitedDownload: .limitedDownload
-            case .limitedStreaming: .streamingExceeded
+            case .limitedStreaming: .limitedStreaming
             case .downloadExceeded: .downloadExceeded
             case .streamingExceeded: .streamingExceeded
             }
@@ -131,7 +131,7 @@ final class DebugQuotaEventSimulator {
     }
 
     private func fireTransferOverQuota(_ scenario: TransferScenario) {
-        QuotaWarningsRouter().presentTransferQuotaWarning(mode: scenario.displayMode)
+        QuotaWarningsRouter().presentTransferDialog(severity: scenario.severity)
 
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: nil)
     }

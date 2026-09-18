@@ -180,8 +180,6 @@
 		0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */; };
 		0EE5AC1B2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */; };
 		0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */; };
-		0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */; };
-		0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */; };
 		0EE6B44D2EAAF2C7000958DB /* CameraUploadPaginationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE6B44C2EAAF2C4000958DB /* CameraUploadPaginationManager.swift */; };
 		0EE89C732BA8FAAF00956F1D /* NodeActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE89C722BA8FAAF00956F1D /* NodeActionTableViewCell.swift */; };
 		0EE989382EEFBA6E00367F26 /* NewTimelineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE989372EEFBA6E00367F26 /* NewTimelineViewModelTests.swift */; };
@@ -206,13 +204,10 @@
 		124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */; };
 		124667FA275DB82000C94335 /* CustomModalAlertViewController+CookieDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */; };
 		124667FB275DB82000C94335 /* CustomModalAlertViewController+LaunchTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667ED275DB81F00C94335 /* CustomModalAlertViewController+LaunchTab.swift */; };
-		124667FC275DB82000C94335 /* CustomModalAlertViewController+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EE275DB81F00C94335 /* CustomModalAlertViewController+Storage.swift */; };
 		124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667EF275DB81F00C94335 /* CustomModalAlertViewController+UpgradeToPro.swift */; };
 		124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667F0275DB81F00C94335 /* CustomModalAlertViewController+Contacts.swift */; };
-		124667FF275DB82000C94335 /* CustomModalAlertViewController+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667F1275DB81F00C94335 /* CustomModalAlertViewController+Config.swift */; };
 		12466801275DB82000C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667F3275DB81F00C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
 		12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667F5275DB82000C94335 /* CustomModalAlertContactsRouter.swift */; };
-		12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667F6275DB82000C94335 /* CustomModalAlertStorageRouter.swift */; };
 		12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124667F7275DB82000C94335 /* CustomModalAlertRouter.swift */; };
 		1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12466825275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift */; };
 		1246682E275DBE0500C94335 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12466826275DBE0500C94335 /* TextFile.swift */; };
@@ -1970,7 +1965,6 @@
 		B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
-		B5CFA46E2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */; };
 		B5D1A6362B7F13E0007447AB /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1A6352B7F13E0007447AB /* NotificationsViewModel.swift */; };
 		B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D58D542AC67C89004ECD36 /* Accounts */; };
 		B5D58D582AC67D0D004ECD36 /* Accounts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D58D572AC67D0D004ECD36 /* Accounts */; };
@@ -3041,7 +3035,6 @@
 		0EE4645B2DF1438700040DA7 /* SaveToPhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveToPhotosViewModel.swift; sourceTree = "<group>"; };
 		0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertViewModelTests.swift; sourceTree = "<group>"; };
 		0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertViewModel.swift; sourceTree = "<group>"; };
-		0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+CustomModalAlert.swift"; sourceTree = "<group>"; };
 		0EE6B44C2EAAF2C4000958DB /* CameraUploadPaginationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadPaginationManager.swift; sourceTree = "<group>"; };
 		0EE89C722BA8FAAF00956F1D /* NodeActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionTableViewCell.swift; sourceTree = "<group>"; };
 		0EE989372EEFBA6E00367F26 /* NewTimelineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTimelineViewModelTests.swift; sourceTree = "<group>"; };
@@ -3067,13 +3060,10 @@
 		124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Business.swift"; sourceTree = "<group>"; };
 		124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+CookieDialog.swift"; sourceTree = "<group>"; };
 		124667ED275DB81F00C94335 /* CustomModalAlertViewController+LaunchTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+LaunchTab.swift"; sourceTree = "<group>"; };
-		124667EE275DB81F00C94335 /* CustomModalAlertViewController+Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Storage.swift"; sourceTree = "<group>"; };
 		124667EF275DB81F00C94335 /* CustomModalAlertViewController+UpgradeToPro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeToPro.swift"; sourceTree = "<group>"; };
 		124667F0275DB81F00C94335 /* CustomModalAlertViewController+Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Contacts.swift"; sourceTree = "<group>"; };
-		124667F1275DB81F00C94335 /* CustomModalAlertViewController+Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Config.swift"; sourceTree = "<group>"; };
 		124667F3275DB81F00C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+TwoFactorAuthentication.swift"; sourceTree = "<group>"; };
 		124667F5275DB82000C94335 /* CustomModalAlertContactsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertContactsRouter.swift; sourceTree = "<group>"; };
-		124667F6275DB82000C94335 /* CustomModalAlertStorageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertStorageRouter.swift; sourceTree = "<group>"; };
 		124667F7275DB82000C94335 /* CustomModalAlertRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertRouter.swift; sourceTree = "<group>"; };
 		12466825275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewRouter.swift; sourceTree = "<group>"; };
 		12466826275DBE0500C94335 /* TextFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
@@ -4855,7 +4845,6 @@
 		B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewRouter.swift; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
-		B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Transfer.swift"; sourceTree = "<group>"; };
 		B5D1A6352B7F13E0007447AB /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		B5D861472CCB3F7D00A2685C /* RecoveryKeyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyViewModelTests.swift; sourceTree = "<group>"; };
 		B5D8A0DF2CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertCookieDialogRouter.swift; sourceTree = "<group>"; };
@@ -6347,15 +6336,12 @@
 			children = (
 				124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */,
 				945DEF722CC90D9200E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift */,
-				124667F1275DB81F00C94335 /* CustomModalAlertViewController+Config.swift */,
 				124667F0275DB81F00C94335 /* CustomModalAlertViewController+Contacts.swift */,
 				124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */,
 				83B4FC68292402E100364F04 /* CustomModalAlertViewcontroller+EnableKeyRotation.swift */,
 				124667ED275DB81F00C94335 /* CustomModalAlertViewController+LaunchTab.swift */,
 				94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */,
 				B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */,
-				124667EE275DB81F00C94335 /* CustomModalAlertViewController+Storage.swift */,
-				B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */,
 				124667F3275DB81F00C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
 				B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */,
 				124667EF275DB81F00C94335 /* CustomModalAlertViewController+UpgradeToPro.swift */,
@@ -6369,7 +6355,6 @@
 				124667F5275DB82000C94335 /* CustomModalAlertContactsRouter.swift */,
 				B5D8A0DF2CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift */,
 				124667F7275DB82000C94335 /* CustomModalAlertRouter.swift */,
-				124667F6275DB82000C94335 /* CustomModalAlertStorageRouter.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -8280,7 +8265,6 @@
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
 				0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */,
-				0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */,
 			);
 			path = CustomModalAlert;
 			sourceTree = "<group>";
@@ -15216,20 +15200,16 @@
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
 				B5D8A0E02CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
-				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
 				2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */,
 				B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */,
 				124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */,
 				945DEF732CC90DA300E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift in Sources */,
-				124667FF275DB82000C94335 /* CustomModalAlertViewController+Config.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
 				124667FA275DB82000C94335 /* CustomModalAlertViewController+CookieDialog.swift in Sources */,
 				83B4FC69292402E100364F04 /* CustomModalAlertViewcontroller+EnableKeyRotation.swift in Sources */,
 				124667FB275DB82000C94335 /* CustomModalAlertViewController+LaunchTab.swift in Sources */,
 				94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */,
 				B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */,
-				124667FC275DB82000C94335 /* CustomModalAlertViewController+Storage.swift in Sources */,
-				B5CFA46E2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift in Sources */,
 				12466801275DB82000C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
 				B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
@@ -15255,7 +15235,6 @@
 				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
 				AA12316A0002000000000002 /* DeviceStorageChecker.swift in Sources */,
 				BF3E1A122E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */,
-				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */,
 				A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				998CDC9B2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */,
@@ -16615,7 +16594,6 @@
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */,
 				BF3E1A112E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */,
-				0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				BF5718502D3719EC004BD1EC /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				998CDCAE2E3ACD8400BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,

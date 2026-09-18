@@ -4,10 +4,6 @@ import MEGAAppPresentation
 import MEGADomain
 
 @objc enum CustomModalAlertMode: Int {
-    case storageEvent = 0
-    case storageQuotaError
-    case storageUploadQuotaError
-    case transferDownloadQuotaError
     case businessGracePeriod
     case outgoingContactRequest
     case contactNotInMEGA
@@ -31,13 +27,7 @@ import MEGADomain
     private var expirationDate: Date?
     private var storageLimit: Int?
     
-    private var transferQuotaDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode?
-    
-    /// An action handler that executes an action and calls a completion handler when finished.
-    private var actionHandlerWithCompletion: ((@escaping () -> Void) -> Void)?
-    /// A simple dismiss handler.
     private var actionHandler: (() -> Void)?
-    private var dismissHandler: (() -> Void)?
     
     @objc init(_ mode: CustomModalAlertMode, presenter: UIViewController) {
         self.mode = mode
@@ -54,19 +44,6 @@ import MEGADomain
         self.mode = mode
         self.presenter = presenter
         self.outShareEmail = outShareEmail
-    }
-    
-    init(_ mode: CustomModalAlertMode,
-         presenter: UIViewController,
-         transferQuotaDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode,
-         actionHandler: @escaping (@escaping () -> Void) -> Void,
-         dismissHandler: @escaping () -> Void
-    ) {
-        self.mode = mode
-        self.presenter = presenter
-        self.transferQuotaDisplayMode = transferQuotaDisplayMode
-        self.actionHandlerWithCompletion = actionHandler
-        self.dismissHandler = dismissHandler
     }
     
     init (
@@ -94,17 +71,6 @@ import MEGADomain
     func build() -> UIViewController {
         let customModalAlertVC = CustomModalAlertViewController()
         switch mode {
-        case .storageQuotaError, .storageUploadQuotaError:
-            customModalAlertVC.configureForStorageQuotaError(false)
-
-        case .transferDownloadQuotaError:
-            guard let transferDisplayMode = transferQuotaDisplayMode else { return customModalAlertVC }
-            customModalAlertVC.configureForTransferQuotaError(
-                for: transferDisplayMode,
-                actionHandler: actionHandlerWithCompletion,
-                dismissHandler: dismissHandler
-            )
-             
         case .businessGracePeriod:
             customModalAlertVC.configureForBusinessGracePeriod()
             

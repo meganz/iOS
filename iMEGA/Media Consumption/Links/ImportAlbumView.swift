@@ -113,9 +113,6 @@ struct ImportAlbumView: View {
     /// the same way it was for the decryption key alert.
     private var albumBodyModals: some View {
         networkAwareContent
-            .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
-                CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
-            }
             .alert(isPresented: $viewModel.showRenameAlbumAlert,
                    viewModel.renameAlbumAlertViewModel())
             .sheet(isPresented: $viewModel.showImportAlbumLocation) {

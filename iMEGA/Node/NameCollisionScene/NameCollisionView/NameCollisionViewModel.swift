@@ -376,11 +376,7 @@ final class NameCollisionViewModel: ObservableObject {
 #if MAIN_APP_TARGET
     @MainActor
     private func showOverQuotaPopup() {
-        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevamp) {
-            QuotaWarningsRouter().presentStorageDialog(severity: .full(.storageState))
-        } else {
-            CustomModalAlertRouter(.storageQuotaError, presenter: UIApplication.mnz_presentingViewController()).start()
-        }
+        QuotaWarningsRouter().presentStorageDialog(severity: .full(.storageState))
     }
 #endif
 }

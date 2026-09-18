@@ -1,6 +1,5 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
-import MEGAAudioPlayer
 import MEGADomain
 import MEGASdk
 import MEGASwift
@@ -179,85 +178,31 @@ private final class QuotaWarningDialogHostingController: UIHostingController<Quo
     }
 }
 
-// MARK: - Legacy flow compatibility
+// MARK: - ObjC entry points
 extension QuotaWarningsRouter {
-    private var isRedesignEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevamp)
-    }
-
     @objc func presentStorageQuotaWarning(event: MEGAEvent) {
         Task { @MainActor in
-            if isRedesignEnabled {
-                // Only red reaches this path — almost full is checked on app open and after a
-                // successful upload instead. The ternary is left as defensive code.
-                let severity: StorageQuotaSeverity = event.number == StorageState.orange.rawValue ? .almostFull : .full(.storageState)
-                presentStorageDialog(severity: severity)
-            } else {
-                // Old logic, copied over
-                CustomModalAlertStorageRouter(
-                    .storageEvent,
-                    event: event,
-                    presenter: UIApplication.mnz_presentingViewController()
-                ).start()
-            }
+            let severity: StorageQuotaSeverity = event.number == StorageState.orange.rawValue ? .almostFull : .full(.storageState)
+            presentStorageDialog(severity: severity)
         }
     }
-    
-    @objc func presentStorageQuotaWarning(error: MEGAError, legacyMode: CustomModalAlertMode) {
+
+    /// A blocked upload is the only trigger that gets the "continue uploading" copy.
+    @objc(presentStorageQuotaWarningForBlockedUpload:)
+    func presentStorageQuotaWarningForBlockedUpload(error: MEGAError) {
         Task { @MainActor in
-            if isRedesignEnabled {
-                // `storageUploadQuotaError` is the only mode raised by a blocked upload, so it is
-                // the only one that gets the "continue uploading" copy.
-                let trigger: StorageQuotaSeverity.FullTrigger = legacyMode == .storageUploadQuotaError ? .uploadAttempt : .storageState
-                presentStorageDialog(severity: error.type == .apiEOverQuota ? .full(trigger) : .almostFull)
-            } else {
-                CustomModalAlertRouter(
-                    legacyMode,
-                    presenter: UIApplication.mnz_presentingViewController()
-                ).start()
-            }
+            presentStorageQuotaWarning(error: error, trigger: .uploadAttempt)
         }
     }
 
-    func presentTransferQuotaWarning(mode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
-        let presenter = UIApplication.mnz_presentingViewController()
-
-        if isRedesignEnabled {
-            let severity: TransferQuotaSeverity = switch mode {
-            case .limitedDownload: .limitedDownload
-            case .downloadExceeded: .downloadExceeded
-            case .streamingExceeded: .streamingExceeded
-            }
-            presentTransferDialog(severity: severity)
-        } else {
-            // Old logic, copied over
-            CustomModalAlertRouter(
-                .transferDownloadQuotaError,
-                presenter: presenter,
-                transferQuotaDisplayMode: mode,
-                actionHandler: { completion in
-                    if AudioPlayerManager.shared.isPlayerAlive() {
-                        Task {
-                            await AudioPlayerManager.shared.dismissFullScreenPlayer()
-                            AudioPlayerManager.shared.closePlayer()
-                            completion()
-                        }
-                    } else {
-                        completion()
-                    }
-                },
-                dismissHandler: {
-                    if AudioPlayerManager.shared.isPlayerAlive() {
-                        Task {
-                            await AudioPlayerManager.shared.dismissFullScreenPlayer()
-                            AudioPlayerManager.shared.closePlayer()
-                        }
-                    }
-                    if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp) {
-                        MEGAAudioPlayerSession.stop()
-                    }
-                }
-            ).start()
+    @objc(presentStorageQuotaWarningForNodeRequestError:)
+    func presentStorageQuotaWarningForNodeRequestError(error: MEGAError) {
+        Task { @MainActor in
+            presentStorageQuotaWarning(error: error, trigger: .storageState)
         }
+    }
+
+    private func presentStorageQuotaWarning(error: MEGAError, trigger: StorageQuotaSeverity.FullTrigger) {
+        presentStorageDialog(severity: error.type == .apiEOverQuota ? .full(trigger) : .almostFull)
     }
 }

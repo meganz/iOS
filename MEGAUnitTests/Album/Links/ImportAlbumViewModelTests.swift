@@ -376,15 +376,17 @@ final class ImportAlbumViewModelTests: XCTestCase {
             name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
 
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: true)
+        var dialogPresented = false
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicCollectionUseCase: publicAlbumUseCase,
-                                           accountStorageUseCase: accountStorageUseCase)
+                                           accountStorageUseCase: accountStorageUseCase,
+                                           presentStorageQuotaDialog: { dialogPresented = true })
         await sut.loadPublicAlbum()
         
         await sut.importAlbum()
         
-        XCTAssertTrue(sut.showStorageQuotaWillExceed)
+        XCTAssertTrue(dialogPresented)
     }
     
     @MainActor
@@ -395,18 +397,19 @@ final class ImportAlbumViewModelTests: XCTestCase {
             name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
 
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: false)
+        var dialogPresented = false
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicCollectionUseCase: publicAlbumUseCase,
-                                           accountStorageUseCase: accountStorageUseCase)
+                                           accountStorageUseCase: accountStorageUseCase,
+                                           presentStorageQuotaDialog: { dialogPresented = true })
         await sut.loadPublicAlbum()
-        XCTAssertFalse(sut.showStorageQuotaWillExceed)
         
         // Act
         await sut.importAlbum()
         
         // Assert
-        XCTAssertFalse(sut.showStorageQuotaWillExceed)
+        XCTAssertFalse(dialogPresented)
     }
     
     @MainActor
@@ -1531,6 +1534,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
         offlineRouter: some AlbumLinkOfflineRouting = MockAlbumLinkOfflineRouter(),
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
+        presentStorageQuotaDialog: @escaping @MainActor () -> Void = {},
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> ImportAlbumViewModel {
@@ -1551,7 +1555,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
             exportRouter: exportRouter,
             onboardingRouter: onboardingRouter,
             offlineRouter: offlineRouter,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
+            presentStorageQuotaDialog: presentStorageQuotaDialog)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

@@ -16,7 +16,6 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosSkipSdkTeardownOnTermination = "istd"
     case iosMediaTimelinePagination = "imtp"
     case iosMediaTimelineDateTaken = "imtdt"
-    case iosQuotaWarningsRevamp = "iqwr"
     case iosUpgradeAccountPlanRevamp = "iuapr"
     case iosLinkRevamp = "ilr"
     case iosAudioPlayerRevamp = "iapr"

@@ -108,7 +108,7 @@ extension AppDelegate {
     }
     
     @objc func showStreamingOverQuotaModalAlert() {
-        showTransferOverQuotaModalAlert(mode: .streamingExceeded)
+        showTransferOverQuotaModalAlert(severity: .streamingExceeded)
     }
     
     private func handleMultiFactorAuthCheck(_ result: Result<MEGARequest, MEGAError>) {
@@ -813,12 +813,12 @@ extension AppDelegate {
     @objc func handleDownloadQuotaError(_ error: MEGAError, transfer: MEGATransfer) {
         guard error.value != 0 else { return }
         
-        var alertDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode
+        var severity: TransferQuotaSeverity
         switch error.type {
         case .apiEgoingOverquota:
-            alertDisplayMode = .limitedDownload
+            severity = .limitedDownload
         case .apiEOverQuota:
-            alertDisplayMode = transfer.isStreamingTransfer ? .streamingExceeded : .downloadExceeded
+            severity = transfer.isStreamingTransfer ? .streamingExceeded : .downloadExceeded
         default: return
         }
         
@@ -828,18 +828,18 @@ extension AppDelegate {
             Task {
                 do {
                     _ = try await accountUseCase.refreshCurrentAccountDetails()
-                    showTransferOverQuotaModalAlert(mode: alertDisplayMode)
+                    showTransferOverQuotaModalAlert(severity: severity)
                 } catch {
                     MEGALogError("[Transfer Quota Dialog] No user account details with error \(error)")
                 }
             }
         } else {
-            showTransferOverQuotaModalAlert(mode: alertDisplayMode)
+            showTransferOverQuotaModalAlert(severity: severity)
         }
     }
     
-    private func showTransferOverQuotaModalAlert(mode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
-        QuotaWarningsRouter().presentTransferQuotaWarning(mode: mode)
+    private func showTransferOverQuotaModalAlert(severity: TransferQuotaSeverity) {
+        QuotaWarningsRouter().presentTransferDialog(severity: severity)
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)
     }
     
