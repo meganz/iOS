@@ -3,6 +3,8 @@ import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
+import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
 
@@ -20,6 +22,8 @@ import SwiftUI
     }
     @Published public var showFilter = false
     
+    @Published public var offlineSnackBar: SnackBar?
+
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
     public let contentMode: PhotoLibraryContentMode
@@ -35,6 +39,10 @@ import SwiftUI
     )
     
     private let tracker: any AnalyticsTracking
+    
+    private let offlineFileOpenGuard: (any OfflineFileOpenGuarding)?
+
+    private var handlesBeingCheckedForOfflineOpening: Set<HandleEntity> = []
     
     /// The view mode events name the Media screen and are counted as its traffic, so a screen that only
     /// borrows the picker stays out of them -- taps on an album link would otherwise be indistinguishable
@@ -52,7 +60,8 @@ import SwiftUI
         sectionHeaderType: PhotoSectionHeaderType = .photoDate, // by default, display the photo date header
         globalHeaderType: PhotoGlobalHeaderType = .dateAndZoom, // by default, display a date and zoom control
         configuration: PhotoLibraryContentConfiguration? = nil,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        offlineFileOpenGuard: (any OfflineFileOpenGuarding)? = ContentLibraries.makeOfflineFileOpenGuard()
     ) {
         self.library = library
         self.contentMode = contentMode
@@ -60,6 +69,7 @@ import SwiftUI
         self.globalHeaderType = globalHeaderType
         self.configuration = configuration
         self.tracker = tracker
+        self.offlineFileOpenGuard = offlineFileOpenGuard
         
         super.init()
     }
@@ -93,6 +103,24 @@ extension PhotoLibraryContentViewModel {
         Array(selection.photos.values)
     }
     
+    func openPhoto(_ photo: NodeEntity, open: @escaping () -> Void) {
+        guard let offlineFileOpenGuard, offlineFileOpenGuard.isActive else {
+            open()
+            return
+        }
+        guard handlesBeingCheckedForOfflineOpening.insert(photo.handle).inserted else { return }
+
+        Task {
+            defer { handlesBeingCheckedForOfflineOpening.remove(photo.handle) }
+
+            if await offlineFileOpenGuard.shouldBlockOpening(photo) {
+                offlineSnackBar = SnackBar(message: Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline)
+            } else {
+                open()
+            }
+        }
+    }
+
     public func toggleSelectAllPhotos() {
         let allSelectedCurrently = selection.photos.count == library.allPhotos.count
         selection.allSelected = !allSelectedCurrently

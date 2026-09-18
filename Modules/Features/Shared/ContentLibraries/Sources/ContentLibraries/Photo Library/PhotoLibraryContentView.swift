@@ -29,6 +29,7 @@ public struct PhotoLibraryContentView: View {
                                        isPresented: $viewModel.showFilter,
                                        onFilterUpdate: onFilterUpdate)
             }
+            .snackBar($viewModel.offlineSnackBar)
     }
     
     @ViewBuilder
