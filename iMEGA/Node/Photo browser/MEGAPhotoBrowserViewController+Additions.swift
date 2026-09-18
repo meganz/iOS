@@ -85,6 +85,8 @@ extension MEGAPhotoBrowserViewController {
                 return
             }
 
+            if await isBlockedWhileOffline(node) { return }
+
             if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
                 // Nodes belonging to the folder-link SDK have to be authorized before they can be streamed,
                 // otherwise their local link carries no node key and the HTTP server answers 404
@@ -112,7 +114,7 @@ extension MEGAPhotoBrowserViewController {
                         return
                     }
 
-                    let delegate = self.playerNodeActionDelegate(presenter: playerVC)
+                    let delegate = offlineAware(self.playerNodeActionDelegate(presenter: playerVC))
 
                     let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
                     let controller = NodeActionViewController(
@@ -707,6 +709,43 @@ extension MEGAPhotoBrowserViewController {
     }
 }
 
+// MARK: - Offline mode
+
+extension MEGAPhotoBrowserViewController {
+
+    /// Wraps a node action sheet delegate so the actions that need a connection prompt instead of
+    /// running while offline
+    private func offlineAware(
+        _ delegate: some NodeActionViewControllerDelegate
+    ) -> any NodeActionViewControllerDelegate {
+        OfflineAwareNodeActionDelegate(
+            wrapping: delegate,
+            offlineActionGuard: OfflineActionGuard(
+                isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+            )
+        )
+    }
+
+    /// Warns instead of opening a player for a video with no local copy while offline
+    private func isBlockedWhileOffline(_ node: MEGANode) async -> Bool {
+        let openGuard = OfflineFileOpenGuard(
+            isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled,
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        )
+
+        guard openGuard.isActive, await openGuard.shouldBlockOpening(node.toNodeEntity()) else { return false }
+
+        showSnackBar(message: Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline)
+        return true
+    }
+}
+
 // MARK: - IBActions
 extension MEGAPhotoBrowserViewController {
     
@@ -719,7 +758,7 @@ extension MEGAPhotoBrowserViewController {
         let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
         let controller = NodeActionViewController(
             node: node,
-            delegate: delegate,
+            delegate: offlineAware(delegate),
             displayMode: displayMode,
             isInVersionsView: isPreviewingVersion(),
             isBackupNode: isBackUpNode,
