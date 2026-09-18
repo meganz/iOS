@@ -194,6 +194,44 @@ struct FolderLinkRepositoryTests {
                 try await repo.fetchNodes()
             }
         }
+
+        @Test("FetchNodes throws expired when error is apiEExpired")
+        func fetchNodesThrowsExpired() async {
+            let sdk = MockSdk()
+            let error = MockError(errorType: .apiEExpired, hasExtraInfo: false)
+            sdk.fetchNodesRequestResult = .failure(error)
+            let repo = FolderLinkRepository(sdk: sdk)
+
+            await #expect(throws: FolderLinkFetchNodesErrorEntity.linkUnavailable(.expired)) {
+                try await repo.fetchNodes()
+            }
+        }
+
+        @Test("FetchNodes throws removed when error is apiENoent")
+        func fetchNodesThrowsRemoved() async {
+            let sdk = MockSdk()
+            let error = MockError(errorType: .apiENoent, hasExtraInfo: false)
+            sdk.fetchNodesRequestResult = .failure(error)
+            let repo = FolderLinkRepository(sdk: sdk)
+
+            await #expect(throws: FolderLinkFetchNodesErrorEntity.linkUnavailable(.removed)) {
+                try await repo.fetchNodes()
+            }
+        }
+
+        /// The SDK reports extra info for a fetch-nodes apiENoent, so the reason has to be read from the
+        /// error type in that branch too, not only in the branch without extra info.
+        @Test("FetchNodes throws removed when apiENoent carries extra info but no link or user status")
+        func fetchNodesThrowsRemovedWhenErrorHasExtraInfo() async {
+            let sdk = MockSdk()
+            let error = MockError(errorType: .apiENoent, hasExtraInfo: true, userStatus: .etdUnknown)
+            sdk.fetchNodesRequestResult = .failure(error)
+            let repo = FolderLinkRepository(sdk: sdk)
+
+            await #expect(throws: FolderLinkFetchNodesErrorEntity.linkUnavailable(.removed)) {
+                try await repo.fetchNodes()
+            }
+        }
     }
 
     @Suite("getRootNode tests")
@@ -238,7 +276,7 @@ struct FolderLinkRepositoryTests {
                 MockNode(handle: 1),
                 MockNode(handle: 2, parentHandle: 1),
                 MockNode(handle: 3, parentHandle: 1),
-                MockNode(handle: 4, parentHandle: 2),
+                MockNode(handle: 4, parentHandle: 2)
             ])
             let repo = FolderLinkRepository(sdk: sdk)
             let children = repo.children(of: 1)
@@ -252,7 +290,7 @@ struct FolderLinkRepositoryTests {
         func nodeReturnsNilWhenNotFound() {
             let sdk = MockSdk(nodes: [
                 MockNode(handle: 1),
-                MockNode(handle: 2),
+                MockNode(handle: 2)
             ])
             let repo = FolderLinkRepository(sdk: sdk)
 

@@ -14,9 +14,13 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
     func hasUpdatedContentView() -> Bool { true }
     
     private let link: String
+    /// Kept apart from `link` and passed through untouched: `link` is what the SDK logs in to, while
+    /// this is the form the user was given, and the only form safe to store.
+    private let receivedLink: String
     
-    init(link: String) {
+    init(link: String, receivedLink: String) {
         self.link = link
+        self.receivedLink = receivedLink
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -94,6 +98,8 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
             nodeActionHandler: nodeActionHandler,
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             isLinkRevampEnabled: isLinkRevampEnabled,
+            linkResolutionReporter: ViewedLinksRecorder.shared,
+            receivedLink: receivedLink,
             mediaDiscoveryContent: {
                 FolderLinkMediaDiscoveryContentView(viewModel: $0)
             },

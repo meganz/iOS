@@ -29,7 +29,7 @@ private struct LegacyFolderLinkUnavailableView: UIViewRepresentable {
             view.configureInvalidFolderLinkByUserETDSuspension()
         case .copyrightSuspension:
             view.configureInvalidFolderLinkByUserCopyrightSuspension()
-        case .generic:
+        case .generic, .removed:
             view.configureGenericInvalidFolderLink()
         case .expired:
             view.configureInvalidFolderLinkForExpired()

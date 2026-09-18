@@ -7,8 +7,8 @@ package enum FolderLinkFlowErrorEntity: Error, Sendable, Equatable {
 }
 
 package protocol FolderLinkFlowUseCaseProtocol: Sendable {
-    func initialStart(with link: String) async throws(FolderLinkFlowErrorEntity) -> HandleEntity
-    func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FolderLinkFlowErrorEntity) -> HandleEntity
+    func initialStart(with link: String) async throws(FolderLinkFlowErrorEntity) -> NodeEntity
+    func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FolderLinkFlowErrorEntity) -> NodeEntity
     func stop(shouldLogout: Bool)
 }
 
@@ -37,11 +37,10 @@ package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
     
     /// In this flow, if invalidDecryptionKey error is returned, error page is shown immediately (.linkUnavailable(.generic))
     /// Check confirmDecryptionKey flow for difference
-    package func initialStart(with link: String) async throws(FolderLinkFlowErrorEntity) -> HandleEntity {
+    package func initialStart(with link: String) async throws(FolderLinkFlowErrorEntity) -> NodeEntity {
         do {
             try await folderLinkLoginUseCase.login(to: link)
             try await folderLinkFetchNodesUseCase.fetchNodes()
-            return folderLinkSearchUseCase.rootFolderLink()
         } catch let loginError as FolderLinkLoginErrorEntity {
             throw switch loginError {
             case .invalidDecryptionKey: .linkUnavailable(.generic)
@@ -57,18 +56,19 @@ package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
         } catch {
             throw .linkUnavailable(.generic)
         }
+
+        return try rootFolderLink()
     }
     
     /// In this flow, if invalidDecryptionKey error is returned, unlike initialStart flow, error page is not shown
     /// Instead, alert that input decryption key is invalid, and asking for input decryption key again.
     /// Check confirmDecryptionKey flow for difference
-    package func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FolderLinkFlowErrorEntity) -> HandleEntity {
+    package func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FolderLinkFlowErrorEntity) -> NodeEntity {
         let fullLink = await folderLinkBuilder.build(link: link, with: decryptionKey)
         
         do {
             try await folderLinkLoginUseCase.login(to: fullLink)
             try await folderLinkFetchNodesUseCase.fetchNodes()
-            return folderLinkSearchUseCase.rootFolderLink()
         } catch let loginError as FolderLinkLoginErrorEntity {
             throw switch loginError {
             case .invalidDecryptionKey: .invalidDecryptionKey
@@ -84,10 +84,23 @@ package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
         } catch {
             throw .linkUnavailable(.generic)
         }
+
+        return try rootFolderLink()
     }
     
     package func stop(shouldLogout: Bool) {
         guard shouldLogout else { return }
         folderLinkLogoutUseCase.logout()
+    }
+
+    private func rootFolderLink() throws(FolderLinkFlowErrorEntity) -> NodeEntity {
+        // in practice at the point rootFolderLink() is called,
+        // folderLinkSearchUseCase.rootFolderLink() should already be available
+        // If the `rootFolderLink()` is not available at this point
+        // then it's an unknown error so we throw error with `.generic` reason
+        guard let rootNode = folderLinkSearchUseCase.rootFolderLink() else {
+            throw .linkUnavailable(.generic)
+        }
+        return rootNode
     }
 }

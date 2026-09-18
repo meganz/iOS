@@ -74,13 +74,13 @@ package struct FolderLinkRepository: FolderLinkRepositoryProtocol {
                         } else if error.userStatus == .copyrightSuspension {
                             .copyrightSuspension
                         } else {
-                            .generic
+                            Self.unavailableReason(for: error.type)
                         }
                         continuation.resume(throwing: FolderLinkFetchNodesErrorEntity.linkUnavailable(reason))
                     } else {
                         let fetchNodesError: FolderLinkFetchNodesErrorEntity = switch error.type {
                         case .apiEIncomplete: .missingDecryptionKey
-                        default: .linkUnavailable(.generic)
+                        default: .linkUnavailable(Self.unavailableReason(for: error.type))
                         }
                         continuation.resume(throwing: fetchNodesError)
                     }
@@ -108,5 +108,13 @@ package struct FolderLinkRepository: FolderLinkRepositoryProtocol {
     
     package func retryPendingConnections() {
         sdk.retryPendingConnections()
+    }
+
+    private static func unavailableReason(for type: MEGAErrorType) -> LinkUnavailableReason {
+        switch type {
+        case .apiEExpired: .expired
+        case .apiENoent: .removed
+        default: .generic
+        }
     }
 }

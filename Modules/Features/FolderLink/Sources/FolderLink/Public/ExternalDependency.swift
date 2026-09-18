@@ -53,3 +53,12 @@ public protocol FolderLinkMediaDiscoveryContent: View {
 public protocol FolderLinkLogoutPolicyProtocol {
     func shouldLogoutUponFolderLinkDismiss() -> Bool
 }
+
+/// Reports the outcome of link resolution, so the app layer can keep a record of the links the
+/// user has opened.
+///
+/// Note: `receivedLink` should be the link the user is shared with, never one rebuilt after a typed-in secret
+public protocol FolderLinkResolutionReporting {
+    func linkResolved(folderNode: NodeEntity, receivedLink: String)
+    func linkUnavailable(receivedLink: String)
+}

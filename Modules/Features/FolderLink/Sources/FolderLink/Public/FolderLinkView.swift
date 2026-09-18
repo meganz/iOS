@@ -20,6 +20,10 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
         let onClose: @MainActor () -> Void
         let isLinkRevampEnabled: Bool
+        let linkResolutionReporter: any FolderLinkResolutionReporting
+        /// The link as the user received it, which is not always `link`: a password-protected link is
+        /// opened in its decrypted form but must only ever be recorded in the form it arrived in.
+        let receivedLink: String
 
         public init(
             link: String,
@@ -31,6 +35,8 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             isLinkRevampEnabled: Bool,
+            linkResolutionReporter: some FolderLinkResolutionReporting,
+            receivedLink: String,
             @ViewBuilder mediaDiscoveryContent: @escaping (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery,
             onClose: @escaping @MainActor () -> Void
         ) {
@@ -43,6 +49,8 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             self.nodeActionHandler = nodeActionHandler
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.isLinkRevampEnabled = isLinkRevampEnabled
+            self.linkResolutionReporter = linkResolutionReporter
+            self.receivedLink = receivedLink
             self.mediaDiscoveryContent = mediaDiscoveryContent
             self.onClose = onClose
         }
@@ -81,7 +89,9 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                     link: dependency.link,
                     folderLinkBuilder: dependency.folderLinkBuilder,
                     folderLinkLogoutPolicy: dependency.folderLinkLogoutPolicy,
-                    isLinkRevampEnabled: dependency.isLinkRevampEnabled
+                    isLinkRevampEnabled: dependency.isLinkRevampEnabled,
+                    linkResolutionReporter: dependency.linkResolutionReporter,
+                    receivedLink: dependency.receivedLink
                 )
             )
         )

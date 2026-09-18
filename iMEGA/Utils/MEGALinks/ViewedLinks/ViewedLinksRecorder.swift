@@ -1,20 +1,20 @@
 import FileLink
+import FolderLink
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import ViewedLinks
 
-@MainActor
-final class ViewedLinksRecorder {
+final class ViewedLinksRecorder: Sendable {
     static let shared = ViewedLinksRecorder()
 
     private let useCase: any ViewedLinksUseCaseProtocol
-    private let isEnabled: @MainActor () -> Bool
+    private let isEnabled: @Sendable () -> Bool
 
     init(
         useCase: some ViewedLinksUseCaseProtocol = ViewedLinksFactory.makeUseCase(),
-        isEnabled: @escaping @MainActor () -> Bool = ViewedLinksRecorder.defaultIsEnabled()
+        isEnabled: @escaping @Sendable () -> Bool = ViewedLinksRecorder.defaultIsEnabled()
     ) {
         self.useCase = useCase
         self.isEnabled = isEnabled
@@ -23,7 +23,7 @@ final class ViewedLinksRecorder {
     /// The history belongs to a signed-in account, so a link opened without one is not recorded: the
     /// widget that shows the history is unreachable while signed out, and a row left behind would
     /// surface to whichever account signs in next.
-    private static func defaultIsEnabled() -> @MainActor () -> Bool {
+    private static func defaultIsEnabled() -> @Sendable () -> Bool {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
 
         return {
@@ -95,5 +95,15 @@ extension ViewedLinksRecorder: FileLinkResolutionReporting {
         guard let linkURL = URL(string: receivedLink) else { return }
 
         removeUnavailable(linkURL: linkURL)
+    }
+}
+
+// MARK: - FolderLinkResolutionReporting
+
+extension ViewedLinksRecorder: FolderLinkResolutionReporting {
+    func linkResolved(folderNode: NodeEntity, receivedLink: String) {
+        guard let linkURL = URL(string: receivedLink) else { return }
+
+        record(handle: folderNode.handle, name: folderNode.name, linkURL: linkURL, isFolder: true)
     }
 }

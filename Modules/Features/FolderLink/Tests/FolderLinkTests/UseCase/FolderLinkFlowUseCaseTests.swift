@@ -1,6 +1,7 @@
 import FolderLink
 import MEGAAppSDKRepoMock
 import MEGADomain
+import MEGADomainMock
 import Testing
 
 struct FolderLinkFlowUseCaseTests {
@@ -9,7 +10,7 @@ struct FolderLinkFlowUseCaseTests {
         @Test("Initial start flow: logs in with original link, fetches nodes, returns root")
         func initialStartFlow_success() async throws {
             let originalLink = "some_link"
-            let folderLinkSearchUseCase = MockFolderLinkSearchUseCase(root: 123)
+            let folderLinkSearchUseCase = MockFolderLinkSearchUseCase(root: NodeEntity(handle: 123))
             let folderLinkLoginUseCase = MockFolderLinkLoginUseCase(loginResult: .success)
             let folderLinkFetchNodesUseCase = MockFolderLinkFetchNodeUseCase(fetchResult: .success)
             let folderLinkBuilder = MockFolderlinkBuilder()
@@ -25,9 +26,18 @@ struct FolderLinkFlowUseCaseTests {
             #expect(folderLinkBuilder.buildCalled == false)
             #expect(folderLinkLoginUseCase.loggedInLink == originalLink)
             #expect(folderLinkFetchNodesUseCase.fetchCalled == true)
-            #expect(root == 123)
+            #expect(root.handle == 123)
         }
-        
+
+        @Test("When the root node is missing after login and fetch, should throw a generic link unavailable error")
+        func initialStart_rootNodeMissing_throwsGenericLinkUnavailable() async {
+            let sut = makeSUT(folderLinkSearchUseCase: MockFolderLinkSearchUseCase(root: nil))
+
+            await #expect(throws: FolderLinkFlowErrorEntity.linkUnavailable(.generic)) {
+                _ = try await sut.initialStart(with: "some_link")
+            }
+        }
+
         @Test(
             "When login throws error, should rethrow expected error",
             arguments: [
@@ -68,7 +78,7 @@ struct FolderLinkFlowUseCaseTests {
         @Test("with decryption key: uses builder, logs in with built link, fetches nodes, returns root")
         func confirmDecryptionKey_success() async throws {
             let decryptionKey = "abc"
-            let expectedRoot: HandleEntity = 999
+            let expectedRoot = NodeEntity(handle: 999)
             let originalLink = "some_link"
             let builtLink = "built_link"
             let folderLinkSearchUseCase = MockFolderLinkSearchUseCase(root: expectedRoot)
@@ -92,7 +102,16 @@ struct FolderLinkFlowUseCaseTests {
             #expect(folderLinkFetchNodesUseCase.fetchCalled == true)
             #expect(root == expectedRoot)
         }
-        
+
+        @Test("When the root node is missing after login and fetch, should throw a generic link unavailable error")
+        func confirmDecryptionKey_rootNodeMissing_throwsGenericLinkUnavailable() async {
+            let sut = makeSUT(folderLinkSearchUseCase: MockFolderLinkSearchUseCase(root: nil))
+
+            await #expect(throws: FolderLinkFlowErrorEntity.linkUnavailable(.generic)) {
+                _ = try await sut.confirmDecryptionKey(with: "some_link", decryptionKey: "some_key")
+            }
+        }
+
         @Test(
             "When login throws error, should rethrow expected error",
             arguments: [

@@ -59,7 +59,7 @@ struct LinkUnavailableContentView: View {
 
     private var title: String {
         switch reason {
-        case .generic:
+        case .generic, .removed:
             copy.notAvailableTitle
         case .expired:
             copy.noLongerAvailableTitle
@@ -71,7 +71,7 @@ struct LinkUnavailableContentView: View {
     @ViewBuilder
     private var description: some View {
         switch reason {
-        case .generic:
+        case .generic, .removed:
             genericReasons
         case .expired:
             centeredParagraph(Text(copy.hasExpiredDescription))

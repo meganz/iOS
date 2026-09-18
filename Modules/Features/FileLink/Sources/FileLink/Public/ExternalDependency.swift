@@ -46,7 +46,6 @@ public protocol FileLinkActionHandlerProtocol {
 /// user has opened.
 ///
 /// Note: `receivedLink` should the link the user is shared with, never one rebuilt after a typed-in secret
-@MainActor
 public protocol FileLinkResolutionReporting {
     func linkResolved(node: NodeEntity, receivedLink: String)
     func linkUnavailable(receivedLink: String)

@@ -6,4 +6,5 @@ public enum LinkUnavailableReason: Error, Sendable, Equatable {
     case copyrightSuspension
     case generic
     case expired
+    case removed
 }

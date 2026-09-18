@@ -2,7 +2,7 @@ import MEGADomain
 import Search
 
 package protocol FolderLinkSearchUseCaseProtocol: Sendable {
-    func rootFolderLink() -> HandleEntity
+    func rootFolderLink() -> NodeEntity?
 }
 
 package struct FolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
@@ -14,7 +14,7 @@ package struct FolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    package func rootFolderLink() -> HandleEntity {
-        folderLinkRepository.getRootNode()
+    package func rootFolderLink() -> NodeEntity? {
+        folderLinkRepository.node(for: folderLinkRepository.getRootNode())
     }
 }

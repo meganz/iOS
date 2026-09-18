@@ -719,7 +719,19 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)showFolderLinkView {
     NSString *link = MEGALinkManager.linkURL.mnz_MEGAURL;
-    UIViewController *folderlinkViewController = [self newFolderLinkViewControllerWithLink:link];
+
+    NSURL *secondaryLink = MEGALinkManager.secondaryLinkURL;
+    BOOL isEncryptedLink = secondaryLink.mnz_type == URLTypeEncryptedLink;
+    NSString *receivedLink = isEncryptedLink ? secondaryLink.absoluteString : link;
+
+    // MEGALinkManager.secondaryLinkURL is only useful in the folder link context when it is an encrypted link.
+    // It is already captured in `receivedLink` above, so this flow no longer needs it.
+    // Clear it here so it cannot leak into the next link opened.
+    if (isEncryptedLink) {
+        MEGALinkManager.secondaryLinkURL = nil;
+    }
+
+    UIViewController *folderlinkViewController = [self newFolderLinkViewControllerWithLink:link receivedLink:receivedLink];
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:folderlinkViewController];
 
     [self presentViewControllerWithAds:navigationController

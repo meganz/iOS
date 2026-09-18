@@ -3,11 +3,11 @@ import MEGADomain
 import Search
 
 final class MockFolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
-    private let root: HandleEntity
+    private let root: NodeEntity?
     
-    init(root: HandleEntity = .invalid) {
+    init(root: NodeEntity? = nil) {
         self.root = root
     }
     
-    func rootFolderLink() -> HandleEntity { root }
+    func rootFolderLink() -> NodeEntity? { root }
 }

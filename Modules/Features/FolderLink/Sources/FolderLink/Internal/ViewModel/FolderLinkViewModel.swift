@@ -14,12 +14,17 @@ package final class FolderLinkViewModel: ObservableObject {
         let pendingConnectionsRetryUseCase: any FolderLinkPendingConnectionsRetryUseCaseProtocol
         let networkUseCase: any NetworkMonitorUseCaseProtocol
         let isLinkRevampEnabled: Bool
+        let linkResolutionReporter: any FolderLinkResolutionReporting
+        /// The link user originally received, not `link` which be the decrypted form of password-protected link
+        let receivedLink: String
 
         init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
             folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol,
-            isLinkRevampEnabled: Bool
+            isLinkRevampEnabled: Bool,
+            linkResolutionReporter: some FolderLinkResolutionReporting,
+            receivedLink: String
         ) {
             let folderLinkFlowUseCase = FolderLinkFlowUseCase(
                 folderLinkLoginUseCase: FolderLinkLoginUseCase(),
@@ -34,7 +39,9 @@ package final class FolderLinkViewModel: ObservableObject {
                 folderLinkFlowUseCase: folderLinkFlowUseCase,
                 pendingConnectionsRetryUseCase: FolderLinkPendingConnectionsRetryUseCase(),
                 networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-                isLinkRevampEnabled: isLinkRevampEnabled
+                isLinkRevampEnabled: isLinkRevampEnabled,
+                linkResolutionReporter: linkResolutionReporter,
+                receivedLink: receivedLink
             )
         }
         
@@ -45,7 +52,9 @@ package final class FolderLinkViewModel: ObservableObject {
             folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
             pendingConnectionsRetryUseCase: some FolderLinkPendingConnectionsRetryUseCaseProtocol,
             networkUseCase: some NetworkMonitorUseCaseProtocol,
-            isLinkRevampEnabled: Bool
+            isLinkRevampEnabled: Bool,
+            linkResolutionReporter: some FolderLinkResolutionReporting,
+            receivedLink: String
         ) {
             self.link = link
             self.folderLinkLogoutPolicy = folderLinkLogoutPolicy
@@ -53,6 +62,8 @@ package final class FolderLinkViewModel: ObservableObject {
             self.pendingConnectionsRetryUseCase = pendingConnectionsRetryUseCase
             self.networkUseCase = networkUseCase
             self.isLinkRevampEnabled = isLinkRevampEnabled
+            self.linkResolutionReporter = linkResolutionReporter
+            self.receivedLink = receivedLink
         }
     }
     
@@ -112,9 +123,7 @@ package final class FolderLinkViewModel: ObservableObject {
     package func startLoadingFolderLink() async {
         folderLinkFlowStopped = false
         do throws(FolderLinkFlowErrorEntity) {
-            let handleEntity = try await folderLinkFlowUseCase.initialStart(with: dependency.link)
-            viewState = .results(handleEntity)
-            trackFolderLinkOpened()
+            show(try await folderLinkFlowUseCase.initialStart(with: dependency.link))
         } catch {
             handleFolderLinkFlowError(error)
         }
@@ -128,9 +137,7 @@ package final class FolderLinkViewModel: ObservableObject {
     package func confirmDecryptionKey(_ key: String) async {
         folderLinkFlowStopped = false
         do throws(FolderLinkFlowErrorEntity) {
-            let handleEntity = try await folderLinkFlowUseCase.confirmDecryptionKey(with: dependency.link, decryptionKey: key)
-            viewState = .results(handleEntity)
-            trackFolderLinkOpened()
+            show(try await folderLinkFlowUseCase.confirmDecryptionKey(with: dependency.link, decryptionKey: key))
         } catch {
             handleFolderLinkFlowError(error)
         }
@@ -148,6 +155,12 @@ package final class FolderLinkViewModel: ObservableObject {
         dependency.pendingConnectionsRetryUseCase.retryPendingConnections()
     }
     
+    private func show(_ rootNode: NodeEntity) {
+        viewState = .results(rootNode.handle)
+        trackFolderLinkOpened()
+        dependency.linkResolutionReporter.linkResolved(folderNode: rootNode, receivedLink: dependency.receivedLink)
+    }
+
     private func handleFolderLinkFlowError(_ error: FolderLinkFlowErrorEntity) {
         guard !folderLinkFlowStopped else { return }
         switch error {
@@ -157,6 +170,16 @@ package final class FolderLinkViewModel: ObservableObject {
             askingForDecryptionKey = true
         case let .linkUnavailable(reason):
             viewState = .error(reason)
+            guard isLinkGone(reason) else { return }
+            dependency.linkResolutionReporter.linkUnavailable(receivedLink: dependency.receivedLink)
+        }
+    }
+
+    /// True only when the link itself is gone for good. A generic failure may be transient, so the stored link is kept.
+    private func isLinkGone(_ reason: LinkUnavailableReason) -> Bool {
+        switch reason {
+        case .downETD, .userETDSuspension, .copyrightSuspension, .expired, .removed: true
+        case .generic: false
         }
     }
 }

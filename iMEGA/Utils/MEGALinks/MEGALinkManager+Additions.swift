@@ -454,8 +454,8 @@ extension MEGALinkManager {
 
 // MARK: - FolderLink
 extension MEGALinkManager {
-    @objc static func newFolderLinkViewController(link: String) -> UIViewController {
-        NewFolderLinkViewController(link: link)
+    @objc static func newFolderLinkViewController(link: String, receivedLink: String) -> UIViewController {
+        NewFolderLinkViewController(link: link, receivedLink: receivedLink)
     }
 
     static func buildFolderLink(_ link: String, with key: String) -> String {
