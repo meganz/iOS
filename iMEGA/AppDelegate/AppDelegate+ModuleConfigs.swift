@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
+import MEGARepo
 import Transfer
 
 extension AppDelegate {
@@ -12,7 +13,15 @@ extension AppDelegate {
             sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
-            nodeUseCase: makeNodeUseCase()
+            nodeUseCase: Self.makeNodeUseCase(),
+            makeOfflineFileOpenGuard: {
+                OfflineFileOpenGuard(
+                    isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled,
+                    networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                    nodeUseCase: AppDelegate.makeNodeUseCase(),
+                    thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+                )
+            }
         )
     }
     
@@ -41,7 +50,7 @@ extension AppDelegate {
           accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
     }
     
-    private func makeNodeUseCase() -> some NodeUseCaseProtocol {
+    private nonisolated static func makeNodeUseCase() -> some NodeUseCaseProtocol {
         NodeUseCase(
             nodeDataRepository: NodeDataRepository.newRepo,
             nodeValidationRepository: NodeValidationRepository.newRepo,

@@ -583,7 +583,9 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
         if photo.isTakenDown {
             router.showTakenDownNodeAlert()
         } else {
-            openPhotoBrowser(for: photo)
+            viewModel.libraryViewModel.openPhoto(photo) { [weak self] in
+                self?.openPhotoBrowser(for: photo)
+            }
         }
     }
 
