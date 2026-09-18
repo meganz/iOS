@@ -84,15 +84,37 @@ extension AppDelegate {
         }
     }
 
-    @objc func startTransferQuotaWarningMonitoring() {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningRevampPhaseTwo) else { return }
-        BatchDownloadFeatureFlag.isEnabled = true
-        
+    @objc func startTransferQuotaWarningMonitoring(hasSession: Bool) {
         Task {
+            guard await isQuotaWarningsRevampPhaseTwoEnabled(hasSession: hasSession) else {
+                MEGALog.log(
+                    level: .info,
+                    message: "[AppDelegate] startTransferQuotaWarningMonitoring skipped due revamp flag disabled "
+                )
+                return
+            }
+            BatchDownloadFeatureFlag.isEnabled = true
+
             await TransferQuotaWarningMonitor(
                 presentDialog: { QuotaWarningsRouter().presentTransferDialog(severity: $0) }
             ).startMonitoring()
         }
+    }
+
+    /// The flag is also on for anonymous users. Without a session nothing calls `getMiscFlags`
+    /// and fetch nodes never runs, so the remote flag ready source stays parked. Fetch the misc
+    /// flags here and read the value directly.
+    private func isQuotaWarningsRevampPhaseTwoEnabled(hasSession: Bool) async -> Bool {
+        guard hasSession else {
+            try? await AccountUseCase(repository: AccountRepository.newRepo).getMiscFlags()
+            return DIContainer.remoteFeatureFlagUseCase
+                .isFeatureFlagEnabled(for: .iosQuotaWarningsRevampPhaseTwo)
+        }
+
+        // No timeout on purpose: the monitor must still start when fetch nodes is late,
+        // for example a launch that begins offline.
+        return await DIContainer.remoteFeatureFlagUseCase
+            .isFeatureFlagEnabledAfterReady(for: .iosQuotaWarningsRevampPhaseTwo)
     }
 
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {

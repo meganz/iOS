@@ -45,7 +45,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     private(set) var transferType: CancellableTransferType
     private(set) var isFolderLink: Bool
     private let preresolvedNodes: [HandleEntity: MEGANode]
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var wrapper: (any CancellableTransferControllerWrapping)?
     private weak var presentedAlert: UIAlertController?
     private var isFinishing = false
@@ -58,13 +58,13 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
          transferType: CancellableTransferType,
          isFolderLink: Bool = false,
          preresolvedNodes: [HandleEntity: MEGANode] = [:],
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.presenter = presenter
         self.transfers = transfers
         self.transferType = transferType
         self.isFolderLink = isFolderLink
         self.preresolvedNodes = preresolvedNodes
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     private func makeDownloadFileRepository(sdk: MEGASdk) -> DownloadFileRepository {
@@ -91,7 +91,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     }
     
     private func makeWrapper() -> any CancellableTransferControllerWrapping {
-        let isRevampEnabled: Bool = featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningRevampPhaseTwo)
+        let isRevampEnabled: Bool = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevampPhaseTwo)
         MEGALog.log(
             level: .info,
             message: """
