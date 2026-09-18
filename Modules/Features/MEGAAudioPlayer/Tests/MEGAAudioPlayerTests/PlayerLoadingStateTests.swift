@@ -108,7 +108,7 @@ struct PlayerLoadingStateTests {
     func errorIsPausedRegardlessOfReadiness(isReady: Bool) {
         #expect(
             PlayerLoadingState(
-                status: .error("boom"),
+                status: .error(.itemFailed(reason: "boom")),
                 hasStartedPlayback: false,
                 isReady: isReady
             ) == .paused
