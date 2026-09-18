@@ -92,8 +92,14 @@ package final class FolderLinkResultsViewModel: ObservableObject {
         dependency.viewModeUseCase.shouldEnableMediaDiscoveryMode(for: dependency.nodeHandle)
     }
     
+    /// Whether the folder holds nothing at all, which is what the empty state and the navigation bar it
+    /// comes with are driven by.
+    package var isFolderEmpty: Bool {
+        !dependency.editModeUseCase.canEnterEditModeWhenOpeningFolder(dependency.nodeHandle)
+    }
+    
     var shouldEnableMoreOptionsMenu: Bool {
-        dependency.editModeUseCase.canEnterEditModeWhenOpeningFolder(dependency.nodeHandle)
+        !isFolderEmpty
     }
     
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {

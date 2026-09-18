@@ -80,14 +80,16 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                 }
                 
                 // Trailing items lay out in the order they are declared, so search sits left of the menu.
-                if showsRevampedChrome {
+                if showsSearchButton {
                     ToolbarItem(placement: .topBarTrailing) {
                         searchButton
                     }
                 }
 
-                ToolbarItem(placement: .topBarTrailing) {
-                    moreOptionsButton
+                if showsMoreOptionsButton {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        moreOptionsButton
+                    }
                 }
 
                 // Moves next to the back/close button once search and more options fill the trailing side.
@@ -131,10 +133,21 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         dependency.isLinkRevampEnabled && !viewModel.editMode.isEditing
     }
 
+    /// An empty folder has nothing to search through and no action to run on it, so the revamped chrome
+    /// drops every button that would offer either rather than showing them disabled. The pre-revamp chrome
+    /// keeps its menu.
+    private var showsSearchButton: Bool {
+        showsRevampedChrome && !viewModel.isFolderEmpty
+    }
+
+    private var showsMoreOptionsButton: Bool {
+        !showsRevampedChrome || !viewModel.isFolderEmpty
+    }
+
     /// The revamped chrome shows both search and more options on the trailing side, which is what pushes
     /// the transfer indicator over to the leading side.
     private var transferIndicatorTrailingItemCount: Int {
-        showsRevampedChrome ? 2 : 1
+        (showsSearchButton ? 1 : 0) + (showsMoreOptionsButton ? 1 : 0)
     }
 
     private var isSearchExpanded: Bool {
@@ -156,7 +169,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
 
     @ViewBuilder
     private var anchoredButtons: some View {
-        if showsRevampedChrome, !isSearchExpanded {
+        if showsRevampedChrome, !viewModel.isFolderEmpty, !isSearchExpanded {
             FolderLinkAnchoredButtons(
                 selection: $viewModel.bottomBarAction,
                 isDisabled: viewModel.bottomBarDisabled || !networkConnected

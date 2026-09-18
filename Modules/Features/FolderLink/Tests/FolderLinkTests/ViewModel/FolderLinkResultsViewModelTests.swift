@@ -402,4 +402,23 @@ final class FolderLinkResultsViewModelTests {
             XCTAssertEqual(sut.searchText, "some text")
         }
     }
+
+    @MainActor
+    final class EmptyFolderTests: XCTestCase {
+        func testWhenFolderHasChildrenShouldNotBeEmpty() {
+            // Given
+            let sut = makeSUT(editModeUseCase: MockFolderLinkEditModeUseCase(canEnter: true))
+
+            // Then
+            XCTAssertFalse(sut.isFolderEmpty)
+        }
+
+        func testWhenFolderHasNoChildrenShouldBeEmpty() {
+            // Given
+            let sut = makeSUT(editModeUseCase: MockFolderLinkEditModeUseCase(canEnter: false))
+
+            // Then
+            XCTAssertTrue(sut.isFolderEmpty)
+        }
+    }
 }
