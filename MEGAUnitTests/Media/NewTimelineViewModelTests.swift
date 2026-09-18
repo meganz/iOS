@@ -263,8 +263,7 @@ struct NewTimelineViewModelTests {
             await recorder.reset()
 
             // Pre-hydrate slot 0 so the next visible window overlaps an already-real slot.
-            let library = sut.photoLibraryContentViewModel.library
-            sut.photoLibraryContentViewModel.library = library.replacingPhotos(from: 0, with: [realSlot0])
+            sut.commitHydratedRun(from: 0, with: [realSlot0])
 
             // Window 0..<2 spans the real slot 0 and the placeholder slot 1; only slot 1 should be fetched.
             await sut.hydrateVisibleWindow(0..<2)
@@ -294,8 +293,7 @@ struct NewTimelineViewModelTests {
 
             // Pre-hydrate the LAST slot so the gap above it has a real lower neighbour and no real
             // upper neighbour → backward paging.
-            let library = sut.photoLibraryContentViewModel.library
-            sut.photoLibraryContentViewModel.library = library.replacingPhotos(from: 2, with: [realSlot2])
+            sut.commitHydratedRun(from: 2, with: [realSlot2])
 
             await sut.hydrateVisibleWindow(1..<3) // gap at slot 1, real at slot 2
 
@@ -409,6 +407,39 @@ struct NewTimelineViewModelTests {
             }
         }
 
+        /// Runs a scroll hydration from inside a mock fetch, once — so its commit lands while a
+        /// reactive pass is suspended on its own.
+        @MainActor
+        private final class ScrollHydrationTrigger {
+            var sut: NewTimelineViewModel?
+            var range: Range<Int> = 0..<0
+            private var isArmed = false
+
+            func arm() { isArmed = true }
+
+            func fireOnce() async {
+                guard isArmed else { return }
+                isArmed = false
+                await sut?.hydrateVisibleWindow(range)
+            }
+        }
+
+        /// Commits a node-metadata patch from inside a mock fetch, exactly once — so a test can land
+        /// one while a reactive pass is suspended on its hydration.
+        @MainActor
+        private final class MetadataPatchTrigger {
+            var sut: NewTimelineViewModel?
+            private var isArmed = false
+
+            func arm() { isArmed = true }
+
+            func fireOnce() async {
+                guard isArmed else { return }
+                isArmed = false
+                await sut?.monitorNodeMetadataUpdates()
+            }
+        }
+
         @Test("Loading the saved filter re-keys the section monitor, so it can't keep counting the default filter's photo set")
         func loadingSavedFiltersRekeysTheSectionMonitor() async {
             // The View starts `monitorTimelineSections()` keyed on `timelineQueryId`, and that monitor
@@ -489,8 +520,7 @@ struct NewTimelineViewModelTests {
                     ]),
                     monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 2)])))
             await Self.buildColdSkeleton(sut) // a pure 4-slot skeleton
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true)])
+            sut.commitHydratedRun(from: 0, with: [NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true)])
 
             // Slots 2, 3 are an isolated cold run (both neighbours are placeholders) → offset fetch.
             await sut.hydrateVisibleWindow(2..<4)
@@ -600,8 +630,7 @@ struct NewTimelineViewModelTests {
                     ])))
             await Self.buildColdSkeleton(sut)
             // Pre-hydrate the day2 slot (index 1, local offset 0 within day2).
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 1, with: [NodeEntity(name: "d2.jpg", handle: 20, hasThumbnail: true)])
+            sut.commitHydratedRun(from: 1, with: [NodeEntity(name: "d2.jpg", handle: 20, hasThumbnail: true)])
 
             await sut.monitorTimelineSections() // day1 grows 1 → 2
 
@@ -621,11 +650,10 @@ struct NewTimelineViewModelTests {
                         Self.sections(day1: 1, day2: 0)  // its count changes
                     ])))
             await Self.buildColdSkeleton(sut)
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [
-                    NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
-                    NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
-                ])
+            sut.commitHydratedRun(from: 0, with: [
+                NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+            ])
 
             await sut.monitorTimelineSections() // day1's count changed → the bucket can't be trusted, drop it whole
 
@@ -657,12 +685,11 @@ struct NewTimelineViewModelTests {
                     ])))
             await Self.buildColdSkeleton(sut)
             // Fully hydrate the initial 3 slots: day1 [10, 11], day2 [12].
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [
-                    NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
-                    NodeEntity(name: "p1.jpg", handle: 11, hasThumbnail: true),
-                    NodeEntity(name: "q0.jpg", handle: 12, hasThumbnail: true)
-                ])
+            sut.commitHydratedRun(from: 0, with: [
+                NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
+                NodeEntity(name: "p1.jpg", handle: 11, hasThumbnail: true),
+                NodeEntity(name: "q0.jpg", handle: 12, hasThumbnail: true)
+            ])
 
             await sut.monitorTimelineSections()   // day1 grew at the front → dropped to placeholders
             await sut.hydrateVisibleWindow(0..<4) // authoritative re-fill of the dropped day1
@@ -688,12 +715,11 @@ struct NewTimelineViewModelTests {
                         Self.sections(day1: 3, day2: 1) // day1 grows at the front
                     ])))
             await Self.buildColdSkeleton(sut)
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [
-                    NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
-                    NodeEntity(name: "p1.jpg", handle: 11, hasThumbnail: true),
-                    NodeEntity(name: "q0.jpg", handle: 12, hasThumbnail: true)
-                ])
+            sut.commitHydratedRun(from: 0, with: [
+                NodeEntity(name: "p0.jpg", handle: 10, hasThumbnail: true),
+                NodeEntity(name: "p1.jpg", handle: 11, hasThumbnail: true),
+                NodeEntity(name: "q0.jpg", handle: 12, hasThumbnail: true)
+            ])
             // The user is viewing the top; record that as the last visible range (all real → no-op fetch).
             await sut.hydrateVisibleWindow(0..<3)
 
@@ -757,8 +783,7 @@ struct NewTimelineViewModelTests {
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
                     monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)])))
             await Self.buildColdSkeleton(sut)
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: false)])
+            sut.commitHydratedRun(from: 0, with: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: false)])
 
             await sut.monitorNodeMetadataUpdates()
 
@@ -778,8 +803,7 @@ struct NewTimelineViewModelTests {
                     monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)])))
             await Self.buildColdSkeleton(sut)
             let hydrated = NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: false)
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [hydrated])
+            sut.commitHydratedRun(from: 0, with: [hydrated])
 
             await sut.monitorNodeMetadataUpdates()
 
@@ -800,14 +824,261 @@ struct NewTimelineViewModelTests {
                     monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)]),
                     excludeSensitivesResult: true))
             await Self.buildColdSkeleton(sut)
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [
-                    NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
+            sut.commitHydratedRun(from: 0, with: [
+                NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
 
             await sut.monitorNodeMetadataUpdates()
 
             // Same render fields (hasThumbnail true both sides) → no patch; sensitivity flip ignored here.
             #expect(sut.photoLibraryContentViewModel.library.allPhotos[0].isMarkedSensitive == false)
+        }
+
+        /// The reconcile in isolation: two libraries over the same layout, each with its own index.
+        @MainActor
+        @Suite("Concurrent metadata reconcile")
+        struct MetadataReconcile {
+            /// Two 2-slot day buckets — the same shape both sides.
+            private static let sections: [MediaDateSectionEntity] = {
+                let day1 = Date(timeIntervalSince1970: 1_660_780_800) // 2022-08-18T00:00:00Z
+                let day2 = Date(timeIntervalSince1970: 1_658_102_400) // 2022-07-18T00:00:00Z
+                return [
+                    .init(groupId: "2022-08-18", startDate: day1, endDate: day1, count: 2),
+                    .init(groupId: "2022-07-18", startDate: day2, endDate: day2, count: 2)
+                ]
+            }()
+
+            /// A library with `nodes` spliced in from slot 0, plus the index addressing them.
+            private static func side(
+                _ nodes: [NodeEntity]
+            ) -> (library: PhotoLibrary, coordinates: [HandleEntity: TimelineProjection.BucketCoordinate]) {
+                let skeleton = TimelineProjection(
+                    library: PhotoLibrary.skeleton(from: sections),
+                    sections: sections, hydratedCoordinates: [:])
+                var coordinates: [HandleEntity: TimelineProjection.BucketCoordinate] = [:]
+                for (offset, node) in nodes.enumerated() {
+                    guard let anchor = skeleton.sectionAnchor(forFlatIndex: offset) else { continue }
+                    coordinates[node.handle] = .init(
+                        groupId: anchor.section.groupId, localOffset: anchor.localOffset)
+                }
+                return (skeleton.library.replacingPhotos(from: 0, with: nodes), coordinates)
+            }
+
+            private static func reconciling(
+                _ mine: [NodeEntity],
+                with theirs: [NodeEntity],
+                carryingUnseenNodes: Bool = true,
+                showsHiddenNodes: Bool = false
+            ) -> NewTimelineViewModel.IndexedLibrary {
+                let assembled = side(mine)
+                let published = side(theirs)
+                return makeSUT().reconciling(
+                    .init(library: assembled.library, coordinates: assembled.coordinates),
+                    describedBy: sections,
+                    with: TimelineProjection(
+                        library: published.library, sections: sections,
+                        hydratedCoordinates: published.coordinates),
+                    carryingUnseenNodes: carryingUnseenNodes,
+                    showsHiddenNodes: showsHiddenNodes)
+            }
+
+            /// Same buckets on both sides, so the node's address still means what it meant.
+            @Test("A node only the other side has fetched is carried in, index and all")
+            func carriesInNodesOnlyTheOtherSideFetched() {
+                let result = Self.reconciling([], with: [NodeEntity(handle: 10, hasThumbnail: true)])
+
+                #expect(result.library.allPhotos[0].handle == 10)
+                #expect(result.coordinates[10] == .init(groupId: "2022-08-18", localOffset: 0))
+            }
+
+            /// Across a query change the two are different sequences, so a slot the other side
+            /// filled says nothing about what belongs here. Shared-handle metadata still moves.
+            @Test("A node only the other side has fetched is not adopted across a query change")
+            func doesNotAdoptUnseenNodesAcrossAQueryChange() {
+                let result = Self.reconciling(
+                    [NodeEntity(handle: 11, hasThumbnail: false)],
+                    with: [
+                        NodeEntity(handle: 10, hasThumbnail: true),
+                        NodeEntity(handle: 11, hasThumbnail: true)
+                    ],
+                    carryingUnseenNodes: false)
+
+                #expect(result.library.allPhotos[0].handle == 11) // this query's own slot 0, untouched
+                #expect(result.library.allPhotos[0].hasThumbnail) // same node, so its thumbnail moves
+                #expect(result.coordinates.keys.sorted() == [11]) // 10 was never taken in
+                #expect(result.library.allPhotos[1].isTimelinePlaceholder)
+            }
+
+            /// A resized bucket makes a local offset meaningless, so nothing addressed in it lands.
+            @Test("A node in a bucket that resized is not carried in")
+            func doesNotCarryIntoAResizedBucket() {
+                let published = Self.side([NodeEntity(handle: 10, hasThumbnail: true)])
+                // The same buckets, but the first one grew by a slot under the other side's feet.
+                let grown: [MediaDateSectionEntity] = [
+                    .init(groupId: "2022-08-18", startDate: Date(timeIntervalSince1970: 1_660_780_800),
+                          endDate: Date(timeIntervalSince1970: 1_660_780_800), count: 3),
+                    Self.sections[1]
+                ]
+
+                let result = makeSUT().reconciling(
+                    .init(library: PhotoLibrary.skeleton(from: grown), coordinates: [:]),
+                    describedBy: grown,
+                    with: TimelineProjection(
+                        library: published.library, sections: Self.sections,
+                        hydratedCoordinates: published.coordinates),
+                    carryingUnseenNodes: true,
+                    showsHiddenNodes: false)
+
+                #expect(result.library.allPhotos.allSatisfy { $0.isTimelinePlaceholder })
+                #expect(result.coordinates.isEmpty)
+            }
+
+            @Test("A node the other side has fresher is adopted, keeping its slot")
+            func adoptsTheFresherNodeInPlace() {
+                let photos = Self.reconciling(
+                    [NodeEntity(handle: 10, isFavourite: false), NodeEntity(handle: 11, isFavourite: false)],
+                    with: [NodeEntity(handle: 10, isFavourite: true), NodeEntity(handle: 11, isFavourite: false)]
+                ).library.allPhotos
+
+                #expect(photos[0].handle == 10) // same slot
+                #expect(photos[0].isFavourite)
+                #expect(photos[1].isFavourite == false)
+                #expect(photos.count == 4) // shape preserved
+            }
+
+            /// The other side's index doesn't address it, so there is nothing to reconcile against.
+            @Test("A node the other side has not fetched is left alone")
+            func keepsNodesAbsentFromTheOtherSide() {
+                let photos = Self.reconciling(
+                    [NodeEntity(handle: 10, hasThumbnail: true)], with: []).library.allPhotos
+
+                #expect(photos[0].handle == 10)
+                #expect(photos[0].hasThumbnail)
+            }
+
+            @Test("Readiness never regresses — a thumbnail in hand is not traded for one that is missing")
+            func neverRegressesReadiness() {
+                let photos = Self.reconciling(
+                    [NodeEntity(handle: 10, hasThumbnail: true, hasPreview: true)],
+                    with: [NodeEntity(handle: 10, hasThumbnail: false, hasPreview: false)]
+                ).library.allPhotos
+
+                #expect(photos[0].hasThumbnail)
+                #expect(photos[0].hasPreview)
+            }
+
+            @Test("Nothing to move leaves the tree untouched")
+            func unchangedWhenNothingDiffers() {
+                let mine = [NodeEntity(handle: 10, hasThumbnail: true)]
+                let photos = Self.reconciling(mine, with: mine).library.allPhotos
+
+                #expect(photos[0] == mine[0])
+            }
+
+            /// When hidden items are excluded, hiding a node is a membership change for the section
+            /// monitor, not a re-render.
+            @Test("A sensitivity flip moves only when hidden items are shown", arguments: [false, true])
+            func sensitivityMovesOnlyWhenHiddenShown(showsHiddenNodes: Bool) {
+                let photos = Self.reconciling(
+                    [NodeEntity(handle: 10, isMarkedSensitive: false)],
+                    with: [NodeEntity(handle: 10, isMarkedSensitive: true)],
+                    showsHiddenNodes: showsHiddenNodes
+                ).library.allPhotos
+
+                #expect(photos[0].isMarkedSensitive == showsHiddenNodes)
+            }
+        }
+
+        /// Both the pass and the scroll bump `libraryRevision`, so a hydration settling mid-pass is
+        /// also a commit to fold in. Dropping it would revert the node to a placeholder, and the
+        /// visible range is de-duplicated — parked where they are, the user never refetches it.
+        @Test("A scroll hydration that commits mid-pass survives the reactive commit")
+        func reactivePassKeepsAScrollHydrationThatLandedDuringIt() async {
+            let scroll = ScrollHydrationTrigger()
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    // What the scroll's cursor run fetches: day1's second slot and day2's only slot.
+                    mediaPageResult: .success([
+                        NodeEntity(name: "d1b.jpg", handle: 11, hasThumbnail: true),
+                        NodeEntity(name: "d2.jpg", handle: 20, hasThumbnail: true)
+                    ]),
+                    // The reactive pass's own window finds nothing, keeping the two apart.
+                    mediaWindowResult: .success([]),
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 3, day2: 1) // day1 reshapes, day2 is untouched
+                    ]),
+                    onFetch: { await scroll.fireOnce() }))
+            scroll.sut = sut
+            scroll.range = 1..<3 // the gap below the planted anchor, in the layout on screen
+            await Self.buildColdSkeleton(sut)
+            sut.commitHydratedRun(from: 0, with: [NodeEntity(name: "d1a.jpg", handle: 10, hasThumbnail: true)])
+            scroll.arm()
+
+            await sut.monitorTimelineSections()
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos.count == 4)
+            // day1 resized, so everything addressed inside it goes back to placeholders — 10 and 11.
+            #expect(photos[0...2].allSatisfy { $0.isTimelinePlaceholder })
+            // day2 did not, so the node the scroll landed there is carried to its new base.
+            #expect(photos[3].handle == 20)
+        }
+
+        /// Planting through `commitHydratedRun` proves the index's consumers work; only a real fetch
+        /// proves its producer does. If `applyHydrationResults` stopped recording where it put
+        /// things, every planting test would still pass and the reshape below would lose the node.
+        @Test("A node hydrated by a real fetch is indexed, so a later reshape can carry it")
+        func realHydrationRecordsWhereItPutThings() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    mediaWindowResult: .success([NodeEntity(name: "d2.jpg", handle: 20, hasThumbnail: true)]),
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 1, day2: 1), // 2 slots
+                        Self.sections(day1: 2, day2: 1)  // day1 grows; day2 is untouched
+                    ])))
+            await Self.buildColdSkeleton(sut)
+
+            // Slot 1 is day2's only slot and has no real neighbour → an offset window, spliced and
+            // indexed by the production path alone.
+            await sut.hydrateVisibleWindow(1..<2)
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos[1].handle == 20)
+
+            await sut.monitorTimelineSections() // day1: 1 → 2
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos.count == 3)
+            #expect(photos[0...1].allSatisfy { $0.isTimelinePlaceholder }) // day1's two slots
+            #expect(photos[2].handle == 20) // carried: only the index knew it was day2's offset 0
+        }
+
+        /// The pass assembles from the library as it stood when it started, so a patch landing
+        /// during its awaits is not in it — publishing it unchanged would revert the node.
+        @Test("A metadata patch landing mid-pass survives the reactive commit instead of being reverted")
+        func reactivePassKeepsAMetadataPatchThatLandedDuringIt() async {
+            let patch = MetadataPatchTrigger()
+            let sut = makeSUT(
+                nodeUseCase: MockNodeUseCase(
+                    nodeUpdates: SingleItemAsyncSequence(
+                        item: [NodeEntity(name: "d1.jpg", handle: 10, hasThumbnail: true)])
+                        .eraseToAnyAsyncSequence()),
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 2, day2: 2) // day2 reshapes; day1 carries node 10 across
+                    ]),
+                    onFetch: { await patch.fireOnce() }))
+            patch.sut = sut
+            await Self.buildColdSkeleton(sut)
+            // Hydrated without a thumbnail — how a just-uploaded node is first fetched.
+            sut.commitHydratedRun(
+                from: 0, with: [NodeEntity(name: "d1.jpg", handle: 10, hasThumbnail: false)])
+            patch.arm() // land the patch inside the reactive pass's own hydration fetch
+
+            await sut.monitorTimelineSections()
+
+            let node = sut.photoLibraryContentViewModel.library.allPhotos[0]
+            #expect(node.handle == 10)
+            #expect(node.hasThumbnail) // reconciled in, not reverted to the pass's pre-patch snapshot
         }
 
         @Test("A sensitivity-only update IS patched in place when hidden items are shown (re-render blurred)")
@@ -823,9 +1094,8 @@ struct NewTimelineViewModelTests {
                     monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)]),
                     excludeSensitivesResult: false))
             await Self.buildColdSkeleton(sut)
-            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
-                .replacingPhotos(from: 0, with: [
-                    NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
+            sut.commitHydratedRun(from: 0, with: [
+                NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
 
             await sut.monitorNodeMetadataUpdates()
 

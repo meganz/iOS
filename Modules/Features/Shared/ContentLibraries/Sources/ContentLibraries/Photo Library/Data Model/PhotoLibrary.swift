@@ -9,7 +9,10 @@ public struct PhotoLibrary: Sendable {
         photoByYearList.flatMap { $0.contentList }
     }
     
-    var photosByDayList: [PhotoByDay] {
+    /// The day buckets in flat display order. Public because the timeline addresses a slot by the
+    /// bucket holding it rather than by an absolute position, and reads the tree one bucket at a
+    /// time instead of flattening it.
+    public var photosByDayList: [PhotoByDay] {
         photosByMonthList.flatMap { $0.contentList }
     }
     

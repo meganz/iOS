@@ -55,6 +55,13 @@ final class NewTimelineViewModel: ObservableObject {
 
     private let initialHydrationWindowSize = 60
 
+    /// Where every fetched node sits, keyed by handle — carried from commit to commit rather than
+    /// rebuilt, which would mean walking every slot on the main actor once per settled scroll.
+    /// Bucket coordinates survive a reshape where flat indices don't, so a rebuild drops only the
+    /// buckets it disturbed. Moves with the library and the sections in `commitProjection`: one
+    /// without the others would resolve the new library in the old layout's coordinates.
+    private var hydratedCoordinates: [HandleEntity: TimelineProjection.BucketCoordinate] = [:]
+
     private var cachedProjection: (revision: Int, value: TimelineProjection)?
     /// Bumped after anything that changes either half of the projection. A cache entry carries the
     /// revision it was built at, so a projection built by a `@Published` observer *during* the
@@ -203,25 +210,23 @@ final class NewTimelineViewModel: ObservableObject {
 
     /// Publish a new projection: the library the grid renders and, when the shape moved, the
     /// sections that describe it. **Runs to completion with no suspension point**, which is what
-    /// makes the four things it switches atomic:
+    /// switches its four pieces atomically: `sectionVersions`, `dateSections`,
+    /// `hydratedCoordinates` and the library.
     ///
-    /// 1. `sectionVersions`, so a fetch planned against the outgoing layout is rejected;
-    /// 2. `dateSections`, the coordinate authority every flat-index mapping reads;
-    /// 3. the library itself.
-    ///
-    /// Bumping the versions *ahead* of this would leave a window in which a selection cycle plans
-    /// against the projection on screen (the old one) while capturing the new version, so its
-    /// result would pass ``versionsStillValid(_:against:)`` having been planned in stale
-    /// coordinates. Moving a slot's coordinates ahead of the publish is the mirror image: the
-    /// promotion pass would read a handle from a position the user is not looking at.
+    /// Moving any of them ahead of the publish opens a window where a selection cycle plans against
+    /// the projection still on screen but captures the new version, so its result passes
+    /// ``versionsStillValid(_:against:)`` having been planned in stale coordinates.
     ///
     /// - Parameter sections: the new layout, or `nil` for a commit that cannot change the shape
-    ///   (metadata patch, sort application, first load), where every delta is zero.
-    /// - Parameter query: the query the content being committed was fetched under, for the commits
-    ///   that fetched it; `nil` leaves the published one alone.
+    ///   (metadata patch, sort application, first load).
+    /// - Parameter coordinates: how this commit moves the index, or `nil` when it cannot — a
+    ///   metadata patch leaves every handle in the slot it was in.
+    /// - Parameter query: the query the committed content was fetched under; `nil` leaves the
+    ///   published one alone.
     private func commitProjection(
         _ library: PhotoLibrary,
         sections: [MediaDateSectionEntity]?,
+        coordinates: CoordinateUpdate? = nil,
         query: MediaTimelineQuery? = nil
     ) {
         if let sections {
@@ -229,12 +234,21 @@ final class NewTimelineViewModel: ObservableObject {
             bumpVersions(for: deltas)
             dateSections = sections
         }
+        switch coordinates {
+        case .adding(let added):
+            // Dropping the cache first leaves this the index's only holder, so the merge runs in
+            // place rather than copying everything fetched so far.
+            cachedProjection = nil
+            hydratedCoordinates.merge(added) { current, _ in current }
+        case .replacing(let replacement):
+            hydratedCoordinates = replacement
+        case nil:
+            break
+        }
         libraryRevision &+= 1
-        // Published in the same hop as the content it describes, and only by the commits that
-        // fetched that content. A metadata patch comes through `commitLibrary` with none: its
-        // library is the one already on record, and stamping it with a query the user has since
-        // chosen — whose sections have not arrived yet — would claim content was fetched under a
-        // query it never was.
+        // Only the commits that fetched the content carry one. A metadata patch comes through
+        // `commitLibrary` with none: stamping it with a query the user has since chosen — whose
+        // sections have not arrived — would claim content was fetched under a query it never was.
         if let query { photoLibraryContentViewModel.mediaTimelineQuery = query }
         photoLibraryContentViewModel.library = library
         projectionRevision &+= 1
@@ -250,17 +264,17 @@ final class NewTimelineViewModel: ObservableObject {
             sortOrder: mediaTimelineSortOrder)
     }
 
-    /// The projection the user is currently looking at.
-    ///
-    /// Cached because building one flattens the library, and selection asks a position question per
-    /// cell during a drag. Invalidated by every change to either half of the pair, which is
-    /// ``commitProjection(_:sections:)`` and the two places that refresh sections alone.
+    /// The projection the user is currently looking at. Cached because building one indexes the
+    /// buckets and selection asks a position question per cell during a drag; invalidated by every
+    /// change to any part of it.
     private var publishedProjection: TimelineProjection {
         if let cachedProjection, cachedProjection.revision == projectionRevision {
             return cachedProjection.value
         }
         let projection = TimelineProjection(
-            library: photoLibraryContentViewModel.library, sections: dateSections)
+            library: photoLibraryContentViewModel.library,
+            sections: dateSections,
+            hydratedCoordinates: hydratedCoordinates)
         cachedProjection = (projectionRevision, projection)
         return projection
     }
@@ -327,27 +341,35 @@ final class NewTimelineViewModel: ObservableObject {
                 guard visible.isEmpty || visible.lowerBound < total else { return nil }
                 return visible.clamped(to: 0..<total)
             } ?? topWindow
-            let prospective = TimelineProjection(library: rebuilt, sections: sections)
+            let prospective = TimelineProjection(
+                library: rebuilt.library, sections: sections, hydratedCoordinates: rebuilt.coordinates)
             var assembled = rebuilt
             if let range, let hydrated = await hydratedVisibleWindow(in: prospective, range: range) {
-                assembled = hydrated
+                // This pass publishes the whole index, so fold in the window's new addresses.
+                assembled = IndexedLibrary(
+                    library: hydrated.library,
+                    coordinates: rebuilt.coordinates.merging(hydrated.addedCoordinates) { current, _ in
+                        current
+                    })
             }
-            // If a metadata patch committed during the `await`s above, `assembled` was built from a
-            // pre-patch snapshot and would revert it.
+            // A commit during the `await`s above — a metadata patch, or a scroll hydration that
+            // settled on its own window — is absent from `assembled`; publishing as-is would undo it.
             if libraryRevision != revisionBefore {
                 let showsHiddenNodes = await !mediaTimelineUseCase.excludeSensitives()
-                assembled = assembled.mergingMetadata(from: photoLibraryContentViewModel.library) { mine, other in
-                    guard metadataDiffers(mine, other, showsHiddenNodes: showsHiddenNodes) else { return false }
-                    if mine.hasThumbnail && !other.hasThumbnail { return false }
-                    if mine.hasPreview && !other.hasPreview { return false }
-                    return true
-                }
+                // Adopting a node only the other side holds claims it belongs to the set this
+                // pass publishes — true only if both sides asked for the same query.
+                assembled = reconciling(
+                    assembled, describedBy: sections, with: publishedProjection,
+                    carryingUnseenNodes: photoLibraryContentViewModel.mediaTimelineQuery == query,
+                    showsHiddenNodes: showsHiddenNodes)
             }
             // The awaits above outlast a query change: replacing the task cancels it, but a pass
             // already past them would still publish sections counted under the query the user has
             // left — and now stamp them with it.
             guard !Task.isCancelled, timelineQueryId == queryId else { return }
-            commitProjection(assembled, sections: sections, query: query)
+            commitProjection(
+                assembled.library, sections: sections,
+                coordinates: .replacing(assembled.coordinates), query: query)
         }
     }
     
@@ -366,8 +388,8 @@ final class NewTimelineViewModel: ObservableObject {
     /// place). Placeholders never match — their handles are synthetic. A no-op unless something
     /// actually changed, so an unchanged burst doesn't churn the tree.
     ///
-    /// The O(total) flatten + scan + tree rebuild runs off the main actor so a Camera-Upload
-    /// burst on a very large library doesn't do heavy work on the main thread.
+    /// Driven off the index, so a burst costs a lookup per updated node rather than a walk of the
+    /// library. The rebuild that follows runs off the main actor.
     private func patchVisibleMetadata(with updatedNodes: [NodeEntity]) async {
         guard let mediaTimelineUseCase, updatedNodes.isNotEmpty else { return }
         // A node's own sensitivity flip only re-renders in place when hidden items are shown
@@ -379,7 +401,7 @@ final class NewTimelineViewModel: ObservableObject {
 
         let maxOffActorAttempts = 3
         for _ in 0..<maxOffActorAttempts {
-            let snapshot = photoLibraryContentViewModel.library
+            let snapshot = publishedProjection
             let revisionBefore = libraryRevision
             let patched = await patchingMetadataOffActor(
                 snapshot, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes)
@@ -398,39 +420,40 @@ final class NewTimelineViewModel: ObservableObject {
         // Lost the race on every off-actor attempt (needs repeated concurrent commits — extremely
         // rare); apply on the actor so it can't be raced again.
         if let rebased = applyingMetadata(
-            to: photoLibraryContentViewModel.library, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes) {
+            to: publishedProjection, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes) {
             commitLibrary(rebased)
         }
     }
 
     /// Off-actor wrapper so the metadata rebuild runs on the cooperative pool, not the main actor.
     private nonisolated func patchingMetadataOffActor(
-        _ library: PhotoLibrary,
+        _ projection: TimelineProjection,
         with updatesByHandle: [HandleEntity: NodeEntity],
         showsHiddenNodes: Bool
     ) async -> PhotoLibrary? {
-        applyingMetadata(to: library, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes)
+        applyingMetadata(to: projection, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes)
     }
 
-    /// Pure metadata patch: swap in each updated node whose handle matches a real (non-placeholder)
-    /// slot and whose render-only metadata actually changed, keeping its flat position. Returns `nil`
-    /// when nothing changed, so the caller commits only real work.
+    /// Pure metadata patch: swap in each updated node the projection already places whose
+    /// render-only metadata changed, keeping its flat position; `nil` when nothing changed. Walks
+    /// the updates, not the library, and moves nothing, so the index still describes the result.
     private nonisolated func applyingMetadata(
-        to library: PhotoLibrary,
+        to projection: TimelineProjection,
         with updatesByHandle: [HandleEntity: NodeEntity],
         showsHiddenNodes: Bool
     ) -> PhotoLibrary? {
         var replacements: [Int: NodeEntity] = [:]
-        for (index, node) in library.allPhotos.enumerated() where !node.isTimelinePlaceholder {
+        for (handle, updated) in updatesByHandle {
             // A removal is a count change — leave it to the reproject path; patching it in place
             // would briefly leave a removed node on screen at a stale position.
-            guard let updated = updatesByHandle[node.handle],
-                  !updated.isRemoved,
+            guard !updated.isRemoved,
+                  let index = projection.flatIndex(ofHandle: handle),
+                  let node = projection.hydratedNode(at: index), node.handle == handle,
                   metadataDiffers(node, updated, showsHiddenNodes: showsHiddenNodes) else { continue }
             replacements[index] = updated
         }
         guard replacements.isNotEmpty else { return nil }
-        return library.replacingPhotos(at: replacements)
+        return projection.library.replacingPhotos(at: replacements)
     }
 
     /// Whether two same-handle nodes differ in a field this in-place patch is allowed to refresh:
@@ -605,7 +628,7 @@ final class NewTimelineViewModel: ObservableObject {
     ///   `timelineGeneration` to drop every in-flight hydration, and reset the per-bucket versions.
     ///
     /// The heavy tree work (skeleton build, re-projection) runs off the main actor.
-    private func resolveSkeletonLibrary(for sections: [MediaDateSectionEntity]) async -> PhotoLibrary? {
+    private func resolveSkeletonLibrary(for sections: [MediaDateSectionEntity]) async -> IndexedLibrary? {
         let filterUnchanged = skeletonFilterOptions == photoFilterOptions
             && skeletonSortOrder == mediaTimelineSortOrder
         if filterUnchanged, sameShape(dateSections, sections) {
@@ -617,8 +640,7 @@ final class NewTimelineViewModel: ObservableObject {
         }
 
         if filterUnchanged {
-            return await reprojecting(
-                photoLibraryContentViewModel.library, from: dateSections, to: sections)
+            return await reprojecting(publishedProjection, to: sections)
         }
 
         // A different query makes every old position meaningless, so the invalidation is raised
@@ -632,7 +654,28 @@ final class NewTimelineViewModel: ObservableObject {
         skeletonSortOrder = mediaTimelineSortOrder
         timelineGeneration &+= 1
         sectionVersions = [:]
-        return await makeSkeleton(from: sections)
+        // Nothing carries over, so nothing is addressed yet either.
+        return IndexedLibrary(library: await makeSkeleton(from: sections), coordinates: [:])
+    }
+
+    /// A library and the index addressing its fetched nodes, so neither travels without the other.
+    struct IndexedLibrary {
+        let library: PhotoLibrary
+        let coordinates: [HandleEntity: TimelineProjection.BucketCoordinate]
+    }
+
+    /// A library and the addresses hydration just added. A splice only fills empty slots, so
+    /// reporting the delta alone keeps the cost the size of the window, not of the index.
+    private struct HydratedWindow {
+        let library: PhotoLibrary
+        let addedCoordinates: [HandleEntity: TimelineProjection.BucketCoordinate]
+    }
+
+    /// How a commit moves the index. Hydration only adds; a rebuilt layout replaces, being the one
+    /// that decides what survived the reshape.
+    private enum CoordinateUpdate {
+        case adding([HandleEntity: TimelineProjection.BucketCoordinate])
+        case replacing([HandleEntity: TimelineProjection.BucketCoordinate])
     }
 
     /// Per-bucket count change between two layouts, for every bucket the new layout still has.
@@ -665,25 +708,22 @@ final class NewTimelineViewModel: ObservableObject {
         PhotoLibrary.skeleton(from: sections)
     }
 
-    /// Rebuild the skeleton for `newSections`, carrying already-hydrated real nodes across so the
-    /// grid keeps its thumbnails instead of flashing to placeholders. A carried node keeps its
-    /// offset within its day bucket and is re-placed at that bucket's new base — its absolute flat
-    /// index shifts when an earlier bucket resizes, but its content survives.
+    /// Rebuild the skeleton for `newSections`, carrying already-fetched nodes across so the grid
+    /// keeps its thumbnails instead of flashing to placeholders. A carried node keeps its offset
+    /// within its day bucket and is re-placed at that bucket's new base. Reading the index rather
+    /// than the tree keeps the work proportional to the nodes fetched so far.
     ///
-    /// Only buckets whose **count is unchanged** are carried. A bucket that grew or shrank is left
-    /// entirely as placeholders: counts alone don't say *where* the change landed (a Camera-Upload
-    /// insert lands at the FRONT of the newest bucket, shifting every node's offset by one), so
-    /// carrying its old offsets would misplace nodes — and, worse, leave a placeholder whose true
-    /// occupant is a node still present elsewhere, which the visible-window hydration would then
-    /// re-fetch into a second slot, duplicating it. A changed bucket is instead re-hydrated
-    /// authoritatively from the SDK-ordered result. Pure and off-actor: an O(total photos) rebuild.
+    /// Only buckets whose **count is unchanged** are carried. Counts don't say *where* a change
+    /// landed (a Camera-Upload insert goes to the FRONT of the newest bucket, shifting every offset
+    /// by one), so carrying a changed bucket would misplace nodes — and leave a placeholder whose
+    /// true occupant is still elsewhere, which hydration would re-fetch into a second slot. Such a
+    /// bucket is re-hydrated from the SDK-ordered result instead.
+    ///
+    /// Library and index come out of one loop, so neither exists without the other. Off-actor.
     private nonisolated func reprojecting(
-        _ library: PhotoLibrary,
-        from oldSections: [MediaDateSectionEntity],
+        _ projection: TimelineProjection,
         to newSections: [MediaDateSectionEntity]
-    ) async -> PhotoLibrary {
-        let photos = library.allPhotos
-
+    ) async -> IndexedLibrary {
         var newBucketBase: [String: Int] = [:]
         var newBucketCount: [String: Int] = [:]
         var cumulative = 0
@@ -692,25 +732,77 @@ final class NewTimelineViewModel: ObservableObject {
             newBucketCount[section.groupId] = section.count
             cumulative += section.count
         }
+        let oldBucketCount = Dictionary(
+            projection.sections.map { ($0.groupId, $0.count) }, uniquingKeysWith: { first, _ in first })
 
-        // Walk the current library alongside the OLD sections (the layout it was built from) so
-        // each real node's `(groupId, localOffset)` is known, then place count-unchanged buckets at
-        // their new base. `defer` keeps `index` aligned with `photos` even for skipped buckets.
         var replacements: [Int: NodeEntity] = [:]
-        var index = 0
-        for section in oldSections {
-            let carryBucket = newBucketCount[section.groupId] == section.count
-            for localOffset in 0..<section.count {
-                defer { index += 1 }
-                guard carryBucket, photos.indices.contains(index) else { continue }
-                let node = photos[index]
-                guard !node.isTimelinePlaceholder,
-                      let base = newBucketBase[section.groupId] else { continue }
-                replacements[base + localOffset] = node
-            }
+        var carried: [HandleEntity: TimelineProjection.BucketCoordinate] = [:]
+        for (handle, coordinate) in projection.hydratedCoordinates {
+            guard let count = newBucketCount[coordinate.groupId],
+                  oldBucketCount[coordinate.groupId] == count,
+                  let base = newBucketBase[coordinate.groupId],
+                  let index = projection.flatIndex(ofHandle: handle),
+                  let node = projection.hydratedNode(at: index) else { continue }
+            replacements[base + coordinate.localOffset] = node
+            carried[handle] = coordinate
         }
 
-        return PhotoLibrary.skeleton(from: newSections).replacingPhotos(at: replacements)
+        return IndexedLibrary(
+            library: PhotoLibrary.skeleton(from: newSections).replacingPhotos(at: replacements),
+            coordinates: carried)
+    }
+
+    /// Fold `published` — a library committed while the pass was suspended — into the snapshot the
+    /// pass assembled, so publishing it doesn't undo the commit. Two things can have landed:
+    ///
+    /// - metadata on a node both sides hold, overlaid in place;
+    /// - a node this pass never saw, carried in under the rule ``reprojecting(_:to:)`` uses (its
+    ///   bucket must still hold the same number of slots), and only when `carryingUnseenNodes` says
+    ///   both sides ran the same query. Shared-handle metadata moves either way, being the node's
+    ///   and not the query's.
+    ///
+    /// Walks the committed side's index, not either library: only a fetched node can be in play.
+    nonisolated func reconciling(
+        _ assembled: IndexedLibrary,
+        describedBy sections: [MediaDateSectionEntity],
+        with published: TimelineProjection,
+        carryingUnseenNodes: Bool,
+        showsHiddenNodes: Bool
+    ) -> IndexedLibrary {
+        let mine = TimelineProjection(
+            library: assembled.library, sections: sections,
+            hydratedCoordinates: assembled.coordinates)
+        let newCounts = Dictionary(
+            sections.map { ($0.groupId, $0.count) }, uniquingKeysWith: { first, _ in first })
+        let oldCounts = Dictionary(
+            published.sections.map { ($0.groupId, $0.count) }, uniquingKeysWith: { first, _ in first })
+
+        var replacements: [Int: NodeEntity] = [:]
+        var coordinates = assembled.coordinates
+        for (handle, coordinate) in published.hydratedCoordinates {
+            guard let theirIndex = published.flatIndex(ofHandle: handle),
+                  let theirs = published.hydratedNode(at: theirIndex) else { continue }
+
+            guard let myIndex = mine.flatIndex(ofHandle: handle) else {
+                guard carryingUnseenNodes,
+                      let count = newCounts[coordinate.groupId], oldCounts[coordinate.groupId] == count,
+                      let target = mine.flatIndex(of: coordinate),
+                      mine.isPlaceholder(at: target) else { continue }
+                replacements[target] = theirs
+                coordinates[handle] = coordinate
+                continue
+            }
+
+            guard let node = mine.hydratedNode(at: myIndex),
+                  metadataDiffers(node, theirs, showsHiddenNodes: showsHiddenNodes) else { continue }
+            // Never trade readiness already in hand for a staler node that lacks it.
+            if node.hasThumbnail && !theirs.hasThumbnail { continue }
+            if node.hasPreview && !theirs.hasPreview { continue }
+            replacements[myIndex] = theirs
+        }
+
+        return IndexedLibrary(
+            library: assembled.library.replacingPhotos(at: replacements), coordinates: coordinates)
     }
 
     /// Two section lists describe the same skeleton shape when their buckets and per-bucket
@@ -744,31 +836,46 @@ final class NewTimelineViewModel: ObservableObject {
         let revisionBefore = libraryRevision
         guard let hydrated = await hydratedVisibleWindow(in: publishedProjection, range: range) else { return }
         guard libraryRevision == revisionBefore else { return }
-        commitLibrary(hydrated)
+        commitProjection(
+            hydrated.library, sections: nil, coordinates: .adding(hydrated.addedCoordinates))
+    }
+
+    /// Publishes `nodes` from `startIndex` and records where they landed — the commit a fetch of
+    /// that window would have made. Test-facing: assigning `photoLibraryContentViewModel.library`
+    /// directly instead would leave the index describing a library that no longer exists.
+    func commitHydratedRun(from startIndex: Int, with nodes: [NodeEntity]) {
+        let projection = publishedProjection
+        var added: [HandleEntity: TimelineProjection.BucketCoordinate] = [:]
+        for (offset, node) in nodes.enumerated() {
+            guard let anchor = projection.sectionAnchor(forFlatIndex: startIndex + offset) else { continue }
+            added[node.handle] = .init(
+                groupId: anchor.section.groupId, localOffset: anchor.localOffset)
+        }
+        commitProjection(
+            projection.library.replacingPhotos(from: startIndex, with: nodes),
+            sections: nil,
+            coordinates: .adding(added))
     }
 
     /// Plan, fetch and splice the real nodes for `range` against `projection`, returning the
-    /// hydrated result (or nil if there was nothing to fill, or the work was invalidated by a
-    /// query/section change before it could be applied).
+    /// hydrated result — nil if there was nothing to fill, or a query/section change invalidated
+    /// the work before it could be applied.
     ///
-    /// Every stage reads the projection it is handed, never `dateSections` — see
-    /// ``commitProjection(_:sections:)``. Planning reads a layout, the fetch suspends, and the
-    /// splice resolves positions again; passing the pair as one value is what keeps both ends
-    /// reading the same one.
+    /// Every stage reads the projection it is handed, never `dateSections`: planning reads a
+    /// layout, the fetch suspends, then the splice resolves positions again.
     ///
-    /// Pure with respect to the published library — the caller decides when to commit, so the
-    /// reactive path can assemble a new snapshot off-screen (two-phase commit) while the
-    /// scroll-driven path commits straight away.
+    /// Pure with respect to the published library, so the reactive path can assemble a snapshot
+    /// off-screen (two-phase commit) while the scroll-driven path commits straight away.
     private func hydratedVisibleWindow(
         in projection: TimelineProjection, range: Range<Int>
-    ) async -> PhotoLibrary? {
+    ) async -> HydratedWindow? {
         guard mediaTimelineUseCase != nil else { return nil }
 
         let planned = planHydrationRuns(range: range, in: projection)
         guard planned.isNotEmpty else { return nil }
 
         let generation = timelineGeneration
-        let capturedVersions = capturedVersions(spanning: range, in: projection.sections)
+        let capturedVersions = capturedVersions(spanning: range, in: projection)
         let results = await fetchHydrationRuns(planned, in: projection)
 
         return await applyHydrationResults(
@@ -785,10 +892,9 @@ final class NewTimelineViewModel: ObservableObject {
     private func planHydrationRuns(
         range: Range<Int>, in projection: TimelineProjection
     ) -> [PlaceholderRun] {
-        let photos = projection.photos
-        let clampedUpper = min(range.upperBound, photos.count)
+        let clampedUpper = min(range.upperBound, projection.itemCount)
         guard range.lowerBound < clampedUpper else { return [] }
-        return placeholderRuns(in: range.lowerBound..<clampedUpper, photos: photos)
+        return placeholderRuns(in: range.lowerBound..<clampedUpper, of: projection)
     }
 
     /// Execute `planned` sequentially, as visible-window hydration does today.
@@ -819,27 +925,37 @@ final class NewTimelineViewModel: ObservableObject {
 
     /// Maximal runs of consecutive placeholder slots inside `visible`, each tagged with the real
     /// node (if any) immediately above and below it — the anchors that decide cursor vs offset.
-    /// Neighbours are read from the full `photos` list, so a real node just outside the visible
-    /// window still seeds a cursor fetch.
-    private func placeholderRuns(in visible: Range<Int>, photos: [NodeEntity]) -> [PlaceholderRun] {
+    /// Neighbours are read from the whole tree, so a real node just outside the visible window
+    /// still seeds a cursor fetch.
+    private func placeholderRuns(
+        in visible: Range<Int>, of projection: TimelineProjection
+    ) -> [PlaceholderRun] {
         var runs: [PlaceholderRun] = []
         var index = visible.lowerBound
         while index < visible.upperBound {
-            guard photos[index].isTimelinePlaceholder else {
+            guard projection.isPlaceholder(at: index) else {
                 index += 1
                 continue
             }
             var end = index
-            while end < visible.upperBound, photos[end].isTimelinePlaceholder { end += 1 }
-            let above = index - 1
-            let below = end
+            while end < visible.upperBound, projection.isPlaceholder(at: end) { end += 1 }
             runs.append(PlaceholderRun(
                 range: index..<end,
-                upperNeighbour: above >= 0 && !photos[above].isTimelinePlaceholder ? photos[above] : nil,
-                lowerNeighbour: below < photos.count && !photos[below].isTimelinePlaceholder ? photos[below] : nil))
+                upperNeighbour: anchor(at: index - 1, in: projection),
+                lowerNeighbour: anchor(at: end, in: projection)))
             index = end
         }
         return runs
+    }
+
+    /// The real node at a flat index paired with where it sits; nil for a placeholder or outside
+    /// the tree. Read together so the two cannot name different slots.
+    private func anchor(at index: Int, in projection: TimelineProjection) -> RunAnchor? {
+        guard let node = projection.hydratedNode(at: index),
+              let section = projection.sectionAnchor(forFlatIndex: index) else { return nil }
+        return RunAnchor(
+            node: node,
+            coordinate: .init(groupId: section.section.groupId, localOffset: section.localOffset))
     }
 
     /// Dispatch one run to the correct fetch. An adjacent real node is preferred as a cursor anchor
@@ -855,17 +971,19 @@ final class NewTimelineViewModel: ObservableObject {
         do {
             if let upper = run.upperNeighbour {
                 let nodes = try await mediaTimelineUseCase.mediaPage(
-                    filter: filter, sortOrder: order, after: upper, limit: run.range.count)
+                    filter: filter, sortOrder: order, after: upper.node, limit: run.range.count)
                 try Task.checkCancellation()
-                return nodes.isEmpty ? nil : RunFetchResult(run: run, kind: .pageAfter(upper), nodes: nodes)
+                return nodes.isEmpty
+                    ? nil : RunFetchResult(run: run, kind: .pageAfter(upper.coordinate), nodes: nodes)
             } else if let lower = run.lowerNeighbour {
                 let nodes = try await mediaTimelineUseCase.mediaPage(
-                    filter: filter, sortOrder: order, before: lower, limit: run.range.count)
+                    filter: filter, sortOrder: order, before: lower.node, limit: run.range.count)
                 try Task.checkCancellation()
-                return nodes.isEmpty ? nil : RunFetchResult(run: run, kind: .pageBefore(lower), nodes: nodes)
+                return nodes.isEmpty
+                    ? nil : RunFetchResult(run: run, kind: .pageBefore(lower.coordinate), nodes: nodes)
             } else {
-                guard let anchor = sectionAnchor(
-                    forFlatIndex: run.range.lowerBound, in: projection.sections) else { return nil }
+                guard let anchor = projection.sectionAnchor(
+                    forFlatIndex: run.range.lowerBound) else { return nil }
                 let nodes = try await mediaTimelineUseCase.mediaWindow(
                     filter: filter, section: anchor.section, sortOrder: order,
                     offset: anchor.localOffset, limit: run.range.count)
@@ -873,7 +991,8 @@ final class NewTimelineViewModel: ObservableObject {
                 guard nodes.isNotEmpty else { return nil }
                 return RunFetchResult(
                     run: run,
-                    kind: .offset(groupId: anchor.section.groupId, localOffset: anchor.localOffset),
+                    kind: .offset(.init(
+                        groupId: anchor.section.groupId, localOffset: anchor.localOffset)),
                     nodes: nodes)
             }
         } catch is CancellationError {
@@ -884,40 +1003,40 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
 
-    /// Fold every run's fetched nodes into one combined splice against `library`, returning the
-    /// result (nil if nothing landed). Positions are resolved against `library`: cursor runs
-    /// re-locate their anchor by handle, offset runs re-derive their start from `(groupId,
-    /// localOffset)` against the current sections — so both survive a reshape in *another* bucket
-    /// (which shifts absolute indices) and land correctly. `replacingPhotos(at:)` keeps the section
-    /// shape, so the layout monitor reconfigures just the swapped cells in place — no full reload,
-    /// no jump. The splice runs off the main actor (O(total photos) rebuild).
+    /// Fold every run's fetched nodes into one combined splice against `projection`, nil if nothing
+    /// landed. Each run resolves its start from a bucket address, so a reshape elsewhere — which
+    /// shifts absolute indices — still lands it correctly. `replacingPhotos(at:)` keeps the section
+    /// shape, so only the swapped cells reconfigure: no reload, no jump. Runs off the main actor.
     private func applyHydrationResults(
         _ results: [RunFetchResult],
         to projection: TimelineProjection,
         generation: Int,
         capturedVersions: [String: UInt]
-    ) async -> PhotoLibrary? {
+    ) async -> HydratedWindow? {
         guard results.isNotEmpty else { return nil }
         // Cancellation landing inside the *last* run surfaces as that run yielding nothing, so the
         // fetch loop exits normally with the earlier runs still in hand; this is where those get
         // dropped.
         guard !Task.isCancelled else { return nil }
         guard generation == timelineGeneration,
-              versionsStillValid(capturedVersions, against: projection.sections) else { return nil }
-        let photos = projection.photos
+              versionsStillValid(capturedVersions, against: projection) else { return nil }
 
-        var occupiedHandles = Set(photos.lazy.filter { !$0.isTimelinePlaceholder }.map(\.handle))
+        // The addresses this splice adds — with the projection's own, also its duplicate check: a
+        // handle in either is already live in the tree, or was placed by an earlier run here.
+        var added: [HandleEntity: TimelineProjection.BucketCoordinate] = [:]
         var replacements: [Int: NodeEntity] = [:]
         for result in results {
-            guard let start = spliceStart(for: result, in: photos, sections: projection.sections) else { continue }
+            guard let start = spliceStart(for: result, in: projection) else { continue }
             for (offset, node) in result.nodes.enumerated() where offset < result.run.range.count {
                 let index = start + offset
-                // Only fill placeholder slots — never overwrite an already-hydrated real node or
-                // overflow past the tree, whatever the SDK returned.
-                guard photos.indices.contains(index), photos[index].isTimelinePlaceholder else { continue }
-                // `insert` doubles as the duplicate check: not inserted ⇒ this handle is already
-                // live in the tree, or an earlier run in this same batch already placed it.
-                guard occupiedHandles.insert(node.handle).inserted else { continue }
+                // Only fill placeholder slots — never overwrite a hydrated node or overflow the
+                // tree, whatever the SDK returned. Nor a slot this batch already filled: taking the
+                // second node would leave the first addressed at a slot it no longer occupies.
+                guard projection.isPlaceholder(at: index), replacements[index] == nil,
+                      projection.hydratedCoordinates[node.handle] == nil, added[node.handle] == nil,
+                      let anchor = projection.sectionAnchor(forFlatIndex: index) else { continue }
+                added[node.handle] = .init(
+                    groupId: anchor.section.groupId, localOffset: anchor.localOffset)
                 replacements[index] = node
             }
         }
@@ -925,69 +1044,46 @@ final class NewTimelineViewModel: ObservableObject {
 
         let hydrated = await splicing(projection.library, replacing: replacements)
         guard generation == timelineGeneration,
-              versionsStillValid(capturedVersions, against: projection.sections) else { return nil }
-        return hydrated
+              versionsStillValid(capturedVersions, against: projection) else { return nil }
+        return HydratedWindow(library: hydrated, addedCoordinates: added)
     }
 
     /// Every captured bucket must still exist and carry the version it had when the hydration
     /// started; otherwise that bucket was reshaped/removed and the fetch is stale.
     private func versionsStillValid(
-        _ captured: [String: UInt], against sections: [MediaDateSectionEntity]
+        _ captured: [String: UInt], against projection: TimelineProjection
     ) -> Bool {
-        let currentGroupIds = Set(sections.map(\.groupId))
-        return captured.allSatisfy { groupId, version in
-            currentGroupIds.contains(groupId) && sectionVersions[groupId, default: 0] == version
+        captured.allSatisfy { groupId, version in
+            projection.containsSection(groupId: groupId) && sectionVersions[groupId, default: 0] == version
         }
     }
 
     /// The current version of every day bucket the flat `range` overlaps, captured when a hydration
     /// starts so ``versionsStillValid(_:)`` can reject it if any of those buckets later reshaped.
     private func capturedVersions(
-        spanning range: Range<Int>, in sections: [MediaDateSectionEntity]
+        spanning range: Range<Int>, in projection: TimelineProjection
     ) -> [String: UInt] {
         var captured: [String: UInt] = [:]
-        var cumulative = 0
-        for section in sections {
-            let next = cumulative + section.count
-            if cumulative < range.upperBound, next > range.lowerBound {
-                captured[section.groupId] = sectionVersions[section.groupId, default: 0]
-            }
-            cumulative = next
-            if cumulative >= range.upperBound { break }
+        for groupId in projection.groupIds(spanning: range) {
+            captured[groupId] = sectionVersions[groupId, default: 0]
         }
         return captured
     }
 
-    /// The flat index the first fetched node lands at, resolved against the *current* sections so a
-    /// reshape elsewhere that shifted absolute positions doesn't misplace the fill. Cursor runs page
-    /// outward from an anchor re-located by handle (`after` fills below it; `before` fills the run's
-    /// tail ending just above the lower anchor); offset runs re-derive their bucket's current base
-    /// and add the captured local offset (nil if that bucket no longer exists).
-    private func spliceStart(
-        for result: RunFetchResult, in photos: [NodeEntity], sections: [MediaDateSectionEntity]
-    ) -> Int? {
+    /// The flat index the first fetched node lands at, resolved against the layout as it stands so
+    /// a reshape elsewhere doesn't misplace the fill. An offset run starts at its own address,
+    /// `after` fills below its anchor, `before` fills the run's tail just above the lower anchor.
+    private func spliceStart(for result: RunFetchResult, in projection: TimelineProjection) -> Int? {
         switch result.kind {
-        case .offset(let groupId, let localOffset):
-            guard let base = base(ofGroupId: groupId, in: sections) else { return nil }
-            return base + localOffset
+        case .offset(let coordinate):
+            return projection.flatIndex(of: coordinate)
         case .pageAfter(let anchor):
-            guard let index = photos.firstIndex(where: { $0.handle == anchor.handle }) else { return nil }
+            guard let index = projection.flatIndex(of: anchor) else { return nil }
             return index + 1
         case .pageBefore(let anchor):
-            guard let index = photos.firstIndex(where: { $0.handle == anchor.handle }) else { return nil }
+            guard let index = projection.flatIndex(of: anchor) else { return nil }
             return max(0, index - result.nodes.count)
         }
-    }
-
-    /// The flat index where `groupId`'s bucket starts in the current layout, or nil if that bucket
-    /// no longer exists (removed by a reshape).
-    private func base(ofGroupId groupId: String, in sections: [MediaDateSectionEntity]) -> Int? {
-        var cumulative = 0
-        for section in sections {
-            if section.groupId == groupId { return cumulative }
-            cumulative += section.count
-        }
-        return nil
     }
 
     private nonisolated func splicing(
@@ -999,39 +1095,28 @@ final class NewTimelineViewModel: ObservableObject {
     /// bordering it — the anchors that decide how the run is fetched.
     private struct PlaceholderRun: Sendable {
         let range: Range<Int>
-        let upperNeighbour: NodeEntity?
-        let lowerNeighbour: NodeEntity?
+        let upperNeighbour: RunAnchor?
+        let lowerNeighbour: RunAnchor?
     }
 
-    /// How a run was fetched — carries what its splice position must be re-derived from at apply
-    /// time (a handle anchor for cursor pages, a bucket + local offset for offset windows) so a
-    /// reshape between fetch and apply can't leave it pinned to a stale absolute index.
+    /// A real node bordering a run: the cursor the SDK pages from, and where that node sits.
+    private struct RunAnchor: Sendable {
+        let node: NodeEntity
+        let coordinate: TimelineProjection.BucketCoordinate
+    }
+
+    /// How a run was fetched, with the bucket address its splice position is re-derived from, so a
+    /// reshape between fetch and apply can't pin it to a stale absolute index.
     private enum RunFetchKind: Sendable {
-        case pageAfter(NodeEntity)
-        case pageBefore(NodeEntity)
-        case offset(groupId: String, localOffset: Int)
+        case pageAfter(TimelineProjection.BucketCoordinate)
+        case pageBefore(TimelineProjection.BucketCoordinate)
+        case offset(TimelineProjection.BucketCoordinate)
     }
 
     private struct RunFetchResult: Sendable {
         let run: PlaceholderRun
         let kind: RunFetchKind
         let nodes: [NodeEntity]
-    }
-
-    /// Maps a flat index in `allPhotos` to the date section that contains it (by cumulative
-    /// count, matching the skeleton) and the local offset within that section.
-    private func sectionAnchor(
-        forFlatIndex index: Int, in sections: [MediaDateSectionEntity]
-    ) -> (section: MediaDateSectionEntity, localOffset: Int)? {
-        var cumulative = 0
-        for section in sections {
-            let next = cumulative + section.count
-            if index < next {
-                return (section, index - cumulative)
-            }
-            cumulative = next
-        }
-        return nil
     }
 
     private func timelinePhotoLibrary() async throws -> PhotoLibrary {
