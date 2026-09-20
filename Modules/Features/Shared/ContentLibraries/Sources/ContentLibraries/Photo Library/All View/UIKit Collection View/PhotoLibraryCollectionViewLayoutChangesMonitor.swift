@@ -80,17 +80,29 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
 
     private func refreshPlan(to sections: [PhotoDateSection]) -> RefreshPlan {
         guard let collectionView else { return .none }
-        // Index paths, not node-derived positions: the collection view already answers "which cells
-        // are on screen" in exactly the coordinates `changedItemIndexPaths` compares in, and they
-        // are unique by construction. Deriving keys from nodes needed de-duplication, because a
-        // splice can leave one node in two slots at once and a zoom-in makes both visible.
-        let visibleIndexPaths = Set(collectionView.indexPathsForVisibleItems)
+        // Index paths, not node-derived positions: the collection view answers in exactly the
+        // coordinates the diff compares in, and they are unique by construction. Deriving keys from
+        // nodes needed de-duplication, because a splice can leave one node in two slots at once and
+        // a zoom-in makes both visible.
+        //
+        // Visible is not enough: with cell prefetching on, a cell just off screen is already built
+        // and configured, and it is not rebuilt when it appears — only `willDisplay` fires. Left
+        // out of the diff, it scrolls in still showing the placeholder it was prepared with. A
+        // screen of margin each way covers the prefetch window. The layout answers for the whole
+        // rect whether or not a cell was built in it, so this is a superset of what exists: a spare
+        // index path is compared and then reconfigures nothing.
+        let preparedRect = collectionView.bounds.insetBy(dx: 0, dy: -collectionView.bounds.height)
+        let preparedIndexPaths = Set(collectionView.indexPathsForVisibleItems)
+            .union(
+                collectionView.collectionViewLayout.layoutAttributesForElements(in: preparedRect)?
+                    .filter { $0.representedElementCategory == .cell }
+                    .map(\.indexPath) ?? [])
 
         // A structural change (section add/remove, header/date change, or item-count change) needs
         // a full reload; a content-only change (placeholder → real node, thumbnail/favourite/
         // sensitive flips) reconfigures just the affected cells in place.
         guard let changed = photoLibraryDataSource.changedItemIndexPaths(
-            to: sections, visibleIndexPaths: visibleIndexPaths) else {
+            to: sections, amongPrepared: preparedIndexPaths) else {
             return .reload
         }
         return changed.isEmpty ? .none : .reconfigure(changed)
