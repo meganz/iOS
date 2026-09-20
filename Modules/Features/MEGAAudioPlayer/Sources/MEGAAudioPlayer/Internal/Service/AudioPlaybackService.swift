@@ -32,6 +32,7 @@ final class AudioPlaybackService {
     private let notificationCenter: NotificationCenter
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let analyticsReporter: AudioPlaybackAnalyticsReporter
+    private let audioNodeUpdatesUseCase: any AudioNodeUpdatesUseCaseProtocol
 
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
@@ -42,6 +43,9 @@ final class AudioPlaybackService {
     private var resolutionTask: Task<Void, Never>?
 
     private var sleepTimerTask: Task<Void, Never>?
+
+    /// Runs for the lifetime of the service: the SDK keeps reporting node changes
+    private var nodeUpdatesTask: Task<Void, Never>?
 
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
@@ -77,7 +81,8 @@ final class AudioPlaybackService {
         engine: some PlaybackEngineProtocol = PlaybackEngine(),
         notificationCenter: NotificationCenter = .default,
         playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase,
-        analyticsReporter: AudioPlaybackAnalyticsReporter = AudioPlaybackAnalyticsReporter(tracker: DependencyInjection.analyticsTracker, accountUseCase: DependencyInjection.accountUseCase)
+        analyticsReporter: AudioPlaybackAnalyticsReporter = AudioPlaybackAnalyticsReporter(tracker: DependencyInjection.analyticsTracker, accountUseCase: DependencyInjection.accountUseCase),
+        audioNodeUpdatesUseCase: some AudioNodeUpdatesUseCaseProtocol = AudioNodeUpdatesUseCase()
     ) {
         self.trackResolver = trackResolver
         self.streamingRepository = streamingRepository
@@ -86,9 +91,11 @@ final class AudioPlaybackService {
         self.notificationCenter = notificationCenter
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.analyticsReporter = analyticsReporter
+        self.audioNodeUpdatesUseCase = audioNodeUpdatesUseCase
         bindEngineToState()
         observeAirPlayRouteChanges()
         setUpNowPlaying()
+        bindNodeUpdates()
     }
     
     func appWillTerminate() {
@@ -545,6 +552,44 @@ extension AudioPlaybackService: PlaybackControllable {
         return true
     }
 
+    // MARK: - Node deletions
+
+    private func bindNodeUpdates() {
+        nodeUpdatesTask = Task { [weak self, audioNodeUpdatesUseCase] in
+            for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedNodeHandles {
+                guard !Task.isCancelled else { return }
+                self?.handleDeletedNodes(withHandles: deletedNodeHandles)
+            }
+        }
+    }
+
+    private func handleDeletedNodes(withHandles deletedNodeHandles: Set<HandleEntity>) {
+        guard currentSource != nil else { return }
+
+        switch playbackQueue.applyingDeletion(ofNodeHandles: deletedNodeHandles) {
+        case .unaffected:
+            break
+
+        case .dropped(let queue):
+            apply(queue)
+
+        case .skipped(let queue):
+            removeSavedPositionForCurrentTrack()
+            apply(queue)
+            playCurrent()
+
+        case .emptied:
+            removeSavedPositionForCurrentTrack()
+            stop(savingPosition: false)
+        }
+    }
+
+    private func apply(_ queue: PlaybackQueue) {
+        playbackQueue = queue
+        let survivingIDs = Set(queue.tracks.map(\.id))
+        unshuffledTracks = unshuffledTracks?.filter { survivingIDs.contains($0.id) }
+    }
+
     func cycleRepeat() {
         repeatModeSubject.send(repeatModeSubject.value.next)
     }
@@ -678,10 +723,17 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func stop() {
+        stop(savingPosition: true)
+    }
+
+    /// - Parameter savingPosition: `false` when the track is going away rather than being left for later
+    private func stop(savingPosition: Bool) {
         guard currentSource != nil else { return }
         
         currentSource = nil
-        saveCurrentPlaybackPositionIfNeeded()
+        if savingPosition {
+            saveCurrentPlaybackPositionIfNeeded()
+        }
         clearResumeState()
         metadataTask?.cancel()
         metadataTask = nil

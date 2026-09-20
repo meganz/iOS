@@ -24,6 +24,14 @@ enum DependencyInjection {
         AudioNodeAvailabilityRepository.newRepo
     }
 
+    static var nodeUpdatesProvider: some NodeUpdatesProviderProtocol {
+        NodeUpdatesProvider()
+    }
+
+    static var nodeAttributeRepository: some NodeAttributeRepositoryProtocol {
+        NodeAttributeRepository.newRepo
+    }
+
     static var memoryWarningNotification: Notification.Name {
         UIApplication.didReceiveMemoryWarningNotification
     }

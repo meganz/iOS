@@ -2,6 +2,7 @@ import Combine
 import Foundation
 @testable import MEGAAudioPlayer
 import MEGADomain
+import MEGASwift
 
 @MainActor
 final class MockPlaybackEngine: PlaybackEngineProtocol {
@@ -173,4 +174,51 @@ actor StubAudioMetadataCache: AudioMetadataCacheProtocol {
     func cachedMetadata(for track: PlaybackTrack) -> AudioMetadata? { nil }
 
     func removeAll() {}
+}
+
+/// Feeds deletions in on demand, standing in for the SDK's node updates.
+struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
+    let deletedNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
+    private let continuation: AsyncStream<Set<HandleEntity>>.Continuation
+
+    init() {
+        let (stream, continuation) = AsyncStream<Set<HandleEntity>>.makeStream()
+        deletedNodeHandles = stream.eraseToAnyAsyncSequence()
+        self.continuation = continuation
+    }
+
+    func simulateDeletion(ofNodeHandles handles: Set<HandleEntity>) {
+        continuation.yield(handles)
+    }
+}
+
+/// Records what reached the resume-position store, in order — the ordering is the
+/// point, because `stop()` saves a position on its way out.
+struct SpyPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
+    enum Operation: Equatable {
+        case saved(FingerprintEntity)
+        case removed(FingerprintEntity)
+    }
+
+    private let storage = Atomic<[Operation]>(wrappedValue: [])
+
+    var operations: [Operation] { storage.wrappedValue }
+
+    func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity {
+        .startFromBeginning
+    }
+
+    func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
+
+    func playbackStopped(
+        for fingerprint: FingerprintEntity,
+        on timeInterval: TimeInterval,
+        outOf fullTimeInterval: TimeInterval
+    ) {
+        storage.mutate { $0.append(.saved(fingerprint)) }
+    }
+
+    func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {
+        storage.mutate { $0.append(.removed(fingerprint)) }
+    }
 }

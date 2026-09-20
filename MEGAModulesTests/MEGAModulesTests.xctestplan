@@ -125,6 +125,14 @@
     {
       "parallelizable" : true,
       "target" : {
+        "containerPath" : "container:Modules\/Features\/MEGAAudioPlayer",
+        "identifier" : "MEGAAudioPlayerTests",
+        "name" : "MEGAAudioPlayerTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
         "containerPath" : "container:Modules\/Features\/MEGAPDFViewer",
         "identifier" : "MEGAPDFViewerTests",
         "name" : "MEGAPDFViewerTests"
