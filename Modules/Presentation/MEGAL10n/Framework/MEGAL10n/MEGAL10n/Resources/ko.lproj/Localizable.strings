@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="촬영 날짜: 오래된 날짜 먼저";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="전송이 일시정지 되었습니다. 네트워크 연결을 기다리는 중입니다";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[B]의 [A]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="할인 이용 불가";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="이 할인을 지금 이용할 수 없습니다. 나중에 다시 시도하세요.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="콘텐츠";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%2$d 중 %1$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="이 파일을 미리 볼 수 없습니다";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="이 미리보기를 불러오던 중 무언가 잘못 되었습니다.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="다시 시도";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="이 PDF는 손상되었습니다";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="파일이 손상되어 열 수 없습니다. 만약 다른 사람이 보낸 것이라면, 새 사본을 보내달라고 요청하세요.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="암호 입력";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="이 PDF는 암호로 보호되어 있습니다.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="잘못된 암호";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="오디오 트랙";

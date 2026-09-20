@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Datum van opname: oudste eerst";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Overdrachten gepauzeerd. Wachten op netwerkverbinding";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] of [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Aanbieding niet beschikbaar";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Deze aanbieding is momenteel niet beschikbaar. Probeer het later opnieuw.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Inhoud";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d van %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Kan geen voorbeeld van dit bestand weergeven";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Er is iets misgegaan bij het laden van dit voorbeeld.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Probeer het nogmaals";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="Dit PDF-bestand is beschadigd";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="Het bestand is beschadigd en kan niet worden geopend. Als iemand anders het naar u heeft gestuurd, vraag diegene dan om een nieuw exemplaar te sturen.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Voer wachtwoord in";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Deze pdf is met een wachtwoord beveiligd.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Ongeldig wachtwoord";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Audiosnummer";

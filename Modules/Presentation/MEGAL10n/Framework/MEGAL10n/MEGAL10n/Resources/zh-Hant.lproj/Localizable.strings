@@ -5053,7 +5053,7 @@
 /* Navigation bar title for Choose Default Launch Tab screen */
 "home.customization.defaultLaunchTab.title"="預設啟動分頁";
 /* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
-"account.profile.expiry.future"="到期日期%@";
+"account.profile.expiry.future"="到期日%@";
 /* Section header above the list of Pro plan features on the revamped upgrade page */
 "subscriptionPurchase.revamp.features.title"="為何要升級至Pro？";
 /* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="拍攝日期：最舊優先";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="傳輸已暫停。正在等待網路連線";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%2$d之%1$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="無法預覽此檔案";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="重試";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="輸入密碼";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="無效的密碼";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A]（共 [B]）";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="優惠不可用";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="此優惠目前無法使用。稍後再試。";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="目錄";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="載入此預覽時發生問題。";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="此 PDF 已損壞";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="該檔案已損壞，無法開啟。如果是他人傳送給您的，請對方重新傳送一份。";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="此 PDF 受密碼保護。";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="音軌";

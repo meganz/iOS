@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Data fotografiei: cele mai vechi primele";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Transferurile sunt întrerupte. Se așteaptă conexiunea la rețea";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d din %2$d";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Reîncearcă";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Introduceți parola";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Parolă nevalidă.";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] din [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Ofertă indisponibilă";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Această ofertă nu este disponibilă momentan. Încercați din nou mai târziu.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Cuprins";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Nu se poate previzualiza acest fișier";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="A apărut o problemă la încărcarea acestei previzualizări.";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="Acest fișier PDF este deteriorat";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="Fișierul este deteriorat și nu poate fi deschis. Dacă altcineva vi l-a trimis, rugați-l să vă trimită o copie nouă.";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Acest fișier PDF este protejat cu parolă.";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Pistă audio";

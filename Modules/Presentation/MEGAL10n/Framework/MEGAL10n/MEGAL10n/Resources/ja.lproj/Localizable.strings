@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="撮影日：古い順";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="転送を一時停止しました。ネットワーク接続を待機中";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] / [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="このキャンペーンはご利用いただけません";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="このキャンペーンは現在ご利用いただけません。時間をおいて再度お試しください。";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="目次";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d / %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="ファイルをプレビューできません";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="プレビューの読み込み中に問題が発生しました。";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="再試行";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="このPDFは破損しています";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="ファイルが破損しているため開けません。もし他の人から送られてきたファイルであれば、その人に新しいコピーを送ってもらうよう依頼してください。";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="パスワードを入力";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="このPDFはパスワードで保護されています。";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="パスワードが正しくありません";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="音声トラック";

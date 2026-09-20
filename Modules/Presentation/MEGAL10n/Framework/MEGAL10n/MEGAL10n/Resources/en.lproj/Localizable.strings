@@ -5207,7 +5207,7 @@
 /* Alert title shown when the promotional offer cannot be resolved at checkout. */
 "account.upgrade.offerUnavailable.title"="Offer unavailable";
 /* Dialog message shown when the promotional offer cannot be resolved at checkout. */
-"account.upgrade.offerUnavailable.message"="This offer isn't available right now. Try again later.";
+"account.upgrade.offerUnavailable.message"="This offer isn’t available right now. Try again later.";
 /* Header of the table of contents panel in the PDF preview */
 "pdfPreview.contents"="Contents";
 /* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */

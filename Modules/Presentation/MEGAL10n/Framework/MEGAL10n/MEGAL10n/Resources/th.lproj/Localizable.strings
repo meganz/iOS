@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="วันที่ถ่ายภาพ: เก่าที่สุดก่อน";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="พักการถ่ายโอนไว้ชั่วคราว กำลังรอการเชื่อมต่อเครือข่าย";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] จากทั้งหมด [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="ไม่มีข้อเสนอนี้ในขณะนี้";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="ข้อเสนอนี้ยังไม่พร้อมให้บริการในขณะนี้ กรุณาลองใหม่ภายหลัง";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="สารบัญ";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d จาก %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="ดูตัวอย่างไฟล์นี้ไม่ได้";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="เกิดข้อผิดพลาดขณะโหลดตัวอย่างไฟล์";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="ลองใหม่";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="ไฟล์ PDF นี้เสียหาย";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="ไฟล์นี้เสียหายและเปิดไม่ได้ หากมีผู้อื่นส่งมาให้คุณ กรุณาขอให้ส่งไฟล์ชุดใหม่มาให้อีกครั้ง";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="ใส่รหัสผ่าน";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="ไฟล์ PDF นี้มีการป้องกันด้วยรหัสผ่าน";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="รหัสผ่านไม่ถูกต้อง";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="แทร็กเสียง";

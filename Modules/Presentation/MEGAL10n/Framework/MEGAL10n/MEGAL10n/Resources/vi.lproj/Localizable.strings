@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Ngày chụp: cũ nhất trước";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Đã tạm dừng truyền tải. Đang chờ kết nối mạng";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Thử lại";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Nhập mật khẩu";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="Bước %1$d trong tổng %2$d bước";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Mật khẩu không hợp lệ";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] trên [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Ưu đãi không khả dụng";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Ưu đãi này hiện không khả dụng. Thử lại sau.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Mục lục";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Không thể xem trước tệp này";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Đã xảy ra sự cố khi tải bản xem trước này.";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="Tệp PDF này bị hỏng";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="Tệp này bị hỏng và không thể mở. Nếu người khác đã gửi tệp này cho bạn, hãy nhờ họ gửi lại một bản sao mới.";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Tệp PDF này được bảo vệ bằng mật khẩu.";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Track âm thanh";

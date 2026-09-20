@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Data de captura: mais antiga";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Transferências pausadas. Esperando conexão";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] de [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Oferta não disponível";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Esta oferta não está disponível no momento. Tente novamente mais tarde.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Conteúdo";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d de %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Não foi possível visualizar este arquivo";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Houve um problema ao carregar esta visualização.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Tentar novamente";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="Este PDF está danificado";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="O arquivo está danificado e não pode ser aberto. Se alguém o enviou a você, peça que envie uma nova cópia.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Digite a senha";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Este PDF está protegido por senha.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Senha incorreta";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Faixa de áudio";

@@ -189,7 +189,7 @@
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="Albüm kaydedilemiyor";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
-"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Bu albümü Bulut depolamanıza kaydetmek için yeterli alanınız yok. Daha fazla depolama alanı için hemen yükseltin.";
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Bu albümü Bulut depolamanıza kaydetmek için yeterli alanınız yok. Daha fazla depolama alanı için hesabınızı hemen yükseltin.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="İndir";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -813,7 +813,7 @@
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="Çöp kutusu boşaltıldı";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Çöp kutusu her %d günde bir otomatik olarak boşaltılır. Çöp kutusunun otomatik olarak boşaltılmasını devre dışı bırakmak isterseniz ücretli bir plana yükseltin.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Çöp kutusu her %d günde bir otomatik olarak boşaltılır. Çöp kutusunun otomatik olarak boşaltılmasını devre dışı bırakmak isterseniz hesabınızı ücretli bir plana yükseltin.";
 /* Rubbish bin auto purge title */
 "settings.fileManagement.rubbishBin.autoPurge.title"="Çöp kutusunu otomatik boşalt";
 /* Rubbish bin auto purge days */
@@ -1171,9 +1171,9 @@
 /* A label which shows the user's current PRO plan. */
 "inAppPurchase.productDetail.navigation.currentPlan"="Mevcut plan";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Özel bir plana yükseltin";
+"Upgrade to a custom plan"="Hesabınızı özel bir plana yükseltin";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Özel bir plana nasıl yükseltebileceğinizi bize sorun:";
+"Ask us how you can upgrade to a custom plan:"="Hesabınızı özel bir plana nasıl yükseltebileceğinizi bize sorun:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Plan iste";
 /* Header shown to help on the purchasin process */
@@ -1221,11 +1221,11 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Hata ayıklama modunu etkinleştir";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Çevrim dışı bölümünde bir günlük oluşturulur (MEGAiOS.log). Günlükler hesabınızla ilgili bilgiler içerebilir.";
+"enableDebugMode_message"="Çevrim dışı bölümünde bir log oluşturulacaktır (MEGAiOS.log). Loglar hesabınızla ilgili bilgiler içerebilir.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Hata ayıklama modunu devre dışı bırak";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="Günlük (MEGAiOS.log), Çevrim dışı bölümünden silinecektir.";
+"disableDebugMode_message"="Log (MEGAiOS.log), Çevrim dışı bölümünden silinecektir.";
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="Bu öğeyi Çevrim dışı bölümünden silmek istediğinizden emin misiniz?";
 /* Alert message shown when the user remove various items from the Offline section */
@@ -1767,7 +1767,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Şundan eski dosyaları kaldır:";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
-"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Daha uzun bir saklama süresi için [S]Pro’ya yükselt[/S]";
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Daha uzun bir saklama süresi için hesabınızı [S]Pro’ya yükseltin[/S]";
 /* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
 "settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="gün";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -2227,9 +2227,9 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
 "settings.userInterface.mediaDiscoverySubFolder.footer"="Alt klasörlerdeki fotoğraflar ve videolar da galeri görünümüne dahil edilecektir";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Son etkinliği gizle";
+"settings.userInterface.hideRecentActivity"="Son etkinlikleri gizle";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Ana sayfadaki son etkinliği gizle.";
+"settings.userInterface.hideRecentActivity.footer"="Ana sayfadaki son etkinlikleri gizle.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Varsayılan";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
@@ -2295,7 +2295,7 @@
 /* Over Disk Quota of must act immediately to save your data */
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Verilerinizi korumak için hemen harekete geçmelisiniz.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
-"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Yükseltmek için <warn>%@</warn> süreniz kaldı.</body>";
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Hesabınızı yükseltmek için <warn>%@</warn> süreniz kaldı.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="Bu sürenin sonunda verileriniz silinebilir.";
 /* Title for action to modify the registered phone number. */
@@ -2573,11 +2573,11 @@
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="Mevcut e-posta adresi";
 /* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Lütfen yükseltin";
+"dialog.storage.odq.title"="Lütfen hesabınızı yükseltin";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Bulut depolamanız neredeyse dolu. Şimdi yükseltin ve %@ TB’ye kadar bulut depolama alanı kazanın.";
+"dialog.storage.almostFull.detail"="Bulut depolamanız neredeyse dolu. Hesabınızı şimdi yükseltin ve %@ TB’ye kadar bulut depolama alanı kazanın.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Bulut depolama alanınız dolu. Depolama alanınızı artırmak ve ek avantajlardan yararlanmak için lütfen bir MEGA Pro planına yükseltin. Depolama sınırınızı aşar ve yükseltme yapmaz veya bazı verileri silmezseniz hesabınız kilitlenebilir. Daha fazla bilgi için lütfen size gönderdiğimiz e-postalara bakın.";
+"dialog.storage.odq.detail"="Bulut depolama alanınız dolu. Depolama alanınızı artırmak ve ek avantajlardan yararlanmak için hesabınızı lütfen bir MEGA Pro planına yükseltin. Depolama sınırınızı aşar ve yükseltme yapmaz veya bazı verileri silmezseniz hesabınız kilitlenebilir. Daha fazla bilgi için lütfen size gönderdiğimiz e-postalara bakın.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Hesap kilitlendi";
 /* Over Disk Quota paywall final title. */
@@ -2587,9 +2587,9 @@
 /* Over Disk Quota paywall final detail message. */
 "dialog.storage.paywall.final.detail"="<paragraph>Hesabınız yükseltilmezse verileriniz yarın silinecektir.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Verilerinizin silinmesini önlemek için <warn>%@</warn> içinde yükseltin.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Verilerinizin silinmesini önlemek için hesabınızı <warn>%@</warn> içinde yükseltin.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Verilerinizi saklamak istiyorsanız bugün yükseltin.</warn></body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Verilerinizi saklamak istiyorsanız hesabınızı bugün yükseltin.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Bonus al";
 /* Backup setup warning title */
@@ -2851,7 +2851,7 @@
 /* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
 "general.filetype.jpeg"="JPEG fotoğrafı";
 /* File extension: .log. Commercial names should be stay on English */
-"general.filetype.log"="Günlük";
+"general.filetype.log"="Log";
 /* File extension: .3mu. Commercial names should be stay on English */
 "general.filetype.m3u"="Medya oynatma listesi";
 /* File extension: .m4a. Commercial names should be stay on English */
@@ -2947,9 +2947,9 @@
 /* Description shown in chat screen if the user didn't allow access to photos */
 "chat.photos.allowPhotoAccessMessage"="Fotoğraf ve video paylaşmak için MEGA’nın galerinize erişmesine izin verin";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.title"="Günlük dosyalarını ekle";
+"help.reportIssue.attachLogFiles.title"="Log dosyalarını ekleyin";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.message"="Hata ayıklamaya yardımcı olmak için tanılama günlük dosyaları eklemek ister misiniz?";
+"help.reportIssue.attachLogFiles.message"="Hata ayıklamaya yardımcı olmak için tanılama log dosyalarını eklemek istiyor musunuz?";
 /* Backups title */
 "backups.title"="Yedeklemeler";
 /* No backups and old inbox files in the account message */
@@ -2991,9 +2991,9 @@
 /* Label to indicate that users' input has not reached the required minimum characters */
 "help.reportIssue.minCharacterNotReach.error"="Açıklama en az 30 karakter olmalı";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
-"help.reportIssue.sendLogFile"="Günlük dosyası gönder";
+"help.reportIssue.sendLogFile"="Log dosyasını gönder";
 /* Title to indicate that the bug report is being uploaded to our support team. */
-"help.reportIssue.uploadingLogFile"="Günlük dosyası yükleniyor";
+"help.reportIssue.uploadingLogFile"="Log dosyası yükleniyor";
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="Raporunuz için teşekkürler";
 /* Confirmation message shown when a bug report is successfully uploaded. */
@@ -3775,17 +3775,17 @@
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Sınırlı kullanılabilir aktarım kotası";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
-"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Bu IP adresi için aktarım kotanızın çoğunu kullandığınız için indirme kesintiye uğrayabilir. Daha fazla kota almak için bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Bu IP adresi için aktarım kotanızın çoğunu kullandığınız için indirme kesintiye uğrayabilir. Daha fazla kota almak için hesabınızı bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
 "transferQuotaError.downloadLimitedQuota.proAccount.message"="Bu hesapta aktarım kotanızın çoğunu kullandığınız için indirme kesintiye uğrayabilir. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile tekrarlanan bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="Aktarım kotası aşıldı";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
-"transferQuotaError.downloadExceededQuota.freeAccount.message"="Bu IP adresi için aktarım kotanız kalmadığından indirmeye devam edemezsiniz. Daha fazla kota almak için bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Bu IP adresi için aktarım kotanız kalmadığından indirmeye devam edemezsiniz. Daha fazla kota almak için hesabınızı bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.downloadExceededQuota.proAccount.message"="Bu hesapta aktarım kotanız kalmadığından indirmeye devam edemezsiniz. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile tekrarlanan bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="Bu IP adresi için aktarım kotanız kalmadığından medyanızın oynatımı durdu. Daha fazla kota almak için bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Bu IP adresi için aktarım kotanız kalmadığından medyanızın oynatımı durdu. Daha fazla kota almak için hesabınızı bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.streamingExceededQuota.proAccount.message"="Bu hesapta aktarım kotanız kalmadığından medyanızın oynatımı durdu. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile tekrarlanan bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
 /* Meeting waiting room leave button */
@@ -4101,7 +4101,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Atla";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Ücretsiz planınızın toplantılarda 60 dakikalık bir sınırı vardır. Pro kullanıcıları sınırsız arama yapabilir ve 1000’e kadar katılımcı ekleyebilir. [A]Hemen yükseltin[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Ücretsiz planınızın toplantılarda 60 dakikalık bir sınırı vardır. Pro kullanıcıları sınırsız arama yapabilir ve 1000’e kadar katılımcı ekleyebilir. [A]Hesabınızı hemen yükseltin[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Sınırlı süreli teklif";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4119,11 +4119,11 @@
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Tamam";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.waitingRoom.warning.limit100Participants"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hemen yükseltin[/A]";
+"meetings.waitingRoom.warning.limit100Participants"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hesabınızı hemen yükseltin[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Bu kısıtlamayı kaldırmak için düzenleyiciden Pro’ya yükseltmesini isteyin.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Bu kısıtlamayı kaldırmak için düzenleyiciden hesabını Pro’ya yükseltmesini isteyin.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazlasına mı ihtiyacınız var? [A]Hemen yükseltin[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazlasına mı ihtiyacınız var? [A]Hesabınızı hemen yükseltin[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Daha fazla zamana mı ihtiyacınız var? Pro planları sınırsız arama sunar.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4133,9 +4133,9 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Bu ücretsiz arama %@ içinde sona erecek";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hemen yükseltin.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hesabınızı hemen yükseltin.[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
-"calls.freePlanLimitWarning.upgradeToProDialog.title"="Sınırsız arama için Pro’ya yükseltin";
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Sınırsız arama için hesabınızı Pro’ya yükseltin";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Aramanız 60 dakika sınırına ulaştı ve sona erdi. Pro kullanıcıları sınırsız arama süresine sahiptir ve 1000’e kadar katılımcı davet edebilir.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
@@ -4411,13 +4411,13 @@
 /* Button title to upgrade when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.button"="Hemen yükselt";
 /* Banner description shown when storage is full, prompting the user to upgrade */
-"account.storage.banner.fullStorageOverQuotaBanner.description"="Veri yüklemeye devam etmek için hemen yükselterek daha fazla depolama alanı edinin.";
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Veri yüklemeye devam etmek için hesabınızı şimdi yükselterek daha fazla depolama alanı edinin.";
 /* Banner title shown when storage is almost full */
 "account.storage.banner.almostFullStorageOverQuotaBanner.title"="Depolama alanınız neredeyse dolu";
 /* Button title to upgrade when storage is almost full */
 "account.storage.banner.almostFullStorageOverQuotaBanner.button"="Hemen yükselt";
 /* Banner description shown when storage is almost full, prompting the user to upgrade */
-"account.storage.banner.almostFullStorageOverQuotaBanner.description"="Veri yüklemeye devam etmek için daha fazla depolama alanı edinmek üzere yükseltin.";
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="Veri yüklemeye devam etmek için daha fazla depolama alanı edinmek üzere hesabınızı yükseltin.";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="Aramalarınızı koruyun";
 /* Description of meetings screen empty view */
@@ -4479,7 +4479,7 @@
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="Medya";
 /* Meetings: Warning banner show in various places about 100 participant limit */
-"meetings.warning.overParticipantLimit"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca mesaj gönderip alabilir. Düzenleyici, bu kısıtlamaları kaldırmak için Pro’ya yükseltebilir.";
+"meetings.warning.overParticipantLimit"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca mesaj gönderip alabilir. Düzenleyici, bu kısıtlamaları kaldırmak için hesabını Pro’ya yükseltebilir.";
 /* Over Disk Quota paywall Upgrade button title */
 "overDiskQuota.paywall.button.upgradeNow"="Hemen yükselt";
 /* Over Disk Quota paywall Make some space button title */
@@ -4499,7 +4499,7 @@
 /* Ad-free experience screen header title */
 "ads.adFree.header.title"="Reklamsız MEGA ister misiniz?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Bol depolama alanı ve daha fazlasını içeren bir Pro planına yükseltin. Pro planlarımız ayda sadece %@ ile başlıyor.";
+"ads.adFree.header.subTitle"="Hesabınızı bol depolama alanı ve daha fazlasını içeren bir Pro planına yükseltin. Pro planlarımız ayda sadece %@ ile başlıyor.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Cömert depolama";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4793,7 +4793,7 @@
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="Depolama alanınız dolu";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="Yüklemeye devam etmek için şimdi yükseltme yapın ve daha fazla depolama alanı edinin";
+"cameraUploads.progress.banner.storageFull.subtitle"="Yüklemeye devam etmek için hesabınızı şimdi yükseltin ve daha fazla depolama alanı edinin";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Hemen yükselt";
 /* Camera Uploads Banner Limited Access Subtitle */
@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Çekim tarihi: önce en eski";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Aktarımlar duraklatıldı. Ağ bağlantısı bekleniyor";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Teklif mevcut değil";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Bu teklif şu anda mevcut değil. Lütfen daha sonra tekrar deneyin.";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[B]’den [A]";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="İçindekiler";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d / %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Bu dosyanın ön izlemesi yapılamıyor";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Bu ön izleme yüklenirken bir sorun oluştu.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Tekrar dene";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="PDF bozuk";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="Dosya bozuk ve açılamıyor. Dosyayı size başka biri gönderdiyse yeni bir kopyasını göndermesini isteyin.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Şifreyi girin";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Bu PDF şifre korumalı.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Geçersiz şifre";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Ses parçası";

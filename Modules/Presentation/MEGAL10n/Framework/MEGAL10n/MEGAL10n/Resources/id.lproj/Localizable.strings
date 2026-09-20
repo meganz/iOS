@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Tanggal diambil: terlama lebih dulu";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Transfer dijeda. Menunggu koneksi jaringan";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d dari %2$d";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Coba lagi";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Masukkan kata sandi";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Password salah.";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] dari [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Penawaran tidak tersedia";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Penawaran ini tidak tersedia saat ini. Coba lagi nanti.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Daftar isi";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Tidak dapat menampilkan pratinjau file ini";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Ada masalah saat memuat pratinjau ini.";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="PDF ini rusak";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="File ini rusak dan tidak dapat dibuka. Jika seseorang mengirimkannya kepadamu, minta mereka mengirim salinan baru.";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="PDF ini dilindungi kata sandi.";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Trek audio";

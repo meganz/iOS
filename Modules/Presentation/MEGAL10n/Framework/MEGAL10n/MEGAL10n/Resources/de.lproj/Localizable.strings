@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByLastModified"="Zuletzt geändert: älteste zuerst";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Transfers pausiert. Warte auf Netzwerkverbindung";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] von [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Angebot nicht verfügbar";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Dieses Angebot ist derzeit nicht verfügbar. Versuchen Sie es später erneut.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Inhalt";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d von %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Für diese Datei kann keine Vorschau angezeigt werden";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Beim Laden der Vorschau ist ein Fehler aufgetreten.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Bitte versuchen Sie es erneut";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="Diese PDF-Datei ist beschädigt";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="Die Datei ist beschädigt und kann nicht geöffnet werden. Wenn Sie die Datei von jemandem erhalten haben, bitten Sie diese Person um eine neue Kopie.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Passwort eingeben";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Diese PDF-Datei ist passwortgeschützt.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Ungültiges Passwort";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Audiospur";

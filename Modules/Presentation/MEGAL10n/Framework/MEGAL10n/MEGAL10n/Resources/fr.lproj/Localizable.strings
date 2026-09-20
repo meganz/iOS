@@ -1473,7 +1473,7 @@
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
 "Circular linkage detected"="Un lien circulaire a été détecté";
 /* Label to show that an error related with an denied access occurs during a SDK operation. */
-"Access denied"="L’accès a été refusé";
+"Access denied"="Accès refusé";
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */
 "Already exists"="Existe déjà";
 /* Label to show that an error related with an Incomplete SDK operation. */
@@ -5208,3 +5208,31 @@
 "cameraUploads.timeline.sort.oldestByLastModified"="Dernière modification : le plus ancien";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Transferts en pause. En attente d'une connexion réseau";
+/* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
+"transfer.progress.percentageOfTotal"="[A] sur [B]";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Offre indisponible";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="Cette offre n’est pas disponible pour le moment. Réessayez plus tard.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Contenu";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d de %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Impossible de prévisualiser ce fichier";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Un problème est survenu lors du chargement de cet aperçu.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Réessayer";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="Ce PDF est endommagé";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="Le fichier est endommagé et ne peut pas être ouvert. Si quelqu'un d'autre vous l'a envoyé, demandez-lui d'envoyer une nouvelle copie.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Entrez le mot de passe";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="Ce PDF est protégé par mot de passe.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Mot de passe invalide";
+/* The Audio track video player option in bottom more menu */
+"videoPlayer.audioTrack.bottomSheet.title"="Piste audio";

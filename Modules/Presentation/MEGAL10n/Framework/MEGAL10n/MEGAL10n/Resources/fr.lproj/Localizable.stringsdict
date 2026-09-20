@@ -4045,9 +4045,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d fichier téléchargé. Consultez Transferts pour voir les fichiers manquants, puis téléchargez-les individuellement.</string>
+        <string>%d fichier téléchargé. Consultez les Transferts pour voir les fichiers manquants, puis téléchargez-les individuellement.</string>
         <key>many</key>
-        <string>%d de fichiers téléchargés. Consultez Transferts pour voir les fichiers manquants, puis téléchargez-les individuellement.</string>
+        <string>%d fichiers téléchargés. Consultez les Transferts pour voir les fichiers manquants, puis téléchargez-les individuellement.</string>
         <key>other</key>
         <string>%d fichiers téléchargés. Consultez Transferts pour voir les fichiers manquants, puis téléchargez-les individuellement.</string>
       </dict>
