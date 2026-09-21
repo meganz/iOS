@@ -117,6 +117,29 @@ class ChatViewController: MessagesViewController {
     var messages: [any MessageType] {
         return chatRoomDelegate.messages
     }
+
+    /// Reloads the whole collection view, dropping the layout's cached sizes first.
+    ///
+    /// ChatViewMessagesFlowLayout caches measured sizes by message id, and a plain reloadData()
+    /// gives it no signal that contents changed, so every reload of the message list has to come
+    /// through here. There are no bare messagesCollectionView.reloadData() calls left in
+    /// ChatRoomDelegate; keep it that way.
+    func reloadMessages() {
+        invalidateCachedMessageSizes()
+        messagesCollectionView.reloadData()
+    }
+
+    /// Like `reloadMessages()` but preserves the scroll position. Used when messages are added
+    /// around existing ones: a history page prepended above, or a finished upload swapped in for
+    /// its placeholder. Existing messages are unchanged, and the layout caches sizes by message id
+    /// rather than by index path, so nothing is dropped here; only the new rows get measured.
+    func reloadMessagesKeepingOffset() {
+        messagesCollectionView.reloadDataAndKeepOffset()
+    }
+
+    private func invalidateCachedMessageSizes() {
+        (messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout)?.invalidateCachedSizes()
+    }
     
     var myUser = User(senderId: String(format: "%llu", MEGAChatSdk.shared.myUserHandle), displayName: "")
 
