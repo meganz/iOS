@@ -595,12 +595,85 @@ struct RevampedCancellableTransferViewModelTests {
         #expect(recordUseCase.recordedBatches.isEmpty)
     }
 
+    // MARK: - Download analytics stats
+
+    @Test("A download of only photos and videos sends the photos and videos event")
+    func downloadStatsForMultimediaOnly() {
+        let analytics = MockAnalyticsEventUseCase()
+        let sut = makeSUT(
+            mediaUseCase: MockMediaUseCase(multimediaNodeNames: ["node.mp3"]),
+            analyticsEventUseCase: analytics,
+            transfers: [CancellableTransfer(handle: 1, name: "node.mp3", type: .download)],
+            transferType: .download)
+
+        sut.dispatch(.onViewReady)
+
+        #expect(analytics.type == .download(.makeAvailableOfflinePhotosVideos))
+    }
+
+    @Test("A download of no photos and videos sends the make available offline event")
+    func downloadStatsForNonMultimediaOnly() {
+        let analytics = MockAnalyticsEventUseCase()
+        let sut = makeSUT(
+            analyticsEventUseCase: analytics,
+            transfers: [CancellableTransfer(handle: 1, name: "node.txt", type: .download)],
+            transferType: .download)
+
+        sut.dispatch(.onViewReady)
+
+        #expect(analytics.type == .download(.makeAvailableOffline))
+    }
+
+    /// The mixed case sends both events. `MockAnalyticsEventUseCase` keeps only the last one,
+    /// so this asserts the second event, exactly like the legacy view model's test does.
+    @Test("A download of photos, videos and other files sends both events")
+    func downloadStatsForMixedSelection() {
+        let analytics = MockAnalyticsEventUseCase()
+        let sut = makeSUT(
+            mediaUseCase: MockMediaUseCase(multimediaNodeNames: ["node.mp3"]),
+            analyticsEventUseCase: analytics,
+            transfers: [
+                CancellableTransfer(handle: 1, name: "node.mp3", type: .download),
+                CancellableTransfer(handle: 2, name: "node.txt", type: .download)
+            ],
+            transferType: .download)
+
+        sut.dispatch(.onViewReady)
+
+        #expect(analytics.type == .download(.makeAvailableOffline))
+    }
+
+    @Test("A chat download sends the stats event")
+    func downloadStatsForChat() {
+        let analytics = MockAnalyticsEventUseCase()
+        let sut = makeSUT(analyticsEventUseCase: analytics, transferType: .downloadChat)
+
+        sut.dispatch(.onViewReady)
+
+        #expect(analytics.type == .download(.makeAvailableOffline))
+    }
+
+    @Test(
+        "An upload or a file link download sends no stats event",
+        arguments: [CancellableTransferType.upload, .downloadFileLink]
+    )
+    func noDownloadStatsForOtherTransferTypes(transferType: CancellableTransferType) {
+        let analytics = MockAnalyticsEventUseCase()
+        let sut = makeSUT(analyticsEventUseCase: analytics, transferType: transferType)
+
+        sut.dispatch(.onViewReady)
+
+        #expect(analytics.type == nil)
+    }
+
     private func makeSUT(
         router: MockRevampedCancellableTransferRouter = MockRevampedCancellableTransferRouter(),
         cancellableTransferUseCase: some CancellableTransferUseCaseProtocol = MockCancellableTransferUseCase(),
         recordOfflineFolderUseCase: MockRecordOfflineFolderUseCase = MockRecordOfflineFolderUseCase(),
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         alertScheduler: MockCancellableTransferAlertScheduler = MockCancellableTransferAlertScheduler(),
+        mediaUseCase: MockMediaUseCase = MockMediaUseCase(),
+        analyticsEventUseCase: MockAnalyticsEventUseCase = MockAnalyticsEventUseCase(),
         transfers: [CancellableTransfer] = [CancellableTransfer(handle: 1, name: "node.txt", type: .download)],
         transferType: CancellableTransferType
     ) -> RevampedCancellableTransferViewModel {
@@ -610,6 +683,8 @@ struct RevampedCancellableTransferViewModelTests {
             recordOfflineFolderUseCase: recordOfflineFolderUseCase,
             overDiskQuotaChecker: overDiskQuotaChecker,
             alertScheduler: alertScheduler,
+            mediaUseCase: mediaUseCase,
+            analyticsEventUseCase: analyticsEventUseCase,
             transfers: transfers,
             transferType: transferType)
     }

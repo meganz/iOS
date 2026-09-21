@@ -115,6 +115,8 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
             overDiskQuotaChecker: makeOverDiskQuotaChecker(),
             alertScheduler: CancellableTransferAlertScheduler(
                 presentHandler: { [weak self] in self?.showTransfersAlert() }),
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
+            analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
             transfers: transfers,
             transferType: transferType
         )

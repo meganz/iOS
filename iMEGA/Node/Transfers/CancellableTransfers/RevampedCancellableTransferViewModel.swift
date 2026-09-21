@@ -18,6 +18,8 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
     private let recordOfflineFolderUseCase: any RecordOfflineFolderUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private let alertScheduler: any CancellableTransferAlertScheduling
+    private let mediaUseCase: any MediaUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let transfers: [CancellableTransfer]
     private let transferType: CancellableTransferType
     
@@ -33,6 +35,8 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
         recordOfflineFolderUseCase: some RecordOfflineFolderUseCaseProtocol,
         overDiskQuotaChecker: some OverDiskQuotaChecking,
         alertScheduler: some CancellableTransferAlertScheduling,
+        mediaUseCase: some MediaUseCaseProtocol,
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
         transfers: [CancellableTransfer],
         transferType: CancellableTransferType
     ) {
@@ -41,6 +45,8 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
         self.recordOfflineFolderUseCase = recordOfflineFolderUseCase
         self.overDiskQuotaChecker = overDiskQuotaChecker
         self.alertScheduler = alertScheduler
+        self.mediaUseCase = mediaUseCase
+        self.analyticsEventUseCase = analyticsEventUseCase
         self.transfers = transfers
         self.transferType = transferType
     }
@@ -60,10 +66,32 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
                 return
             }
             router.prepareTransfersWidget()
+            sendDownloadAnalyticsStats()
             startTransfers()
             alertScheduler.scheduleForPresent()
         case .didTapCancelButton:
             cancelTransfers()
+        }
+    }
+
+    // MARK: - Analytics
+
+    /// Kept identical to the legacy view model, so the revamp does not change the event counts.
+    private func sendDownloadAnalyticsStats() {
+        switch transferType {
+        case .download, .downloadChat: break
+        case .upload, .downloadFileLink: return
+        }
+
+        let multimediaNodesCount = transfers.filter { mediaUseCase.isMultimedia($0.name ?? "") }.count
+
+        if multimediaNodesCount == transfers.count {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOfflinePhotosVideos))
+        } else if multimediaNodesCount == 0 {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOffline))
+        } else {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOfflinePhotosVideos))
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOffline))
         }
     }
 
