@@ -9,24 +9,33 @@ import UIKit
 struct SlideShowRouter: Routing {
     private weak var presenter: UIViewController?
     private let dataProvider: PhotoBrowserDataProvider
+    private let photos: [NodeEntity]?
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
+    /// - Parameter photos: the whole image sequence, for a browser that holds only part of it.
+    ///   `nil` where the provider's own array is already all of it, which is every entry point but
+    ///   the paginated timeline.
     init(
         dataProvider: PhotoBrowserDataProvider,
         presenter: UIViewController?,
+        photos: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.dataProvider = dataProvider
         self.presenter = presenter
+        self.photos = photos
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
     }
+
+    private var photoEntities: [NodeEntity] {
+        photos ?? dataProvider.fetchOnlyPhotoEntities(
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
+    }
     
     private func configSlideShowViewModel() -> SlideShowViewModel {
-        let photoEntities = dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
-        
         var preferenceRepo: PreferenceRepository
         if let slideshowUserDefaults = UserDefaults(suiteName: "slideshow") {
             preferenceRepo = PreferenceRepository(userDefaults: slideshowUserDefaults)
@@ -41,8 +50,6 @@ struct SlideShowRouter: Routing {
     }
 
     private func configLegacySlideShowViewModel() -> LegacySlideShowViewModel {
-        let photoEntities = dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
-
         var preferenceRepo: PreferenceRepository
         if let slideshowUserDefaults = UserDefaults(suiteName: "slideshow") {
             preferenceRepo = PreferenceRepository(userDefaults: slideshowUserDefaults)

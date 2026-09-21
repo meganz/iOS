@@ -30,13 +30,14 @@ func makePaginationContext(
     nodes: [NodeEntity],
     globalStartIndex: Int = 0,
     totalCount: Int = 0,
-    sortOrder: MediaTimelineSortOrderEntity = .newest
+    sortOrder: MediaTimelineSortOrderEntity = .newest,
+    filter: MediaTimelineFilterEntity = MediaTimelineFilterEntity(mediaType: .allMedia, location: .allLocations)
 ) -> PhotoBrowserPaginationContext {
     PhotoBrowserPaginationContext(
         nodes: nodes,
         globalStartIndex: globalStartIndex,
         totalCount: totalCount,
-        filter: MediaTimelineFilterEntity(mediaType: .allMedia, location: .allLocations),
+        filter: filter,
         sortOrder: sortOrder)
 }
 

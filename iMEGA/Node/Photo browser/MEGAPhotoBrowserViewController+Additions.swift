@@ -20,13 +20,17 @@ import UIKit
 
 extension MEGAPhotoBrowserViewController {
     @objc func makeViewModel() -> PhotoBrowserViewModel {
-        makeViewModel(paginator: nil)
+        makeViewModel(paginator: nil, fullListProvider: nil)
     }
 
-    func makeViewModel(paginator: PhotoBrowserPaginator?) -> PhotoBrowserViewModel {
+    func makeViewModel(
+        paginator: PhotoBrowserPaginator?,
+        fullListProvider: PhotoBrowserFullListProvider?
+    ) -> PhotoBrowserViewModel {
         let viewModel = PhotoBrowserViewModel(
             photoBrowserUseCase: PhotoBrowserUseCase(nodeRepository: NodeRepository.newRepo),
-            paginator: paginator)
+            paginator: paginator,
+            fullListProvider: fullListProvider)
         viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
         return viewModel
     }
@@ -81,6 +85,45 @@ extension MEGAPhotoBrowserViewController {
         return prePresentingVC
     }
     
+    /// The queue "previous / next" moves through: every video the browser's query reaches, so a
+    /// paginated browser does not skip the ones it has not paged to.
+    ///
+    /// Falls back to the loaded window whenever the full list cannot stand in for it — including
+    /// when the list no longer holds the node being played, which a deletion, a hide or a move out
+    /// of the query can do. A queue without its own current item has nothing to step from.
+    private func videoQueue(containing node: MEGANode) async -> [MEGANode] {
+        let queue = await fullVideoQueue(containing: node) ?? loadedVideoQueue()
+
+        // Nodes belonging to the folder-link SDK have to be authorized before they can be streamed,
+        // otherwise their local link carries no node key and the HTTP server answers 404
+        let authorized = queue.map { video in
+            api == MEGASdk.sharedFolderLink ? (api.authorizeNode(video) ?? video) : video
+        }
+        return authorized.isEmpty ? [node] : authorized
+    }
+
+    /// Asked for only once the full list is out of the running: on a paginated browser the provider
+    /// holds entities, so every read of `allPhotos` maps the whole window back to SDK nodes.
+    private func loadedVideoQueue() -> [MEGANode] {
+        dataProvider.allPhotos.filter { ($0.name ?? "").fileExtensionGroup.isVideo }
+    }
+
+    private func fullVideoQueue(containing node: MEGANode) async -> [MEGANode]? {
+        guard let entities = await fullMediaList(of: .videos, containing: node.toNodeEntity()) else {
+            return nil
+        }
+        let nodes = await megaNodes(for: entities, in: api)
+        // Mapping drops what the SDK cannot resolve locally, which the check on the entities could
+        // not see.
+        return nodes.contains { $0.handle == node.handle } ? nodes : nil
+    }
+
+    /// Off the main actor: this is one `sdk.node(forHandle:)` per entity, and the full list is
+    /// every video in the account rather than the browser's window.
+    private nonisolated func megaNodes(for entities: [NodeEntity], in sdk: MEGASdk) async -> [MEGANode] {
+        entities.toMEGANodes(in: sdk)
+    }
+
     @objc func playCurrentVideo() async {
         guard let node = await dataProvider.currentPhoto() else {
             return
@@ -95,19 +138,13 @@ extension MEGAPhotoBrowserViewController {
             if await isBlockedWhileOffline(node) { return }
 
             if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
-                // Nodes belonging to the folder-link SDK have to be authorized before they can be streamed,
-                // otherwise their local link carries no node key and the HTTP server answers 404
-                let allVideoNodes = dataProvider.allPhotos.filter { node in
-                    let fileName = node.name ?? ""
-                    return fileName.fileExtensionGroup.isVideo
-                }
-                .map { node in
-                    api == MEGASdk.sharedFolderLink ? (api.authorizeNode(node) ?? node) : node
-                }
+                let allVideoNodes = await videoQueue(containing: node)
+                // Dismissed while the queue was being fetched: nothing left to present from.
+                guard viewIfLoaded?.window != nil else { return }
                 let playerViewModel = MEGAPlayerViewModel(
                     player: MEGAAVPlayer.liveValue(
                         for: node,
-                        within: allVideoNodes.isEmpty ? [node] : allVideoNodes,
+                        within: allVideoNodes,
                     )
                 )
                 let playerVC = MEGAPlayerViewController(
@@ -300,7 +337,33 @@ extension MEGAPhotoBrowserViewController {
 
     @objc func openSlideShow() {
         DIContainer.tracker.trackAnalyticsEvent(with: PlaySlideshowMenuToolbarEvent())
-        SlideShowRouter(dataProvider: dataProvider, presenter: self).start()
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let photos = await fullMediaList(of: .images, containing: dataProvider.currentPhotoNodeEntity)
+            // Dismissed while the query ran: there is nothing to present from any more.
+            guard viewIfLoaded?.window != nil else { return }
+            SlideShowRouter(dataProvider: dataProvider, presenter: self, photos: photos).start()
+        }
+    }
+
+    /// The whole sequence of `mediaType`, for the consumers that cannot work from the loaded
+    /// window. `nil` leaves the caller on the array it already has.
+    ///
+    /// Behind a progress indicator: on a paginated browser this is a query over the whole account,
+    /// and the control the user pressed would otherwise sit there looking dead. The indicator
+    /// comes down with the query either way — leaving the browser cancels it, so it never hangs
+    /// over the screen the user moved on to.
+    private func fullMediaList(
+        of mediaType: MediaTimelineFilterEntity.MediaType,
+        containing node: NodeEntity?
+    ) async -> [NodeEntity]? {
+        guard viewModel.loadsFullMediaList else { return nil }
+        SVProgressHUD.show()
+        defer { SVProgressHUD.dismiss() }
+        guard let nodes = await viewModel.fullMediaList(of: mediaType),
+              let node, nodes.contains(node)
+        else { return nil }
+        return nodes
     }
     
     @objc func isSlideShowEnabled() async -> Bool {
@@ -541,7 +604,8 @@ extension MEGAPhotoBrowserViewController {
             sdk: sdk,
             displayMode: displayMode,
             isFromSharedItem: isFromSharedItem,
-            paginator: nil)
+            paginator: nil,
+            fullListProvider: nil)
     }
 
     /// Opens on a paginated sequence: the browser is handed the contiguous run around the tapped
@@ -564,7 +628,8 @@ extension MEGAPhotoBrowserViewController {
             sdk: sdk,
             displayMode: displayMode,
             isFromSharedItem: false,
-            paginator: PhotoBrowserPaginator(context: context, useCase: mediaTimelineUseCase))
+            paginator: PhotoBrowserPaginator(context: context, useCase: mediaTimelineUseCase),
+            fullListProvider: PhotoBrowserFullListProvider(context: context, useCase: mediaTimelineUseCase))
     }
 
     private static func photoBrowser(
@@ -572,7 +637,8 @@ extension MEGAPhotoBrowserViewController {
         sdk: MEGASdk,
         displayMode: DisplayMode,
         isFromSharedItem: Bool,
-        paginator: PhotoBrowserPaginator?
+        paginator: PhotoBrowserPaginator?,
+        fullListProvider: PhotoBrowserFullListProvider?
     ) -> MEGAPhotoBrowserViewController {
         let browser = MEGAPhotoBrowserViewController.photoBrowser(
             with: dataProvider,
@@ -583,7 +649,9 @@ extension MEGAPhotoBrowserViewController {
         // Ahead of the lazy getter that would otherwise make one without it. Nothing has read the
         // view model at this point: the storyboard has only been instantiated.
         if let paginator {
-            browser.viewModel = browser.makeViewModel(paginator: paginator)
+            browser.viewModel = browser.makeViewModel(
+                paginator: paginator,
+                fullListProvider: fullListProvider)
         }
         browser.needsReload = true
         return browser

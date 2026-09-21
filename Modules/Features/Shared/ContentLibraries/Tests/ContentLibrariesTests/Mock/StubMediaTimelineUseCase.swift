@@ -16,6 +16,10 @@ actor MediaTimelinePageScript {
     private(set) var backwardAnchors: [NodeEntity] = []
     private(set) var limits: [Int] = []
 
+    /// The scope each forward call ran under, for the callers that narrow it rather than continue
+    /// the browser's own.
+    private(set) var forwardQueries: [(filter: MediaTimelineFilterEntity, sortOrder: MediaTimelineSortOrderEntity)] = []
+
     /// Run while a fetch on that side is suspended, so a test can change the paginator's state
     /// mid-request. One-shot: cleared before it runs, so a second fetch on the same side proceeds
     /// straight through — which is what lets a test park one request and then issue another.
@@ -45,8 +49,14 @@ actor MediaTimelinePageScript {
     var forwardCallCount: Int { forwardAnchors.count }
     var backwardCallCount: Int { backwardAnchors.count }
 
-    fileprivate func nextForward(anchor: NodeEntity?, limit: Int) async throws -> [NodeEntity] {
+    fileprivate func nextForward(
+        filter: MediaTimelineFilterEntity,
+        sortOrder: MediaTimelineSortOrderEntity,
+        anchor: NodeEntity?,
+        limit: Int
+    ) async throws -> [NodeEntity] {
         forwardAnchors.append(anchor)
+        forwardQueries.append((filter, sortOrder))
         limits.append(limit)
         let page: Result<[NodeEntity], any Error> = forwardPages.isEmpty ? .success([]) : forwardPages.removeFirst()
         let hook = onForwardFetch
@@ -75,7 +85,8 @@ struct StubMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         after lastNode: NodeEntity?,
         limit: Int
     ) async throws -> [NodeEntity] {
-        try await script.nextForward(anchor: lastNode, limit: limit)
+        try await script.nextForward(
+            filter: filter, sortOrder: sortOrder, anchor: lastNode, limit: limit)
     }
 
     func mediaPage(

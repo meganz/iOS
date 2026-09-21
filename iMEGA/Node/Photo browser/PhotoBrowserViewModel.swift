@@ -80,6 +80,16 @@ import NodeBackgroundDownloader
     /// entry point on exactly the path it is on today.
     private let paginator: PhotoBrowserPaginator?
 
+    /// Injected alongside the paginator, for the consumers that need the whole sequence rather
+    /// than the loaded window. `nil` everywhere else, where the loaded array already is the whole
+    /// sequence.
+    private let fullListProvider: PhotoBrowserFullListProvider?
+
+    /// The full list query in flight. Held so it can be cancelled when the browser goes away: the
+    /// query is unbounded, and the progress indicator the caller put up for it would otherwise
+    /// stay over whatever screen the user left for until the search finished on its own.
+    @MainActor private var fullListTask: Task<[NodeEntity], any Error>?
+
     /// How close to an end of the loaded range the current photo has to get before the next page
     /// is requested. Provisional until measured against thumbnail prefetch on device.
     private let prefetchDistance = 10
@@ -127,6 +137,7 @@ import NodeBackgroundDownloader
         tracker: some AnalyticsTracking = DIContainer.tracker,
         photoBrowserUseCase: some PhotoBrowserUseCaseProtocol,
         paginator: PhotoBrowserPaginator? = nil,
+        fullListProvider: PhotoBrowserFullListProvider? = nil,
         makeDownloadUseCase: @escaping (MEGANode) -> any PhotoBrowserNodeDownloadUseCaseProtocol = {
             PhotoBrowserViewModel.makeDownloadUseCase(megaNode: $0)
         }
@@ -134,7 +145,42 @@ import NodeBackgroundDownloader
         self.tracker = tracker
         self.photoBrowserUseCase = photoBrowserUseCase
         self.paginator = paginator
+        self.fullListProvider = fullListProvider
         self.makeDownloadUseCase = makeDownloadUseCase
+    }
+
+    /// Whether asking for a full media list costs a query. `false` means the caller already holds
+    /// the whole sequence and ``fullMediaList(of:)`` has nothing to add.
+    var loadsFullMediaList: Bool { fullListProvider != nil }
+
+    /// Every node of `mediaType` in this browsing session, or `nil` when the caller should keep
+    /// using the array it already has.
+    ///
+    /// `nil` covers three cases that mean the same thing to a caller: this browser was handed its
+    /// whole sequence up front, the query failed, or it came back empty. Empty is not taken at
+    /// face value — the browser is showing media of its own, so a list holding none is a result to
+    /// fall back from rather than one to play.
+    @MainActor
+    func fullMediaList(of mediaType: MediaTimelineFilterEntity.MediaType) async -> [NodeEntity]? {
+        guard let fullListProvider else { return nil }
+        let task = Task { try await fullListProvider.fullList(of: mediaType) }
+        fullListTask = task
+        defer { if fullListTask == task { fullListTask = nil } }
+        do {
+            let nodes = try await task.value
+            // A cancelled search answers with an empty list rather than an error, so neither
+            // outcome below is a result worth reporting once the caller has gone.
+            guard !task.isCancelled else { return nil }
+            guard nodes.isNotEmpty else {
+                MEGALogWarning("[Photo Browser] the full \(mediaType) list came back empty")
+                return nil
+            }
+            return nodes
+        } catch {
+            guard !task.isCancelled else { return nil }
+            MEGALogError("[Photo Browser] failed to load the full \(mediaType) list: \(error)")
+            return nil
+        }
     }
 
     /// `i of n` for the title, or `nil` when this browser does not paginate — the caller then falls
@@ -348,6 +394,9 @@ import NodeBackgroundDownloader
             self?.isVisible = false
             self?.flushHeldPages()
             self?.cancelPageRequests()
+            // Same for a full list query: it was started for a screen that is on its way out, and
+            // its progress indicator has no business outliving that screen.
+            self?.fullListTask?.cancel()
         }
     }
 
