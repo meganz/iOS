@@ -20,11 +20,13 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
     }
 
     func header(accountDetails: AccountDetailsEntity?, canUpgrade: Bool) -> QuotaDialogHeader {
-        QuotaDialogHeader(
+        let quota = accountDetails.flatMap { currentQuotaProgress(accountDetails: $0) }
+
+        return QuotaDialogHeader(
             image: MEGAAssets.Image.quotaWarning,
-            title: title(accountDetails: accountDetails),
+            title: title(quota: quota),
             subtitle: .attributed(
-                text: subtitleText(canUpgrade: canUpgrade),
+                text: subtitleText(canUpgrade: canUpgrade, hasQuota: quota != nil),
                 links: [canUpgrade ? learnMoreAttribute : megaIoLinkAttribute]
             )
         )
@@ -67,29 +69,30 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         )
     }
 
-    private func title(accountDetails: AccountDetailsEntity?) -> String {
+    private func title(quota: QuotaProgress?) -> String {
         switch severity {
         case .limitedDownload, .limitedStreaming:
-            if let accountDetails, let quota = currentQuotaProgress(accountDetails: accountDetails) {
+            if let quota {
                 Strings.Localizable.QuotaWarning.Transfer.PercentUsed.title(quota.usedPercentage)
             } else {
-                Strings.Localizable.QuotaWarning.Transfer.RunningLow.title
+                Strings.Localizable.QuotaWarning.Transfer.Limited.title
             }
         case .downloadExceeded, .streamingExceeded:
             Strings.Localizable.QuotaWarning.Transfer.Exceeded.title
         }
     }
 
-    private func subtitleText(canUpgrade: Bool) -> String {
+    /// The running-low copy does not split by download vs streaming: one wording covers both.
+    private func subtitleText(canUpgrade: Bool, hasQuota: Bool) -> String {
         switch severity {
-        case .limitedDownload:
-            canUpgrade
-                ? Strings.Localizable.QuotaWarning.Transfer.LimitedDownload.subtitle(learnMoreTitle)
-                : Strings.Localizable.QuotaWarning.Transfer.LimitedDownload.Manage.subtitle(megaIoLinkText)
-        case .limitedStreaming:
-            canUpgrade
-                ? Strings.Localizable.QuotaWarning.Transfer.LimitedStreaming.subtitle(learnMoreTitle)
-                : Strings.Localizable.QuotaWarning.Transfer.LimitedStreaming.Manage.subtitle(megaIoLinkText)
+        case .limitedDownload, .limitedStreaming:
+            if !canUpgrade {
+                Strings.Localizable.QuotaWarning.Transfer.Limited.Manage.subtitle(megaIoLinkText)
+            } else if hasQuota {
+                Strings.Localizable.QuotaWarning.Transfer.Limited.subtitle(learnMoreTitle)
+            } else {
+                Strings.Localizable.QuotaWarning.Transfer.Limited.Free.subtitle(learnMoreTitle)
+            }
         case .downloadExceeded:
             canUpgrade
                 ? Strings.Localizable.QuotaWarning.Transfer.DownloadExceeded.subtitle(learnMoreTitle)
