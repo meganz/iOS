@@ -182,7 +182,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                             MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
                         }
                         
-                        chatViewController.messagesCollectionView.reloadData()
+                        chatViewController.reloadMessages()
                         // 1 because the "unread text" notification cell should be shown as well.
                         let scrollingIndexPath = IndexPath(item: 0, section: chatMessages.count - chatRoom.unreadCount - 1)
                         chatViewController.messagesCollectionView.scrollToItem(at: scrollingIndexPath,
@@ -192,7 +192,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                         return
                     }
                     
-                    chatViewController?.messagesCollectionView.reloadData()
+                    chatViewController?.reloadMessages()
                     chatViewController?.scrollToBottom(animated: false)
                     return
                 }
@@ -200,7 +200,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                 chatMessages = historyMessages + chatMessages
                 historyMessages.removeAll()
                 
-                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                chatViewController?.reloadMessagesKeepingOffset()
                 chatViewController?.showOrHideJumpToBottom()
                 loadingState = false
             }
@@ -229,7 +229,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
             if message.type == .truncate {
                 chatMessages.removeAll()
                 updateUnreadMessagesLabel(unreads: 0)
-                chatViewController?.messagesCollectionView.reloadData()
+                chatViewController?.reloadMessages()
             }
             
             // [MEET-522]
@@ -322,7 +322,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                             try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
                         }
                         
-                        chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                        chatViewController?.reloadMessagesKeepingOffset()
                         if isLastSectionVisible() {
                             chatViewController?.scrollToBottom(animated: false)
                         }
@@ -395,7 +395,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
         if message.type == .truncate {
             updateUnreadMessagesLabel(unreads: 0)
             chatMessages.removeAll()
-            chatViewController?.messagesCollectionView.reloadData()
+            chatViewController?.reloadMessages()
             
             insertMessage(message)
         }
@@ -490,7 +490,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
     func resetChatRoom() {
         isChatRoomOpen = false
         chatMessages = []
-        chatViewController?.messagesCollectionView.reloadData()
+        chatViewController?.reloadMessages()
         ChatRoomRepository.newRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: self)
     }
     
@@ -502,7 +502,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
             } else {
                 chatMessages[index] = ChatNotificationMessage(type: .unreadMessage(unreads))
             }
-            chatViewController?.messagesCollectionView.reloadData()
+            chatViewController?.reloadMessages()
         }
     }
     
@@ -542,7 +542,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
         }
         
         chatMessages.append(ChatMessage(message: message, chatRoom: chatRoom))
-        messagesCollectionView.reloadData()
+        chatViewController?.reloadMessages()
         
         if chatMessages.count == 1 {
             if chatViewController?.keyboardVisible ?? false {
@@ -564,14 +564,14 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
         transfers.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
         guard let chatViewController = self.chatViewController else { return }
         if messages.count == 1 {
-            chatViewController.messagesCollectionView.reloadData()
+            chatViewController.reloadMessages()
             if chatViewController.keyboardVisible {
                 chatViewController.additionalBottomInset = 0
             }
             chatViewController.scrollToBottom()
             return
         }
-        chatViewController.messagesCollectionView.reloadData()
+        chatViewController.reloadMessages()
         chatViewController.scrollToBottom()
     }
     
@@ -789,71 +789,67 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             insertTransfer(transfer)
             chatViewController?.checkTransferPauseStatus()
         } else if appData.contains("downloadAttachToMessageID") {
-            let messageID = transfer.mnz_extractMessageIDFromAppData()
-            
-            chatMessages = chatMessages.map({ (chatMessage) -> any MessageType in
-                
-                if var chatMessage = chatMessage as? ChatMessage, chatMessage.messageId ==  messageID {
-                    chatMessage.transfer = transfer
-                    return chatMessage
-                }
-                
-                return chatMessage
-            })
-            
-            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            if isLastSectionVisible() {
-                chatViewController?.scrollToBottom(animated: false)
-            }
+            attach(transfer, toMessageWithID: transfer.mnz_extractMessageIDFromAppData())
         }
     }
-    
+
     private func handleOnTransferFinish(_ transfer: MEGATransfer) {
         guard let appData = transfer.appData else {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.map { (chatMessage) -> ChatMessage in
-                
-                if chatMessage.transfer?.tag == transfer.tag {
-                    return ChatMessage(transfer: transfer, chatRoom: chatRoom)
-                }
-                
-                return chatMessage
-            }
+            replaceTransfer(taggedWith: transfer.tag, with: transfer)
         } else if appData.contains("downloadAttachToMessageID") {
-            let messageID = transfer.mnz_extractMessageIDFromAppData()
-            
-            chatMessages = chatMessages.map({ (chatMessage) -> any MessageType in
-                
-                if var chatMessage = chatMessage as? ChatMessage, chatMessage.messageId ==  messageID {
-                    chatMessage.transfer = transfer
-                    return chatMessage
-                }
-                
-                return chatMessage
-            })
-            
-            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            if isLastSectionVisible() {
-                chatViewController?.scrollToBottom(animated: false)
-            }
+            attach(transfer, toMessageWithID: transfer.mnz_extractMessageIDFromAppData())
         }
     }
-    
+
     private func handleOnTransferUpdate(_ transfer: MEGATransfer) {
-        guard let appData = transfer.appData else {
+        guard let appData = transfer.appData, appData.contains("\(chatRoom.chatId)") else {
             return
         }
-        if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.map { (chatMessage) -> ChatMessage in
-                
-                if chatMessage.transfer?.tag == transfer.tag {
-                    return ChatMessage(transfer: transfer, chatRoom: chatRoom)
-                }
-                
-                return chatMessage
-            }
+
+        replaceTransfer(taggedWith: transfer.tag, with: transfer)
+    }
+
+    /// Attaches `transfer` to the one message it belongs to and refreshes only that row.
+    ///
+    /// This used to rebuild the whole `chatMessages` array and then call `reloadDataAndKeepOffset()`,
+    /// which discards the item-sizing dictionary UIKit keeps and forces a synchronous re-layout of
+    /// every loaded message. Paging in a page of history starts a thumbnail download per attachment,
+    /// and each one lands here on start and again on finish, so N attachments cost 2N full
+    /// re-layouts.
+    private func attach(_ transfer: MEGATransfer, toMessageWithID messageID: String) {
+        guard let index = chatMessages.firstIndex(where: { ($0 as? ChatMessage)?.messageId == messageID }),
+              var chatMessage = chatMessages[index] as? ChatMessage else {
+            return
         }
+
+        chatMessage.transfer = transfer
+        chatMessages[index] = chatMessage
+
+        // One message is one section, see ChatViewController.numberOfSections(in:). The bounds check
+        // covers the window between mutating chatMessages elsewhere and telling the collection view
+        // about it; a row the collection view does not know about yet picks the transfer up when it
+        // is first created.
+        guard let collectionView = chatViewController?.messagesCollectionView,
+              index < collectionView.numberOfSections else {
+            return
+        }
+
+        collectionView.reloadItems(at: [IndexPath(item: 0, section: index)])
+
+        if isLastSectionVisible() {
+            chatViewController?.scrollToBottom(animated: false)
+        }
+    }
+
+    /// Tags are unique per transfer, so the first match is the only one.
+    private func replaceTransfer(taggedWith tag: Int, with transfer: MEGATransfer) {
+        guard let index = transfers.firstIndex(where: { $0.transfer?.tag == tag }) else {
+            return
+        }
+
+        transfers[index] = ChatMessage(transfer: transfer, chatRoom: chatRoom)
     }
 }
