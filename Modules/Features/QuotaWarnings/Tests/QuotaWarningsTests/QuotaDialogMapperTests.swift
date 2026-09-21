@@ -120,29 +120,25 @@ struct TransferQuotaDialogMapperTests {
         )
     }
 
-    @Test func header_limitedDownloadFreeAccount_showsRunningLowTitle() {
-        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
+    /// A free account has no transfer figure to quote, so it gets the limited copy, not a percentage.
+    @Test(arguments: [TransferQuotaSeverity.limitedDownload, .limitedStreaming])
+    func header_limitedFreeAccount_showsLimitedTitleAndFreeCopy(severity: TransferQuotaSeverity) {
+        let sut = TransferQuotaDialogMapper(severity: severity)
         let header = sut.header(accountDetails: .build(proLevel: .free), canUpgrade: true)
 
-        #expect(header.title == "Your transfer quota is running low")
-        #expect(header.subtitle.text == "As a result, your download may be interrupted. Upgrade your plan to get more transfer quota. Learn more")
+        #expect(header.title == "Limited transfer quota")
+        #expect(header.subtitle.text == "Your transfer quota may be running low. As a result, your downloads or streams may be interrupted. Upgrade your plan for more transfer quota. Learn more")
         #expect(header.subtitle.links.count == 1)
     }
 
-    @Test func header_limitedStreaming_showsRunningLowTitleAndStreamingCopy() {
-        let sut = TransferQuotaDialogMapper(severity: .limitedStreaming)
-        let header = sut.header(accountDetails: .build(proLevel: .free), canUpgrade: true)
-
-        #expect(header.title == "Your transfer quota is running low")
-        #expect(header.subtitle.text == "As a result, media playback may be interrupted. Upgrade your plan to get more transfer quota. Learn more")
-        #expect(header.subtitle.links.count == 1)
-    }
-
-    @Test func header_limitedDownloadPaidAccount_showsPercentTitle() {
-        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
+    @Test(arguments: [TransferQuotaSeverity.limitedDownload, .limitedStreaming])
+    func header_limitedPaidAccount_showsPercentTitleAndUpgradeCopy(severity: TransferQuotaSeverity) {
+        let sut = TransferQuotaDialogMapper(severity: severity)
         let header = sut.header(accountDetails: .build(transferUsed: 80, transferMax: 100, proLevel: .proI), canUpgrade: true)
 
         #expect(header.title == "You’ve used 80% of your transfer quota")
+        #expect(header.subtitle.text == "Upgrade your plan to get more transfer quota. Learn more")
+        #expect(header.subtitle.links.count == 1)
     }
 
     @Test func header_exceeded_showsExceededTitle() {
@@ -153,8 +149,8 @@ struct TransferQuotaDialogMapperTests {
     }
 
     @Test(arguments: [
-        (TransferQuotaSeverity.limitedDownload, "As a result, your download may be interrupted. Manage your plan at mega.io for more transfer quota"),
-        (.limitedStreaming, "As a result, media playback may be interrupted. Manage your plan at mega.io for more transfer quota"),
+        (TransferQuotaSeverity.limitedDownload, "Manage your plan at mega.io for more transfer quota"),
+        (.limitedStreaming, "Manage your plan at mega.io for more transfer quota"),
         (.downloadExceeded, "To continue your download, manage your plan at mega.io for more transfer quota"),
         (.streamingExceeded, "To continue media playback, manage your plan at mega.io for more transfer quota")
     ])
@@ -169,8 +165,8 @@ struct TransferQuotaDialogMapperTests {
     // MARK: - Signed out
 
     @Test(arguments: [
-        (TransferQuotaSeverity.limitedDownload, "Your transfer quota is running low"),
-        (.limitedStreaming, "Your transfer quota is running low"),
+        (TransferQuotaSeverity.limitedDownload, "Limited transfer quota"),
+        (.limitedStreaming, "Limited transfer quota"),
         (.downloadExceeded, "Transfer quota exceeded"),
         (.streamingExceeded, "Transfer quota exceeded")
     ])
