@@ -2,6 +2,7 @@ import AVFoundation
 @preconcurrency import Combine
 import Foundation
 import MEGAAppSDKRepo
+import MEGADomain
 
 // MARK: - Protocol
 
@@ -53,6 +54,9 @@ final class PlaybackEngine {
     private var isPlaybackIntended = false
     private var isInterrupted = false
 
+    /// The address the loaded item was built from, before any AirPlay rewrite
+    private var currentURL: URL?
+
     /// Target of the in-flight seek
     private var pendingSeekTarget: TimeInterval?
     /// Identifies the latest seek, so a superseded one cannot open the gate early.
@@ -63,6 +67,7 @@ final class PlaybackEngine {
         observeTimeControlStatus()
         startPeriodicTimeObserver()
         observeAudioInterruption()
+        observeExternalPlayback()
     }
     
     isolated deinit {
@@ -116,7 +121,8 @@ extension PlaybackEngine {
     func play(url: URL) {
         resetSeekGate()
         configureAudioSession()
-        let item = AVPlayerItem(url: url)
+        currentURL = url
+        let item = AVPlayerItem(url: itemURL(for: url))
         itemObservations.removeAll()
         observeDuration(of: item)
         observeEnd(of: item)
@@ -134,6 +140,7 @@ extension PlaybackEngine {
         itemObservations.removeAll()
         resetSeekGate()
         player.pause()
+        currentURL = nil
         player.replaceCurrentItem(with: nil)
         isPlaybackIntended = false
         currentTimeSubject.send(0)
@@ -209,6 +216,7 @@ extension PlaybackEngine {
     func stop() {
         itemObservations.removeAll()
         player.pause()
+        currentURL = nil
         player.replaceCurrentItem(with: nil)
         setPlaybackSpeed(1)
         isPlaybackIntended = false
@@ -218,6 +226,65 @@ extension PlaybackEngine {
         currentTimeSubject.send(0)
         durationSubject.send(nil)
         playbackStatusSubject.send(.idle)
+    }
+}
+
+// MARK: - External Playback (AirPlay)
+
+extension PlaybackEngine {
+    private var isPlayingLocalFile: Bool {
+        currentURL?.isFileURL == true
+    }
+
+    private func observeExternalPlayback() {
+        player.publisher(for: \.isExternalPlaybackActive)
+            .removeDuplicates()
+            // Pairs each value with the one before it, so the initial emission — which describes no
+            // transition — drops out and only a genuine flip reaches the sink.
+            .scan((old: false, new: false)) { state, value in
+                (old: state.new, new: value)
+            }
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                guard state.old != state.new else { return }
+                guard let self, !isPlayingLocalFile else { return }
+                let activated = state.new
+
+                let isPlaying = player.rate > 0
+                player.pause()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    replaceURLForExternalPlayback(activated: activated)
+                    if isPlaying {
+                        player.play()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    private func itemURL(for url: URL) -> URL {
+        guard player.isExternalPlaybackActive, !url.isFileURL else { return url }
+        return url.updatedURLWithCurrentAddress()
+    }
+
+    private func replaceURLForExternalPlayback(activated: Bool) {
+        guard let currentURL else { return }
+        replaceCurrentItemURL(to: activated ? currentURL.updatedURLWithCurrentAddress() : currentURL)
+    }
+
+    private func replaceCurrentItemURL(to url: URL) {
+        let resumeTime = player.currentTime()
+        let item = AVPlayerItem(url: url)
+        itemObservations.removeAll()
+        observeDuration(of: item)
+        observeEnd(of: item)
+        observeFailure(of: item)
+        player.replaceCurrentItem(with: item)
+
+        guard resumeTime.isValid else { return }
+        player.seek(to: resumeTime)
     }
 }
 
