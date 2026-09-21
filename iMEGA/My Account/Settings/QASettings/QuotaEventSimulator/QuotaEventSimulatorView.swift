@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGASwift
@@ -40,16 +41,39 @@ struct QuotaEventSimulatorView: View {
 
     @State private var isPresentingDialog = false
 
-    // MARK: - Display limit (the real once-a-day-per-trigger cap on the storage almost-full dialog)
-    /// A capped trigger, identified by the label shown in the Display limit section.
+    // MARK: - Display limit (the real once-a-day-per-trigger cap on the almost-full dialogs)
+    /// A capped trigger, identified by the label shown in the Display limit section. Holds closures so
+    /// storage and transfer triggers — which have different QA seams — can share one row.
     private struct CappedTrigger: Identifiable {
         let id: String
-        let useCase: StorageAlmostFullDialogUseCase
+        let allowanceState: () -> QADailyAllowanceState
+        let setLastShownDate: (Date) -> Void
+        let resetDailyCount: () -> Void
+
+        static func storage(_ id: String, _ useCase: StorageAlmostFullDialogUseCase) -> CappedTrigger {
+            CappedTrigger(
+                id: id,
+                allowanceState: { useCase._allowanceState },
+                setLastShownDate: useCase._setLastShownDate,
+                resetDailyCount: useCase._resetDailyCount
+            )
+        }
+
+        static func transfer(_ trigger: QATransferAlmostFullTrigger) -> CappedTrigger {
+            CappedTrigger(
+                id: trigger.title,
+                allowanceState: { trigger._allowanceState },
+                setLastShownDate: trigger._setLastShownDate,
+                resetDailyCount: trigger._resetDailyCount
+            )
+        }
     }
 
     private static let cappedTriggers: [CappedTrigger] = [
-        CappedTrigger(id: "On app open", useCase: .onAppOpen),
-        CappedTrigger(id: "After a successful upload", useCase: .afterSuccessfulUpload)
+        .storage("On app open", .onAppOpen),
+        .storage("After a successful upload", .afterSuccessfulUpload),
+        .transfer(.limitedDownload),
+        .transfer(.limitedStreaming)
     ]
 
     // MARK: - Real SDK storage event (goes through AppDelegate onEvent:, unlike Start)
@@ -72,6 +96,7 @@ struct QuotaEventSimulatorView: View {
             recommendationSection
             startSection
             storageEventSection
+            transferStateSection
             displayLimitSection
         }
         .listStyle(.grouped)
@@ -81,7 +106,7 @@ struct QuotaEventSimulatorView: View {
         .alert("Daily limit reset", isPresented: $isPresentingLimitResetAlert) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("Today's counts are cleared. The storage almost-full dialog can show once again "
+            Text("Today's counts are cleared. The almost-full dialog can show once again "
                  + "from each real trigger.")
         }
     }
@@ -224,7 +249,25 @@ struct QuotaEventSimulatorView: View {
         }
     }
 
-    /// The real app caps the storage almost-full dialog at once a calendar day *per trigger*. Reports
+    /// Notifies the real download transfer-quota state provider, so the production monitor runs the
+    /// limited-download path — including its daily allowance below. Unlike **Start** above.
+    private var transferStateSection: some View {
+        Section {
+            Button("Send orange download state") {
+                DownloadTransferQuotaStateProvider.shared.notify(state: .orange)
+            }
+        } header: {
+            header("Send transfer quota state")
+        } footer: {
+            Text("Drives the limited-download dialog through the real monitor, so tapping twice in a day "
+                 + "shows it once. Needs the quota warnings revamp phase two flag on, otherwise the "
+                 + "monitor is not running and nothing happens. Limited streaming has no injection point "
+                 + "— it reads real SDK streaming events — so use the rows below to inspect its count.")
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        }
+    }
+
+    /// The real app caps each almost-full dialog at once a calendar day *per trigger*. Reports
     /// whether each allowance is spent, and clears them on demand.
     /// Note neither affects **Start** above, which presents the dialog directly rather than through
     /// the real trigger, so the cap never applies there.
@@ -240,7 +283,7 @@ struct QuotaEventSimulatorView: View {
                         displayedComponents: [.date, .hourAndMinute]
                     )
                     Button("Clear this trigger's count") {
-                        trigger.useCase._resetDailyCount()
+                        trigger.resetDailyCount()
                         refreshDisplayLimitStatus()
                     }
                 } label: {
@@ -252,11 +295,16 @@ struct QuotaEventSimulatorView: View {
                 refreshDisplayLimitStatus()
                 isPresentingLimitResetAlert = true
             }
+            Button("Reset transfer almost-full daily limits") {
+                QATransferAlmostFullTrigger._resetAllDailyCounts()
+                refreshDisplayLimitStatus()
+                isPresentingLimitResetAlert = true
+            }
         } header: {
             header("Display limit")
         } footer: {
-            Text("The storage almost-full dialog shows at most once a day (00:00–23:59) per trigger, and "
-                 + "the two triggers have separate allowances. To test the same-day rule without waiting "
+            Text("Each almost-full dialog shows at most once a day (00:00–23:59) per trigger, and every "
+                 + "trigger has its own allowance. To test the same-day rule without waiting "
                  + "for midnight: trigger the dialog once, then move Last shown to another day — the count "
                  + "stays, but it no longer counts as today, so the dialog can show again. "
                  + "Trigger points without an allowance — over-quota error, album import — are "
@@ -288,7 +336,7 @@ struct QuotaEventSimulatorView: View {
             get: { lastShownDateEdits[trigger.id] ?? Date() },
             set: { newDate in
                 lastShownDateEdits[trigger.id] = newDate
-                trigger.useCase._setLastShownDate(newDate)
+                trigger.setLastShownDate(newDate)
                 refreshDisplayLimitStatus()
             }
         )
@@ -298,7 +346,7 @@ struct QuotaEventSimulatorView: View {
     /// counts only ever move via real triggers elsewhere in the app.
     private func refreshDisplayLimitStatus() {
         for trigger in Self.cappedTriggers {
-            let state = trigger.useCase._allowanceState
+            let state = trigger.allowanceState()
             allowanceStates[trigger.id] = state
             // Keep whatever QA already picked when nothing is stored, so a cleared trigger does not
             // snap the picker back to now mid-edit.
