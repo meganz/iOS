@@ -52,9 +52,8 @@ public struct AudioStreamingRepository: AudioStreamingRepositoryProtocol {
         (node as? MEGANode) ?? sdk.node(forHandle: node.handle)
     }
 
+    /// The loopback link the SDK hands back, used as-is
     private func localLink(for node: MEGANode) -> URL? {
-        let server = streamingSDK
-        guard let link = server.httpServerGetLocalLink(node) else { return nil }
-        return server.httpServerIsLocalOnly() ? link : link.updatedURLWithCurrentAddress()
+        streamingSDK.httpServerGetLocalLink(node)
     }
 }
