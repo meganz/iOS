@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomainMock
 import MEGARepo
@@ -130,6 +131,56 @@ struct MEGAPurchasePricingTests {
         ])
 
         #expect(sut.mobileOffer(for: MockSKProduct(identifier: "pro1.oneMonth"))?.expiryDate == nil)
+    }
+
+    // MARK: - accountType(for:)
+
+    @Test("reads no plan type while no pricing has been loaded")
+    func accountType_withoutPricing_isFree() {
+        let sut = MEGAPurchase()
+
+        #expect(sut.accountType(for: MockSKProduct(identifier: "pro1.oneMonth")) == .free)
+    }
+
+    @Test("reads no plan type for a product the pricing does not list")
+    func accountType_forAProductMissingFromThePricing_isFree() {
+        let sut = makeSUT(pricingProducts: [
+            MockPricingProduct(proLevel: .proI, iOSID: "pro1.oneMonth")
+        ])
+
+        #expect(sut.accountType(for: MockSKProduct(identifier: "pro3.oneMonth")) == .free)
+    }
+
+    @Test("reads the plan type of the pricing entry carrying the product's identifier")
+    func accountType_forAProductInThePricing_isItsProLevel() {
+        let sut = makeSUT(pricingProducts: [
+            MockPricingProduct(proLevel: .proII, iOSID: "pro2.oneMonth")
+        ])
+
+        #expect(sut.accountType(for: MockSKProduct(identifier: "pro2.oneMonth")) == .proII)
+    }
+
+    /// A plan whose identifier carries no `proN` marker still resolves to its real tier, because the type
+    /// is read from the pricing rather than deduced from the identifier.
+    @Test("reads the Essential plan type for a product priced as Essential")
+    func accountType_forAnEssentialProduct_isEssential() {
+        let sut = makeSUT(pricingProducts: [
+            MockPricingProduct(proLevel: .essential, iOSID: "mega.ios.a13.oneYear")
+        ])
+
+        #expect(sut.accountType(for: MockSKProduct(identifier: "mega.ios.a13.oneYear")) == .essential)
+    }
+
+    /// Reading the plan type at the wrong index is how a plan ends up charging for a different tier, so
+    /// this asserts the type comes from the entry that actually matches.
+    @Test("reads the plan type of the matching pricing entry, not of another entry")
+    func accountType_readsThePlanTypeOfTheMatchingEntry() {
+        let sut = makeSUT(pricingProducts: [
+            MockPricingProduct(proLevel: .proI, iOSID: "pro1.oneMonth"),
+            MockPricingProduct(proLevel: .proIII, iOSID: "pro3.oneMonth")
+        ])
+
+        #expect(sut.accountType(for: MockSKProduct(identifier: "pro3.oneMonth")) == .proIII)
     }
 }
 

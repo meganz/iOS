@@ -100,8 +100,10 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             // there's a mismatch between the products listed in the SDK/API and those available in the Apple Store.
             // This discrepancy can occur when new products are added to the SDK/API but haven't been added to the Apple Store yet.
             guard let index = purchase.productIndex(for: product) else { continue }
+            let planType = purchase.accountType(for: product)
             let mobileOffer = purchase.mobileOffer(for: product)
             let plan = product.toPlanEntity(
+                planType: planType,
                 storage: storageGB(atProductIndex: index),
                 transfer: transferGB(atProductIndex: index),
                 apiPrice: price(atProductIndex: index),

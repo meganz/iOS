@@ -5,12 +5,13 @@ import StoreKit
 // MARK: - SKProduct
 extension SKProduct {
     public func toPlanEntity(
+        planType: MEGAAccountType,
         storage: Int = 0,
         transfer: Int = 0,
         apiPrice: Decimal? = nil,
         apiCurrencyCode: String? = nil,
         useAPIPrice: Bool = false,
-        mobileOffer: MobileOfferEntity? = nil
+        mobileOffer: MobileOfferEntity? = nil,
     ) -> PlanEntity {
         PlanEntity(
             product: self,
@@ -19,6 +20,7 @@ extension SKProduct {
             apiPrice: apiPrice,
             apiCurrencyCode: apiCurrencyCode,
             useAPIPrice: useAPIPrice,
+            planType: planType,
             mobileOffer: mobileOffer
         )
     }
@@ -28,7 +30,6 @@ extension SKProduct {
 extension MEGAPricing {
     public func toPlanEntity(index: Int) -> PlanEntity? {
         guard let id = iOSID(atProductIndex: index) else { return nil }
-    
         return PlanEntity(
             productIdentifier: id,
             type: proLevel(atProductIndex: index).toAccountTypeEntity(),
@@ -59,15 +60,14 @@ fileprivate extension PlanEntity {
         apiPrice: Decimal?,
         apiCurrencyCode: String?,
         useAPIPrice: Bool,
+        planType: MEGAAccountType,
         mobileOffer: MobileOfferEntity? = nil
     ) {
-        self.init(productIdentifier: product.productIdentifier)
-        self.mobileOffer = mobileOffer
-
         let productIdentifier = product.productIdentifier
+        self.init(productIdentifier: productIdentifier)
+        self.mobileOffer = mobileOffer
         subscriptionCycle = SubscriptionCycleEntity(productIdentifier: productIdentifier)
 
-        let planType = planType(productIdentifier: productIdentifier)
         name = MEGAAccountDetails.string(for: planType) ?? ""
         type = planType.toAccountTypeEntity()
 
@@ -99,17 +99,5 @@ fileprivate extension PlanEntity {
             }(),
             currency: apiCurrencyCode
         )
-    }
-
-    private func planType(productIdentifier: String) -> MEGAAccountType {
-        if productIdentifier.contains("pro1") {
-            return .proI
-        } else if productIdentifier.contains("pro2") {
-            return .proII
-        } else if productIdentifier.contains("pro3") {
-            return .proIII
-        } else {
-            return .lite
-        }
     }
 }

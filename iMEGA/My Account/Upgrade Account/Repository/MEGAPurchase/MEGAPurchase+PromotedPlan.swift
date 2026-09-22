@@ -6,11 +6,12 @@ import MEGAL10n
 import MEGASwift
 
 extension MEGAPurchase {
-    private enum InAppPurchaseStoreError: Error {
+    private enum InAppPurchaseStoreError: Error, Equatable {
         case alreadyPurchasedPlan
         case noLoggedInUser
         case noAccountDetails
         case proFlexiOrBusinessAccount
+        case productNotAvailable(String)
     }
     
     // MARK: - Promoted plan purchase
@@ -112,10 +113,30 @@ extension MEGAPurchase {
             MEGALogInfo("[StoreKit] Cancel promoted plan purchase for \(product.productIdentifier). User's current account is either Pro Flexi or Business account.")
             throw InAppPurchaseStoreError.proFlexiOrBusinessAccount
         }
-        
-        let plan = product.toPlanEntity()
+
+        let planType: MEGAAccountType = try {
+            if let index = productIndex(for: product) {
+                return pricing.proLevel(atProductIndex: index)
+            }
+            // For Promoted Plan flow, we can promote a plan whose id cannot be resolved by MEGAPricing.
+            // More specifically, these plan are the legacy ProI, ProII and ProIII
+            // For these plans, we need to deduce the planType from their name, not from MEGAPricing.
+            let productIdentifier = product.productIdentifier
+            if productIdentifier.contains("pro1") {
+                return .proI
+            } else if productIdentifier.contains("pro2") {
+                return .proII
+            } else if productIdentifier.contains("pro3") {
+                return .proIII
+            } else {
+                throw InAppPurchaseStoreError.productNotAvailable(productIdentifier)
+            }
+        }()
+
+        let plan = product.toPlanEntity(planType: planType)
         let isProductAlreadyPurchased = plan.type == accountDetails.proLevel &&
                                         plan.subscriptionCycle == accountDetails.subscriptionCycle
+
         guard !isProductAlreadyPurchased else {
             MEGALogInfo("[StoreKit] Cancel promoted plan purchase. Plan \(product.productIdentifier) is already purchased.")
             throw InAppPurchaseStoreError.alreadyPurchasedPlan
@@ -160,6 +181,8 @@ extension MEGAPurchase {
             SVProgressHUD.showError(withStatus: Strings.Localizable.Account.Upgrade.NotAvailableWithCurrentPlan.message)
         case .noAccountDetails:
             return
+        case .productNotAvailable(let productIdentifier):
+            SVProgressHUD.showError(withStatus: Strings.Localizable.productNotFound(productIdentifier))
         }
     }
 }
