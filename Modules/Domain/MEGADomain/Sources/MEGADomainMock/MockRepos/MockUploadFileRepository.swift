@@ -58,6 +58,7 @@ public final class MockUploadFileRepository: UploadFileRepositoryProtocol, @unch
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     ) {
         completion?(uploadResult)

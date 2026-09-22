@@ -12,6 +12,11 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
     private let nodeEntity: NodeEntity?
     private let transferEntity: TransferEntity?
     private let totalBytes: Int
+    /// Reported to the `temporaryError` closure of every started upload, before any completion.
+    private let uploadTemporaryError: ErrorEntity?
+    /// Captured so a test can report a temporary error after the upload started.
+    public var uploadFileTemporaryErrorClosure: ((TransferEntity, ErrorEntity) -> Void)?
+    @Atomic public var cancelUploadTransfers_calledTimes = 0
     
     public init(
         duplicate: Bool = true,
@@ -22,9 +27,11 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         filename: String = "",
         nodeEntity: NodeEntity? = nil,
         transfer: TransferEntity? = nil,
-        totalBytes: Int = 1
+        totalBytes: Int = 1,
+        uploadTemporaryError: ErrorEntity? = nil
     ) {
         self.duplicate = duplicate
+        self.uploadTemporaryError = uploadTemporaryError
         self.uploadFileResult = uploadFileResult
         self.uploadSupportFileResult = uploadSupportFileResult
         self.cancelTransferResult = cancelTransferResult
@@ -60,8 +67,13 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     ) {
+        uploadFileTemporaryErrorClosure = temporaryError
+        if let uploadTemporaryError {
+            temporaryError?(transferEntity ?? TransferEntity(), uploadTemporaryError)
+        }
         guard let result = uploadFileResult else { return }
         switch result {
         case .success:
@@ -148,5 +160,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         FileManager.default.temporaryDirectory.appendingPathComponent(self.filename)
     }
     
-    public func cancelUploadTransfers() { }
+    public func cancelUploadTransfers() {
+        $cancelUploadTransfers_calledTimes.mutate { $0 += 1 }
+    }
 }

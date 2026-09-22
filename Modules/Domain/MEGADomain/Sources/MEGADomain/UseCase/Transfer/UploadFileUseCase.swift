@@ -19,6 +19,7 @@ public protocol UploadFileUseCaseProtocol: Sendable {
     ///   - uploadOptions: the uploadOptions
     ///   - start: An optional closure called when the upload starts.
     ///   - progress: An optional closure called to update the progress of the upload.
+    ///   - temporaryError: An optional closure called when the upload stalls and the SDK keeps retrying it.
     ///   - completion: An optional closure called upon completion of the upload.
     func uploadFile(
         _ url: URL,
@@ -26,6 +27,7 @@ public protocol UploadFileUseCaseProtocol: Sendable {
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     )
     
@@ -51,6 +53,29 @@ public protocol UploadFileUseCaseProtocol: Sendable {
     func tempURL(forFilename filename: String) -> URL
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func cancelUploadTransfers()
+}
+
+public extension UploadFileUseCaseProtocol {
+    /// Swift forbids default values in a protocol requirement, so this overload is the default for
+    /// callers that do not watch for retries.
+    func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?,
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    ) {
+        uploadFile(
+            url,
+            toParent: parent,
+            uploadOptions: uploadOptions,
+            start: start,
+            progress: progress,
+            temporaryError: nil,
+            completion: completion
+        )
+    }
 }
 
 // MARK: - Use case implementation -
@@ -85,6 +110,7 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     ) {
         let name = uploadOptions.fileName ?? url.lastPathComponent
@@ -95,7 +121,7 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
             return
         }
         
-        uploadFileRepository.uploadFile(uploadUrl, toParent: parent, uploadOptions: uploadOptions, start: start, progress: progress) { result in
+        uploadFileRepository.uploadFile(uploadUrl, toParent: parent, uploadOptions: uploadOptions, start: start, progress: progress, temporaryError: temporaryError) { result in
             switch result {
             case .success(let transfer):
                 completion?(.success(transfer))
