@@ -47,6 +47,9 @@ final class AudioPlaybackService {
     /// Runs for the lifetime of the service: the SDK keeps reporting node changes
     private var nodeUpdatesTask: Task<Void, Never>?
 
+    /// The folder-link SDK's own stream, which only bears on folder-link playback
+    private var folderLinkNodeUpdatesTask: Task<Void, Never>?
+
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
     private var playGeneration = 0
@@ -555,16 +558,26 @@ extension AudioPlaybackService: PlaybackControllable {
     // MARK: - Node deletions
 
     private func bindNodeUpdates() {
-        nodeUpdatesTask = Task { [weak self, audioNodeUpdatesUseCase] in
+        nodeUpdatesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
             for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedNodeHandles {
                 guard !Task.isCancelled else { return }
-                self?.handleDeletedNodes(withHandles: deletedNodeHandles)
+                await self?.handleDeletedNodes(withHandles: deletedNodeHandles, isFolderLink: false)
+            }
+        }
+
+        folderLinkNodeUpdatesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
+            for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedFolderLinkNodeHandles {
+                guard !Task.isCancelled else { return }
+                await self?.handleDeletedNodes(withHandles: deletedNodeHandles, isFolderLink: true)
             }
         }
     }
 
-    private func handleDeletedNodes(withHandles deletedNodeHandles: Set<HandleEntity>) {
-        guard currentSource != nil else { return }
+    private func handleDeletedNodes(
+        withHandles deletedNodeHandles: Set<HandleEntity>,
+        isFolderLink: Bool
+    ) {
+        guard let currentSource, currentSource.isFolderLink == isFolderLink else { return }
 
         switch playbackQueue.applyingDeletion(ofNodeHandles: deletedNodeHandles) {
         case .unaffected:

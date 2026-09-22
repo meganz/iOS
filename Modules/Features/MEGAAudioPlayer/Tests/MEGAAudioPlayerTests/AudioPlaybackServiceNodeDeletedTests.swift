@@ -1,9 +1,10 @@
 import Foundation
-import MEGADomain
 @testable import MEGAAudioPlayer
+import MEGADomain
 import Testing
 
-/// A Cloud Drive file deleted while its queue is playing (IOS-11540).
+/// A file deleted while its queue is playing — out of the Cloud Drive (IOS-11540) or out
+/// of a folder link (IOS-11521).
 ///
 /// The deletion arrives as an SDK node update rather than a playback error: a node
 /// in the Rubbish Bin still streams, so nothing fails on its own and the queue has
@@ -205,7 +206,87 @@ struct AudioPlaybackServiceNodeDeletedTests {
         #expect(resumeStore.operations == [.removed(fingerprint(1))])
     }
 
+    // MARK: - Folder link
+
+    /// The folder-link tree is reported by its own SDK instance, so its deletions arrive
+    /// on their own stream (IOS-11521).
+    @Test("Deleting the folder-link track that is playing skips to the next one")
+    func folderLink_deletingTheCurrentTrack_skipsToTheNext() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1), linkSong(2), linkSong(3)]))
+        engine.simulatePlayhead(at: 5)
+
+        updates.simulateFolderLinkDeletion(ofNodeHandles: [1])
+
+        await wait(until: { sut.currentQueue.current?.id == "2" })
+        #expect(sut.currentQueue.tracks.map(\.id) == ["2", "3"])
+        #expect(engine.playedURLs == [streamURL(1), streamURL(2)])
+    }
+
+    @Test("Deleting an upcoming folder-link track drops it and keeps playback running")
+    func folderLink_deletingAnUpcomingTrack_keepsPlaybackRunning() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1), linkSong(2), linkSong(3)]))
+
+        updates.simulateFolderLinkDeletion(ofNodeHandles: [2])
+
+        await wait(until: { sut.currentQueue.tracks.count == 2 })
+        #expect(sut.currentQueue.tracks.map(\.id) == ["1", "3"])
+        #expect(engine.playedURLs == [streamURL(1)], "nothing was restarted")
+    }
+
+    @Test("Deleting the only folder-link track ends the session")
+    func folderLink_deletingTheOnlyTrack_stopsPlayback() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1)]))
+
+        updates.simulateFolderLinkDeletion(ofNodeHandles: [1])
+
+        await wait(until: { sut.currentSource == nil })
+        #expect(sut.currentQueue.tracks.isEmpty)
+    }
+
+    /// The two SDKs see trees that are invisible to one another, so neither stream may
+    /// be applied to playback out of the other — even on a handle that matches.
+    @Test("An account deletion leaves folder-link playback alone")
+    func folderLink_ignoresAccountDeletions() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1), linkSong(2)]))
+
+        updates.simulateDeletion(ofNodeHandles: [1])
+
+        await settle()
+        #expect(sut.currentQueue.tracks.map(\.id) == ["1", "2"])
+        #expect(sut.currentSource != nil)
+    }
+
+    @Test("A folder-link deletion leaves Cloud Drive playback alone")
+    func account_ignoresFolderLinkDeletions() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
+
+        updates.simulateFolderLinkDeletion(ofNodeHandles: [1])
+
+        await settle()
+        #expect(sut.currentQueue.tracks.map(\.id) == ["1", "2"])
+        #expect(sut.currentSource != nil)
+    }
+
     // MARK: - Helpers
+
+    private func linkSong(_ handle: UInt64) -> StubPlayableNode {
+        StubPlayableNode(handle: handle, name: "song\(handle).mp3", fingerprint: fingerprint(handle))
+    }
 
     private func song(_ handle: UInt64) -> NodeEntity {
         NodeEntity(name: "song\(handle).mp3", fingerprint: fingerprint(handle), handle: handle)
@@ -257,7 +338,9 @@ private struct StreamingNodeURLResolver: AudioTrackURLUseCaseProtocol {
             return file
         case .offline(let url):
             return url
-        case .folderLink, .fileLink:
+        case .folderLink(let node):
+            return URL(string: "https://stream.test/\(node.handle)")
+        case .fileLink:
             return nil
         }
     }

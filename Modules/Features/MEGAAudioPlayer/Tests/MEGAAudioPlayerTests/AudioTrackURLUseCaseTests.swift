@@ -111,10 +111,3 @@ private final class LocalFileLookupSpy: @unchecked Sendable {
         }
     }
 }
-
-private struct StubPlayableNode: PlayableNode {
-    let handle: UInt64
-    var name: String? = "track.mp3"
-    var parentHandle: UInt64 = 0
-    var fingerprint: String?
-}

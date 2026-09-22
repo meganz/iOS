@@ -179,16 +179,26 @@ actor StubAudioMetadataCache: AudioMetadataCacheProtocol {
 /// Feeds deletions in on demand, standing in for the SDK's node updates.
 struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
     let deletedNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
+    let deletedFolderLinkNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
     private let continuation: AsyncStream<Set<HandleEntity>>.Continuation
+    private let folderLinkContinuation: AsyncStream<Set<HandleEntity>>.Continuation
 
     init() {
         let (stream, continuation) = AsyncStream<Set<HandleEntity>>.makeStream()
         deletedNodeHandles = stream.eraseToAnyAsyncSequence()
         self.continuation = continuation
+
+        let (folderLinkStream, folderLinkContinuation) = AsyncStream<Set<HandleEntity>>.makeStream()
+        deletedFolderLinkNodeHandles = folderLinkStream.eraseToAnyAsyncSequence()
+        self.folderLinkContinuation = folderLinkContinuation
     }
 
     func simulateDeletion(ofNodeHandles handles: Set<HandleEntity>) {
         continuation.yield(handles)
+    }
+
+    func simulateFolderLinkDeletion(ofNodeHandles handles: Set<HandleEntity>) {
+        folderLinkContinuation.yield(handles)
     }
 }
 

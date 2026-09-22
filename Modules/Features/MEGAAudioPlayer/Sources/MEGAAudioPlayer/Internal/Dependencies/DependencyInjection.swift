@@ -24,8 +24,8 @@ enum DependencyInjection {
         AudioNodeAvailabilityRepository.newRepo
     }
 
-    static var nodeUpdatesProvider: some NodeUpdatesProviderProtocol {
-        NodeUpdatesProvider()
+    static var nodeRepository: some NodeRepositoryProtocol {
+        NodeRepository.newRepo
     }
 
     static var nodeAttributeRepository: some NodeAttributeRepositoryProtocol {

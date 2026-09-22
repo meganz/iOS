@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-/// What a Cloud Drive deletion means for the queue that is playing.
+/// What a deletion means for the queue that is playing.
 enum QueueDeletionOutcome {
     /// Nothing the queue holds was deleted.
     case unaffected
@@ -14,15 +14,21 @@ enum QueueDeletionOutcome {
 }
 
 extension PlaybackQueue {
-    /// Reconciles the queue against nodes that have left the Cloud Drive
+    /// Reconciles the queue against nodes that have left the tree it was built from
     ///
     /// - Parameter deletedNodeHandles: the handles that have gone
     func applyingDeletion(ofNodeHandles deletedNodeHandles: Set<HandleEntity>) -> QueueDeletionOutcome {
         let deletedTrackIDs = Set(
             tracks
                 .filter { track in
-                    guard case .account(let node) = track else { return false }
-                    return deletedNodeHandles.contains(node.handle)
+                    switch track {
+                    case .account(let node):
+                        return deletedNodeHandles.contains(node.handle)
+                    case .folderLink(let node):
+                        return deletedNodeHandles.contains(node.handle)
+                    case .fileLink, .offline, .offlineNode:
+                        return false
+                    }
                 }
                 .map(\.id)
         )
