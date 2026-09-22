@@ -334,6 +334,82 @@ struct NewTimelineViewModelTests {
             #expect(await recorder.pageBeforeCalls.isEmpty)
         }
 
+        /// A five-slot skeleton with a real node in the middle: one window then plans two runs
+        /// fetched by different calls — backward above it, forward below — so a test can give one
+        /// run a landing and the other an empty page, a failure or a cancellation.
+        private static func makeSplitRunSUT(
+            pageBefore: Result<[NodeEntity], any Error>,
+            pageAfter: Result<[NodeEntity], any Error>
+        ) async -> NewTimelineViewModel {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    mediaPageResult: pageAfter,
+                    mediaPageBeforeResult: pageBefore,
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 3, day2: 2)])))
+            await Self.buildColdSkeleton(sut)
+            sut.commitHydratedRun(from: 2, with: [NodeEntity(name: "mid.jpg", handle: 20, hasThumbnail: true)])
+            return sut
+        }
+
+        @Test("A run whose query fails leaves its own slots blank without costing the runs that answered")
+        func hydrateVisibleWindowFailedRunDoesNotAbortTheBatch() async {
+            let sut = await Self.makeSplitRunSUT(
+                pageBefore: .failure(GenericErrorEntity()),
+                pageAfter: .success([
+                    NodeEntity(name: "d.jpg", handle: 30, hasThumbnail: true),
+                    NodeEntity(name: "e.jpg", handle: 31, hasThumbnail: true)
+                ]))
+
+            await sut.hydrateVisibleWindow(0..<5)
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[0].isTimelinePlaceholder) // the failed run
+            #expect(photos[1].isTimelinePlaceholder)
+            #expect(photos[2].handle == 20)
+            #expect(photos[3].handle == 30) // the run that answered still landed
+            #expect(photos[4].handle == 31)
+        }
+
+        @Test("A run the query answers with nothing is left blank, and says nothing about the rest of the batch")
+        func hydrateVisibleWindowEmptyRunDoesNotAbortTheBatch() async {
+            let sut = await Self.makeSplitRunSUT(
+                pageBefore: .success([]),
+                pageAfter: .success([
+                    NodeEntity(name: "d.jpg", handle: 30, hasThumbnail: true),
+                    NodeEntity(name: "e.jpg", handle: 31, hasThumbnail: true)
+                ]))
+
+            await sut.hydrateVisibleWindow(0..<5)
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[0].isTimelinePlaceholder) // answered, and still blank
+            #expect(photos[1].isTimelinePlaceholder)
+            #expect(photos[3].handle == 30)
+            #expect(photos[4].handle == 31)
+        }
+
+        @Test("A cancelled run drops the runs that already landed with it, rather than committing half a window")
+        func hydrateVisibleWindowCancelledRunCommitsNothing() async {
+            // A cancelled hydration is one a newer visible range replaced; committing half of it
+            // would get that newer window discarded. The first run lands, the second is cancelled,
+            // and the landing must go with it.
+            let sut = await Self.makeSplitRunSUT(
+                pageBefore: .success([
+                    NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                    NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+                ]),
+                pageAfter: .failure(CancellationError()))
+
+            await sut.hydrateVisibleWindow(0..<5)
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[0].isTimelinePlaceholder) // the run that landed was dropped too
+            #expect(photos[1].isTimelinePlaceholder)
+            #expect(photos[2].handle == 20) // what was already committed is untouched
+            #expect(photos[3].isTimelinePlaceholder)
+            #expect(photos[4].isTimelinePlaceholder)
+        }
+
         @Test("A reshape that drops the grid's reported range off the end hydrates the top instead of nothing")
         func reshapePastReportedRangeFallsBackToTopWindow() async {
             // The grid keeps reporting the last range it displayed — nothing ever clears it — so a

@@ -915,10 +915,20 @@ final class NewTimelineViewModel: ObservableObject {
             // user is actually looking at — discarded by the revision guard in
             // ``hydrateVisibleWindow(_:)``.
             guard !Task.isCancelled, isCurrentQuery(generation) else { return [] }
-            guard let result = await fetchRun(run, in: projection, using: mediaTimelineUseCase) else {
-                continue
+            switch await fetchRun(run, in: projection, using: mediaTimelineUseCase) {
+            case .landed(let result):
+                results.append(result)
+            case .empty:
+                MEGALogDebug("[\(type(of: self))] run hydration found no nodes for \(run.range)")
+            case .unanchored:
+                MEGALogDebug("[\(type(of: self))] run hydration found no bucket for \(run.range)")
+            case .cancelled:
+                // Drops what already landed, for the reason above; the loop used to see this only
+                // on its next turn, so a run cancelled last still returned the ones before it.
+                return []
+            case .failed(let error):
+                MEGALogError("[\(type(of: self))] run hydration failed: \(error)")
             }
-            results.append(result)
         }
         return results
     }
@@ -965,7 +975,7 @@ final class NewTimelineViewModel: ObservableObject {
         _ run: PlaceholderRun,
         in projection: TimelineProjection,
         using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
-    ) async -> RunFetchResult? {
+    ) async -> RunFetchOutcome {
         let filter = photoFilterOptions.toMediaTimelineFilterEntity()
         let order = mediaTimelineSortOrder
         do {
@@ -974,32 +984,33 @@ final class NewTimelineViewModel: ObservableObject {
                     filter: filter, sortOrder: order, after: upper.node, limit: run.range.count)
                 try Task.checkCancellation()
                 return nodes.isEmpty
-                    ? nil : RunFetchResult(run: run, kind: .pageAfter(upper.coordinate), nodes: nodes)
+                    ? .empty
+                    : .landed(RunFetchResult(run: run, kind: .pageAfter(upper.coordinate), nodes: nodes))
             } else if let lower = run.lowerNeighbour {
                 let nodes = try await mediaTimelineUseCase.mediaPage(
                     filter: filter, sortOrder: order, before: lower.node, limit: run.range.count)
                 try Task.checkCancellation()
                 return nodes.isEmpty
-                    ? nil : RunFetchResult(run: run, kind: .pageBefore(lower.coordinate), nodes: nodes)
+                    ? .empty
+                    : .landed(RunFetchResult(run: run, kind: .pageBefore(lower.coordinate), nodes: nodes))
             } else {
                 guard let anchor = projection.sectionAnchor(
-                    forFlatIndex: run.range.lowerBound) else { return nil }
+                    forFlatIndex: run.range.lowerBound) else { return .unanchored }
                 let nodes = try await mediaTimelineUseCase.mediaWindow(
                     filter: filter, section: anchor.section, sortOrder: order,
                     offset: anchor.localOffset, limit: run.range.count)
                 try Task.checkCancellation()
-                guard nodes.isNotEmpty else { return nil }
-                return RunFetchResult(
+                guard nodes.isNotEmpty else { return .empty }
+                return .landed(RunFetchResult(
                     run: run,
                     kind: .offset(.init(
                         groupId: anchor.section.groupId, localOffset: anchor.localOffset)),
-                    nodes: nodes)
+                    nodes: nodes))
             }
         } catch is CancellationError {
-            return nil
+            return .cancelled
         } catch {
-            MEGALogError("[\(type(of: self))] run hydration failed: \(error)")
-            return nil
+            return .failed(error)
         }
     }
 
@@ -1117,6 +1128,21 @@ final class NewTimelineViewModel: ObservableObject {
         let run: PlaceholderRun
         let kind: RunFetchKind
         let nodes: [NodeEntity]
+    }
+
+    /// What one run fetch produced. It used to be `RunFetchResult?`, where `nil` meant a
+    /// cancellation, an empty page, a missing anchor and a failure alike — and only an answered
+    /// query says anything about the positions covered, which a caller that retries has to know.
+    private enum RunFetchOutcome {
+        /// The query answered with nodes for the run.
+        case landed(RunFetchResult)
+        /// The query answered, and the run is still blank.
+        case empty
+        /// The run no longer starts inside a date bucket, so nothing was asked.
+        case unanchored
+        /// Dropped before it could answer, so it says nothing about the run.
+        case cancelled
+        case failed(any Error)
     }
 
     private func timelinePhotoLibrary() async throws -> PhotoLibrary {

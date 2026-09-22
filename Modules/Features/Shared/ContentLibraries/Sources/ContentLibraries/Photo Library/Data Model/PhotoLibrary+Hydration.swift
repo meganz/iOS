@@ -13,7 +13,9 @@ public extension PhotoLibrary {
     func replacingPhotos(at replacements: [Int: NodeEntity]) -> PhotoLibrary {
         guard !replacements.isEmpty else { return self }
         var splicer = PhotoSplicer(replacements)
-        return PhotoLibrary(photoByYearList: splicer.splicing(photoByYearList))
+        // The layout is carried over untouched: a splice fills slots, it never moves them.
+        return PhotoLibrary(
+            photoByYearList: splicer.splicing(photoByYearList), layoutVersion: layoutVersion)
     }
 
     /// Convenience over `replacingPhotos(at:)` for one contiguous run starting at `startIndex`.

@@ -61,6 +61,10 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var dragLastIndexPath: IndexPath?
     private var dragSelectionMode: DragSelectionMode?
     private var initialSelectionHandles: Set<HandleEntity> = []
+    /// The layout the running drag reads index paths against, and the handler's record of what it
+    /// started from. Both live for one gesture only.
+    private var dragLayoutVersion: Int?
+    private var dragSelectionGestureToken: SelectionGestureToken?
 
     private var autoScrollDisplayLink: CADisplayLink?
     private var autoScrollVelocity: CGFloat = 0
@@ -84,6 +88,19 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     
     private var viewModel: PhotoLibraryModeAllCollectionViewModel {
         representer.viewModel
+    }
+
+    /// Answers for placeholder cells, on the screens that have one.
+    private var positionalSelectionHandler: (any PositionalSelectionHandling)? {
+        viewModel.libraryViewModel.positionalSelectionHandler
+    }
+
+    /// Where an index path sits in the grid the user is looking at, version included: the same
+    /// index means different photos on either side of a change.
+    private func selectionPosition(at indexPath: IndexPath) -> SelectionPosition? {
+        guard let flatIndex = photoLibraryDataSource.flatIndex(of: indexPath) else { return nil }
+        return SelectionPosition(
+            flatIndex: flatIndex, layoutVersion: layoutChangesMonitor.renderedLayoutVersion)
     }
     
     init(_ representer: PhotoLibraryCollectionViewRepresenter) {
@@ -153,12 +170,13 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             header.contentConfiguration = createGlobalHeaderConfiguration(title: title)
         }
         
-        photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, _, photo in
+        photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, indexPath, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
                 thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: representer.contentMode),
-                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: representer.contentMode)
+                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: representer.contentMode),
+                placeholderSelection: placeholderSelection(for: cell, configuredAt: indexPath)
             )
             cell.viewModel = viewModel
             
@@ -219,10 +237,26 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
               !viewModel.isEditing else { return }
         let location = gesture.location(in: collectionView)
         guard let indexPath = collectionView.indexPathForItem(at: location),
-              let photo = photoLibraryDataSource.photo(at: indexPath),
-              !photo.isTimelinePlaceholder else { return }
+              let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
+        // A placeholder is pressable only where a handler can answer for it; elsewhere the press
+        // does nothing, as before. The cell decides what it means either way, so there is one path.
+        guard !photo.isTimelinePlaceholder || positionalSelectionHandler != nil else { return }
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         (collectionView.cellForItem(at: indexPath) as? PhotoLibraryCollectionCell)?.viewModel.handleLongPress()
+    }
+
+    /// A placeholder cell's link to the handler, or nil on a screen that has none. The position
+    /// comes from the cell's live index path, falling back to the one it was configured at — the
+    /// right answer while the cell is still being built and has none yet.
+    private func placeholderSelection(
+        for cell: UICollectionViewCell, configuredAt indexPath: IndexPath
+    ) -> PlaceholderCellSelection? {
+        guard let handler = positionalSelectionHandler else { return nil }
+        return PlaceholderCellSelection(handler: handler) { [weak self, weak cell] in
+            guard let self else { return nil }
+            let current = cell.flatMap { collectionView?.indexPath(for: $0) } ?? indexPath
+            return selectionPosition(at: current)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -336,48 +370,85 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         switch gesture.state {
         case .began:
-            guard let indexPath = collectionView?.indexPathForItem(at: location),
-                  let photo = photoLibraryDataSource.photo(at: indexPath) else {
-                return
-            }
-
-            dragInitialIndexPath = indexPath
-            dragLastIndexPath = indexPath
-            let selection = viewModel.libraryViewModel.selection
-            let isInitialPhotoLongPressOrigin = selection.wasRecentlyLongPressed(photo.handle)
-            // When the user keeps the finger down after a long-press and continues into a drag,
-            // the initial cell is already selected by the long-press. Treat the drag as an
-            // extend-selection (.select) and skip toggling the initial cell so the user keeps it selected.
-            if isInitialPhotoLongPressOrigin {
-                dragSelectionMode = .select
-                selection.consumeRecentLongPressMark()
-            } else {
-                dragSelectionMode = selection.isPhotoSelected(photo) ? .deselect : .select
-                if let dragSelectionMode {
-                    applySelectionMode(dragSelectionMode, to: photo)
-                }
-            }
-            initialSelectionHandles = Set(selection.photos.keys)
+            guard let indexPath = collectionView?.indexPathForItem(at: location) else { return }
+            beginDragSelection(at: indexPath)
 
         case .changed:
-            updateAutoScrollIfNeeded(at: location)
-            guard let indexPath = collectionView?.indexPathForItem(at: location) else {
+            guard extendDragSelection(to: collectionView?.indexPathForItem(at: location)) else {
                 break
             }
-            if indexPath != dragLastIndexPath {
-                updateSelection(at: indexPath)
-                dragLastIndexPath = indexPath
-            }
+            updateAutoScrollIfNeeded(at: location)
             
         case .ended, .cancelled, .failed:
-            stopAutoScroll()
-            dragInitialIndexPath = nil
-            dragLastIndexPath = nil
-            dragSelectionMode = nil
-            initialSelectionHandles.removeAll()
+            endDragSelection()
             
         default:
             break
+        }
+    }
+
+    /// Start a drag on the cell at `indexPath`.
+    ///
+    /// The pan recognizer does nothing but turn a gesture into this, ``extendDragSelection(to:)``
+    /// and ``endDragSelection()``, so every way a drag can advance goes through the same three
+    /// places — auto-scroll included, which is how it reaches the layout check without a gesture.
+    func beginDragSelection(at indexPath: IndexPath) {
+        guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
+
+        dragInitialIndexPath = indexPath
+        dragLastIndexPath = indexPath
+        dragLayoutVersion = layoutChangesMonitor.renderedLayoutVersion
+        let selection = viewModel.libraryViewModel.selection
+        let isInitialPhotoLongPressOrigin = wasRecentlyLongPressed(photo, at: indexPath)
+        // When the user keeps the finger down after a long-press and continues into a drag,
+        // the initial cell is already selected by the long-press. Treat the drag as an
+        // extend-selection (.select) and skip toggling the initial cell so the user keeps it selected.
+        if isInitialPhotoLongPressOrigin {
+            dragSelectionMode = .select
+            consumeRecentLongPressMark()
+        } else {
+            dragSelectionMode = isSelected(photo, at: indexPath) ? .deselect : .select
+            if let dragSelectionMode {
+                applySelectionMode(dragSelectionMode, to: photo, at: indexPath)
+            }
+        }
+        // Taken after the initial cell has been toggled, so shrink-back restores what the drag
+        // itself produced there rather than undoing it. With a handler the record lives there and
+        // there only: it is the side that can follow a slot resolving into a node mid-drag.
+        dragSelectionGestureToken = positionalSelectionHandler?.beginSelectionGesture()
+        initialSelectionHandles = dragSelectionGestureToken == nil ? Set(selection.photos.keys) : []
+    }
+
+    /// Extend the running drag to `indexPath`, if that is a cell it is not already on.
+    ///
+    /// - Returns: false when the grid has been re-laid out under the finger and the drag was ended.
+    ///   Its index paths were all read against one layout, so rather than extend the band by
+    ///   positions that no longer mean what they did, the gesture stops here and what was selected
+    ///   stays; the user starts a new stroke when ready.
+    @discardableResult
+    func extendDragSelection(to indexPath: IndexPath?) -> Bool {
+        guard dragLayoutVersion == layoutChangesMonitor.renderedLayoutVersion else {
+            endDragSelection()
+            return false
+        }
+        guard let indexPath, indexPath != dragLastIndexPath else { return true }
+        updateSelection(at: indexPath)
+        dragLastIndexPath = indexPath
+        return true
+    }
+
+    /// Forget what the running drag was built on. Idempotent: an abandoned drag ends here when the
+    /// layout moves, and again when the finger lifts.
+    func endDragSelection() {
+        stopAutoScroll()
+        dragInitialIndexPath = nil
+        dragLastIndexPath = nil
+        dragSelectionMode = nil
+        dragLayoutVersion = nil
+        initialSelectionHandles.removeAll()
+        if let token = dragSelectionGestureToken {
+            dragSelectionGestureToken = nil
+            positionalSelectionHandler?.endSelectionGesture(token)
         }
     }
     
@@ -393,29 +464,94 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         let addedToRange = currentRange.subtracting(previousRange)
         for indexPath in addedToRange {
             guard let photo = photoLibraryDataSource.photo(at: indexPath) else { continue }
-            applySelectionMode(selectionMode, to: photo)
+            applySelectionMode(selectionMode, to: photo, at: indexPath)
         }
         
         // Photos removed from the range in this step
         let removedFromRange = previousRange.subtracting(currentRange)
         for indexPath in removedFromRange {
             guard let photo = photoLibraryDataSource.photo(at: indexPath) else { continue }
-            let wasSelected = initialSelectionHandles.contains(photo.handle)
-            if wasSelected {
-                viewModel.libraryViewModel.selection.selectPhoto(photo)
-            } else {
-                viewModel.libraryViewModel.selection.deselectPhoto(photo)
-            }
+            restoreSelectionAtGestureStart(of: photo, at: indexPath)
         }
     }
-    
-    private func applySelectionMode(_ mode: DragSelectionMode, to photo: NodeEntity) {
-        switch mode {
-        case .select:
-            viewModel.libraryViewModel.selection.selectPhoto(photo)
-        case .deselect:
-            viewModel.libraryViewModel.selection.deselectPhoto(photo)
+
+    /// Whether the cell at `indexPath` is marked — by handle, or by position for a placeholder.
+    private func isSelected(_ photo: NodeEntity, at indexPath: IndexPath) -> Bool {
+        guard photo.isTimelinePlaceholder else {
+            return viewModel.libraryViewModel.selection.isPhotoSelected(photo)
         }
+        guard let handler = positionalSelectionHandler,
+              let position = selectionPosition(at: indexPath) else { return false }
+        return handler.isSelected(at: position)
+    }
+
+    /// Apply one step of a drag to one cell.
+    ///
+    /// Split per cell, never per gesture: one drag runs over loaded photos and placeholders alike. A
+    /// loaded photo is keyed by the handle the grid is rendering, which means the same file whatever
+    /// the layout does; only a placeholder needs a position. Sending the whole band as indices would
+    /// drag the half that cannot be got wrong today into the same race.
+    private func applySelectionMode(
+        _ mode: DragSelectionMode, to photo: NodeEntity, at indexPath: IndexPath
+    ) {
+        guard photo.isTimelinePlaceholder else {
+            switch mode {
+            case .select:
+                viewModel.libraryViewModel.selection.selectPhoto(photo)
+            case .deselect:
+                viewModel.libraryViewModel.selection.deselectPhoto(photo)
+            }
+            return
+        }
+        guard let handler = positionalSelectionHandler,
+              let position = selectionPosition(at: indexPath) else { return }
+        handler.apply(mode == .select ? .dragSelect : .dragDeselect, at: position)
+    }
+
+    /// Put a cell the band has shrunk back off into the state it was in when the drag began.
+    private func restoreSelectionAtGestureStart(of photo: NodeEntity, at indexPath: IndexPath) {
+        guard photo.isTimelinePlaceholder else {
+            let selection = viewModel.libraryViewModel.selection
+            if wasSelectedAtGestureStart(photo) {
+                selection.selectPhoto(photo)
+            } else {
+                selection.deselectPhoto(photo)
+            }
+            return
+        }
+        guard let handler = positionalSelectionHandler,
+              let token = dragSelectionGestureToken,
+              let position = selectionPosition(at: indexPath) else { return }
+        handler.apply(
+            handler.wasSelectedAtGestureStart(token, at: position) ? .dragSelect : .dragDeselect,
+            at: position)
+    }
+
+    /// Whether a loaded cell was marked when the drag began. The handler answers when there is one:
+    /// this cell may have been marked as a slot with no photo yet and resolved into this node since,
+    /// which a record of handles taken at `.began` cannot know about.
+    private func wasSelectedAtGestureStart(_ photo: NodeEntity) -> Bool {
+        guard let handler = positionalSelectionHandler,
+              let token = dragSelectionGestureToken else {
+            return initialSelectionHandles.contains(photo.handle)
+        }
+        return handler.wasSelectedAtGestureStart(token, handle: photo.handle)
+    }
+
+    /// Both stores are asked, rather than the one this cell matches now.
+    ///
+    private func wasRecentlyLongPressed(_ photo: NodeEntity, at indexPath: IndexPath) -> Bool {
+        if viewModel.libraryViewModel.selection.wasRecentlyLongPressed(photo.handle) { return true }
+        guard let handler = positionalSelectionHandler,
+              let position = selectionPosition(at: indexPath) else { return false }
+        return handler.wasRecentlyLongPressed(at: position)
+    }
+
+    /// Cleared on both sides for the same reason the read asks both: whichever took the mark, it is
+    /// spent, and the other holds nothing to clear.
+    private func consumeRecentLongPressMark() {
+        viewModel.libraryViewModel.selection.consumeRecentLongPressMark()
+        positionalSelectionHandler?.consumeRecentLongPressMark()
     }
 
     private func updateAutoScrollIfNeeded(at location: CGPoint) {
@@ -495,11 +631,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         collectionView.setContentOffset(offset, animated: false)
 
         let location = gesture.location(in: collectionView)
-        if let indexPath = collectionView.indexPathForItem(at: location),
-           indexPath != dragLastIndexPath {
-            updateSelection(at: indexPath)
-            dragLastIndexPath = indexPath
-        }
+        extendDragSelection(to: collectionView.indexPathForItem(at: location))
     }
 }
 

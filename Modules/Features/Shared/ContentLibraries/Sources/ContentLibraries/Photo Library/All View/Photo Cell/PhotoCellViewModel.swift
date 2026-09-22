@@ -77,15 +77,19 @@ open class PhotoCellViewModel: ObservableObject {
     private let sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?
     private let selection: PhotoSelection
     private let configuration: ContentLibraries.Configuration
+    /// Set only for a placeholder cell on a screen that answers by position; nil leaves it inert.
+    private let placeholderSelection: PlaceholderCellSelection?
     private var subscriptions = Set<AnyCancellable>()
     
     public init(photo: NodeEntity,
                 viewModel: PhotoLibraryModeAllViewModel,
                 thumbnailLoader: some ThumbnailLoaderProtocol,
                 sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?,
-                configuration: ContentLibraries.Configuration = ContentLibraries.configuration) {
+                configuration: ContentLibraries.Configuration = ContentLibraries.configuration,
+                placeholderSelection: PlaceholderCellSelection? = nil) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
+        self.placeholderSelection = photo.isTimelinePlaceholder ? placeholderSelection : nil
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.configuration = configuration
@@ -112,7 +116,16 @@ open class PhotoCellViewModel: ObservableObject {
     // MARK: Internal
                 
     func select() {
-        guard !isPlaceholder, !selection.isSelectionDisabled else { return }
+        guard !selection.isSelectionDisabled else { return }
+        // A placeholder's mark is not a node in the selection, so it is neither toggled here nor
+        // counted against a limit — the screens that set one have no placeholders anyway.
+        guard !isPlaceholder else {
+            guard editMode.isEditing,
+                  let placeholderSelection,
+                  let position = placeholderSelection.position() else { return }
+            placeholderSelection.handler.apply(.tap, at: position)
+            return
+        }
         if editMode.isEditing && (isSelected || !isSelectionLimitReached) {
             isSelected.toggle()
         } else {
@@ -121,7 +134,15 @@ open class PhotoCellViewModel: ObservableObject {
     }
 
     func handleLongPress() {
-        guard !isPlaceholder, !selection.isSelectionDisabled, !editMode.isEditing else { return }
+        guard !selection.isSelectionDisabled, !editMode.isEditing else { return }
+        guard !isPlaceholder else {
+            guard let placeholderSelection,
+                  let position = placeholderSelection.position() else { return }
+            selection.editMode = .active
+            placeholderSelection.handler.apply(.longPress, at: position)
+            placeholderSelection.handler.markRecentlyLongPressed(at: position)
+            return
+        }
         selection.editMode = .active
         selection.selectPhoto(photo)
         selection.markRecentlyLongPressed(photo.handle)
@@ -187,6 +208,19 @@ open class PhotoCellViewModel: ObservableObject {
     }
     
     private func configSelection() {
+        if let placeholderSelection {
+            configPlaceholderSelection(placeholderSelection)
+        } else {
+            configHandleSelection()
+        }
+        
+        if let isSelectionLimitReachedPublisher = selection.isSelectionLimitReachedPublisher {
+            isSelectionLimitReachedPublisher
+                .assign(to: &$isSelectionLimitReached)
+        }
+    }
+
+    private func configHandleSelection() {
         selection
             .$allSelected
             .dropFirst()
@@ -206,13 +240,40 @@ open class PhotoCellViewModel: ObservableObject {
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .assign(to: &$isSelected)
-        
-        if let isSelectionLimitReachedPublisher = selection.isSelectionLimitReachedPublisher {
-            isSelectionLimitReachedPublisher
-                .assign(to: &$isSelectionLimitReached)
-        }
     }
     
+    /// A placeholder has no handle for `selection.photos` to key it by, so its mark is asked for by
+    /// position and re-asked on every change. It renders as any other selected cell does.
+    ///
+    /// This replaces the handle subscription rather than joining it: a synthetic handle is never in
+    /// `photos`, so that one would clear the mark on the next change to the committed selection.
+    private func configPlaceholderSelection(_ placeholderSelection: PlaceholderCellSelection) {
+        updateSelectionFromPlaceholderHandler()
+        selection
+            .$allSelected
+            .dropFirst()
+            .filter { [weak self] allSelected in
+                !allSelected && self?.isSelected == true
+            }
+            .map { _ in false }
+            .assign(to: &$isSelected)
+        // No main-queue hop: the handler is main-actor bound, so the mark lands in the same turn
+        // as the interaction that caused it.
+        placeholderSelection.handler.selectionDidChangePublisher
+            .sink { [weak self] in
+                self?.updateSelectionFromPlaceholderHandler()
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func updateSelectionFromPlaceholderHandler() {
+        guard let placeholderSelection, let position = placeholderSelection.position() else { return }
+        let selected = placeholderSelection.handler.isSelected(at: position)
+        if isSelected != selected {
+            isSelected = selected
+        }
+    }
+
     private func configZoomState(with zoomStatePublisher: some Publisher<PhotoLibraryZoomState, Never>) {
         zoomStatePublisher
             .map(\.scaleFactor)

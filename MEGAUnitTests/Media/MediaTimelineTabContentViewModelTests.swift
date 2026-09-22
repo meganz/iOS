@@ -248,6 +248,43 @@ struct MediaTimelineTabContentViewModelTests {
             
             #expect(config == expectedConfig)
         }
+
+        @Test("A placeholder that reached the selection never reaches an action")
+        func toolbarActionRunsOnRealNodesOnly() {
+            // A placeholder's handle names no file. Nothing puts one in the selection today,
+            // hence the selection written directly here.
+            let coordinator = MockMediaTabToolbarCoordinator()
+            let real = NodeEntity(handle: 1)
+            let placeholder = NodeEntity(handle: Self.placeholderHandle)
+            let sut = makeSUT()
+            sut.toolbarCoordinator = coordinator
+            sut.timelineViewModel.photoLibraryContentViewModel
+                .selection.photos = [real.handle: real, placeholder.handle: placeholder]
+
+            sut.handleToolbarAction(.download)
+
+            #expect(coordinator.lastNodes == [real])
+            // The count is what the user marked, not what the action could run on.
+            #expect(sut.toolbarConfig()?.selectedItemsCount == 2)
+        }
+
+        @Test("An action with nothing but placeholders selected does not run")
+        func toolbarActionWithOnlyPlaceholdersDoesNothing() {
+            let coordinator = MockMediaTabToolbarCoordinator()
+            let placeholder = NodeEntity(handle: Self.placeholderHandle)
+            let sut = makeSUT()
+            sut.toolbarCoordinator = coordinator
+            sut.timelineViewModel.photoLibraryContentViewModel
+                .selection.photos = [placeholder.handle: placeholder]
+
+            sut.handleToolbarAction(.download)
+
+            #expect(coordinator.lastAction == nil)
+            #expect(coordinator.lastNodes == nil)
+        }
+
+        /// In the reserved high band `isTimelinePlaceholder` answers for, and not `.invalid`.
+        private static let placeholderHandle: HandleEntity = 0xF000_0000_0000_0001
     }
     
     @MainActor
@@ -479,5 +516,16 @@ struct MediaTimelineTabContentViewModelTests {
             mediaTimelineUseCase: mediaTimelineUseCase,
             isDateTakenSortEnabled: isDateTakenSortEnabled
         )
+    }
+}
+
+@MainActor
+private final class MockMediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
+    var lastAction: MediaBottomToolbarAction?
+    var lastNodes: [NodeEntity]?
+
+    func handleToolbarAction(_ action: MediaBottomToolbarAction, with nodes: [NodeEntity]) {
+        lastAction = action
+        lastNodes = nodes
     }
 }

@@ -14,6 +14,12 @@ extension Array where Element: PhotoDateSection {
     var hydratedPhotos: [NodeEntity] {
         allPhotos.filter { !$0.isTimelinePlaceholder }
     }
+
+    /// The layout these sections were built from. One rendering comes from one library, so the
+    /// first answers for all; an empty grid has no cell to interact with.
+    var layoutVersion: Int {
+        first?.layoutVersion ?? PhotoLibrary.initialLayoutVersion
+    }
     
     func indexPath(of position: PhotoScrollPosition, in timeZone: TimeZone? = nil) -> IndexPath? {
         for (sectionIndex, section) in self.enumerated() where section.photoByDayList.contains(where: { $0.categoryDate == position.date.removeTimestamp(timeZone: timeZone) }) {

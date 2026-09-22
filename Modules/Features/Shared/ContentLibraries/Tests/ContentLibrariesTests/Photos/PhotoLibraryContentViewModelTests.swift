@@ -41,6 +41,35 @@ struct PhotoLibraryContentViewModelTests {
         #expect(sut.selection.photos.isEmpty)
         #expect(library.allPhotos.isNotEmpty)
     }
+
+    @MainActor
+    @Test
+    func toggleSelectAllPhotos_withSkeletonSlotsInTheLibrary_stillTogglesOff() throws {
+        // Three slots, two of them filled: `toPhotoLibrary` cannot build this, since a placeholder
+        // carries no name and so is not visual media to the mapper.
+        let bucketDate = try "2023-08-18T00:00:00Z".date
+        let photos = [NodeEntity(name: "a.png", handle: HandleEntity(1), modificationTime: bucketDate),
+                      NodeEntity(name: "b.png", handle: HandleEntity(2), modificationTime: bucketDate)
+        ]
+        let library = PhotoLibrary
+            .skeleton(from: [MediaDateSectionEntity(
+                groupId: "2023-08-18", startDate: bucketDate, endDate: bucketDate, count: 3)])
+            .replacingPhotos(from: 0, with: photos)
+        let sut = Self.makeSUT(library: library, contentMode: .library)
+
+        sut.toggleSelectAllPhotos()
+
+        #expect(sut.selection.allSelected)
+        // The slot is not selectable, so the selection is short of the library by one and the
+        // count on its own cannot tell "everything is selected" from "something is missing".
+        #expect(sut.selection.photos.count == photos.count)
+        #expect(library.allPhotos.count == photos.count + 1)
+
+        sut.toggleSelectAllPhotos()
+
+        #expect(sut.selection.allSelected == false)
+        #expect(sut.selection.photos.isEmpty)
+    }
     
     @MainActor
     @Test(arguments: [

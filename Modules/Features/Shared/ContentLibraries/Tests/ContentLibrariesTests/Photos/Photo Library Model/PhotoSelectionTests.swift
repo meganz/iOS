@@ -47,6 +47,15 @@ class PhotoSelectionTests: XCTestCase {
         XCTAssertTrue(sut.photos.isEmpty)
     }
 
+    func testSetSelectedPhotos_timelinePlaceholders_areDropped() {
+        let placeholder = NodeEntity.timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0))
+        let real = NodeEntity(handle: 1)
+
+        sut.setSelectedPhotos([real, placeholder])
+
+        XCTAssertEqual(Array(sut.photos.values), [real])
+    }
+
     func testIsPhotoSelected() {
         let nodes = [NodeEntity(handle: 1),
                      NodeEntity(handle: 2),

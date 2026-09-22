@@ -3,14 +3,15 @@ import MEGAAppPresentation
 import MEGAFoundation
 
 final class PhotoMonthSection: PhotoDateSection {
-    init(photoByMonth: PhotoByMonth) {
+    init(photoByMonth: PhotoByMonth, layoutVersion: Int = PhotoLibrary.initialLayoutVersion) {
         let isCurrentYear = Calendar.current.component(.year, from: photoByMonth.categoryDate) == Calendar.current.component(.year, from: Date())
         let formatter: any DateFormatting = isCurrentYear ? DateFormatter.monthOnlyTemplate() : DateFormatter.monthTemplate()
         let title = formatter.localisedString(from: photoByMonth.categoryDate)
 
         super.init(photoByDayList: photoByMonth.contentList,
                    categoryDate: photoByMonth.categoryDate,
-                   title: title)
+                   title: title,
+                   layoutVersion: layoutVersion)
     }
     
     override var attributedTitle: AttributedString {
@@ -25,6 +26,6 @@ final class PhotoMonthSection: PhotoDateSection {
 
 extension PhotoLibrary {
     var photoMonthSections: [PhotoMonthSection] {
-        photosByMonthList.map { PhotoMonthSection(photoByMonth: $0) }
+        photosByMonthList.map { PhotoMonthSection(photoByMonth: $0, layoutVersion: layoutVersion) }
     }
 }

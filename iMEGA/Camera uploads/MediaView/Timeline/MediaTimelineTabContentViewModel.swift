@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
@@ -228,21 +229,25 @@ extension MediaTimelineTabContentViewModel: MediaTabToolbarActionsProvider {
     }
 
     func toolbarConfig() -> MediaBottomToolbarConfig? {
-        let selectedNodes = selectedNodesForToolbar
-        let selectedCount = selectedNodes.count
-
         let actions: [MediaBottomToolbarAction] = [
             .download, .manageLink, .addToAlbum, .moveToRubbishBin, .more]
 
         return MediaBottomToolbarConfig(
             actions: actions,
-            selectedItemsCount: selectedCount
+            selectedItemsCount: selectedItemsCount
         )
     }
 
-    /// Private helper to get selected nodes for internal use
+    /// What the user marked, which is not what an action can run on: the toolbar reports marks.
+    private var selectedItemsCount: Int {
+        timelineViewModel.photoLibraryContentViewModel.selection.photos.count
+    }
+
+    /// The nodes an action runs on. A placeholder's synthetic handle names no file, so the filter
+    /// is a last line of defence — `selectPhoto` already refuses them — kept where actions read.
     private var selectedNodesForToolbar: [NodeEntity] {
-        Array(timelineViewModel.photoLibraryContentViewModel.selectedPhotos)
+        timelineViewModel.photoLibraryContentViewModel.selectedPhotos
+            .filter { !$0.isTimelinePlaceholder }
     }
 }
 

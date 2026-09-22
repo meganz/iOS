@@ -15,6 +15,9 @@ import SwiftUI
     
     public let visiblePhotoIndexRange = CurrentValueSubject<Range<Int>?, Never>(nil)
 
+    /// Answers for cells whose photo has not loaded yet, when there is a screen that can.
+    public weak var positionalSelectionHandler: (any PositionalSelectionHandling)?
+
     /// The query behind the content currently committed, set by the screen that owns it when that
     /// screen paginates. Its presence is what tells a photo browser opened from here that it has
     /// to page for the rest of the sequence rather than being handed all of it.
@@ -128,11 +131,12 @@ extension PhotoLibraryContentViewModel {
     }
 
     public func toggleSelectAllPhotos() {
-        let allSelectedCurrently = selection.photos.count == library.allPhotos.count
+        let selectablePhotos = library.allPhotos.filter { !$0.isTimelinePlaceholder }
+        let allSelectedCurrently = selection.photos.count == selectablePhotos.count
         selection.allSelected = !allSelectedCurrently
         
         if selection.allSelected {
-            selection.setSelectedPhotos(library.allPhotos)
+            selection.setSelectedPhotos(selectablePhotos)
         }
     }
 }

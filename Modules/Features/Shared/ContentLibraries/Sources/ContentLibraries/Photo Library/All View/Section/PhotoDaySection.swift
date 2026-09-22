@@ -1,7 +1,7 @@
 import Foundation
 
 final class PhotoDaySection: PhotoDateSection {
-    init(photoByDay: PhotoByDay) {
+    init(photoByDay: PhotoByDay, layoutVersion: Int = PhotoLibrary.initialLayoutVersion) {
         let title: String
         if photoByDay.categoryDate.isThisYear {
             title = DateFormatter.fromTemplate("MMMMd").localisedString(from: photoByDay.categoryDate)
@@ -11,7 +11,8 @@ final class PhotoDaySection: PhotoDateSection {
         
         super.init(photoByDayList: [photoByDay],
                    categoryDate: photoByDay.categoryDate,
-                   title: title)
+                   title: title,
+                   layoutVersion: layoutVersion)
     }
     
     override var attributedTitle: AttributedString {
@@ -33,6 +34,6 @@ final class PhotoDaySection: PhotoDateSection {
 
 extension PhotoLibrary {
     var photoDaySections: [PhotoDaySection] {
-        photosByDayList.map { PhotoDaySection(photoByDay: $0)}
+        photosByDayList.map { PhotoDaySection(photoByDay: $0, layoutVersion: layoutVersion) }
     }
 }

@@ -971,6 +971,50 @@ final class PhotoCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    // MARK: - Skeleton placeholder selection
+
+    @MainActor
+    func testIsSelected_placeholderCellAndSelectAll_staysUnselected() {
+        let handler = MockPositionalSelectionHandler()
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler: handler))
+
+        allViewModel.libraryViewModel.selection.editMode = .active
+        allViewModel.libraryViewModel.selection.allSelected = true
+
+        // A select-all reaches neither `photos` nor the handler, so nothing has selected this slot
+        // and nothing afterwards would clear a check put on it here.
+        XCTAssertFalse(sut.isSelected)
+    }
+
+    @MainActor
+    func testIsSelected_placeholderCellAndSelectionCleared_isDeselected() {
+        let handler = MockPositionalSelectionHandler()
+        handler.selectedPositions = [Self.placeholderPosition]
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler: handler))
+        XCTAssertTrue(sut.isSelected)
+
+        // Leaving edit mode clears `allSelected`, which is the only thing that puts this cell back.
+        allViewModel.libraryViewModel.selection.editMode = .active
+        allViewModel.libraryViewModel.selection.editMode = .inactive
+
+        XCTAssertFalse(sut.isSelected)
+    }
+
+    private static let placeholderPosition = SelectionPosition(flatIndex: 0, layoutVersion: 0)
+
+    @MainActor
+    private static func placeholderSelection(
+        handler: MockPositionalSelectionHandler
+    ) -> PlaceholderCellSelection {
+        PlaceholderCellSelection(handler: handler) { Self.placeholderPosition }
+    }
+
     // MARK: - Skeleton placeholder short-circuit
 
     @MainActor
@@ -1110,6 +1154,118 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertTrue(allViewModel.libraryViewModel.selection.photos.isEmpty)
     }
 
+    // MARK: - Placeholder cells on a screen that answers by position
+
+    // A placeholder has no handle to select it by. On a screen that pages its content in, the cell
+    // reports where it is and the screen answers; everywhere else it stays inert.
+
+    @MainActor
+    func testSelect_placeholderWithHandler_reportsTheTapAtItsPosition() {
+        let handler = MockPositionalSelectionHandler()
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler))
+        allViewModel.libraryViewModel.selection.editMode = .active
+
+        sut.select()
+
+        XCTAssertEqual(handler.applied.map(\.interaction), [.tap])
+        XCTAssertEqual(handler.applied.map(\.position), [Self.position])
+        // The mark is the handler's to make: nothing is written into the committed selection, whose
+        // entries are real nodes.
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.photos.isEmpty)
+    }
+
+    @MainActor
+    func testSelect_placeholderWithHandler_outsideEditMode_reportsNothing() {
+        let handler = MockPositionalSelectionHandler()
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler))
+
+        sut.select()
+
+        XCTAssertTrue(handler.applied.isEmpty)
+    }
+
+    @MainActor
+    func testSelect_placeholderWithHandler_cellOffScreen_reportsNothing() {
+        // No index path means no position to report. Guessing one would be guessing a photo.
+        let handler = MockPositionalSelectionHandler()
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: PlaceholderCellSelection(handler: handler) { nil })
+        allViewModel.libraryViewModel.selection.editMode = .active
+
+        sut.select()
+
+        XCTAssertTrue(handler.applied.isEmpty)
+    }
+
+    @MainActor
+    func testHandleLongPress_placeholderWithHandler_entersEditModeAndMarksThePosition() {
+        let handler = MockPositionalSelectionHandler()
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler))
+
+        sut.handleLongPress()
+
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.editMode.isEditing)
+        XCTAssertEqual(handler.applied.map(\.interaction), [.longPress])
+        // The mark is what stops the drag that may follow the same unlifted finger from toggling
+        // this cell straight back off.
+        XCTAssertEqual(handler.longPressMarks, [Self.position])
+    }
+
+    @MainActor
+    func testIsSelected_placeholderWithHandler_takesItsStateFromTheHandler() {
+        let handler = MockPositionalSelectionHandler()
+        handler.selectedPositions = [Self.position]
+
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler))
+
+        // Asked on the way in, so a cell scrolling onto a marked slot arrives already marked.
+        XCTAssertTrue(sut.isSelected)
+
+        handler.selectedPositions = []
+        handler.notifySelectionChanged()
+
+        XCTAssertFalse(sut.isSelected)
+    }
+
+    @MainActor
+    func testIsSelected_placeholderWithHandler_survivesAChangeToTheCommittedSelection() {
+        // A synthetic handle is never in `selection.photos`, so a cell taking its mark from there
+        // would lose it the moment any real photo was selected anywhere on screen.
+        let handler = MockPositionalSelectionHandler()
+        handler.selectedPositions = [Self.position]
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            placeholderSelection: Self.placeholderSelection(handler))
+
+        allViewModel.libraryViewModel.selection.selectPhoto(NodeEntity(handle: 99))
+
+        XCTAssertTrue(sut.isSelected)
+    }
+
+    private static let position = SelectionPosition(flatIndex: 3, layoutVersion: 7)
+
+    @MainActor
+    private static func placeholderSelection(
+        _ handler: MockPositionalSelectionHandler
+    ) -> PlaceholderCellSelection {
+        PlaceholderCellSelection(handler: handler) { position }
+    }
+
     @MainActor
     private func makeSUT(
         photo: NodeEntity,
@@ -1117,6 +1273,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)? = nil,
         configuration: ContentLibraries.Configuration = .mockConfiguration(),
+        placeholderSelection: PlaceholderCellSelection? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> PhotoCellViewModel {
@@ -1126,7 +1283,8 @@ final class PhotoCellViewModelTests: XCTestCase {
                 libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            configuration: configuration)
+            configuration: configuration,
+            placeholderSelection: placeholderSelection)
         addTeardownBlock { [weak sut] in
             // Add sleep to give `@Published` properties used in infinite async sequences via `.values` time to cancel
             try await Task.sleep(nanoseconds: 100_000_000)

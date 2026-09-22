@@ -21,14 +21,24 @@ public class PhotoDateSection: PhotoSection {
 
     public let itemCount: Int
 
+    /// The layout these items were read from, carried here so the rendered sections and their
+    /// version travel as one value and cannot be paired up wrongly. See ``SelectionPosition``.
+    public let layoutVersion: Int
+
     /// The flat index each day bucket starts at, so an item can be located by bisecting the days
     /// instead of walking them. The masonry section holds the whole library's days, not a month's.
     private let dayStartIndices: [Int]
 
-    init(photoByDayList: [PhotoByDay], categoryDate: Date, title: String = "") {
+    init(
+        photoByDayList: [PhotoByDay],
+        categoryDate: Date,
+        title: String = "",
+        layoutVersion: Int = PhotoLibrary.initialLayoutVersion
+    ) {
         self.photoByDayList = photoByDayList
         self.categoryDate = categoryDate
         self.title = title
+        self.layoutVersion = layoutVersion
 
         var starts = [Int]()
         starts.reserveCapacity(photoByDayList.count)

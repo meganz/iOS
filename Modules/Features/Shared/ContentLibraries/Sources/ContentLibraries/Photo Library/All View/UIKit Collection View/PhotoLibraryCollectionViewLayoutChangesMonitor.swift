@@ -7,6 +7,11 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
     private weak var collectionView: UICollectionView?
     private let representer: PhotoLibraryCollectionViewRepresenter
     private(set) var photoLibraryDataSource = [PhotoDateSection]()
+
+    /// The layout version of what the grid is showing. Read from the sections themselves, so it
+    /// trails the committed library by the debounce below exactly as the cells do: an interaction
+    /// is stamped with the layout the user was looking at, not the one that replaced it.
+    var renderedLayoutVersion: Int { photoLibraryDataSource.layoutVersion }
     private var subscriptions = Set<AnyCancellable>()
     private var currentLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?
     
