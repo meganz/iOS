@@ -71,8 +71,6 @@ extension MEGAPurchase {
         SVProgressHUD.dismiss()
         SVProgressHUD.setDefaultMaskType(.none)
 
-
-
         let promotionalOfferUnavailable = AccountPlanErrorEntity.promotionalOfferUnavailableError
         for delegate in purchaseDelegates {
             delegate.failedPurchase?(promotionalOfferUnavailable.errorCode, message: promotionalOfferUnavailable.errorMessage)
@@ -118,5 +116,10 @@ extension MEGAPurchase {
     func mobileOffer(for product: SKProduct) -> MobileOfferEntity? {
         guard let pricing, let index = productIndex(for: product) else { return nil }
         return pricing.toMobileOfferEntity(index: index)
+    }
+
+    func accountType(for product: SKProduct) -> MEGAAccountType {
+        guard let pricing, let index = productIndex(for: product) else { return .free }
+        return pricing.proLevel(atProductIndex: index)
     }
 }
