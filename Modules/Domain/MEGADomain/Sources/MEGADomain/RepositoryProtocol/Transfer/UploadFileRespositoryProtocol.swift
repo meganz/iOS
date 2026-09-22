@@ -35,6 +35,7 @@ public protocol UploadFileRepositoryProtocol: Sendable {
     ///   - uploadOptions: the uploadOptionsm
     ///   - start: An optional closure called when the upload starts.
     ///   - progress: An optional closure called to update the progress of the upload.
+    ///   - temporaryError: An optional closure called when the upload stalls and the SDK keeps retrying it.
     ///   - completion: An optional closure called upon completion of the upload.
     func uploadFile(
         _ url: URL,
@@ -42,6 +43,7 @@ public protocol UploadFileRepositoryProtocol: Sendable {
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     )
     

@@ -347,6 +347,9 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, Cancellab
     var transferCompletedWithError_calledTimes = 0
     var transferFlowDidFinish_calledTimes = 0
     var prepareTransfersWidget_calledTimes = 0
+    /// The `dismiss` flag of the last call, per routing method.
+    var transferCancelled_dismiss: Bool?
+    var transferFailed_dismiss: Bool?
 
     nonisolated init() { }
     
@@ -361,10 +364,12 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, Cancellab
 
     func transferCancelled(with message: String, dismiss: Bool) {
         transferCancelled_calledTimes += 1
+        transferCancelled_dismiss = dismiss
     }
 
     func transferFailed(error: String, dismiss: Bool) {
         transferFailed_calledTimes += 1
+        transferFailed_dismiss = dismiss
     }
 
     func transferCompletedWithError(error: String, dismiss: Bool) {

@@ -286,6 +286,10 @@
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
 		24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */; };
 		243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */; };
+		7DA15143C9D8B9F63CF16767 /* ShareExtensionCancellableTransferRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C6366B4D5BBE5770C6DED4 /* ShareExtensionCancellableTransferRouterTests.swift */; };
+		D90B25D7CB93B0275C2E3E6F /* ShareExtensionCancellableTransferViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784F847BC35876267AA6A775 /* ShareExtensionCancellableTransferViewModelTests.swift */; };
+		6D29A571AC48ED0CD02757EF /* ShareExtensionCancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */; };
+		39FEE1CF3244B7E073FF7497 /* ShareExtensionCancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */; };
 		BE1A0A062F60000100AA0401 /* RevampedCancellableTransferViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1A0A052F60000100AA0401 /* RevampedCancellableTransferViewModelTests.swift */; };
 		243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */; };
 		243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */; };
@@ -3130,6 +3134,8 @@
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
 		24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewController.swift; sourceTree = "<group>"; };
 		243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterFactoryTests.swift; sourceTree = "<group>"; };
+		94C6366B4D5BBE5770C6DED4 /* ShareExtensionCancellableTransferRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferRouterTests.swift; sourceTree = "<group>"; };
+		784F847BC35876267AA6A775 /* ShareExtensionCancellableTransferViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferViewModelTests.swift; sourceTree = "<group>"; };
 		BE1A0A052F60000100AA0401 /* RevampedCancellableTransferViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevampedCancellableTransferViewModelTests.swift; sourceTree = "<group>"; };
 		243AFAF82C71A684005CC22E /* MEGACD 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 7.xcdatamodel"; sourceTree = "<group>"; };
 		243AFAF82C71A684005CC22F /* MEGACD 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -6595,6 +6601,8 @@
 				A50AE349304C4DDB007A07CF /* CancellableTransferAlertSchedulerTests.swift */,
 				243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */,
 				BE1A0A052F60000100AA0401 /* RevampedCancellableTransferViewModelTests.swift */,
+				94C6366B4D5BBE5770C6DED4 /* ShareExtensionCancellableTransferRouterTests.swift */,
+				784F847BC35876267AA6A775 /* ShareExtensionCancellableTransferViewModelTests.swift */,
 			);
 			path = CancellableTransfers;
 			sourceTree = "<group>";
@@ -16208,6 +16216,8 @@
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */,
 				B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */,
+				6D29A571AC48ED0CD02757EF /* ShareExtensionCancellableTransferRouter.swift in Sources */,
+				39FEE1CF3244B7E073FF7497 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				94F92EB82CAAD6DE00966A0F /* ShareLinkDialogRouter.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				249351BF2CD36DE300A8F653 /* ShareVideoPlaylistLinkInitialSections.swift in Sources */,
@@ -17177,6 +17187,8 @@
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				249B71DA2ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift in Sources */,
 				6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */,
+				7DA15143C9D8B9F63CF16767 /* ShareExtensionCancellableTransferRouterTests.swift in Sources */,
+				D90B25D7CB93B0275C2E3E6F /* ShareExtensionCancellableTransferViewModelTests.swift in Sources */,
 				94AFB6F42CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift in Sources */,
 				94DCA6C82CAADEBD00F28AA2 /* SimpleDialogConfigFactoryTests.swift in Sources */,
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,

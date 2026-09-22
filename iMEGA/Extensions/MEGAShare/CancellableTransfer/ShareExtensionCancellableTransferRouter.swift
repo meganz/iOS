@@ -23,21 +23,29 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
         
         let viewModel =  ShareExtensionCancellableTransferViewModel(router: self, uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo), transfers: transfers)
         
-        let wrapper = CancellableTransferControllerWrapper(viewModel: viewModel)
+        return install(CancellableTransferControllerWrapper(viewModel: viewModel))
+    }
+    
+    // Dependency-injection seam used by tests to avoid constructing app-wide repositories.
+    func build(viewModel: ShareExtensionCancellableTransferViewModel) -> UIViewController {
+        install(CancellableTransferControllerWrapper(viewModel: viewModel))
+    }
+    
+    private func install(_ wrapper: CancellableTransferControllerWrapper<ShareExtensionCancellableTransferViewModel>) -> UIViewController {
         self.wrapper = wrapper
         return wrapper.createViewController()
     }
     
     @objc func start() {
-        guard let presenter = presenter else { return }
-        presenter.present(build(), animated: true) { [weak self] in
-            self?.wrapper?.viewIsReady()
-        }
+        _ = build()
+        wrapper?.viewIsReady()
     }
     
     func showTransfersAlert() {
-        guard let presenter = presenter else { return }
-        presenter.present(build(), animated: true)
+        // Reuse the wrapper built in `start()`. Building again replaces it, and the alert on
+        // screen only holds it weakly, so its Cancel button would dispatch nothing.
+        guard let presenter, let alert = wrapper?.cancelAlertController() else { return }
+        presenter.present(alert, animated: true)
     }
     
     func transferSuccess(with message: String, dismiss: Bool) {

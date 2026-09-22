@@ -46,6 +46,7 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
+        temporaryError: ((TransferEntity, ErrorEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     ) {
         guard let completion else {
@@ -56,6 +57,7 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         let transferDelegate = TransferDelegate(completion: completion)
         transferDelegate.start = start
         transferDelegate.progress = progress
+        transferDelegate.temporaryError = temporaryError
         
         sdk.startUpload(withLocalPath: url.path, parentHandle: parent, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions(), delegate: transferDelegate)
     }

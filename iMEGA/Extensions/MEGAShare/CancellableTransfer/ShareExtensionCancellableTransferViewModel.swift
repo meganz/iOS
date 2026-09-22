@@ -39,18 +39,24 @@ final class ShareExtensionCancellableTransferViewModel: CancellableTransferViewM
         case .onViewReady:
             invokeCommand?(.transferring)
             router.showTransfersAlert()
+            // Set before starting, so a quota error on the first upload still dismisses the alert.
+            alertPresented = true
             if fileTransfers.isNotEmpty {
                 startShareExtensionFileUploads()
             } else {
                 startShareExtensionFolderUploads()
             }
-            self.alertPresented = true
         case .didTapCancelButton:
             if processingComplete {
                 return
             }
+            processingComplete = true
             transfersCancelled = true
             uploadFileUseCase.cancelUploadTransfers()
+            invokeCommand?(.cancelling)
+            // The cancelled transfers report back, but every completion path bails on
+            // `transfersCancelled`, so close the flow here instead. The alert is already gone.
+            router.transferCancelled(with: Strings.Localizable.transferCancelled, dismiss: false)
         }
     }
     
@@ -84,7 +90,23 @@ final class ShareExtensionCancellableTransferViewModel: CancellableTransferViewM
         }
     }
     
+    /// The SDK retries an over quota upload forever, so stop the flow on the first warning.
+    private func didReceiveTemporaryError(_ error: ErrorEntity) {
+        // Cancelling is async, so a queued quota callback can still land after a terminal result.
+        guard error.type == .quotaExceeded, !processingComplete else { return }
+        transfersCancelled = true
+        processingComplete = true
+        uploadFileUseCase.cancelUploadTransfers()
+        router.transferFailed(
+            error: Strings.Localizable.yourUploadSCannotProceedBecauseYourAccountIsFull,
+            dismiss: alertPresented
+        )
+    }
+    
     private func manageTransfersCompletion() {
+        if processingComplete {
+            return
+        }
         processingComplete = true
         if transferErrors.isEmpty {
             router.transferSuccess(with: successShareMessage, dismiss: alertPresented)
@@ -154,6 +176,9 @@ final class ShareExtensionCancellableTransferViewModel: CancellableTransferViewM
                 progress: isFolder ? { [weak transferViewEntity] transferEntity in
                     transferViewEntity?.setStage(transferEntity.stage)
                 } : { _ in },
+                temporaryError: { [weak self] _, error in
+                    self?.didReceiveTemporaryError(error)
+                },
                 completion: { [weak self] result in
                     switch result {
                     case .success:
