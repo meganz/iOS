@@ -71,6 +71,10 @@ extension PlaybackSource {
             return .fileLink(url: url, node: node)
         }
     }
+
+    var isFolderLink: Bool {
+        if case .folderLink = self { true } else { false }
+    }
 }
 
 struct PlaybackQueue: Sendable {
