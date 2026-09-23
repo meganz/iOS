@@ -153,29 +153,43 @@ final class TimelinePendingSelection: PositionalSelectionHandling {
 
     /// A reshape is being published. Runs inside ``NewTimelineViewModel``'s commit transaction, so
     /// the new version, the sections it describes and the library reach the screen together.
-    ///
-    /// Pending marks in a bucket that resized are **discarded**: an offset no longer names the cell
-    /// the user marked, and discarding can only lose a mark, never move one onto another photo.
-    /// Rebasing them onto where they moved to is a later change.
-    func layoutDidReshape(to sections: [MediaDateSectionEntity], bucketsWhoseCountChanged: Set<String>) {
+    func layoutDidReshape(
+        to sections: [MediaDateSectionEntity], countDeltas: [String: Int], newestFirst: Bool
+    ) {
         layoutVersion &+= 1
         let generation = resolver?.selectionQueryGeneration ?? 0
-        let surviving = Set(sections.map(\.groupId))
-        let stillNamesACell: (TimelineSelectionSlot) -> Bool = { slot in
-            slot.queryGeneration == generation
-                && surviving.contains(slot.groupId)
-                && !bucketsWhoseCountChanged.contains(slot.groupId)
+        let newCounts = Dictionary(uniqueKeysWithValues: sections.map { ($0.groupId, $0.count) })
+        // Where a slot sits after this reshape, or nil when its bucket can no longer hold it.
+        let rebased: (TimelineSelectionSlot) -> TimelineSelectionSlot? = { slot in
+            guard slot.queryGeneration == generation,
+                  let count = newCounts[slot.groupId] else { return nil }
+            let delta = countDeltas[slot.groupId] ?? 0
+            let offset = slot.localOffset + ((delta > 0 && newestFirst) ? delta : 0)
+            guard (0..<count).contains(offset) else { return nil }
+            return TimelineSelectionSlot(
+                queryGeneration: slot.queryGeneration, groupId: slot.groupId, localOffset: offset)
         }
 
         // Everything positional in one sweep. The handles a drag started from are deliberately not
         // swept: a handle names the same photo in any layout, and the drag goes on being answered
         // for its loaded cells until the grid catches up and ends it.
-        let kept = unresolvedSlots.filter(stillNamesACell)
+        let kept = Set(unresolvedSlots.compactMap(rebased))
         for (token, baseline) in Array(gestureBaselines) {
-            gestureBaselines[token]?.slots = baseline.slots.filter(stillNamesACell)
+            gestureBaselines[token]?.slots = Set(baseline.slots.compactMap(rebased))
         }
-        if let slot = longPressed?.slot, !stillNamesACell(slot) { longPressed = nil }
-        resolutionFailureCounts = resolutionFailureCounts.filter { kept.contains($0.key) }
+        if let slot = longPressed?.slot {
+            // Cleared rather than left slotless: a mark under neither name answers for nothing, and
+            // the drag following the same finger would read its own origin cell as one to toggle.
+            if let moved = rebased(slot) { longPressed?.slot = moved } else { longPressed = nil }
+        }
+        // Moved with their slots. Left where they were, a mark that outlived a reshape would
+        // inherit a stranger's budget and could be dropped on failures that were never its own.
+        var movedFailureCounts: [TimelineSelectionSlot: Int] = [:]
+        for (slot, failures) in resolutionFailureCounts {
+            guard let moved = rebased(slot), kept.contains(moved) else { continue }
+            movedFailureCounts[moved] = failures
+        }
+        resolutionFailureCounts = movedFailureCounts
         guard kept != unresolvedSlots else { return }
         unresolvedSlots = kept
         publishMarkedCount()

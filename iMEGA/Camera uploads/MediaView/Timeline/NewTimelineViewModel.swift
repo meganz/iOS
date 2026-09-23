@@ -261,9 +261,11 @@ final class NewTimelineViewModel: ObservableObject {
             bumpVersions(for: deltas)
             dateSections = sections
             // The shape moved, so a position means something else now: a new layout version, and
-            // the marks whose bucket resized are dropped with the layout that placed them.
+            // the marks in a bucket that resized move to where that bucket put them. The sort
+            // order is read here rather than stored on the slot, it cannot change without
+            // changing the query, and a query change drops every slot before this runs.
             pendingSelection?.layoutDidReshape(
-                to: sections, bucketsWhoseCountChanged: Set(deltas.keys))
+                to: sections, countDeltas: deltas, newestFirst: mediaTimelineSortOrder.isNewestFirst)
         }
         switch coordinates {
         case .adding(let added):

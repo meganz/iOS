@@ -1233,8 +1233,8 @@ struct NewTimelineViewModelTests {
             #expect(sut.markedItemCount == 1) // the same one cell, now named by its handle
         }
 
-        @Test("A mark in a bucket that resized is dropped, and one in a bucket that did not is kept")
-        func aReshapedBucketDropsItsMarks() async {
+        @Test("A mark in a bucket that grew at the front moves with its cell, and one in a later bucket moves down")
+        func aReshapedBucketMovesItsMarks() async {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
                     monitorDateSectionsSequences: Self.sectionStreams([
@@ -1250,7 +1250,9 @@ struct NewTimelineViewModelTests {
             sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(0..<0)
             await sut.monitorTimelineSections() // day1 grows at the front
 
-            #expect(sut.markedItemCount == 1)
+            #expect(sut.markedItemCount == 2)
+            #expect(Self.handler(sut)?.isSelected(at: Self.position(0, in: sut)) == false) // the new arrival
+            #expect(Self.handler(sut)?.isSelected(at: Self.position(1, in: sut)) == true) // day1, pushed along
             #expect(Self.handler(sut)?.isSelected(at: Self.position(3, in: sut)) == true) // day2, moved down
         }
 

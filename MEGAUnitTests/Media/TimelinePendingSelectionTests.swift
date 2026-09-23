@@ -72,6 +72,25 @@ struct TimelinePendingSelectionTests {
         SelectionPosition(flatIndex: flatIndex, layoutVersion: layoutVersion)
     }
 
+    /// The commit transaction's own call: deltas worked out from the two section lists, and the
+    /// projection swapped alongside, since the two move together in production.
+    private static func reshape(
+        _ sut: SUT,
+        to sections: [MediaDateSectionEntity],
+        from previous: [MediaDateSectionEntity] = Self.sections(),
+        hydrating replacements: [Int: NodeEntity] = [:],
+        newestFirst: Bool = true
+    ) {
+        let old = Dictionary(uniqueKeysWithValues: previous.map { ($0.groupId, $0.count) })
+        var deltas: [String: Int] = [:]
+        for section in sections where (old[section.groupId] ?? 0) != section.count {
+            deltas[section.groupId] = section.count - (old[section.groupId] ?? 0)
+        }
+        sut.pendingSelection.layoutDidReshape(
+            to: sections, countDeltas: deltas, newestFirst: newestFirst)
+        sut.resolver.projection = Self.projection(sections, hydrating: replacements)
+    }
+
     /// Give the settle timer and the cycle it starts room to run, without pinning the test to how
     /// many hops that takes.
     private static func waitUntil(_ isSatisfied: () -> Bool) async {
@@ -112,9 +131,7 @@ struct TimelinePendingSelectionTests {
     @Test("An interaction read off a layout that has been replaced is ignored, not guessed at")
     func staleLayoutVersionIsRefused() {
         let sut = Self.makeSUT()
-        sut.pendingSelection.layoutDidReshape(
-            to: Self.sections(first: 3), bucketsWhoseCountChanged: ["2022-08-18"])
-        sut.resolver.projection = Self.projection(Self.sections(first: 3))
+        Self.reshape(sut, to: Self.sections(first: 3))
 
         sut.pendingSelection.apply(.tap, at: Self.position(0, layoutVersion: 0))
 
@@ -137,19 +154,147 @@ struct TimelinePendingSelectionTests {
 
     // MARK: - Reshape
 
-    @Test("A reshape drops the marks in the bucket that resized and keeps the rest")
-    func reshapeDiscardsMarksInTheResizedBucket() {
+    @Test("A mark outside the bucket that resized keeps its cell")
+    func reshapeKeepsMarksInOtherBuckets() {
         let sut = Self.makeSUT()
-        sut.pendingSelection.apply(.tap, at: Self.position(0)) // 2022-08-18
-        sut.pendingSelection.apply(.tap, at: Self.position(3)) // 2022-07-18
+        sut.pendingSelection.apply(.tap, at: Self.position(3)) // 2022-07-18, offset 1
 
-        sut.pendingSelection.layoutDidReshape(
-            to: Self.sections(first: 3), bucketsWhoseCountChanged: ["2022-08-18"])
-        sut.resolver.projection = Self.projection(Self.sections(first: 3))
+        Self.reshape(sut, to: Self.sections(first: 3))
 
         #expect(sut.pendingSelection.unresolvedCount == 1)
         // One slot lower in the new layout, and it is still the same cell of the same day.
         #expect(sut.pendingSelection.isSelected(at: Self.position(4, layoutVersion: 1)))
+    }
+
+    @Test("Newest-first, a photo arriving in a day moves the marks in it down and is not marked")
+    func growthNewestFirstShiftsMarksInTheBucket() {
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(0)) // 2022-08-18, offset 0
+        sut.pendingSelection.apply(.tap, at: Self.position(1)) // offset 1
+
+        Self.reshape(sut, to: Self.sections(first: 3))
+
+        #expect(sut.pendingSelection.unresolvedCount == 2)
+        #expect(!sut.pendingSelection.isSelected(at: Self.position(0, layoutVersion: 1))) // arrival
+        #expect(sut.pendingSelection.isSelected(at: Self.position(1, layoutVersion: 1)))
+        #expect(sut.pendingSelection.isSelected(at: Self.position(2, layoutVersion: 1)))
+    }
+
+    @Test("Oldest-first, growth lands at the day's tail, so the marks above it do not move")
+    func growthOldestFirstKeepsOffsets() {
+        // Shifting anyway would take the mark off the band's first cell and put one on the photo
+        // that just arrived — two of the three rules broken at once.
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(0))
+        sut.pendingSelection.apply(.tap, at: Self.position(1))
+
+        Self.reshape(sut, to: Self.sections(first: 3), newestFirst: false)
+
+        #expect(sut.pendingSelection.unresolvedCount == 2)
+        #expect(sut.pendingSelection.isSelected(at: Self.position(0, layoutVersion: 1)))
+        #expect(sut.pendingSelection.isSelected(at: Self.position(1, layoutVersion: 1)))
+        #expect(!sut.pendingSelection.isSelected(at: Self.position(2, layoutVersion: 1))) // arrival
+    }
+
+    @Test("A deletion keeps its offsets and loses only the tail that no longer fits")
+    func shrinkageKeepsOffsetsAndDropsTheTail() {
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(2)) // 2022-07-18, offset 0
+        sut.pendingSelection.apply(.tap, at: Self.position(3)) // offset 1
+        sut.pendingSelection.apply(.tap, at: Self.position(4)) // offset 2
+
+        Self.reshape(sut, to: Self.sections(second: 1))
+
+        // A day that lost two items loses two marks, and it loses them from the tail.
+        #expect(sut.pendingSelection.unresolvedCount == 1)
+        #expect(sut.pendingSelection.isSelected(at: Self.position(2, layoutVersion: 1)))
+    }
+
+    @Test("A deletion does not shift, whichever way the list is sorted")
+    func shrinkageDoesNotShift() {
+        // A count says where an arrival goes, never where a departure was. Reading the sort order
+        // on shrinkage too takes the mark off a cell that is still sitting there.
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(2)) // 2022-07-18, offset 0
+
+        Self.reshape(sut, to: Self.sections(second: 2))
+
+        #expect(sut.pendingSelection.unresolvedCount == 1)
+        #expect(sut.pendingSelection.isSelected(at: Self.position(2, layoutVersion: 1)))
+    }
+
+    @Test("A band spanning the loaded edge stays whole when its day grows")
+    func growthKeepsTheBandWholeAcrossTheLoadedEdge() {
+        // The committed half follows its photos by handle. Left on their arithmetic offsets, the
+        // marked half would overlap it by one cell and the band would lose one at its tail — one
+        // cell gone, on every reshape, from a band the user painted in a single stroke.
+        let a = NodeEntity(name: "a.jpg", handle: 1)
+        let b = NodeEntity(name: "b.jpg", handle: 2)
+        let before = Self.sections(first: 0, second: 5)
+        let sut = Self.makeSUT(hydrating: [0: a, 1: b], sections: before)
+        for index in 0...4 { sut.pendingSelection.apply(.tap, at: Self.position(index)) }
+        #expect(sut.pendingSelection.markedCount == 5) // 2 committed by handle, 3 marked by position
+
+        Self.reshape(
+            sut, to: Self.sections(first: 0, second: 6), from: before, hydrating: [1: a, 2: b])
+
+        #expect(sut.pendingSelection.markedCount == 5)
+        #expect(!sut.pendingSelection.isSelected(at: Self.position(0, layoutVersion: 1))) // arrival
+        for index in 1...5 {
+            #expect(sut.pendingSelection.isSelected(at: Self.position(index, layoutVersion: 1)))
+        }
+    }
+
+    @Test("A mark that moves onto a photo is pinned to that photo")
+    func rebasedMarkPromotesToTheNodeItNowSitsOn() {
+        let node = NodeEntity(name: "a.jpg", handle: 7)
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(0)) // 2022-08-18, offset 0
+
+        Self.reshape(sut, to: Self.sections(first: 3), hydrating: [1: node])
+        sut.pendingSelection.promoteResolvedSlots()
+
+        #expect(sut.selection.photos[7] == node)
+        #expect(sut.pendingSelection.unresolvedCount == 0)
+    }
+
+    @Test("A long press survives its day growing under the finger")
+    func longPressMarkMovesWithItsBucket() {
+        // The press and the drag that follows it are two events with a reshape's worth of time
+        // between them. Dropped here, the drag reads its own origin cell as one to toggle off.
+        let sut = Self.makeSUT()
+        sut.pendingSelection.markRecentlyLongPressed(at: Self.position(0))
+        #expect(sut.pendingSelection.wasRecentlyLongPressed(at: Self.position(0)))
+
+        Self.reshape(sut, to: Self.sections(first: 3))
+
+        #expect(sut.pendingSelection.wasRecentlyLongPressed(at: Self.position(1, layoutVersion: 1)))
+        #expect(!sut.pendingSelection.wasRecentlyLongPressed(at: Self.position(0, layoutVersion: 1)))
+    }
+
+    @Test("What a drag started from moves too, so shrink-back restores the cells it marked")
+    func gestureBaselineMovesWithTheLayout() {
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(0))
+        let token = sut.pendingSelection.beginSelectionGesture()
+
+        Self.reshape(sut, to: Self.sections(first: 3))
+
+        #expect(sut.pendingSelection.wasSelectedAtGestureStart(
+            token, at: Self.position(1, layoutVersion: 1)))
+        #expect(!sut.pendingSelection.wasSelectedAtGestureStart(
+            token, at: Self.position(0, layoutVersion: 1)))
+    }
+
+    @Test("A mark counted under a query that has gone is not carried onto the new one")
+    func reshapeDropsMarksFromAnOutgoingQuery() {
+        let sut = Self.makeSUT()
+        sut.pendingSelection.apply(.tap, at: Self.position(0))
+        sut.resolver.selectionQueryGeneration = 1
+
+        Self.reshape(sut, to: Self.sections(first: 3))
+
+        #expect(sut.pendingSelection.unresolvedCount == 0)
     }
 
     @Test("A mark whose day is gone goes with it")
@@ -157,8 +302,7 @@ struct TimelinePendingSelectionTests {
         let sut = Self.makeSUT()
         sut.pendingSelection.apply(.tap, at: Self.position(3)) // 2022-07-18
 
-        sut.pendingSelection.layoutDidReshape(
-            to: Self.sections(second: 0), bucketsWhoseCountChanged: [])
+        Self.reshape(sut, to: Self.sections(second: 0))
 
         #expect(sut.pendingSelection.unresolvedCount == 0)
     }
@@ -183,7 +327,7 @@ struct TimelinePendingSelectionTests {
         let sut = Self.makeSUT()
         #expect(sut.pendingSelection.layoutVersion == PhotoLibrary.initialLayoutVersion)
 
-        sut.pendingSelection.layoutDidReshape(to: Self.sections(), bucketsWhoseCountChanged: [])
+        Self.reshape(sut, to: Self.sections())
 
         #expect(sut.pendingSelection.layoutVersion == PhotoLibrary.initialLayoutVersion + 1)
     }
@@ -409,7 +553,8 @@ struct TimelinePendingSelectionTests {
         let sut = Self.makeSUT()
         sut.resolver.outcome = .unproductive
         sut.resolver.onHydrate = { [pendingSelection = sut.pendingSelection] _ in
-            pendingSelection.layoutDidReshape(to: Self.sections(), bucketsWhoseCountChanged: [])
+            pendingSelection.layoutDidReshape(
+                to: Self.sections(), countDeltas: [:], newestFirst: true)
         }
 
         sut.pendingSelection.apply(.tap, at: Self.position(0))
