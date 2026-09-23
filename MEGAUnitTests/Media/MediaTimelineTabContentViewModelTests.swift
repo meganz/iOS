@@ -283,6 +283,36 @@ struct MediaTimelineTabContentViewModelTests {
             #expect(coordinator.lastNodes == nil)
         }
 
+        @Test("Cells marked before their photos loaded are counted, and an action ignores them")
+        func toolbarCountsMarksOnCellsThatHaveNotLoaded() async {
+            // The count is the user's intent and is right from the tap; the action runs on what has
+            // resolved into a node by the time it is tapped, which here is nothing.
+            let day = Date(timeIntervalSince1970: 1_660_780_800) // 2022-08-18T00:00:00Z
+            let timelineViewModel = makeTimelineViewModel(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    monitorDateSectionsSequences: [
+                        SingleItemAsyncSequence(item: .success([
+                            MediaDateSectionEntity(
+                                groupId: "2022-08-18", startDate: day, endDate: day, count: 3)
+                        ])).eraseToAnyAsyncSequence()
+                    ]))
+            let coordinator = MockMediaTabToolbarCoordinator()
+            let sut = makeSUT(timelineViewModel: timelineViewModel)
+            sut.toolbarCoordinator = coordinator
+            let contentViewModel = timelineViewModel.photoLibraryContentViewModel
+            contentViewModel.visiblePhotoIndexRange.send(0..<0)
+            await timelineViewModel.monitorTimelineSections()
+            contentViewModel.selection.editMode = .active
+
+            contentViewModel.positionalSelectionHandler?.apply(
+                .tap,
+                at: SelectionPosition(flatIndex: 0, layoutVersion: contentViewModel.library.layoutVersion))
+
+            #expect(sut.toolbarConfig()?.selectedItemsCount == 1)
+            sut.handleToolbarAction(.download)
+            #expect(coordinator.lastAction == nil)
+        }
+
         /// In the reserved high band `isTimelinePlaceholder` answers for, and not `.invalid`.
         private static let placeholderHandle: HandleEntity = 0xF000_0000_0000_0001
     }

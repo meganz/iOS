@@ -220,10 +220,12 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
 
 extension MediaTimelineTabContentViewModel: MediaTabToolbarActionsProvider {
     var toolbarUpdatePublisher: AnyPublisher<Void, Never>? {
-        timelineViewModel.photoLibraryContentViewModel.selection.$photos
-            .dropFirst()
-            .map { $0.isEmpty }
+        // The same edge as before — the toolbar appearing and going away — counted the way the
+        // title counts: a selection of nothing but cells that have not loaded is still a selection.
+        timelineViewModel.markedItemCountPublisher
+            .map { $0 == 0 }
             .removeDuplicates()
+            .dropFirst()
             .map { _ in () }
             .eraseToAnyPublisher()
     }
@@ -240,7 +242,7 @@ extension MediaTimelineTabContentViewModel: MediaTabToolbarActionsProvider {
 
     /// What the user marked, which is not what an action can run on: the toolbar reports marks.
     private var selectedItemsCount: Int {
-        timelineViewModel.photoLibraryContentViewModel.selection.photos.count
+        timelineViewModel.markedItemCount
     }
 
     /// The nodes an action runs on. A placeholder's synthetic handle names no file, so the filter
@@ -256,6 +258,11 @@ extension MediaTimelineTabContentViewModel: MediaTabToolbarActionsProvider {
 extension MediaTimelineTabContentViewModel: MediaTabToolbarActionHandler {
     func handleToolbarAction(_ action: MediaBottomToolbarAction) {
         let nodes = selectedNodesForToolbar
+        // An action runs on what has resolved into a node by the time it is tapped and ignores the
+        // rest, so the shortfall is only measurable here: seconds later those marks have resolved
+        // and nothing is left to count.
+        let ignored = timelineViewModel.pendingSelectionCount
+        MEGALogDebug("[MediaTimeline] toolbar \(action) on \(nodes.count) nodes, \(ignored) still loading")
         guard !nodes.isEmpty else { return }
 
         toolbarCoordinator?.handleToolbarAction(action, with: nodes)
@@ -275,9 +282,7 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationTitleProvider {
             return Just(inactiveEditModeTitle).eraseToAnyPublisher()
         }
 
-        let selectionCountPublisher = timelineViewModel.photoLibraryContentViewModel.selection.$photos
-            .map { $0.count }
-            .eraseToAnyPublisher()
+        let selectionCountPublisher = timelineViewModel.markedItemCountPublisher
 
         return sharedResourceProvider.selectionTitlePublisher(
             selectionCountPublisher: selectionCountPublisher,

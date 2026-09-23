@@ -1179,6 +1179,99 @@ struct NewTimelineViewModelTests {
             #expect(node.handle == 10)
             #expect(node.isMarkedSensitive) // patched in place → cell reconfigures and blurs
         }
+
+        // MARK: - Selecting cells that have not loaded
+
+        private static func handler(_ sut: NewTimelineViewModel) -> (any PositionalSelectionHandling)? {
+            sut.photoLibraryContentViewModel.positionalSelectionHandler
+        }
+
+        /// Stamped with the version of the library on screen. Nothing here renders, so there is no
+        /// grid lagging a debounce behind one — that gap is the coordinator's side of the contract.
+        private static func position(_ flatIndex: Int, in sut: NewTimelineViewModel) -> SelectionPosition {
+            SelectionPosition(
+                flatIndex: flatIndex,
+                layoutVersion: sut.photoLibraryContentViewModel.library.layoutVersion)
+        }
+
+        @Test("A reshape stamps a new layout version on the grid; filling a slot leaves it where it was")
+        func reshapeMovesTheLayoutVersionAndHydrationDoesNot() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 3, day2: 1)
+                    ])))
+            await Self.buildColdSkeleton(sut)
+            let version = sut.photoLibraryContentViewModel.library.layoutVersion
+
+            sut.commitHydratedRun(from: 0, with: [NodeEntity(name: "a.jpg", handle: 10)])
+            #expect(sut.photoLibraryContentViewModel.library.layoutVersion == version)
+
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(0..<0)
+            await sut.monitorTimelineSections() // day1 grows by one
+
+            #expect(sut.photoLibraryContentViewModel.library.layoutVersion == version + 1)
+        }
+
+        @Test("A mark on a cell with no photo is pinned to that photo the moment it arrives")
+        func markingAPlaceholderCommitsOnceItsPhotoLands() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    monitorDateSectionsSequences: Self.sectionStreams([Self.sections(day1: 2, day2: 1)])))
+            await Self.buildColdSkeleton(sut)
+            sut.updateEditMode(.active)
+
+            Self.handler(sut)?.apply(.tap, at: Self.position(0, in: sut))
+            #expect(sut.markedItemCount == 1)
+            #expect(sut.photoLibraryContentViewModel.selection.photos.isEmpty) // no node to commit yet
+
+            let node = NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true)
+            sut.commitHydratedRun(from: 0, with: [node])
+
+            #expect(sut.photoLibraryContentViewModel.selection.photos[10] == node)
+            #expect(sut.markedItemCount == 1) // the same one cell, now named by its handle
+        }
+
+        @Test("A mark in a bucket that resized is dropped, and one in a bucket that did not is kept")
+        func aReshapedBucketDropsItsMarks() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 3, day2: 1)
+                    ])))
+            await Self.buildColdSkeleton(sut)
+            sut.updateEditMode(.active)
+            Self.handler(sut)?.apply(.tap, at: Self.position(0, in: sut)) // day1
+            Self.handler(sut)?.apply(.tap, at: Self.position(2, in: sut)) // day2
+            #expect(sut.markedItemCount == 2)
+
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(0..<0)
+            await sut.monitorTimelineSections() // day1 grows at the front
+
+            #expect(sut.markedItemCount == 1)
+            #expect(Self.handler(sut)?.isSelected(at: Self.position(3, in: sut)) == true) // day2, moved down
+        }
+
+        @Test("A filter change takes every mark with it — the positions were counted under the old query")
+        func aQueryChangeClearsMarks() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    monitorDateSectionsSequences: Self.sectionStreams([
+                        Self.sections(day1: 2, day2: 1),
+                        Self.sections(day1: 2, day2: 1)
+                    ])))
+            await Self.buildColdSkeleton(sut)
+            sut.updateEditMode(.active)
+            Self.handler(sut)?.apply(.tap, at: Self.position(0, in: sut))
+
+            await sut.updatePhotoFilter(option: .images)
+            sut.photoLibraryContentViewModel.visiblePhotoIndexRange.send(0..<0)
+            await sut.monitorTimelineSections()
+
+            #expect(sut.markedItemCount == 0)
+        }
     }
 
     @MainActor

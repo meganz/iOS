@@ -136,6 +136,26 @@ final class NewTimelineViewModel: ObservableObject {
     private(set) var hydrationTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+
+    /// Selection for cells whose photo has not loaded, on the paginated path only.
+    private let pendingSelection: TimelinePendingSelection?
+
+    /// What the user marked: committed nodes plus positions still waiting for one.
+    var markedItemCount: Int {
+        pendingSelection?.markedCount ?? photoLibraryContentViewModel.selection.photos.count
+    }
+
+    var markedItemCountPublisher: AnyPublisher<Int, Never> {
+        guard let pendingSelection else {
+            return photoLibraryContentViewModel.selection.$photos
+                .map(\.count)
+                .removeDuplicates()
+                .eraseToAnyPublisher()
+        }
+        return pendingSelection.markedCountPublisher.removeDuplicates().eraseToAnyPublisher()
+    }
+
+    var pendingSelectionCount: Int { pendingSelection?.unresolvedCount ?? 0 }
     
     init(
         photoLibraryContentViewModel: PhotoLibraryContentViewModel,
@@ -159,6 +179,10 @@ final class NewTimelineViewModel: ObservableObject {
         self.mediaTimelineUseCase = mediaTimelineUseCase
         self.isDateTakenSortEnabled = isDateTakenSortEnabled
         self.tracker = tracker
+        // Only the paginated path has cells with no node behind them.
+        pendingSelection = mediaTimelineUseCase == nil
+            ? nil
+            : TimelinePendingSelection(selection: photoLibraryContentViewModel.selection)
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         $sortsByDateTaken.useCase = preferenceUseCase
         $sortsOldestFirst.useCase = preferenceUseCase
@@ -170,6 +194,8 @@ final class NewTimelineViewModel: ObservableObject {
             ?? (sortOrderPreferenceUseCase.sortOrder(for: .cameraUploadExplorerFeed) == .modificationAsc)
         sortsOldestFirst = oldestFirst
         sortOrder = oldestFirst ? .modificationAsc : .modificationDesc
+        pendingSelection?.resolver = self
+        photoLibraryContentViewModel.positionalSelectionHandler = pendingSelection
     }
     
     func onViewDisappear() {
@@ -177,6 +203,7 @@ final class NewTimelineViewModel: ObservableObject {
         sortPhotoLibraryTask = nil
         saveFiltersTask = nil
         hydrationTask = nil
+        pendingSelection?.teardown()
     }
     
     func loadPhotos() async {
@@ -233,6 +260,10 @@ final class NewTimelineViewModel: ObservableObject {
             let deltas = countDeltas(from: dateSections, to: sections)
             bumpVersions(for: deltas)
             dateSections = sections
+            // The shape moved, so a position means something else now: a new layout version, and
+            // the marks whose bucket resized are dropped with the layout that placed them.
+            pendingSelection?.layoutDidReshape(
+                to: sections, bucketsWhoseCountChanged: Set(deltas.keys))
         }
         switch coordinates {
         case .adding(let added):
@@ -250,8 +281,12 @@ final class NewTimelineViewModel: ObservableObject {
         // `commitLibrary` with none: stamping it with a query the user has since chosen — whose
         // sections have not arrived — would claim content was fetched under a query it never was.
         if let query { photoLibraryContentViewModel.mediaTimelineQuery = query }
-        photoLibraryContentViewModel.library = library
+        photoLibraryContentViewModel.library = library.withLayoutVersion(
+            pendingSelection?.layoutVersion ?? PhotoLibrary.initialLayoutVersion)
         projectionRevision &+= 1
+        // Last, on a projection whose halves now agree: a mark whose photo arrived in this commit
+        // is pinned to that node before the user can see a thumbnail under it.
+        pendingSelection?.promoteResolvedSlots()
     }
 
     /// The query as it stands now, to be snapshotted by whoever is about to fetch content under
@@ -654,6 +689,8 @@ final class NewTimelineViewModel: ObservableObject {
         skeletonSortOrder = mediaTimelineSortOrder
         timelineGeneration &+= 1
         sectionVersions = [:]
+        // Every position was counted under the outgoing query, so nothing positional survives it.
+        pendingSelection?.queryDidChange()
         // Nothing carries over, so nothing is addressed yet either.
         return IndexedLibrary(library: await makeSkeleton(from: sections), coordinates: [:])
     }
@@ -1244,5 +1281,51 @@ final class NewTimelineViewModel: ObservableObject {
         
         guard photoFilterOptions != savedFilters else { return }
         photoFilterOptions = savedFilters
+    }
+}
+
+// MARK: - TimelineSelectionResolving
+
+extension NewTimelineViewModel: TimelineSelectionResolving {
+    var selectionProjection: TimelineProjection { publishedProjection }
+
+    var selectionQueryGeneration: Int { timelineGeneration }
+
+    /// Fetch and publish the nodes for a stretch of marked positions, through the same path the
+    /// visible window uses — so the commit that lands them promotes their marks on its way out.
+    func hydrateForSelection(_ range: Range<Int>) async -> TimelineSelectionHydrationOutcome {
+        let projection = publishedProjection
+        let generation = timelineGeneration
+        let versions = capturedVersions(spanning: range, in: projection)
+        let revisionBefore = libraryRevision
+
+        let startedAt = Date()
+        guard let hydrated = await hydratedVisibleWindow(in: projection, range: range) else {
+            let invalidated = generation != timelineGeneration
+                || libraryRevision != revisionBefore
+                || !versionsStillValid(versions, against: publishedProjection)
+            let outcome: TimelineSelectionHydrationOutcome = invalidated ? .discarded : .unproductive
+            log(selectionRequest: range, from: startedAt, outcome: outcome)
+            return outcome
+        }
+        guard libraryRevision == revisionBefore else {
+            log(selectionRequest: range, from: startedAt, outcome: .discarded)
+            return .discarded
+        }
+        commitProjection(
+            hydrated.library, sections: nil, coordinates: .adding(hydrated.addedCoordinates))
+        log(selectionRequest: range, from: startedAt, outcome: .committed)
+        return .committed
+    }
+
+    /// The three numbers that say whether a request bound is ever needed: how many cells one
+    /// selection request covers, how long its query took, and how often a reshape threw it away.
+    private func log(
+        selectionRequest range: Range<Int>, from startedAt: Date,
+        outcome: TimelineSelectionHydrationOutcome
+    ) {
+        let milliseconds = Int(Date().timeIntervalSince(startedAt) * 1000)
+        MEGALogDebug(
+            "[TimelineSelection] \(range.count) slots in \(milliseconds)ms → \(outcome)")
     }
 }

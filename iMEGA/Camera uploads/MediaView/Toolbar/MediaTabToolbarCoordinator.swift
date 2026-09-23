@@ -35,6 +35,9 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
         // independently and drop unresolvable handles silently, so the sheet the user was shown
         // could describe a different set from the one that executed.
         let megaNodes = nodes.compactMap { $0.toMEGANode(in: .sharedSdk) }
+        // The other half of what an action ends up running on: selected nodes the SDK can no
+        // longer resolve are dropped here, silently, as they always have been.
+        MEGALogDebug("[MediaTabToolbar] \(action) executes on \(megaNodes.count) of \(nodes.count)")
         guard megaNodes.isNotEmpty else { return }
 
         switch action {

@@ -18,9 +18,12 @@ public final class PhotoSelection: ObservableObject {
     /// `wasRecentlyLongPressed(_:)` returns true for that handle until the window expires
     /// or another action consumes the mark — used to keep drag-select from immediately
     /// deselecting the long-pressed item when the user keeps the finger down and drags.
-    public func markRecentlyLongPressed(_ handle: HandleEntity) {
+    /// - Parameter at: when the press happened. A screen that only learns the handle later — a
+    ///   cell whose photo had not loaded when it was pressed — passes the original instant, so the
+    ///   window runs from the press rather than from the hand-over.
+    public func markRecentlyLongPressed(_ handle: HandleEntity, at date: Date = Date()) {
         recentLongPressHandle = handle
-        recentLongPressAt = Date()
+        recentLongPressAt = date
     }
 
     public func wasRecentlyLongPressed(_ handle: HandleEntity) -> Bool {
