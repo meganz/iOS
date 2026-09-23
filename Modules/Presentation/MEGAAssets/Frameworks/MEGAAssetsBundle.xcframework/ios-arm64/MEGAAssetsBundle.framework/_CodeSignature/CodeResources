@@ -6,31 +6,31 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		1MhZt4d2g4TqO79XjN9ahLe7+00=
+		sg7vQFmt3yrJ8MLIQ2KEkhkyWuE=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		HoYnHFly7mFOUKTCtles0Qh1WKY=
+		jtQpup/NmkEfdSZWE1PJrGtAEMk=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		nCOqoNv1G5L2mK7VJQsba9FOEUs=
+		gvjbKK2wNYdJJvVM05DfqASNZyw=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		8g9LaZgSn5NW0a2mLp5Df1Ez3L4=
+		6arl+aHs+VWrYsyAkBuy29x6NNQ=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		xUQnRJgcuoA1ne5fAWnXlFVOzv8=
+		szSwpGDLCY/MoWKP2Fac+kcVJqs=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		8g9LaZgSn5NW0a2mLp5Df1Ez3L4=
+		6arl+aHs+VWrYsyAkBuy29x6NNQ=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		HHhX7+gvJFWrzA2p7O39rwb2cEM=
+		JhjyPKEmCqWsIjWddF7q0i58+oI=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -39,42 +39,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			512/+98Y6Pn0P+479yfRLp1Z2Cr+M9b1KZNaXAUmSek=
+			vbIAJW1F8g5rM9V/1fvjio7INvyGA3iv8QeL4h7iCMI=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			8WEZDJIboqoA4sogG8zQQM/FGSwrEclqI9yJkrcB2GM=
+			REolcNWt6aUG7BqHTJXnDZRjKlgZ9izRsM+B5RJVm5c=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VdbuPQ7mUN0VDN9kw7Gr7CYa+h3B2djFPdoQX+9GIDU=
+			EKq5fodNC59iyehrGR7ugjYHtOSf20qaQUUF85XznVY=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/zDqrDGbSgdkxeYOvaJYLPM/WL+9xqL8REyAkwWxx8U=
+			qinfBcq8QM+Jn2yLH6f5B/A1/qWAmHmnNapCmB6aiDo=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VdbuPQ7mUN0VDN9kw7Gr7CYa+h3B2djFPdoQX+9GIDU=
+			EKq5fodNC59iyehrGR7ugjYHtOSf20qaQUUF85XznVY=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ju2djTuDM99vhwfahyyn35jktTs6znl86OPuYg0cFPQ=
+			1scGhFqKiAu8hFQCtJE4AV9klYssA0zReb5hr4Z48PI=
 			</data>
 		</dict>
 	</dict>

@@ -517,4 +517,5 @@ public struct MEGAUIImageBundle {
     public static var homeDiscountBanner: UIImage { UIImage.homeDiscountBanner }
     public static var promoBannerIpad: UIImage { UIImage.promoBannerIpad }
     public static var monoWaveformMediumThinOutline: UIImage { UIImage.monoWaveformMediumThinOutline }
+    public static var viewedLinks: UIImage { UIImage.viewedLinks }
 }

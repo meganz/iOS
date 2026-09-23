@@ -132,7 +132,7 @@ final class ViewedLinksDebugViewModel: ObservableObject {
     
     private let useCase: any ViewedLinksUseCaseProtocol
     
-    init(useCase: some ViewedLinksUseCaseProtocol = ViewedLinksFactory.makeUseCase()) {
+    init(useCase: some ViewedLinksUseCaseProtocol = ViewedLinksFactory.makeViewedLinksUseCase()) {
         self.useCase = useCase
     }
     

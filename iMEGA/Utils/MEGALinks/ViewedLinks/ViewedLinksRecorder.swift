@@ -13,7 +13,7 @@ final class ViewedLinksRecorder: Sendable {
     private let isEnabled: @Sendable () -> Bool
 
     init(
-        useCase: some ViewedLinksUseCaseProtocol = ViewedLinksFactory.makeUseCase(),
+        useCase: some ViewedLinksUseCaseProtocol = ViewedLinksFactory.makeViewedLinksUseCase(),
         isEnabled: @escaping @Sendable () -> Bool = ViewedLinksRecorder.defaultIsEnabled()
     ) {
         self.useCase = useCase
