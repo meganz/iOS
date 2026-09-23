@@ -1,3 +1,5 @@
+import ChatRepo
+import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -205,14 +207,11 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 
                 downloadGifIcon.isHidden = true
             } else if node.size?.doubleValue ?? 0 < autoDownloadThresholdSize {
-                MEGASdk.shared.startDownloadNode(
+                downloadOriginalImage(
                     node,
-                    localPath: originalImagePath,
-                    fileName: nil,
-                    appData: nil,
-                    startFirst: true, cancelToken: nil,
-                    collisionCheck: CollisionCheck.fingerprint,
-                    collisionResolution: CollisionResolution.newWithN
+                    messageId: megaMessage.messageId,
+                    chatId: chatMessage.chatRoom.chatId,
+                    to: originalImagePath
                 )
                 downloadGifIcon.isHidden = true
             } else {
@@ -223,6 +222,30 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             durationLabel.isHidden = false
             playIconView.isHidden = !loadingIndicator.isHidden
             downloadGifIcon.isHidden = true
+        }
+    }
+
+    private func downloadOriginalImage(
+        _ node: MEGANode,
+        messageId: HandleEntity,
+        chatId: HandleEntity,
+        to path: String
+    ) {
+        let useCase = ChatAttachmentDownloadUseCase(
+            downloadFileRepository: DownloadFileRepository(
+                sdk: .shared,
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: .sharedChatSdk, sdk: .shared)
+            ),
+            downloadChatRepository: DownloadChatRepository.newRepo
+        )
+        Task {
+            try? await useCase.download(
+                nodeHandle: node.handle,
+                messageId: messageId,
+                chatId: chatId,
+                to: URL(fileURLWithPath: path),
+                appData: nil
+            )
         }
     }
 
