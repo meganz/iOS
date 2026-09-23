@@ -5230,3 +5230,15 @@
 "pdfPreview.password.invalid"="Invalid password";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="Audio track";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="Links you open are saved here";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="Clear viewed links?";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="Clear viewed link?";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="Clear viewed links history";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="Are you sure you want to clear all viewed links history? This cannot be undone.";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="Viewed links history has been cleared";
