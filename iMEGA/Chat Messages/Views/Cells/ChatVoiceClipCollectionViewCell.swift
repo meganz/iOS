@@ -1,6 +1,9 @@
+import ChatRepo
 import CoreGraphics
+import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
+import MEGADomain
 import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
@@ -146,16 +149,11 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
             durationLabel.text = TimeInterval(duration).timeString
             let nodePath = currentNode.mnz_voiceCachePath()
             if !FileManager.default.fileExists(atPath: nodePath) {
-                let appData = NSString().mnz_appDataToDownloadAttach(toMessageID: megaMessage.messageId)
-                MEGASdk.shared.startDownloadNode(
+                downloadVoiceClip(
                     currentNode,
-                    localPath: nodePath,
-                    fileName: nil,
-                    appData: appData,
-                    startFirst: true,
-                    cancelToken: nil,
-                    collisionCheck: CollisionCheck.fingerprint,
-                    collisionResolution: CollisionResolution.newWithN
+                    messageId: megaMessage.messageId,
+                    chatId: chatMessage.chatRoom.chatId,
+                    to: nodePath
                 )
                 configureLoadingView()
             } else {
@@ -170,6 +168,31 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         playButton.setImage(pauseButtonImage, for: .selected)
     }
     
+    private func downloadVoiceClip(
+        _ node: MEGANode,
+        messageId: HandleEntity,
+        chatId: HandleEntity,
+        to path: String
+    ) {
+        let appData = NSString().mnz_appDataToDownloadAttach(toMessageID: messageId)
+        let useCase = ChatAttachmentDownloadUseCase(
+            downloadFileRepository: DownloadFileRepository(
+                sdk: .shared,
+                chatNodeProvider: ChatMEGANodeProvider(chatSdk: .sharedChatSdk, sdk: .shared)
+            ),
+            downloadChatRepository: DownloadChatRepository.newRepo
+        )
+        Task {
+            try? await useCase.download(
+                nodeHandle: node.handle,
+                messageId: messageId,
+                chatId: chatId,
+                to: URL(fileURLWithPath: path),
+                appData: appData
+            )
+        }
+    }
+
     private func configureLoadingView() {
         loadingIndicator.startAnimating()
         loadingIndicator.isHidden = false
