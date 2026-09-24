@@ -903,6 +903,9 @@
     self.users = users;
     
     __weak __typeof__(self) weakSelf = self;
+    // The extension runs in its own process. It does not get the app's autoCreate value.
+    // Without autoCreate, the folder is missing and every chat upload fails.
+    [MyChatFilesFolderNodeAccess.shared updateAutoCreateWithStatus:^BOOL{ return YES; }];
     [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {
         if (error || myChatFilesFolderNode == nil) {
             MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
