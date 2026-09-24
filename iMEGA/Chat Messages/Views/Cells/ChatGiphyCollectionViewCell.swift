@@ -54,15 +54,16 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
             return
         }
 
-        let megaMessage = chatMessage.message
-        guard let giphy = megaMessage.containsMeta?.giphy, let webpSrc = giphy.webpSrc else {
+        // The source comes from the sender; only MEGA's Giphy proxy may be fetched (IOS-12655).
+        guard let url = GiphyURLResolver.webURL(from: chatMessage.message.containsMeta?.giphy?.webpSrc) else {
+            imageView.sd_cancelCurrentImageLoad()
+            imageView.image = nil
+            loadingIndicator.stopAnimating()
             return
         }
         loadingIndicator.startAnimating()
-        let url = webpSrc.replacingOccurrences(of: ServiceManager.shared.GIPHY_URL, with: ServiceManager.shared.BASE_URL)
-        
-        imageView.sd_setImage(with: URL(string: url)) { (_, _, _, _) in
-            self.loadingIndicator.stopAnimating()
+        imageView.sd_setImage(with: url) { [weak self] _, _, _, _ in
+            self?.loadingIndicator.stopAnimating()
         }
     }
 }

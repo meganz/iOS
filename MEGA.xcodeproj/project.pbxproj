@@ -480,6 +480,7 @@
 		2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
 		2F7E7064251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */; };
+		4FF666074B9D04C0C01616AD /* GiphyURLResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBC24171608917EEBADE49F /* GiphyURLResolver.swift */; };
 		2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */; };
 		2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F85306E24885F9100064E83 /* PreviewersView.swift */; };
 		2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F85307224885FAB00064E83 /* PreviewersView.xib */; };
@@ -1465,6 +1466,7 @@
 		94A46F452E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A46F442E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift */; };
 		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
 		4E38FEA1D976DCA64444E2E2 /* ChatViewMessagesFlowLayoutInvalidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0741FDF749869689DED68 /* ChatViewMessagesFlowLayoutInvalidationTests.swift */; };
+		A6E955CA259D51A93645531B /* GiphyURLResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351A066DC00CA61718452A2E /* GiphyURLResolverTests.swift */; };
 		94A54A972C2B0B940062D8E3 /* ActionSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */; };
 		94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */; };
 		94A7E9912EA74F7800258E5D /* MockTrackEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A7E9902EA74F7800258E5D /* MockTrackEntity.swift */; };
@@ -4335,6 +4337,7 @@
 		94A46F442E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardingAudioPlayerViewRouterMock.swift; sourceTree = "<group>"; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
 		C2F0741FDF749869689DED68 /* ChatViewMessagesFlowLayoutInvalidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewMessagesFlowLayoutInvalidationTests.swift; sourceTree = "<group>"; };
+		351A066DC00CA61718452A2E /* GiphyURLResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyURLResolverTests.swift; sourceTree = "<group>"; };
 		94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetModel.swift; sourceTree = "<group>"; };
 		94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUploadingViewModelTests.swift; sourceTree = "<group>"; };
 		94A7E9902EA74F7800258E5D /* MockTrackEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTrackEntity.swift; sourceTree = "<group>"; };
@@ -4599,6 +4602,7 @@
 		A81BD63227EDC4C100234902 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		A81BD63427EDC4C200234902 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySelectionViewController.swift; sourceTree = "<group>"; };
+		0DBC24171608917EEBADE49F /* GiphyURLResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyURLResolver.swift; sourceTree = "<group>"; };
 		A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySelectionView.swift; sourceTree = "<group>"; };
 		A81C6587254B2D3000105BF4 /* GiphyCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyCategoryView.swift; sourceTree = "<group>"; };
 		A81C6592254B2EC900105BF4 /* GiphyPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyPreviewViewController.swift; sourceTree = "<group>"; };
@@ -9223,6 +9227,7 @@
 				94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */,
 				C2F0741FDF749869689DED68 /* ChatViewMessagesFlowLayoutInvalidationTests.swift */,
 				B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */,
+				351A066DC00CA61718452A2E /* GiphyURLResolverTests.swift */,
 				94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */,
 				A894E7A22B8F6396006AC2C5 /* UserAvatarHandlerTests.swift */,
 			);
@@ -11215,6 +11220,7 @@
 				A81C6592254B2EC900105BF4 /* GiphyPreviewViewController.swift */,
 				A81C6585254B2D3000105BF4 /* GiphySelectionView.swift */,
 				A81C6584254B2D3000105BF4 /* GiphySelectionViewController.swift */,
+				0DBC24171608917EEBADE49F /* GiphyURLResolver.swift */,
 			);
 			name = Giphy;
 			path = Chat/Giphy;
@@ -15414,6 +15420,7 @@
 				2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */,
 				A81C6589254B2D3000105BF4 /* GiphySelectionView.swift in Sources */,
 				A81C6588254B2D3000105BF4 /* GiphySelectionViewController.swift in Sources */,
+				4FF666074B9D04C0C01616AD /* GiphyURLResolver.swift in Sources */,
 				BF943E9E235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */,
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
@@ -16962,6 +16969,7 @@
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
 				25E319F52C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift in Sources */,
 				2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */,
+				A6E955CA259D51A93645531B /* GiphyURLResolverTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
 				0E2085742C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift in Sources */,
 				0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */,
