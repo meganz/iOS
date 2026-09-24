@@ -147,6 +147,26 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^(void) {
+            // Call back only once the alert dismissal runs to completion
+            // to avoid interrupting further presenting while its dismissal
+            // Check `topPresentableViewController` for details where by
+            // the `candidate.presentedViewController == nil` check fails when the alert is dismissing
+            void (^notifyCaller)(void) = ^{
+                if (self.filePaths && self.filePathsArray.count) {
+                    self.filePaths(self.filePathsArray);
+                }
+                if (self.errors && self.errorsArray.count) {
+                    self.errors(self.errorsArray);
+                }
+            };
+            
+            // Previous filePaths/filePath callback lived in its own dispatch_async block, so it always ran
+            // Make sure to run the callback when alertController or never presented.
+            if (self.alertController.presentingViewController == nil) {
+                notifyCaller();
+                return;
+            }
+            
             [self.alertController dismissViewControllerAnimated:YES completion:^{
                 if (self.exportAssetFailed) {
                     NSString *message = LocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
@@ -154,15 +174,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     [videoExportFailedController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDestructive handler:nil]];
                     [UIApplication.mnz_presentingViewController presentViewController:videoExportFailedController animated:YES completion:nil];
                 }
+                notifyCaller();
             }];
-        });
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.filePaths && self.filePathsArray.count) {
-                self.filePaths(self.filePathsArray);
-            }
-            if (self.errors && self.errorsArray.count) {
-                self.errors(self.errorsArray);
-            }
         });
     } else {
         if (self.asset.mediaType == PHAssetMediaTypeVideo) {
@@ -397,19 +410,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             
             MEGALogDebug(@"[PA] Export session started");
             [encoder exportAsynchronouslyWithCompletionHandler:^{
-                if (encoder.status == AVAssetExportSessionStatusCompleted) {
+                BOOL exportCompleted = (encoder.status == AVAssetExportSessionStatusCompleted);
+                if (exportCompleted) {
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
-                    if (self.filePath) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (self.presenter) {
-                                self.filePath(filePath);
-                            } else {
-                                filePath = encoder.outputURL.path.mnz_relativeLocalPath;
-                                self.filePath(filePath);
-                            }
-                        });
-                    }
                 }
                 else if (encoder.status == AVAssetExportSessionStatusCancelled) {
                     MEGALogDebug(@"[PA] Export session cancelled");
@@ -418,7 +422,30 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session failed with error: %@ (%ld)", encoder.error.localizedDescription, (long)encoder.error.code);
                 }
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    [self.alertController dismissViewControllerAnimated:YES completion:nil];
+                    // Call back only once the alert dismissal runs to completion
+                    // to avoid interrupting further presenting while its dismissal
+                    // Check `topPresentableViewController` for details where by
+                    // the `candidate.presentedViewController == nil` check fails when the alert is dismissing
+                    void (^notifyCaller)(void) = ^{
+                        if (!exportCompleted || !self.filePath) {
+                            return;
+                        }
+                        if (self.presenter) {
+                            self.filePath(filePath);
+                        } else {
+                            filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                            self.filePath(filePath);
+                        }
+                    };
+                    
+                    // Previous filePaths/filePath callback lived in its own dispatch_async block, so it always ran
+                    // Make sure to run the notifyCaller when alertController is nil or never presented.
+                    if (self.alertController.presentingViewController == nil) {
+                        notifyCaller();
+                        return;
+                    }
+                    
+                    [self.alertController dismissViewControllerAnimated:YES completion:notifyCaller];
                 });
             }];
             if (UIApplication.mnz_presentingViewController != self.alertController) {
