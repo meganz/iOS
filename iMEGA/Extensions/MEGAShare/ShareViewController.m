@@ -34,6 +34,7 @@
 @property (nonatomic) NSUInteger pendingAssets;
 @property (nonatomic) NSUInteger totalAssets;
 @property (nonatomic) NSUInteger unsupportedAssets;
+@property (nonatomic, getter=isOverQuota) BOOL overQuota;
 @property (nonatomic) float progress;
 @property (nonatomic) NSDate *lastProgressChange;
 
@@ -459,6 +460,7 @@
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
     self.unsupportedAssets = 0;
+    self.overQuota = NO;
     
     // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
     NSArray<NSString *> *typeIdentifiers = @[UTTypeFileURL.identifier,
@@ -836,7 +838,7 @@
     }
     
     if (self.unsupportedAssets > 0) {
-        NSString *message = LocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+        NSString *message = self.isOverQuota ? LocalizedString(@"Your upload(s) cannot proceed because your account is full", @"") : LocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (self.pendingAssets == self.unsupportedAssets) {
@@ -975,8 +977,23 @@
     }
 }
 
+- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    // Handle over quota error while uploading, which show an relevant message.
+    // The Share to Cloud Drive path handles this in its own view model (ShareExtensionCancellableTransferViewModel).
+    if (!(self.users || self.chats) || ![self isOverQuotaError:error]) {
+        return;
+    }
+    self.overQuota = YES;
+    // The SDK retries an over quota upload forever. Cancel it so onTransferFinish shows the quota alert.
+    [api cancelTransfer:transfer];
+}
+
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (error.type) {
+        // Uploads sent to a chat fail here when the account is full, so tell the user the real reason.
+        if ([self isOverQuotaError:error]) {
+            self.overQuota = YES;
+        }
         [self oneUnsupportedMore];
         MEGALogError(@"Transfer finished with error: %@", LocalizedString(error.name, @""));
         return;
@@ -992,6 +1009,10 @@
         NSString *coordinates = [transfer.appData mnz_stringBetweenString:@">setCoordinates=" andString:@">"];
         [transfer mnz_setCoordinates:coordinates];
     }
+}
+
+- (BOOL)isOverQuotaError:(MEGAError *)error {
+    return error.type == MEGAErrorTypeApiEOverQuota;
 }
 
 #pragma mark - MEGAChatRoomDelegate
