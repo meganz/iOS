@@ -1,6 +1,6 @@
 import Foundation
 
-struct AudioPlaylistItem: Identifiable {
+struct AudioPlaylistItem: Identifiable, Equatable {
     let id: String
     let title: String
 }

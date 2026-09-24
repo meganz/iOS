@@ -180,8 +180,12 @@ actor StubAudioMetadataCache: AudioMetadataCacheProtocol {
 struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
     let deletedNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
     let deletedFolderLinkNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
+    let renamedNodes: AnyAsyncSequence<[NodeEntity]>
+    let renamedFolderLinkNodes: AnyAsyncSequence<[any PlayableNode]>
     private let continuation: AsyncStream<Set<HandleEntity>>.Continuation
     private let folderLinkContinuation: AsyncStream<Set<HandleEntity>>.Continuation
+    private let renameContinuation: AsyncStream<[NodeEntity]>.Continuation
+    private let folderLinkRenameContinuation: AsyncStream<[any PlayableNode]>.Continuation
 
     init() {
         let (stream, continuation) = AsyncStream<Set<HandleEntity>>.makeStream()
@@ -191,6 +195,14 @@ struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
         let (folderLinkStream, folderLinkContinuation) = AsyncStream<Set<HandleEntity>>.makeStream()
         deletedFolderLinkNodeHandles = folderLinkStream.eraseToAnyAsyncSequence()
         self.folderLinkContinuation = folderLinkContinuation
+
+        let (renameStream, renameContinuation) = AsyncStream<[NodeEntity]>.makeStream()
+        renamedNodes = renameStream.eraseToAnyAsyncSequence()
+        self.renameContinuation = renameContinuation
+
+        let (folderLinkRenameStream, folderLinkRenameContinuation) = AsyncStream<[any PlayableNode]>.makeStream()
+        renamedFolderLinkNodes = folderLinkRenameStream.eraseToAnyAsyncSequence()
+        self.folderLinkRenameContinuation = folderLinkRenameContinuation
     }
 
     func simulateDeletion(ofNodeHandles handles: Set<HandleEntity>) {
@@ -199,6 +211,14 @@ struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
 
     func simulateFolderLinkDeletion(ofNodeHandles handles: Set<HandleEntity>) {
         folderLinkContinuation.yield(handles)
+    }
+
+    func simulateRename(of nodes: [NodeEntity]) {
+        renameContinuation.yield(nodes)
+    }
+
+    func simulateFolderLinkRename(of nodes: [any PlayableNode]) {
+        folderLinkRenameContinuation.yield(nodes)
     }
 }
 

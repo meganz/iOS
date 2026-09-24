@@ -24,6 +24,10 @@ enum DependencyInjection {
         AudioNodeAvailabilityRepository.newRepo
     }
 
+    static var folderLinkNodeRepository: some AudioFolderLinkNodeRepositoryProtocol {
+        AudioFolderLinkNodeRepository.newRepo
+    }
+
     static var nodeRepository: some NodeRepositoryProtocol {
         NodeRepository.newRepo
     }

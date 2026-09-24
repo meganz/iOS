@@ -96,6 +96,34 @@ struct AudioNodeUpdatesUseCaseTests {
         #expect(batches == [[2]], "the first update is dropped rather than emitted empty")
     }
 
+    // MARK: - Rename
+
+    @Test("A renamed node is reported with its new name, and other changes are ignored")
+    func renamedNode_isReported() async {
+        let sut = makeSUT(batches: [[
+            NodeEntity(changeTypes: .name, name: "new.mp3", handle: 1),
+            NodeEntity(changeTypes: .removed, handle: 2),
+            NodeEntity(changeTypes: .favourite, handle: 3)
+        ]])
+
+        let batches = await collectRenamed(sut)
+
+        #expect(batches.map { $0.map(\.handle) } == [[1]])
+        #expect(batches.first?.first?.name == "new.mp3")
+    }
+
+    @Test("An update with nothing renamed in it is not emitted at all")
+    func updateWithNoRename_emitsNothing() async {
+        let sut = makeSUT(batches: [
+            [NodeEntity(changeTypes: .removed, handle: 1)],
+            [NodeEntity(changeTypes: .name, handle: 2)]
+        ])
+
+        let batches = await collectRenamed(sut)
+
+        #expect(batches.map { $0.map(\.handle) } == [[2]])
+    }
+
     // MARK: - Folder link
 
     @Test("A node removed from the folder-link tree counts as deleted")
@@ -122,19 +150,54 @@ struct AudioNodeUpdatesUseCaseTests {
         #expect(batches.isEmpty, "the account SDK cannot resolve a folder-link handle, so its Rubbish Bin answer is meaningless here")
     }
 
+    /// The folder-link update only says which node changed; the node that replaces the
+    /// queued one is looked up afresh, authorized, so it still streams and has actions.
+    @Test("A renamed folder-link node is reported as the authorized node now in the folder-link tree")
+    func folderLink_renamedNode_isReportedAsTheAuthorizedNode() async {
+        let sut = makeSUT(
+            folderLinkBatches: [[
+                NodeEntity(changeTypes: .name, handle: 1),
+                NodeEntity(changeTypes: .removed, handle: 2)
+            ]],
+            folderLinkNodes: [1: StubPlayableNode(handle: 1, name: "new.mp3")]
+        )
+
+        let batches = await collectRenamedFolderLink(sut)
+
+        #expect(batches.map { $0.map(\.handle) } == [[1]])
+        #expect(batches.first?.first?.name == "new.mp3")
+    }
+
+    @Test("A renamed folder-link node that can no longer be found is left out")
+    func folderLink_renamedNodeThatIsGone_isLeftOut() async {
+        let sut = makeSUT(
+            folderLinkBatches: [
+                [NodeEntity(changeTypes: .name, handle: 1)],
+                [NodeEntity(changeTypes: .name, handle: 2)]
+            ],
+            folderLinkNodes: [2: StubPlayableNode(handle: 2, name: "new.mp3")]
+        )
+
+        let batches = await collectRenamedFolderLink(sut)
+
+        #expect(batches.map { $0.map(\.handle) } == [[2]], "the first update is dropped rather than emitted empty")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
         batches: [[NodeEntity]] = [],
         folderLinkBatches: [[NodeEntity]] = [],
-        isInRubbishBin: Bool = false
+        isInRubbishBin: Bool = false,
+        folderLinkNodes: [HandleEntity: StubPlayableNode] = [:]
     ) -> AudioNodeUpdatesUseCase {
         AudioNodeUpdatesUseCase(
             nodeRepository: MockNodeRepository(
                 nodeUpdates: finiteSequence(of: batches),
                 folderLinkNodeUpdates: finiteSequence(of: folderLinkBatches)
             ),
-            nodeAttributeRepository: MockNodeAttributeRepository(isInRubbishBin: isInRubbishBin)
+            nodeAttributeRepository: MockNodeAttributeRepository(isInRubbishBin: isInRubbishBin),
+            folderLinkNodeRepository: StubFolderLinkNodeRepository(nodes: folderLinkNodes)
         )
     }
 
@@ -155,11 +218,37 @@ struct AudioNodeUpdatesUseCaseTests {
         return batches
     }
 
+    private func collectRenamed(_ sut: AudioNodeUpdatesUseCase) async -> [[NodeEntity]] {
+        var batches: [[NodeEntity]] = []
+        for await batch in sut.renamedNodes {
+            batches.append(batch)
+        }
+        return batches
+    }
+
+    private func collectRenamedFolderLink(_ sut: AudioNodeUpdatesUseCase) async -> [[any PlayableNode]] {
+        var batches: [[any PlayableNode]] = []
+        for await batch in sut.renamedFolderLinkNodes {
+            batches.append(batch)
+        }
+        return batches
+    }
+
     private func collectFolderLink(_ sut: AudioNodeUpdatesUseCase) async -> [Set<HandleEntity>] {
         var batches: [Set<HandleEntity>] = []
         for await batch in sut.deletedFolderLinkNodeHandles {
             batches.append(batch)
         }
         return batches
+    }
+}
+
+private struct StubFolderLinkNodeRepository: AudioFolderLinkNodeRepositoryProtocol {
+    static var newRepo: StubFolderLinkNodeRepository { StubFolderLinkNodeRepository(nodes: [:]) }
+
+    let nodes: [HandleEntity: StubPlayableNode]
+
+    func authorizedNode(forHandle handle: HandleEntity) -> (any PlayableNode)? {
+        nodes[handle]
     }
 }
