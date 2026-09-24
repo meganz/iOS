@@ -170,14 +170,13 @@ final class AudioPlayerViewModel: ObservableObject {
             .store(in: &cancellables)
 
         service.currentQueuePublisher
-            .map(\.tracks)
-            .removeDuplicates { $0.map(\.id) == $1.map(\.id) }
-            .map { tracks in
-                tracks.map { AudioPlaylistItem(id: $0.id, title: $0.displayName) }
+            .map { queue in
+                queue.tracks.map { AudioPlaylistItem(id: $0.id, title: $0.displayName) }
             }
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
-                guard let self, playlistItems.map(\.id) != items.map(\.id) else { return }
+                guard let self, playlistItems != items else { return }
                 playlistItems = items
             }
             .store(in: &cancellables)

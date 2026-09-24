@@ -10,7 +10,7 @@ final class AudioPlaybackService {
 
     private let currentSourceSubject = CurrentValueSubject<PlaybackSource?, Never>(nil)
     private let queueSubject = CurrentValueSubject<PlaybackQueue, Never>(.empty)
-    private let titleSubject = CurrentValueSubject<String, Never>("")
+    private let metadataTitleSubject = CurrentValueSubject<String?, Never>(nil)
     private let artistSubject = CurrentValueSubject<String?, Never>(nil)
     private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
     private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.idle)
@@ -49,6 +49,10 @@ final class AudioPlaybackService {
 
     /// The folder-link SDK's own stream, which only bears on folder-link playback
     private var folderLinkNodeUpdatesTask: Task<Void, Never>?
+
+    private var renamedNodesTask: Task<Void, Never>?
+
+    private var renamedFolderLinkNodesTask: Task<Void, Never>?
 
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
@@ -128,7 +132,7 @@ final class AudioPlaybackService {
     private func applyMetadata(_ metadata: AudioMetadata, generation: Int) {
         guard generation == playGeneration, currentSource != nil else { return }
         if let title = metadata.title, !title.isEmpty {
-            self.title = title
+            metadataTitleSubject.send(title)
         }
         artist = metadata.artist
         artworkData = metadata.artworkData
@@ -268,6 +272,9 @@ final class AudioPlaybackService {
 // MARK: - PlaybackStateObservable
 
 extension AudioPlaybackService: PlaybackStateObservable {
+    /// The source playback was started with. Stays as passed in — only its presence and
+    /// its case are read after the queue is built. For the tracks, use `currentQueue`,
+    /// which is the one kept up to date on renames and deletions.
     private(set) var currentSource: PlaybackSource? {
         get { currentSourceSubject.value }
         set { currentSourceSubject.send(newValue) }
@@ -282,9 +289,8 @@ extension AudioPlaybackService: PlaybackStateObservable {
         return await metadataCache.metadata(for: track)
     }
 
-    private(set) var title: String {
-        get { titleSubject.value }
-        set { titleSubject.send(newValue) }
+    var title: String {
+        Self.title(metadataTitle: metadataTitleSubject.value, nodeName: playbackQueue.current?.displayName)
     }
 
     private(set) var artist: String? {
@@ -337,7 +343,17 @@ extension AudioPlaybackService: PlaybackStateObservable {
     }
 
     var titlePublisher: AnyPublisher<String, Never> {
-        titleSubject.eraseToAnyPublisher()
+        Publishers.CombineLatest(
+            metadataTitleSubject,
+            queueSubject.map { $0.current?.displayName }
+        )
+        .map(Self.title(metadataTitle:nodeName:))
+        .removeDuplicates()
+        .eraseToAnyPublisher()
+    }
+
+    private static func title(metadataTitle: String?, nodeName: String?) -> String {
+        metadataTitle ?? nodeName ?? ""
     }
 
     var artistPublisher: AnyPublisher<String?, Never> {
@@ -440,7 +456,7 @@ extension AudioPlaybackService: PlaybackControllable {
 
         reportStarted(track: track, generation: generation)
 
-        title = track.displayName
+        metadataTitleSubject.send(nil)
         artist = nil
         artworkData = nil
         artworkResolvedSubject.send(false)
@@ -555,7 +571,7 @@ extension AudioPlaybackService: PlaybackControllable {
         return true
     }
 
-    // MARK: - Node deletions
+    // MARK: - Node updates
 
     private func bindNodeUpdates() {
         nodeUpdatesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
@@ -569,6 +585,20 @@ extension AudioPlaybackService: PlaybackControllable {
             for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedFolderLinkNodeHandles {
                 guard !Task.isCancelled else { return }
                 await self?.handleDeletedNodes(withHandles: deletedNodeHandles, isFolderLink: true)
+            }
+        }
+
+        renamedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
+            for await renamedNodes in audioNodeUpdatesUseCase.renamedNodes {
+                guard !Task.isCancelled else { return }
+                await self?.refreshTracks(isFolderLink: false) { $0.refreshingNodes(renamedNodes) }
+            }
+        }
+
+        renamedFolderLinkNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
+            for await renamedNodes in audioNodeUpdatesUseCase.renamedFolderLinkNodes {
+                guard !Task.isCancelled else { return }
+                await self?.refreshTracks(isFolderLink: true) { $0.refreshingFolderLinkNodes(renamedNodes) }
             }
         }
     }
@@ -594,6 +624,22 @@ extension AudioPlaybackService: PlaybackControllable {
         case .emptied:
             removeSavedPositionForCurrentTrack()
             stop(savingPosition: false)
+        }
+    }
+
+    /// Swaps fresh node snapshots into the queue in place — playback is not interrupted
+    ///
+    /// - Parameter refresh: the tracks with fresh snapshots swapped in, `nil` when none was affected
+    private func refreshTracks(
+        isFolderLink: Bool,
+        _ refresh: ([PlaybackTrack]) -> [PlaybackTrack]?
+    ) {
+        guard let currentSource, currentSource.isFolderLink == isFolderLink,
+              let tracks = refresh(playbackQueue.tracks) else { return }
+
+        playbackQueue = PlaybackQueue(tracks: tracks, currentIndex: playbackQueue.currentIndex)
+        if let unshuffled = unshuffledTracks.flatMap(refresh) {
+            unshuffledTracks = unshuffled
         }
     }
 
@@ -759,7 +805,7 @@ extension AudioPlaybackService: PlaybackControllable {
         unshuffledTracks = nil
         isShuffleOnSubject.send(false)
         playbackQueue = .empty
-        title = ""
+        metadataTitleSubject.send(nil)
         artist = nil
         artworkData = nil
         artworkResolvedSubject.send(false)

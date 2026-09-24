@@ -14,6 +14,15 @@ protocol AudioNodeUpdatesUseCaseProtocol: Sendable {
     /// folder-link SDK instance, which is the only one that sees that tree, and
     /// therefore only meaningful while a folder link is what is playing.
     var deletedFolderLinkNodeHandles: AnyAsyncSequence<Set<HandleEntity>> { get }
+
+    /// Cloud Drive nodes whose name has changed, carrying the new name. Only
+    /// non-empty batches are emitted.
+    var renamedNodes: AnyAsyncSequence<[NodeEntity]> { get }
+
+    /// Folder-link nodes whose name has changed, as authorized nodes carrying the
+    /// new name — authorized, like the ones the queue was built from, so they can
+    /// stand in for them. Only non-empty batches are emitted.
+    var renamedFolderLinkNodes: AnyAsyncSequence<[any PlayableNode]> { get }
 }
 
 // MARK: - Implementation
@@ -21,13 +30,16 @@ protocol AudioNodeUpdatesUseCaseProtocol: Sendable {
 struct AudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
     private let nodeRepository: any NodeRepositoryProtocol
     private let nodeAttributeRepository: any NodeAttributeRepositoryProtocol
+    private let folderLinkNodeRepository: any AudioFolderLinkNodeRepositoryProtocol
 
     init(
         nodeRepository: some NodeRepositoryProtocol = DependencyInjection.nodeRepository,
-        nodeAttributeRepository: some NodeAttributeRepositoryProtocol = DependencyInjection.nodeAttributeRepository
+        nodeAttributeRepository: some NodeAttributeRepositoryProtocol = DependencyInjection.nodeAttributeRepository,
+        folderLinkNodeRepository: some AudioFolderLinkNodeRepositoryProtocol = DependencyInjection.folderLinkNodeRepository
     ) {
         self.nodeRepository = nodeRepository
         self.nodeAttributeRepository = nodeAttributeRepository
+        self.folderLinkNodeRepository = folderLinkNodeRepository
     }
 
     var deletedNodeHandles: AnyAsyncSequence<Set<HandleEntity>> {
@@ -41,6 +53,25 @@ struct AudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
         Self.deletedHandles(in: nodeRepository.folderLinkNodeUpdates) { node in
             node.changeTypes.contains(.removed)
         }
+    }
+
+    var renamedNodes: AnyAsyncSequence<[NodeEntity]> {
+        nodeRepository.nodeUpdates
+            .map { nodes in nodes.filter { $0.changeTypes.contains(.name) } }
+            .filter { $0.isNotEmpty }
+            .eraseToAnyAsyncSequence()
+    }
+
+    var renamedFolderLinkNodes: AnyAsyncSequence<[any PlayableNode]> {
+        let repository = folderLinkNodeRepository
+        return nodeRepository.folderLinkNodeUpdates
+            .map { nodes in
+                nodes
+                    .filter { $0.changeTypes.contains(.name) }
+                    .compactMap { repository.authorizedNode(forHandle: $0.handle) }
+            }
+            .filter { $0.isNotEmpty }
+            .eraseToAnyAsyncSequence()
     }
 
     private static func deletedHandles(
