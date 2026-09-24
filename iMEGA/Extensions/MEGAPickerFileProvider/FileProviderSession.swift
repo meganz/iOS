@@ -55,6 +55,7 @@ actor FileProviderSession {
             do {
                 try await authUseCase.login(sessionId: sessionId)
                 try await NodeActionUseCase(repo: NodeActionRepository.newRepo).fetchNodes()
+                await cancelResumedDownloads()
             } catch {
                 throw Self.readinessError(for: error)
             }
@@ -72,6 +73,29 @@ actor FileProviderSession {
         }
     }
 
+    /// Cancels the downloads the SDK resumed from its transfer cache while logging in.
+    private func cancelResumedDownloads() async {
+        let resumedDownloads = MEGASdk.shared.downloadTransfers.size
+        guard resumedDownloads > 0 else { return }
+
+        MEGALogInfo("[Picker] Cancelling \(resumedDownloads) download(s) resumed from the transfer cache")
+        do {
+            try await TransferUseCase(
+                repo: TransferRepository.newRepo,
+                metadataUseCase: MetadataUseCase(
+                    metadataRepository: MetadataRepository(),
+                    fileSystemRepository: FileSystemRepository.sharedRepo,
+                    fileExtensionRepository: FileExtensionRepository(),
+                    nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
+                ),
+                nodeDataRepository: NodeDataRepository.newRepo
+            ).cancelDownloadTransfers()
+        } catch {
+            // Not fatal for the session: the extension still works, it just keeps running the stale transfers.
+            MEGALogError("[Picker] Can't cancel the resumed downloads: \(error)")
+        }
+    }
+    
     /// Translates a `fastLogin` / `fetchNodes` failure into a File Provider error.
     ///
     /// This mapping lives here rather than in `FileProviderExtension.fileProviderError(for:)` because the same
