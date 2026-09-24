@@ -1,5 +1,6 @@
 @preconcurrency import Combine
 import ContentLibraries
+import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
@@ -806,6 +807,15 @@ struct VideoPlaylistsViewModelTestSuite {
             #expect(sut.shouldShowAddNewPlaylistAlert == !isPaywalled)
             #expect(videoRevampRouter.showOverDiskQuotaCalled == expectedCount)
         }
+        
+        @Test("when offline it should not show the add new playlist alert")
+        func offline() {
+            let sut = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: false))
+            
+            sut.addPlaylistButtonTap()
+            
+            #expect(sut.shouldShowAddNewPlaylistAlert == false)
+        }
     }
     
     @Suite("Select action sheet menu action")
@@ -829,12 +839,38 @@ struct VideoPlaylistsViewModelTestSuite {
             #expect(sut.selectedVideoPlaylistEntityForShareLink == nil)
             #expect(sut.shouldShowDeletePlaylistAlert == false)
         }
+
+        @Test("when offline no action should trigger",
+              arguments: [ContextAction.Category.rename, .shareLink, .manageLink, .removeLink, .deletePlaylist])
+        func offline(category: ContextAction.Category) {
+            let offlineActionGuard = MockOfflineActionGuard(allowsAction: false)
+            let sut = makeSUT(offlineActionGuard: offlineActionGuard)
+
+            sut.didSelectActionSheetMenuAction(ContextAction(
+                type: category, icon: "", title: ""))
+
+            #expect(offlineActionGuard.allowsActionRequiringConnectionCallCount == 1)
+            #expect(sut.shouldShowRenamePlaylistAlert == false)
+            #expect(sut.selectedVideoPlaylistEntityForShareLink == nil)
+            #expect(sut.shouldShowDeletePlaylistAlert == false)
+        }
+
+        @Test("when online the action triggers")
+        func online() {
+            let sut = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: true))
+
+            sut.didSelectActionSheetMenuAction(ContextAction(
+                type: .rename, icon: "", title: ""))
+
+            #expect(sut.shouldShowRenamePlaylistAlert)
+        }
     }
     
     @MainActor
     private static func makeSUT(
         accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
-        videoRevampRouter: some VideoRevampRouting = MockVideoRevampRouter()
+        videoRevampRouter: some VideoRevampRouting = MockVideoRevampRouter(),
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard.neverBlocking
     ) -> VideoPlaylistsViewModel {
         .init(
             videoPlaylistsUseCase: MockVideoPlaylistUseCase(),
@@ -849,6 +885,7 @@ struct VideoPlaylistsViewModelTestSuite {
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: MockVideoPlaylistUseCase()),
-            videoRevampRouter: videoRevampRouter)
+            videoRevampRouter: videoRevampRouter,
+            offlineActionGuard: offlineActionGuard)
     }
 }

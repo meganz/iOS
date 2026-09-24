@@ -1,25 +1,58 @@
 import Combine
+import MEGAAppPresentation
 import MEGADomain
+import MEGARepo
 import Video
 
 @MainActor
 final class VideoPlaylistContentContainerViewModel: ObservableObject {
     
     @Published var sortOrder: SortOrderEntity = .defaultAsc
+    @Published private(set) var isNetworkOffline = false
     
     private(set) var cancellables: Set<AnyCancellable> = []
     
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
+    private let offlineActionGuard: any OfflineActionGuarding
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private var networkConnectivityTask: Task<Void, Never>?
     
     private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
     
     init(sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-         overDiskQuotaChecker: some OverDiskQuotaChecking) {
+         overDiskQuotaChecker: some OverDiskQuotaChecking,
+         offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard(
+            isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+         ),
+         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = NetworkMonitorUseCase(
+            repo: NetworkMonitorRepository.newRepo
+         )) {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.overDiskQuotaChecker = overDiskQuotaChecker
+        self.offlineActionGuard = offlineActionGuard
+        self.networkMonitorUseCase = networkMonitorUseCase
         
         monitorSortOrderChanged()
+        monitorNetworkConnectivity()
+    }
+    
+    deinit {
+        networkConnectivityTask?.cancel()
+    }
+    
+    private func monitorNetworkConnectivity() {
+        guard DIContainer.featureFlagProvider.isNewOfflineModeEnabled else { return }
+        networkConnectivityTask = Task { [weak self, networkMonitorUseCase] in
+            let connectionSequence = networkMonitorUseCase
+                .connectionSequence
+                .prepend(networkMonitorUseCase.isConnected())
+                .removeDuplicates()
+            for await isConnected in connectionSequence {
+                guard let self else { return }
+                isNetworkOffline = !isConnected
+            }
+        }
     }
     
     private func monitorSortOrderChanged() {
@@ -54,6 +87,9 @@ final class VideoPlaylistContentContainerViewModel: ObservableObject {
     }
     
     func didSelectMenuAction(_ action: DisplayActionEntity) {
+        guard !action.requiresConnection || offlineActionGuard.allowsActionRequiringConnection() else {
+            return
+        }
         guard !(action == .newPlaylist && showOverDiskQuotaIfNeeded()) else {
             return
         }
@@ -61,6 +97,9 @@ final class VideoPlaylistContentContainerViewModel: ObservableObject {
     }
     
     func didSelectQuickAction(_ action: QuickActionEntity) {
+        guard !action.requiresConnection || offlineActionGuard.allowsActionRequiringConnection() else {
+            return
+        }
         guard !([QuickActionEntity.download, .shareLink, .manageLink,
                  .removeLink, .rename, .saveToPhotos].contains(action) &&
                 showOverDiskQuotaIfNeeded()) else {
@@ -70,6 +109,7 @@ final class VideoPlaylistContentContainerViewModel: ObservableObject {
     }
     
     func didSelectVideoPlaylistAction(_ action: VideoPlaylistActionEntity) {
+        guard offlineActionGuard.allowsActionRequiringConnection() else { return }
         guard !showOverDiskQuotaIfNeeded() else { return }
         sharedUIState.selectedVideoPlaylistActionEntity = action
     }

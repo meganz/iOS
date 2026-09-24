@@ -162,9 +162,11 @@ final class VideoPlaylistContentViewController: UIViewController {
     private func subscribeToVideoSelection() {
         videoSelection.$videos
             .map { $0.isNotEmpty }
+            .combineLatest(viewModel.$isNetworkOffline)
+            .map { hasSelectedItem, isNetworkOffline in !hasSelectedItem || isNetworkOffline }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasSelectedItem in
-                self?.videoToolbarViewModel.isDisabled = !hasSelectedItem
+            .sink { [weak self] isDisabled in
+                self?.videoToolbarViewModel.isDisabled = isDisabled
             }
             .store(in: &subscriptions)
     }

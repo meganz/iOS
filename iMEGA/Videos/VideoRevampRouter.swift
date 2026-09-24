@@ -2,7 +2,9 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
 import MEGAPreference
+import MEGARepo
 import MEGASdk
 import SwiftUI
 import Video
@@ -14,6 +16,48 @@ struct VideoRevampRouter: VideoRevampRouting {
 
     private let nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
+    private let offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher
+
+    private let offlineActionGuard: any OfflineActionGuarding
+
+    init(
+        explorerType: ExplorerTypeEntity,
+        navigationController: UINavigationController?,
+        syncModel: VideoRevampSyncModel,
+        offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher = VideoRevampRouter.makeOfflineNodeTapDispatcher(),
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard(
+            isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+        )
+    ) {
+        self.explorerType = explorerType
+        self.navigationController = navigationController
+        self.syncModel = syncModel
+        self.offlineNodeTapDispatcher = offlineNodeTapDispatcher
+        self.offlineActionGuard = offlineActionGuard
+
+        offlineNodeTapDispatcher.showFileUnavailableSnackBar = { [weak navigationController] in
+            let presenter = navigationController?.topViewController ?? navigationController
+            presenter?.showSnackBar(message: Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline)
+        }
+    }
+
+    static func makeOfflineNodeTapDispatcher() -> OfflineAwareNodeTapDispatcher {
+        let nodeUseCase = NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+        return OfflineAwareNodeTapDispatcher(
+            offlineFileOpenGuard: OfflineFileOpenGuard(
+                isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled,
+                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                nodeUseCase: nodeUseCase,
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            ),
+            nodeUseCase: nodeUseCase
+        )
+    }
+
     private var videoConfig: VideoConfig {
         .live()
     }
@@ -95,6 +139,12 @@ struct VideoRevampRouter: VideoRevampRouting {
     }
     
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) {
+        offlineNodeTapDispatcher.dispatch(nodeHandle: video.handle, isFolder: video.isFolder) { _ in
+            self.presentMediaBrowser(for: video, allVideos: allVideos)
+        }
+    }
+
+    private func presentMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) {
         let nodeInfoUseCase = NodeInfoUseCase()
         guard let selectedNode = nodeInfoUseCase.node(for: video.handle) else { return }
         let allNodes = allVideos.compactMap { nodeInfoUseCase.node(for: $0.handle) }
@@ -137,7 +187,10 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         let viewController = NodeActionViewController(
             node: videoMegaNode,
-            delegate: overDiskQuotaNodeActionDelegate,
+            delegate: OfflineAwareNodeActionDelegate(
+                wrapping: overDiskQuotaNodeActionDelegate,
+                offlineActionGuard: offlineActionGuard
+            ),
             displayMode: .cloudDrive,
             isIncoming: false,
             isBackupNode: isBackupNode,

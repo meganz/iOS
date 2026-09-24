@@ -1,4 +1,6 @@
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGATest
@@ -101,11 +103,65 @@ final class VideoPlaylistContentContainerViewModelTests: XCTestCase {
         }
     }
     
+    // MARK: - Offline mode
+    
+    @MainActor
+    func testQuickAction_whenOfflineAndActionNeedsConnection_doesNotRunAction() {
+        let (sut, _) = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: false))
+        
+        sut.didSelectQuickAction(.rename)
+        
+        XCTAssertNil(sut.sharedUIState.selectedQuickActionEntity)
+        cancelTask(on: sut)
+    }
+    
+    @MainActor
+    func testVideoPlaylistAction_whenOffline_doesNotRunAction() {
+        let (sut, _) = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: false))
+        
+        sut.didSelectVideoPlaylistAction(.delete)
+        
+        XCTAssertNil(sut.sharedUIState.selectedVideoPlaylistActionEntity)
+        cancelTask(on: sut)
+    }
+    
+    @MainActor
+    func testMenuAction_whenOfflineAndActionDoesNotNeedConnection_runsAction() {
+        let (sut, _) = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: false))
+        
+        sut.didSelectMenuAction(.select)
+        
+        XCTAssertEqual(sut.sharedUIState.selectedDisplayActionEntity, .select)
+        cancelTask(on: sut)
+    }
+    
+    @MainActor
+    func testQuickAction_whenOnline_runsAction() {
+        let (sut, _) = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: true))
+        
+        sut.didSelectQuickAction(.rename)
+        
+        XCTAssertEqual(sut.sharedUIState.selectedQuickActionEntity, .rename)
+        cancelTask(on: sut)
+    }
+    
+    @MainActor
+    func testIsNetworkOffline_whenOnline_isFalse() async {
+        let (sut, _) = makeSUT(networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true))
+        
+        await Task.yield()
+        
+        XCTAssertFalse(sut.isNetworkOffline)
+        cancelTask(on: sut)
+    }
+    
     // MARK: - Helpers
     
     @MainActor
     private func makeSUT(
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+        offlineActionGuard: some OfflineActionGuarding = MockOfflineActionGuard(),
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -114,7 +170,9 @@ final class VideoPlaylistContentContainerViewModelTests: XCTestCase {
     ) {
         let sut = VideoPlaylistContentContainerViewModel(
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            overDiskQuotaChecker: MockOverDiskQuotaChecker()
+            overDiskQuotaChecker: MockOverDiskQuotaChecker(),
+            offlineActionGuard: offlineActionGuard,
+            networkMonitorUseCase: networkMonitorUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, sortOrderPreferenceUseCase)

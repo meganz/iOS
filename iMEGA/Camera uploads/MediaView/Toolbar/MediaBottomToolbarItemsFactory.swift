@@ -37,7 +37,7 @@ struct MediaBottomToolbarItemsFactory {
         for action: MediaBottomToolbarAction,
         config: MediaBottomToolbarConfig
     ) -> Bool {
-        guard config.hasSelection else {
+        guard !config.isNetworkOffline, config.hasSelection else {
             return false
         }
 

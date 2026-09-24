@@ -1193,6 +1193,21 @@ struct VideoPlaylistContentViewModelTestSuite {
             #expect(videoRevampRouter.showOverDiskQuotaCalled == 0)
             #expect(sut.shouldShowVideoPlaylistPicker == false)
         }
+        
+        @Test("when offline it should not show the video picker")
+        func offline() {
+            let videoRevampRouter = MockVideoRevampRouter()
+            let sut = makeSUT(
+                videoRevampRouter: videoRevampRouter,
+                offlineActionGuard: MockOfflineActionGuard(allowsAction: false))
+            sut.shouldShowVideoPlaylistPicker = true
+            
+            sut.showVideoPicker()
+            
+            #expect(videoRevampRouter.openVideoPickerCalled == 0)
+            #expect(videoRevampRouter.showOverDiskQuotaCalled == 0)
+            #expect(sut.shouldShowVideoPlaylistPicker == false)
+        }
     }
     
     @MainActor
@@ -1213,6 +1228,7 @@ struct VideoPlaylistContentViewModelTestSuite {
         accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
         videoRevampRouter: some VideoRevampRouting = MockVideoRevampRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard.neverBlocking,
         syncModel: VideoRevampSyncModel = .init()
     ) -> VideoPlaylistContentViewModel {
         .init(
@@ -1231,6 +1247,7 @@ struct VideoPlaylistContentViewModelTestSuite {
             accountStorageUseCase: accountStorageUseCase,
             videoRevampRouter: videoRevampRouter,
             featureFlagProvider: featureFlagProvider,
+            offlineActionGuard: offlineActionGuard,
             syncModel: syncModel,
             videoSelection: VideoSelection()
         )

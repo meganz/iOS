@@ -39,6 +39,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let videoRevampRouter: any VideoRevampRouting
+    private let offlineActionGuard: any OfflineActionGuarding
     private let syncModel: VideoRevampSyncModel
     let sortHeaderConfig: SortHeaderConfig
     
@@ -97,6 +98,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         videoRevampRouter: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol,
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard.neverBlocking,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         syncModel: VideoRevampSyncModel,
         videoSelection: VideoSelection
@@ -117,6 +119,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.videoRevampRouter = videoRevampRouter
         self.featureFlagProvider = featureFlagProvider
+        self.offlineActionGuard = offlineActionGuard
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.syncModel = syncModel
         self.videoSelection = videoSelection
@@ -222,6 +225,9 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     func showVideoPicker() {
         defer { shouldShowVideoPlaylistPicker = false }
+        guard offlineActionGuard.allowsActionRequiringConnection() else {
+            return
+        }
         guard !accountStorageUseCase.isPaywalled else {
             videoRevampRouter.showOverDiskQuota()
             return
