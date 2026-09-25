@@ -193,7 +193,7 @@ struct RevampedSearchResultThumbnailView: View {
     @ViewBuilder private var trailingView: some View {
         if selectionEnabled {
             selectionIcon
-        } else {
+        } else if viewModel.isContextMenuEnabled {
             moreButton
         }
     }

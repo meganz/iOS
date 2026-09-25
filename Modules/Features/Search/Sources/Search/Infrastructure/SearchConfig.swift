@@ -12,16 +12,22 @@ public struct SearchConfig {
     // [SAO-3133]: Refactor ColorAssets to remove unnecessary color properties
     public let colorAssets: ColorAssets
 
+    /// Whether a result row offers the context menu button. Screens that provide no context
+    /// actions turn this off so the row does not show a button that does nothing.
+    public let isContextMenuEnabled: Bool
+
     public init(
         chipAssets: ChipAssets = .default,
         emptyViewAssetFactory: @escaping (SearchChipEntity?, SearchQuery) -> EmptyViewAssets,
         rowAssets: RowAssets = .default,
-        colorAssets: ColorAssets = .default
+        colorAssets: ColorAssets = .default,
+        isContextMenuEnabled: Bool = true
     ) {
         self.chipAssets = chipAssets
         self.emptyViewAssetFactory = emptyViewAssetFactory
         self.rowAssets = rowAssets
         self.colorAssets = colorAssets
+        self.isContextMenuEnabled = isContextMenuEnabled
     }
 
     public struct ChipAssets {

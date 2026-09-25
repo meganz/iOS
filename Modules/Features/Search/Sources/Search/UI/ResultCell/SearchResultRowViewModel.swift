@@ -187,6 +187,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
     let swipeActions: [SearchResultSwipeAction]
+    let isContextMenuEnabled: Bool
 
     init(
         result: SearchResult,
@@ -194,7 +195,8 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,
         actions: UserActions,
-        swipeActions: [SearchResultSwipeAction]
+        swipeActions: [SearchResultSwipeAction],
+        isContextMenuEnabled: Bool = true
     ) {
         self.result = result
         self.query = query
@@ -202,6 +204,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         self.actions = actions
         self.rowAssets = rowAssets
         self.swipeActions = swipeActions
+        self.isContextMenuEnabled = isContextMenuEnabled
     }
 
     func loadThumbnail() async {

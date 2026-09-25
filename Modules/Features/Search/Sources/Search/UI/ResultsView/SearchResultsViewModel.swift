@@ -434,7 +434,8 @@ public final class SearchResultsViewModel: ObservableObject {
             rowAssets: config.rowAssets,
             colorAssets: config.colorAssets,
             actions: rowActions(for: result),
-            swipeActions: swipeActions
+            swipeActions: swipeActions,
+            isContextMenuEnabled: config.isContextMenuEnabled
         )
     }
 

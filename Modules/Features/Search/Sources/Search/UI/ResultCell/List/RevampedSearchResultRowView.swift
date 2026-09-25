@@ -108,7 +108,7 @@ struct RevampedSearchResultRowView: View {
     }
 
     private var showsMoreButton: Bool {
-        editMode?.wrappedValue.isEditing != true
+        viewModel.isContextMenuEnabled && editMode?.wrappedValue.isEditing != true
     }
 
     private var innerContent: some View {
