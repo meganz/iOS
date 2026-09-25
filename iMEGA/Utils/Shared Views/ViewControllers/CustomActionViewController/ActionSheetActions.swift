@@ -195,7 +195,7 @@ final class ContextActionSheetAction: BaseAction {
 
 extension NodeAction {
     class func exportFileAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ExportFile.title(nodeCount), image: .export, type: .exportFile)
+        NodeAction(title: Strings.Localizable.download, image: .downloadToDevice, type: .exportFile)
     }
     
     class func shareFolderAction(nodeCount: Int = 1) -> NodeAction {

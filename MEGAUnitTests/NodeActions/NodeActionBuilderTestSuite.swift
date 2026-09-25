@@ -1,5 +1,7 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
+import MEGAAssets
+import MEGAL10n
 import Testing
 
 @Suite("NodeActionBuilderTestSuite")
@@ -272,6 +274,30 @@ struct NodeActionBuilderTestSuite {
             
             #expect(actions.types == expectedActions)
         }
+    }
+}
+
+@Suite("Export file action")
+struct ExportFileActionTestSuite {
+    @Test("shows Download with the arrow-down icon for one or many files", arguments: [1, 2, 10])
+    @MainActor func exportFileAction(nodeCount: Int) {
+        let action = NodeAction.exportFileAction(nodeCount: nodeCount)
+
+        #expect(action.title == Strings.Localizable.download)
+        #expect(action.image == MEGAAssets.UIImage.downloadToDisk)
+        #expect(action.type == .exportFile)
+    }
+
+    @Test("multi-select files sheet shows Download for the export action", arguments: [1, 3])
+    @MainActor func multiselectFiles(selectedNodeCount: Int) throws {
+        let actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: selectedNodeCount)
+            .setDisplayMode(.cloudDrive)
+            .multiselectBuild()
+
+        let exportAction = try #require(actions.first { $0.type == .exportFile })
+        #expect(exportAction.title == Strings.Localizable.download)
+        #expect(exportAction.image == MEGAAssets.UIImage.downloadToDisk)
     }
 }
 

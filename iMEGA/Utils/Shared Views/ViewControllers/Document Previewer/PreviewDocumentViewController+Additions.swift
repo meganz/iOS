@@ -135,7 +135,7 @@ extension PreviewDocumentViewController {
     }
 
     @objc func configureBarButtonImages() {
-        self.exportFileBarButtonItem?.image = MEGAAssets.UIImage.externalLink
+        self.exportFileBarButtonItem?.image = MEGAAssets.UIImage.downloadToDisk
         self.importBarButtonItem.image = MEGAAssets.UIImage.folderArrow
         self.downloadBarButtonItem.image = MEGAAssets.UIImage.arrowDownCircle
         self.moreBarButtonItem.image = MEGAAssets.UIImage.moreHorizontal

@@ -378,7 +378,7 @@ extension TextEditorViewController: ViewType {
         if accessLevel == .owner {
             let exportFileBarButtonItem =
                 UIBarButtonItem(
-                    image: MEGAAssets.UIImage.export,
+                    image: MEGAAssets.UIImage.downloadToDisk,
                     style: .plain,
                     target: self,
                     action: #selector(exportFileTapped(button:))

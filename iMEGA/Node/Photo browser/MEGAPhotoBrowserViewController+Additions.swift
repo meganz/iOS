@@ -972,12 +972,16 @@ extension MEGAPhotoBrowserViewController {
         default:
             self.leftToolbarItem?.image = MEGAAssets.UIImage.thumbnailsThin
         }
-        self.rightToolbarItem?.image = MEGAAssets.UIImage.externalLink
-        
+        // Matches `didPressRightToolbarButton`: only these modes do not export the file.
+        self.rightToolbarItem?.image = switch displayMode {
+        case .fileLink, .albumLink, .nodeInsideFolderLink: MEGAAssets.UIImage.externalLink
+        default: MEGAAssets.UIImage.downloadToDisk
+        }
+
         self.saveToolbarItem.image = MEGAAssets.UIImage.photosApp
         self.importToolbarItem.image = MEGAAssets.UIImage.folderArrow
         self.forwardToolbarItem.image = MEGAAssets.UIImage.cornerUpLeft
-        self.exportFileToolbarItem.image = MEGAAssets.UIImage.export
+        self.exportFileToolbarItem.image = MEGAAssets.UIImage.downloadToDisk
     }
 
     @objc class func photoBrowserDataProvider(currentPhoto: MEGANode, mediaNodes: [MEGANode], sdk: MEGASdk) -> PhotoBrowserDataProvider {
