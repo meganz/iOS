@@ -8,6 +8,7 @@ import MEGASwiftUI
 import Search
 import SwiftUI
 import Transfer
+import ViewedLinks
 
 /// @MainActor is required as its conformer would be MEGAStore from main target
 @MainActor
@@ -53,6 +54,8 @@ extension HomeView {
         let tracker: any AnalyticsTracking
         let featureFlagProvider: any FeatureFlagProviderProtocol
         let promotedPlanProvider: @Sendable () async throws -> PlanEntity?
+        // Viewed links widget
+        let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -83,7 +86,8 @@ extension HomeView {
             photoLibraryContentViewRouter: some PhotoLibraryContentViewRouting,
             tracker: some AnalyticsTracking,
             featureFlagProvider: some FeatureFlagProviderProtocol,
-            promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?
+            promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?,
+            viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -114,6 +118,7 @@ extension HomeView {
             self.tracker = tracker
             self.featureFlagProvider = featureFlagProvider
             self.promotedPlanProvider = promotedPlanProvider
+            self.viewedLinksUseCase = viewedLinksUseCase
         }
     }
 }

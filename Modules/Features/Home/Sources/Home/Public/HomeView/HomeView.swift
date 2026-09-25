@@ -12,6 +12,7 @@ import Search
 import SwiftUI
 import Transfer
 import UIKit
+import ViewedLinks
 
 @MainActor
 public final class HomeDeepLink: ObservableObject {
@@ -395,7 +396,21 @@ public struct HomeView: View {
                         ),
                         addMenuActionHandler: homeAddMenuActionHandler
                     )
-                case .viewedLinks, .continueWhereYouLeft, .doMoreWithMega:
+                case .viewedLinks:
+                    if isHomeRevampPhase2Enabled {
+                        ViewedLinksWidgetView(
+                            dependency: ViewedLinksWidgetView.Dependency(
+                                viewedLinksUseCase: dependency.viewedLinksUseCase,
+                                openLink: { dependency.router.route(to: .viewedLink($0)) },
+                                onOpenFullScreen: {
+                                    // [IOS-11807]: Wire VLs full screens
+                                }
+                            )
+                        )
+                    } else {
+                        EmptyView()
+                    }
+                case .continueWhereYouLeft, .doMoreWithMega:
                     if isHomeRevampPhase2Enabled {
                         Text("\(widget.rawValue)") // corresponding view will be added later
                             .frame(height: 30)

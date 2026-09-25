@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MEGASwift
 import ViewedLinks
 

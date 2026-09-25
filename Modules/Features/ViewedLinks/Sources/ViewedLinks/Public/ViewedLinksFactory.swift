@@ -8,7 +8,7 @@ public enum ViewedLinksFactory {
         ViewedLinksUseCase(repository: makeViewedLinkRepository())
     }
 
-    public static func makeViewedLinkThumbnailUseCase() -> some ViewedLinkThumbnailUseCaseProtocol {
+    static func makeViewedLinkThumbnailUseCase() -> some ViewedLinkThumbnailUseCaseProtocol {
         ViewedLinkThumbnailUseCase(repository: ViewedLinkThumbnailRepository())
     }
 

@@ -19,6 +19,7 @@ import MEGAUI
 import Search
 import SwiftUI
 import Transfer
+import ViewedLinks
 
 // MARK: - Revamped Home
 extension HomeScreenFactory {
@@ -146,7 +147,8 @@ extension HomeScreenFactory {
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket),
             tracker: DIContainer.tracker,
             featureFlagProvider: DIContainer.featureFlagProvider,
-            promotedPlanProvider: PromotedPlanFactory.makeProvider()
+            promotedPlanProvider: PromotedPlanFactory.makeProvider(),
+            viewedLinksUseCase: ViewedLinksFactory.makeViewedLinksUseCase()
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)

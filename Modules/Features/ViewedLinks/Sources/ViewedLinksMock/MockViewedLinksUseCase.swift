@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MEGASwift
 import ViewedLinks
 
@@ -13,6 +14,7 @@ public final class MockViewedLinksUseCase: ViewedLinksUseCaseProtocol, @unchecke
     public private(set) var removedLinks: [[ViewedLinkEntity]] = []
     public private(set) var removedUnavailableURLs: [URL] = []
     public private(set) var clearHistoryCallCount = 0
+    public private(set) var lastTopLimit: Int?
 
     public var recordCallCount: Int { recordedLinks.count }
 
@@ -32,6 +34,7 @@ public final class MockViewedLinksUseCase: ViewedLinksUseCaseProtocol, @unchecke
     }
 
     public func topViewedLinks(limit: Int) async throws(ViewedLinkErrorEntity) -> [ViewedLinkEntity] {
+        lastTopLimit = limit
         try throwIfNeeded()
         return Array(topViewedLinksResult.prefix(limit))
     }

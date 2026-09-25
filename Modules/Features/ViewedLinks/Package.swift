@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../Search"),
 
         // UI
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
 
@@ -39,6 +40,9 @@ let package = Package(
         // Repository
         .package(path: "../../Repository/MEGAAppSDKRepo"),
 
+        // DataSource
+        .package(path: "../../DataSource/MEGASDK"),
+
         // Test
         .package(path: "../../MEGASharedRepo/MEGATest")
     ],
@@ -47,6 +51,7 @@ let package = Package(
             name: "ViewedLinks",
             dependencies: [
                 "Search",
+                "MEGADesignToken",
                 "MEGASwiftUI",
                 "MEGAUIComponent",
                 "MEGAAppPresentation",
@@ -54,6 +59,7 @@ let package = Package(
                 "MEGAL10n",
                 "MEGADomain",
                 "MEGAAppSDKRepo",
+                .product(name: "MEGASdk", package: "MEGASDK"),
                 "MEGASwift"
             ]
         ),
@@ -69,8 +75,10 @@ let package = Package(
             dependencies: [
                 "ViewedLinks",
                 "ViewedLinksMock",
+                "MEGAAssets",
                 "MEGADomain",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
+                "MEGASwift",
                 "MEGATest"
             ]
         )

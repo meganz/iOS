@@ -33,6 +33,8 @@ final class HomeViewRouter: HomeViewRouting {
             showUpgradePlanView()		
         case .promotionalBanner(let url):
             routeToPromotionalUrl(url)
+        case .viewedLink(let url):
+            openViewedLink(url)
         case .promoLandingDialog:
             showPromoLandingDialog()
         case .offline:
@@ -108,6 +110,12 @@ final class HomeViewRouter: HomeViewRouting {
         PromoLandingDialogRouter
             .makeDefault(presenter: UIApplication.mnz_visibleViewController())
             .start()
+    }
+
+    /// Routes through the same path the app uses for a link typed into Open link.
+    private func openViewedLink(_ url: URL) {
+        MEGALinkManager.adapterLinkURL = url
+        MEGALinkManager.processLinkURL(url)
     }
 
     private func routeToPromotionalUrl(_ url: URL) {
