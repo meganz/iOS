@@ -5002,6 +5002,9 @@ public enum Strings {
       public enum Favourite {
         public static let title: Swift.String
       }
+      public enum LastAccessed {
+        public static let title: Swift.String
+      }
       public enum LastModified {
         public static let title: Swift.String
       }

@@ -5242,3 +5242,5 @@
 "viewedLinks.clear.confirmation.message"="Are you sure you want to clear all viewed links history? This cannot be undone.";
 /* Confirmation message shown after the viewed links history is cleared */
 "viewedLinks.clear.success.message"="Viewed links history has been cleared";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="Date";
