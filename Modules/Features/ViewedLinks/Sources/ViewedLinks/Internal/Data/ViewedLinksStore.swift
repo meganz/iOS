@@ -112,9 +112,11 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
 
     /// Purges accumulated persistent-history transactions once per store lifetime; nothing here consumes history tokens.
     /// Available on iOS 18 and later; earlier systems accrue history that this store never reads.
+    /// An in-memory store keeps no history, and asking it to delete history faults, so it is skipped.
     private func pruneStaleHistory() {
         guard #available(iOS 18, *), !didPruneHistory else { return }
         didPruneHistory = true
+        guard modelContainer.configurations.contains(where: { !$0.isStoredInMemoryOnly }) else { return }
         try? modelContext.deleteHistory(HistoryDescriptor<DefaultHistoryTransaction>())
     }
 
