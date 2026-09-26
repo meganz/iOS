@@ -25,6 +25,7 @@ public struct HomeView: View {
     private enum NavigationRoute: Hashable {
         case shortcut(ShortcutType)
         case recents
+        case viewedLinks
         case widgetsCustomization
     }
 
@@ -272,6 +273,15 @@ public struct HomeView: View {
             }
         case .recents:
             recentActionBucketsListView
+        case .viewedLinks:
+            ViewedLinksView(
+                dependency: ViewedLinksView.Dependency(
+                    viewedLinksUseCase: dependency.viewedLinksUseCase,
+                    openLink: { dependency.router.route(to: .viewedLink($0)) },
+                    showSnackBar: { navigator.showSnackBar(SnackBar(message: $0)) }
+                ),
+                tabBarHidden: $navigator.tabBarHidden
+            )
         case .widgetsCustomization:
             HomeWidgetsCustomizationView(dependency:
                     .init(defaultLaunchDestinationUseCase: dependency.defaultLaunchDestinationUseCase)
@@ -403,7 +413,7 @@ public struct HomeView: View {
                                 viewedLinksUseCase: dependency.viewedLinksUseCase,
                                 openLink: { dependency.router.route(to: .viewedLink($0)) },
                                 onOpenFullScreen: {
-                                    // [IOS-11807]: Wire VLs full screens
+                                    navigator.append(NavigationRoute.viewedLinks)
                                 }
                             )
                         )

@@ -44,13 +44,13 @@ struct ViewedLinkThumbnailRepository: ViewedLinkThumbnailRepositoryProtocol {
             throw ThumbnailErrorEntity.nodeNotFound
         }
 
+        try? fileManager.createDirectory(at: cacheDirectoryURL, withIntermediateDirectories: true)
+
         return ThumbnailEntity(url: try await downloadThumbnail(for: node, to: url), type: .thumbnail)
     }
 
     private func cacheURL(for handle: HandleEntity) -> URL? {
         guard let base64Handle = MEGASdk.base64Handle(forHandle: handle) else { return nil }
-
-        try? fileManager.createDirectory(at: cacheDirectoryURL, withIntermediateDirectories: true)
 
         return cacheDirectoryURL.appendingPathComponent(base64Handle)
     }

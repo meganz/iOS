@@ -24,6 +24,7 @@ let package = Package(
         // UI
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../UI/MEGAUIKit"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
 
         // Presentation
@@ -53,6 +54,7 @@ let package = Package(
                 "Search",
                 "MEGADesignToken",
                 "MEGASwiftUI",
+                "MEGAUIKit",
                 "MEGAUIComponent",
                 "MEGAAppPresentation",
                 "MEGAAssets",

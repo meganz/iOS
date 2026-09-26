@@ -5,7 +5,6 @@ import UIKit
 /// Any configuration needed for search module assets, behaviour or styling
 /// currently on chips colors are specified here
 public struct SearchConfig {
-    
     public let chipAssets: ChipAssets
     public let emptyViewAssetFactory: (SearchChipEntity?, SearchQuery) -> EmptyViewAssets
     public let rowAssets: RowAssets

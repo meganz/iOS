@@ -45,14 +45,11 @@ public struct ViewedLinksWidgetView: View {
     }
 
     private var header: some View {
-        HStack(spacing: TokenSpacing._3) {
+        HStack(spacing: 0) {
             Text(Strings.Localizable.Home.Customization.Widget.viewedLinks)
                 .font(.callout)
                 .fontWeight(.semibold)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
-
-            Spacer()
-
             chevronButton
         }
         .padding(.bottom, TokenSpacing._3)
@@ -69,6 +66,8 @@ public struct ViewedLinksWidgetView: View {
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 .frame(width: TokenSpacing._7, height: TokenSpacing._7)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .contentShape(Rectangle())
         }
         .opacity(isLoaded ? 1 : 0)
         .disabled(!isLoaded)
