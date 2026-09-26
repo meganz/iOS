@@ -78,6 +78,7 @@ struct ViewedLinksMigrationTests {
             linkURL: try #require(URL(string: "https://mega.nz/file/7#key")),
             name: "a.pdf",
             isFolder: false,
+            hasThumbnail: false,
             lastAccessed: Date(timeIntervalSince1970: 0)
         )
         try await store.record(link)

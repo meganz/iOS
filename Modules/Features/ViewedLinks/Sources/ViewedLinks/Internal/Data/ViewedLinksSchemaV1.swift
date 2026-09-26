@@ -16,13 +16,17 @@ enum ViewedLinksSchemaV1: VersionedSchema {
         var linkURL: String
         var name: String
         var isFolder: Bool
+        /// Defaulted so an existing store migrates without a new schema version. A row written
+        /// before this column existed reads back as `false` until the link is opened again.
+        var hasThumbnail: Bool = false
         var lastAccessed: Date
 
-        init(handle: Int64, linkURL: String, name: String, isFolder: Bool, lastAccessed: Date) {
+        init(handle: Int64, linkURL: String, name: String, isFolder: Bool, hasThumbnail: Bool, lastAccessed: Date) {
             self.handle = handle
             self.linkURL = linkURL
             self.name = name
             self.isFolder = isFolder
+            self.hasThumbnail = hasThumbnail
             self.lastAccessed = lastAccessed
         }
     }

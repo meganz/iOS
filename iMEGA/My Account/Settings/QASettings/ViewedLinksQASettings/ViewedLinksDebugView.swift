@@ -147,6 +147,7 @@ final class ViewedLinksDebugViewModel: ObservableObject {
             linkURL: url,
             name: name.isEmpty ? "Untitled" : name,
             isFolder: isFolder,
+            hasThumbnail: false,
             lastAccessed: .now
         )
         do {

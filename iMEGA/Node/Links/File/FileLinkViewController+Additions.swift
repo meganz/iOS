@@ -145,7 +145,8 @@ extension FileLinkViewController {
                 handle: node.handle,
                 name: node.nameAfterDecryptionCheck(),
                 linkURL: linkURL,
-                isFolder: false
+                isFolder: false,
+                hasThumbnail: node.hasThumbnail()
             )
         }
     }

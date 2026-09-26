@@ -7,6 +7,7 @@ public struct ViewedLinkEntity: Sendable {
     public let linkURL: URL
     public let name: String
     public let isFolder: Bool
+    public let hasThumbnail: Bool
     public let lastAccessed: Date
 
     public init(
@@ -14,12 +15,14 @@ public struct ViewedLinkEntity: Sendable {
         linkURL: URL,
         name: String,
         isFolder: Bool,
+        hasThumbnail: Bool,
         lastAccessed: Date
     ) {
         self.handle = handle
         self.linkURL = linkURL
         self.name = name
         self.isFolder = isFolder
+        self.hasThumbnail = hasThumbnail
         self.lastAccessed = lastAccessed
     }
 }

@@ -9,7 +9,7 @@ import ViewedLinks
 struct ViewedLinksUseCaseTests {
     private func makeLink(handle: HandleEntity = 1) throws -> ViewedLinkEntity {
         let url = try #require(URL(string: "https://mega.nz/file/\(handle)#key"))
-        return ViewedLinkEntity(handle: handle, linkURL: url, name: "f\(handle)", isFolder: false, lastAccessed: Date(timeIntervalSince1970: 0))
+        return ViewedLinkEntity(handle: handle, linkURL: url, name: "f\(handle)", isFolder: false, hasThumbnail: false, lastAccessed: Date(timeIntervalSince1970: 0))
     }
 
     @Test("record forwards to the repository")

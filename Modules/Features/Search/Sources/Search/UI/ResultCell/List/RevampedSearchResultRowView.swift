@@ -214,18 +214,27 @@ struct RevampedSearchResultRowView: View {
         viewModel.result.properties.propertyViewsFor(layout: layout, placement: placement, colorAssets: viewModel.colorAssets)
     }
 
+    /// An empty `Text` still reserves a line, so a row with nothing to show below the title would
+    /// keep a blank second line and push the title off centre.
+    private var hasSubtitle: Bool {
+        !viewModel.result.description(layout).isEmpty || !viewModel.result.properties.isEmpty
+    }
+
+    @ViewBuilder
     private var subtitleLine: some View {
-        HStack(spacing: TokenSpacing._2) {
-            propertyViewsFor(placement: .secondary(.leading))
-            Text(viewModel.result.description(layout))
-                .font(.footnote)
-                .lineLimit(1)
-                .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
-            propertyViewsFor(placement: .secondary(.trailing))
-            Spacer()
-            propertyViewsFor(placement: .secondary(.trailingEdge))
+        if hasSubtitle {
+            HStack(spacing: TokenSpacing._2) {
+                propertyViewsFor(placement: .secondary(.leading))
+                Text(viewModel.result.description(layout))
+                    .font(.footnote)
+                    .lineLimit(1)
+                    .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
+                propertyViewsFor(placement: .secondary(.trailing))
+                Spacer()
+                propertyViewsFor(placement: .secondary(.trailingEdge))
+            }
+            .padding(.vertical, TokenSpacing._1)
         }
-        .padding(.vertical, TokenSpacing._1)
     }
 
     @ViewBuilder

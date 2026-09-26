@@ -515,13 +515,15 @@ extension MEGALinkManager {
 
         let handle = node.handle
         let name = node.nameAfterDecryptionCheck()
+        let hasThumbnail = node.hasThumbnail()
 
         Task { @MainActor in
             ViewedLinksRecorder.shared.record(
                 handle: handle,
                 name: name,
                 linkURL: linkURL,
-                isFolder: false
+                isFolder: false,
+                hasThumbnail: hasThumbnail
             )
         }
     }

@@ -204,6 +204,7 @@ struct ViewedLinksWidgetViewModelTests {
             linkURL: url,
             name: name ?? "file\(handle).jpg",
             isFolder: isFolder,
+            hasThumbnail: false,
             lastAccessed: Date(timeIntervalSince1970: TimeInterval(handle))
         )
     }

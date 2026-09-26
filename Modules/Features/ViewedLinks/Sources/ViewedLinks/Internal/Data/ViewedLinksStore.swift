@@ -41,6 +41,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
                 existing.linkURL = link.linkURL.absoluteString
                 existing.name = link.name
                 existing.isFolder = link.isFolder
+                existing.hasThumbnail = link.hasThumbnail
                 existing.lastAccessed = link.lastAccessed
             } else {
                 context.insert(ViewedLinkModel(
@@ -48,6 +49,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
                     linkURL: link.linkURL.absoluteString,
                     name: link.name,
                     isFolder: link.isFolder,
+                    hasThumbnail: link.hasThumbnail,
                     lastAccessed: link.lastAccessed
                 ))
             }
@@ -142,6 +144,7 @@ package actor ViewedLinksStore: ViewedLinksStoreProtocol, ModelActor {
             linkURL: URL(string: model.linkURL) ?? URL(fileURLWithPath: "/"),
             name: model.name,
             isFolder: model.isFolder,
+            hasThumbnail: model.hasThumbnail,
             lastAccessed: model.lastAccessed
         )
     }

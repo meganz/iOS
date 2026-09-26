@@ -76,6 +76,7 @@ struct ViewedLinkThumbnailUseCaseTests {
             linkURL: url,
             name: name,
             isFolder: isFolder,
+            hasThumbnail: false,
             lastAccessed: Date(timeIntervalSince1970: 0)
         )
     }

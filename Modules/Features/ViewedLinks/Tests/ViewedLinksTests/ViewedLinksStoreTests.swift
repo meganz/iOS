@@ -19,7 +19,7 @@ struct ViewedLinksStoreTests {
         lastAccessed: Date = Date(timeIntervalSince1970: 0)
     ) throws -> ViewedLinkEntity {
         let url = try #require(URL(string: "https://mega.nz/file/\(handle)#key"))
-        return ViewedLinkEntity(handle: handle, linkURL: url, name: name, isFolder: isFolder, lastAccessed: lastAccessed)
+        return ViewedLinkEntity(handle: handle, linkURL: url, name: name, isFolder: isFolder, hasThumbnail: false, lastAccessed: lastAccessed)
     }
 
     @Test("record then fetch returns the stored link")

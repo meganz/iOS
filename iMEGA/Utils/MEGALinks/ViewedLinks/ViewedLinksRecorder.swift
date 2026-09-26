@@ -46,7 +46,7 @@ final class ViewedLinksRecorder: Sendable {
         }
     }
 
-    func record(handle: HandleEntity, name: String, linkURL: URL, isFolder: Bool) {
+    func record(handle: HandleEntity, name: String, linkURL: URL, isFolder: Bool, hasThumbnail: Bool) {
         guard isEnabled(), !name.isEmpty else { return }
 
         let linkURL = Self.normalised(linkURL)
@@ -56,6 +56,7 @@ final class ViewedLinksRecorder: Sendable {
             linkURL: linkURL,
             name: name,
             isFolder: isFolder,
+            hasThumbnail: hasThumbnail,
             lastAccessed: .now
         )
 
@@ -88,7 +89,7 @@ extension ViewedLinksRecorder: FileLinkResolutionReporting {
     func linkResolved(node: NodeEntity, receivedLink: String) {
         guard let linkURL = URL(string: receivedLink) else { return }
 
-        record(handle: node.handle, name: node.name, linkURL: linkURL, isFolder: false)
+        record(handle: node.handle, name: node.name, linkURL: linkURL, isFolder: false, hasThumbnail: node.hasThumbnail)
     }
 
     func linkUnavailable(receivedLink: String) {
@@ -104,6 +105,6 @@ extension ViewedLinksRecorder: FolderLinkResolutionReporting {
     func linkResolved(folderNode: NodeEntity, receivedLink: String) {
         guard let linkURL = URL(string: receivedLink) else { return }
 
-        record(handle: folderNode.handle, name: folderNode.name, linkURL: linkURL, isFolder: true)
+        record(handle: folderNode.handle, name: folderNode.name, linkURL: linkURL, isFolder: true, hasThumbnail: false)
     }
 }
