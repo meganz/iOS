@@ -28,8 +28,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libmegachatsdk",
-            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260921.015910/libmegachatsdk.xcframework.20260921.015910.zip",
-            checksum: "e6751b309c68a10b7cea57244bb4b7802beef13f1f39dd8cc7bd0bd423443e88"
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260926.060011/libmegachatsdk.xcframework.20260926.060011.zip",
+            checksum: "c64d6fb9f0ba56ebac9561c8e815664e37ea8368c4c5c771013231a45d5e51cb"
         )
     ],
     cxxLanguageStandard: .cxx17
