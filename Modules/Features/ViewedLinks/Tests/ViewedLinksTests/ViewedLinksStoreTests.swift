@@ -198,6 +198,7 @@ struct ViewedLinksStoreTests {
                     linkURL: "https://mega.nz/file/1#key",
                     name: "pending",
                     isFolder: false,
+                    hasThumbnail: false,
                     lastAccessed: Date(timeIntervalSince1970: 0)
                 ))
                 throw TestError()
