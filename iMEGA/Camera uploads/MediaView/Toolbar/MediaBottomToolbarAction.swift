@@ -45,6 +45,9 @@ struct MediaBottomToolbarConfig: Equatable {
     let actions: [MediaBottomToolbarAction]
     let selectedItemsCount: Int
     let isAllExported: Bool
+    /// Every action this toolbar offers changes remote state or starts a transfer, so offline the
+    /// whole bar is greyed out rather than tapped for a failure
+    var isNetworkOffline: Bool
 
     var hasSelection: Bool {
         selectedItemsCount > 0
@@ -53,10 +56,12 @@ struct MediaBottomToolbarConfig: Equatable {
     init(
         actions: [MediaBottomToolbarAction],
         selectedItemsCount: Int,
-        isAllExported: Bool = false
+        isAllExported: Bool = false,
+        isNetworkOffline: Bool = false
     ) {
         self.actions = actions
         self.selectedItemsCount = selectedItemsCount
         self.isAllExported = isAllExported
+        self.isNetworkOffline = isNetworkOffline
     }
 }

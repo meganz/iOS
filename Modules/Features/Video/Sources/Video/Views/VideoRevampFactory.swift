@@ -104,7 +104,10 @@ public class VideoRevampFactory {
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase
             ),
-            videoRevampRouter: router
+            videoRevampRouter: router,
+            offlineActionGuard: OfflineActionGuard(
+                isNewOfflineModeEnabled: featureFlagProvider.isNewOfflineModeEnabled
+            )
         )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,
@@ -170,6 +173,9 @@ public class VideoRevampFactory {
             accountStorageUseCase: accountStorageUseCase,
             videoRevampRouter: router,
             featureFlagProvider: featureFlagProvider,
+            offlineActionGuard: OfflineActionGuard(
+                isNewOfflineModeEnabled: featureFlagProvider.isNewOfflineModeEnabled
+            ),
             syncModel: syncModel,
             videoSelection: videoSelection
         )

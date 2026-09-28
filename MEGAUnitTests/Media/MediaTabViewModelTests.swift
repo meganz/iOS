@@ -456,6 +456,37 @@ extension MockMediaTabContentViewModel: MediaTabNavigationTitleProvider {
     }
 }
 
+@Suite("Media bottom toolbar items")
+@MainActor
+struct MediaBottomToolbarItemsFactoryTests {
+    @Test("when offline every item is disabled")
+    func offline() {
+        let items = MediaBottomToolbarItemsFactory()
+            .buildToolbarItems(config: config(isNetworkOffline: true))
+        
+        #expect(items.allSatisfy { $0.isEnabled == false })
+    }
+    
+    @Test("when online the items follow the selection")
+    func online() {
+        let factory = MediaBottomToolbarItemsFactory()
+        
+        #expect(factory.buildToolbarItems(config: config()).allSatisfy { $0.isEnabled })
+        #expect(factory.buildToolbarItems(config: config(selectedItemsCount: 0)).allSatisfy { $0.isEnabled == false })
+    }
+    
+    private func config(
+        selectedItemsCount: Int = 2,
+        isNetworkOffline: Bool = false
+    ) -> MediaBottomToolbarConfig {
+        MediaBottomToolbarConfig(
+            actions: [.download, .sendToChat, .more],
+            selectedItemsCount: selectedItemsCount,
+            isNetworkOffline: isNetworkOffline
+        )
+    }
+}
+
 extension MockMediaTabContentViewModel: MediaTabNavigationSubtitleProvider {
     var subtitleUpdatePublisher: AnyPublisher<String?, Never> {
         navigationSubtitleUpdateSubject.eraseToAnyPublisher()

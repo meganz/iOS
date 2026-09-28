@@ -118,7 +118,10 @@ struct MediaTabPlaylistFactory {
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase
             ),
-            videoRevampRouter: router
+            videoRevampRouter: router,
+            offlineActionGuard: OfflineActionGuard(
+                isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+            )
         )
 
         return PlaylistTabViewModel(

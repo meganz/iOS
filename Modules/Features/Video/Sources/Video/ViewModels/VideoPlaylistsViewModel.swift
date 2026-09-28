@@ -41,6 +41,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
     private let syncModel: VideoRevampSyncModel
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
     private let videoRevampRouter: any VideoRevampRouting
+    private let offlineActionGuard: any OfflineActionGuarding
     
     public let setSelection = SetSelection()
     @Published public var videoPlaylists = [VideoPlaylistEntity]()
@@ -92,6 +93,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
         featureFlagProvider: some FeatureFlagProviderProtocol,
         contentProvider: some VideoPlaylistsViewModelContentProviderProtocol,
         videoRevampRouter: some VideoRevampRouting,
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard.neverBlocking,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
@@ -107,6 +109,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
         self.featureFlagProvider = featureFlagProvider
         self.contentProvider = contentProvider
         self.videoRevampRouter = videoRevampRouter
+        self.offlineActionGuard = offlineActionGuard
         
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
@@ -291,6 +294,9 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
     }
     
     func didSelectActionSheetMenuAction(_ contextAction: ContextAction) {
+        guard offlineActionGuard.allowsActionRequiringConnection() else {
+            return
+        }
         guard !showOverDiskQuotaIfNeeded() else {
             return
         }
@@ -371,6 +377,9 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
     }
     
     func addPlaylistButtonTap() {
+        guard offlineActionGuard.allowsActionRequiringConnection() else {
+            return
+        }
         guard !showOverDiskQuotaIfNeeded() else {
             return
         }

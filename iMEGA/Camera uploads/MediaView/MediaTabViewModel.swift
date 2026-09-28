@@ -8,6 +8,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPhotos
 import MEGAPreference
+import MEGARepo
 import SwiftUI
 
 @MainActor
@@ -63,6 +64,8 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
 
     @Published private(set) var toolbarConfig: MediaBottomToolbarConfig?
 
+    private var isNetworkOffline = false
+
     let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
     let visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel
 
@@ -72,6 +75,8 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
 
     let tabViewModels: [MediaTab: any MediaTabContentViewModel]
     private let tracker: any AnalyticsTracking
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private var networkConnectivityTask: Task<Void, Never>?
 
     // MARK: - Initialization
 
@@ -83,7 +88,10 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         cameraUploadsSettingsViewRouter: some Routing,
         cameraUploadProgressRouter: some CameraUploadProgressRouting,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = NetworkMonitorUseCase(
+            repo: NetworkMonitorRepository.newRepo
+        )
     ) {
         self.tabViewModels = tabViewModels
         self.visualMediaSearchResultsViewModel = visualMediaSearchResultsViewModel
@@ -95,7 +103,9 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             cameraUploadProgressRouter: cameraUploadProgressRouter
         )
         self.tracker = tracker
+        self.networkMonitorUseCase = networkMonitorUseCase
 
+        monitorNetworkConnectivity()
         configureContextMenuManager()
         // injectSharedResources() should be called before subscribeToTabViewModelEvents().
         // titleUpdatePublisher is a computed property that checks sharedResourceProvider —
@@ -106,8 +116,27 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         updateNavigationBarForCurrentTab()
     }
     
+    deinit {
+        networkConnectivityTask?.cancel()
+    }
+    
     func onViewAppear() {
         tracker.trackAnalyticsEvent(with: MediaScreenEvent())
+    }
+    
+    private func monitorNetworkConnectivity() {
+        guard DIContainer.featureFlagProvider.isNewOfflineModeEnabled else { return }
+        networkConnectivityTask = Task { [weak self, networkMonitorUseCase] in
+            let connectionSequence = networkMonitorUseCase
+                .connectionSequence
+                .prepend(networkMonitorUseCase.isConnected())
+                .removeDuplicates()
+            for await isConnected in connectionSequence {
+                guard let self else { return }
+                isNetworkOffline = !isConnected
+                updateToolbarConfig()
+            }
+        }
     }
 
     // MARK: - Shared Resource Injection
@@ -231,7 +260,9 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             return
         }
 
-        toolbarConfig = tabViewModel.toolbarConfig()
+        var config = tabViewModel.toolbarConfig()
+        config?.isNetworkOffline = isNetworkOffline
+        toolbarConfig = config
     }
     
     private func handleTitleUpdate(_ newTitle: String) {
