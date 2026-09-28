@@ -77,8 +77,10 @@ let package = Package(
             dependencies: [
                 "ViewedLinks",
                 "ViewedLinksMock",
+                "Search",
                 "MEGAAssets",
                 "MEGADomain",
+                "MEGAL10n",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGASwift",
                 "MEGATest"

@@ -5,22 +5,16 @@ import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
-import UIKit
 
-/// The full history of links the user has opened, with sorting, a list and grid toggle,
-/// multi select clearing and a clear all action.
 public struct ViewedLinksView: View {
     public struct Dependency {
-        let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
         let openLink: @MainActor (URL) -> Void
         let showPostDismissalSnackBar: @MainActor (String) -> Void
 
         public init(
-            viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
             openLink: @escaping @MainActor (URL) -> Void,
             showSnackBar: @escaping @MainActor (String) -> Void
         ) {
-            self.viewedLinksUseCase = viewedLinksUseCase
             self.openLink = openLink
             self.showPostDismissalSnackBar = showSnackBar
         }
@@ -37,8 +31,6 @@ public struct ViewedLinksView: View {
     ) {
         _viewModel = StateObject(
             wrappedValue: ViewedLinksViewModel(
-                viewedLinksUseCase: dependency.viewedLinksUseCase,
-                thumbnailUseCase: ViewedLinksFactory.makeViewedLinkThumbnailUseCase(),
                 openLink: dependency.openLink
             )
         )
@@ -49,7 +41,7 @@ public struct ViewedLinksView: View {
     public var body: some View {
         SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
             .background(TokenColors.Background.page.swiftUI)
-            .navigationTitle(navigationTitle)
+            .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .toolbar {
@@ -103,12 +95,6 @@ public struct ViewedLinksView: View {
             }
     }
 
-    private var navigationTitle: String {
-        viewModel.editMode.isEditing
-            ? viewModel.selectionTitle
-            : Strings.Localizable.Home.Customization.Widget.viewedLinks
-    }
-
     @ViewBuilder
     private var leadingBarButton: some View {
         if viewModel.editMode.isEditing {
@@ -118,7 +104,7 @@ public struct ViewedLinksView: View {
         }
     }
 
-    @ViewBuilder var clearButtonView: some View {
+    private var clearButtonView: some View {
         Button {
             viewModel.requestClearSelectedLinks()
         } label: {

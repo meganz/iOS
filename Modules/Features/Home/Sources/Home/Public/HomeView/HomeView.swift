@@ -227,7 +227,7 @@ public struct HomeView: View {
                     }
                 }
             }
-            .miniPlayerAware()
+            .tabBarAndMiniPlayerAware()
             .navigationDestination(for: NavigationRoute.self) { route in
                 navigationDestinationBuilder(with: route)
             }
@@ -276,7 +276,6 @@ public struct HomeView: View {
         case .viewedLinks:
             ViewedLinksView(
                 dependency: ViewedLinksView.Dependency(
-                    viewedLinksUseCase: dependency.viewedLinksUseCase,
                     openLink: { dependency.router.route(to: .viewedLink($0)) },
                     showSnackBar: { navigator.showSnackBar(SnackBar(message: $0)) }
                 ),

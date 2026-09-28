@@ -4,13 +4,8 @@ import MEGADomain
 import MEGASwift
 import Search
 
-/// Turns a viewed link into a row the Search module can render.
 struct ViewedLinkSearchResultMapper: Sendable {
-    private let thumbnailUseCase: any ViewedLinkThumbnailUseCaseProtocol
-
-    init(thumbnailUseCase: some ViewedLinkThumbnailUseCaseProtocol) {
-        self.thumbnailUseCase = thumbnailUseCase
-    }
+    let thumbnailUseCase: any ViewedLinkThumbnailUseCaseProtocol
 
     func map(link: ViewedLinkEntity) -> SearchResult {
         SearchResult(

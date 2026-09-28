@@ -1,10 +1,12 @@
 import MEGASwift
 import Search
 
-/// Serves the viewed links history to the Search module.
-///
-/// The store is capped, so there is no paging and no chips: every query returns the whole history.
-struct ViewedLinksSearchResultsProvider: SearchResultsProviding {
+protocol ViewedLinksResultsProviding: SearchResultsProviding {
+    func link(for id: ResultId) -> ViewedLinkEntity?
+    func links(for ids: Set<ResultId>) -> [ViewedLinkEntity]
+}
+
+struct ViewedLinksSearchResultsProvider: ViewedLinksResultsProviding {
     private let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
     private let mapper: ViewedLinkSearchResultMapper
     @Atomic private var cachedLinks: [ViewedLinkEntity] = []
@@ -49,7 +51,6 @@ struct ViewedLinksSearchResultsProvider: SearchResultsProviding {
             .eraseToAnyAsyncSequence()
     }
 
-    /// The entity behind a row, so the caller can open the link or remove it.
     func link(for id: ResultId) -> ViewedLinkEntity? {
         cachedLinks.first { $0.handle == id }
     }
