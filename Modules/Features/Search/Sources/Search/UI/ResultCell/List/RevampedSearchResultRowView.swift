@@ -214,25 +214,9 @@ struct RevampedSearchResultRowView: View {
         viewModel.result.properties.propertyViewsFor(layout: layout, placement: placement, colorAssets: viewModel.colorAssets)
     }
 
-    /// An empty `Text` still reserves a line, so a row with nothing to show below the title would
-    /// keep a blank second line and push the title off centre. Only the placements this line
-    /// renders count, because a property placed elsewhere does not fill it.
-    private var hasSubtitle: Bool {
-        let placements: [PropertyPlacement] = [
-            .secondary(.leading),
-            .secondary(.trailing),
-            .secondary(.trailingEdge)
-        ]
-
-        return !viewModel.result.description(layout).isEmpty
-        || placements.contains {
-            !viewModel.result.properties.propertiesFor(mode: layout, placement: $0).isEmpty
-        }
-    }
-
     @ViewBuilder
     private var subtitleLine: some View {
-        if hasSubtitle {
+        if viewModel.hasSubtitle(for: layout) {
             HStack(spacing: TokenSpacing._2) {
                 propertyViewsFor(placement: .secondary(.leading))
                 Text(viewModel.result.description(layout))

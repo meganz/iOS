@@ -231,6 +231,19 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         return description.isNotEmpty || properties.isNotEmpty
     }
 
+    /// An empty `Text` still reserves a line, so a row with nothing to show below the title would
+    /// keep a blank second line and push the title off centre.
+    func hasSubtitle(for layout: ResultCellLayout) -> Bool {
+        let placements: [PropertyPlacement] = [
+            .secondary(.leading),
+            .secondary(.trailing),
+            .secondary(.trailingEdge)
+        ]
+
+        return result.description(layout).isNotEmpty
+            || placements.contains { result.properties.propertiesFor(mode: layout, placement: $0).isNotEmpty }
+    }
+
     private func update(thumbnailImage: UIImage) {
         self.thumbnailImage = thumbnailImage
         if !isThumbnailLoadedOnce {
