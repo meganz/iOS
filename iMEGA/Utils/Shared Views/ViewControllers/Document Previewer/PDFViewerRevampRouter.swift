@@ -41,10 +41,17 @@ import MEGARepo
         pdfDocumentSource: PDFViewerDocumentSource,
         isLink: Bool
     ) -> UIViewController {
+        if #available(iOS 26.0, *) {
+            AppearanceManager.setTranslucentNavigationBar(for: [PDFViewerViewController.self])
+        }
+
+        weak var presentedViewer: UIViewController?
         let dependency = PDFViewerView.Dependency(
             pdfDocumentSource: pdfDocumentSource,
             downloadUseCase: makeDownloadNodeUseCase(isLink: isLink),
             fileName: fileName,
+            transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
+            onClose: { presentedViewer?.dismiss(animated: true) },
             onLinkTapped: { url in
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)
@@ -52,8 +59,10 @@ import MEGARepo
         )
 
         let viewer = PDFViewerViewController(dependency: dependency)
-        viewer.modalPresentationStyle = .fullScreen
-        return viewer
+        presentedViewer = viewer
+        let navigationController = MEGANavigationController(rootViewController: viewer)
+        navigationController.modalPresentationStyle = .fullScreen
+        return navigationController
     }
 
     private static func makeDownloadNodeUseCase(isLink: Bool) -> some DownloadNodeUseCaseProtocol {

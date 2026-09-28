@@ -220,6 +220,16 @@ final class AppearanceManager: NSObject {
         UINavigationBar.appearance(whenContainedInInstancesOf: appearanceContainers).scrollEdgeAppearance = appearance
     }
 
+    class func setTranslucentNavigationBar(for appearanceContainers: [any UIAppearanceContainer.Type]) {
+        let navigationBar = UINavigationBar.appearance(whenContainedInInstancesOf: appearanceContainers)
+        navigationBar.isTranslucent = true
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+    }
+
     @available(iOS 26.0, *)
     class func setupLiquidGlassNavigationBar(
         _ navigationBar: UINavigationBar,

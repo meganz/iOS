@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 @testable import MEGAPDFViewer
 import Observation
 import PDFKit
@@ -26,9 +27,11 @@ private struct MockPDFDocumentLoader: PDFDocumentLoading {
     }
     
     /// A one-page document, so the loader mock can return something real.
-    static func makeDocument() -> PDFDocument {
+    static func makeDocument(pageCount: Int = 1) -> PDFDocument {
         let document = PDFDocument()
-        document.insert(PDFPage(), at: 0)
+        for index in 0..<pageCount {
+            document.insert(PDFPage(), at: index)
+        }
         return document
     }
 }
@@ -164,6 +167,65 @@ struct PDFViewerViewModelTests {
         await sut.loadDocumentFromSource()
 
         #expect(useCase.localDocumentURLCallCount == 1)
+    }
+
+    @Test func loadDocumentURL_readyEvent_setsPageState() async {
+        let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(
+                document: MockPDFDocumentLoader.makeDocument(pageCount: 3)
+            )
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(url))
+
+        await awaitDocumentParsed(sut)
+
+        let pageCount: Int? = switch sut.state {
+        case .ready(_, let pagingState): pagingState.pageCount
+        default: nil
+        }
+        #expect(pageCount == 3)
+        #expect(sut.currentPageIndex == 0)
+        #expect(
+            sut.pageIndicatorText == Strings.Localizable.PdfPreview.pageOfTotal(1, 3)
+        )
+        task.cancel()
+    }
+
+    @Test func updateCurrentPageIndex_acceptsOnlyDocumentPages() async {
+        let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(
+                document: MockPDFDocumentLoader.makeDocument(pageCount: 3)
+            )
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(url))
+        await awaitDocumentParsed(sut)
+
+        sut.currentPageIndex = 2
+        #expect(sut.currentPageIndex == 2)
+        #expect(
+            sut.pageIndicatorText == Strings.Localizable.PdfPreview.pageOfTotal(3, 3)
+        )
+
+        sut.currentPageIndex = -1
+        sut.currentPageIndex = 3
+        #expect(sut.currentPageIndex == 2)
+        task.cancel()
     }
 
 }

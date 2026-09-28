@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 import Observation
 @preconcurrency import PDFKit
 
@@ -13,14 +14,28 @@ final class PDFViewerViewModel {
     }
 
     enum ViewState: Equatable {
+        struct PagingState: Equatable {
+            var currentPageIndex: Int
+            var pageCount: Int
+        }
+
         case loading(progress: Float?)
-        case ready(document: PDFDocument)
+        case ready(document: PDFDocument, pagingState: PagingState)
         case failed
+
+        var isReady: Bool {
+            switch self {
+            case .ready: true
+            default: false
+            }
+        }
     }
 
     private(set) var state: ViewState = .loading(progress: nil)
 
     private let dependency: Dependency
+
+    var fileName: String { dependency.fileName }
 
     init(dependency: Dependency) {
         self.dependency = dependency
@@ -34,7 +49,7 @@ extension PDFViewerViewModel {
     /// Held here rather than inside `PDFDisplayerView` for future MR:
     /// The thumbnails grid will render from the same loaded document.
     var pdfDocument: PDFDocument? {
-        guard case .ready(let document) = state else { return nil }
+        guard case .ready(let document, _) = state else { return nil }
         return document
     }
 
@@ -65,6 +80,40 @@ extension PDFViewerViewModel {
             state = .failed
             return
         }
-        state = .ready(document: document)
+        let pagingState = ViewState.PagingState(currentPageIndex: 0, pageCount: document.pageCount)
+        state = .ready(document: document, pagingState: pagingState)
+    }
+}
+
+// MARK: - Paging state management
+
+extension PDFViewerViewModel {
+
+    private var pagingState: ViewState.PagingState? {
+        get {
+            guard case .ready(_, let pagingState) = state else { return nil }
+            return pagingState
+        }
+        set {
+            guard let newValue, case .ready(let document, _) = state else { return }
+            state = .ready(document: document, pagingState: newValue)
+        }
+    }
+
+    var currentPageIndex: Int {
+        get { pagingState?.currentPageIndex ?? 0 }
+        set {
+            guard let pageCount = pagingState?.pageCount,
+                  (0..<pageCount).contains(newValue) else { return }
+            pagingState?.currentPageIndex = newValue
+        }
+    }
+
+    var pageIndicatorText: String {
+        guard case .ready(_, let pagingState) = state else { return "" }
+        return Strings.Localizable.PdfPreview.pageOfTotal(
+            pagingState.currentPageIndex + 1,
+            pagingState.pageCount
+        )
     }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "6b0d6154b4a51efb15da1f8cf2aef3e4b8571192bad3d4a9a079f437c7d80f91",
+  "originHash" : "328be261adb26c0138c430cb074e4a3e05299f60998c4c89f2baca84d36f4607",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -146,6 +146,15 @@
       }
     },
     {
+      "identity" : "samkeychain",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/meganz/SAMKeychain.git",
+      "state" : {
+        "revision" : "19f05f16b30eed2ed398df30353ec52844e329e5",
+        "version" : "2.0.0"
+      }
+    },
+    {
       "identity" : "swift-async-algorithms",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-async-algorithms",
@@ -170,6 +179,15 @@
       "state" : {
         "revision" : "74203046135342e4a4a627476dd6caf8b28fe11b",
         "version" : "509.0.0"
+      }
+    },
+    {
+      "identity" : "swiftui-introspect",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/siteline/swiftui-introspect",
+      "state" : {
+        "revision" : "a08b87f96b41055577721a6e397562b21ad52454",
+        "version" : "26.0.0"
       }
     }
   ],
