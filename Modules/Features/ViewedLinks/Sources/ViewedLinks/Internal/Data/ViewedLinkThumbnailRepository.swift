@@ -51,7 +51,6 @@ struct ViewedLinkThumbnailRepository: ViewedLinkThumbnailRepositoryProtocol {
 
     private func cacheURL(for handle: HandleEntity) -> URL? {
         guard let base64Handle = MEGASdk.base64Handle(forHandle: handle) else { return nil }
-
         return cacheDirectoryURL.appendingPathComponent(base64Handle)
     }
 

@@ -19,11 +19,20 @@ struct ViewedLinksSearchResultsProvider: ViewedLinksResultsProviding {
         self.mapper = mapper
     }
 
-    /// Throws rather than returning nil, because the Search module reads a nil refresh as an
-    /// empty history and would wipe the list a newer query already filled.
+    /// A read failure returns nil, which makes the Search module clear the list, so the screen shows
+    /// its empty state. A cancelled read rethrows instead, leaving the rows on screen untouched.
     func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity? {
         try Task.checkCancellation()
-        let links = try await loadLinks(for: queryRequest)
+
+        let links: [ViewedLinkEntity]
+        do {
+            links = try await loadLinks(for: queryRequest)
+        } catch ViewedLinkErrorEntity.cancelled {
+            throw ViewedLinkErrorEntity.cancelled
+        } catch {
+            return nil
+        }
+
         try Task.checkCancellation()
         return resultsEntity(for: links)
     }

@@ -6,8 +6,6 @@ import Search
 
 extension SearchConfig {
     static var viewedLinks: SearchConfig {
-        // Empty view is no-op in Viewed Link screen: The screen closes as soon as its last link
-        // is removed so `emptyViewAssets` is just a placeholder to satisfy SearchConfig here.
         let emptyViewAssets = SearchConfig.EmptyViewAssets(
             image: MEGAAssets.Image.viewedLinks,
             title: Strings.Localizable.ViewedLinks.Empty.message,

@@ -131,7 +131,7 @@ final class ViewedLinksViewModel: ObservableObject {
     }
 
     /// Clears the whole history once the store has accepted the change.
-    /// - Returns: `false`
+    /// - Returns: `true` when the history is successfully cleared
     func clearAllLinks() async -> Bool {
         do {
             try await viewedLinksUseCase.clearHistory()
@@ -151,7 +151,10 @@ final class ViewedLinksViewModel: ObservableObject {
     }
 
     func didSelect(_ selection: SearchResultSelection) {
-        guard let link = resultsProvider.link(for: selection.result.id) else { return }
+        guard let link = resultsProvider.link(for: selection.result.id) else {
+            MEGALog.log(level: .error, message: "Could not resolve link with handle \(selection.result.id)")
+            return
+        }
         openLink(link.linkURL)
     }
 
