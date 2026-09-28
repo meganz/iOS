@@ -274,6 +274,7 @@
     }
 
     [self startObservingViewedLinksLogout];
+    [self startFileProviderDomainUpdatesWithHasSession:(sessionV3 != nil)];
     [self listenToDomainUpdates];
     [self listenToLoggedOutStreamingOverQuota];
     [self startTransferQuotaWarningMonitoringWithHasSession:(sessionV3 != nil)];
@@ -1548,6 +1549,8 @@
             [weakSelf.quickAccessWidgetManager startWidgetManagerWithCompletionHandler:^{
                 [weakSelf.quickAccessWidgetManager reloadWidgetItemData];
             }];
+            
+            [weakSelf registerFileProviderDomain];
             
             [weakSelf presentAccountExpiredViewIfNeeded];
             

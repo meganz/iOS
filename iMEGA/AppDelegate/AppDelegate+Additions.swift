@@ -61,6 +61,19 @@ extension AppDelegate {
         }
     }
 
+    /// Without a session there is no account the File Provider domain could serve. This also clears a domain
+    /// left behind when the app was killed before a logout finished removing it.
+    @objc func startFileProviderDomainUpdates(hasSession: Bool) {
+        FileProviderDomainUpdater.shared.startObservingLogout()
+        if !hasSession {
+            FileProviderDomainUpdater.shared.removeDomains()
+        }
+    }
+
+    @objc func registerFileProviderDomain() {
+        FileProviderDomainUpdater.shared.registerDomain()
+    }
+
     @objc func listenToDomainUpdates() {
         Task {
             for await _ in MEGAAccountManagement.DependencyInjection.appDomainUpdatesUseCase.events {

@@ -1282,6 +1282,9 @@
 		84AA7D5E1C909E5D39F08383 /* AppDelegate+PromoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B5459ECAA21BBC9A9D816F /* AppDelegate+PromoDialog.swift */; };
 		84BB636E2FC6847000334B0D /* SharedItemsViewController+Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */; };
 		84DB3FEA2FDFEFBD00DD99EB /* FileProviderSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */; };
+		3744AB617EB5F611E298E686 /* ReplicatedFileProviderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */; };
+		B02BCFB337B55DE1784BD27D /* ReplicatedFileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */; };
+		061DA4BF4CEB2DAEF39E8409 /* ReplicatedFileProviderRootItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7818B713E5964C838E4D5CDD /* ReplicatedFileProviderRootItem.swift */; };
 		B67012023DA8C6618416957D /* FileProviderDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F92BF44005E5E2786C269C7 /* FileProviderDownloadCoordinator.swift */; };
 		84F6E2823029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */; };
 		84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */; };
@@ -2327,7 +2330,6 @@
 		BF6149562A9FF34400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149552A9FF34400AB051A /* MEGAL10n */; };
 		BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149592A9FF35200AB051A /* MEGAL10n */; };
 		BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495D2A9FF36200AB051A /* MEGAL10n */; };
-		BF6149622A9FF37000AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149612A9FF37000AB051A /* MEGAL10n */; };
 		BF6149662A9FF38400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149652A9FF38400AB051A /* MEGAL10n */; };
 		BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149692A9FF39500AB051A /* MEGAL10n */; };
 		BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */; };
@@ -2353,6 +2355,9 @@
 		BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */; };
 		BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
+		CF7C05944D973724478D6391 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = BDBFA6BBCDE9EED3D6B13F44 /* MEGAPickerFileProviderDomain */; };
+		2FAE6CC58699FA24F8301047 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = B0F976CE4C6D262F3B041CD1 /* MEGAPickerFileProviderRepo */; };
+		45FCCCD035DD989DB8B134BE /* FileProviderDomainUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC264C909D889EA6D40F51B /* FileProviderDomainUpdater.swift */; };
 		BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */; };
 		BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
@@ -2532,7 +2537,6 @@
 		BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6E553255259FE00050DCA /* SortOrderType.swift */; };
 		BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728D2D9B637A005B114E /* MEGAAppPresentation */; };
 		BFE7729F2D9B8A17005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */; };
-		BFE772A12D9B8A23005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A02D9B8A23005B114E /* MEGAAppPresentation */; };
 		BFE772A32D9B8A32005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A22D9B8A32005B114E /* MEGAAppPresentation */; };
 		BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */; };
 		BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */; };
@@ -4163,6 +4167,9 @@
 		84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Highlight.swift"; sourceTree = "<group>"; };
 		2F92BF44005E5E2786C269C7 /* FileProviderDownloadCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderDownloadCoordinator.swift; sourceTree = "<group>"; };
 		84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderSession.swift; sourceTree = "<group>"; };
+		1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderEnumerator.swift; sourceTree = "<group>"; };
+		EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderExtension.swift; sourceTree = "<group>"; };
+		7818B713E5964C838E4D5CDD /* ReplicatedFileProviderRootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderRootItem.swift; sourceTree = "<group>"; };
 		84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEnoughStorageAlertRouter.swift; sourceTree = "<group>"; };
 		84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferIndicatorBarItemConfigurator.swift; sourceTree = "<group>"; };
 		8B8B4669F271D8CEDD945F9E /* PromoDialogInterruptibility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoDialogInterruptibility.swift; sourceTree = "<group>"; };
@@ -5268,6 +5275,7 @@
 		BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetailsTests.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
+		3BC264C909D889EA6D40F51B /* FileProviderDomainUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderDomainUpdater.swift; sourceTree = "<group>"; };
 		BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
 		BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
 		BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatViewAnimator.swift; sourceTree = "<group>"; };
@@ -5739,6 +5747,8 @@
 				ABCD12550000000000000001 /* MEGAPDFViewer in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */,
+				CF7C05944D973724478D6391 /* MEGAPickerFileProviderDomain in Frameworks */,
+				2FAE6CC58699FA24F8301047 /* MEGAPickerFileProviderRepo in Frameworks */,
 				6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */,
 				A5E136862EB4FF9A004BDD4F /* MEGASdk in Frameworks */,
 				1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */,
@@ -5845,10 +5855,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFE772A12D9B8A23005B114E /* MEGAAppPresentation in Frameworks */,
 				BF2AFDAE2D9F85E60075248C /* MEGAAppSDKRepo in Frameworks */,
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
-				BF6149622A9FF37000AB051A /* MEGAL10n in Frameworks */,
 				A5E136932EB50614004BDD4F /* MEGAPickerFileProviderDomain in Frameworks */,
 				94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */,
 				A5EA94152EB5EC43009778D3 /* MEGAPickerFileProviderRepo in Frameworks */,
@@ -11226,9 +11234,20 @@
 			path = Chat/Giphy;
 			sourceTree = "<group>";
 		};
+		9005D6C895C5C1E877801498 /* Replicated */ = {
+			isa = PBXGroup;
+			children = (
+				1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */,
+				EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */,
+				7818B713E5964C838E4D5CDD /* ReplicatedFileProviderRootItem.swift */,
+			);
+			path = Replicated;
+			sourceTree = "<group>";
+		};
 		A8399F45296C40070062B6BC /* MEGAPickerFileProvider */ = {
 			isa = PBXGroup;
 			children = (
+				9005D6C895C5C1E877801498 /* Replicated */,
 				B6D16A6D29DD03E400402828 /* Supporting Files */,
 				2F92BF44005E5E2786C269C7 /* FileProviderDownloadCoordinator.swift */,
 				A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */,
@@ -11810,6 +11829,7 @@
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */,
 				B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */,
+				3BC264C909D889EA6D40F51B /* FileProviderDomainUpdater.swift */,
 				A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */,
 				9A5E0C012E4F1A0100D3B7C1 /* SeedExportReporter.swift */,
 			);
@@ -13902,6 +13922,8 @@
 			);
 			name = MEGA;
 			packageProductDependencies = (
+				BDBFA6BBCDE9EED3D6B13F44 /* MEGAPickerFileProviderDomain */,
+				B0F976CE4C6D262F3B041CD1 /* MEGAPickerFileProviderRepo */,
 				BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */,
 				A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */,
 				BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */,
@@ -14127,8 +14149,6 @@
 				A8399FB8296DD5A70062B6BC /* SAMKeychain */,
 				94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */,
 				94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */,
-				BF6149612A9FF37000AB051A /* MEGAL10n */,
-				BFE772A02D9B8A23005B114E /* MEGAAppPresentation */,
 				BF2AFDAD2D9F85E60075248C /* MEGAAppSDKRepo */,
 				A5E136922EB50614004BDD4F /* MEGAPickerFileProviderDomain */,
 				A5EA94142EB5EC43009778D3 /* MEGAPickerFileProviderRepo */,
@@ -15350,6 +15370,7 @@
 				94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */,
+				45FCCCD035DD989DB8B134BE /* FileProviderDomainUpdater.swift in Sources */,
 				BF5E340E2559E2EC0055395E /* FilesExplorerContainerGridViewState.swift in Sources */,
 				BF5E34062559E2C10055395E /* FilesExplorerContainerListViewState.swift in Sources */,
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
@@ -16802,6 +16823,9 @@
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
+				3744AB617EB5F611E298E686 /* ReplicatedFileProviderEnumerator.swift in Sources */,
+				B02BCFB337B55DE1784BD27D /* ReplicatedFileProviderExtension.swift in Sources */,
+				061DA4BF4CEB2DAEF39E8409 /* ReplicatedFileProviderRootItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18121,6 +18145,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MEGA_FILE_PROVIDER_PRINCIPAL_CLASS = FileProviderExtension;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -18168,6 +18193,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MEGA_FILE_PROVIDER_PRINCIPAL_CLASS = FileProviderExtension;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -18211,6 +18237,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MEGA_FILE_PROVIDER_PRINCIPAL_CLASS = FileProviderExtension;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -19541,6 +19568,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAIntentDomain;
 		};
+		BDBFA6BBCDE9EED3D6B13F44 /* MEGAPickerFileProviderDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPickerFileProviderDomain;
+		};
+		B0F976CE4C6D262F3B041CD1 /* MEGAPickerFileProviderRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPickerFileProviderRepo;
+		};
 		A5E136922EB50614004BDD4F /* MEGAPickerFileProviderDomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPickerFileProviderDomain;
@@ -19881,10 +19916,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
 		};
-		BF6149612A9FF37000AB051A /* MEGAL10n */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10n;
-		};
 		BF6149652A9FF38400AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
@@ -19923,10 +19954,6 @@
 			productName = MEGAAppPresentationMock;
 		};
 		BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAAppPresentation;
-		};
-		BFE772A02D9B8A23005B114E /* MEGAAppPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAppPresentation;
 		};

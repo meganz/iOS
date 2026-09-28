@@ -1,5 +1,4 @@
 @preconcurrency import FileProvider
-import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPickerFileProviderDomain

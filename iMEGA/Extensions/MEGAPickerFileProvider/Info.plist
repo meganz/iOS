@@ -11,7 +11,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.fileprovider-nonui</string>
 		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).FileProviderExtension</string>
+		<string>$(PRODUCT_MODULE_NAME).$(MEGA_FILE_PROVIDER_PRINCIPAL_CLASS)</string>
 	</dict>
     <key>GADApplicationIdentifier</key>
     <string>$(GOOGLE_ADS_APPID)</string>
