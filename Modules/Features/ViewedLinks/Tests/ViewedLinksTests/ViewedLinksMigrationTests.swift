@@ -71,6 +71,29 @@ struct ViewedLinksMigrationTests {
         }
     }
 
+    /// The version-1 model as it was before the `hasThumbnail` column, at the same schema version.
+    fileprivate enum ProbeSchemaV1WithoutThumbnail: VersionedSchema {
+        static let versionIdentifier = Schema.Version(1, 0, 0)
+        static var models: [any PersistentModel.Type] { [Self.ViewedLinkModel.self] }
+
+        @Model
+        final class ViewedLinkModel {
+            var handle: Int64
+            var linkURL: String
+            var name: String
+            var isFolder: Bool
+            var lastAccessed: Date
+
+            init(handle: Int64, linkURL: String, name: String, isFolder: Bool, lastAccessed: Date) {
+                self.handle = handle
+                self.linkURL = linkURL
+                self.name = name
+                self.isFolder = isFolder
+                self.lastAccessed = lastAccessed
+            }
+        }
+    }
+
     private func seedVersion1Store(at url: URL) async throws {
         let store = ViewedLinksStore(storeURL: url)
         let link = ViewedLinkEntity(
@@ -82,6 +105,22 @@ struct ViewedLinksMigrationTests {
             lastAccessed: Date(timeIntervalSince1970: 0)
         )
         try await store.record(link)
+    }
+
+    private func seedStoreWithoutThumbnailColumn(at url: URL) throws {
+        let container = try ModelContainer(
+            for: Schema(versionedSchema: ProbeSchemaV1WithoutThumbnail.self),
+            configurations: ModelConfiguration(url: url, cloudKitDatabase: .none)
+        )
+        let context = ModelContext(container)
+        context.insert(ProbeSchemaV1WithoutThumbnail.ViewedLinkModel(
+            handle: 7,
+            linkURL: "https://mega.nz/file/7#key",
+            name: "a.pdf",
+            isFolder: false,
+            lastAccessed: Date(timeIntervalSince1970: 0)
+        ))
+        try context.save()
     }
 
     @Test("a version-1 store lightweight-migrates to a schema that adds an optional attribute")
@@ -149,6 +188,21 @@ struct ViewedLinksMigrationTests {
 
         #expect(rows.count == 1)
         #expect(rows.first?.handle == 7)
+    }
+
+    @Test("a store written before the hasThumbnail column opens in place and reads hasThumbnail as false")
+    func storeWithoutThumbnailColumnMigratesInPlace() async throws {
+        let url = try makeTemporaryStoreURL()
+        defer { try? FileManager.default.removeItem(at: url.deletingLastPathComponent()) }
+
+        try seedStoreWithoutThumbnailColumn(at: url)
+
+        let store = ViewedLinksStore(storeURL: url)
+        let all = try await store.viewedLinks(sortedBy: .name, ascending: true)
+
+        #expect(all.map(\.handle) == [7])
+        #expect(all.first?.name == "a.pdf")
+        #expect(all.first?.hasThumbnail == false)
     }
 
     private func makeTemporaryStoreURL() throws -> URL {

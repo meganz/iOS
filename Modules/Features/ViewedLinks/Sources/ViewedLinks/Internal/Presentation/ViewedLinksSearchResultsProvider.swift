@@ -22,12 +22,14 @@ struct ViewedLinksSearchResultsProvider: ViewedLinksResultsProviding {
     /// Throws rather than returning nil, because the Search module reads a nil refresh as an
     /// empty history and would wipe the list a newer query already filled.
     func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity? {
+        try Task.checkCancellation()
         let links = try await loadLinks(for: queryRequest)
         try Task.checkCancellation()
         return resultsEntity(for: links)
     }
 
     func search(queryRequest: SearchQuery, lastItemIndex: Int?) async -> SearchResultsEntity? {
+        guard !Task.isCancelled else { return nil }
         guard lastItemIndex == nil else { return nil }
 
         // A read failure shows the empty state here, because a nil first search leaves the list
