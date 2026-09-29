@@ -14,10 +14,6 @@ public final class MEGAPlayerViewController: UIViewController {
         VideoPlayerPictureInPictureSession.isHosted(by: self)
     }
 
-    private var isOffScreen: Bool {
-        isBeingDismissed || viewIfLoaded?.window == nil
-    }
-
     private let pictureInPicturePresenter: @MainActor () -> UIViewController?
 
     public init(
@@ -137,13 +133,14 @@ public final class MEGAPlayerViewController: UIViewController {
     /// Takes the window down and stops whatever was feeding it
     func endPictureInPictureSession() {
         pipController?.stopPictureInPicture()
-        endPlaybackIfOffScreen()
+        endPlaybackUnlessPresented()
     }
 
-    /// A session that ends with the player nowhere on screen has nothing left to play into, so playback
-    /// ends with it. One the user restored — or never left — carries on full screen.
-    private func endPlaybackIfOffScreen() {
-        guard isOffScreen else { return }
+    /// A session that ends with the player dismissed — or on its way out — has nothing left to play into,
+    /// so playback ends with it. One still presented carries on, even while something presented over it has
+    /// taken its window: it is still there once that goes.
+    private func endPlaybackUnlessPresented() {
+        guard presentingViewController == nil || isBeingDismissed else { return }
 
         viewModel.viewWillDismiss()
     }
@@ -230,8 +227,11 @@ extension MEGAPlayerViewController: @preconcurrency AVPictureInPictureController
             return
         }
 
-        guard isOffScreen else {
-            completionHandler(true)
+        // Still presented: either on screen, or only covered by something presented over it — it is
+        // restored where it is. Presenting it again would throw, and so would presenting it mid dismissal,
+        // which is a player on its way out with nothing to restore to.
+        guard presentingViewController == nil else {
+            completionHandler(!isBeingDismissed)
             return
         }
 
@@ -246,7 +246,7 @@ extension MEGAPlayerViewController: @preconcurrency AVPictureInPictureController
     public func pictureInPictureControllerDidStopPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController
     ) {
-        endPlaybackIfOffScreen()
+        endPlaybackUnlessPresented()
         VideoPlayerPictureInPictureSession.relinquish(by: self)
     }
 
@@ -257,7 +257,7 @@ extension MEGAPlayerViewController: @preconcurrency AVPictureInPictureController
         // The session counts as running from `willStart`, so a player dismissed during the start
         // transition has already skipped its teardown on the way out, waiting for the window to take
         // over. No window arrived, so it has to happen here.
-        endPlaybackIfOffScreen()
+        endPlaybackUnlessPresented()
         VideoPlayerPictureInPictureSession.relinquish(by: self)
     }
 }
