@@ -1,0 +1,47 @@
+import ContinueWhereYouLeftOff
+import MEGADomain
+
+/// Mock `LeftOffItemsStoreProtocol` for repository tests. Surfaces raw errors (untyped `throws`),
+/// mirroring the real store, so the repository's error mapping can be exercised.
+package final class MockLeftOffItemsStore: LeftOffItemsStoreProtocol, @unchecked Sendable {
+    package var fetchItemsResult: [LeftOffItemEntity]
+    package var errorToThrow: (any Error)?
+
+    package private(set) var recordedItems: [LeftOffItemEntity] = []
+    package private(set) var removedHandles: [[HandleEntity]] = []
+    package private(set) var removedUnavailableHandles: [HandleEntity] = []
+    package private(set) var clearHistoryCallCount = 0
+
+    package init(
+        fetchItemsResult: [LeftOffItemEntity] = [],
+        errorToThrow: (any Error)? = nil
+    ) {
+        self.fetchItemsResult = fetchItemsResult
+        self.errorToThrow = errorToThrow
+    }
+
+    package func fetchItems(sortedBy key: LeftOffItemsSortKey, ascending: Bool) async throws -> [LeftOffItemEntity] {
+        if let errorToThrow { throw errorToThrow }
+        return fetchItemsResult
+    }
+
+    package func record(_ item: LeftOffItemEntity) async throws {
+        if let errorToThrow { throw errorToThrow }
+        recordedItems.append(item)
+    }
+
+    package func remove(handles: [HandleEntity]) async throws {
+        if let errorToThrow { throw errorToThrow }
+        removedHandles.append(handles)
+    }
+
+    package func removeUnavailable(handle: HandleEntity) async throws {
+        if let errorToThrow { throw errorToThrow }
+        removedUnavailableHandles.append(handle)
+    }
+
+    package func clearHistory() async throws {
+        if let errorToThrow { throw errorToThrow }
+        clearHistoryCallCount += 1
+    }
+}

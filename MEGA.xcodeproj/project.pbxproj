@@ -1650,6 +1650,7 @@
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A5472CBF2F04EE2000A49688 /* NewFolderLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */; };
 		8CC111C641C89AB41A73B3F5 /* ViewedLinks in Frameworks */ = {isa = PBXBuildFile; productRef = CE6DA084558DA2E906E4BDDA /* ViewedLinks */; };
+		3A28ADED5367725A30DD8324 /* ContinueWhereYouLeftOff in Frameworks */ = {isa = PBXBuildFile; productRef = 8C569CE8D6E901C8A4F81A33 /* ContinueWhereYouLeftOff */; };
 		A5472CC72F04EF0900A49688 /* FolderLink in Frameworks */ = {isa = PBXBuildFile; productRef = A5472CC62F04EF0900A49688 /* FolderLink */; };
 		A5472CCE2F05010E00A49688 /* NewFolderLinkViewController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */; };
 		A5472D082F06494300A49688 /* MEGAFolderLinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */; };
@@ -4526,6 +4527,7 @@
 		A52F1E332EBCE55800D3A2E9 /* Chat */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Chat; sourceTree = "<group>"; };
 		A52F1E342EBCE55800D3A2E9 /* CloudDrive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudDrive; sourceTree = "<group>"; };
 		CE6DA084000000000000AA01 /* ViewedLinks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewedLinks; sourceTree = "<group>"; };
+		A2F08963F515C8671318ADC8 /* ContinueWhereYouLeftOff */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ContinueWhereYouLeftOff; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksDebugView.swift; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksRecorder.swift; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksCrashlyticsErrorReporter.swift; sourceTree = "<group>"; };
@@ -5709,6 +5711,7 @@
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				BF27E3F42CF3FDD5002C892B /* CloudDrive in Frameworks */,
 				256428552CC7927D005DA9B1 /* ContentLibraries in Frameworks */,
+				3A28ADED5367725A30DD8324 /* ContinueWhereYouLeftOff in Frameworks */,
 				940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */,
 				16F95A2E2DDF129A00A14DDE /* DeviceKit in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
@@ -11051,6 +11054,7 @@
 				A52F1E322EBCE55800D3A2E9 /* Accounts */,
 				A52F1E332EBCE55800D3A2E9 /* Chat */,
 				A52F1E342EBCE55800D3A2E9 /* CloudDrive */,
+				A2F08963F515C8671318ADC8 /* ContinueWhereYouLeftOff */,
 				A52F1E352EBCE55800D3A2E9 /* DeviceCenter */,
 				BF26E7482F3D84A600AF51E5 /* Favourites */,
 				842AF5533025B0ED0089685B /* FileLink */,
@@ -13989,6 +13993,7 @@
 				A5E1368B2EB50586004BDD4F /* MEGADomain */,
 				14F2EFBF2EDD46B300C37318 /* APMKit */,
 				CE6DA084558DA2E906E4BDDA /* ViewedLinks */,
+				8C569CE8D6E901C8A4F81A33 /* ContinueWhereYouLeftOff */,
 				A5472CC62F04EF0900A49688 /* FolderLink */,
 				FE1EA0000000000000000007 /* FileLink */,
 				BF7758D02F21D8490091DE2A /* Home */,
@@ -14397,6 +14402,7 @@
 				A5EA941B2EB5EE27009778D3 /* XCLocalSwiftPackageReference "Modules/MEGASharedRepo/MEGAStoreKit" */,
 				A5EA941C2EB5EE55009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Notifications" */,
 				5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */,
+				1BE2ED719D274FF27521352E /* XCLocalSwiftPackageReference "Modules/Features/ContinueWhereYouLeftOff" */,
 				A5EA941D2EB5EE82009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Search" */,
 				A5EA941E2EB5EEB2009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Video" */,
 				A5EA941F2EB5EEE4009778D3 /* XCLocalSwiftPackageReference "Modules/Features/PhotosBrowser" */,
@@ -19174,6 +19180,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/ViewedLinks;
 		};
+		1BE2ED719D274FF27521352E /* XCLocalSwiftPackageReference "Modules/Features/ContinueWhereYouLeftOff" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/ContinueWhereYouLeftOff;
+		};
 		A5EA941D2EB5EE82009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Search" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/Search;
@@ -19535,6 +19545,10 @@
 		CE6DA084558DA2E906E4BDDA /* ViewedLinks */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ViewedLinks;
+		};
+		8C569CE8D6E901C8A4F81A33 /* ContinueWhereYouLeftOff */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ContinueWhereYouLeftOff;
 		};
 		A5472CC62F04EF0900A49688 /* FolderLink */ = {
 			isa = XCSwiftPackageProductDependency;
