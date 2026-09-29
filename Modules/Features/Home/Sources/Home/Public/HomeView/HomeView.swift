@@ -277,7 +277,8 @@ public struct HomeView: View {
             ViewedLinksView(
                 dependency: ViewedLinksView.Dependency(
                     openLink: { dependency.router.route(to: .viewedLink($0)) },
-                    showSnackBar: { navigator.showSnackBar(SnackBar(message: $0)) }
+                    showSnackBar: { navigator.showSnackBar(SnackBar(message: $0)) },
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 ),
                 tabBarHidden: $navigator.tabBarHidden
             )

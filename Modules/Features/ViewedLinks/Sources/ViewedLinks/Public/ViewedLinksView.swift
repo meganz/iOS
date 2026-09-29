@@ -5,18 +5,22 @@ import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 public struct ViewedLinksView: View {
     public struct Dependency {
         let openLink: @MainActor (URL) -> Void
         let showPostDismissalSnackBar: @MainActor (String) -> Void
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
 
         public init(
             openLink: @escaping @MainActor (URL) -> Void,
-            showSnackBar: @escaping @MainActor (String) -> Void
+            showSnackBar: @escaping @MainActor (String) -> Void,
+            transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         ) {
             self.openLink = openLink
             self.showPostDismissalSnackBar = showSnackBar
+            self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
         }
     }
 
@@ -24,6 +28,7 @@ public struct ViewedLinksView: View {
     @Binding private var tabBarHidden: Bool
     @Environment(\.dismiss) private var dismiss
     private let showPostDismissalSnackBar: @MainActor (String) -> Void
+    private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
 
     public init(
         dependency: Dependency,
@@ -36,6 +41,7 @@ public struct ViewedLinksView: View {
         )
         _tabBarHidden = tabBarHidden
         showPostDismissalSnackBar = dependency.showPostDismissalSnackBar
+        transferIndicatorToolbarFactory = dependency.transferIndicatorToolbarFactory
     }
 
     public var body: some View {
@@ -48,6 +54,7 @@ public struct ViewedLinksView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     leadingBarButton
                 }
+                transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
                 ToolbarItem(placement: .topBarTrailing) {
                     trailingBarButton
                 }

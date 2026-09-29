@@ -15,6 +15,9 @@ public final class MockViewedLinksUseCase: ViewedLinksUseCaseProtocol, @unchecke
     public private(set) var removedUnavailableURLs: [URL] = []
     public private(set) var clearHistoryCallCount = 0
     public private(set) var lastTopLimit: Int?
+    public private(set) var viewedLinksCallCount = 0
+    public private(set) var lastSortKey: ViewedLinksSortKey?
+    public private(set) var lastAscending: Bool?
 
     public var recordCallCount: Int { recordedLinks.count }
 
@@ -29,6 +32,9 @@ public final class MockViewedLinksUseCase: ViewedLinksUseCaseProtocol, @unchecke
     }
 
     public func viewedLinks(sortedBy sortKey: ViewedLinksSortKey, ascending: Bool) async throws(ViewedLinkErrorEntity) -> [ViewedLinkEntity] {
+        viewedLinksCallCount += 1
+        lastSortKey = sortKey
+        lastAscending = ascending
         try throwIfNeeded()
         return viewedLinksResult
     }

@@ -23,18 +23,14 @@ struct ViewedLinksSearchResultsProvider: ViewedLinksResultsProviding {
     /// its empty state. A cancelled read rethrows instead, leaving the rows on screen untouched.
     func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity? {
         try Task.checkCancellation()
-
-        let links: [ViewedLinkEntity]
         do {
-            links = try await loadLinks(for: queryRequest)
+            let links = try await loadLinks(for: queryRequest)
+            return resultsEntity(for: links)
         } catch ViewedLinkErrorEntity.cancelled {
-            throw ViewedLinkErrorEntity.cancelled
+            throw CancellationError()
         } catch {
             return nil
         }
-
-        try Task.checkCancellation()
-        return resultsEntity(for: links)
     }
 
     func search(queryRequest: SearchQuery, lastItemIndex: Int?) async -> SearchResultsEntity? {

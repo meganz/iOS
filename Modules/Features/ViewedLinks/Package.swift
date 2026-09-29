@@ -20,6 +20,7 @@ let package = Package(
     dependencies: [
         // Features
         .package(path: "../Search"),
+        .package(path: "../Transfer"),
 
         // UI
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
@@ -52,6 +53,7 @@ let package = Package(
             name: "ViewedLinks",
             dependencies: [
                 "Search",
+                "Transfer",
                 "MEGADesignToken",
                 "MEGASwiftUI",
                 "MEGAUIKit",
@@ -81,6 +83,7 @@ let package = Package(
                 "MEGAAssets",
                 "MEGADomain",
                 "MEGAL10n",
+                "MEGAUIComponent",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGASwift",
                 "MEGATest"
