@@ -73,12 +73,12 @@ struct PermissionOnboardingRouterTests {
     @Test(
         "when permission can be requested, should show PermissionOnboardingView with correct view model data and output",
         .disabled("Disabled due to flakiness"),
-        arguments: [
+        arguments: [(TestCase, Bool)]([
             (TestCase.notifications, true),
-            (.notifications, false),
-            (.cameraBackups, true),
-            (.cameraBackups, false)
-            ]
+            (TestCase.notifications, false),
+            (TestCase.cameraBackups, true),
+            (TestCase.cameraBackups, false)
+        ])
     )
     func testShouldAskForPermissions(testCase: TestCase, output: Bool) async throws {
         let window = UIWindow()
