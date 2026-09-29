@@ -299,7 +299,7 @@ struct CloudDriveViewControllerFactory {
         mediaContentDelegate: MediaContentDelegateHandler,
         searchControllerWrapper: SearchControllerWrapper,
         nodeActionsBridge: NodeActionsBridge,
-        onSelectionModeChange: @escaping (Bool) -> Void,
+        onSelectionModeChange: @escaping (_ enabled: Bool, _ selectedNodes: [NodeEntity]) -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void,
         onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
@@ -388,11 +388,15 @@ struct CloudDriveViewControllerFactory {
             onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
             onBack: { [weak navigationController] in navigationController?.popViewController(animated: true) },
             onCancel: { [weak navigationController] in navigationController?.dismiss(animated: true) },
-            onEditingChanged: { [tracker] enabled in
+            onEditingChanged: { [tracker, weak mediaDiscoveryContentViewModel] enabled in
                 if enabled {
                     tracker.trackAnalyticsEvent(with: CloudDriveMultiSelectModeEnteredEvent())
                 }
-                onSelectionModeChange(enabled)
+                // A long-press in media discovery selects an item as it enters edit mode, and the async
+                // selection toolbar update can land before this one; passing the current selection keeps
+                // this update from overwriting it with an empty, greyed-out toolbar.
+                let selectedMediaNodes = mediaDiscoveryContentViewModel?.photoLibraryContentViewModel.selection.photos.map(\.value)
+                onSelectionModeChange(enabled, selectedMediaNodes ?? [])
             },
             updateTransferWidgetHandler: {
                 TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
@@ -696,12 +700,12 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
-        let onSelectionModeChange: (Bool) -> Void  = { enabled in
+        let onSelectionModeChange: (_ enabled: Bool, _ selectedNodes: [NodeEntity]) -> Void = { enabled, selectedNodes in
 
             Task { @MainActor in
                 let accessType = await parentNodeAccessType()
                 selectionHandler.onSelectionModeChange?(
-                    enabled, toolbarConfig([], accessType)
+                    enabled, toolbarConfig(selectedNodes, accessType)
                 )
             }
         }
