@@ -80,7 +80,7 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     }
     
     public func tempUploadURL(for name: String) -> URL {
-        tempFolder.appendingPathComponent(self.name)
+        tempFolder.appendingPathComponent(name)
     }
 
     public func base64HandleTempFolder(for base64Handle: Base64HandleEntity) -> URL {

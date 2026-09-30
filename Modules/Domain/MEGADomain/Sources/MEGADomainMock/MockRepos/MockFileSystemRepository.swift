@@ -8,6 +8,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     private let fileExists: Bool
     private let copiedNode: Bool
     private let movedNode: Bool
+    /// Sources whose move fails even when `movedNode` is `true`, for a test that needs only some moves to fail.
+    private let failingMoveSourceURLs: Set<URL>
     private let containsOriginalsDirectory: Bool
     private let fileSize: UInt64
     private let fileCount: Int
@@ -27,6 +29,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     public init(fileExists: Bool = false,
                 copiedNode: Bool = false,
                 movedNode: Bool = false,
+                failingMoveSourceURLs: Set<URL> = [],
                 containsOriginalsDirectory: Bool = false,
                 fileSize: UInt64 = 0,
                 fileCount: Int = 0,
@@ -38,6 +41,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
         self.fileExists = fileExists
         self.copiedNode = copiedNode
         self.movedNode = movedNode
+        self.failingMoveSourceURLs = failingMoveSourceURLs
         self.containsOriginalsDirectory = containsOriginalsDirectory
         self.fileSize = fileSize
         self.fileCount = fileCount
@@ -58,7 +62,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     
     public func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool {
         $movedFiles.mutate { $0.append((sourceURL, destinationURL)) }
-        return movedNode
+        return movedNode && !failingMoveSourceURLs.contains(sourceURL)
     }
     
     public func copyFile(at sourceURL: URL, to destinationURL: URL) -> Bool {
