@@ -29,7 +29,7 @@ struct PermissionOnboardingRouterTests {
     }
 
     struct TestCase: @unchecked Sendable {
-        struct ViewModelOutput {
+        struct ViewModelOutput: Equatable {
             let image: Image
             let title: String
             let description: String
@@ -73,12 +73,12 @@ struct PermissionOnboardingRouterTests {
     @Test(
         "when permission can be requested, should show PermissionOnboardingView with correct view model data and output",
         .disabled("Disabled due to flakiness"),
-        arguments: [(TestCase, Bool)]([
+        arguments: [
             (TestCase.notifications, true),
-            (TestCase.notifications, false),
-            (TestCase.cameraBackups, true),
-            (TestCase.cameraBackups, false)
-        ])
+            (.notifications, false),
+            (.cameraBackups, true),
+            (.cameraBackups, false)
+            ]
     )
     func testShouldAskForPermissions(testCase: TestCase, output: Bool) async throws {
         let window = UIWindow()
@@ -98,12 +98,15 @@ struct PermissionOnboardingRouterTests {
         )
         let viewModel = hosted.rootView.viewModel
 
-        #expect(viewModel.image == testCase.viewModelOutput.image)
-        #expect(viewModel.title == testCase.viewModelOutput.title)
-        #expect(viewModel.description == testCase.viewModelOutput.description)
-        #expect(viewModel.note == testCase.viewModelOutput.note)
-        #expect(viewModel.primaryButtonTitle == testCase.viewModelOutput.primaryButton)
-        #expect(viewModel.secondaryButtonTitle == testCase.viewModelOutput.secondaryButton)
+        let actualOutput = TestCase.ViewModelOutput(
+            image: viewModel.image,
+            title: viewModel.title,
+            description: viewModel.description,
+            note: viewModel.note,
+            primaryButton: viewModel.primaryButtonTitle,
+            secondaryButton: viewModel.secondaryButtonTitle
+        )
+        #expect(actualOutput == testCase.viewModelOutput)
 
         viewModel.routeTo(.finished(result: output))
         let receivedOutput = await startTask.value
