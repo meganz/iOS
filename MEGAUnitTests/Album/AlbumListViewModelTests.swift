@@ -60,14 +60,19 @@ final class AlbumListViewModelTests: XCTestCase {
     func testNewAlbumName_whenAlbumContainsNoNewAlbum() async {
         let sut = albumListViewModel()
         let expectation = expectation(description: "Monitoring task has started")
-        Task {
+        let monitoring = Task {
             expectation.fulfill()
-            try await sut.monitorAlbums()
+            do {
+                try await sut.monitorAlbums()
+            } catch {
+                XCTFail("Unexpected error")
+            }
         }
         await fulfillment(of: [expectation], timeout: 1)
         _ = await albumResult(sut: sut, condition: \.isEmpty)
         
         XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
+        monitoring.cancel()
     }
     
     @MainActor
