@@ -4563,6 +4563,7 @@
 		A52F1E782EBCE55800D3A2E9 /* MEGASwiftUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASwiftUI; sourceTree = "<group>"; };
 		A52F1E792EBCE55800D3A2E9 /* MEGAUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAUI; sourceTree = "<group>"; };
 		A52F1E7A2EBCE55800D3A2E9 /* MEGAUIKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAUIKit; sourceTree = "<group>"; };
+		A52F1E7D2FB1C0A100D3A2E9 /* MEGAMarkdown */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMarkdown; sourceTree = "<group>"; };
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderLinkViewController.swift; sourceTree = "<group>"; };
 		A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewFolderLinkViewController+Ads.swift"; sourceTree = "<group>"; };
@@ -11146,6 +11147,7 @@
 		A52F1E7B2EBCE55800D3A2E9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A52F1E7D2FB1C0A100D3A2E9 /* MEGAMarkdown */,
 				A52F1E782EBCE55800D3A2E9 /* MEGASwiftUI */,
 				A52F1E792EBCE55800D3A2E9 /* MEGAUI */,
 				A52F1E7A2EBCE55800D3A2E9 /* MEGAUIKit */,

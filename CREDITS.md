@@ -169,6 +169,18 @@ https://github.com/SVProgressHUD/SVProgressHUD/blob/master/LICENSE.txt
 
 --------------------------------------------------------------------
 
+#### swift-cmark (cmark-gfm)
+https://github.com/swiftlang/swift-cmark
+
+Copyright (c) 2014, John MacFarlane
+
+###### License:
+Simplified (2-clause) BSD License. Some files use MIT-style licenses.
+
+https://github.com/swiftlang/swift-cmark/blob/0.9.0/COPYING
+
+--------------------------------------------------------------------
+
 #### UIBarButtonItem-Badge
 https://github.com/meganz/UIBarButtonItem-Badge
 
