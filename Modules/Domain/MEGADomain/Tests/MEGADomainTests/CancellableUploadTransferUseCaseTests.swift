@@ -15,8 +15,17 @@ struct CancellableUploadTransferUseCaseTests {
 
     // MARK: - Helpers
 
-    private func makeSUT(_ repository: MockUploadFileRepository) -> CancellableUploadTransferUseCase {
-        CancellableUploadTransferUseCase(uploadFileRepository: repository)
+    private let uploadsFolder = URL(fileURLWithPath: "/Uploads")
+
+    private func makeSUT(
+        _ repository: MockUploadFileRepository,
+        fileSystemRepository: MockFileSystemRepository = MockFileSystemRepository(movedNode: true)
+    ) -> CancellableUploadTransferUseCase {
+        CancellableUploadTransferUseCase(
+            uploadFileRepository: repository,
+            fileSystemRepository: fileSystemRepository,
+            fileCacheRepository: MockFileCacheRepository(tempFolder: uploadsFolder)
+        )
     }
 
     private func makeTransfer(
@@ -35,10 +44,11 @@ struct CancellableUploadTransferUseCaseTests {
 
     private func states(
         from repository: MockUploadFileRepository,
-        transfers: [CancellableTransferEntity] = []
+        transfers: [CancellableTransferEntity] = [],
+        fileSystemRepository: MockFileSystemRepository = MockFileSystemRepository(movedNode: true)
     ) async -> [CancellableTransferStateEntity] {
         var collected = [CancellableTransferStateEntity]()
-        for await state in makeSUT(repository).start(transfers: transfers) {
+        for await state in makeSUT(repository, fileSystemRepository: fileSystemRepository).start(transfers: transfers) {
             collected.append(state)
         }
         return collected
@@ -122,6 +132,89 @@ struct CancellableUploadTransferUseCaseTests {
         _ = await states(from: repository, transfers: [makeTransfer("a.jpg")])
 
         #expect(repository.uploadedBatches.count == 1)
+    }
+
+    // MARK: - Moving the items into the Uploads folder
+
+    @Test("Every item is moved into the Uploads folder, and the repository uploads the moved copy")
+    func everyItemIsMovedBeforeUpload() async throws {
+        let repository = MockUploadFileRepository()
+        let fileSystem = MockFileSystemRepository(movedNode: true)
+        let transfers = [makeTransfer("a.jpg"), makeTransfer("Docs", isFile: false, parentHandle: 7)]
+
+        _ = await states(from: repository, transfers: transfers, fileSystemRepository: fileSystem)
+
+        let expectedURLs = [uploadsFolder.appendingPathComponent("a.jpg"), uploadsFolder.appendingPathComponent("Docs")]
+        #expect(fileSystem.movedFiles.map(\.source.path) == ["/tmp/a.jpg", "/tmp/Docs"])
+        #expect(fileSystem.movedFiles.map(\.destination) == expectedURLs)
+        let handedOver = try #require(repository.uploadedBatches.first)
+        #expect(handedOver.map(\.localFileURL) == expectedURLs)
+        #expect(handedOver.map(\.isFile) == [true, false])
+        #expect(handedOver.map(\.parentHandle) == [1, 7])
+    }
+
+    @Test("A failed move fails the batch, uploads nothing and removes nothing")
+    func aFailedMoveFailsTheBatch() async {
+        let repository = MockUploadFileRepository()
+        let fileSystem = MockFileSystemRepository(movedNode: false)
+
+        let states = await states(from: repository, transfers: [makeTransfer("a.jpg")], fileSystemRepository: fileSystem)
+
+        #expect(states == [.failed])
+        #expect(repository.uploadedBatches.isEmpty)
+        #expect(fileSystem.removeFileURLs.isEmpty)
+    }
+
+    @Test("A move that fails after others succeeded removes the items already moved, and stops moving")
+    func aPartlyFailedMoveRemovesTheMovedItems() async {
+        let repository = MockUploadFileRepository()
+        let fileSystem = MockFileSystemRepository(
+            movedNode: true,
+            failingMoveSourceURLs: [URL(fileURLWithPath: "/tmp/b.jpg")]
+        )
+        let transfers = [makeTransfer("a.jpg"), makeTransfer("b.jpg"), makeTransfer("c.jpg")]
+
+        let states = await states(from: repository, transfers: transfers, fileSystemRepository: fileSystem)
+
+        #expect(states == [.failed])
+        #expect(repository.uploadedBatches.isEmpty)
+        #expect(fileSystem.movedFiles.map(\.source.lastPathComponent) == ["a.jpg", "b.jpg"])
+        #expect(fileSystem.removeFileURLs == [uploadsFolder.appendingPathComponent("a.jpg")])
+    }
+
+    @Test("The moved items are removed once the batch finishes, even after the screen stopped reading")
+    func theMovedItemsAreRemovedAfterTheBatchFinishes() async {
+        // The mapper stops at the transferring stage. The finish comes after it.
+        let repository = MockUploadFileRepository(batchEvents: [
+            .folderUpdateEvent(stage: .transferringFiles, fileCount: 2),
+            .finish(TransferEntity())
+        ])
+        let fileSystem = MockFileSystemRepository(movedNode: true)
+
+        let states = await states(from: repository, transfers: [makeTransfer("a.jpg"), makeTransfer("b.jpg")], fileSystemRepository: fileSystem)
+
+        #expect(states == [.transferringFiles])
+        await waitForRemovals(count: 2, in: fileSystem)
+        #expect(Set(fileSystem.removeFileURLs) == [uploadsFolder.appendingPathComponent("a.jpg"), uploadsFolder.appendingPathComponent("b.jpg")])
+    }
+
+    @Test("The moved items are removed when the batch ends on an error")
+    func theMovedItemsAreRemovedWhenTheBatchThrows() async {
+        let repository = MockUploadFileRepository(batchEventsError: TransferErrorEntity.upload)
+        let fileSystem = MockFileSystemRepository(movedNode: true)
+
+        let states = await states(from: repository, transfers: [makeTransfer("a.jpg")], fileSystemRepository: fileSystem)
+
+        #expect(states == [.failed])
+        await waitForRemovals(count: 1, in: fileSystem)
+        #expect(fileSystem.removeFileURLs == [uploadsFolder.appendingPathComponent("a.jpg")])
+    }
+
+    /// The removal runs in the relay task, so it can land after the last state.
+    private func waitForRemovals(count: Int, in fileSystem: MockFileSystemRepository) async {
+        for _ in 0..<1000 where fileSystem.removeFileURLs.count < count {
+            try? await Task.sleep(nanoseconds: NSEC_PER_MSEC)
+        }
     }
 
     // MARK: - Reading the batch state from its transfer events

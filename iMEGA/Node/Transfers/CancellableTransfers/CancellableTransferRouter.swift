@@ -144,7 +144,9 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
             )
         case .upload:
             return CancellableUploadTransferUseCase(
-                uploadFileRepository: UploadFileRepository(sdk: MEGASdk.shared)
+                uploadFileRepository: UploadFileRepository(sdk: MEGASdk.shared),
+                fileSystemRepository: FileSystemRepository.sharedRepo,
+                fileCacheRepository: FileCacheRepository.newRepo
             )
         }
     }

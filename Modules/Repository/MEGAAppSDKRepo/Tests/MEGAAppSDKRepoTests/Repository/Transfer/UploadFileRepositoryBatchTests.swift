@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomain
+import MEGADomainMock
 import MEGASdk
 import Testing
 
@@ -24,7 +25,12 @@ struct UploadFileRepositoryBatchTests {
     // MARK: - Helpers
 
     private func makeSUT(_ sdk: MockSdk) -> CancellableUploadTransferUseCase {
-        CancellableUploadTransferUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk))
+        // Moved "into" /tmp, so each item keeps the path the SDK scripts are keyed by.
+        CancellableUploadTransferUseCase(
+            uploadFileRepository: UploadFileRepository(sdk: sdk),
+            fileSystemRepository: MockFileSystemRepository(movedNode: true),
+            fileCacheRepository: MockFileCacheRepository(tempFolder: URL(fileURLWithPath: "/tmp"))
+        )
     }
 
     private func makeTransfer(_ name: String, isFile: Bool) -> CancellableTransferEntity {
@@ -407,8 +413,12 @@ struct UploadFileRepositoryBatchTests {
         // the batch would call itself started with an item still scanning.
         let sdk = MockSdk()
         sdk.stubbedUploadScripts = ["/tmp/a/Docs": .driven, "/tmp/b/Docs": .driven]
-        let transfers = [makeTransfer("a/Docs", isFile: false), makeTransfer("b/Docs", isFile: false)]
-        var iterator = makeSUT(sdk).start(transfers: transfers).makeAsyncIterator()
+        // Read without the use case, because its move into Uploads would give both items one path.
+        let items = [makeItem("a/Docs", isFile: false), makeItem("b/Docs", isFile: false)]
+        let repository = UploadFileRepository(sdk: sdk)
+        var iterator = CancellableTransferStateMapper(direction: .upload)
+            .map(from: { repository.upload(batch: items) })
+            .makeAsyncIterator()
         let a = try await sdk.drivenUploadDelegate(for: "/tmp/a/Docs")
         let b = try await sdk.drivenUploadDelegate(for: "/tmp/b/Docs")
 
