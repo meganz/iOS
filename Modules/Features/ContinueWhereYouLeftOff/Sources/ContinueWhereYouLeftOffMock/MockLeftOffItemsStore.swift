@@ -11,6 +11,9 @@ package final class MockLeftOffItemsStore: LeftOffItemsStoreProtocol, @unchecked
     package private(set) var removedHandles: [[HandleEntity]] = []
     package private(set) var removedUnavailableHandles: [HandleEntity] = []
     package private(set) var clearHistoryCallCount = 0
+    package private(set) var lastSortKey: LeftOffItemsSortKey?
+    package private(set) var lastAscending: Bool?
+    package private(set) var lastLimit: Int?
 
     package init(
         fetchItemsResult: [LeftOffItemEntity] = [],
@@ -20,7 +23,10 @@ package final class MockLeftOffItemsStore: LeftOffItemsStoreProtocol, @unchecked
         self.errorToThrow = errorToThrow
     }
 
-    package func fetchItems(sortedBy key: LeftOffItemsSortKey, ascending: Bool) async throws -> [LeftOffItemEntity] {
+    package func fetchItems(sortedBy key: LeftOffItemsSortKey, ascending: Bool, limit: Int) async throws -> [LeftOffItemEntity] {
+        lastSortKey = key
+        lastAscending = ascending
+        lastLimit = limit
         if let errorToThrow { throw errorToThrow }
         return fetchItemsResult
     }

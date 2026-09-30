@@ -43,6 +43,17 @@ let package = Package(
                 "ContinueWhereYouLeftOff",
                 "MEGASwift"
             ]
+        ),
+        .testTarget(
+            name: "ContinueWhereYouLeftOffTests",
+            dependencies: [
+                "ContinueWhereYouLeftOff",
+                "ContinueWhereYouLeftOffMock",
+                "MEGADomain",
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                "MEGASwift",
+                "MEGATest"
+            ]
         )
     ]
 )

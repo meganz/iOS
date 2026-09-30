@@ -3,12 +3,13 @@ import MEGASwift
 
 public protocol LeftOffItemsUseCaseProtocol: Sendable {
     /// Fetch all items, sorted by the given key and direction.
-    /// Resolves each row's live node to filter hidden/sensitive nodes,
-    /// prune dead rows, refresh metadata and fill the video's `duration`.
-    func items(sortedBy key: LeftOffItemsSortKey, ascending: Bool) async throws(LeftOffItemErrorEntity) -> [LeftOffItemEntity]
+    /// Sensitive nodes are checked
+    /// prune dead rows
+    /// Map resolved rows to `ResolvedLeftOffItemEntity` with the data
+    func items(sortedBy key: LeftOffItemsSortKey, ascending: Bool) async throws(LeftOffItemErrorEntity) -> [ResolvedLeftOffItemEntity]
 
     /// The most recently accessed items, capped at `limit`.
-    func topItems(limit: Int) async throws(LeftOffItemErrorEntity) -> [LeftOffItemEntity]
+    func topItems(limit: Int) async throws(LeftOffItemErrorEntity) -> [ResolvedLeftOffItemEntity]
 
     /// Upsert an item, keyed by handle.
     func record(_ item: LeftOffItemEntity) async throws(LeftOffItemErrorEntity)
@@ -22,7 +23,6 @@ public protocol LeftOffItemsUseCaseProtocol: Sendable {
     /// Clear all left-off items.
     func clearHistory() async throws(LeftOffItemErrorEntity)
 
-    /// Live stream of the left-off items, re-emitted whenever the underlying nodes change.
-    /// Each emission is fully resolved, the same as `items(sortedBy:ascending:)`.
-    func leftOffItemsUpdates() -> AnyAsyncSequence<[LeftOffItemEntity]>
+    /// Emits a signal whenever something that can change the resolved list happens
+    func changesSignalSequence() -> AnyAsyncSequence<Void>
 }

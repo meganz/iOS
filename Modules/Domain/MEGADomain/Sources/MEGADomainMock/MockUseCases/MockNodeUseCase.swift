@@ -14,6 +14,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     private let isNodeInRubbishBin: Bool
     private let nodeAccessLevel: () -> NodeAccessTypeEntity
     private let nodes: [HandleEntity: NodeEntity]
+    private let _rootNode: NodeEntity?
     private let folderLinkInfo: FolderLinkInfoEntity?
     private let nodeForFileLink: NodeEntity?
     private let nodeInRubbishBin: NodeEntity?
@@ -24,6 +25,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         isDownloaded: Bool = false,
         isNodeInRubbishBin: Bool = false,
         nodes: [HandleEntity: NodeEntity] = [:],
+        rootNode: NodeEntity? = nil,
         nodeAccessLevel: @escaping () -> NodeAccessTypeEntity = { .unknown },
         folderLinkInfo: FolderLinkInfoEntity? = nil,
         nodeForFileLink: NodeEntity? = nil,
@@ -35,6 +37,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         self.isDownloaded = isDownloaded
         self.isNodeInRubbishBin = isNodeInRubbishBin
         self.nodes = nodes
+        self._rootNode = rootNode
         self.nodeAccessLevel = nodeAccessLevel
         self.folderLinkInfo = folderLinkInfo
         self.nodeForFileLink = nodeForFileLink
@@ -45,7 +48,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     public func rootNode() -> NodeEntity? {
-        nil
+        _rootNode
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {

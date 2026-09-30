@@ -3,11 +3,11 @@ import MEGASwift
 
 /// Mock `LeftOffItemsUseCaseProtocol` for tests and previews.
 public final class MockLeftOffItemsUseCase: LeftOffItemsUseCaseProtocol, @unchecked Sendable {
-    public var itemsResult: [LeftOffItemEntity]
-    public var topItemsResult: [LeftOffItemEntity]
+    public var itemsResult: [ResolvedLeftOffItemEntity]
+    public var topItemsResult: [ResolvedLeftOffItemEntity]
     public var errorToThrow: LeftOffItemErrorEntity?
-    public var leftOffItemsUpdatesResult: AnyAsyncSequence<[LeftOffItemEntity]> =
-        EmptyAsyncSequence<[LeftOffItemEntity]>().eraseToAnyAsyncSequence()
+    public var changesSignalSequenceResult: AnyAsyncSequence<Void> =
+        AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
 
     public private(set) var recordedItems: [LeftOffItemEntity] = []
     public private(set) var removedItems: [[LeftOffItemEntity]] = []
@@ -20,8 +20,8 @@ public final class MockLeftOffItemsUseCase: LeftOffItemsUseCaseProtocol, @unchec
     public var recordCallCount: Int { recordedItems.count }
 
     public init(
-        itemsResult: [LeftOffItemEntity] = [],
-        topItemsResult: [LeftOffItemEntity] = [],
+        itemsResult: [ResolvedLeftOffItemEntity] = [],
+        topItemsResult: [ResolvedLeftOffItemEntity] = [],
         errorToThrow: LeftOffItemErrorEntity? = nil
     ) {
         self.itemsResult = itemsResult
@@ -29,14 +29,14 @@ public final class MockLeftOffItemsUseCase: LeftOffItemsUseCaseProtocol, @unchec
         self.errorToThrow = errorToThrow
     }
 
-    public func items(sortedBy key: LeftOffItemsSortKey, ascending: Bool) async throws(LeftOffItemErrorEntity) -> [LeftOffItemEntity] {
+    public func items(sortedBy key: LeftOffItemsSortKey, ascending: Bool) async throws(LeftOffItemErrorEntity) -> [ResolvedLeftOffItemEntity] {
         lastSortKey = key
         lastAscending = ascending
         if let errorToThrow { throw errorToThrow }
         return itemsResult
     }
 
-    public func topItems(limit: Int) async throws(LeftOffItemErrorEntity) -> [LeftOffItemEntity] {
+    public func topItems(limit: Int) async throws(LeftOffItemErrorEntity) -> [ResolvedLeftOffItemEntity] {
         lastTopLimit = limit
         if let errorToThrow { throw errorToThrow }
         return Array(topItemsResult.prefix(limit))
@@ -62,7 +62,7 @@ public final class MockLeftOffItemsUseCase: LeftOffItemsUseCaseProtocol, @unchec
         clearHistoryCallCount += 1
     }
 
-    public func leftOffItemsUpdates() -> AnyAsyncSequence<[LeftOffItemEntity]> {
-        leftOffItemsUpdatesResult
+    public func changesSignalSequence() -> AnyAsyncSequence<Void> {
+        changesSignalSequenceResult
     }
 }

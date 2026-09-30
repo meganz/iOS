@@ -25,6 +25,14 @@
       }
     },
     {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/ContinueWhereYouLeftOff",
+        "identifier" : "ContinueWhereYouLeftOffTests",
+        "name" : "ContinueWhereYouLeftOffTests"
+      }
+    },
+    {
       "enabled" : false,
       "parallelizable" : true,
       "target" : {
