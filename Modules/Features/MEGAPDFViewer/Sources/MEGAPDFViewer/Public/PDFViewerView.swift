@@ -85,7 +85,11 @@ public struct PDFViewerView: View {
                     .ignoresSafeArea()
 
                 if let document = viewModel.pdfDocument {
-                    PDFDisplayerView(document: document, onLinkTapped: onLinkTapped)
+                    PDFDisplayerView(
+                        document: document,
+                        currentPage: $viewModel.currentPageIndex,
+                        onLinkTapped: onLinkTapped
+                    )
                     .ignoresSafeArea()
                 }
 
