@@ -8,13 +8,21 @@ protocol MEGAPDFViewPageObservationDelegate: AnyObject {
     func pdfView(_ pdfView: MEGAPDFView, currentPageDidChange index: Int)
 }
 
+@MainActor
+protocol MEGAPDFViewDocumentTapDelegate: AnyObject {
+    func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView)
+}
+
 final class MEGAPDFView: PDFView {
     private let autoFittingViewModel = AutoFittingPDFViewModel()
     private let pagingScrollObservationMonitor = PDFViewerPagingScrollObservationMonitor()
+    private let singleTapHandler = PDFDocumentSingleTapHandler()
 
     private var subscriptions = Set<AnyCancellable>()
 
     weak var pageObservationDelegate: (any MEGAPDFViewPageObservationDelegate)?
+    weak var documentTapDelegate: (any MEGAPDFViewDocumentTapDelegate)?
+
     override var document: PDFDocument? {
         get { super.document }
         set {
@@ -44,6 +52,12 @@ final class MEGAPDFView: PDFView {
     }
 
     private func bindEvents() {
+        singleTapHandler.configure(
+            on: self,
+            target: self,
+            action: #selector(didSingleTap)
+        )
+
         autoFittingViewModel.$zoomStateUpdate
             .compactMap { $0 }
             .sink { [weak self] zoomStateUpdate in
@@ -96,7 +110,22 @@ final class MEGAPDFView: PDFView {
     }
 }
 
-/// Renders an already-parsed `PDFDocument` inside SwiftUI.
+// MARK: - Single-tap handling
+
+extension MEGAPDFView {
+    @objc private func didSingleTap(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: self)
+        guard !areaOfInterest(for: location).contains(.linkArea) else { return }
+
+        if currentSelection != nil {
+            clearSelection()
+            return
+        }
+
+        documentTapDelegate?.pdfViewDidReceiveDocumentTap(self)
+    }
+}
+
 extension MEGAPDFView: PDFViewerPagingScrollObservationMonitorDataSource {
     var currentPageIndexAtViewportCenter: Int? {
         guard let document else { return nil }
@@ -115,6 +144,7 @@ struct PDFDisplayerView: UIViewRepresentable {
     let document: PDFDocument
     @Binding var currentPage: Int
     let onLinkTapped: @MainActor (URL) -> Void
+    let onTap: @MainActor () -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -125,6 +155,7 @@ struct PDFDisplayerView: UIViewRepresentable {
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
         pdfView.delegate = context.coordinator
+        pdfView.documentTapDelegate = context.coordinator
         pdfView.pageObservationDelegate = context.coordinator
         return pdfView
     }
@@ -141,7 +172,8 @@ struct PDFDisplayerView: UIViewRepresentable {
     @MainActor
     final class Coordinator: NSObject,
                              PDFViewDelegate,
-                             MEGAPDFViewPageObservationDelegate {
+                             MEGAPDFViewPageObservationDelegate,
+                             MEGAPDFViewDocumentTapDelegate {
         var parent: PDFDisplayerView
 
         init(parent: PDFDisplayerView) {
@@ -150,7 +182,10 @@ struct PDFDisplayerView: UIViewRepresentable {
 
         func pdfView(_ pdfView: MEGAPDFView, currentPageDidChange index: Int) {
             parent.currentPage = index
+        }
 
+        func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView) {
+            parent.onTap()
         }
 
         nonisolated func pdfViewWillClick(onLink sender: PDFView, with url: URL) {

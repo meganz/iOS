@@ -169,6 +169,20 @@ struct PDFViewerViewModelTests {
         #expect(useCase.localDocumentURLCallCount == 1)
     }
 
+    @Test func chromeVisibility_startsShownAndToggles() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+
+        #expect(!sut.isChromeHidden)
+        sut.isChromeHidden.toggle()
+        #expect(sut.isChromeHidden)
+        sut.isChromeHidden.toggle()
+        #expect(!sut.isChromeHidden)
+    }
+
     @Test func loadDocumentURL_readyEvent_setsPageState() async {
         let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
         let (stream, continuation) = AsyncThrowingStream.makeStream(

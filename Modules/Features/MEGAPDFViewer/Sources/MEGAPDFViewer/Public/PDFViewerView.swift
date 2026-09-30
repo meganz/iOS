@@ -88,7 +88,12 @@ public struct PDFViewerView: View {
                     PDFDisplayerView(
                         document: document,
                         currentPage: $viewModel.currentPageIndex,
-                        onLinkTapped: onLinkTapped
+                        onLinkTapped: onLinkTapped,
+                        onTap: {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                viewModel.isChromeHidden.toggle()
+                            }
+                        }
                     )
                     .ignoresSafeArea()
                 }
@@ -105,8 +110,18 @@ public struct PDFViewerView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .toolbar { toolbarContent }
+            .toolbar(
+                viewModel.isChromeHidden ? .hidden : .visible,
+                for: .navigationBar
+            )
+            .toolbar(
+                viewModel.state.isReady && !viewModel.isChromeHidden
+                    ? .visible : .hidden,
+                for: .bottomBar
+            )
             .transparentLiquidGlassOrSolidOtherwiseToolbarBackground(for: .navigationBar)
             .transparentLiquidGlassOrSolidOtherwiseToolbarBackground(for: .bottomBar)
+            .statusBarHidden(viewModel.isChromeHidden)
         }
         .tint(TokenColors.Icon.primary.swiftUI)
         .task { await viewModel.loadDocumentFromSource() }

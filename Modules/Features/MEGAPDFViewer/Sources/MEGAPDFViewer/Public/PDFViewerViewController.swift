@@ -14,6 +14,16 @@ public final class PDFViewerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // `PDFViewerView` sets `.statusBarHidden`, which only the hosting
+    // controller answers.
+    public override var childForStatusBarHidden: UIViewController? {
+        viewerViewController
+    }
+
+    public override var childForStatusBarStyle: UIViewController? {
+        viewerViewController
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         attachViewerView()
