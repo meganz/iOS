@@ -20,6 +20,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
 import MEGARepo
+import MEGASwift
 import MEGAVideoPlayer
 import PushKit
 import QuotaWarnings
@@ -833,6 +834,28 @@ extension AppDelegate {
     }
 
     // MARK: - Account details
+
+    /// The SDK reports a storage state only when it really changes, so this runs once per transition.
+    /// A plan downgrade sends no other signal, so the cached details still hold the old allowance.
+    @objc func refreshAccountDetailsThenPresentStorageQuotaWarning(event: MEGAEvent) {
+        Task { @MainActor in
+            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+            do {
+                _ = try await accountUseCase.refreshCurrentAccountDetails()
+                MEGALog.log(
+                    level: .info,
+                    message: "[AppDelegate] refresh account details before presenting storage dialog \(event.number)"
+                )
+            } catch {
+                MEGALog.log(
+                    level: .info,
+                    message: "[AppDelegate] failed to refresh account details before presenting storage dialog \(event.number)"
+                )
+            }
+            QuotaWarningsRouter().presentStorageQuotaWarning(event: event)
+        }
+    }
+
     @objc func refreshAccountDetails() {
         Task {
             do {

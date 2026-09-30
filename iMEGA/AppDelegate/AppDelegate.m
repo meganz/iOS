@@ -796,7 +796,7 @@
 
 - (void)showDeferredStorageEventDialogIfNeeded {
     if (self.storageEventToDisplayLater) {
-        [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithEvent:self.storageEventToDisplayLater];
+        [self refreshAccountDetailsThenPresentStorageQuotaWarningWithEvent:self.storageEventToDisplayLater];
         self.storageEventToDisplayLater = nil;
     }
 }
@@ -1320,9 +1320,13 @@
             } else if (event.number == StorageStatePaywall) {
                 [self presentOverDiskQuota];
             } else {
-                if (event.number == StorageStateRed || event.number == StorageStateOrange) {
+                if (event.number == StorageStateGreen) {
+                    // The allowance can change with no dialog to show, so refresh here too.
+                    // Otherwise Home and the storage banner keep the old plan.
+                    [self refreshAccountDetails];
+                } else if (event.number == StorageStateRed || event.number == StorageStateOrange) {
                     if (self.mainTBC != nil) {
-                        [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithEvent:event];
+                        [self refreshAccountDetailsThenPresentStorageQuotaWarningWithEvent:event];
                     } else {
                         // Launch: the main tab bar hasn't been installed as the window root yet,
                         // so the root is still the transient LaunchViewController. Presenting now
