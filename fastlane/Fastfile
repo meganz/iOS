@@ -308,7 +308,7 @@ platform :ios do
 
   desc "Run unit tests for local packages"
   lane :run_tests_against_local_packages do |options|
-    scan(
+    scan_options = {
       workspace: WORKSPACE,
       scheme: "MEGAModulesTests",
       device: "iPhone 17 Pro",
@@ -322,7 +322,11 @@ platform :ios do
       concurrent_workers: 2,
       skip_build: true,
       number_of_retries: 20
-    )
+    }
+    # only_testing is a comma list of test targets. An empty list would run every test.
+    only_testing = options[:only_testing].to_s.strip
+    scan_options[:only_testing] = only_testing.split(",") unless only_testing.empty?
+    scan(scan_options)
   end
 
   desc "Download metadata"

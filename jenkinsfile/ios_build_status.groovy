@@ -4,6 +4,9 @@ import groovy.transform.Field
 // This is global variable is required to check if the unit test step was reached or not. This is required to avoid running the parse_and_upload_build_warnings_and_errors lane if the unit test step was not reached.
 @Field boolean runUnitTestsStepReached = false
 
+// Loaded jenkinsfile/package_tests.groovy. The stage and its post block share it.
+@Field def packageTests = null
+
 NODE_LABELS = 'mac-jenkins-slave-ios-xcode-26'
 
 def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
@@ -197,7 +200,8 @@ pipeline {
                                 script {
                                     envInjector.injectEnvs {
                                         setupProjectDependencies()
-                                        sh "bundle exec fastlane run_tests_against_local_packages"
+                                        packageTests = load('jenkinsfile/package_tests.groovy')
+                                        packageTests.runPackageTests()
                                     }
                                 }
                             }
@@ -222,16 +226,7 @@ pipeline {
                         success {
                             script {
                                 envInjector.injectEnvs {
-                                    dir("scripts/CodeCoverageParserKit/") {
-                                        sh 'swift run CodeCoverageParserKit --targets \"MEGAAppPresentation,MEGAAppSDKRepo,MEGAAuthentication,Chat,ChatRepo,Accounts,CloudDrive,ContentLibraries,DeviceCenter,MEGASwift,Notifications,Settings,MEGAAnalytics,MEGAAnalyticsDomain,MEGAConnectivity,MEGADeepLinkHandling,MEGADomain,MEGAFoundation,MEGAInfrastructure,MEGAIntentDomain,MEGAL10n,MEGALogger,MEGAPermissions,MEGAPhotos,MEGAPickerFileProviderDomain,MEGASwiftUI,MEGAUI,MEGAUIComponent,MEGAUIKit,PhotoBrowser,Search,Video\"'
-                                    }
-
-                                    if (fileExists('fastlane/code_coverage.md')) {
-                                        sh 'cp fastlane/code_coverage.md fastlane/code_coverage_packages.md'
-                                        artifactStasher.stashArtifact('swift-packages-coverage', 'fastlane/code_coverage_packages.md')
-                                    } else {
-                                        echo "Warning: fastlane/code_coverage.md not found in Swift Packages run unit tests stage"
-                                    }                                
+                                    packageTests.reportPackageCoverage()
                                 }
                             }
                         }
