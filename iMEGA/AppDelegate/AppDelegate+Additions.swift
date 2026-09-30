@@ -522,7 +522,13 @@ extension AppDelegate {
     @objc nonisolated  func didReceiveSQLiteDiskFullNotification() {
         Task { @MainActor in
             guard self.blockingWindow == nil else { return }
-            let window = UIWindow(frame: UIScreen.main.bounds)
+            // A window attached to no scene is never shown under the scene life cycle.
+            let window: UIWindow
+            if let windowScene = self.window.windowScene {
+                window = UIWindow(windowScene: windowScene)
+            } else {
+                window = UIWindow(frame: UIScreen.main.bounds)
+            }
             window.windowLevel = .alert + 1
             DiskFullBlockingViewRouter(window: window).start()
             self.blockingWindow = window

@@ -34,6 +34,14 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 - (void)showLink:(NSURL *)url;
 - (void)setAccountFirstLogin:(BOOL)isFirstLogin;
 
+// Scene support, called by SceneDelegate. The scene creates the window, so everything that needs
+// one runs from -sceneDidConnectWithWindow:launchURL: rather than from application launch.
+- (void)sceneDidConnectWithWindow:(UIWindow *)window launchURL:(nullable NSURL *)launchURL NS_SWIFT_NAME(sceneDidConnect(with:launchURL:));
+- (void)handleOpenURL:(NSURL *)url NS_SWIFT_NAME(handleOpenURL(_:));
+- (void)handleContinueUserActivity:(NSUserActivity *)userActivity NS_SWIFT_NAME(handleContinueUserActivity(_:));
+- (void)handleShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler NS_SWIFT_NAME(handleShortcutItem(_:completionHandler:));
+- (void)handleColdLaunchShortcutItem:(UIApplicationShortcutItem *)shortcutItem NS_SWIFT_NAME(handleColdLaunchShortcutItem(_:));
+
 // Implemented in AppDelegate.m. Declared here so the MEGAPurchasePricingDelegate
 // conformance (declared in a Swift extension) can find the witnesses.
 - (void)pricingsReady;

@@ -2360,6 +2360,7 @@
 		BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */; };
 		BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
+		C8B13A76891A42E48D8F72E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09DFAE424E644D696B73101 /* SceneDelegate.swift */; };
 		CF7C05944D973724478D6391 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = BDBFA6BBCDE9EED3D6B13F44 /* MEGAPickerFileProviderDomain */; };
 		2FAE6CC58699FA24F8301047 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = B0F976CE4C6D262F3B041CD1 /* MEGAPickerFileProviderRepo */; };
 		45FCCCD035DD989DB8B134BE /* FileProviderDomainUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC264C909D889EA6D40F51B /* FileProviderDomainUpdater.swift */; };
@@ -5288,6 +5289,7 @@
 		BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetailsTests.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
+		F09DFAE424E644D696B73101 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3BC264C909D889EA6D40F51B /* FileProviderDomainUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderDomainUpdater.swift; sourceTree = "<group>"; };
 		BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
 		BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
@@ -11868,6 +11870,7 @@
 				B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */,
 				3BC264C909D889EA6D40F51B /* FileProviderDomainUpdater.swift */,
 				A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */,
+				F09DFAE424E644D696B73101 /* SceneDelegate.swift */,
 				9A5E0C012E4F1A0100D3B7C1 /* SeedExportReporter.swift */,
 			);
 			path = AppDelegate;
@@ -16185,6 +16188,7 @@
 				0EE4645C2DF1439D00040DA7 /* SaveToPhotosViewModel.swift in Sources */,
 				BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */,
 				5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */,
+				C8B13A76891A42E48D8F72E3 /* SceneDelegate.swift in Sources */,
 				838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */,
 				83669E972987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift in Sources */,
 				83669E9D2987FA9F003E8F74 /* ScheduledMeetingOccurrencesView.swift in Sources */,

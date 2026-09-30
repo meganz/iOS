@@ -107,7 +107,8 @@
     
     [UncaughtExceptionHandler registerHandler];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
-    
+    [self observeApplicationLifeCycleNotifications];
+
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
     
     NSError *error;
@@ -198,8 +199,6 @@
     
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     
-    [AppearanceManager setupAppearance:self.window.traitCollection];
-    
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
     _presentInviteContactVCLater = NO;
@@ -229,7 +228,10 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"error", @"nil") message:message preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
             [MEGAChatSdk.shared logout];
-            [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+            // The window does not exist until the scene connects, which happens after this method returns.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+            });
         } else if (chatInit == MEGAChatInitOnlineSession || chatInit == MEGAChatInitOfflineSession) {
             [self importMessagesFromNSE];
         }
@@ -237,41 +239,14 @@
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
         [self markRemoteFeatureFlagAsLoading];
         [MEGASdk.shared fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
-        
-        if ([MEGAReachabilityManager isReachable]) {
-            [self showLaunchViewController];
-        } else {
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:LocalizedString(@"logoutLabel", @"")];
-                [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
-            } else {
-                _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                UIViewController *mainController = [self adsMainTabBarController:_mainTBC
-                                                             onViewFirstAppeared:nil];
-                [self.window setRootViewController:mainController];
-            }
-        }
-        
+
         [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
-    } else {
-        // Resume ephemeral account
-        self.window.rootViewController = [self makeOnboardingViewController];
-        NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
-        if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
-            __weak typeof(self) weakSelf = self;
-            MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
-                [weakSelf showConfirmEmailView];
-            }];
-            createAccountRequestDelegate.resumeCreateAccount = YES;
-            [MEGASdk.shared resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
-        } else {
-            [self listenToStorePaymentTransactions];
-        }
+    } else if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"] == nil) {
+        [self listenToStorePaymentTransactions];
     }
+    // The root view controller, and with an ephemeral account the choice between resuming it and
+    // listening to the store, are set up in -sceneDidConnectWithWindow:launchURL:. The window does
+    // not exist yet, and that choice depends on the launch URL, which the scene delivers.
 
     [self startObservingViewedLinksLogout];
     [self startFileProviderDomainUpdatesWithHasSession:(sessionV3 != nil)];
@@ -279,15 +254,6 @@
     [self listenToLoggedOutStreamingOverQuota];
     [self startTransferQuotaWarningMonitoringWithHasSession:(sessionV3 != nil)];
 
-    UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
-    if (applicationShortcutItem != nil) {
-        if (isFetchNodesDone) {
-            [self manageQuickActionType:applicationShortcutItem.type];
-        } else {
-            self.quickActionType = applicationShortcutItem.type;
-        }
-    }
-    
     MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
@@ -295,7 +261,6 @@
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
     
-    [self.window makeKeyAndVisible];
     if (application.applicationState != UIApplicationStateBackground) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center removeAllPendingNotificationRequests];
@@ -307,7 +272,20 @@
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+#pragma mark - App life cycle
+
+// Driven by the UIApplication notifications, not by the UIApplicationDelegate callbacks: under the
+// scene life cycle UIKit no longer calls those, and a scene delegate only reports its own scene's
+// transitions, while the work below concerns the whole app.
+- (void)observeApplicationLifeCycleNotifications {
+    NSNotificationCenter *center = NSNotificationCenter.defaultCenter;
+    [center addObserver:self selector:@selector(appWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    [center addObserver:self selector:@selector(appDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [center addObserver:self selector:@selector(appWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [center addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)appWillResignActive {
     MEGALogDebug(@"[App Lifecycle] Application will resign active");
     
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
@@ -326,7 +304,7 @@
     }];
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
+- (void)appDidEnterBackground {
     MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
@@ -348,14 +326,14 @@
     }
     [self.window addSubview:self.privacyView];
     
-    [self application:application shouldHideWindows:YES];
+    [self application:UIApplication.sharedApplication shouldHideWindows:YES];
     
     if (![NSStringFromClass([UIApplication mnz_keyWindow].class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
     }
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
+- (void)appWillEnterForeground {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
     
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
@@ -377,7 +355,7 @@
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;
     
-    [self application:application shouldHideWindows:NO];
+    [self application:UIApplication.sharedApplication shouldHideWindows:NO];
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center removeAllPendingNotificationRequests];
@@ -388,7 +366,7 @@
     [self showPromoLandingDialogIfNeeded];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)appDidBecomeActive {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
 
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
@@ -398,7 +376,7 @@
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults setInteger:0 forKey:MEGAApplicationIconBadgeNumber];    
-    application.applicationIconBadgeNumber = 0;
+    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
     
     [MEGAChatSdk.shared signalPresenceActivity];
     
@@ -428,7 +406,9 @@
     [MEGASdkCleanUp localLogoutAndCleanUpWithSkipTeardown:self.shouldSkipSdkTeardownOnTermination];
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+#pragma mark - Scene entry points
+
+- (void)handleOpenURL:(NSURL *)url {
     MEGALogDebug(@"[App Lifecycle] Application open URL %@", url);
     
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
@@ -438,53 +418,113 @@
     
     MEGALinkManager.linkURL = url;
     [self manageLink:url];
-    
-    return YES;
 }
 
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+- (void)handleContinueUserActivity:(NSUserActivity *)userActivity {
     MEGALogDebug(@"[App Lifecycle] Application continue user activity %@", userActivity.activityType);
-    
+
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
                                    msg:[NSString stringWithFormat:@"Application continue user activity %@", userActivity.activityType]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
-            MEGALinkManager.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
-            [self openAppFromSpotlight];
-            if ([self isAdsMainTabBarRootView] && ![LTHPasscodeViewController doesPasscodeExist]) {
-                [MEGALinkManager presentNode];
-            }
-        } else if ([userActivity.activityType isEqualToString:@"INStartCallIntent"]) {
-            INInteraction *interaction = userActivity.interaction;
-            INStartCallIntent *startCallIntent = (INStartCallIntent *)interaction.intent;
-            [self startCallFromIntent:startCallIntent];
-        } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
-            NSURL *universalLinkURL = userActivity.webpageURL;
-            if (universalLinkURL) {
-                MEGALinkManager.linkURL = universalLinkURL;
-                [self manageLink:universalLinkURL];
-            }
+
+    if (![MEGAReachabilityManager isReachable]) {
+        return;
+    }
+
+    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+        MEGALinkManager.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+        [self openAppFromSpotlight];
+        if ([self isAdsMainTabBarRootView] && ![LTHPasscodeViewController doesPasscodeExist]) {
+            [MEGALinkManager presentNode];
         }
-        return YES;
-    } else {
-        return NO;
+    } else if ([userActivity.activityType isEqualToString:@"INStartCallIntent"]) {
+        INInteraction *interaction = userActivity.interaction;
+        INStartCallIntent *startCallIntent = (INStartCallIntent *)interaction.intent;
+        [self startCallFromIntent:startCallIntent];
+    } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
+        NSURL *universalLinkURL = userActivity.webpageURL;
+        if (universalLinkURL) {
+            MEGALinkManager.linkURL = universalLinkURL;
+            [self manageLink:universalLinkURL];
+        }
     }
 }
 
-- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
+- (void)handleShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
     MEGALogDebug(@"[App Lifecycle] Application perform action for shortcut item");
-    
+
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
                                    msg:@"Application perform action for shortcut item"
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
-    
+
     if (isFetchNodesDone) {
         completionHandler([self manageQuickActionType:shortcutItem.type]);
     }
+}
+
+- (void)handleColdLaunchShortcutItem:(UIApplicationShortcutItem *)shortcutItem {
+    if (isFetchNodesDone) {
+        [self manageQuickActionType:shortcutItem.type];
+    } else {
+        self.quickActionType = shortcutItem.type;
+    }
+}
+
+#pragma mark - Scene connection
+
+- (void)sceneDidConnectWithWindow:(UIWindow *)window launchURL:(NSURL *)launchURL {
+    self.window = window;
+    [AppearanceManager setupAppearance:window.traitCollection];
+
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        [self setUpRootViewControllerForExistingSession];
+    } else {
+        [self setUpOnboardingResumingEphemeralAccountUnlessConfirming:launchURL];
+    }
+
+    [window makeKeyAndVisible];
+}
+
+- (void)setUpRootViewControllerForExistingSession {
+    if ([MEGAReachabilityManager isReachable]) {
+        [self showLaunchViewController];
+    } else if ([LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
+                                                                 withLogout:YES
+                                                             andLogoutTitle:LocalizedString(@"logoutLabel", @"")];
+        [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
+    } else {
+        _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        UIViewController *mainController = [self adsMainTabBarController:_mainTBC
+                                                     onViewFirstAppeared:nil];
+        [self.window setRootViewController:mainController];
+    }
+}
+
+/// An ephemeral account (sign-up not yet confirmed) is resumed unless the app was launched from
+/// the confirmation link, in which case the link completes the sign-up and the app just listens to
+/// the store as it does without any account.
+- (void)setUpOnboardingResumingEphemeralAccountUnlessConfirming:(NSURL *)launchURL {
+    self.window.rootViewController = [self makeOnboardingViewController];
+
+    NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
+    if (sessionId == nil) {
+        return;
+    }
+    if ([launchURL.absoluteString containsString:@"confirm"]) {
+        [self listenToStorePaymentTransactions];
+        return;
+    }
+
+    __weak typeof(self) weakSelf = self;
+    MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
+        [weakSelf showConfirmEmailView];
+    }];
+    createAccountRequestDelegate.resumeCreateAccount = YES;
+    [MEGASdk.shared resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

@@ -7,7 +7,7 @@ import MEGADomain
 ///   * `processActionsAfterSetRootVC`, once the tab bar is the window root and any passcode has been entered. A
 ///     free user's forced Upgrade screen at login does not go through there, which is what keeps the dialog out
 ///     of that flow.
-///   * `applicationWillEnterForeground:`, for a return to an app that is already set up.
+///   * `appWillEnterForeground`, for a return to an app that is already set up.
 extension AppDelegate {
     @objc func showPromoLandingDialogIfNeeded() {
         Task { @MainActor in
