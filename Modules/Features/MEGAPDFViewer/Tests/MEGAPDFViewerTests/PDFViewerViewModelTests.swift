@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MEGAL10n
 @testable import MEGAPDFViewer
 import Observation
@@ -6,16 +7,20 @@ import PDFKit
 import Testing
 
 private final class MockPDFDocumentURLUseCase: PDFDocumentURLUseCaseProtocol {
-    private let stream: AsyncThrowingStream<PDFDocumentLoadEvent, any Error>
+    private let makeStream: () -> AsyncThrowingStream<PDFDocumentLoadEvent, any Error>
     private(set) var localDocumentURLCallCount = 0
 
     init(stream: AsyncThrowingStream<PDFDocumentLoadEvent, any Error>) {
-        self.stream = stream
+        makeStream = { stream }
+    }
+
+    init(makeStream: @escaping () -> AsyncThrowingStream<PDFDocumentLoadEvent, any Error>) {
+        self.makeStream = makeStream
     }
 
     func localDocumentURL(for pdfDocumentSource: PDFViewerDocumentSource) -> AsyncThrowingStream<PDFDocumentLoadEvent, any Error> {
         localDocumentURLCallCount += 1
-        return stream
+        return makeStream()
     }
 }
 
@@ -39,6 +44,7 @@ private struct MockPDFDocumentLoader: PDFDocumentLoading {
 @MainActor
 struct PDFViewerViewModelTests {
     private func makeSUT(
+        pdfDocumentSource: PDFViewerDocumentSource = .local(URL(fileURLWithPath: "/tmp/test.pdf")),
         documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
         documentLoader: some PDFDocumentLoading = MockPDFDocumentLoader(
             document: MockPDFDocumentLoader.makeDocument()
@@ -46,7 +52,7 @@ struct PDFViewerViewModelTests {
     ) -> PDFViewerViewModel {
         PDFViewerViewModel(
             dependency: PDFViewerViewModel.Dependency(
-                pdfDocumentSource: .local(URL(fileURLWithPath: "/tmp/test.pdf")),
+                pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: documentURLUseCase,
                 documentLoader: documentLoader,
                 fileName: "test.pdf"
@@ -127,13 +133,16 @@ struct PDFViewerViewModelTests {
             documentLoader: MockPDFDocumentLoader(document: nil)
         )
 
+        sut.isChromeHidden = true
+
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(url))
         continuation.finish()
         await task.value
 
         #expect(sut.pdfDocument == nil)
-        #expect(sut.state == .failed)
+        #expect(sut.state == .failed(.init(.documentUnreadable, isShowingDamagedFileAlert: true)))
+        #expect(!sut.isChromeHidden)
     }
 
     @Test func loadDocumentURL_streamThrows_setsFailedState() async {
@@ -142,12 +151,102 @@ struct PDFViewerViewModelTests {
             throwing: (any Error).self
         )
         let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+        sut.isChromeHidden = true
 
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.finish(throwing: PDFDocumentLoadError.transferFailed)
 
-        await awaitState(sut, equals: .failed)
+        await awaitState(sut, equals: .failed(.init(.downloadFailed)))
+        #expect(!sut.isChromeHidden)
         task.cancel()
+    }
+
+    @Test func retryAfterDownloadFailure_resolvesNodeAgain() async {
+        let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
+        var attempt = 0
+        let useCase = MockPDFDocumentURLUseCase {
+            attempt += 1
+            return AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.finish(throwing: PDFDocumentLoadError.transferFailed)
+                } else {
+                    continuation.yield(.ready(url))
+                    continuation.finish()
+                }
+            }
+        }
+        let sut = makeSUT(
+            pdfDocumentSource: .node(NodeEntity(handle: 1)),
+            documentURLUseCase: useCase
+        )
+
+        await sut.loadDocumentFromSource()
+        #expect(sut.state == .failed(.init(.downloadFailed)))
+
+        await sut.retryDocumentLoad()
+
+        #expect(sut.state.isReady)
+        #expect(useCase.localDocumentURLCallCount == 2)
+    }
+
+    @Test func retryAfterUnreadableLocalFile_resolvesSourceAgain() async {
+        let url = URL(fileURLWithPath: "/tmp/damaged.pdf")
+        let useCase = MockPDFDocumentURLUseCase {
+            AsyncThrowingStream { continuation in
+                continuation.yield(.ready(url))
+                continuation.finish()
+            }
+        }
+        let sut = makeSUT(
+            documentURLUseCase: useCase,
+            documentLoader: MockPDFDocumentLoader(document: nil)
+        )
+
+        await sut.loadDocumentFromSource()
+        #expect(sut.state == .failed(.init(.documentUnreadable, isShowingDamagedFileAlert: true)))
+
+        await sut.retryDocumentLoad()
+
+        #expect(sut.state == .failed(.init(.documentUnreadable, isShowingDamagedFileAlert: true)))
+        #expect(useCase.localDocumentURLCallCount == 2)
+    }
+
+    @Test func retry_cancelledAttemptLateEvents_doNotChangeState() async {
+        let (failedStream, failedContinuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let (cancelledStream, cancelledContinuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let (currentStream, currentContinuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        var streams = [failedStream, cancelledStream, currentStream]
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase { streams.removeFirst() })
+
+        failedContinuation.finish(throwing: PDFDocumentLoadError.transferFailed)
+        await sut.loadDocumentFromSource()
+
+        let cancelledTask = Task { await sut.retryDocumentLoad() }
+        cancelledContinuation.yield(.progress(0.2))
+        await awaitState(sut, equals: .loading(progress: 0.2))
+        cancelledTask.cancel()
+        await cancelledTask.value
+
+        let currentTask = Task { await sut.loadDocumentFromSource() }
+        cancelledContinuation.yield(.progress(0.9))
+        cancelledContinuation.finish(throwing: PDFDocumentLoadError.transferFailed)
+        currentContinuation.yield(.progress(0.5))
+        await awaitState(sut, equals: .loading(progress: 0.5))
+
+        currentContinuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        currentContinuation.finish()
+        await currentTask.value
+
+        #expect(sut.state.isReady)
     }
 
     @Test func loadDocumentURL_afterDocumentLoaded_doesNotResolveAgain() async {

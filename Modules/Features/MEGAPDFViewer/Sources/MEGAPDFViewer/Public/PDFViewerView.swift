@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 import Transfer
 
@@ -55,6 +56,7 @@ public struct PDFViewerView: View {
     }
 
     @State private var viewModel: PDFViewerViewModel
+    @State private var retryTask: Task<Void, Never>?
 
     private let onClose: @MainActor () -> Void
 
@@ -113,7 +115,10 @@ public struct PDFViewerView: View {
                 case .loading(let progress):
                     loadingView(progress: progress)
                 case .failed:
-                    failedView
+                    FileErrorView {
+                        retryTask?.cancel()
+                        retryTask = Task { await viewModel.retryDocumentLoad() }
+                    }
                 case .ready:
                     EmptyView()
                 }
@@ -133,9 +138,21 @@ public struct PDFViewerView: View {
             .transparentLiquidGlassOrSolidOtherwiseToolbarBackground(for: .navigationBar)
             .transparentLiquidGlassOrSolidOtherwiseToolbarBackground(for: .bottomBar)
             .statusBarHidden(viewModel.isChromeHidden)
+            .alert(
+                Strings.Localizable.PdfPreview.Damaged.title,
+                isPresented: $viewModel.isShowingDamagedFileAlert
+            ) {
+                Button(Strings.Localizable.ok) {}
+            } message: {
+                Text(Strings.Localizable.PdfPreview.Damaged.message)
+            }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
         .task { await viewModel.loadDocumentFromSource() }
+        .onDisappear {
+            retryTask?.cancel()
+            retryTask = nil
+        }
     }
 
     @ToolbarContentBuilder
@@ -151,24 +168,22 @@ public struct PDFViewerView: View {
             .accessibilityLabel(Strings.Localizable.close)
         }
 
-        if viewModel.state != .failed {
-            ToolbarItem(placement: .principal) {
-                PDFViewerTitleView(
-                    fileName: viewModel.fileName,
-                    pageIndicatorText: viewModel.pageIndicatorText
-                )
-            }
+        ToolbarItem(placement: .principal) {
+            PDFViewerTitleView(
+                fileName: viewModel.fileName,
+                pageIndicatorText: viewModel.pageIndicatorText
+            )
+        }
 
-            // Trailing items lay out in the order they are declared, so the
-            // indicator goes first and the more button keeps the trailing edge.
-            transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+        // Trailing items lay out in the order they are declared, so the
+        // indicator goes first and the more button keeps the trailing edge.
+        transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
 
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {} label: {
-                    MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
-                }
-                .accessibilityLabel(Strings.Localizable.more)
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {} label: {
+                MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
             }
+            .accessibilityLabel(Strings.Localizable.more)
         }
 
         if viewModel.state.isReady {
@@ -210,13 +225,5 @@ public struct PDFViewerView: View {
                 .frame(width: 150)
                 .tint(TokenColors.Icon.accent.swiftUI)
         }
-    }
-
-    /// IOS-12492 will provide a generic fullscreen error view, and replace this
-    /// question-mark view with the error view.
-    private var failedView: some View {
-        Image(systemName: "doc.questionmark")
-            .font(.system(size: 44))
-            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
     }
 }

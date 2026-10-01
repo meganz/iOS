@@ -69,7 +69,9 @@ struct PDFDocumentURLUseCase: PDFDocumentURLUseCaseProtocol {
                     guard transfer.totalBytes > 0 else { continue }
                     continuation.yield(.progress(Float(transfer.transferredBytes) / Float(transfer.totalBytes)))
                 case .finish(let transfer):
-                    if let path = transfer.path {
+                    if transfer.lastErrorExtended != nil {
+                        continuation.finish(throwing: PDFDocumentLoadError.transferFailed)
+                    } else if let path = transfer.path {
                         continuation.yield(.ready(URL(fileURLWithPath: path)))
                         continuation.finish()
                     } else {
@@ -80,6 +82,10 @@ struct PDFDocumentURLUseCase: PDFDocumentURLUseCaseProtocol {
                     break
                 }
             }
+            guard !Task.isCancelled else { return }
+            // Transfer streams that end without a `.finish` event are treated
+            // as failed.
+            continuation.finish(throwing: PDFDocumentLoadError.transferFailed)
         }
         continuation.onTermination = { @Sendable _ in task.cancel() }
         return stream

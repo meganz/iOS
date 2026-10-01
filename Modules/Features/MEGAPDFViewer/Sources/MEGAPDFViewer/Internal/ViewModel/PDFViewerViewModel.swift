@@ -19,9 +19,27 @@ final class PDFViewerViewModel {
             var pageCount: Int
         }
 
+        struct FailedState: Equatable {
+            var failureReason: FailureReason
+            var isShowingDamagedFileAlert: Bool
+
+            init(
+                _ failureReason: FailureReason,
+                isShowingDamagedFileAlert: Bool = false
+            ) {
+                self.failureReason = failureReason
+                self.isShowingDamagedFileAlert = isShowingDamagedFileAlert
+            }
+        }
+
+        enum FailureReason: Equatable {
+            case downloadFailed
+            case documentUnreadable
+        }
+
         case loading(progress: Float?)
         case ready(document: PDFDocument, pagingState: PagingState)
-        case failed
+        case failed(FailedState)
 
         var isReady: Bool {
             switch self {
@@ -29,9 +47,17 @@ final class PDFViewerViewModel {
             default: false
             }
         }
+
+        var isFailed: Bool { if case .failed = self { true } else { false } }
     }
 
     private(set) var state: ViewState = .loading(progress: nil)
+
+    private var failedState: ViewState.FailedState? {
+        get { if case .failed(let failedState) = state { failedState } else { nil } }
+        set { if let newValue, state.isFailed { state = .failed(newValue) } }
+    }
+
     var isChromeHidden = false
     var isShowingThumbnails = false
 
@@ -73,17 +99,40 @@ extension PDFViewerViewModel {
             }
         } catch {
             guard !Task.isCancelled else { return }
-            state = .failed
+            fail(.downloadFailed)
         }
     }
 
     private func loadDocument(at url: URL) {
         guard let document = dependency.documentLoader.loadDocument(url: url) else {
-            state = .failed
+            fail(.documentUnreadable)
             return
         }
         let pagingState = ViewState.PagingState(currentPageIndex: 0, pageCount: document.pageCount)
         state = .ready(document: document, pagingState: pagingState)
+    }
+
+    private func fail(_ reason: ViewState.FailureReason) {
+        isChromeHidden = false
+        state = .failed(
+            .init(reason,
+                  isShowingDamagedFileAlert: reason == .documentUnreadable)
+        )
+    }
+}
+
+// MARK: - Failure state management
+
+extension PDFViewerViewModel {
+    var isShowingDamagedFileAlert: Bool {
+        get { failedState?.isShowingDamagedFileAlert ?? false }
+        set { failedState?.isShowingDamagedFileAlert = newValue }
+    }
+
+    /// Returns to the loading state and resolves the source again.
+    func retryDocumentLoad() async {
+        state = .loading(progress: nil)
+        await loadDocumentFromSource()
     }
 }
 

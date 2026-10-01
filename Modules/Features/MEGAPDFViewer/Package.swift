@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../MEGASharedRepo/MEGATest"),
+        .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../Transfer"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
@@ -32,6 +33,7 @@ let package = Package(
                 "MEGAAssets",
                 "MEGADomain",
                 "MEGAL10n",
+                "MEGASwiftUI",
                 "MEGADesignToken",
                 "Transfer"
             ],
