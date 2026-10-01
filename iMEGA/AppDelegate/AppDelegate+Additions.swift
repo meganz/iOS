@@ -239,6 +239,24 @@ extension AppDelegate {
         ).start()
     }
 
+    /// A call answered through CallKit while no scene was connected (the app launched in the
+    /// background for the VoIP push) had no presenter for its UI. Replayed once the tab bar is the
+    /// window root, like the deferred storage event, so the root swap cannot tear it down.
+    @objc func openCallUIForInProgressCallIfNeeded() {
+        guard !MeetingContainerViewController.isAlreadyPresented,
+              let chatId = chatIdOfCallBeingJoinedOrInProgress(),
+              let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId)?.toChatRoomEntity() else { return }
+        openCallUIForInProgressCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom)
+    }
+
+    private func chatIdOfCallBeingJoinedOrInProgress() -> ChatIdEntity? {
+        [MEGAChatCallStatus.inProgress, .joining]
+            .lazy
+            .compactMap { MEGAChatSdk.shared.chatCalls(withState: $0) }
+            .first { $0.size > 0 }
+            .map { $0.megaHandle(at: 0) }
+    }
+
     private func showCookieDialog() async {
         guard shouldPresentModal else { return }
         

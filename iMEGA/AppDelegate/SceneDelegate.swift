@@ -7,6 +7,10 @@ import UIKit
 /// `AppDelegate`, which keeps owning the root view controller, and forwards the per-scene entry
 /// points to the handlers `AppDelegate` already has.
 ///
+/// A background launch (VoIP push, silent push, background refresh) connects no scene, and the
+/// system may disconnect the scene of a backgrounded app; `AppDelegate` is told about both ends so
+/// it does no window work in between.
+///
 /// App-wide life-cycle work (chat background status, background tasks, badge, privacy cover) is
 /// deliberately *not* forwarded from here: UIKit calls a scene delegate only for that scene's own
 /// transitions, and on iOS 26 and earlier the system connects a second, non-interactive scene while
@@ -39,6 +43,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let shortcutItem = connectionOptions.shortcutItem {
             appDelegate.handleColdLaunchShortcutItem(shortcutItem)
         }
+    }
+
+    func sceneDidDisconnect(_ scene: UIScene) {
+        appDelegate?.sceneDidDisconnect()
     }
 
     // MARK: - Entry points while running

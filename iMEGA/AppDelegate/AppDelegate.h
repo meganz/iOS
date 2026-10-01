@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 // Scene support, called by SceneDelegate. The scene creates the window, so everything that needs
 // one runs from -sceneDidConnectWithWindow:launchURL: rather than from application launch.
 - (void)sceneDidConnectWithWindow:(UIWindow *)window launchURL:(nullable NSURL *)launchURL NS_SWIFT_NAME(sceneDidConnect(with:launchURL:));
+- (void)sceneDidDisconnect;
 - (void)handleOpenURL:(NSURL *)url NS_SWIFT_NAME(handleOpenURL(_:));
 - (void)handleContinueUserActivity:(NSUserActivity *)userActivity NS_SWIFT_NAME(handleContinueUserActivity(_:));
 - (void)handleShortcutItem:(UIApplicationShortcutItem *)shortcutItem

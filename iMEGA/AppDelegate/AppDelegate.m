@@ -51,6 +51,10 @@
 @interface AppDelegate () <UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    // NO on a background launch (VoIP push, silent push, background refresh) and after the system
+    // disconnects the scene: there is no window to put a root view controller in, so UI work waits
+    // for the next connection.
+    BOOL isSceneConnected;
 }
 
 @property (nonatomic, strong) UIView *privacyView;
@@ -475,11 +479,13 @@
 #pragma mark - Scene connection
 
 - (void)sceneDidConnectWithWindow:(UIWindow *)window launchURL:(NSURL *)launchURL {
+    // Before anything that may call -updateRootViewControllerForCurrentState, which bails out otherwise.
+    isSceneConnected = YES;
     self.window = window;
     [AppearanceManager setupAppearance:window.traitCollection];
 
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        [self setUpRootViewControllerForExistingSession];
+        [self updateRootViewControllerForCurrentState];
     } else {
         [self setUpOnboardingResumingEphemeralAccountUnlessConfirming:launchURL];
     }
@@ -487,8 +493,26 @@
     [window makeKeyAndVisible];
 }
 
-- (void)setUpRootViewControllerForExistingSession {
-    if ([MEGAReachabilityManager isReachable]) {
+- (void)sceneDidDisconnect {
+    isSceneConnected = NO;
+    MEGALogDebug(@"[App Lifecycle] Scene did disconnect");
+}
+
+/// The window root follows the account state, so every event that moves that state (the scene
+/// connecting, fetch nodes finishing, a reload) comes here instead of choosing a root itself. Calling
+/// it again with the same state is harmless, which is what a scene reconnection needs.
+///
+/// Fetch nodes can finish before any scene exists (VoIP push, background refresh); in that case the
+/// tab bar is installed when the scene connects, not when fetch nodes finishes.
+- (void)updateRootViewControllerForCurrentState {
+    if (!isSceneConnected) {
+        [self logNoSceneConnectedFor:@"root view controller update"];
+        return;
+    }
+
+    if (isFetchNodesDone && !MEGASdk.isGuest && !isAccountFirstLogin) {
+        [self showMainTabBar];
+    } else if ([MEGAReachabilityManager isReachable]) {
         [self showLaunchViewController];
     } else if ([LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -525,6 +549,15 @@
     }];
     createAccountRequestDelegate.resumeCreateAccount = YES;
     [MEGASdk.shared resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
+}
+
+- (void)logNoSceneConnectedFor:(NSString *)work {
+    NSString *message = [NSString stringWithFormat:@"No scene connected, skipping %@", work];
+    MEGALogWarning(@"[App Lifecycle] %@", message);
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:message
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
@@ -747,6 +780,14 @@
 }
 
 - (void)showMainTabBar {
+    if (!isSceneConnected) {
+        // Nothing to show into; -updateRootViewControllerForCurrentState installs the tab bar once a
+        // scene connects. The Camera Uploads node does not depend on UI and must still be loaded.
+        [self logNoSceneConnectedFor:@"main tab bar"];
+        [self initializeCameraUploadsNode];
+        return;
+    }
+
     if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         
         void (^mainOnAppear)(void) = ^() {
@@ -821,6 +862,8 @@
     [self showTemporaryTransferErrorDialogIfNeeded];
 
     [self showStorageQuotaWarningIfNeeded];
+
+    [self openCallUIForInProgressCallIfNeeded];
 
     [self showPromoLandingDialogIfNeeded];
 
@@ -1396,7 +1439,7 @@
             
         case EventReloading: {
             isFetchNodesDone = NO;
-            [self showLaunchViewController];
+            [self updateRootViewControllerForCurrentState];
             break;
         }
         
@@ -1581,7 +1624,7 @@
             __weak typeof(self) weakSelf = self;
             
             if (!_isAccountFirstLogin) {
-                [weakSelf showMainTabBar];
+                [weakSelf updateRootViewControllerForCurrentState];
                 if (weakSelf.openChatLater) {
                     [weakSelf.mainTBC openChatRoomNumber:weakSelf.openChatLater];
                 }

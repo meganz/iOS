@@ -10,6 +10,17 @@
 
 + (UIViewController *)mnz_presentingViewController {
     UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
+#ifndef MNZ_SHARE_EXTENSION
+    if (rootViewController == nil) {
+        // No connected scene (background launch) or no root yet: whatever the caller presents is lost.
+        NSString *message = @"No presenting view controller: no key window in the connected scenes";
+        MEGALogWarning(@"[App Lifecycle] %@", message);
+        [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                       msg:message
+                                      file:@(__FILENAME__)
+                                  function:@(__FUNCTION__)];
+    }
+#endif
     
     while (rootViewController.presentedViewController) {
         rootViewController = rootViewController.presentedViewController;
