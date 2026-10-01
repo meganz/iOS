@@ -1,11 +1,14 @@
 import ContinueWhereYouLeftOff
 import MEGADomain
+import MEGASwift
 
 /// Mock `LeftOffItemsStoreProtocol` for repository tests. Surfaces raw errors (untyped `throws`),
 /// mirroring the real store, so the repository's error mapping can be exercised.
 package final class MockLeftOffItemsStore: LeftOffItemsStoreProtocol, @unchecked Sendable {
     package var fetchItemsResult: [LeftOffItemEntity]
     package var errorToThrow: (any Error)?
+    package var changesSignalSequenceResult: AnyAsyncSequence<Void> =
+        AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
 
     package private(set) var recordedItems: [LeftOffItemEntity] = []
     package private(set) var removedHandles: [[HandleEntity]] = []
@@ -49,5 +52,9 @@ package final class MockLeftOffItemsStore: LeftOffItemsStoreProtocol, @unchecked
     package func clearHistory() async throws {
         if let errorToThrow { throw errorToThrow }
         clearHistoryCallCount += 1
+    }
+
+    package func changesSignalSequence() -> AnyAsyncSequence<Void> {
+        changesSignalSequenceResult
     }
 }

@@ -176,17 +176,12 @@ struct ViewedLinksSwiftDataTests {
         @Test("change signal emits on a persisted mutation")
         func changeSignalEmitsOnMutation() async throws {
             let store = makeStore()
-            let signal = store.changesSignalSequence()
+            // Making the iterator registers the observer, so the write below cannot be missed.
+            var iterator = store.changesSignalSequence().makeAsyncIterator()
 
-            let received = Task { () -> Bool in
-                for await _ in signal { return true }
-                return false
-            }
-            // The observer registers on iteration, so give it a head start before mutating.
-            try await Task.sleep(for: .milliseconds(50))
             try await store.record(makeLink(handle: 1))
 
-            #expect(await received.value)
+            #expect(await iterator.next() != nil)
         }
 
         @Test("a thrown write rolls back and does not poison the context")

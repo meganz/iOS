@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Foundation
 import MEGADomain
 import MEGASwift
@@ -66,10 +67,11 @@ package struct LeftOffItemsUseCase: LeftOffItemsUseCaseProtocol {
     }
 
     package func changesSignalSequence() -> AnyAsyncSequence<Void> {
-        // [IOS-12121] - Combine with store change
-        nodeUseCase.nodeUpdates
-            .map { _ in () }
-            .eraseToAnyAsyncSequence()
+        merge(
+            repository.changesSignalSequence(),
+            nodeUseCase.nodeUpdates.map { _ in () }
+        )
+        .eraseToAnyAsyncSequence()
     }
 
     private func fetchBatch(

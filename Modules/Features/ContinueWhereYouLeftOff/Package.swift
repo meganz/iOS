@@ -26,7 +26,10 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGASwift"),
 
         // Test
-        .package(path: "../../MEGASharedRepo/MEGATest")
+        .package(path: "../../MEGASharedRepo/MEGATest"),
+
+        // External
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
         .target(
@@ -34,7 +37,8 @@ let package = Package(
             dependencies: [
                 "MEGADomain",
                 "MEGAFoundation",
-                "MEGASwift"
+                "MEGASwift",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ]
         ),
         .target(

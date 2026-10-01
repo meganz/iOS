@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 package protocol LeftOffItemsRepositoryProtocol: Sendable {
     func fetchItems(sortedBy key: LeftOffItemsSortKey, ascending: Bool, limit: Int) async throws(LeftOffItemErrorEntity) -> [LeftOffItemEntity]
@@ -6,4 +7,5 @@ package protocol LeftOffItemsRepositoryProtocol: Sendable {
     func remove(_ items: [LeftOffItemEntity]) async throws(LeftOffItemErrorEntity)
     func removeUnavailable(handle: HandleEntity) async throws(LeftOffItemErrorEntity)
     func clearHistory() async throws(LeftOffItemErrorEntity)
+    func changesSignalSequence() -> AnyAsyncSequence<Void>
 }

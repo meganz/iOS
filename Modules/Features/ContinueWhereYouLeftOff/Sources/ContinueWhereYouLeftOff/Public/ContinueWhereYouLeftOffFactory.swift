@@ -1,7 +1,7 @@
 import MEGADomain
 
 public enum ContinueWhereYouLeftOffFactory {
-    private static let sharedStore: any LeftOffItemsStoreProtocol = DummyLeftOffItemsStore()
+    private static let sharedStore: any LeftOffItemsStoreProtocol = LeftOffItemsStore()
 
     public static func makeLeftOffItemsUseCase(
         nodeUseCase: some NodeUseCaseProtocol,

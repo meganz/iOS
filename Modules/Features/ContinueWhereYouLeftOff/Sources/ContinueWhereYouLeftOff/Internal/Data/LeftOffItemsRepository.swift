@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAFoundation
+import MEGASwift
 
 package struct LeftOffItemsRepository: LeftOffItemsRepositoryProtocol {
     private let store: any LeftOffItemsStoreProtocol
@@ -26,6 +27,10 @@ package struct LeftOffItemsRepository: LeftOffItemsRepositoryProtocol {
 
     package func clearHistory() async throws(LeftOffItemErrorEntity) {
         try await perform { try await store.clearHistory() }
+    }
+
+    package func changesSignalSequence() -> AnyAsyncSequence<Void> {
+        store.changesSignalSequence()
     }
 
     private func perform<T>(_ operation: () async throws -> T) async throws(LeftOffItemErrorEntity) -> T {

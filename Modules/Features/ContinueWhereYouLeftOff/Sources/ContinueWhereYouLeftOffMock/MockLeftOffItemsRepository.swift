@@ -1,5 +1,6 @@
 import ContinueWhereYouLeftOff
 import MEGADomain
+import MEGASwift
 
 /// Mock `LeftOffItemsRepositoryProtocol` for use-case tests.
 package final class MockLeftOffItemsRepository: LeftOffItemsRepositoryProtocol, @unchecked Sendable {
@@ -8,6 +9,8 @@ package final class MockLeftOffItemsRepository: LeftOffItemsRepositoryProtocol, 
     /// so tests can drive the `topItems` retry loop across changing store contents.
     package var fetchItemsBatches: [[LeftOffItemEntity]] = []
     package var errorToThrow: LeftOffItemErrorEntity?
+    package var changesSignalSequenceResult: AnyAsyncSequence<Void> =
+        AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
 
     package private(set) var fetchItemsCallCount = 0
     package private(set) var recordedItems: [LeftOffItemEntity] = []
@@ -55,5 +58,9 @@ package final class MockLeftOffItemsRepository: LeftOffItemsRepositoryProtocol, 
     package func clearHistory() async throws(LeftOffItemErrorEntity) {
         if let errorToThrow { throw errorToThrow }
         clearHistoryCallCount += 1
+    }
+
+    package func changesSignalSequence() -> AnyAsyncSequence<Void> {
+        changesSignalSequenceResult
     }
 }

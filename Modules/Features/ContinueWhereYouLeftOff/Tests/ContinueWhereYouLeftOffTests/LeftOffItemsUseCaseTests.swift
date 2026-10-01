@@ -17,6 +17,7 @@ struct LeftOffItemsUseCaseTests {
         nodes: [HandleEntity: NodeEntity] = [:],
         rootNode: NodeEntity? = NodeEntity(handle: 999),
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence(),
+        repositoryChanges: AnyAsyncSequence<Void> = EmptyAsyncSequence<Void>().eraseToAnyAsyncSequence(),
         isNodeInRubbishBin: Bool = false,
         repositoryError: LeftOffItemErrorEntity? = nil,
         excludeSensitives: Bool = false,
@@ -25,6 +26,7 @@ struct LeftOffItemsUseCaseTests {
     ) -> (LeftOffItemsUseCase, MockLeftOffItemsRepository) {
         let repository = MockLeftOffItemsRepository(fetchItemsResult: stored, errorToThrow: repositoryError)
         repository.fetchItemsBatches = fetchBatches
+        repository.changesSignalSequenceResult = repositoryChanges
         let sut = LeftOffItemsUseCase(
             repository: repository,
             nodeUseCase: MockNodeUseCase(
@@ -41,6 +43,13 @@ struct LeftOffItemsUseCaseTests {
             )
         )
         return (sut, repository)
+    }
+
+    private func finiteSignal(count: Int) -> AnyAsyncSequence<Void> {
+        AsyncStream<Void> { continuation in
+            for _ in 0..<count { continuation.yield(()) }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
     }
 
     private func item(_ handle: HandleEntity, name: String = "stored") -> LeftOffItemEntity {
@@ -331,6 +340,36 @@ struct LeftOffItemsUseCaseTests {
         }
 
         #expect(ticks == 2)
+    }
+
+    @Test("changesSignalSequence emits a tick for each store change")
+    func changesSignalSequenceTicksOnStoreChanges() async {
+        let (sut, _) = makeSUT(repositoryChanges: finiteSignal(count: 3))
+
+        var ticks = 0
+        for await _ in sut.changesSignalSequence() {
+            ticks += 1
+        }
+
+        #expect(ticks == 3)
+    }
+
+    /// Both arms are finite on purpose: the merged sequence only finishes once every base finishes.
+    @Test("changesSignalSequence merges store changes with node updates")
+    func changesSignalSequenceMergesBothSources() async {
+        let updates = AsyncStream<[NodeEntity]> { continuation in
+            continuation.yield([NodeEntity(handle: 1)])
+            continuation.yield([NodeEntity(handle: 2)])
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+        let (sut, _) = makeSUT(nodeUpdates: updates, repositoryChanges: finiteSignal(count: 3))
+
+        var ticks = 0
+        for await _ in sut.changesSignalSequence() {
+            ticks += 1
+        }
+
+        #expect(ticks == 5)
     }
 
     // MARK: - Writes
