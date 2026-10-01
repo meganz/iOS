@@ -239,12 +239,29 @@ extension AppDelegate {
         ).start()
     }
 
-    /// A call answered through CallKit while no scene was connected (the app launched in the
-    /// background for the VoIP push) had no presenter for its UI. Replayed once the tab bar is the
-    /// window root, like the deferred storage event, so the root swap cannot tear it down.
-    @objc func openCallUIForInProgressCallIfNeeded() {
-        guard !MeetingContainerViewController.isAlreadyPresented,
-              let chatId = chatIdOfCallBeingJoinedOrInProgress(),
+    // MARK: - Meeting UI across a root change
+
+    /// The meeting UI is presented on whatever the window root is at the time. `showMainTabBar` calls this
+    /// before replacing the root, which dismisses that UI; it is opened again by `openPendingCallUI` once
+    /// the tab bar is the stable root. Stored and consumed once, like the deferred storage event, so a
+    /// call the user minimised on purpose is never reopened.
+    @objc func deferCallUIWhenPresented() {
+        guard MeetingContainerViewController.isAlreadyPresented else { return }
+        isCallUIPending = true
+    }
+
+    /// A call answered through CallKit while no scene was connected (background launch for the VoIP
+    /// push), or a scene reconnecting during a call, has no meeting UI on screen.
+    @objc func deferCallUIWhenInCallWithoutUI() {
+        guard chatIdOfCallBeingJoinedOrInProgress() != nil,
+              !MeetingContainerViewController.isAlreadyPresented else { return }
+        isCallUIPending = true
+    }
+
+    @objc func openPendingCallUI() {
+        guard isCallUIPending else { return }
+        isCallUIPending = false
+        guard let chatId = chatIdOfCallBeingJoinedOrInProgress(),
               let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId)?.toChatRoomEntity() else { return }
         openCallUIForInProgressCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom)
     }

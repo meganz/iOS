@@ -20,12 +20,16 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
 @property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
-@property (nonatomic) NSNumber *openChatLater;
+@property (nonatomic, nullable) NSNumber *openChatLater;
 @property (nonatomic) BOOL showAccountUpgradeScreen;
 @property (nonatomic) BOOL loadProductsAndShowAccountUpgradeScreen;
 @property (strong, nonatomic) CloudDriveQuickUploadActionRouter* quickUploadActionRouter;
 @property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 @property (nonatomic) BOOL didDispatchDefaultLaunchDestination;
+/// The meeting UI of the call in progress must be opened once the tab bar is the window root. Set when a
+/// root change is about to tear it down or a scene connects to an account in a call with no meeting UI;
+/// consumed once by -processActionsAfterSetRootVC, so a call the user minimised is never reopened.
+@property (nonatomic, getter=isCallUIPending) BOOL callUIPending;
 
 - (void)showMainTabBar;
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;

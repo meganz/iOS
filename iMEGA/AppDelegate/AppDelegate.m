@@ -489,6 +489,9 @@
     [AppearanceManager setupAppearance:window.traitCollection];
 
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        // A call answered while no scene was connected has no meeting UI yet; the root below is not
+        // stable enough to present it on, so it is deferred to the tab bar.
+        [self deferCallUIWhenInCallWithoutUI];
         [self updateRootViewControllerForCurrentState];
     } else {
         [self setUpOnboardingResumingEphemeralAccountUnlessConfirming:launchURL];
@@ -793,10 +796,8 @@
 
 - (void)showMainTabBar {
     if (!isSceneConnected) {
-        // Nothing to show into; -updateRootViewControllerForCurrentState installs the tab bar once a
-        // scene connects. The Camera Uploads node does not depend on UI and must still be loaded.
+        // Nothing to show into; -updateRootViewControllerForCurrentState installs the tab bar once a scene connects.
         [self logNoSceneConnectedFor:@"main tab bar"];
-        [self initializeCameraUploadsNode];
         return;
     }
 
@@ -819,6 +820,7 @@
                     [self processActionsAfterSetRootVC];
                 }
             }
+            [self openChatRoomLaterIfPending];
         };
         
         if (![self isAdsMainTabBarRootView]) {
@@ -826,6 +828,8 @@
             
             UIViewController *mainController = [self adsMainTabBarController:_mainTBC
                                                          onViewFirstAppeared:mainOnAppear];
+            // Replacing the root dismisses whatever the old root presented, the meeting UI included.
+            [self deferCallUIWhenPresented];
             [self.window setRootViewController:mainController];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -845,6 +849,16 @@
     }
     
     [self initializeCameraUploadsNode];
+}
+
+/// `openChatLater` is set by a chat notification tap that arrives before the tab bar exists.
+- (void)openChatRoomLaterIfPending {
+    NSNumber *chatNumber = self.openChatLater;
+    if (chatNumber == nil || self.mainTBC == nil) {
+        return;
+    }
+    self.openChatLater = nil;
+    [self.mainTBC openChatRoomNumber:chatNumber];
 }
 
 - (void)processActionsAfterSetRootVC {
@@ -875,7 +889,7 @@
 
     [self showStorageQuotaWarningIfNeeded];
 
-    [self openCallUIForInProgressCallIfNeeded];
+    [self openPendingCallUI];
 
     [self showPromoLandingDialogIfNeeded];
 
@@ -1451,7 +1465,9 @@
             
         case EventReloading: {
             isFetchNodesDone = NO;
-            [self updateRootViewControllerForCurrentState];
+            if (isSceneConnected) {
+                [self showLaunchViewController];
+            }
             break;
         }
         
@@ -1637,10 +1653,12 @@
             
             if (!_isAccountFirstLogin) {
                 [weakSelf updateRootViewControllerForCurrentState];
-                if (weakSelf.openChatLater) {
-                    [weakSelf.mainTBC openChatRoomNumber:weakSelf.openChatLater];
+                if (weakSelf.mainTBC) {
+                    [weakSelf openChatRoomLaterIfPending];
                 }
             }
+            // Independent of any UI; -showMainTabBar also does this for the login flow.
+            [weakSelf initializeCameraUploadsNode];
             
             [MEGASdk.shared getAccountDetails];
             [weakSelf refreshAccountDetails];
