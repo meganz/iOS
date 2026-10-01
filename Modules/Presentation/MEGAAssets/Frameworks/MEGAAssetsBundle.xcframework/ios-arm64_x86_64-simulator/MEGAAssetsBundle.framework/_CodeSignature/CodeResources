@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		buAWW3Ngfl9tzbdMLrvJEtrCTs4=
+		kWSLLP/KaygI3oq4aXA9si/BDFQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -14,11 +14,11 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		zc86yQZ8o2hcFv1ekGFIIZIA5sg=
+		UuW0xEFEfkMSISAfkWSLb+DVo7E=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		h32IfY8SaX1TaIjPimUgKDUUZig=
+		J6o4WJi8HQN9lKCpAIo00D8zDpc=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -26,19 +26,19 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		h32IfY8SaX1TaIjPimUgKDUUZig=
+		J6o4WJi8HQN9lKCpAIo00D8zDpc=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		kBcScRYbaWc+P9aidCpTzX/yr50=
+		QGofsoW7UOSKrBMLhWQG+RH9XQ8=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		zc86yQZ8o2hcFv1ekGFIIZIA5sg=
+		UuW0xEFEfkMSISAfkWSLb+DVo7E=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		ANEyJIuTP4aAcL7H/RemDeGVhq8=
+		64Tsg665eDKmSMDJ22nw5kxiJQU=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -46,11 +46,11 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		ANEyJIuTP4aAcL7H/RemDeGVhq8=
+		64Tsg665eDKmSMDJ22nw5kxiJQU=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		qFD4BhjmjHIkPfs+Fo/yoVLywhk=
+		WdL3/NfxXaHp0t7uQUezcgMoOJ8=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -59,21 +59,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WSMa4mLFrmZKkwYY0vyJ08iP2MOx1PU6h6+UtS9awGM=
+			Kir2atCGz6f+xPfxsQiMHyEv4Lkq+VR2DJaVLdtXLiM=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JmHSUUGYdkIylnKL32ytunypUap488gCGMBVvNUmpy8=
+			PFpJxim9A5VoVkwlHsXArpwdNXBxHeggYYeeIS/6VE0=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iu3hRH4qPKgncqEuLBKsOtwc/gd6Alrdh2hT9ul59o0=
+			moyZQwHNZZnpMe6wsH+CMB0ySD5Oi5eNMRcwIAygntM=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -87,28 +87,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			iu3hRH4qPKgncqEuLBKsOtwc/gd6Alrdh2hT9ul59o0=
+			moyZQwHNZZnpMe6wsH+CMB0ySD5Oi5eNMRcwIAygntM=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			92bXJLwHgg877RDQFR4zktr2Qkz7WBnRiTsDj42ZoJE=
+			BkfpTI7IUxVvwzhRR4fPVlKAUbap65zPAt/cLBBxdrU=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JmHSUUGYdkIylnKL32ytunypUap488gCGMBVvNUmpy8=
+			PFpJxim9A5VoVkwlHsXArpwdNXBxHeggYYeeIS/6VE0=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MeMRqNCBUxj27LGJt3P9BDzAmHvNE2kRlSRkzuT7l4M=
+			1352ydKsdOM0y0CiAqZhGpnTvjCHm7TOCXvByw45IFA=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -122,14 +122,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			MeMRqNCBUxj27LGJt3P9BDzAmHvNE2kRlSRkzuT7l4M=
+			1352ydKsdOM0y0CiAqZhGpnTvjCHm7TOCXvByw45IFA=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HJFXQ5EjkA88YB16l9VOIEH8yX9BVkjARZjnDp30mvk=
+			fHjAbQmm6oQkBMaIjW+1cnvZPFaK45PsxKPovIEDvek=
 			</data>
 		</dict>
 	</dict>

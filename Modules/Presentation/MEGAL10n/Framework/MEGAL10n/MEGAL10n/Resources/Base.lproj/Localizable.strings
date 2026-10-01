@@ -5244,3 +5244,15 @@
 "viewedLinks.clear.success.message"="Viewed links history has been cleared";
 /* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
 "sorting.lastAccessed.title"="Date";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="Continue where your left";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="Items you left unfinished will appear here";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="Clear history";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="Are you sure you want to clear your history? This cannot be undone.";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="Clear file?";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="Clear files?";

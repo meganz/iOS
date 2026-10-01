@@ -362,4 +362,5 @@ public struct MEGAImageBundle {
     public static var promoBannerIpad: Image { Image(.promoBannerIpad) }
     public static var monoWaveformMediumThinOutline: Image { Image(.monoWaveformMediumThinOutline) }
     public static var viewedLinks: Image { Image(.viewedLinks) }
+    public static var continueWhereYouLeftIcon: Image { Image(.continueWhereYouLeftIcon) }
 }

@@ -2467,6 +2467,28 @@ public enum Strings {
         }
       }
     }
+    public enum ContinueWhereYouLeftOff {
+      public static let title: Swift.String
+      public enum Clear {
+        public enum Confirmation {
+          public static let message: Swift.String
+          public static let title: Swift.String
+        }
+      }
+      public enum ClearFile {
+        public enum Confirmation {
+          public static let title: Swift.String
+        }
+      }
+      public enum ClearFiles {
+        public enum Confirmation {
+          public static let title: Swift.String
+        }
+      }
+      public enum Empty {
+        public static let message: Swift.String
+      }
+    }
     public enum Device {
       public enum Center {
         public static let title: Swift.String
