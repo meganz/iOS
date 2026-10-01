@@ -481,6 +481,10 @@
 - (void)sceneDidConnectWithWindow:(UIWindow *)window launchURL:(NSURL *)launchURL {
     // Before anything that may call -updateRootViewControllerForCurrentState, which bails out otherwise.
     isSceneConnected = YES;
+    [self logLifeCycle:[NSString stringWithFormat:@"Scene did connect, scene state %ld, application state %ld, fetch nodes done %d",
+                        (long)window.windowScene.activationState,
+                        (long)UIApplication.sharedApplication.applicationState,
+                        isFetchNodesDone]];
     self.window = window;
     [AppearanceManager setupAppearance:window.traitCollection];
 
@@ -495,7 +499,7 @@
 
 - (void)sceneDidDisconnect {
     isSceneConnected = NO;
-    MEGALogDebug(@"[App Lifecycle] Scene did disconnect");
+    [self logLifeCycle:@"Scene did disconnect"];
 }
 
 /// The window root follows the account state, so every event that moves that state (the scene
@@ -511,16 +515,20 @@
     }
 
     if (isFetchNodesDone && !MEGASdk.isGuest && !isAccountFirstLogin) {
+        [self logLifeCycle:@"Root view controller: main tab bar"];
         [self showMainTabBar];
     } else if ([MEGAReachabilityManager isReachable]) {
+        [self logLifeCycle:@"Root view controller: launch screen, waiting for fetch nodes"];
         [self showLaunchViewController];
     } else if ([LTHPasscodeViewController doesPasscodeExist]) {
+        [self logLifeCycle:@"Root view controller: passcode, offline"];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:NO
                                                                  withLogout:YES
                                                              andLogoutTitle:LocalizedString(@"logoutLabel", @"")];
         [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
     } else {
+        [self logLifeCycle:@"Root view controller: main tab bar, offline"];
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         UIViewController *mainController = [self adsMainTabBarController:_mainTBC
                                                      onViewFirstAppeared:nil];
@@ -552,7 +560,11 @@
 }
 
 - (void)logNoSceneConnectedFor:(NSString *)work {
-    NSString *message = [NSString stringWithFormat:@"No scene connected, skipping %@", work];
+    [self logLifeCycle:[NSString stringWithFormat:@"No scene connected, skipping %@", work]];
+}
+
+/// Goes to the SDK log file and to Crashlytics: a root that never shows up is invisible otherwise.
+- (void)logLifeCycle:(NSString *)message {
     MEGALogWarning(@"[App Lifecycle] %@", message);
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
                                    msg:message
