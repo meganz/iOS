@@ -1,0 +1,78 @@
+{
+ "devices": [
+  {
+   "architecture": "arm64",
+   "deviceId": "F74E2217-CB6E-4DA1-9085-7589B7666DA8",
+   "deviceName": "iPhone 17",
+   "modelName": "iPhone 17",
+   "osBuildNumber": "23E254a",
+   "osVersion": "26.4.1",
+   "platform": "iOS Simulator"
+  }
+ ],
+ "testNodes": [
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          {
+           "children": [
+            {
+             "name": "RetryProbeTests.swift:11: failed - Deliberate failure before the measurement",
+             "nodeType": "Failure Message"
+            }
+           ],
+           "duration": "0,25s",
+           "durationInSeconds": 0.25288403034210205,
+           "name": "First Run",
+           "nodeIdentifier": "1",
+           "nodeType": "Repetition",
+           "result": "Failed"
+          },
+          {
+           "duration": "0,042s",
+           "durationInSeconds": 0.04206109046936035,
+           "name": "Retry 1",
+           "nodeIdentifier": "2",
+           "nodeType": "Repetition",
+           "result": "Passed"
+          }
+         ],
+         "details": "⚠️ Passed after 1 retry",
+         "duration": "0,15s",
+         "durationInSeconds": 0.1474725604057312,
+         "name": "testFailsBeforeMeasuringOnce()",
+         "nodeIdentifier": "RetryProbeTests/testFailsBeforeMeasuringOnce()",
+         "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/RetryProbeTests/testFailsBeforeMeasuringOnce",
+         "nodeType": "Test Case",
+         "result": "Passed"
+        }
+       ],
+       "name": "RetryProbeTests",
+       "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/RetryProbeTests",
+       "nodeType": "Test Suite",
+       "result": "Passed"
+      }
+     ],
+     "name": "MEGABenchmarkTests",
+     "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests",
+     "nodeType": "Unit test bundle",
+     "result": "Passed"
+    }
+   ],
+   "name": "RetryTests",
+   "nodeType": "Test Plan",
+   "result": "Passed"
+  }
+ ],
+ "testPlanConfigurations": [
+  {
+   "configurationId": "1",
+   "configurationName": "Retry"
+  }
+ ]
+}

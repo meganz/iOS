@@ -1,0 +1,26 @@
+{
+  "ParsingBenchmarks/testChunkedParseTenMegabytes": {
+    "CPU Cycles": 9656492.17,
+    "CPU Instructions Retired": 37725880.32,
+    "CPU Time": 2.56,
+    "Clock Monotonic Time": 2.54,
+    "Peak Heap Growth": 160.67
+  },
+  "ParsingBenchmarks/testParseTwoMegabytes": {
+    "CPU Cycles": 5966032.4,
+    "CPU Instructions Retired": 24004053.01,
+    "CPU Time": 1.59,
+    "Clock Monotonic Time": 1.58,
+    "Peak Heap Growth": 154.55
+  },
+  "ParsingBenchmarks/testPathologicalInputs": {
+    "CPU Cycles": 25215960.14,
+    "CPU Instructions Retired": 107473790.93,
+    "CPU Time": 11.18,
+    "Clock Monotonic Time": 11.85
+  },
+  "ParsingBenchmarks/testWholeParseTenMegabytes": {
+    "Clock Monotonic Time": 1.53,
+    "Peak Heap Growth": 685.68
+  }
+}

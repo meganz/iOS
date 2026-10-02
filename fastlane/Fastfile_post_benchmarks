@@ -1,0 +1,8 @@
+  lane :post_benchmark_report_to_mr do |options|
+    post_markdown_to_gitlab_mr_note(
+      markdown_path: "outputs/benchmarks.md",
+      mr: options[:mr],
+      token: options[:token],
+      kind: "benchmark"
+    )
+  end

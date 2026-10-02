@@ -80,7 +80,7 @@ Only terms that are specific to Markdown, cmark, or this package are listed. Add
 | Fuzz | Tests that generate random inputs from a seed and compare the chunked tree with the whole tree. |
 | Attack input | A hand-written hostile input, for example 50,000 nested `>` or a 5,000-column table. |
 | Corpus | The generated benchmark files, such as `mixed-10m` (10 MB of mixed Markdown). Deterministic from a seed. Not in git. |
-| Bench | The gated timing and memory tests in `ParsingBenchTests`. |
+| Bench | The gated timing and memory tests in `ParsingBenchmarks` (target `MEGAMarkdownBenchmarks`). |
 | First content | The time from open until the first row is on screen. A preview measure, not a parser measure. |
 | Peak memory | The highest process footprint during one measured operation, sampled from a background thread. |
 | Gate | A pass or fail bound in a bench test, for example "chunked peak under half of whole". |

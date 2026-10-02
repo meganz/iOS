@@ -7,6 +7,9 @@ import groovy.transform.Field
 // Loaded jenkinsfile/package_tests.groovy. The stage and its post block share it.
 @Field def packageTests = null
 
+// Loaded jenkinsfile/benchmarks.groovy. The stage and its post block share it.
+@Field def benchmarks = null
+
 NODE_LABELS = 'mac-jenkins-slave-ios-xcode-26'
 
 def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
@@ -62,6 +65,11 @@ def postErrors() {
 
 def postAppSizeToMR() {
     executeFastlaneTask("post_app_size_to_mr")
+}
+
+def postBenchmarkReportToMR() {
+    // The report matters most when the benchmarks fail, so it does not wait for the unit test step.
+    executeFastlaneTask("post_benchmark_report_to_mr", false)
 }
 
 def setupProjectDependencies() {
@@ -227,6 +235,43 @@ pipeline {
                             script {
                                 envInjector.injectEnvs {
                                     packageTests.reportPackageCoverage()
+                                }
+                            }
+                        }
+                        cleanup {
+                            cleanWs(
+                                cleanWhenFailure: true,
+                                cleanWhenAborted: true,
+                                cleanWhenNotBuilt: true,
+                                cleanWhenUnstable: true,
+                                cleanWhenSuccess: true,
+                                disableDeferredWipeout: true,
+                                deleteDirs: true
+                            )
+                        }
+                    }
+                }
+                stage('Benchmarks') {
+                    agent { label NODE_LABELS }
+                    steps {
+                        gitlabCommitStatus(name: 'Benchmarks') {
+                            withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                script {
+                                    envInjector.injectEnvs {
+                                        benchmarks = load('jenkinsfile/benchmarks.groovy')
+                                        benchmarks.runBenchmarks { setupProjectDependencies() }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            script {
+                                envInjector.injectEnvs {
+                                    if (benchmarks != null && benchmarks.publishResults()) {
+                                        postBenchmarkReportToMR()
+                                    }
                                 }
                             }
                         }

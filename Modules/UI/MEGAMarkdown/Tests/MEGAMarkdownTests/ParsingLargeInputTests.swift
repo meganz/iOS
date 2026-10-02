@@ -2,7 +2,7 @@ import Foundation
 @testable import MEGAMarkdown
 import Testing
 
-/// Big inputs parsed in the normal test run. These check structure only; timing lives in `ParsingBenchTests`.
+/// Big inputs parsed in the normal test run. These check structure only; timing lives in `ParsingBenchmarks`.
 @Suite struct ParsingLargeInputTests {
     /// Builds a mixed document of roughly `targetBytes` UTF-8 bytes.
     static func makeLargeDocument(targetBytes: Int) -> String {

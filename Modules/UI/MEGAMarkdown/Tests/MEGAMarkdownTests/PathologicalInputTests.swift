@@ -3,7 +3,8 @@ import Foundation
 import Testing
 
 /// The inputs from cmark's `test/pathological_tests.py`, through the whole parser and the chunker.
-/// Each case must finish fast and give the output cmark gives. Deep quotes and lists are in `ParserDifferenceTests`.
+/// Each case must give the output cmark gives. Deep quotes and lists are in `ParserDifferenceTests`.
+/// The time of each case is measured in Release by `ParsingBenchmarks.testPathologicalInputs`, with the same inputs.
 @Suite struct PathologicalInputTests {
     struct Case: CustomTestStringConvertible {
         var name: String
@@ -79,14 +80,10 @@ import Testing
         referenceCollisions()
     ]
 
-    /// cmark's `pathological_tests.py` allows 5 s per case for the C parser alone. Same limit here for parser + walker.
+    /// A time limit here would fail on a slow CI machine with coverage on. `ParsingBenchmarks` gates the time.
     @Test(arguments: cases)
-    func parsesFastWithTheExpectedOutput(testCase: Case) {
-        let clock = ContinuousClock()
-        var blocks: [MarkdownBlock] = []
-        let elapsed = clock.measure { blocks = parse(testCase.markdown) }
-        print("pathological: \(testCase.name) bytes=\(testCase.markdown.utf8.count) blocks=\(blocks.count) time=\(elapsed)")
-        #expect(elapsed < .seconds(5), "\(testCase.name) took \(elapsed)")
+    func givesTheExpectedOutput(testCase: Case) {
+        let blocks = parse(testCase.markdown)
         #expect(testCase.check(blocks), "\(testCase.name): unexpected output, \(blocks.count) blocks")
     }
 

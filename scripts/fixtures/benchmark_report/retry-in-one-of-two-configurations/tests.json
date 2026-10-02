@@ -1,0 +1,98 @@
+{
+ "devices": [
+  {
+   "architecture": "arm64",
+   "deviceId": "9D855746-8875-4BAC-BAF2-B4537924622D",
+   "deviceName": "iPhone 17",
+   "modelName": "iPhone 17",
+   "osBuildNumber": "23E254a",
+   "osVersion": "26.4.1",
+   "platform": "iOS Simulator"
+  }
+ ],
+ "testNodes": [
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          {
+           "children": [
+            {
+             "children": [
+              {
+               "name": "ConfigurationProbeTests.swift:12: failed - First assertion attempt failed",
+               "nodeType": "Failure Message"
+              }
+             ],
+             "duration": "0,025s",
+             "durationInSeconds": 0.02474188804626465,
+             "name": "First Run",
+             "nodeIdentifier": "1",
+             "nodeType": "Repetition",
+             "result": "Failed"
+            },
+            {
+             "duration": "0,00048s",
+             "durationInSeconds": 0.00047898292541503906,
+             "name": "Retry 1",
+             "nodeIdentifier": "2",
+             "nodeType": "Repetition",
+             "result": "Passed"
+            }
+           ],
+           "details": "⚠️ Passed after 1 retry",
+           "name": "Assertions",
+           "nodeIdentifier": "2",
+           "nodeType": "Test Plan Configuration",
+           "result": "Passed"
+          },
+          {
+           "duration": "0,054s",
+           "durationInSeconds": 0.05415797233581543,
+           "name": "Measured",
+           "nodeIdentifier": "1",
+           "nodeType": "Test Plan Configuration",
+           "result": "Passed"
+          }
+         ],
+         "duration": "0,026s",
+         "durationInSeconds": 0.026459614435831707,
+         "name": "testSelected()",
+         "nodeIdentifier": "ConfigurationProbeTests/testSelected()",
+         "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/ConfigurationProbeTests/testSelected",
+         "nodeType": "Test Case",
+         "result": "Passed"
+        }
+       ],
+       "name": "ConfigurationProbeTests",
+       "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/ConfigurationProbeTests",
+       "nodeType": "Test Suite",
+       "result": "Passed"
+      }
+     ],
+     "name": "MEGABenchmarkTests",
+     "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests",
+     "nodeType": "Unit test bundle",
+     "result": "Passed"
+    }
+   ],
+   "name": "Configurations",
+   "nodeType": "Test Plan",
+   "result": "Passed"
+  }
+ ],
+ "testPlanConfigurations": [
+  {
+   "configurationId": "1",
+   "configurationName": "Measured"
+  },
+  {
+   "configurationId": "2",
+   "configurationName": "Assertions"
+  }
+ ]
+}

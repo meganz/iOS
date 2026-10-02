@@ -129,7 +129,7 @@ memory.
 | Byte ranges, Unicode, line endings, BOMs, and late definitions | [ChunkerEdgeTests.swift](Tests/MEGAMarkdownTests/ChunkerEdgeTests.swift). |
 | Every CommonMark and GFM spec example | [SpecCorpusChunkTests.swift](Tests/MEGAMarkdownTests/SpecCorpusChunkTests.swift) runs the 742 examples from cmark's own test files. Each example is cut at targets of 1, 2, 5, 13, and 50 bytes, so a cut lands inside each construct. A seeded fuzz joins 2 to 8 random examples with an empty, single, or double newline separator. |
 | Pathological inputs | [PathologicalInputTests.swift](Tests/MEGAMarkdownTests/PathologicalInputTests.swift) also chunks each input from cmark's `pathological_tests.py` at a 4 KiB target and compares with a whole parse. |
-| Time, peak memory, and input-size scaling | [ParsingBenchTests.swift](Tests/MEGAMarkdownTests/ParsingBenchTests.swift), enabled separately. |
+| Time, peak memory, and input-size scaling | [ParsingBenchmarks.swift](Tests/MEGAMarkdownBenchmarks/ParsingBenchmarks.swift), run with `scripts/benchmark.sh`. |
 
 The spec examples live in [Fixtures/cmark-spec](Tests/MEGAMarkdownTests/Fixtures/cmark-spec/NOTICE.md). They are copied unchanged from the swift-cmark test folder at the pinned revision. [PARSER.md](PARSER.md#cmark-owns-syntax-recognition) describes the revision check and the refresh script. [SpecCorpus.swift](Tests/MEGAMarkdownTests/SpecCorpus.swift) reads them the same way as cmark's `spec_tests.py`: the Markdown between a 32-backtick `example` line and a `.` line, with `→` as a tab. Disabled examples are skipped. The chunk tests use only the Markdown input of each example. The expected HTML is not compared.
 

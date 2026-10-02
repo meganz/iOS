@@ -243,6 +243,13 @@
       }
     },
     {
+      "target" : {
+        "containerPath" : "container:Modules\/Infrastracture\/MEGABenchmark",
+        "identifier" : "MEGABenchmarkTests",
+        "name" : "MEGABenchmarkTests"
+      }
+    },
+    {
       "parallelizable" : true,
       "skippedTests" : [
         "DebouncerTests\/testMultipleStarts_whenCalledMultipleTimes_shouldOnlyExecuteLastAction()",

@@ -110,11 +110,13 @@ xcodebuild test \
 
 Replace `<SIMULATOR_UDID>` with an available simulator ID from `xcrun simctl list devices available`.
 
+The time, memory, and scaling benchmarks are a separate target, `MEGAMarkdownBenchmarks`. Run them with
+`scripts/benchmark.sh Modules/UI/MEGAMarkdown` (see the README).
+
 For optional runs, export these variables before invoking `xcodebuild`. The `TEST_RUNNER_` prefix passes them into the test process; setting an arbitrary Xcode build setting is not equivalent.
 
 | Exported variable | Effect |
 |---|---|
-| `TEST_RUNNER_MARKDOWN_BENCH=1` | Enables the serialized time, memory, and scaling benchmarks. Check that they ran rather than being skipped. |
 | `TEST_RUNNER_MARKDOWN_FUZZ_ITERATIONS=400` | Sets the seeded fuzz iteration count for the snippet fuzz and the spec-example fuzz; 400 is the default, with three chunk targets per iteration. |
 | `TEST_RUNNER_MARKDOWN_CHUNK_FILES=/absolute/a.md:/absolute/b.md` | Enables whole-versus-chunked comparison for additional files. |
 | `TEST_RUNNER_MARKDOWN_REFERENCE_ITERATIONS=3000` | Sets the number of seeded mutations in the cmark comparison. 3,000 is the default. |

@@ -4555,6 +4555,7 @@
 		A52F1E3B2EBCE55800D3A2E9 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		A52F1E3C2EBCE55800D3A2E9 /* Video */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Video; sourceTree = "<group>"; };
 		A52F1E3E2EBCE55800D3A2E9 /* KMTransferUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KMTransferUtils; sourceTree = "<group>"; };
+		04D790F54731CEED60E52EEB /* MEGABenchmark */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGABenchmark; sourceTree = "<group>"; };
 		A52F1E3F2EBCE55800D3A2E9 /* MEGAFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAFoundation; sourceTree = "<group>"; };
 		A52F1E402EBCE55800D3A2E9 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		A52F1E6E2EBCE55800D3A2E9 /* MEGAAppPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAppPresentation; sourceTree = "<group>"; };
@@ -11131,6 +11132,7 @@
 			children = (
 				14F2EFBE2EDD468C00C37318 /* APMKit */,
 				A52F1E3E2EBCE55800D3A2E9 /* KMTransferUtils */,
+				04D790F54731CEED60E52EEB /* MEGABenchmark */,
 				A52F1E3F2EBCE55800D3A2E9 /* MEGAFoundation */,
 				A52F1E402EBCE55800D3A2E9 /* MEGAPermissions */,
 			);

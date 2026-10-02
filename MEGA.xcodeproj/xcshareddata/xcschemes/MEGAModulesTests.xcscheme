@@ -127,6 +127,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MEGABenchmark"
+               BuildableName = "MEGABenchmark"
+               BlueprintName = "MEGABenchmark"
+               ReferencedContainer = "container:Modules/Infrastracture/MEGABenchmark">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "MEGAFoundation"
                BuildableName = "MEGAFoundation"
                BlueprintName = "MEGAFoundation"

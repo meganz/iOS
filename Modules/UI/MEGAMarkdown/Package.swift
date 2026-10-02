@@ -21,7 +21,8 @@ let package = Package(
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         // Markdown parser (cmark-gfm, C). Pinned: parser output must not change without review.
         .package(url: "https://github.com/swiftlang/swift-cmark.git", exact: "0.9.0"),
-        .package(path: "../../Infrastracture/MEGAFoundation")
+        .package(path: "../../Infrastracture/MEGAFoundation"),
+        .package(path: "../../Infrastracture/MEGABenchmark")
     ],
     targets: [
         .target(
@@ -40,6 +41,15 @@ let package = Package(
                 .product(name: "cmark-gfm", package: "swift-cmark")
             ],
             resources: [.copy("Fixtures")],
+            swiftSettings: settings),
+        // Benchmarks with XCTest metrics. They run only with TEST_RUNNER_MEGA_BENCH=1 (see scripts/benchmark.sh).
+        .testTarget(
+            name: "MEGAMarkdownBenchmarks",
+            dependencies: [
+                "MEGAMarkdown",
+                .product(name: "MEGABenchmark", package: "MEGABenchmark")
+            ],
+            exclude: ["Limits.json"],
             swiftSettings: settings)
     ],
     swiftLanguageModes: [.v6]

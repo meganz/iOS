@@ -1,0 +1,75 @@
+{
+ "devices": [
+  {
+   "architecture": "arm64",
+   "deviceId": "9D855746-8875-4BAC-BAF2-B4537924622D",
+   "deviceName": "iPhone 17",
+   "modelName": "iPhone 17",
+   "osBuildNumber": "23E254a",
+   "osVersion": "26.4.1",
+   "platform": "iOS Simulator"
+  }
+ ],
+ "testNodes": [
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          {
+           "duration": "0,001s",
+           "durationInSeconds": 0.0010329484939575195,
+           "name": "Assertions",
+           "nodeIdentifier": "2",
+           "nodeType": "Test Plan Configuration",
+           "result": "Passed"
+          },
+          {
+           "duration": "0,3s",
+           "durationInSeconds": 0.2965439558029175,
+           "name": "Measured",
+           "nodeIdentifier": "1",
+           "nodeType": "Test Plan Configuration",
+           "result": "Passed"
+          }
+         ],
+         "duration": "0,15s",
+         "durationInSeconds": 0.1487884521484375,
+         "name": "testSelected()",
+         "nodeIdentifier": "ConfigurationProbeTests/testSelected()",
+         "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/ConfigurationProbeTests/testSelected",
+         "nodeType": "Test Case",
+         "result": "Passed"
+        }
+       ],
+       "name": "ConfigurationProbeTests",
+       "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/ConfigurationProbeTests",
+       "nodeType": "Test Suite",
+       "result": "Passed"
+      }
+     ],
+     "name": "MEGABenchmarkTests",
+     "nodeIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests",
+     "nodeType": "Unit test bundle",
+     "result": "Passed"
+    }
+   ],
+   "name": "Configurations",
+   "nodeType": "Test Plan",
+   "result": "Passed"
+  }
+ ],
+ "testPlanConfigurations": [
+  {
+   "configurationId": "1",
+   "configurationName": "Measured"
+  },
+  {
+   "configurationId": "2",
+   "configurationName": "Assertions"
+  }
+ ]
+}

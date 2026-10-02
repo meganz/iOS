@@ -1,0 +1,36 @@
+[
+ {
+  "testIdentifier": "ConfigurationProbeTests/testSelected()",
+  "testIdentifierURL": "test://com.apple.xcode/MEGABenchmark/MEGABenchmarkTests/ConfigurationProbeTests/testSelected",
+  "testRuns": [
+   {
+    "device": {
+     "deviceId": "9D855746-8875-4BAC-BAF2-B4537924622D",
+     "deviceName": "iPhone 17"
+    },
+    "metrics": [
+     {
+      "baselineAverage": 0,
+      "baselineName": "",
+      "displayName": "Clock Monotonic Time",
+      "identifier": "com.apple.dt.XCTMetric_Clock.time.monotonic",
+      "maxPercentRegression": 10,
+      "maxPercentRelativeStandardDeviation": 10,
+      "maxRegression": 0,
+      "maxStandardDeviation": 10,
+      "measurements": [
+       0.006161931000000001,
+       0.006172468
+      ],
+      "polarity": "prefers smaller",
+      "unitOfMeasurement": "s"
+     }
+    ],
+    "testPlanConfiguration": {
+     "configurationId": "1",
+     "configurationName": "Measured"
+    }
+   }
+  ]
+ }
+]
