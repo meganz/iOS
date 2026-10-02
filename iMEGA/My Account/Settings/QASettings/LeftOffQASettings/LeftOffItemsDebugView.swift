@@ -6,40 +6,23 @@ import UIKit
 
 #if DEBUG || QA_CONFIG
 /// Manual harness for exercising the Continue Where You Left Off data stack.
-/// Drives the real shared-store use case from `ContinueWhereYouLeftOffFactory`, so recording,
-/// fetching, removing and the change signal all exercise the real store.
-struct CWYLODebugView: View {
-    @StateObject private var viewModel = CWYLODebugViewModel()
+/// Drives the real shared-store use case from `ContinueWhereYouLeftOffFactory`, so fetching,
+/// removing and the change signal all exercise the real store.
+struct LeftOffItemsDebugView: View {
+    @StateObject private var viewModel = LeftOffItemsDebugViewModel()
 
     var body: some View {
-        NavigationStack {
-            Form {
-                newItemSection
-                fetchSection
-                resultsSection
-                statusSection
-            }
-            .navigationTitle("Continue Where You Left Off Debug")
-            .navigationBarTitleDisplayMode(.inline)
-            // `.task`, not `.onFirstLoad`: opening an item takes this screen off screen, which
-            // cancels the task and ends the change subscription. This has to re-fetch and
-            // re-subscribe on every appear, and `onFirstLoad` would refuse to run a second time.
-            .task { await viewModel.start() }
+        Form {
+            fetchSection
+            resultsSection
+            statusSection
         }
-    }
-
-    private var newItemSection: some View {
-        Section("New item") {
-            TextField("Handle (blank = random)", text: $viewModel.handleString)
-                .keyboardType(.numberPad)
-            TextField("Name (blank = node name)", text: $viewModel.name)
-            Button("Record") {
-                Task { await viewModel.record() }
-            }
-            Button("Record through LeftOffItemsRecorder") {
-                Task { await viewModel.recordThroughRecorder() }
-            }
-        }
+        .navigationTitle("Continue Where You Left Off Debug")
+        .navigationBarTitleDisplayMode(.inline)
+        // `.task`, not `.onFirstLoad`: opening an item takes this screen off screen, which
+        // cancels the task and ends the change subscription. This has to re-fetch and
+        // re-subscribe on every appear, and `onFirstLoad` would refuse to run a second time.
+        .task { await viewModel.start() }
     }
 
     private var fetchSection: some View {
@@ -112,9 +95,7 @@ struct CWYLODebugView: View {
 }
 
 @MainActor
-final class CWYLODebugViewModel: ObservableObject {
-    @Published var handleString = ""
-    @Published var name = ""
+final class LeftOffItemsDebugViewModel: ObservableObject {
     @Published var sortKey: LeftOffItemsSortKey = .lastAccessed
     @Published var ascending = false
     @Published private(set) var items: [ResolvedLeftOffItemEntity] = []
@@ -122,14 +103,9 @@ final class CWYLODebugViewModel: ObservableObject {
     private var changesObserverTask: Task<Void, Never>?
 
     private let useCase: any LeftOffItemsUseCaseProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
 
-    init(
-        useCase: any LeftOffItemsUseCaseProtocol = CWYLODebugViewModel.makeUseCase(),
-        nodeUseCase: some NodeUseCaseProtocol = CWYLODebugViewModel.makeNodeUseCase()
-    ) {
+    init(useCase: any LeftOffItemsUseCaseProtocol = LeftOffItemsDebugViewModel.makeUseCase()) {
         self.useCase = useCase
-        self.nodeUseCase = nodeUseCase
     }
 
     private static func makeUseCase() -> any LeftOffItemsUseCaseProtocol {
@@ -156,30 +132,6 @@ final class CWYLODebugViewModel: ObservableObject {
             nodeValidationRepository: NodeValidationRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
         )
-    }
-
-    /// Writes straight to the store, so a row can be created for a handle the recorder would reject.
-    func record() async {
-        let handle = resolvedHandle()
-        let item = LeftOffItemEntity(handle: handle, name: resolvedName(for: handle), lastAccessed: .now)
-
-        do {
-            try await useCase.record(item)
-            status = "Recorded handle \(handle)"
-            await refreshAll()
-        } catch {
-            status = "Record failed: \(error)"
-        }
-    }
-
-    /// Goes through the same path the players and viewers use, so the feature flag, sign-in and
-    /// account-node guards are exercised too.
-    func recordThroughRecorder() async {
-        let handle = resolvedHandle()
-
-        await LeftOffItemsRecorder.shared.record(handle: handle, name: resolvedName(for: handle))
-        status = "Sent handle \(handle) to LeftOffItemsRecorder"
-        await refreshAll()
     }
 
     func refreshAll() async {
@@ -260,15 +212,6 @@ final class CWYLODebugViewModel: ObservableObject {
         }
     }
 
-    private func resolvedHandle() -> HandleEntity {
-        UInt64(handleString) ?? UInt64.random(in: 1...UInt64.max)
-    }
-
-    private func resolvedName(for handle: HandleEntity) -> String {
-        guard name.isEmpty else { return name }
-        return nodeUseCase.nodeForHandle(handle)?.name ?? "Untitled"
-    }
-
     deinit {
         changesObserverTask?.cancel()
         changesObserverTask = nil
@@ -276,6 +219,6 @@ final class CWYLODebugViewModel: ObservableObject {
 }
 
 #Preview {
-    CWYLODebugView()
+    LeftOffItemsDebugView()
 }
 #endif

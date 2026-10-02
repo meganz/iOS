@@ -149,12 +149,85 @@ final class PreviewDocumentViewModelTests: XCTestCase {
         XCTAssertEqual(useCase.cancelDownloadTransfers_calledTimes, 0)
     }
 
+    // MARK: - Left off item
+
+    func testProcessLeftOffItem_whenReadBelowTheNearCompletionFraction_records() async {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(useCase: MockDownloadNodeUseCase(transferEvents: []), leftOffItemRecordUseCase: leftOffItemRecordUseCase)
+        let called = expectation(description: "use case called")
+        leftOffItemRecordUseCase.onCall = { called.fulfill() }
+
+        sut.processLeftOffItem(page: 5, totalPages: 10)
+
+        await fulfillment(of: [called], timeout: 1)
+        XCTAssertEqual(leftOffItemRecordUseCase.record_Calls.map(\.handle), [1])
+        XCTAssertEqual(leftOffItemRecordUseCase.record_Calls.map(\.name), ["file.pdf"])
+        XCTAssertTrue(leftOffItemRecordUseCase.remove_Calls.isEmpty)
+    }
+
+    /// Exactly at the fraction counts as read through, so the boundary removes rather than records.
+    func testProcessLeftOffItem_whenReadAtTheNearCompletionFraction_removes() async {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(useCase: MockDownloadNodeUseCase(transferEvents: []), leftOffItemRecordUseCase: leftOffItemRecordUseCase)
+        let called = expectation(description: "use case called")
+        leftOffItemRecordUseCase.onCall = { called.fulfill() }
+
+        sut.processLeftOffItem(page: 9, totalPages: 10)
+
+        await fulfillment(of: [called], timeout: 1)
+        XCTAssertEqual(leftOffItemRecordUseCase.remove_Calls, [1])
+        XCTAssertTrue(leftOffItemRecordUseCase.record_Calls.isEmpty)
+    }
+
+    func testProcessLeftOffItem_whenReadPastTheNearCompletionFraction_removes() async {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(useCase: MockDownloadNodeUseCase(transferEvents: []), leftOffItemRecordUseCase: leftOffItemRecordUseCase)
+        let called = expectation(description: "use case called")
+        leftOffItemRecordUseCase.onCall = { called.fulfill() }
+
+        sut.processLeftOffItem(page: 10, totalPages: 10)
+
+        await fulfillment(of: [called], timeout: 1)
+        XCTAssertEqual(leftOffItemRecordUseCase.remove_Calls, [1])
+        XCTAssertTrue(leftOffItemRecordUseCase.record_Calls.isEmpty)
+    }
+
+    /// The page count is unknown until the document loads, and dividing by it would be meaningless.
+    /// The guard returns before any task is started, so this needs no waiting.
+    func testProcessLeftOffItem_whenPageCountIsUnknown_doesNothing() {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(useCase: MockDownloadNodeUseCase(transferEvents: []), leftOffItemRecordUseCase: leftOffItemRecordUseCase)
+        leftOffItemRecordUseCase.onCall = { XCTFail("No task should be started") }
+
+        sut.processLeftOffItem(page: 1, totalPages: 0)
+
+        XCTAssertTrue(leftOffItemRecordUseCase.record_Calls.isEmpty)
+        XCTAssertTrue(leftOffItemRecordUseCase.remove_Calls.isEmpty)
+    }
+
+    /// A local file opened by path has no node, so there is nothing to key the list on.
+    func testProcessLeftOffItem_withoutNode_doesNothing() {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(node: nil, useCase: MockDownloadNodeUseCase(transferEvents: []), leftOffItemRecordUseCase: leftOffItemRecordUseCase)
+        leftOffItemRecordUseCase.onCall = { XCTFail("No task should be started") }
+
+        sut.processLeftOffItem(page: 5, totalPages: 10)
+
+        XCTAssertTrue(leftOffItemRecordUseCase.record_Calls.isEmpty)
+        XCTAssertTrue(leftOffItemRecordUseCase.remove_Calls.isEmpty)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
         node: MEGANode? = MockNode(handle: 1, name: "file.pdf"),
-        useCase: MockDownloadNodeUseCase
+        useCase: MockDownloadNodeUseCase,
+        leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
     ) -> PreviewDocumentViewModel {
-        PreviewDocumentViewModel(node: node, makeDownloadNodeUseCase: { _ in useCase })
+        PreviewDocumentViewModel(
+            node: node,
+            makeDownloadNodeUseCase: { _ in useCase },
+            leftOffItemRecordUseCase: leftOffItemRecordUseCase
+        )
     }
 }

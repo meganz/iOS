@@ -2717,9 +2717,9 @@
 		D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */; };
 		D4597907603A472A68B3B885 /* AppOpenPromoLandingDialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB5898FB2C3FFC3E7875AD /* AppOpenPromoLandingDialogRouter.swift */; };
 		D4A1F0C2B83E47519A6C0E12 /* ViewedLinksDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */; };
-		C4F1A0010001000000000007 /* CWYLODebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F1A0010001000000000006 /* CWYLODebugView.swift */; };
+		C4F1A0010001000000000007 /* LeftOffItemsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F1A0010001000000000006 /* LeftOffItemsDebugView.swift */; };
 		D4A1F0C2B83E47519A6C0E32 /* ViewedLinksRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */; };
-		C4F1A0010001000000000002 /* LeftOffItemsRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F1A0010001000000000001 /* LeftOffItemsRecorder.swift */; };
+		C4F1A0010001000000000002 /* LeftOffItemsRecordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F1A0010001000000000001 /* LeftOffItemsRecordUseCase.swift */; };
 		D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */; };
 		D7B05EB5303C2F11004C5100 /* TransfersTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
@@ -4542,9 +4542,9 @@
 		CE6DA084000000000000AA01 /* ViewedLinks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewedLinks; sourceTree = "<group>"; };
 		A2F08963F515C8671318ADC8 /* ContinueWhereYouLeftOff */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ContinueWhereYouLeftOff; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksDebugView.swift; sourceTree = "<group>"; };
-		C4F1A0010001000000000006 /* CWYLODebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CWYLODebugView.swift; sourceTree = "<group>"; };
+		C4F1A0010001000000000006 /* LeftOffItemsDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LeftOffItemsDebugView.swift; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksRecorder.swift; sourceTree = "<group>"; };
-		C4F1A0010001000000000001 /* LeftOffItemsRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LeftOffItemsRecorder.swift; sourceTree = "<group>"; };
+		C4F1A0010001000000000001 /* LeftOffItemsRecordUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LeftOffItemsRecordUseCase.swift; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksCrashlyticsErrorReporter.swift; sourceTree = "<group>"; };
 		A52F1E352EBCE55800D3A2E9 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
@@ -10452,7 +10452,7 @@
 		C4F1A0010001000000000003 /* ContinueWhereYouLeftOff */ = {
 			isa = PBXGroup;
 			children = (
-				C4F1A0010001000000000001 /* LeftOffItemsRecorder.swift */,
+				C4F1A0010001000000000001 /* LeftOffItemsRecordUseCase.swift */,
 			);
 			path = ContinueWhereYouLeftOff;
 			sourceTree = "<group>";
@@ -13133,8 +13133,8 @@
 		BFEF8CA92887A0D000F8F9F1 /* QASettings */ = {
 			isa = PBXGroup;
 			children = (
-				C4F1A0010001000000000008 /* CWYLOQASettings */,
 				B5E9D3F928ACEACD00504F1F /* Feature Flag */,
+				C4F1A0010001000000000008 /* LeftOffQASettings */,
 				95C4703B78A360C501B9F704 /* PromoDialogQASettings */,
 				BA0BFDAF995076E249EAECF4 /* QuotaEventSimulator */,
 				C4A9FDFF30539DAF00EE4057 /* ViewedLinksQASettings */,
@@ -13592,12 +13592,12 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
-		C4F1A0010001000000000008 /* CWYLOQASettings */ = {
+		C4F1A0010001000000000008 /* LeftOffQASettings */ = {
 			isa = PBXGroup;
 			children = (
-				C4F1A0010001000000000006 /* CWYLODebugView.swift */,
+				C4F1A0010001000000000006 /* LeftOffItemsDebugView.swift */,
 			);
-			path = CWYLOQASettings;
+			path = LeftOffQASettings;
 			sourceTree = "<group>";
 		};
 		C4A9FDFF30539DAF00EE4057 /* ViewedLinksQASettings */ = {
@@ -15329,7 +15329,6 @@
 				943649D92A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift in Sources */,
 				C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */,
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
-				C4F1A0010001000000000007 /* CWYLODebugView.swift in Sources */,
 				5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */,
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
 				83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */,
@@ -15578,7 +15577,8 @@
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				C464FDE22D9CB79F00274FCD /* LayoutAttributesAnimator.swift in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
-				C4F1A0010001000000000002 /* LeftOffItemsRecorder.swift in Sources */,
+				C4F1A0010001000000000007 /* LeftOffItemsDebugView.swift in Sources */,
+				C4F1A0010001000000000002 /* LeftOffItemsRecordUseCase.swift in Sources */,
 				A1D5F0C24E7B41A9B3C60002 /* LegacyAudioTearDownHandler.swift in Sources */,
 				6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */,
 				A873E85B26E2228400CBB174 /* LegacyFileVersioningViewModel.swift in Sources */,

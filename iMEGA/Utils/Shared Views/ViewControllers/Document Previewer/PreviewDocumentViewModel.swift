@@ -9,6 +9,7 @@ import MEGARepo
 final class PreviewDocumentViewModel: NSObject {
     private let megaNode: MEGANode?
     private let makeDownloadNodeUseCase: (MEGANode) -> any DownloadNodeUseCaseProtocol
+    private let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
     
     private var downloadNodeUseCase: (any DownloadNodeUseCaseProtocol)?
     private var downloadTask: Task<Void, Never>?
@@ -18,12 +19,18 @@ final class PreviewDocumentViewModel: NSObject {
     @objc init(node: MEGANode?) {
         self.megaNode = node
         self.makeDownloadNodeUseCase = { Self.makeDownloadNodeUseCase(megaNode: $0) }
+        self.leftOffItemRecordUseCase = LeftOffItemsRecordUseCase.shared
     }
 
-    /// Test seam: the use case is otherwise built on `MEGASdk.shared`.
-    init(node: MEGANode?, makeDownloadNodeUseCase: @escaping (MEGANode) -> any DownloadNodeUseCaseProtocol) {
+    /// non-@objc init for testing purpose
+    init(
+        node: MEGANode?,
+        makeDownloadNodeUseCase: @escaping (MEGANode) -> any DownloadNodeUseCaseProtocol,
+        leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol
+    ) {
         self.megaNode = node
         self.makeDownloadNodeUseCase = makeDownloadNodeUseCase
+        self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
     }
     
     @objc func start(
@@ -68,6 +75,22 @@ final class PreviewDocumentViewModel: NSObject {
         downloadTask?.cancel()
         downloadTask = nil
         downloadNodeUseCase?.cancelDownloadTransfers()
+    }
+
+    @objc func processLeftOffItem(page: Int, totalPages: Int) {
+        guard let megaNode, let name = megaNode.name, totalPages > 0 else { return }
+
+        let nearCompletionFraction = 0.9
+        let shouldRecordLeftOffItem = Double(page) / Double(totalPages) < nearCompletionFraction
+        let handle = megaNode.handle
+
+        Task { [leftOffItemRecordUseCase] in
+            if shouldRecordLeftOffItem {
+                await leftOffItemRecordUseCase.record(handle: handle, name: name)
+            } else {
+                await leftOffItemRecordUseCase.remove(handle: handle)
+            }
+        }
     }
 
     // MARK: - Private

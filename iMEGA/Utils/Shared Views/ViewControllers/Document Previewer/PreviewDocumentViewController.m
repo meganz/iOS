@@ -115,6 +115,7 @@
                 [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:page] timescale:nil];
             }
         }
+        [self.viewModel processLeftOffItemWithPage:(NSInteger)page totalPages:(NSInteger)self.pdfView.document.pageCount];
     }
     
     [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];

@@ -80,7 +80,7 @@ struct QASettingsView: View {
             }
 
             NavigationLink {
-                CWYLODebugView()
+                LeftOffItemsDebugView()
             } label: {
                 Text(Constants.continueWhereYouLeftOffDebugText)
             }

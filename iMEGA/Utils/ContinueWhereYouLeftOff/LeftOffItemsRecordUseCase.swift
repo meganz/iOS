@@ -5,21 +5,21 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
 
-final class LeftOffItemsRecorder: Sendable {
-    static let shared = LeftOffItemsRecorder()
+final class LeftOffItemsRecordUseCase: LeftOffItemRecordUseCaseProtocol {
+    static let shared = LeftOffItemsRecordUseCase()
 
     private let useCase: any LeftOffItemsUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     // Whether the record should record the left off items or not
-    // LeftOffItemsRecorder is used as a shared instance therefore it should determined its
+    // LeftOffItemsRecordUseCase is used as a shared instance therefore it should determined its
     // `isEnabled` at run time (e.g: When user logged out, it should not record items,
     // but when user has logged in it can record items.
     private let isEnabled: @Sendable () -> Bool
 
     init(
-        useCase: some LeftOffItemsUseCaseProtocol = LeftOffItemsRecorder.defaultUseCase(),
-        nodeUseCase: some NodeUseCaseProtocol = LeftOffItemsRecorder.defaultNodeUseCase(),
-        isEnabled: @escaping @Sendable () -> Bool = LeftOffItemsRecorder.defaultIsEnabled()
+        useCase: some LeftOffItemsUseCaseProtocol = LeftOffItemsRecordUseCase.defaultUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = LeftOffItemsRecordUseCase.defaultNodeUseCase(),
+        isEnabled: @escaping @Sendable () -> Bool = LeftOffItemsRecordUseCase.defaultIsEnabled()
     ) {
         self.useCase = useCase
         self.nodeUseCase = nodeUseCase
@@ -37,6 +37,17 @@ final class LeftOffItemsRecorder: Sendable {
             try await useCase.record(item)
         } catch {
             MEGALog.log(level: .error, message: "Could not record file with handle: \(handle). Error: \(error.localizedDescription)")
+        }
+    }
+
+    func remove(handle: HandleEntity) async {
+        guard isEnabled() else { return }
+
+        let item = LeftOffItemEntity(handle: handle, name: "", lastAccessed: .now)
+        do {
+            try await useCase.remove([item])
+        } catch {
+            MEGALog.log(level: .error, message: "Could not remove file with handle: \(handle). Error: \(error.localizedDescription)")
         }
     }
 
