@@ -105,7 +105,7 @@ final class LegacySlideShowViewController: UIViewController, ViewType {
     }
 
     private func adjustHeightOfTopAndBottomView() {
-        let safeArea = UIApplication.shared.keyWindow?.safeAreaInsets
+        let safeArea = (view.window ?? UIApplication.mnz_keyWindow())?.safeAreaInsets
         let topHeight = safeArea?.top ?? .zero
         let bottomHeight = safeArea?.bottom ?? .zero
 

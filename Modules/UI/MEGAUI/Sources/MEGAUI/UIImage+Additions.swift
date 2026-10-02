@@ -17,7 +17,7 @@ public extension UIImage {
         let height: CGFloat = imageSize.height
         let radius: CGFloat = imageSize.width / 2
         
-        UIGraphicsBeginImageContextWithOptions(imageSize, false, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, UITraitCollection.current.displayScale)
         
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.setStrokeColor(backgroundColor.cgColor)

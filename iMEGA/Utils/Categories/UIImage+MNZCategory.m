@@ -95,7 +95,7 @@
         
         // Support both iPad 3.2 and iPhone 4 Retina displays with the correct scale
         if ([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
-            float scale = [[UIScreen mainScreen] scale];
+            float scale = UITraitCollection.currentTraitCollection.displayScale;
             image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
         } else {
             image = [UIImage imageWithCGImage:imageRef];
@@ -193,7 +193,7 @@
     ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(scaleX, scaleY)];
     
     UIImage *image = [UIImage imageWithCIImage:ciImage
-                                         scale:UIScreen.mainScreen.scale
+                                         scale:UITraitCollection.currentTraitCollection.displayScale
                                    orientation:UIImageOrientationUp];
     
     return image;

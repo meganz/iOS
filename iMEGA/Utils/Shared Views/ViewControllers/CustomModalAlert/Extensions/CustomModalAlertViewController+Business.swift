@@ -14,7 +14,7 @@ extension CustomModalAlertViewController {
         dismissButtonTitle = Strings.Localizable.dismiss
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
+                guard let rootViewController = UIApplication.mnz_keyWindow()?.rootViewController else {
                     return
                 }
                 if rootViewController.isKind(of: UIHostingController<AdsSlotView<MainTabBarWrapper>>.self) == false {

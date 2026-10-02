@@ -1,6 +1,7 @@
 #include <sys/utsname.h>
 
 #import "UIDevice+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 static NSString *machine;
 static NSString *deviceName;
@@ -240,13 +241,17 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
 
 - (CGFloat)mnz_maxSideForChatBubbleWithMedia:(BOOL)media {
     const CGFloat kMaxBubbleSide = media ? 340.0f : 566.0f;
-    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    UIWindow *window = UIApplication.mnz_keyWindow;
+    if (window == nil) {
+        return kMaxBubbleSide;
+    }
+    CGFloat windowWidth = window.bounds.size.width;
+    CGFloat windowHeight = window.bounds.size.height;
     CGFloat maxSide;
-    if ([self iPhoneDevice] && screenWidth > screenHeight) {
-        maxSide = screenHeight;
+    if ([self iPhoneDevice] && windowWidth > windowHeight) {
+        maxSide = windowHeight;
     } else {
-        maxSide = screenWidth;
+        maxSide = windowWidth;
     }
     maxSide -= media ? 140.0f : 104.0f;
     if (maxSide > kMaxBubbleSide) {

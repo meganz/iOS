@@ -82,7 +82,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private var isIPhoneLandscape: Bool {
         UIDevice.current.iPhoneDevice &&
         (UIDevice.current.orientation.isLandscape ||
-         UIScreen.main.bounds.width > UIScreen.main.bounds.height)
+         view.bounds.width > view.bounds.height)
     }
     
     private var isUserAGuest: Bool?
@@ -699,8 +699,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         stackViewLeadingConstraint.constant = leadingAndTrailing
         stackViewTrailingConstraint.constant = -leadingAndTrailing
         
-        let safeInsetTop = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
-        let safeInsetBottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        let safeAreaInsets = (view.window ?? UIApplication.mnz_keyWindow())?.safeAreaInsets ?? view.safeAreaInsets
+        let safeInsetTop = safeAreaInsets.top
+        let safeInsetBottom = safeAreaInsets.bottom
         stackViewTopConstraint.constant = top + safeInsetTop
         stackViewBottomConstraint.constant = bottom + safeInsetBottom
         callCollectionView.reloadData()

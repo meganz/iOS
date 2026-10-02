@@ -13,7 +13,10 @@ class ChatUnreadMessagesLabelCollectionCell: UICollectionViewCell {
 
 class ChatUnreadMessagesLabelCollectionCellSizeCalculator: MessageSizeCalculator {
     let verticalSpacing: CGFloat = 20 // Label's top and bottom spacing
-    let fitSize = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
+    private var fitSize: CGSize {
+        let width = layout?.collectionView?.bounds.width ?? UIApplication.mnz_keyWindow()?.bounds.width ?? 0
+        return CGSize(width: width, height: .greatestFiniteMagnitude)
+    }
    
     lazy var calculateTitleLabel: MEGALabel = {
         let titleLabel = MEGALabel(frame: .zero)

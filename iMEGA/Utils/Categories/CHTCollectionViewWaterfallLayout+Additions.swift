@@ -7,11 +7,10 @@ extension CHTCollectionViewWaterfallLayout {
     }
     
     private var containerWidth: CGFloat {
-        var windowWidth = UIScreen.main.bounds.width
-        if let keyWindow = UIApplication.shared.keyWindow {
-            windowWidth = keyWindow.bounds.width - keyWindow.safeAreaInsets.left - keyWindow.safeAreaInsets.right
-        }
-        
-        return windowWidth - sectionInset.left - sectionInset.right
+        // The collection view once it has been laid out, the window before that.
+        let container: UIView? = (collectionView?.bounds.width ?? 0) > 0 ? collectionView : UIApplication.mnz_keyWindow()
+        guard let container else { return 0 }
+        let usableWidth = container.bounds.width - container.safeAreaInsets.left - container.safeAreaInsets.right
+        return usableWidth - sectionInset.left - sectionInset.right
     }
 }

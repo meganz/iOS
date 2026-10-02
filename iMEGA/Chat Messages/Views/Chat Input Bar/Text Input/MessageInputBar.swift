@@ -95,9 +95,16 @@ class MessageInputBar: UIView {
     }
 
     private var keyboardHeight: CGFloat?
+    /// The window the bar is in; the key window while it is measured before being attached.
+    private var containerWindow: UIWindow? {
+        window ?? UIApplication.mnz_keyWindow()
+    }
+    private var containerHeight: CGFloat {
+        containerWindow?.bounds.height ?? superview?.bounds.height ?? bounds.height
+    }
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
     private var editViewTopConstraintValueWhenExpanded: CGFloat? {
-        let minHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
+        let minHeight = containerWindow?.safeAreaInsets.top ?? minTopPaddingWhenExpanded
         
         // The text view should be (statusBarHeight + 67.0) from the top of the screen
         return minHeight + 67.0
@@ -304,7 +311,7 @@ class MessageInputBar: UIView {
         + keyboard
         + editViewHeightConstraint.constant
 
-        return UIScreen.main.bounds.height - insetHeight
+        return containerHeight - insetHeight
     }
     
     private func configureEditField() {
@@ -419,7 +426,7 @@ class MessageInputBar: UIView {
 
         let keyboard = messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0
         let contentHeight = [keyboard, messageTextViewBottomConstraint.constant, messageTextView.intrinsicContentSize.height, editViewHeightConstraint.constant].reduce(0, +)
-        let topConstraintValue = UIScreen.main.bounds.height - contentHeight
+        let topConstraintValue = containerHeight - contentHeight
 
         editViewTopConstraint.constant = topConstraintValue
         layoutIfNeeded()

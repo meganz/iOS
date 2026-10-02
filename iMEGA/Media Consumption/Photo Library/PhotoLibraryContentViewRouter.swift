@@ -114,7 +114,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     private func topViewController() -> UIViewController? {
-        guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return nil }
+        guard var topController = UIApplication.mnz_keyWindow()?.rootViewController else { return nil }
         
         while let presentedViewController = topController.presentedViewController {
             topController = presentedViewController

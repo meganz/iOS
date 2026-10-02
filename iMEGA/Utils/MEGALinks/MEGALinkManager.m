@@ -557,11 +557,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)showLinkNotValid {
+    UIViewController *viewController = [[UIViewController alloc] init];
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options:nil] firstObject];
     [unavailableLinkView configureInvalidQueryLink];
-    unavailableLinkView.frame = [[UIScreen mainScreen] bounds];
-    
-    UIViewController *viewController = [[UIViewController alloc] init];
+    unavailableLinkView.frame = viewController.view.bounds;
+    unavailableLinkView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [viewController.view addSubview:unavailableLinkView];
     viewController.navigationItem.title = LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     

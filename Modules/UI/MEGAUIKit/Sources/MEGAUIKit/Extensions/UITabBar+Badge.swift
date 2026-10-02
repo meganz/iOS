@@ -36,7 +36,8 @@ import UIKit
         let itemHeight = frame.height - safeAreaInsets.bottom
 
         let isIPhone = UIDevice.current.userInterfaceIdiom == .phone
-        let isLandScape = UIDevice.current.orientation.isLandscape || UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        let containerBounds = window?.bounds ?? superview?.bounds ?? bounds
+        let isLandScape = UIDevice.current.orientation.isLandscape || containerBounds.width > containerBounds.height
         let isIPhoneLandscape = isIPhone && isLandScape
         
         let isRightToLeftLayout = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft

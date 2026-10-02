@@ -14,7 +14,7 @@ final class OnboardingUSPViewController: UIHostingController<OnboardingView<Load
         viewModel: OnboardingViewModel = MEGAAuthentication.DependencyInjection.onboardingViewModel
     ) {
         self.viewModel = .init(onboardingViewModel: viewModel) { hasConfirmedAccount in
-            guard let window = UIApplication.shared.keyWindow else { return }
+            guard let window = UIApplication.mnz_keyWindow() else { return }
             let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
             let coordinator = SubscriptionPurchaseViewCoordinator(
                 window: window,

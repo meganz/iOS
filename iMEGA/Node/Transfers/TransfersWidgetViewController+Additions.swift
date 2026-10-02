@@ -205,7 +205,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
             let location = panView?.center
             guard let x = location?.x else { return }
 
-            if x > UIScreen.main.bounds.width / 2 {
+            if x > ((view.window ?? currentKeyWindow)?.bounds.width ?? view.bounds.width) / 2 {
                 progressViewLeadingConstraint.isActive = false
                 progressViewTraillingConstraint.isActive = true
                 showProgressIndicatorViewFromLeft = false

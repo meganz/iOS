@@ -325,7 +325,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         guard let superview = separatorLineView.superview else { return }
         
         separatorLineView.translatesAutoresizingMaskIntoConstraints = false
-        [separatorLineView.heightAnchor.constraint(equalToConstant: 1/UIScreen.main.scale),
+        [separatorLineView.heightAnchor.constraint(equalToConstant: 1 / traitCollection.displayScale),
          separatorLineView.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
          separatorLineView.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
          separatorLineView.trailingAnchor.constraint(greaterThanOrEqualTo: superview.trailingAnchor)

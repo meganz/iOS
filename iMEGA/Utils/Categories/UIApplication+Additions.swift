@@ -32,11 +32,6 @@ extension UIApplication {
         return !window.frame.equalTo(window.screen.bounds)
     }
     
-    var keyWindow: UIWindow? {
-        guard let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return nil }
-        return scene.windows.first(where: \.isKeyWindow)
-    }
-    
     var isBackgroundState: Bool {
         UIApplication.shared.applicationState == .background
     }

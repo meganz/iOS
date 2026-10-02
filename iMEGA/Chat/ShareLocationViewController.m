@@ -132,8 +132,9 @@
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000);
     mapSnapshotOptions.region = region;
-    mapSnapshotOptions.scale = UIScreen.mainScreen.scale;
-    mapSnapshotOptions.size = CGSizeMake(750 / UIScreen.mainScreen.scale, 750 / UIScreen.mainScreen.scale);
+    CGFloat displayScale = self.traitCollection.displayScale;
+    mapSnapshotOptions.scale = displayScale;
+    mapSnapshotOptions.size = CGSizeMake(750 / displayScale, 750 / displayScale);
     mapSnapshotOptions.showsBuildings = YES;
     mapSnapshotOptions.pointOfInterestFilter = [MKPointOfInterestFilter filterIncludingAllCategories];
     

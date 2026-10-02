@@ -41,7 +41,7 @@ extension MainTabBarController {
 
         chatRoomsListViewController.viewModel.selectChatMode(chatRoom.isMeeting ? .meetings : .chats)
         
-        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+        if let rootViewController = UIApplication.mnz_keyWindow()?.rootViewController {
             rootViewController.dismiss(animated: true) {
                 chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink)
             }

@@ -938,7 +938,7 @@
     }
     
     UIViewController *onboardingVC = [self makeOnboardingViewController];
-    UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
+    UIView *overlayView = [self.window snapshotViewAfterScreenUpdates:NO];
     [self.window addSubview:overlayView];
     self.window.rootViewController = onboardingVC;
     

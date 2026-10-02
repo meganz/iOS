@@ -740,7 +740,7 @@ extension MEGAPhotoBrowserViewController {
 
     fileprivate func titleMaximumWidthForTransferIndicator() -> CGFloat {
         let navBarWidth = navigationController?.navigationBar.bounds.width
-            ?? (view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width)
+            ?? (view.bounds.width > 0 ? view.bounds.width : (view.window ?? UIApplication.mnz_keyWindow())?.bounds.width ?? 0)
         return navBarWidth * NavigationTitleMetrics.maxWidthRatioWhenIndicatorVisible
     }
 }

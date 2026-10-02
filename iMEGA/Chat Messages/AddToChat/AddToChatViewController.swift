@@ -93,7 +93,7 @@ class AddToChatViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if UIDevice.current.iPadDevice {
-            let maxWidth = UIApplication.shared.keyWindow?.bounds.width ?? UIScreen.main.bounds.width
+            let maxWidth = containerWindow?.bounds.width ?? view.bounds.width
             preferredContentSize = requiredSize(forWidth: min((maxWidth-20), iPadPopoverWidth))
         }
         
@@ -179,7 +179,7 @@ class AddToChatViewController: UIViewController {
             + mediaCollectionViewBottomConstraint.constant
             + mediaCollectionViewTopConstraint.constant
         
-        let menuPageViewHeight = SafeArea().height
+        let menuPageViewHeight = containerSafeArea.height
             - mediaCollectionViewHeight
             - menuViewBottomConstraint.constant
             - pageControlHeight
@@ -220,13 +220,26 @@ class AddToChatViewController: UIViewController {
         }
     }
     
+    /// The window this controller is shown in; before it is attached, the key window. Its bounds are the
+    /// area the panel can use, which is the whole screen on iPhone but only the app's window on iPad.
+    private var containerWindow: UIWindow? {
+        view.window ?? UIApplication.mnz_keyWindow()
+    }
+
+    private var containerSafeArea: SafeArea {
+        SafeArea(bounds: containerWindow?.bounds ?? view.bounds,
+                 insets: containerWindow?.safeAreaInsets ?? view.safeAreaInsets)
+    }
+
     private func updateContentViewConstraints() {
-        if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width > UIScreen.main.bounds.height) {
-            let safeArea = SafeArea()
+        guard !UIDevice.current.iPadDevice else { return }
+        let containerBounds = containerWindow?.bounds ?? view.bounds
+        if containerBounds.width > containerBounds.height {
+            let safeArea = containerSafeArea
             let contentViewPadding = (safeArea.width - suitableWidth(forHeight: safeArea.height)) / 2.0
             self.contentViewLeadingConstraint.constant = contentViewPadding
             self.contentViewTrailingConstraint.constant = -contentViewPadding
-        } else if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width < UIScreen.main.bounds.height) {
+        } else if containerBounds.width < containerBounds.height {
             self.contentViewLeadingConstraint.constant = 0
             self.contentViewTrailingConstraint.constant = 0
         }
@@ -359,9 +372,8 @@ private struct SafeArea {
     let width: CGFloat
     let height: CGFloat
     
-    init() {
-        let safeAreaInsets: UIEdgeInsets = UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
-        self.width = UIScreen.main.bounds.width - (safeAreaInsets.left + safeAreaInsets.right)
-        self.height = UIScreen.main.bounds.height - (safeAreaInsets.top + safeAreaInsets.bottom)
+    init(bounds: CGRect, insets: UIEdgeInsets) {
+        self.width = bounds.width - (insets.left + insets.right)
+        self.height = bounds.height - (insets.top + insets.bottom)
     }
 }

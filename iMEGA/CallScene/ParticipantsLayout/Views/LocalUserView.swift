@@ -97,7 +97,7 @@ class LocalUserView: UIView {
         frame.size = sizeForView()
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
         
-        positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)
+        positionView(by: CGPoint(x: (superview ?? window)?.bounds.width ?? 0, y: 0), animated: false)
         isHidden = false
     }
     
@@ -199,14 +199,15 @@ class LocalUserView: UIView {
         guard let superview else { return .zero }
         var iPhoneXOffset: CGFloat = 0.0
         
-        if UIDevice.current.iPhoneX && UIScreen.main.bounds.size.height < UIScreen.main.bounds.size.width {
+        if UIDevice.current.iPhoneX && superview.bounds.height < superview.bounds.width {
             iPhoneXOffset = Constants.iPhoneXOffset
         }
         
         let superviewWidth = superview.frame.size.width
         let superviewHeight = superview.frame.size.height
-        let topInset = (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0)
-        let bottomInset = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        let safeAreaInsets = (window ?? UIApplication.mnz_keyWindow())?.safeAreaInsets ?? .zero
+        let topInset = safeAreaInsets.top
+        let bottomInset = safeAreaInsets.bottom
         
         switch corner {
         case .topLeft:

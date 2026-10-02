@@ -7,7 +7,7 @@ import MEGARepo
 @MainActor
 final class DocScannerSaveSettingsViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
-    private let screenScale = UIScreen.main.scale
+    private let screenScale = UITraitCollection.current.displayScale
     private let pitagResolverUseCase: any PitagResolverUseCaseProtocol
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     
