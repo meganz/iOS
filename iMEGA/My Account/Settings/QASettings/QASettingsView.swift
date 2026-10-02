@@ -19,6 +19,7 @@ struct QASettingsView: View {
         static let quotaEventSimulatorText = "Quota dialog simulator"
         static let promoDialogText = "Promo dialog"
         static let viewedLinksDebugText = "Viewed Links debug"
+        static let continueWhereYouLeftOffDebugText = "Continue Where You Left Off debug"
     }
 
     let viewModel: QASettingsViewModel
@@ -76,6 +77,12 @@ struct QASettingsView: View {
                 ViewedLinksDebugView()
             } label: {
                 Text(Constants.viewedLinksDebugText)
+            }
+
+            NavigationLink {
+                CWYLODebugView()
+            } label: {
+                Text(Constants.continueWhereYouLeftOffDebugText)
             }
 
             Section(

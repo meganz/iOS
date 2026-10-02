@@ -7,7 +7,7 @@ public enum ContinueWhereYouLeftOffFactory {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
-    ) -> any LeftOffItemsUseCaseProtocol {
+    ) -> some LeftOffItemsUseCaseProtocol {
         LeftOffItemsUseCase(
             repository: LeftOffItemsRepository(store: sharedStore),
             nodeUseCase: nodeUseCase,
