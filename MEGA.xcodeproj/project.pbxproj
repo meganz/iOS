@@ -17694,7 +17694,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
@@ -17756,7 +17756,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -18107,7 +18107,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -18167,7 +18167,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -18468,7 +18468,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -18649,7 +18649,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -18711,7 +18711,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(TOOLCHAIN_DIR)/usr/include",
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
