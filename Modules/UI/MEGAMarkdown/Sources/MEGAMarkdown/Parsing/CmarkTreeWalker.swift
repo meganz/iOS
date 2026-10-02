@@ -290,10 +290,10 @@ struct CmarkTreeWalker {
 
     private mutating func addPiece(_ text: String, extra: InlineStyle) {
         let context = contexts[contexts.count - 1]
-        // Foundation keeps no inner styles and no line breaks in image alt text.
-        if context.inImage, extra.contains(.softBreak) || extra.contains(.lineBreak) { return }
+        // Alt text keeps no inner styles. A line break in it is a space, like cmark writes it, so words stay apart.
+        let isBreakInAltText = context.inImage && (extra.contains(.softBreak) || extra.contains(.lineBreak))
         let style = context.inImage ? context.style : context.style.union(extra)
-        pieces.append(Piece(text: text, style: style, link: context.link))
+        pieces.append(Piece(text: isBreakInAltText ? " " : text, style: style, link: context.link))
     }
 
     private mutating func pushStyle(_ style: InlineStyle) {

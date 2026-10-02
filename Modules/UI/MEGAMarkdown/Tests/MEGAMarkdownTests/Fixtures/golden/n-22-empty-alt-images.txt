@@ -4,4 +4,4 @@
   row ["￼" img=x.png] | 
 #2 line=6 paragraph ["￼" link=k]
 #3 line=8 paragraph ["text "]["￼" img=y.png][" more"]
-#4 line=10 paragraph ["ab" img=u.png][" "]["cd" img=v.png]
+#4 line=10 paragraph ["a b" img=u.png][" "]["c d" img=v.png]

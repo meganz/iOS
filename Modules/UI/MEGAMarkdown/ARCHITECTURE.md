@@ -117,6 +117,11 @@ For optional runs, export these variables before invoking `xcodebuild`. The `TES
 | `TEST_RUNNER_MARKDOWN_BENCH=1` | Enables the serialized time, memory, and scaling benchmarks. Check that they ran rather than being skipped. |
 | `TEST_RUNNER_MARKDOWN_FUZZ_ITERATIONS=400` | Sets the seeded fuzz iteration count for the snippet fuzz and the spec-example fuzz; 400 is the default, with three chunk targets per iteration. |
 | `TEST_RUNNER_MARKDOWN_CHUNK_FILES=/absolute/a.md:/absolute/b.md` | Enables whole-versus-chunked comparison for additional files. |
+| `TEST_RUNNER_MARKDOWN_REFERENCE_ITERATIONS=3000` | Sets the number of seeded mutations in the cmark comparison. 3,000 is the default. |
+| `TEST_RUNNER_MARKDOWN_REFERENCE_SEED=11` | Sets the seed of those mutations. 11 is the default. |
+| `TEST_RUNNER_MARKDOWN_REFERENCE_REPORT=/absolute/report.txt` | Writes every difference from cmark to the file, with both sides. |
+| `TEST_RUNNER_MARKDOWN_REFERENCE_FILES=/absolute/a.md:/absolute/b.md` | Compares additional files with cmark, for example real documents or another parser's test inputs. |
+| `TEST_RUNNER_MARKDOWN_FOUNDATION_PARITY=1` | Enables the comparison with Foundation's `AttributedString(markdown:)`. Foundation is not a source of truth, and its output changes with the OS. |
 
 Report benchmark results with the input, build configuration, simulator/device, and measured operation.
 

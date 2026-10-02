@@ -3,9 +3,11 @@ import Foundation
 import SwiftUI
 import Testing
 
-/// Every cmark spec example through the old Foundation parser (the reference) and through `MarkdownParser`.
-/// The walker's rules follow Foundation, so Foundation is the oracle. Wanted differences are listed with a reason.
-@Suite struct SpecCorpusParityTests {
+/// Every cmark spec example through Foundation's `AttributedString(markdown:)` and through `MarkdownParser`.
+/// Foundation is not a source of truth (see DECISIONS.md, "Source of truth"), and its output changes with the OS.
+/// This suite only shows where the parser differs from the old viewer. It runs with `MARKDOWN_FOUNDATION_PARITY=1`.
+@Suite(.enabled(if: ProcessInfo.processInfo.environment["MARKDOWN_FOUNDATION_PARITY"] == "1"))
+struct SpecCorpusParityTests {
     /// "file number" of each example where the two parsers differ on purpose, with the reason.
     static let knownDifferences: [String: String] = [
         // Foundation closes nested emphasis too early. cmark gives the spec's HTML.

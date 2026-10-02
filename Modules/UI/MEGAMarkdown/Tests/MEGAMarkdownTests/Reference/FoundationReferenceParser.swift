@@ -3,8 +3,8 @@ import Foundation
 // Only for the underline attribute key.
 import SwiftUI
 
-/// TEST ONLY. The old Foundation parser (`AttributedString(markdown:)`), kept as the reference
-/// the cmark parser is compared with. Copied from `MarkdownParser.swift` before the switch.
+/// TEST ONLY. The old Foundation parser (`AttributedString(markdown:)`), for the opt-in `SpecCorpusParityTests`.
+/// Copied from `MarkdownParser.swift` before the switch. It is not a source of truth.
 enum FoundationReferenceParser {
     static func parse(
         _ markdown: String,

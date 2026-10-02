@@ -78,7 +78,7 @@ During conversion, `ParsedBlock.markdownBlock` assigns IDs. `InlineText.attribut
 
 ## Behavior decisions
 
-The conversion preserves established Foundation `AttributedString(markdown:)` behavior where intended. [CmarkTreeWalker+Rules.swift](Sources/MEGAMarkdown/Parsing/CmarkTreeWalker+Rules.swift) contains shared conversion rules. The walker also handles block-specific decisions.
+The conversion gives cmark's HTML output, except for the intended differences in [DECISIONS.md](DECISIONS.md#intended-differences-from-cmark) and the task rules. [CmarkTreeWalker+Rules.swift](Sources/MEGAMarkdown/Parsing/CmarkTreeWalker+Rules.swift) contains shared conversion rules. The walker also handles block-specific decisions.
 
 | Input or feature | Result |
 |---|---|
@@ -89,7 +89,7 @@ The conversion preserves established Foundation `AttributedString(markdown:)` be
 | Table alignment | An unspecified alignment becomes `.left`, matching the established output. |
 | Images | A paragraph containing only images becomes one image block. It uses the first image's URL and the collected alt text. Images mixed with other text stay inline. |
 | Empty image alt text | An internal `U+FFFC` placeholder keeps the image present during traversal. Image blocks expose an empty alt string. Inline images retain the placeholder. An image inside a link keeps the link on its alt text or on the placeholder. Nothing inside alt text adds a placeholder. |
-| Breaks inside image alt text | Inner formatting and line-break nodes are omitted from the alt text, following the established behavior. |
+| Breaks inside image alt text | Inner formatting is omitted from the alt text. A line break becomes a space, like cmark writes it. |
 
 [ParserDifferenceTests.swift](Tests/MEGAMarkdownTests/ParserDifferenceTests.swift) records deliberate differences and difficult inputs: multiline link labels retain their break, empty image blocks expose empty alt text, selected missing source positions are repaired, and deep nesting is bounded. A paragraph interrupted by a table can still share the table's reported starting line. Positions are not an exact source map.
 
@@ -99,10 +99,11 @@ The conversion preserves established Foundation `AttributedString(markdown:)` be
 |---|---|
 | Block kinds, inline styles, nesting, tables, and source positions | `ParsingBlockTests`, `ParsingInlineTests`, `ParsingNestingTests`, and `ParsingTableTests`. |
 | Break attributes, underline, HTML style tags, and compact text | `ParsingSoftBreakUnderlineTests`, `ParsingStyleTagTests`, and `InlineTextTests`. |
+| Same output as cmark | [CmarkReferenceTests.swift](Tests/MEGAMarkdownTests/CmarkReferenceTests.swift) renders the parser output as HTML and compares it with cmark's own HTML for the same input. It runs every spec example, every fixture file, and 3,000 seeded mutations. Each intended difference is a rule in [CmarkReference.swift](Tests/MEGAMarkdownTests/CmarkReference.swift). |
 | Exact public output | [ParserGoldenTests.swift](Tests/MEGAMarkdownTests/ParserGoldenTests.swift) compares 61 Markdown fixtures with checked-in text snapshots, using the default parse options. |
 | Intentional differences and difficult inputs | [ParserDifferenceTests.swift](Tests/MEGAMarkdownTests/ParserDifferenceTests.swift). |
 | Output for every cmark spec example | [SpecCorpusGoldenTests.swift](Tests/MEGAMarkdownTests/SpecCorpusGoldenTests.swift) parses the 742 examples in `Fixtures/cmark-spec` and compares the dump with one golden file, `cmark-spec-examples.txt`. It freezes the output. It does not prove the output is right. It shows which spec examples a change touches. |
 | Pathological inputs | [PathologicalInputTests.swift](Tests/MEGAMarkdownTests/PathologicalInputTests.swift) runs the inputs from cmark's `pathological_tests.py` through the whole parser. Each case must finish in 5 seconds and give the output cmark gives. Deep quotes and lists are in `ParserDifferenceTests`. |
 | Large-document structure and background parsing | [ParsingLargeInputTests.swift](Tests/MEGAMarkdownTests/ParsingLargeInputTests.swift). |
 
-The golden snapshots preserve the accepted output established during Foundation comparison, including intentional differences. `SpecCorpusParityTests` still runs Foundation's `AttributedString(markdown:)` as a live reference on every spec example. The spec golden test freezes the parser output for each cmark spec example. `SpecCorpusHTMLTests` compares the output with the spec's expected HTML and lists the known differences. See [Testing](ARCHITECTURE.md#testing) for how to run the tests and update golden output.
+The source of truth for each parser behaviour is in [DECISIONS.md](DECISIONS.md#source-of-truth). Check a bug report with the steps in [Reporting a parser bug](DECISIONS.md#reporting-a-parser-bug). The golden snapshots are not a source of truth. They show which outputs a change touches. `SpecCorpusParityTests` compares with Foundation's `AttributedString(markdown:)` only when `MARKDOWN_FOUNDATION_PARITY=1` is set. See [Testing](ARCHITECTURE.md#testing) for how to run the tests and update golden output.

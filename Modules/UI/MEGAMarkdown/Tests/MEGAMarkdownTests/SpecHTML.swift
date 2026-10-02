@@ -15,17 +15,23 @@ enum SpecHTML {
 
     /// Inline tags in the order they are written. Flattened runs lose the nesting order, so both sides use this one.
     private static let inlineOrder = ["a", "strong", "em", "del", "u", "code"]
+    /// Block tags cmark's renderer writes. Any other tag is raw HTML from the input, so it is text.
+    private static let blockTags: Set<String> = [
+        "p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "blockquote", "pre", "table", "thead", "tbody", "tr", "th", "td", "hr"
+    ]
 
     /// Same inline tree, different tag order or run split: same string.
     /// A tag nested in itself (`<em><em>a</em></em>`) counts once, because the model keeps styles as an `OptionSet`.
     /// `<p>` directly inside `<li>` is removed, because the model has no tight/loose flag.
     /// ` align="left"` is removed, because the walker maps "none" to left (both draw the same).
+    /// An empty cell has no alignment, because cmark writes none on a cell it adds to a short row.
     static func canonical(_ html: String) -> String {
         var scanner = Canonicalizer()
         scanner.scan(html)
-        return scanner.out
-            .replacingOccurrences(of: "\n</li>", with: "</li>")
+        let result = scanner.out
             .replacingOccurrences(of: " align=\"left\"", with: "")
+            .replacingOccurrences(of: #"\n+</li>"#, with: "</li>", options: .regularExpression)
+        return result.replacingOccurrences(of: #"<(t[dh]) align="\w+"></t[dh]>"#, with: "<$1></$1>", options: .regularExpression)
     }
 
     private struct Canonicalizer {
@@ -40,7 +46,11 @@ enum SpecHTML {
             var index = html.startIndex
             while index < html.endIndex {
                 if html[index] == "<", let (tag, after) = Self.tag(in: html, at: index) {
-                    consume(tag)
+                    if inlineOrder.contains(tag.name), !tag.isClosing, !Self.hasClosingTag(tag.name, in: html, from: after) {
+                        appendText(tag.raw)
+                    } else {
+                        consume(tag)
+                    }
                     index = after
                 } else {
                     appendText(String(html[index]))
@@ -72,7 +82,36 @@ enum SpecHTML {
             return (Tag(name: name, isClosing: isClosing, attributes: attributes, raw: raw), html.index(after: close))
         }
 
+        /// True when `</name>` closes the tag before the next block tag.
+        private static func hasClosingTag(_ name: String, in html: String, from start: String.Index) -> Bool {
+            var depth = 0
+            var index = start
+            while let open = html[index...].firstIndex(of: "<") {
+                guard let (tag, after) = Self.tag(in: html, at: open) else {
+                    index = html.index(after: open)
+                    continue
+                }
+                if blockTags.contains(tag.name) { return false }
+                if tag.name == name {
+                    if !tag.isClosing {
+                        depth += 1
+                    } else if depth == 0 {
+                        return true
+                    } else {
+                        depth -= 1
+                    }
+                }
+                index = after
+            }
+            return false
+        }
+
         private mutating func consume(_ tag: Tag) {
+            guard inlineOrder.contains(tag.name) || blockTags.contains(tag.name) else {
+                // Raw HTML from the input, and `br`, `img` and `input`, which hold no text.
+                appendText(tag.raw)
+                return
+            }
             if inlineOrder.contains(tag.name) {
                 if tag.isClosing {
                     if let open = styles.lastIndex(where: { $0 == tag.name || $0.hasPrefix(tag.name + " ") }) {
@@ -85,15 +124,12 @@ enum SpecHTML {
                 }
                 return
             }
-            if ["br", "img", "input"].contains(tag.name) {
-                appendText(tag.raw)
-                return
-            }
             if tag.name == "p", blockStack.last == "li" {
                 // Loose `<li>\n<p>a</p>\n</li>` becomes tight `<li>a</li>`.
                 if !tag.isClosing, justOpenedItem, let last = runs.indices.last, runs[last].text.hasSuffix("\n") {
                     runs[last].text.removeLast()
                 }
+                if !tag.isClosing { justOpenedItem = false }
                 return
             }
             flush()
@@ -108,8 +144,9 @@ enum SpecHTML {
         }
 
         private mutating func appendText(_ text: String) {
+            // Sorted, so runs with the same styles merge whatever order the tags were written in.
             var unique: [String] = []
-            for style in styles where !unique.contains(style) { unique.append(style) }
+            for style in styles.sorted(by: { rank($0) < rank($1) }) where !unique.contains(style) { unique.append(style) }
             if let last = runs.indices.last, runs[last].styles == unique {
                 runs[last].text += text
             } else {
@@ -160,7 +197,7 @@ enum SpecHTML {
             case .paragraph(let text):
                 if text.runs.count == 1, text.runs[0].style.contains(.blockHTML) {
                     cr()
-                    out += text.text
+                    out += CmarkReference.asText(text.text)
                     cr()
                 } else {
                     cr()
@@ -182,7 +219,8 @@ enum SpecHTML {
             case .codeBlock(let language, let code):
                 cr()
                 if let language {
-                    let firstWord = language.prefix { !$0.isWhitespace }
+                    // cmark ends the first word at an ASCII space, not at U+00A0.
+                    let firstWord = language.prefix { !" \t\n\r\u{0B}\u{0C}".contains($0) }
                     out += "<pre><code class=\"language-\(SpecHTML.escape(String(firstWord)))\">"
                 } else {
                     out += "<pre><code>"
@@ -267,11 +305,14 @@ enum SpecHTML {
             var start = text.text.utf8.startIndex
             for run in text.runs {
                 let end = text.text.utf8.index(text.text.utf8.startIndex, offsetBy: run.end)
-                let piece = String(text.text[start..<end])
+                let runText = String(text.text[start..<end])
                 start = end
-                // U+FFFC placeholders keep a block alive in the model. They are not author text.
-                if run.style.contains(.placeholder) { continue }
                 let link = run.link >= 0 ? text.links[run.link] : nil
+                // U+FFFC placeholders keep a block alive in the model. They are not author text.
+                // An image placeholder is still an image, with empty alt text, as cmark writes it.
+                let isPlaceholder = run.style.contains(.placeholder)
+                if isPlaceholder, !run.style.contains(.image) { continue }
+                let piece = isPlaceholder ? "" : runText
                 let open = Self.openTags(run.style, link: link)
                 for tag in open { out += "<\(tag)>" }
                 if let link, run.style.contains(.image) {
@@ -279,11 +320,12 @@ enum SpecHTML {
                     if !link.title.isEmpty { out += " title=\"\(SpecHTML.escape(link.title))\"" }
                     out += " />"
                 } else if run.style.contains(.lineBreak) {
-                    out += "<br />\n"
+                    // Equal neighbour runs merge, so one run can hold several breaks.
+                    out += String(repeating: "<br />\n", count: max(1, piece.filter { $0 == "\n" }.count))
                 } else if run.style.contains(.softBreak) {
                     out += "\n"
                 } else if run.style.contains(.inlineHTML) || run.style.contains(.blockHTML) {
-                    out += piece
+                    out += CmarkReference.asText(piece)
                 } else {
                     out += SpecHTML.escape(piece)
                 }

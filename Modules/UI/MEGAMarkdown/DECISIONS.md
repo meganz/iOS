@@ -10,3 +10,95 @@ Why the package is built this way.
 | API level | cmark C API directly, own tree walker with `cmark_iter`. No second tree, no recursion. | • **`swiftlang/swift-markdown`**: same C parser, plus a recursive copy to a Swift tree. 10 MB in 868 ms vs 136 ms, 2x memory. Stack overflow on 50,000 nested `>`. No autolink extension. Tree not `Sendable`. |
 | Inline model | Compact `InlineText` (`String` + `Int32` runs). `AttributedString` is built later, so a preview can convert only visible blocks. 10 MB in 264 ms. | • **`AttributedString` during the walk**: 10 MB in 2.2 s, about 5x more memory. 98% of Foundation's time was attributed-string building. |
 | Large input | Chunks of about 1 MiB, cut only where a cmark probe says the last leaf block is closed. Grow 2x on a rejected cut. Cap 8 MiB, then plain text. iPhone 15, 10 MB: peak 15 MB. First content 173 ms (simulator). | • **Whole-file tree**: about 20 MB per MB of input (2 GB at 100 MB). iPhone 15, 10 MB: peak 491 MB. First content 11.9 s (simulator).<br>• **Cut at blank lines, parse parts in parallel**: old prototype gave 11 wrong outputs, 7 visible (fence lines inside HTML, hidden definitions). |
+
+## Source of truth
+
+Each parser behaviour has one source of truth. A bug is output that differs from it, when no rule below explains the difference. Any other difference is a product decision. Add it to this file first, then change the code.
+
+| Behaviour | Source of truth | Checked by |
+|---|---|---|
+| CommonMark blocks and inlines | The HTML of cmark-gfm from the pinned `swift-cmark`, for the same input and the same extensions. | `CmarkReferenceTests`: every spec example, every fixture file, and 3,000 seeded mutations of spec examples. |
+| GFM tables, strikethrough and autolinks | The same cmark HTML. | `CmarkReferenceTests`. |
+| Task items | The GFM task list rule, with two fixes to cmark's `tasklist` extension (see "Task items"). | `ParsingNestingTests` and `ParserEdgeCaseTests`. The cmark comparison ignores task markers. |
+| Style tags like `<b>` and `<u>` | The tags the editor exporter writes. The names and the pairing rule live in `StyleTag.swift`. | `ParsingStyleTagTests`. The cmark comparison pairs tags with the same `StyleTag` rule (R5). |
+| Link and image URLs | RFC 3986. The URL keeps the destination cmark gives, encoded once. | Fixed strings in `ParsingInlineTests`. |
+| Display rules for the viewer | The rules R1 to R6 below. | `CmarkReferenceTests` checks that each rule is still needed. |
+| Chunked parsing | A whole-file parse of the same text. | `ChunkedParseTests`, `ChunkerEdgeTests` and `SpecCorpusChunkTests`. |
+| Pathological inputs | cmark's `pathological_tests.py`. | `PathologicalInputTests`. |
+
+Golden snapshots (`ParserGoldenTests`, `SpecCorpusGoldenTests`) are not a source of truth. They only show which outputs a change touches.
+
+Foundation's `AttributedString(markdown:)` is not a source of truth. Its output changes with the OS, and the old viewer never shipped. `SpecCorpusParityTests` still compares with it when `MARKDOWN_FOUNDATION_PARITY=1` is set.
+
+The cmark comparison renders the parser output as cmark HTML. A canonical form removes what the model does not keep: tight or loose lists, the order of nested style tags, split text runs, and the alignment of empty cells. Raw HTML is compared as text on both sides.
+
+## Intended differences from cmark
+
+Each rule has the same ID in `CmarkReference.rules`. A test fails when a rule no longer changes its example.
+
+| ID | Rule | Why |
+|---|---|---|
+| R1 | A block with no content is dropped: an empty heading or code block, a quote or list item with no content, and a table body row of empty cells. An ordered list then starts at its first kept item. An empty task item stays. | The viewer has nothing to show for an empty row. The editor writes `- [ ] ` for a new task, so that item must stay. |
+| R2 | A code block loses all trailing newlines. cmark keeps the blank lines before the closing fence. | Trailing blank lines would show as empty space at the end of the block. |
+| R3 | An image inside a link shows its alt text as the link text. | The model has one link per text run, so an image cannot sit inside a link. |
+| R4 | An image block has no title. An inline image keeps its title. | `ParsedBlock.Kind.image` has no title. |
+| R5 | Matched bare style tags style the text between them and are removed. | The editor writes these tags when Markdown syntax cannot round-trip. |
+| R6 | A link inside a link keeps only the inner link. cmark nests an autolink inside link text. | The model has one link per text run. |
+
+A line break inside image alt text becomes a space, like cmark writes it. The words of the alt text stay apart.
+
+## Task items
+
+| Rule | cmark's `tasklist` extension | This package |
+|---|---|---|
+| Marker | `[ ]`, `[x]` or `[X]` right after the list marker, then a space or tab on the same line. | The same. |
+| Checked state | True when `[x]` appears anywhere on the line, so `- [ ] see [x]` is checked. | Read from the marker itself. |
+| Marker after `>` or after a second list marker (`> - [x] a`, `- - [x] a`) | Not found. The marker stays text. | Found at the start of the item's first paragraph. |
+| Escaped marker `\[x]` or entity `&#91;x&#93;` | Text. | Text. |
+| Marker that cmark already read as a reference link, like `[x]` with a `[x]: /url` definition | A link, when the marker is after `>` or a second list marker. | The same. |
+| Spaces after the marker | Removed. A space written as `&#32;` stays. | The same. |
+
+GitHub.com is not the source of truth for task items. It turns an escaped `\[x]` into a checkbox, and a `[x]: /url` definition wins over the marker even at the line start. The package follows cmark, with the two fixes above.
+
+## Reporting a parser bug
+
+Check every report against the "Source of truth" table before you change code.
+
+1. Find the row for the behaviour, for example task items, link URLs or tables.
+2. Compare the output with that source of truth. For syntax, run the cmark comparison on the input. For the other rows, read the rule in this file and its tests.
+3. Sort the report with the table below.
+4. Give three things in the report: the input, the source-of-truth output and the parser output. "GitHub does X" or "I expect Y" alone is not enough.
+
+| Result | Meaning | Next step |
+|---|---|---|
+| The output differs, and no rule here explains it. | A bug. | Fix it, and add the input as a test. |
+| The output differs, and a rule here explains it (R1 to R6, or "Task items"). | Intended. | No change. |
+| The output matches the source of truth, but another output is wanted. | A product decision. | Change this file first, then the code and its tests. |
+
+Run the cmark comparison on one input from the package folder:
+
+```sh
+export TEST_RUNNER_MARKDOWN_REFERENCE_FILES=/absolute/input.md
+export TEST_RUNNER_MARKDOWN_REFERENCE_REPORT=/absolute/report.txt
+xcodebuild test -scheme MEGAMarkdown \
+  -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' \
+  -skipPackagePluginValidation SWIFT_SUPPRESS_WARNINGS=NO \
+  -only-testing:MEGAMarkdownTests/CmarkReferenceTests
+```
+
+The report file lists every difference, with the cmark output and the parser output in canonical form.
+
+When an AI tool checks a parser change, start the request with this text:
+
+```text
+Check MEGAMarkdown parser changes against Modules/UI/MEGAMarkdown/DECISIONS.md.
+Each parser behaviour has one source of truth, listed in "Source of truth".
+For each problem:
+- Give the input, the source-of-truth output, and the parser output.
+- Say which source of truth applies.
+- If a rule in "Intended differences from cmark" or "Task items" explains
+  the difference, it is not a bug. Do not report it.
+- If the output matches the source of truth but should change, label it
+  "product decision", not "bug".
+For syntax problems, run the cmark comparison in "Reporting a parser bug".
+```
