@@ -1,0 +1,10 @@
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["b"]
+        #4 line=2 quote
+          #5 line=2 paragraph ["c "]["d" em]
+  item checkbox=none
+    #6 line=3 paragraph ["e"]

@@ -1,0 +1,1 @@
+#0 line=0 paragraph ["a" link=with%20space][" "]["b" link=url(x)][" c "]["d" link=#frag][" "]["e" link=mailto:x@y.z]

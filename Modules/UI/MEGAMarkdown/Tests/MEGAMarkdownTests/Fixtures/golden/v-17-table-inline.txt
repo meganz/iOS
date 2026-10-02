@@ -1,0 +1,4 @@
+#0 line=0 table columns=left,center
+  header ["a"] | ["b" strong]
+  row ["c|d" code] | ["l" link=https://l.com]
+  row ["s" strike] | ["u" u]

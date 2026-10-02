@@ -1,0 +1,4 @@
+#0 line=0 paragraph ["￼" link=https://ci.example]
+#1 line=2 paragraph ["￼" link=https://ci.example][" tail"]
+#2 line=4 paragraph ["x" img=outer.png][" and more text"]
+#3 line=6 image url=outer.png alt=""

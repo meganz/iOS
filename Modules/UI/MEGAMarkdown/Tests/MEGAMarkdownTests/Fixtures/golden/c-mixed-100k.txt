@@ -1,0 +1,1745 @@
+#0 line=0 heading3 ["Section 0 folder"]
+#1 line=2 code language=swift "let value0 = 228 // share\nlet value1 = 754 // folder\nlet value2 = 692 // storage\nlet value3 = 913 // encrypt\nlet value4 = 89 // node"
+#2 line=10 paragraph ["Key account upload mega backup "]["video" code][" chat."]
+#3 line=12 quote
+  #4 line=12 paragraph ["Storage "]["meeting" em][" quota node plan file meeting "]["chat" u][" plan "]["quota" em][" encrypt meeting."]["\n" soft]["Account cloud привет node quota quota upload storage meeting share cloud link."]
+#5 line=15 heading2 ["Section 1 transfer"]
+#6 line=17 paragraph ["Encrypt naïve download photo storage key folder quota chat key "]["secure" strong][" photo node secure."]["\n" soft]["share" strike][" encrypt transfer encrypt account quota "]["device" strike][" "]["video" strong][" node "]["quota" em][" cloud upload "]["encrypt" link=https://mega.io/12][" node secure folder backup plan."]["\n" soft]["Meeting folder "]["device" link=https://mega.io/2][" device device "]["folder" em][" mega upload sync link download photo encrypt sync node "]["video" em]["."]["\n" soft]["key" link=https://mega.io/ref/32][" "]["link" em][" upload node "]["transfer" em][" node sync download photo "]["file" strong][" node sync chat chat encrypt."]
+#7 line=22 quote
+  #8 line=22 paragraph ["Quota encrypt share storage transfer plan secure "]["cloud" code][" "]["download" strong][" share storage "]["encrypt" strong]["."]["\n" soft]["Account chat "]["share" strong][" cloud upload encrypt transfer upload link привет plan "]["download" link=https://mega.io/ref/44]["."]
+#9 line=25 paragraph ["Device upload meeting download plan "]["mega" code][" link "]["cloud" code][" storage "]["key" code][" sync mega plan."]
+#10 line=27 heading3 ["Section 2 storage"]
+#11 line=29 paragraph ["Video folder photo account backup storage photo."]["\n" soft]["Sync quota plan storage key file."]["\n" soft]["Photo "]["mega" strong][" transfer backup account "]["upload" link=https://mega.io/5][" folder account upload share encrypt device key device secure quota secure file."]["\n" soft]["Video share account video sync node ωmega привет backup."]
+#12 line=34 code language=swift "let value0 = 919 // upload\nlet value1 = 499 // upload\nlet value2 = 279 // backup\nlet value3 = 497 // mega\nlet value4 = 398 // video\nlet value5 = 684 // plan\nlet value6 = 817 // meeting\nlet value7 = 741 // link\nlet value8 = 860 // device\nlet value9 = 941 // share\nlet value10 = 637 // encrypt"
+#13 line=48 paragraph ["mega" em][" device video meeting backup mega chat "]["quota" strong][" 中文 日本語 folder account transfer folder "]["photo" code]["."]["\n" soft]["Node meeting node folder plan node."]["\n" soft]["Plan "]["video" strong][" "]["secure" code][" quota share quota encrypt storage upload device transfer."]["\n" soft]["Привет download account key storage upload secure 한국어 photo encrypt storage."]
+#14 line=53 paragraph ["upload" strike][" folder account secure key sync "]["photo" strong][" "]["download" strong][" photo "]["secure" code]["."]["\n" soft]["Secure cloud folder file "]["share" link=https://mega.io/4][" "]["photo" em]["."]["\n" soft]["Backup upload device backup transfer sync "]["file" link=https://mega.io/ref/11][" "]["link" strong][" transfer."]["\n" soft]["Account file quota sync "]["quota" link=https://mega.io/4][" "]["share" em]["."]
+#15 line=58 paragraph ["Node device download file storage file node 한국어 link download quota secure "]["plan" code][" backup meeting."]["\n" soft]["Naïve meeting mega "]["backup" em][" transfer cloud photo "]["folder" strong][" upload mega folder share key secure."]["\n" soft]["Share key file backup download photo plan encrypt encrypt."]
+#16 line=62 image url=https://mega.io/img/89.png alt="sync"
+#17 line=64 paragraph ["backup" strong][" account plan share 🇻🇳 folder key 日本語 "]["share" em]["."]["\n" soft]["Video file encrypt account "]["encrypt" strong][" quota upload folder folder "]["mega" strong][" photo upload link meeting "]["node" link=https://mega.io/14][" download device "]["link" em]["."]["\n" soft]["Photo download meeting meeting account plan café photo chat download plan."]["\n" soft]["Quota "]["device" strong][" "]["share" code][" storage encrypt key download photo."]
+#18 line=69 paragraph ["Share plan encrypt mega chat node "]["chat" code][" mega video file account "]["share" strong][" "]["👩‍💻" code]["."]
+#19 line=71 heading1 ["Section 3 encrypt"]
+#20 line=73 paragraph ["Account storage "]["quota" code][" backup account upload plan quota sync "]["device" code][" quota привет node encrypt upload "]["transfer" strong]["."]["\n" soft]["Encrypt plan chat "]["video" strong][" share "]["storage" em][" chat key."]["\n" soft]["Plan "]["mega" em][" meeting account file share encrypt transfer transfer folder encrypt device device video chat."]
+#21 line=77 code language=swift "let value0 = 68 // file\nlet value1 = 851 // file\nlet value2 = 95 // backup\nlet value3 = 98 // storage\nlet value4 = 756 // chat\nlet value5 = 831 // share\nlet value6 = 569 // cloud\nlet value7 = 600 // encrypt\nlet value8 = 575 // video"
+#22 line=89 quote
+  #23 line=89 paragraph ["Plan "]["storage" em][" photo "]["sync" link=https://mega.io/ref/30][" folder folder backup transfer mega account account "]["chat" strong]["."]["\n" soft]["Node storage 🇻🇳 "]["video" link=https://mega.io/ref/19][" node "]["share" link=https://mega.io/ref/39][" file secure sync "]["backup" code][" node cloud."]
+#24 line=92 heading2 ["Setext cloud"]
+#25 line=95 heading1 ["Section 4 sync"]
+#26 line=97 paragraph ["<div>\nshare html block\n</div>\n" blockhtml]
+#27 line=101 code language=swift "let value0 = 335 // folder\nlet value1 = 7 // secure\nlet value2 = 764 // backup\nlet value3 = 179 // share\nlet value4 = 389 // encrypt\nlet value5 = 720 // upload"
+#28 line=110 list ordered=true start=1
+  item checkbox=none
+    #29 line=110 paragraph ["Mega video account "]["meeting" strong][" transfer "]["chat" em]["."]
+  item checkbox=none
+    #30 line=111 paragraph ["Meeting upload key sync storage share."]
+    #31 line=112 list ordered=false start=1
+      item checkbox=none
+        #32 line=112 paragraph ["transfer" link=https://mega.io/ref/48][" link device device quota."]
+#33 line=113 list ordered=false start=1
+  item checkbox=none
+    #34 line=113 paragraph ["Share quota cloud device "]["photo" em][" file."]
+  item checkbox=none
+    #35 line=114 paragraph ["Cloud quota "]["key" link=https://mega.io/ref/3][" video quota device."]
+#36 line=116 quote
+  #37 line=116 paragraph ["Photo plan quota encrypt storage transfer node photo "]["meeting" strike][" file video storage."]["\n" soft]["File "]["chat" strong][" sync sync file key "]["key" strong][" "]["transfer" link=https://mega.io/7][" link transfer "]["device" strong][" storage."]
+#38 line=119 paragraph ["Device secure plan device key sync "]["download" em][" chat key link share upload mega chat chat folder "]["share" link=https://mega.io/16][" secure."]["\n" soft]["Secure "]["naïve" strong][" share key upload backup "]["file" code][" transfer."]["\n" soft]["Upload mega backup key key key "]["secure" strong][" chat naïve "]["quota" code][" "]["video" link=https://mega.io/10][" video plan quota account photo."]
+#39 line=123 heading1 ["Section 5 cloud"]
+#40 line=125 image url=https://mega.io/img/50.png alt="key"
+#41 line=127 heading2 ["Setext encrypt"]
+#42 line=130 list ordered=false start=1
+  item checkbox=none
+    #43 line=130 paragraph ["Cloud folder meeting meeting account key."]
+    #44 line=131 list ordered=false start=1
+      item checkbox=none
+        #45 line=131 paragraph ["Backup encrypt video transfer device."]
+#46 line=132 list ordered=true start=2
+  item checkbox=none
+    #47 line=132 paragraph ["Backup "]["cloud" em][" chat link transfer "]["share" em]["."]
+#48 line=134 paragraph ["日本語 chat share quota mega meeting download transfer secure file device video encrypt link quota."]["\n" soft]["Folder upload 🇻🇳 "]["encrypt" strike][" file storage backup video plan encrypt share."]["\n" soft]["key" link=https://mega.io/ref/10][" account key download "]["download" strike][" "]["encrypt" code]["."]["\n" soft]["node" link=https://mega.io/ref/42][" transfer cloud café download backup 🇻🇳 secure meeting "]["cloud" link=https://mega.io/ref/26][" sync account chat chat upload "]["upload" link=https://mega.io/15]["."]
+#49 line=139 paragraph ["Link storage secure photo meeting sync photo quota mega download "]["chat" strong][" encrypt file encrypt plan."]["\n" soft]["Meeting encrypt sync "]["cloud" strong][" video share video meeting."]["\n" soft]["Node encrypt secure "]["plan" code][" photo account download node node storage share node mega backup transfer storage key."]["\n" soft]["Secure link encrypt storage download upload photo account chat storage plan."]
+#50 line=144 heading2 ["Section 6 chat"]
+#51 line=146 paragraph ["Device sync encrypt transfer cloud quota video "]["share" strong][" link secure photo file storage link cloud secure photo."]["\n" soft]["transfer" code][" photo key key folder quota."]["\n" soft]["Привет sync meeting file share mega download storage."]
+#52 line=150 paragraph ["plan" code][" meeting account quota transfer "]["secure" link=https://mega.io/ref/47][" chat secure sync transfer device "]["node" code][" key link folder "]["secure" code][" cloud."]["\n" soft]["node" em][" photo mega cloud encrypt file photo quota backup device "]["meeting" em][" "]["encrypt" link=https://mega.io/11][" folder "]["key" strike]["."]["\n" soft]["Mega storage upload download "]["folder" strong][" transfer mega "]["transfer" strong][" account."]
+#53 line=154 paragraph ["Encrypt "]["cloud" link=https://mega.io/1][" upload video video plan "]["download" em][" storage backup chat key share."]
+#54 line=156 paragraph ["Photo device backup upload file file cloud "]["transfer" strong][" node."]["\n" soft]["Sync mega "]["storage" code][" secure account encrypt device download "]["device" code][" secure sync node mega node."]["\n" soft]["Video upload plan secure secure chat secure quota file mega."]["\n" soft]["account" link=https://mega.io/ref/13][" "]["chat" em][" transfer "]["mega" strong][" "]["mega" strong][" encrypt 😀 folder upload chat chat upload plan quota meeting "]["quota" strong]["."]
+#55 line=161 heading1 ["Section 7 file"]
+#56 line=163 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["video"] | ["9271 KB"] | ["folder"]
+  row ["key"] | ["698 KB"] | ["upload"]
+  row ["sync"] | ["9287 KB"] | ["secure"]
+  row ["download"] | ["763 KB"] | ["file"]
+  row ["plan"] | ["4594 KB"] | ["encrypt"]
+  row ["node"] | ["540 KB"] | ["link"]
+  row ["video"] | ["257 KB"] | ["sync"]
+#57 line=173 list ordered=false start=1
+  item checkbox=none
+    #58 line=173 paragraph ["Node encrypt share file "]["cloud" code][" file."]
+  item checkbox=none
+    #59 line=174 paragraph ["Mega device meeting plan photo file."]
+  item checkbox=none
+    #60 line=175 paragraph ["chat" code][" 한국어 "]["folder" link=https://mega.io/2][" device "]["folder" strong][" file."]
+  item checkbox=checked
+    #61 line=176 paragraph ["File upload meeting download backup file."]
+  item checkbox=none
+    #62 line=177 paragraph ["device" code][" meeting video quota video secure."]
+#63 line=179 paragraph ["<div>\nphoto html block\n</div>\n" blockhtml]
+#64 line=183 code language=swift "let value0 = 502 // node\nlet value1 = 800 // upload\nlet value2 = 333 // meeting\nlet value3 = 287 // meeting\nlet value4 = 373 // folder\nlet value5 = 954 // node\nlet value6 = 204 // node\nlet value7 = 558 // link\nlet value8 = 698 // encrypt\nlet value9 = 27 // storage\nlet value10 = 472 // account\nlet value11 = 214 // device"
+#65 line=198 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["account"] | ["1134 KB"] | ["backup"]
+  row ["plan"] | ["8181 KB"] | ["share"]
+  row ["quota"] | ["4962 KB"] | ["upload"]
+  row ["download"] | ["2526 KB"] | ["account"]
+  row ["backup"] | ["6177 KB"] | ["file"]
+  row ["device"] | ["9797 KB"] | ["secure"]
+  row ["node"] | ["6567 KB"] | ["encrypt"]
+  row ["key"] | ["6854 KB"] | ["encrypt"]
+#66 line=209 paragraph ["Encrypt folder chat node meeting "]["backup" code][" upload node chat node mega "]["file" code][" share sync folder "]["video" em][" "]["account" code]["."]["\n" soft]["Plan storage link device link "]["meeting" strong][" sync mega account folder chat."]["\n" soft]["Plan quota meeting device account "]["node" em][" folder chat backup backup account link share."]
+#67 line=213 heading2 ["Section 8 transfer"]
+#68 line=215 break
+#69 line=217 paragraph ["<div>\nsecure html block\n</div>\n" blockhtml]
+#70 line=221 paragraph ["Secure account file upload encrypt node encrypt download chat storage "]["backup" code][" upload device file."]["\n" soft]["Upload account quota sync node encrypt photo."]["\n" soft]["Key "]["folder" link=https://mega.io/1][" backup "]["quota" strike][" "]["upload" link=https://mega.io/4][" upload "]["secure" link=https://mega.io/6][" quota quota meeting."]["\n" soft]["Chat "]["node" strong][" "]["storage" code][" quota file backup video "]["node" link=https://mega.io/7][" video "]["cloud" code]["."]
+#71 line=226 heading2 ["Section 9 mega"]
+#72 line=228 image url=https://mega.io/img/56.png alt="link"
+#73 line=230 list ordered=true start=1
+  item checkbox=none
+    #74 line=230 paragraph ["Quota "]["download" code][" file "]["link" em][" storage "]["quota" code]["."]
+    #75 line=231 list ordered=false start=1
+      item checkbox=none
+        #76 line=231 paragraph ["file" link=https://mega.io/0][" plan привет backup upload."]
+#77 line=232 list ordered=false start=1
+  item checkbox=none
+    #78 line=232 paragraph ["photo" link=https://mega.io/0][" share file 日本語 quota transfer."]
+#79 line=233 list ordered=true start=3
+  item checkbox=none
+    #80 line=233 paragraph ["Node backup download transfer "]["account" strong][" photo."]
+  item checkbox=none
+    #81 line=234 paragraph ["Upload secure mega share backup secure."]
+  item checkbox=checked
+    #82 line=235 paragraph ["Cloud meeting key "]["meeting" em][" "]["transfer" link=https://mega.io/ref/5][" key."]
+#83 line=237 paragraph ["Quota account "]["upload" em][" "]["backup" code][" cloud storage 日本語 chat storage storage folder 😀."]["\n" soft]["Node key node folder folder cloud café."]["\n" soft]["Link encrypt quota backup file plan key file photo mega photo chat."]
+#84 line=241 heading2 ["Section 10 sync"]
+#85 line=243 image url=https://mega.io/img/19.png alt="upload"
+#86 line=245 paragraph ["Chat mega 😀 folder backup share."]["\n" soft]["Upload account "]["storage" em][" share node share video."]["\n" soft]["Storage "]["upload" em][" "]["node" code][" device encrypt device "]["folder" code][" photo cloud "]["share" code][" chat photo."]["\n" soft]["😀 encrypt "]["share" strike][" "]["upload" link=https://mega.io/3][" chat file "]["file" strong][" quota."]
+#87 line=250 paragraph ["device" em][" backup mega chat download transfer photo."]["\n" soft]["File sync upload mega chat chat meeting ωmega "]["download" em][" key upload plan "]["storage" em][" upload."]["\n" soft]["Link storage mega node sync secure "]["cloud" code][" "]["upload" strong][" video share "]["video" em][" account key chat "]["node" code][" share backup quota."]
+#88 line=254 code language=swift "let value0 = 710 // transfer\nlet value1 = 805 // chat\nlet value2 = 228 // plan\nlet value3 = 603 // link\nlet value4 = 387 // photo\nlet value5 = 751 // account\nlet value6 = 301 // share\nlet value7 = 181 // storage\nlet value8 = 1 // account\nlet value9 = 971 // node"
+#89 line=267 paragraph ["Transfer "]["secure" link=https://mega.io/1][" upload quota account video upload folder."]
+#90 line=269 paragraph ["Link meeting secure plan cloud "]["folder" em][" "]["meeting" u][" file secure "]["quota" u][" "]["link" em][" sync storage photo node cloud photo."]["\n" soft]["sync" code][" quota folder secure quota meeting download download account chat node meeting encrypt node file cloud."]["\n" soft]["Plan device sync "]["backup" em][" sync transfer "]["file" em][" encrypt device ωmega folder node folder folder."]["\n" soft]["Backup node 한국어 plan привет secure mega photo account "]["upload" link=https://mega.io/9][" device storage sync backup."]
+#91 line=274 code language=swift "let value0 = 840 // cloud\nlet value1 = 527 // link\nlet value2 = 67 // photo\nlet value3 = 726 // key\nlet value4 = 413 // share\nlet value5 = 799 // key\nlet value6 = 900 // node"
+#92 line=284 paragraph ["upload" strong][" chat device folder secure secure link "]["account" code][" "]["café" u]["."]["\n" soft]["Sync plan "]["key" strong][" "]["plan" strong][" quota upload photo download chat photo meeting привет photo file video."]
+#93 line=287 heading2 ["Section 11 quota"]
+#94 line=289 paragraph ["<div>\nquota html block\n</div>\n" blockhtml]
+#95 line=293 paragraph ["Cloud transfer share photo meeting node account secure key plan folder storage link "]["quota" em]["."]["\n" soft]["Photo chat folder node secure plan cloud sync "]["device" link=https://mega.io/8][" link quota."]
+#96 line=296 paragraph ["Sync link "]["file" strike][" backup "]["meeting" strong][" storage."]
+#97 line=298 paragraph ["sync" strong][" 中文 "]["photo" strike][" node cloud storage backup video "]["sync" u][" "]["meeting" strong][" share 🇻🇳 quota quota cloud folder naïve encrypt."]["\n" soft]["Account 😀 download backup storage folder download chat cloud account "]["mega" strong][" folder share file download photo link."]["\n" soft]["Plan folder mega link transfer chat meeting meeting backup "]["folder" link=https://mega.io/9]["."]
+#98 line=302 code language=swift "let value0 = 106 // backup\nlet value1 = 933 // node\nlet value2 = 494 // node\nlet value3 = 694 // device"
+#99 line=309 paragraph ["Mega storage "]["secure" code][" "]["cloud" em][" mega storage plan account plan plan encrypt mega secure file video upload "]["upload" em][" node."]["\n" soft]["Folder "]["mega" code][" encrypt transfer key device cloud video secure "]["device" code][" "]["upload" strong][" quota key."]["\n" soft]["Link storage transfer meeting sync "]["backup" strong][" plan."]["\n" soft]["Device share café node link "]["share" code][" transfer meeting account video "]["share" link=https://mega.io/10][" storage encrypt encrypt transfer "]["plan" link=https://mega.io/15][" link video."]
+#100 line=314 code language=swift "let value0 = 491 // node\nlet value1 = 584 // plan\nlet value2 = 727 // backup\nlet value3 = 690 // storage\nlet value4 = 915 // encrypt\nlet value5 = 292 // backup\nlet value6 = 827 // mega\nlet value7 = 535 // folder\nlet value8 = 25 // meeting\nlet value9 = 148 // cloud"
+#101 line=327 quote
+  #102 line=327 paragraph ["Link share photo chat plan storage key photo meeting plan mega device."]["\n" soft]["Account node storage link link cloud "]["share" u][" mega "]["share" strong][" "]["transfer" em][" transfer node."]
+#103 line=330 heading1 ["Section 12 account"]
+#104 line=332 list ordered=false start=1
+  item checkbox=none
+    #105 line=332 paragraph ["Encrypt upload video transfer "]["quota" strong][" device."]
+  item checkbox=none
+    #106 line=333 paragraph ["Привет folder "]["photo" strong][" chat "]["secure" strong][" sync."]
+    #107 line=334 list ordered=false start=1
+      item checkbox=none
+        #108 line=334 paragraph ["Encrypt sync plan encrypt storage."]
+  item checkbox=none
+    #109 line=335 paragraph ["share" strong][" "]["cloud" em][" download upload device mega."]
+    #110 line=336 list ordered=false start=1
+      item checkbox=none
+        #111 line=336 paragraph ["ωmega" em][" cloud "]["key" code][" photo device."]
+#112 line=338 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["secure"] | ["2562 KB"] | ["encrypt"]
+  row ["upload"] | ["2235 KB"] | ["storage"]
+#113 line=343 paragraph ["Plan storage mega "]["folder" strong][" meeting photo storage quota link "]["sync" code][" node encrypt photo sync video "]["upload" code]["."]["\n" soft]["Sync transfer share video video storage "]["chat" link=https://mega.io/6][" secure photo quota share storage file "]["quota" strong][" meeting."]["\n" soft]["Encrypt encrypt chat node device chat transfer share node."]
+#114 line=347 paragraph ["<div>\nstorage html block\n</div>\n" blockhtml]
+#115 line=351 code language=swift "let value0 = 41 // upload\nlet value1 = 779 // secure\nlet value2 = 237 // file\nlet value3 = 270 // chat\nlet value4 = 239 // cloud\nlet value5 = 684 // sync\nlet value6 = 530 // chat"
+#116 line=361 heading2 ["Section 13 secure"]
+#117 line=363 break
+#118 line=365 paragraph ["Key storage link node key upload chat."]["\n" soft]["Mega link download chat plan "]["storage" code][" secure "]["backup" strong][" node "]["key" strong][" cloud key node."]["\n" soft]["Photo transfer link share link link device meeting sync plan folder "]["transfer" strong][" key "]["plan" link=https://mega.io/13][" mega quota cloud."]
+#119 line=369 paragraph ["Chat account download file backup café mega video backup encrypt download sync secure secure chat share storage "]["link" code]["."]["\n" soft]["Video plan "]["quota" strong][" share "]["file" em][" file meeting account link sync key ωmega transfer 中文."]["\n" soft]["Download meeting mega file encrypt download device download."]["\n" soft]["File folder encrypt account secure device mega meeting plan backup mega "]["photo" code][" "]["video" em][" secure."]
+#120 line=374 paragraph ["Plan storage download upload "]["folder" code][" plan 🇻🇳 chat."]["\n" soft]["Node key "]["node" strike][" backup key link key mega folder download download chat backup."]["\n" soft]["Meeting share folder encrypt share secure "]["secure" link=https://mega.io/6][" quota secure "]["node" strong][" "]["link" em]["."]
+#121 line=378 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["quota"] | ["1578 KB"] | ["device"]
+  row ["storage"] | ["5484 KB"] | ["download"]
+  row ["chat"] | ["5904 KB"] | ["encrypt"]
+  row ["encrypt"] | ["4223 KB"] | ["chat"]
+  row ["mega"] | ["6747 KB"] | ["folder"]
+#122 line=386 paragraph ["Quota photo secure file quota quota quota "]["file" em][" video download device storage backup share storage."]["\n" soft]["meeting" code][" secure 😀 folder quota upload "]["quota" strike]["."]
+#123 line=389 heading3 ["Section 14 link"]
+#124 line=391 paragraph ["Device download account device node encrypt encrypt photo "]["photo" strong][" share mega."]["\n" soft]["Secure photo encrypt encrypt account meeting quota transfer photo download "]["link" link=https://mega.io/10][" device transfer."]["\n" soft]["Café naïve device "]["share" strong][" backup chat "]["video" em][" "]["share" em][" file download folder."]
+#125 line=395 code language=swift "let value0 = 789 // device\nlet value1 = 253 // storage\nlet value2 = 34 // sync\nlet value3 = 471 // storage\nlet value4 = 789 // folder\nlet value5 = 533 // plan\nlet value6 = 213 // secure\nlet value7 = 398 // plan"
+#126 line=406 paragraph ["<div>\nvideo html block\n</div>\n" blockhtml]
+#127 line=410 heading1 ["Section 15 quota"]
+#128 line=412 paragraph ["Photo plan quota 한국어 "]["upload" strong][" account chat "]["secure" code][" "]["quota" em][" share."]
+#129 line=414 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["secure"] | ["3813 KB"] | ["video"]
+  row ["encrypt"] | ["5691 KB"] | ["device"]
+  row ["storage"] | ["3162 KB"] | ["mega"]
+#130 line=420 code language=swift "let value0 = 741 // share\nlet value1 = 256 // cloud\nlet value2 = 496 // account\nlet value3 = 448 // encrypt\nlet value4 = 301 // encrypt\nlet value5 = 713 // secure\nlet value6 = 194 // node"
+#131 line=430 paragraph ["Download "]["encrypt" u][" device chat key mega transfer plan sync "]["encrypt" link=https://mega.io/ref/18][" quota."]["\n" soft]["file" strong][" link secure 😀 account upload sync."]["\n" soft]["quota" em][" backup cloud cloud file "]["folder" code][" meeting."]
+#132 line=434 list ordered=false start=1
+  item checkbox=none
+    #133 line=434 paragraph ["Encrypt quota account link key transfer."]
+#134 line=435 list ordered=true start=2
+  item checkbox=none
+    #135 line=435 paragraph ["Chat storage encrypt storage device café."]
+#136 line=436 list ordered=false start=1
+  item checkbox=none
+    #137 line=436 paragraph ["Photo "]["video" strong][" account key "]["share" code][" "]["share" link=https://mega.io/5]["."]
+#138 line=438 list ordered=true start=1
+  item checkbox=none
+    #139 line=438 paragraph ["Node storage secure node quota node."]
+#140 line=439 list ordered=false start=1
+  item checkbox=none
+    #141 line=439 paragraph ["Backup upload mega cloud encrypt account."]
+    #142 line=440 list ordered=false start=1
+      item checkbox=none
+        #143 line=440 paragraph ["Meeting node photo "]["video" em][" cloud."]
+#144 line=441 list ordered=true start=3
+  item checkbox=none
+    #145 line=441 paragraph ["account" link=https://mega.io/0][" encrypt node storage download "]["node" em]["."]
+#146 line=443 paragraph ["Transfer link device upload storage cloud share mega photo."]["\n" soft]["Storage key transfer account plan cloud."]["\n" soft]["download" em][" "]["mega" em][" plan "]["folder" strong][" quota key video file device cloud video mega quota key download mega "]["upload" link=https://mega.io/ref/25][" file."]
+#147 line=447 list ordered=false start=1
+  item checkbox=none
+    #148 line=447 paragraph ["node" link=https://mega.io/ref/19][" video "]["quota" link=https://mega.io/2][" sync account backup."]
+#149 line=448 list ordered=true start=2
+  item checkbox=none
+    #150 line=448 paragraph ["video" em][" "]["storage" code][" share backup storage storage."]
+  item checkbox=none
+    #151 line=449 paragraph ["Transfer transfer "]["plan" strong][" "]["secure" link=https://mega.io/3][" secure meeting."]
+    #152 line=450 list ordered=false start=1
+      item checkbox=none
+        #153 line=450 paragraph ["Cloud download plan file device."]
+#154 line=451 list ordered=false start=1
+  item checkbox=none
+    #155 line=451 paragraph ["Upload transfer video node account device."]
+  item checkbox=none
+    #156 line=452 paragraph ["storage" strong][" quota device photo transfer share."]
+#157 line=453 list ordered=true start=6
+  item checkbox=none
+    #158 line=453 paragraph ["Node share mega account file account."]
+#159 line=455 heading1 ["Section 16 file"]
+#160 line=457 code language=swift "let value0 = 371 // file\nlet value1 = 536 // account\nlet value2 = 393 // storage\nlet value3 = 810 // key\nlet value4 = 626 // link\nlet value5 = 387 // encrypt\nlet value6 = 389 // cloud\nlet value7 = 786 // link\nlet value8 = 934 // video\nlet value9 = 579 // plan\nlet value10 = 883 // share\nlet value11 = 166 // share"
+#161 line=472 paragraph ["Storage quota "]["sync" strong][" mega encrypt secure secure transfer encrypt "]["sync" strong][" quota cloud."]
+#162 line=474 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["video"] | ["1437 KB"] | ["cloud"]
+  row ["folder"] | ["6832 KB"] | ["link"]
+  row ["link"] | ["4660 KB"] | ["transfer"]
+  row ["plan"] | ["9748 KB"] | ["node"]
+#163 line=481 heading3 ["Section 17 link"]
+#164 line=483 code language=swift "let value0 = 953 // cloud\nlet value1 = 95 // photo\nlet value2 = 330 // chat\nlet value3 = 919 // meeting\nlet value4 = 839 // file\nlet value5 = 776 // backup\nlet value6 = 863 // encrypt"
+#165 line=493 paragraph ["Download sync folder key account account video transfer."]["\n" soft]["Secure secure upload "]["mega" code][" folder transfer video "]["sync" strong]["."]["\n" soft]["Download key folder storage link plan cloud quota video."]["\n" soft]["Cloud storage mega "]["chat" em][" mega encrypt meeting photo cloud upload photo folder."]
+#166 line=498 paragraph ["Mega share storage "]["video" link=https://mega.io/3][" key "]["storage" strong][" "]["key" code]["."]["\n" soft]["Plan video key mega sync download "]["plan" code][" "]["download" code][" encrypt chat."]
+#167 line=501 paragraph ["File encrypt secure "]["meeting" em][" link quota transfer sync "]["encrypt" em][" device account plan secure transfer link."]["\n" soft]["Video "]["👩‍💻" code][" link "]["node" strike][" account "]["quota" em][" device transfer secure account backup account file "]["secure" code][" video link."]["\n" soft]["Folder meeting "]["cloud" code][" node mega device node video plan backup file key."]
+#168 line=505 paragraph ["Encrypt 🇻🇳 photo account account encrypt."]["\n" soft]["Sync chat "]["plan" strike][" "]["café" link=https://mega.io/3][" plan "]["file" link=https://mega.io/5][" device backup."]["\n" soft]["Encrypt upload node account encrypt café folder "]["file" link=https://mega.io/7][" download "]["transfer" em][" storage plan photo."]
+#169 line=509 image url=https://mega.io/img/99.png alt="encrypt"
+#170 line=511 heading1 ["Section 18 secure"]
+#171 line=513 list ordered=false start=1
+  item checkbox=none
+    #172 line=513 paragraph ["Photo ωmega node node photo photo."]
+    #173 line=514 list ordered=false start=1
+      item checkbox=none
+        #174 line=514 paragraph ["Download download naïve "]["storage" link=https://mega.io/ref/28][" link."]
+  item checkbox=none
+    #175 line=515 paragraph ["Cloud share secure meeting quota "]["chat" em]["."]
+    #176 line=516 list ordered=false start=1
+      item checkbox=none
+        #177 line=516 paragraph ["Cloud photo encrypt meeting "]["backup" strong]["."]
+  item checkbox=none
+    #178 line=517 paragraph ["Key encrypt backup download folder device."]
+  item checkbox=none
+    #179 line=518 paragraph ["Video video "]["file" strong][" folder storage mega."]
+    #180 line=519 list ordered=false start=1
+      item checkbox=none
+        #181 line=519 paragraph ["Sync account "]["transfer" strike][" quota folder."]
+#182 line=520 list ordered=true start=5
+  item checkbox=none
+    #183 line=520 paragraph ["Quota backup video download video download."]
+    #184 line=521 list ordered=false start=1
+      item checkbox=none
+        #185 line=521 paragraph ["Sync "]["secure" code][" backup device "]["file" em]["."]
+#186 line=523 code language=swift "let value0 = 19 // secure\nlet value1 = 152 // quota\nlet value2 = 655 // mega\nlet value3 = 955 // cloud\nlet value4 = 680 // meeting\nlet value5 = 272 // share\nlet value6 = 716 // video\nlet value7 = 926 // meeting\nlet value8 = 588 // mega"
+#187 line=535 list ordered=false start=1
+  item checkbox=none
+    #188 line=535 paragraph ["File "]["👩‍💻" strike][" chat cloud file "]["video" em]["."]
+  item checkbox=none
+    #189 line=536 paragraph ["Cloud photo quota quota cloud node."]
+  item checkbox=none
+    #190 line=537 paragraph ["Device "]["привет" em][" cloud quota plan storage."]
+#191 line=538 list ordered=true start=4
+  item checkbox=none
+    #192 line=538 paragraph ["Secure upload link folder "]["node" em][" folder."]
+  item checkbox=none
+    #193 line=539 paragraph ["Storage plan sync "]["video" em][" backup link."]
+#194 line=541 paragraph ["Transfer "]["secure" em][" naïve photo secure quota upload cloud transfer photo 中文 folder encrypt quota "]["sync" code][" secure "]["cloud" em][" sync."]
+#195 line=543 paragraph ["Cloud mega upload video video "]["upload" code]["."]["\n" soft]["Sync secure "]["backup" link=https://mega.io/2][" device device download account folder link photo quota node file sync "]["download" strong][" upload upload."]["\n" soft]["Node "]["cloud" strong][" "]["key" strong][" secure folder encrypt backup photo mega account "]["node" strong][" share chat mega account."]["\n" soft]["Download node file cloud chat chat."]
+#196 line=548 paragraph ["account" em][" "]["sync" link=https://mega.io/1][" "]["encrypt" code][" node storage download "]["cloud" em][" secure."]["\n" soft]["Encrypt photo plan file "]["file" em][" photo link."]["\n" soft]["Share "]["quota" strong][" plan chat mega upload video quota plan device photo secure "]["cloud" link=https://mega.io/12][" link encrypt account "]["share" u]["."]
+#197 line=552 heading1 ["Section 19 cloud"]
+#198 line=554 list ordered=true start=1
+  item checkbox=none
+    #199 line=554 paragraph ["Cloud share link mega share "]["share" strong]["."]
+#200 line=555 list ordered=false start=1
+  item checkbox=none
+    #201 line=555 paragraph ["Secure node storage "]["account" code][" "]["cloud" link=https://mega.io/4][" "]["photo" strong]["."]
+#202 line=556 list ordered=true start=3
+  item checkbox=none
+    #203 line=556 paragraph ["Transfer upload "]["sync" strong][" device key transfer."]
+#204 line=557 list ordered=false start=1
+  item checkbox=none
+    #205 line=557 paragraph ["Backup photo device storage backup storage."]
+  item checkbox=none
+    #206 line=558 paragraph ["file" link=https://mega.io/0][" key node backup link share."]
+#207 line=560 paragraph ["Photo encrypt "]["mega" link=https://mega.io/ref/19][" quota photo account."]["\n" soft]["Download transfer node plan folder mega."]["\n" soft]["Share share chat "]["chat" strong][" quota quota link plan."]["\n" soft]["Account chat 🇻🇳 backup folder sync account encrypt folder folder."]
+#208 line=565 image url=https://mega.io/img/44.png alt="secure"
+#209 line=567 paragraph ["Transfer link naïve share "]["sync" link=https://mega.io/4][" account mega cloud."]["\n" soft]["Key "]["download" strong][" mega transfer link 日本語."]["\n" soft]["Chat storage "]["file" code][" mega photo mega sync secure device chat."]
+#210 line=571 paragraph ["video" strike][" share photo video device device backup secure mega folder "]["plan" em][" meeting."]["\n" soft]["link" em][" video "]["meeting" strike][" storage node quota plan."]
+#211 line=574 heading2 ["Section 20 secure"]
+#212 line=576 paragraph ["Secure "]["share" strong][" file 日本語 share file secure."]["\n" soft]["Secure video mega 😀 device "]["device" strong][" plan "]["account" u][" photo."]["\n" soft]["Node plan encrypt meeting meeting photo "]["café" strike][" storage quota chat cloud quota "]["account" em]["."]["\n" soft]["link" strong][" device key account привет "]["node" code][" account key link backup."]
+#213 line=581 quote
+  #214 line=581 paragraph ["File photo node storage "]["node" code][" file backup quota photo sync key link."]["\n" soft]["Key sync device transfer node sync share backup file download download "]["upload" code]["."]
+#215 line=584 paragraph ["Device backup 日本語 한국어 cloud "]["mega" em][" video backup file share key node download "]["transfer" strike][" video storage "]["sync" link=https://mega.io/16][" download."]["\n" soft]["Cloud folder plan share "]["photo" strong][" "]["transfer" strong][" cloud upload quota "]["plan" strike]["."]
+#216 line=587 break
+#217 line=589 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["mega"] | ["6439 KB"] | ["download"]
+  row ["photo"] | ["1479 KB"] | ["upload"]
+  row ["photo"] | ["3447 KB"] | ["link"]
+  row ["device"] | ["5197 KB"] | ["quota"]
+  row ["backup"] | ["556 KB"] | ["download"]
+#218 line=597 break
+#219 line=599 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["secure"] | ["6766 KB"] | ["video"]
+  row ["account"] | ["6921 KB"] | ["folder"]
+  row ["link"] | ["4276 KB"] | ["key"]
+  row ["file"] | ["5765 KB"] | ["backup"]
+  row ["transfer"] | ["8974 KB"] | ["storage"]
+#220 line=607 heading2 ["Section 21 device"]
+#221 line=609 paragraph ["Quota mega video upload quota plan device download video backup meeting "]["upload" strong][" 🇻🇳 file account transfer."]
+#222 line=611 paragraph ["node" code][" backup plan sync download share sync plan "]["share" strong][" upload chat."]
+#223 line=613 quote
+  #224 line=613 paragraph ["secure" link=https://mega.io/0][" account meeting "]["download" em][" cloud chat transfer mega photo share node secure."]["\n" soft]["share" em][" "]["backup" link=https://mega.io/1][" cloud download photo download link share quota "]["share" em][" secure "]["backup" code]["."]
+#225 line=616 break
+#226 line=618 list ordered=true start=1
+  item checkbox=none
+    #227 line=618 paragraph ["secure" code][" "]["share" strike][" photo key plan mega."]
+#228 line=619 list ordered=false start=1
+  item checkbox=checked
+    #229 line=619 paragraph ["plan" code][" photo meeting folder file secure."]
+  item checkbox=checked
+    #230 line=620 paragraph ["Quota storage "]["node" strike][" quota "]["storage" em][" "]["meeting" code]["."]
+    #231 line=621 list ordered=false start=1
+      item checkbox=none
+        #232 line=621 paragraph ["meeting" em][" link quota folder storage."]
+#233 line=622 list ordered=true start=4
+  item checkbox=none
+    #234 line=622 paragraph ["plan" code][" sync secure file transfer "]["file" strong]["."]
+#235 line=623 list ordered=false start=1
+  item checkbox=none
+    #236 line=623 paragraph ["Share quota "]["backup" em][" "]["photo" link=https://mega.io/3][" photo photo."]
+#237 line=625 image url=https://mega.io/img/13.png alt="key"
+#238 line=627 list ordered=true start=1
+  item checkbox=none
+    #239 line=627 paragraph ["Download "]["key" strong][" device "]["meeting" strong][" account device."]
+#240 line=628 list ordered=false start=1
+  item checkbox=none
+    #241 line=628 paragraph ["Link transfer backup "]["naïve" strong][" device storage."]
+  item checkbox=none
+    #242 line=629 paragraph ["Plan "]["photo" em][" "]["sync" code][" 中文 "]["quota" link=https://mega.io/4][" quota."]
+#243 line=630 list ordered=true start=4
+  item checkbox=none
+    #244 line=630 paragraph ["backup" strong][" share secure node "]["meeting" em][" 😀."]
+#245 line=631 list ordered=false start=1
+  item checkbox=none
+    #246 line=631 paragraph ["photo" strong][" key plan upload backup download."]
+  item checkbox=none
+    #247 line=633 paragraph ["backup" strong][" sync key video account photo."]
+  item checkbox=none
+    #248 line=634 paragraph ["Chat link "]["storage" em][" link folder secure."]
+    #249 line=635 list ordered=false start=1
+      item checkbox=none
+        #250 line=635 paragraph ["Mega "]["plan" link=https://mega.io/ref/32][" naïve "]["upload" strike][" download."]
+  item checkbox=none
+    #251 line=636 paragraph ["Encrypt account folder device folder transfer."]
+  item checkbox=checked
+    #252 line=637 paragraph ["quota" code][" "]["chat" link=https://mega.io/ref/18][" key share "]["share" strike][" backup."]
+    #253 line=638 list ordered=false start=1
+      item checkbox=none
+        #254 line=638 paragraph ["Secure file backup share "]["upload" link=https://mega.io/4]["."]
+  item checkbox=none
+    #255 line=639 paragraph ["Key mega account file link cloud."]
+#256 line=641 heading3 ["Section 22 cloud"]
+#257 line=643 heading2 ["Setext plan"]
+#258 line=646 break
+#259 line=648 heading2 ["Setext backup"]
+#260 line=651 paragraph ["chat" strong][" key meeting encrypt device quota "]["photo" em][" meeting share "]["sync" code][" key "]["mega" strong][" node photo folder download cloud."]["\n" soft]["Node upload node plan chat account meeting."]["\n" soft]["Key chat backup cloud sync key meeting quota secure."]
+#261 line=655 paragraph ["Secure account account "]["storage" link=https://mega.io/ref/35][" folder folder "]["key" link=https://mega.io/ref/23][" chat."]["\n" soft]["日本語" link=https://mega.io/0][" cloud photo "]["secure" strong][" file node video storage share device storage plan meeting."]
+#262 line=658 paragraph ["File node photo "]["encrypt" em][" encrypt node key encrypt 中文 node transfer secure 😀 🇻🇳 folder "]["photo" link=https://mega.io/15][" "]["file" link=https://mega.io/ref/26]["."]["\n" soft]["Transfer "]["account" em][" "]["video" link=https://mega.io/2][" download "]["folder" em][" transfer key cloud file upload 🇻🇳 upload share file share upload."]["\n" soft]["Encrypt 👩‍💻 quota 👩‍💻 plan quota "]["photo" strong][" "]["node" em][" "]["account" strike][" encrypt sync video."]["\n" soft]["Account video transfer share "]["👩‍💻" strong][" 日本語 account file file plan meeting."]
+#263 line=663 paragraph ["mega" strike][" sync mega account transfer upload "]["chat" strong][" account sync folder secure storage node "]["storage" em][" node storage "]["plan" strong][" plan."]["\n" soft]["device" strong][" plan video "]["download" strike][" secure storage backup meeting node upload."]
+#264 line=666 paragraph ["Video "]["folder" strong][" mega video secure cloud upload transfer device."]
+#265 line=668 heading1 ["Section 23 cloud"]
+#266 line=670 paragraph ["device" em][" "]["backup" em][" "]["encrypt" em][" "]["meeting" code][" upload "]["transfer" strong][" backup video mega "]["sync" code][" naïve "]["node" strike][" chat device "]["cloud" em][" backup chat "]["share" link=https://mega.io/17]["."]
+#267 line=672 paragraph ["Mega "]["share" em][" encrypt sync sync plan device node photo device."]["\n" soft]["Mega device storage storage mega mega."]["\n" soft]["Sync "]["chat" strong][" 中文 download encrypt link mega quota."]
+#268 line=676 paragraph ["Chat key backup share sync chat quota transfer photo cloud."]["\n" soft]["Key sync plan meeting key link account secure node sync."]
+#269 line=679 heading1 ["Section 24 meeting"]
+#270 line=681 paragraph ["Chat file upload transfer backup video 👩‍💻 chat key download file video photo download share."]["\n" soft]["Encrypt 한국어 meeting "]["quota" strong][" share storage key device file account "]["encrypt" strong][" share secure video meeting photo café video."]["\n" soft]["Transfer meeting encrypt video "]["photo" code][" encrypt transfer file sync file mega backup share file "]["sync" strike][" backup link node."]["\n" soft]["Download "]["device" em][" upload secure "]["storage" code][" device photo link transfer plan meeting link photo storage secure folder folder."]
+#271 line=686 code language=swift "let value0 = 461 // link\nlet value1 = 258 // sync\nlet value2 = 518 // cloud\nlet value3 = 473 // mega\nlet value4 = 74 // quota\nlet value5 = 711 // plan\nlet value6 = 767 // device\nlet value7 = 390 // video"
+#272 line=697 code language=swift "let value0 = 406 // cloud\nlet value1 = 10 // download\nlet value2 = 117 // account\nlet value3 = 939 // share\nlet value4 = 334 // plan"
+#273 line=705 code language=swift "let value0 = 472 // file\nlet value1 = 84 // encrypt\nlet value2 = 672 // upload\nlet value3 = 730 // device\nlet value4 = 143 // secure\nlet value5 = 840 // download\nlet value6 = 861 // link\nlet value7 = 174 // mega\nlet value8 = 621 // folder"
+#274 line=717 heading1 ["Section 25 photo"]
+#275 line=719 list ordered=true start=1
+  item checkbox=none
+    #276 line=719 paragraph ["한국어" link=https://mega.io/ref/22][" "]["account" strong][" sync quota account account."]
+    #277 line=720 list ordered=false start=1
+      item checkbox=none
+        #278 line=720 paragraph ["😀 chat mega video file."]
+#279 line=721 list ordered=false start=1
+  item checkbox=none
+    #280 line=721 paragraph ["Link "]["key" code][" encrypt encrypt upload "]["link" strong]["."]
+#281 line=722 list ordered=true start=3
+  item checkbox=none
+    #282 line=722 paragraph ["Plan "]["chat" strong][" backup folder node transfer."]
+  item checkbox=none
+    #283 line=723 paragraph ["Share account "]["secure" em][" ωmega storage mega."]
+#284 line=724 list ordered=false start=1
+  item checkbox=none
+    #285 line=724 paragraph ["Upload chat meeting ωmega "]["video" link=https://mega.io/4][" cloud."]
+#286 line=726 quote
+  #287 line=726 paragraph ["Mega video plan account meeting "]["quota" strong][" file share link sync storage sync."]["\n" soft]["Upload quota "]["secure" em][" meeting backup share mega file transfer link device "]["secure" em]["."]
+#288 line=729 paragraph ["sync" strong][" storage backup chat "]["node" em][" folder sync storage quota."]["\n" soft]["Meeting upload chat account transfer download plan naïve meeting file backup account plan storage storage node share."]["\n" soft]["Meeting 日本語 naïve backup link share folder link sync."]["\n" soft]["transfer" code][" file "]["download" em][" 中文 "]["folder" strong][" mega "]["cloud" code][" mega download video plan upload."]
+#289 line=734 heading3 ["Section 26 meeting"]
+#290 line=736 quote
+  #291 line=736 paragraph ["Video 😀 "]["share" strong][" key upload plan plan "]["video" strong][" cloud plan meeting chat."]["\n" soft]["Secure folder sync node "]["cloud" strike][" photo device folder upload plan "]["account" strong][" video."]
+#292 line=739 code language=swift "let value0 = 736 // download\nlet value1 = 681 // secure\nlet value2 = 974 // plan\nlet value3 = 126 // plan\nlet value4 = 139 // encrypt"
+#293 line=747 quote
+  #294 line=747 paragraph ["Account node quota storage quota backup folder video storage share node node."]["\n" soft]["Backup plan plan "]["meeting" strong][" "]["video" link=https://mega.io/4][" upload transfer "]["account" strong][" key account sync "]["meeting" em]["."]
+#295 line=750 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["account"] | ["3451 KB"] | ["storage"]
+  row ["upload"] | ["862 KB"] | ["link"]
+  row ["secure"] | ["6420 KB"] | ["photo"]
+#296 line=756 heading2 ["Setext plan"]
+#297 line=759 image url=https://mega.io/img/2.png alt="link"
+#298 line=761 heading3 ["Section 27 meeting"]
+#299 line=763 paragraph ["meeting" em][" photo encrypt node account "]["node" link=https://mega.io/5][" photo storage chat plan meeting."]["\n" soft]["Link secure key share "]["cloud" code][" photo quota plan quota device "]["file" strike][" key."]["\n" soft]["Node folder secure photo file encrypt mega key node "]["quota" strike][" plan transfer 👩‍💻 share file."]["\n" soft]["Naïve encrypt "]["plan" strong][" key encrypt account chat "]["account" code][" "]["upload" strong][" sync sync storage download link download share storage quota."]
+#300 line=768 paragraph ["Video mega "]["download" strike][" encrypt file "]["download" link=https://mega.io/5][" "]["download" strong][" upload folder photo folder photo."]["\n" soft]["Cloud meeting plan transfer "]["node" strike][" 🇻🇳 share cloud chat transfer device key key upload photo."]
+#301 line=771 paragraph ["Storage "]["node" em][" encrypt mega key secure encrypt transfer mega storage plan key device key chat cloud."]
+#302 line=773 paragraph ["Plan folder download node quota device cloud."]["\n" soft]["Photo 日本語 😀 key "]["secure" strong][" download photo encrypt device share chat folder meeting "]["cloud" u][" secure."]["\n" soft]["Secure "]["account" strike][" meeting "]["meeting" link=https://mega.io/3][" "]["mega" strike][" mega plan transfer photo backup."]
+#303 line=777 paragraph ["Folder upload secure account sync "]["quota" link=https://mega.io/5][" "]["meeting" strong][" share file."]["\n" soft]["Photo upload key folder chat cloud привет "]["transfer" code][" secure folder share chat."]
+#304 line=780 heading3 ["Section 28 key"]
+#305 line=782 paragraph ["File storage quota device encrypt secure "]["storage" link=https://mega.io/ref/8][" encrypt encrypt."]["\n" soft]["account" code][" secure key download cloud account secure file meeting transfer link."]["\n" soft]["Key key photo link "]["photo" strong][" download cloud sync привет "]["video" em][" encrypt transfer quota upload download."]
+#306 line=786 list ordered=true start=1
+  item checkbox=none
+    #307 line=786 paragraph ["Quota transfer upload quota share backup."]
+  item checkbox=none
+    #308 line=787 paragraph ["Link storage "]["photo" u][" meeting "]["share" em][" quota."]
+    #309 line=788 list ordered=false start=1
+      item checkbox=none
+        #310 line=788 paragraph ["Storage naïve café "]["cloud" link=https://mega.io/3][" "]["download" link=https://mega.io/4]["."]
+#311 line=789 list ordered=false start=1
+  item checkbox=checked
+    #312 line=789 paragraph ["Folder "]["account" em][" node photo cloud "]["encrypt" strike]["."]
+#313 line=790 list ordered=true start=4
+  item checkbox=none
+    #314 line=790 paragraph ["backup" link=https://mega.io/0][" mega chat plan folder "]["upload" code]["."]
+  item checkbox=none
+    #315 line=791 paragraph ["File link link plan photo secure."]
+#316 line=792 list ordered=false start=1
+  item checkbox=none
+    #317 line=792 paragraph ["Mega "]["quota" link=https://mega.io/1][" device secure backup file."]
+    #318 line=793 list ordered=false start=1
+      item checkbox=none
+        #319 line=793 paragraph ["Chat account quota quota encrypt."]
+  item checkbox=none
+    #320 line=795 paragraph ["Account account file café share chat."]
+  item checkbox=none
+    #321 line=796 paragraph ["Encrypt upload "]["storage" link=https://mega.io/2][" "]["account" link=https://mega.io/3][" account "]["account" code]["."]
+  item checkbox=none
+    #322 line=797 paragraph ["Share "]["file" strong][" "]["backup" link=https://mega.io/2][" "]["storage" link=https://mega.io/3][" photo device."]
+#323 line=798 list ordered=true start=4
+  item checkbox=none
+    #324 line=798 paragraph ["Cloud "]["link" strong][" plan account key link."]
+    #325 line=799 list ordered=false start=1
+      item checkbox=none
+        #326 line=799 paragraph ["Share cloud storage file video."]
+#327 line=800 list ordered=false start=1
+  item checkbox=none
+    #328 line=800 paragraph ["Chat "]["folder" code][" "]["video" strong][" "]["encrypt" code][" mega encrypt."]
+#329 line=801 list ordered=true start=6
+  item checkbox=checked
+    #330 line=801 paragraph ["Cloud "]["cloud" strong][" "]["photo" strong][" photo video share."]
+    #331 line=802 list ordered=false start=1
+      item checkbox=none
+        #332 line=802 paragraph ["Storage "]["share" strong][" secure "]["photo" u][" file."]
+#333 line=804 paragraph ["quota" link=https://mega.io/0][" key quota device chat cloud meeting "]["transfer" em][" quota."]["\n" soft]["Share file link download file download device."]
+#334 line=807 paragraph ["Chat transfer chat video key "]["plan" strong][" cloud "]["encrypt" strong][" photo file "]["plan" code][" quota "]["folder" em][" meeting "]["video" em]["."]
+#335 line=809 paragraph ["secure" code][" "]["encrypt" link=https://mega.io/ref/30][" sync ωmega chat "]["sync" em][" plan "]["link" em][" "]["meeting" em]["."]["\n" soft]["Backup download backup link secure link account encrypt file share storage "]["video" strong][" share plan mega share "]["node" code]["."]["\n" soft]["Sync link sync node "]["chat" strong][" key secure backup backup."]["\n" soft]["Link encrypt meeting plan transfer folder "]["folder" em][" "]["😀" code][" transfer device plan upload folder folder device account chat download."]
+#336 line=814 paragraph ["backup" strong][" привет storage node meeting cloud share storage "]["key" link=https://mega.io/ref/14][" share meeting download video "]["backup" strong][" "]["share" strong][" file."]["\n" soft]["Share chat upload upload meeting "]["download" em]["."]["\n" soft]["Quota folder "]["folder" link=https://mega.io/2][" "]["link" code][" chat folder naïve sync."]["\n" soft]["Quota link plan "]["cloud" code][" chat "]["encrypt" strong][" download mega share "]["sync" strong][" file download."]
+#337 line=819 heading1 ["Section 29 file"]
+#338 line=821 code language=swift "let value0 = 301 // device\nlet value1 = 763 // secure\nlet value2 = 446 // key\nlet value3 = 969 // meeting\nlet value4 = 944 // sync\nlet value5 = 256 // link\nlet value6 = 202 // plan\nlet value7 = 866 // account\nlet value8 = 287 // meeting\nlet value9 = 105 // node\nlet value10 = 812 // node\nlet value11 = 319 // link"
+#339 line=836 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["secure"] | ["7102 KB"] | ["device"]
+  row ["backup"] | ["9771 KB"] | ["storage"]
+  row ["download"] | ["5223 KB"] | ["transfer"]
+  row ["folder"] | ["9950 KB"] | ["meeting"]
+  row ["backup"] | ["3273 KB"] | ["node"]
+  row ["chat"] | ["6127 KB"] | ["quota"]
+  row ["file"] | ["7364 KB"] | ["link"]
+#340 line=846 break
+#341 line=848 paragraph ["<div>\ndownload html block\n</div>\n" blockhtml]
+#342 line=852 list ordered=false start=1
+  item checkbox=none
+    #343 line=852 paragraph ["Key 日本語 link plan "]["video" strike][" mega."]
+    #344 line=853 list ordered=false start=1
+      item checkbox=none
+        #345 line=853 paragraph ["Video meeting "]["sync" code][" transfer "]["plan" em]["."]
+  item checkbox=none
+    #346 line=854 paragraph ["Video cloud download link upload quota."]
+#347 line=855 list ordered=true start=3
+  item checkbox=none
+    #348 line=855 paragraph ["meeting" strong][" "]["key" strong][" file backup chat video."]
+    #349 line=856 list ordered=false start=1
+      item checkbox=none
+        #350 line=856 paragraph ["Device folder "]["folder" strong][" "]["mega" link=https://mega.io/3][" account."]
+  item checkbox=checked
+    #351 line=857 paragraph ["Chat mega download cloud video meeting."]
+    #352 line=858 list ordered=false start=1
+      item checkbox=none
+        #353 line=858 paragraph ["device" code][" share backup key plan."]
+#354 line=860 heading2 ["Section 30 video"]
+#355 line=862 list ordered=true start=1
+  item checkbox=none
+    #356 line=862 paragraph ["Encrypt quota "]["file" em][" "]["sync" strong][" meeting sync."]
+#357 line=863 list ordered=false start=1
+  item checkbox=none
+    #358 line=863 paragraph ["Account "]["key" code][" chat transfer "]["sync" em][" plan."]
+#359 line=865 quote
+  #360 line=865 paragraph ["Folder device 🇻🇳 "]["encrypt" em][" share "]["video" em][" "]["folder" strong][" backup link secure cloud "]["upload" code]["."]["\n" soft]["Node folder account folder account sync transfer 日本語 secure account file "]["device" link=https://mega.io/11]["."]
+#361 line=868 paragraph ["Link link transfer mega "]["folder" strong][" 한국어 link folder device encrypt chat photo."]["\n" soft]["Transfer key 😀 share ωmega chat meeting quota device link video download key folder."]["\n" soft]["Chat secure "]["plan" link=https://mega.io/ref/18][" "]["plan" u][" file café "]["folder" em][" backup cloud photo "]["encrypt" link=https://mega.io/ref/5][" share node."]["\n" soft]["Secure plan folder transfer plan share share "]["photo" em][" quota "]["backup" code]["."]
+#362 line=873 list ordered=false start=1
+  item checkbox=none
+    #363 line=873 paragraph ["Chat backup mega share upload transfer."]
+#364 line=874 list ordered=true start=2
+  item checkbox=none
+    #365 line=874 paragraph ["Meeting key cloud folder photo "]["cloud" strike]["."]
+#366 line=875 list ordered=false start=1
+  item checkbox=none
+    #367 line=875 paragraph ["key" link=https://mega.io/0][" "]["secure" link=https://mega.io/1][" quota photo secure "]["file" strong]["."]
+#368 line=876 list ordered=true start=4
+  item checkbox=checked
+    #369 line=876 paragraph ["secure" strong][" "]["meeting" em][" meeting upload transfer "]["transfer" strike]["."]
+    #370 line=877 list ordered=false start=1
+      item checkbox=none
+        #371 line=877 paragraph ["日本語 link sync "]["plan" code][" chat."]
+#372 line=879 paragraph ["backup" link=https://mega.io/0][" folder "]["한국어" strong][" plan chat storage 日本語 key key "]["quota" link=https://mega.io/ref/41][" video share photo."]
+#373 line=881 paragraph ["Transfer key share node "]["meeting" em][" 日本語 secure upload storage link backup "]["download" code]["."]["\n" soft]["Chat link "]["meeting" link=https://mega.io/2][" encrypt device "]["storage" u][" "]["sync" em][" naïve mega encrypt plan quota sync chat share quota "]["file" strike]["."]["\n" soft]["Folder encrypt photo account link node transfer cloud node download 😀 "]["cloud" link=https://mega.io/11][" storage cloud."]["\n" soft]["Node cloud backup file share cloud chat."]
+#374 line=886 paragraph ["Mega encrypt plan cloud share "]["share" code]["."]["\n" soft]["Chat cloud mega encrypt mega "]["cloud" em][" link."]
+#375 line=889 paragraph ["Meeting "]["file" em][" sync chat device encrypt key encrypt backup "]["download" em]["."]["\n" soft]["Key "]["sync" strike][" "]["share" strong][" device "]["folder" strong][" download "]["file" em][" meeting."]
+#376 line=892 heading2 ["Section 31 meeting"]
+#377 line=894 paragraph ["Backup cloud mega video node ωmega storage folder plan encrypt node meeting."]["\n" soft]["Mega "]["download" em][" encrypt cloud plan "]["transfer" strong][" plan link café."]
+#378 line=897 paragraph ["<div>\nsecure html block\n</div>\n" blockhtml]
+#379 line=901 quote
+  #380 line=901 paragraph ["backup" em][" download file download upload transfer "]["quota" strong][" device account download привет upload."]["\n" soft]["device" code][" sync plan "]["photo" link=https://mega.io/3][" chat quota photo cloud "]["node" strong][" video key sync."]
+#381 line=904 list ordered=true start=1
+  item checkbox=none
+    #382 line=904 paragraph ["File node encrypt folder cloud key."]
+    #383 line=905 list ordered=false start=1
+      item checkbox=none
+        #384 line=905 paragraph ["Photo chat folder backup "]["key" em]["."]
+  item checkbox=none
+    #385 line=906 paragraph ["Backup share backup transfer "]["video" code][" key."]
+#386 line=907 list ordered=false start=1
+  item checkbox=none
+    #387 line=907 paragraph ["device" strong][" download secure cloud 日本語 key."]
+#388 line=909 paragraph ["Account video "]["storage" strong][" chat quota photo storage "]["key" em][" node device key folder cloud node photo link storage."]["\n" soft]["Key "]["video" code][" folder upload download upload sync "]["link" strong][" encrypt secure 中文 backup device account backup share folder."]["\n" soft]["Upload key storage account cloud key plan quota node plan secure "]["photo" link=https://mega.io/11][" file storage secure "]["link" strong][" transfer quota."]["\n" soft]["Link photo quota secure photo upload device chat secure transfer photo "]["backup" em][" download device."]
+#389 line=914 paragraph ["Upload photo link folder "]["video" strike][" "]["storage" strong][" account "]["encrypt" em][" sync link."]
+#390 line=916 heading2 ["Section 32 account"]
+#391 line=918 paragraph ["Sync "]["mega" strong][" "]["🇻🇳" code][" "]["secure" strong][" mega "]["upload" strong][" meeting storage "]["file" em][" storage 🇻🇳."]["\n" soft]["Node transfer backup 한국어 quota "]["backup" code][" encrypt account."]
+#392 line=921 paragraph ["Chat device meeting secure "]["video" link=https://mega.io/4][" "]["file" code][" secure meeting storage cloud photo cloud backup."]
+#393 line=923 paragraph ["Secure quota secure "]["storage" em][" "]["account" em][" "]["mega" u][" link "]["folder" strong][" link share "]["meeting" strong][" photo download chat photo transfer transfer video."]["\n" soft]["share" u][" "]["secure" strong][" share mega "]["account" code][" "]["folder" em][" "]["link" em][" upload 中文 backup transfer encrypt file sync "]["folder" strike][" quota node."]
+#394 line=926 paragraph ["<div>\nstorage html block\n</div>\n" blockhtml]
+#395 line=930 heading3 ["Section 33 plan"]
+#396 line=932 paragraph ["sync" code][" "]["share" link=https://mega.io/1][" mega "]["cloud" link=https://mega.io/3][" backup key meeting secure video sync download encrypt download backup chat chat encrypt sync."]
+#397 line=934 paragraph ["Key "]["video" code][" download "]["한국어" strong][" secure account node secure secure."]
+#398 line=936 code language=swift "let value0 = 768 // encrypt\nlet value1 = 826 // folder\nlet value2 = 39 // chat\nlet value3 = 29 // transfer\nlet value4 = 915 // account\nlet value5 = 156 // account\nlet value6 = 753 // link\nlet value7 = 891 // share\nlet value8 = 84 // backup\nlet value9 = 854 // folder\nlet value10 = 57 // device\nlet value11 = 652 // account"
+#399 line=951 paragraph ["Sync video video node mega plan "]["key" link=https://mega.io/6][" link sync quota mega folder "]["account" em][" "]["file" code]["."]
+#400 line=953 paragraph ["Quota mega file photo sync "]["photo" em][" link backup."]
+#401 line=955 paragraph ["Download secure quota plan ωmega sync quota sync."]["\n" soft]["Storage sync cloud quota node plan naïve "]["mega" link=https://mega.io/ref/30][" quota chat link transfer backup upload."]
+#402 line=958 heading2 ["Section 34 transfer"]
+#403 line=960 list ordered=true start=1
+  item checkbox=none
+    #404 line=960 paragraph ["key" code][" download "]["mega" u][" photo key "]["share" strike]["."]
+#405 line=961 list ordered=false start=1
+  item checkbox=none
+    #406 line=961 paragraph ["Share link sync file "]["backup" code][" plan."]
+#407 line=962 list ordered=true start=3
+  item checkbox=none
+    #408 line=962 paragraph ["Encrypt secure account "]["meeting" strike][" share photo."]
+#409 line=963 list ordered=false start=1
+  item checkbox=none
+    #410 line=963 paragraph ["Secure mega upload mega file "]["sync" strong]["."]
+#411 line=964 list ordered=true start=5
+  item checkbox=none
+    #412 line=964 paragraph ["Share "]["secure" strong][" backup key file quota."]
+#413 line=966 paragraph ["Meeting 😀 backup transfer key video folder encrypt."]["\n" soft]["Mega node transfer cloud 👩‍💻 transfer video mega chat photo chat meeting "]["folder" strike][" secure device storage."]["\n" soft]["File ωmega folder file photo 한국어 file folder photo upload node backup link transfer photo."]
+#414 line=970 paragraph ["Share quota mega transfer device video "]["encrypt" strong][" chat storage link cloud file "]["chat" em][" key video share chat mega."]
+#415 line=972 paragraph ["encrypt" link=https://mega.io/0][" "]["folder" code][" folder link meeting sync video plan quota."]["\n" soft]["Upload device link "]["photo" strong][" device folder backup transfer key storage ωmega secure mega quota."]["\n" soft]["Link upload sync mega upload upload key video upload mega backup "]["meeting" em][" download account."]["\n" soft]["account" strong][" "]["storage" em][" storage account device share node link share sync "]["account" em][" secure video device "]["transfer" strong][" key."]
+#416 line=977 paragraph ["Photo node device "]["account" strike][" meeting sync mega storage secure chat key secure secure mega upload."]["\n" soft]["Transfer quota node storage key chat folder download storage."]["\n" soft]["Cloud upload account upload cloud "]["download" code][" file."]
+#417 line=981 heading1 ["Section 35 key"]
+#418 line=983 paragraph ["Node cloud sync secure sync mega folder quota transfer."]["\n" soft]["Backup link photo encrypt encrypt folder."]
+#419 line=986 paragraph ["<div>\nsecure html block\n</div>\n" blockhtml]
+#420 line=990 paragraph ["File folder quota sync sync key transfer "]["video" link=https://mega.io/ref/49][" link link secure storage secure."]["\n" soft]["Photo storage node "]["meeting" em][" quota "]["download" strong][" sync "]["chat" strong][" meeting sync."]["\n" soft]["download" code][" video node cloud account transfer cloud chat "]["secure" link=https://mega.io/8][" video share node upload plan photo."]["\n" soft]["File storage device video video download "]["mega" link=https://mega.io/6][" backup."]
+#421 line=995 list ordered=false start=1
+  item checkbox=checked
+    #422 line=995 paragraph ["chat" strong][" cloud video node file folder."]
+  item checkbox=checked
+    #423 line=996 paragraph ["Transfer file download "]["storage" link=https://mega.io/ref/21][" quota account."]
+#424 line=998 break
+#425 line=1000 heading2 ["Section 36 node"]
+#426 line=1002 paragraph ["Привет upload encrypt node account share."]["\n" soft]["Encrypt share video plan backup sync "]["👩‍💻" strike][" mega."]["\n" soft]["Sync meeting node link "]["key" strike][" folder chat sync key folder 😀 folder file photo quota "]["secure" strong][" storage."]["\n" soft]["Upload "]["🇻🇳" link=https://mega.io/ref/44][" "]["cloud" em][" storage backup link storage chat "]["link" strong][" meeting download."]
+#427 line=1007 paragraph ["👩‍💻" strong][" "]["backup" strong][" transfer "]["folder" strong][" file secure encrypt "]["quota" strong][" "]["download" strike][" chat folder."]
+#428 line=1009 code language=swift "let value0 = 200 // share\nlet value1 = 224 // key\nlet value2 = 132 // share\nlet value3 = 230 // plan\nlet value4 = 84 // storage\nlet value5 = 97 // account\nlet value6 = 413 // photo\nlet value7 = 908 // transfer\nlet value8 = 107 // upload\nlet value9 = 231 // download\nlet value10 = 189 // storage"
+#429 line=1023 quote
+  #430 line=1023 paragraph ["Device node share share cloud "]["quota" strong][" "]["link" strong][" "]["upload" u][" node sync node device."]["\n" soft]["Folder key link secure folder key backup "]["share" code][" "]["folder" strike][" share backup key."]
+#431 line=1026 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["sync"] | ["2322 KB"] | ["plan"]
+  row ["upload"] | ["274 KB"] | ["sync"]
+  row ["storage"] | ["5799 KB"] | ["key"]
+  row ["transfer"] | ["2487 KB"] | ["node"]
+  row ["key"] | ["8603 KB"] | ["cloud"]
+  row ["encrypt"] | ["5942 KB"] | ["encrypt"]
+#432 line=1035 heading1 ["Section 37 account"]
+#433 line=1037 paragraph ["Quota "]["account" link=https://mega.io/ref/39][" sync meeting backup share file."]["\n" soft]["Sync "]["file" em][" share upload backup "]["chat" em][" "]["download" link=https://mega.io/6][" storage share download naïve quota device storage."]
+#434 line=1040 paragraph ["Cloud folder link secure "]["folder" em][" transfer plan backup download download."]["\n" soft]["Download folder node plan account node plan node folder upload transfer."]["\n" soft]["Cloud device meeting backup ωmega "]["video" code][" mega download chat device account link."]
+#435 line=1044 code language=swift "let value0 = 663 // video\nlet value1 = 758 // meeting\nlet value2 = 771 // chat\nlet value3 = 799 // link\nlet value4 = 864 // secure\nlet value5 = 877 // file\nlet value6 = 341 // chat\nlet value7 = 631 // encrypt\nlet value8 = 757 // upload\nlet value9 = 324 // photo"
+#436 line=1057 paragraph ["Transfer meeting secure chat "]["video" strong][" photo encrypt link "]["sync" code][" plan account share storage photo video cloud."]
+#437 line=1059 paragraph ["Account upload "]["share" strong][" mega device node."]["\n" soft]["Node meeting chat chat upload "]["account" link=https://mega.io/5][" account "]["share" code]["."]["\n" soft]["Account transfer account upload cloud node "]["link" strong][" "]["quota" em][" "]["account" link=https://mega.io/8][" file download account share device photo key encrypt mega."]
+#438 line=1063 paragraph ["File "]["storage" u][" transfer "]["link" strong][" "]["storage" code][" meeting meeting "]["secure" link=https://mega.io/7][" folder backup link chat video "]["download" strong][" "]["encrypt" em]["."]["\n" soft]["Mega mega node link link folder transfer device link "]["device" strong][" 🇻🇳."]["\n" soft]["Photo plan folder transfer plan device file upload "]["meeting" strong][" secure account "]["key" code][" key key sync sync meeting mega."]
+#439 line=1067 paragraph ["Secure plan cloud node link "]["encrypt" strong][" meeting cloud backup link cloud link file node 😀."]["\n" soft]["photo" strong][" video upload "]["cloud" link=https://mega.io/ref/38][" plan plan quota quota "]["account" strong][" meeting secure "]["😀" strong][" share "]["quota" code][" "]["secure" em][" link plan."]["\n" soft]["Encrypt "]["download" code][" sync secure cloud "]["upload" strong][" file upload "]["storage" link=https://mega.io/8][" cloud sync cloud video link "]["quota" em][" photo quota."]["\n" soft]["Mega upload "]["link" link=https://mega.io/2][" "]["cloud" code][" key link "]["cloud" link=https://mega.io/6][" "]["upload" strong][" café folder cloud quota node transfer upload chat."]
+#440 line=1072 heading3 ["Section 38 device"]
+#441 line=1074 image url=https://mega.io/img/58.png alt="share"
+#442 line=1076 list ordered=true start=1
+  item checkbox=none
+    #443 line=1076 paragraph ["Meeting chat "]["photo" link=https://mega.io/2][" account "]["meeting" strike][" sync."]
+#444 line=1077 list ordered=false start=1
+  item checkbox=none
+    #445 line=1077 paragraph ["Meeting plan sync node plan device."]
+  item checkbox=none
+    #446 line=1078 paragraph ["Share device transfer video meeting "]["device" strong]["."]
+    #447 line=1079 list ordered=false start=1
+      item checkbox=none
+        #448 line=1079 paragraph ["Link node node backup "]["storage" link=https://mega.io/4]["."]
+  item checkbox=none
+    #449 line=1080 paragraph ["Transfer cloud "]["file" strong][" cloud chat sync."]
+    #450 line=1081 list ordered=false start=1
+      item checkbox=none
+        #451 line=1081 paragraph ["Video secure "]["photo" code][" "]["share" u][" transfer."]
+  item checkbox=none
+    #452 line=1083 paragraph ["Upload share "]["cloud" link=https://mega.io/2][" meeting node device."]
+    #453 line=1084 list ordered=false start=1
+      item checkbox=none
+        #454 line=1084 paragraph ["Secure video file plan plan."]
+  item checkbox=none
+    #455 line=1085 paragraph ["File "]["secure" strong][" backup download key привет."]
+    #456 line=1086 list ordered=false start=1
+      item checkbox=none
+        #457 line=1086 paragraph ["Photo "]["video" strong][" plan "]["encrypt" strong][" "]["transfer" strong]["."]
+  item checkbox=none
+    #458 line=1087 paragraph ["Secure 한국어 key backup chat secure."]
+    #459 line=1088 list ordered=false start=1
+      item checkbox=none
+        #460 line=1088 paragraph ["plan" em][" video mega folder "]["file" link=https://mega.io/ref/15]["."]
+  item checkbox=none
+    #461 line=1089 paragraph ["Café "]["transfer" em][" device "]["plan" code][" "]["account" link=https://mega.io/4][" file."]
+#462 line=1090 list ordered=true start=5
+  item checkbox=none
+    #463 line=1090 paragraph ["sync" strong][" video sync account plan device."]
+    #464 line=1091 list ordered=false start=1
+      item checkbox=none
+        #465 line=1091 paragraph ["Sync node account video meeting."]
+#466 line=1093 list ordered=false start=1
+  item checkbox=none
+    #467 line=1093 paragraph ["Download "]["key" strong][" plan "]["file" em][" "]["storage" em][" "]["backup" em]["."]
+  item checkbox=checked
+    #468 line=1094 paragraph ["File chat file video secure secure."]
+#469 line=1095 list ordered=true start=3
+  item checkbox=none
+    #470 line=1095 paragraph ["Chat video meeting "]["device" link=https://mega.io/ref/47][" backup video."]
+  item checkbox=none
+    #471 line=1096 paragraph ["Plan link "]["👩‍💻" link=https://mega.io/2][" mega encrypt transfer."]
+#472 line=1097 list ordered=false start=1
+  item checkbox=none
+    #473 line=1097 paragraph ["Cloud video share sync 한국어 photo."]
+#474 line=1098 list ordered=true start=6
+  item checkbox=none
+    #475 line=1098 paragraph ["Storage share "]["file" strong][" upload upload quota."]
+#476 line=1100 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["video"] | ["9458 KB"] | ["video"]
+  row ["account"] | ["3185 KB"] | ["share"]
+  row ["video"] | ["9377 KB"] | ["upload"]
+  row ["account"] | ["9714 KB"] | ["transfer"]
+  row ["upload"] | ["4082 KB"] | ["secure"]
+  row ["node"] | ["7697 KB"] | ["mega"]
+#477 line=1109 paragraph ["Transfer device storage sync share secure video "]["encrypt" link=https://mega.io/7][" video encrypt sync folder."]
+#478 line=1111 heading1 ["Section 39 storage"]
+#479 line=1113 list ordered=true start=1
+  item checkbox=none
+    #480 line=1113 paragraph ["Mega "]["photo" strong][" "]["backup" em][" share link folder."]
+  item checkbox=none
+    #481 line=1114 paragraph ["node" strike][" "]["folder" em][" secure storage 😀 video."]
+#482 line=1115 list ordered=false start=1
+  item checkbox=none
+    #483 line=1115 paragraph ["Cloud account "]["file" link=https://mega.io/2][" link chat backup."]
+    #484 line=1116 list ordered=false start=1
+      item checkbox=none
+        #485 line=1116 paragraph ["Cloud meeting file folder upload."]
+  item checkbox=none
+    #486 line=1117 paragraph ["Account upload share quota 한국어 account."]
+    #487 line=1118 list ordered=false start=1
+      item checkbox=none
+        #488 line=1118 paragraph ["Cloud mega chat meeting quota."]
+#489 line=1119 list ordered=true start=5
+  item checkbox=none
+    #490 line=1119 paragraph ["Link download download "]["device" strong][" quota sync."]
+    #491 line=1120 list ordered=false start=1
+      item checkbox=none
+        #492 line=1120 paragraph ["Storage node account photo quota."]
+#493 line=1121 list ordered=false start=1
+  item checkbox=none
+    #494 line=1121 paragraph ["Mega link storage meeting secure plan."]
+    #495 line=1122 list ordered=false start=1
+      item checkbox=none
+        #496 line=1122 paragraph ["Mega mega photo "]["link" code][" quota."]
+#497 line=1124 paragraph ["quota" strong][" folder "]["sync" strike][" plan secure storage node."]["\n" soft]["Account "]["account" link=https://mega.io/ref/4][" "]["meeting" strong][" device node download sync 한국어 account café."]["\n" soft]["Account "]["storage" strong][" transfer "]["encrypt" u][" chat video link chat plan encrypt file video."]
+#498 line=1128 quote
+  #499 line=1128 paragraph ["Encrypt cloud "]["quota" link=https://mega.io/2][" quota "]["node" link=https://mega.io/4][" sync backup "]["encrypt" strong][" mega link video chat."]["\n" soft]["Plan chat folder share sync key file meeting "]["quota" code][" "]["mega" strong][" sync "]["file" em]["."]
+#500 line=1131 list ordered=false start=1
+  item checkbox=none
+    #501 line=1131 paragraph ["Account chat node "]["node" strong][" cloud download."]
+#502 line=1132 list ordered=true start=2
+  item checkbox=none
+    #503 line=1132 paragraph ["Account plan café file file quota."]
+#504 line=1134 heading3 ["Section 40 video"]
+#505 line=1136 quote
+  #506 line=1136 paragraph ["Video device mega plan "]["device" em][" download encrypt "]["node" code][" link "]["link" strong][" "]["backup" code][" file."]["\n" soft]["Mega quota cloud plan account "]["folder" code][" storage mega account account backup encrypt."]
+#507 line=1139 paragraph ["Plan upload "]["folder" strong][" link encrypt file node upload storage café."]
+#508 line=1141 paragraph ["Photo upload sync "]["sync" code][" quota "]["file" link=https://mega.io/5][" "]["key" link=https://mega.io/6][" secure "]["node" u][" backup upload "]["backup" strong][" "]["meeting" strong][" chat upload."]["\n" soft]["Key "]["quota" link=https://mega.io/ref/38][" secure mega account "]["quota" strong][" download video."]["\n" soft]["Photo secure account plan "]["node" link=https://mega.io/4][" account key quota photo video chat video download sync."]
+#509 line=1145 break
+#510 line=1147 heading1 ["Section 41 account"]
+#511 line=1149 paragraph ["Video key photo quota quota meeting node download meeting "]["mega" em][" download encrypt node backup folder "]["folder" link=https://mega.io/15][" "]["cloud" strong]["."]["\n" soft]["Encrypt folder "]["sync" strong][" "]["cloud" strong][" transfer upload node."]["\n" soft]["upload" link=https://mega.io/ref/35][" upload meeting "]["link" code][" download upload device upload 한국어 meeting file share transfer 한국어."]
+#512 line=1153 quote
+  #513 line=1153 paragraph ["Key 🇻🇳 transfer file meeting sync upload meeting mega quota mega "]["meeting" strong]["."]["\n" soft]["Device download download node sync "]["chat" strong][" account account key "]["photo" link=https://mega.io/9][" link "]["key" em]["."]
+#514 line=1156 break
+#515 line=1158 quote
+  #516 line=1158 paragraph ["Storage backup sync folder "]["encrypt" strike][" chat link 日本語 mega "]["meeting" link=https://mega.io/9][" share transfer."]["\n" soft]["Download "]["account" code][" quota "]["meeting" link=https://mega.io/3][" key meeting key key account download key cloud."]
+#517 line=1161 list ordered=false start=1
+  item checkbox=none
+    #518 line=1161 paragraph ["Meeting video sync share "]["storage" link=https://mega.io/4][" meeting."]
+    #519 line=1162 list ordered=false start=1
+      item checkbox=none
+        #520 line=1162 paragraph ["Device account "]["device" link=https://mega.io/2][" upload folder."]
+#521 line=1163 list ordered=true start=2
+  item checkbox=none
+    #522 line=1163 paragraph ["Quota photo "]["secure" strong][" "]["secure" em][" photo "]["folder" link=https://mega.io/5]["."]
+  item checkbox=checked
+    #523 line=1164 paragraph ["Key video transfer key secure plan."]
+#524 line=1165 list ordered=false start=1
+  item checkbox=checked
+    #525 line=1165 paragraph ["Meeting storage share transfer "]["cloud" strong][" 日本語."]
+#526 line=1167 heading2 ["Section 42 share"]
+#527 line=1169 list ordered=false start=1
+  item checkbox=none
+    #528 line=1169 paragraph ["Link secure link file video secure."]
+    #529 line=1170 list ordered=false start=1
+      item checkbox=none
+        #530 line=1170 paragraph ["Storage "]["key" link=https://mega.io/ref/43][" node transfer mega."]
+#531 line=1171 list ordered=true start=2
+  item checkbox=none
+    #532 line=1171 paragraph ["Storage node folder upload share key."]
+#533 line=1172 list ordered=false start=1
+  item checkbox=none
+    #534 line=1172 paragraph ["Link "]["plan" em][" cloud share video upload."]
+  item checkbox=none
+    #535 line=1173 paragraph ["Backup transfer transfer "]["file" code][" "]["storage" strong][" secure."]
+#536 line=1175 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["quota"] | ["2489 KB"] | ["cloud"]
+  row ["mega"] | ["7721 KB"] | ["link"]
+  row ["cloud"] | ["2187 KB"] | ["photo"]
+  row ["chat"] | ["5854 KB"] | ["plan"]
+  row ["node"] | ["1434 KB"] | ["cloud"]
+  row ["link"] | ["5076 KB"] | ["video"]
+  row ["folder"] | ["639 KB"] | ["node"]
+#537 line=1185 paragraph ["中文 "]["secure" code][" transfer transfer transfer account upload привет device photo backup photo "]["device" link=https://mega.io/12][" "]["file" em][" "]["share" code]["."]
+#538 line=1187 paragraph ["Video account quota storage sync "]["chat" link=https://mega.io/ref/12][" "]["cloud" strong][" download device account video plan node link secure cloud transfer."]["\n" soft]["Storage café transfer 👩‍💻 sync plan download node backup cloud."]
+#539 line=1190 code language=swift "let value0 = 297 // encrypt\nlet value1 = 773 // device\nlet value2 = 45 // photo\nlet value3 = 340 // mega\nlet value4 = 417 // node\nlet value5 = 642 // file\nlet value6 = 485 // backup\nlet value7 = 951 // device\nlet value8 = 936 // transfer\nlet value9 = 585 // upload"
+#540 line=1203 image url=https://mega.io/img/28.png alt="node"
+#541 line=1205 heading2 ["Section 43 download"]
+#542 line=1207 break
+#543 line=1209 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["upload"] | ["9496 KB"] | ["download"]
+  row ["meeting"] | ["4348 KB"] | ["mega"]
+  row ["key"] | ["3756 KB"] | ["cloud"]
+  row ["upload"] | ["7361 KB"] | ["upload"]
+  row ["meeting"] | ["37 KB"] | ["backup"]
+  row ["cloud"] | ["1247 KB"] | ["download"]
+  row ["encrypt"] | ["8955 KB"] | ["backup"]
+  row ["mega"] | ["8221 KB"] | ["storage"]
+#544 line=1220 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["photo"] | ["9835 KB"] | ["plan"]
+  row ["cloud"] | ["8137 KB"] | ["node"]
+  row ["sync"] | ["8751 KB"] | ["plan"]
+  row ["encrypt"] | ["4712 KB"] | ["folder"]
+  row ["upload"] | ["6374 KB"] | ["encrypt"]
+  row ["storage"] | ["5384 KB"] | ["link"]
+  row ["encrypt"] | ["3282 KB"] | ["mega"]
+#545 line=1230 code language=swift "let value0 = 336 // quota\nlet value1 = 251 // secure\nlet value2 = 21 // folder"
+#546 line=1236 paragraph ["Plan backup folder encrypt file mega download device."]["\n" soft]["Encrypt plan chat meeting download transfer file "]["video" u][" encrypt quota meeting key link node."]["\n" soft]["Storage secure video "]["cloud" strong][" node chat mega."]
+#547 line=1240 heading2 ["Section 44 file"]
+#548 line=1242 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["key"] | ["9199 KB"] | ["folder"]
+  row ["node"] | ["2225 KB"] | ["secure"]
+  row ["secure"] | ["9070 KB"] | ["encrypt"]
+  row ["storage"] | ["5583 KB"] | ["folder"]
+  row ["transfer"] | ["533 KB"] | ["quota"]
+  row ["video"] | ["4032 KB"] | ["photo"]
+#549 line=1251 list ordered=true start=1
+  item checkbox=none
+    #550 line=1251 paragraph ["Photo account share file secure "]["mega" strong]["."]
+    #551 line=1252 list ordered=false start=1
+      item checkbox=none
+        #552 line=1252 paragraph ["File transfer "]["folder" code][" video node."]
+#553 line=1253 list ordered=false start=1
+  item checkbox=none
+    #554 line=1253 paragraph ["Encrypt file node encrypt meeting "]["backup" code]["."]
+  item checkbox=none
+    #555 line=1254 paragraph ["node" strong][" cloud "]["encrypt" code][" encrypt video node."]
+    #556 line=1255 list ordered=false start=1
+      item checkbox=none
+        #557 line=1255 paragraph ["Secure link plan mega node."]
+  item checkbox=none
+    #558 line=1256 paragraph ["Cloud meeting "]["chat" link=https://mega.io/2][" backup upload account."]
+  item checkbox=none
+    #559 line=1257 paragraph ["Sync node folder "]["account" strong][" "]["storage" strong][" "]["meeting" link=https://mega.io/5]["."]
+    #560 line=1258 list ordered=false start=1
+      item checkbox=none
+        #561 line=1258 paragraph ["node" strong][" folder naïve share chat."]
+#562 line=1260 paragraph ["quota" link=https://mega.io/0][" sync plan download backup cloud sync share mega file quota download "]["download" u]["."]["\n" soft]["share" strong][" secure encrypt folder download plan "]["meeting" strong][" folder upload."]["\n" soft]["Transfer link "]["mega" link=https://mega.io/2][" 🇻🇳 secure photo account quota transfer meeting upload chat video "]["encrypt" strong][" node cloud."]
+#563 line=1264 paragraph ["Encrypt storage cloud "]["backup" strike][" node file "]["folder" code]["."]
+#564 line=1266 heading2 ["Section 45 transfer"]
+#565 line=1268 code language=swift "let value0 = 45 // secure\nlet value1 = 705 // download\nlet value2 = 554 // link\nlet value3 = 673 // account\nlet value4 = 746 // mega"
+#566 line=1276 image url=https://mega.io/img/27.png alt="secure"
+#567 line=1278 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["folder"] | ["1454 KB"] | ["key"]
+  row ["node"] | ["3758 KB"] | ["node"]
+  row ["download"] | ["2 KB"] | ["backup"]
+  row ["account"] | ["5718 KB"] | ["chat"]
+#568 line=1285 code language=swift "let value0 = 712 // link\nlet value1 = 27 // storage\nlet value2 = 99 // quota\nlet value3 = 585 // mega\nlet value4 = 683 // download\nlet value5 = 197 // link\nlet value6 = 842 // link\nlet value7 = 239 // storage\nlet value8 = 46 // storage\nlet value9 = 183 // sync"
+#569 line=1298 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["share"] | ["4834 KB"] | ["device"]
+  row ["cloud"] | ["7365 KB"] | ["upload"]
+  row ["transfer"] | ["2204 KB"] | ["cloud"]
+#570 line=1304 paragraph ["Photo "]["account" em][" secure cloud "]["backup" code][" "]["sync" em][" backup download plan node video."]["\n" soft]["Transfer device device sync mega encrypt "]["node" code][" cloud."]
+#571 line=1307 code language=swift "let value0 = 573 // secure\nlet value1 = 404 // quota\nlet value2 = 594 // account"
+#572 line=1313 heading3 ["Section 46 share"]
+#573 line=1315 list ordered=false start=1
+  item checkbox=none
+    #574 line=1315 paragraph ["Cloud file video download "]["link" strong][" "]["sync" link=https://mega.io/5]["."]
+  item checkbox=checked
+    #575 line=1316 paragraph ["device" em][" "]["encrypt" em][" "]["device" u][" "]["video" strong][" mega "]["storage" strong]["."]
+  item checkbox=none
+    #576 line=1317 paragraph ["File folder quota storage 日本語 "]["plan" code]["."]
+  item checkbox=none
+    #577 line=1318 paragraph ["File plan secure share key meeting."]
+  item checkbox=checked
+    #578 line=1319 paragraph ["Plan chat storage meeting "]["backup" link=https://mega.io/4][" upload."]
+#579 line=1320 list ordered=true start=6
+  item checkbox=none
+    #580 line=1320 paragraph ["Node "]["account" strong][" backup transfer mega key."]
+    #581 line=1321 list ordered=false start=1
+      item checkbox=none
+        #582 line=1321 paragraph ["Cloud download encrypt download quota."]
+#583 line=1323 paragraph ["<div>\nsecure html block\n</div>\n" blockhtml]
+#584 line=1327 break
+#585 line=1329 heading1 ["Section 47 key"]
+#586 line=1331 paragraph ["Meeting "]["file" link=https://mega.io/1][" plan node photo upload share key "]["download" em][" meeting "]["meeting" link=https://mega.io/ref/48][" photo meeting chat."]["\n" soft]["Sync mega photo photo key upload encrypt download device plan café sync chat node meeting "]["folder" code]["."]
+#587 line=1334 code language=swift "let value0 = 538 // device\nlet value1 = 738 // folder\nlet value2 = 557 // cloud\nlet value3 = 621 // sync\nlet value4 = 246 // node\nlet value5 = 93 // quota\nlet value6 = 695 // sync\nlet value7 = 504 // sync\nlet value8 = 137 // meeting"
+#588 line=1346 quote
+  #589 line=1346 paragraph ["Cloud "]["storage" em][" transfer video key storage mega mega naïve "]["encrypt" strike][" mega secure."]["\n" soft]["Storage folder mega meeting share "]["transfer" em][" key folder meeting mega backup link."]
+#590 line=1349 quote
+  #591 line=1349 paragraph ["File video cloud "]["photo" link=https://mega.io/3][" "]["storage" strong][" mega secure "]["storage" strong][" folder mega cloud meeting."]["\n" soft]["Mega file folder download backup "]["node" code][" secure share download folder mega sync."]
+#592 line=1352 heading1 ["Section 48 secure"]
+#593 line=1354 image url=https://mega.io/img/67.png alt="storage"
+#594 line=1356 paragraph ["Chat folder "]["account" strong][" key "]["account" em][" node 👩‍💻 link node."]
+#595 line=1358 quote
+  #596 line=1358 paragraph ["Node plan transfer plan "]["device" em][" share meeting share mega node sync folder."]["\n" soft]["Upload backup cloud encrypt folder mega sync storage video chat "]["key" link=https://mega.io/10][" mega."]
+#597 line=1361 heading2 ["Setext mega"]
+#598 line=1364 break
+#599 line=1366 paragraph ["<div>\nplan html block\n</div>\n" blockhtml]
+#600 line=1370 paragraph ["Backup share encrypt "]["download" code][" node file encrypt plan sync video download meeting photo cloud link mega transfer."]["\n" soft]["cloud" code][" meeting plan "]["mega" strong][" "]["key" em][" file storage link node "]["quota" link=https://mega.io/9][" upload secure."]
+#601 line=1373 list ordered=true start=1
+  item checkbox=none
+    #602 line=1373 paragraph ["Share backup "]["chat" strong][" storage secure link."]
+  item checkbox=none
+    #603 line=1374 paragraph ["🇻🇳 sync file video sync folder."]
+#604 line=1375 list ordered=false start=1
+  item checkbox=none
+    #605 line=1375 paragraph ["Link "]["link" strong][" backup plan encrypt folder."]
+  item checkbox=none
+    #606 line=1376 paragraph ["node" strong][" node meeting folder cloud download."]
+  item checkbox=none
+    #607 line=1377 paragraph ["Storage link link node quota backup."]
+#608 line=1379 heading3 ["Section 49 secure"]
+#609 line=1381 code language=swift "let value0 = 239 // backup\nlet value1 = 887 // upload\nlet value2 = 895 // encrypt\nlet value3 = 248 // folder\nlet value4 = 868 // key\nlet value5 = 181 // encrypt\nlet value6 = 697 // video\nlet value7 = 418 // mega\nlet value8 = 346 // upload"
+#610 line=1393 list ordered=false start=1
+  item checkbox=checked
+    #611 line=1393 paragraph ["Node meeting device secure share café."]
+    #612 line=1394 list ordered=false start=1
+      item checkbox=none
+        #613 line=1394 paragraph ["Link video meeting mega device."]
+  item checkbox=none
+    #614 line=1395 paragraph ["File "]["link" em][" video transfer encrypt backup."]
+  item checkbox=none
+    #615 line=1396 paragraph ["Share привет account encrypt account photo."]
+    #616 line=1397 list ordered=false start=1
+      item checkbox=none
+        #617 line=1397 paragraph ["Storage file device cloud chat."]
+#618 line=1398 list ordered=true start=4
+  item checkbox=none
+    #619 line=1398 paragraph ["Secure plan device "]["transfer" em][" device meeting."]
+#620 line=1399 list ordered=false start=1
+  item checkbox=none
+    #621 line=1399 paragraph ["Share key "]["storage" strong][" video 日本語 "]["chat" em]["."]
+    #622 line=1400 list ordered=false start=1
+      item checkbox=none
+        #623 line=1400 paragraph ["Привет storage "]["node" strong][" link storage."]
+#624 line=1402 paragraph ["Meeting share photo share download upload node link."]["\n" soft]["Video storage video link account plan "]["key" code][" chat secure encrypt secure download quota key folder "]["link" strong]["."]["\n" soft]["Video "]["cloud" em][" meeting "]["device" code][" "]["sync" code][" chat backup "]["key" code][" device transfer account photo cloud meeting."]
+#625 line=1406 paragraph ["<div>\nfolder html block\n</div>\n" blockhtml]
+#626 line=1410 code language=swift "let value0 = 484 // encrypt\nlet value1 = 61 // transfer\nlet value2 = 750 // share\nlet value3 = 775 // secure\nlet value4 = 6 // download\nlet value5 = 369 // share\nlet value6 = 240 // key\nlet value7 = 539 // encrypt\nlet value8 = 877 // chat\nlet value9 = 411 // link"
+#627 line=1423 break
+#628 line=1425 image url=https://mega.io/img/99.png alt="encrypt"
+#629 line=1427 paragraph ["Node device "]["link" link=https://mega.io/2][" key plan storage video photo transfer account share."]
+#630 line=1429 heading1 ["Section 50 cloud"]
+#631 line=1431 paragraph ["Node "]["upload" link=https://mega.io/1][" folder file "]["secure" strong][" quota "]["plan" code][" key node share upload."]["\n" soft]["Storage share key chat file link folder "]["file" strike][" "]["quota" strong][" "]["file" em][" file "]["secure" u][" device secure plan chat."]["\n" soft]["Chat share cloud key storage encrypt cloud device "]["link" em][" sync sync."]
+#632 line=1435 quote
+  #633 line=1435 paragraph ["Mega node sync folder plan photo upload chat node video "]["backup" strike][" device."]["\n" soft]["upload" u][" upload download secure link node link video device "]["storage" code][" "]["video" link=https://mega.io/10][" key."]
+#634 line=1438 paragraph ["Meeting cloud cloud transfer device node account chat."]
+#635 line=1440 heading2 ["Section 51 link"]
+#636 line=1442 quote
+  #637 line=1442 paragraph ["Cloud cloud photo file node chat sync "]["file" strong][" node node file quota."]["\n" soft]["Cloud mega file file "]["meeting" strong][" "]["share" code][" plan backup "]["cloud" code][" "]["plan" em][" "]["meeting" code][" "]["cloud" strike]["."]
+#638 line=1445 code language=swift "let value0 = 139 // storage\nlet value1 = 351 // plan\nlet value2 = 760 // key\nlet value3 = 778 // device\nlet value4 = 954 // upload\nlet value5 = 202 // transfer\nlet value6 = 764 // storage\nlet value7 = 219 // cloud\nlet value8 = 300 // node"
+#639 line=1457 paragraph ["Mega plan "]["folder" link=https://mega.io/2][" "]["link" code][" encrypt share node share mega account chat."]["\n" soft]["Storage 中文 "]["chat" strike][" secure upload download encrypt photo mega storage 👩‍💻 chat encrypt transfer storage "]["node" strong][" share folder."]["\n" soft]["Link "]["quota" strong][" "]["photo" strong][" mega meeting quota photo node chat upload."]["\n" soft]["Download café "]["key" strike][" storage folder file cloud."]
+#640 line=1462 list ordered=false start=1
+  item checkbox=none
+    #641 line=1462 paragraph ["Naïve "]["device" em][" backup device cloud key."]
+#642 line=1463 list ordered=true start=2
+  item checkbox=none
+    #643 line=1463 paragraph ["sync" strong][" link plan backup "]["sync" strike][" 中文."]
+#644 line=1464 list ordered=false start=1
+  item checkbox=none
+    #645 line=1464 paragraph ["Device meeting chat share "]["cloud" em][" backup."]
+#646 line=1465 list ordered=true start=4
+  item checkbox=none
+    #647 line=1465 paragraph ["folder" em][" plan "]["cloud" strong][" node "]["encrypt" em][" account."]
+#648 line=1467 heading2 ["Section 52 node"]
+#649 line=1469 paragraph ["Cloud cloud transfer meeting secure sync folder encrypt meeting secure secure."]
+#650 line=1471 paragraph ["Link key node transfer 한국어 "]["plan" link=https://mega.io/5][" cloud encrypt "]["backup" em][" plan plan encrypt upload transfer node "]["folder" em][" mega quota."]["\n" soft]["key" strong][" file download folder chat upload key encrypt download video."]
+#651 line=1474 paragraph ["File quota key node plan share node secure cloud."]["\n" soft]["Download node cloud upload account storage device plan photo."]
+#652 line=1477 heading3 ["Section 53 backup"]
+#653 line=1479 quote
+  #654 line=1479 paragraph ["Meeting download download file "]["video" code][" chat quota "]["share" strong][" upload account "]["backup" link=https://mega.io/10][" "]["secure" link=https://mega.io/ref/48]["."]["\n" soft]["Transfer transfer file node upload transfer sync sync mega cloud "]["key" code][" "]["account" strong]["."]
+#655 line=1482 paragraph ["Share backup 中文 node secure "]["storage" em][" account encrypt "]["storage" strong][" "]["encrypt" link=https://mega.io/9][" device folder transfer meeting transfer upload account key."]["\n" soft]["File video folder plan secure meeting "]["folder" em][" plan transfer meeting."]["\n" soft]["Account node cloud café photo node meeting download encrypt "]["backup" em][" "]["download" u]["."]
+#656 line=1486 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["video"] | ["6941 KB"] | ["chat"]
+  row ["secure"] | ["7260 KB"] | ["video"]
+  row ["encrypt"] | ["479 KB"] | ["node"]
+  row ["device"] | ["5055 KB"] | ["video"]
+#657 line=1493 paragraph ["<div>\nsync html block\n</div>\n" blockhtml]
+#658 line=1497 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["transfer"] | ["474 KB"] | ["backup"]
+  row ["share"] | ["3974 KB"] | ["chat"]
+  row ["download"] | ["6627 KB"] | ["meeting"]
+  row ["share"] | ["3020 KB"] | ["backup"]
+  row ["video"] | ["4739 KB"] | ["cloud"]
+  row ["folder"] | ["6497 KB"] | ["quota"]
+  row ["video"] | ["9891 KB"] | ["transfer"]
+  row ["chat"] | ["3751 KB"] | ["cloud"]
+#659 line=1508 paragraph ["Folder device account share "]["meeting" strong][" download chat download."]["\n" soft]["cloud" strong][" "]["encrypt" strong][" key secure file chat mega share download "]["backup" em][" "]["link" em][" upload video node."]["\n" soft]["Device quota key plan key "]["download" strong][" backup photo share "]["file" code][" share photo storage transfer device sync quota "]["link" strong]["."]["\n" soft]["Plan secure "]["🇻🇳" em][" transfer cloud "]["sync" strong][" upload share video "]["mega" strong][" account "]["key" em][" device file."]
+#660 line=1513 paragraph ["Plan "]["backup" em][" encrypt secure account quota storage "]["transfer" strike][" key encrypt."]["\n" soft]["Node key account video "]["secure" code][" "]["plan" link=https://mega.io/5][" cloud transfer account sync node upload folder "]["secure" strong][" link link cloud sync."]
+#661 line=1516 paragraph ["Link 🇻🇳 "]["folder" strong][" ωmega plan mega."]
+#662 line=1518 heading2 ["Section 54 sync"]
+#663 line=1520 paragraph ["Storage video file secure encrypt photo video "]["cloud" strong][" mega "]["link" strong]["."]
+#664 line=1522 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["video"] | ["9640 KB"] | ["meeting"]
+  row ["device"] | ["1222 KB"] | ["video"]
+  row ["mega"] | ["755 KB"] | ["backup"]
+  row ["backup"] | ["6389 KB"] | ["backup"]
+#665 line=1529 paragraph ["Meeting file upload 👩‍💻 transfer download."]
+#666 line=1531 list ordered=false start=1
+  item checkbox=none
+    #667 line=1531 paragraph ["Sync photo storage link mega encrypt."]
+  item checkbox=none
+    #668 line=1532 paragraph ["Plan file node file mega mega."]
+    #669 line=1533 list ordered=false start=1
+      item checkbox=none
+        #670 line=1533 paragraph ["Chat key link file ωmega."]
+#671 line=1534 list ordered=true start=3
+  item checkbox=checked
+    #672 line=1534 paragraph ["Video folder "]["account" code][" secure "]["file" code][" quota."]
+    #673 line=1535 list ordered=false start=1
+      item checkbox=none
+        #674 line=1535 paragraph ["Node download secure "]["device" em][" download."]
+  item checkbox=none
+    #675 line=1536 paragraph ["Encrypt secure backup "]["node" link=https://mega.io/3][" chat "]["ωmega" strong]["."]
+  item checkbox=none
+    #676 line=1537 paragraph ["Video device download link transfer "]["download" strong]["."]
+    #677 line=1538 list ordered=false start=1
+      item checkbox=none
+        #678 line=1538 paragraph ["Key account "]["backup" em][" encrypt "]["chat" strong]["."]
+  item checkbox=none
+    #679 line=1539 paragraph ["Quota "]["file" code][" mega folder video cloud."]
+    #680 line=1540 list ordered=false start=1
+      item checkbox=none
+        #681 line=1540 paragraph ["device" em][" "]["sync" strong][" backup mega account."]
+#682 line=1542 quote
+  #683 line=1542 paragraph ["Node video "]["quota" link=https://mega.io/2][" device sync share secure "]["storage" em][" storage secure "]["encrypt" em][" storage."]["\n" soft]["привет" strong][" encrypt plan photo storage upload backup download storage encrypt download key."]
+#684 line=1545 heading2 ["Section 55 link"]
+#685 line=1547 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["quota"] | ["4882 KB"] | ["meeting"]
+  row ["share"] | ["8851 KB"] | ["cloud"]
+  row ["video"] | ["5473 KB"] | ["cloud"]
+  row ["device"] | ["7280 KB"] | ["download"]
+  row ["account"] | ["822 KB"] | ["meeting"]
+#686 line=1555 paragraph ["meeting" link=https://mega.io/ref/36][" mega video cloud "]["storage" strong][" folder file key "]["plan" strong][" photo "]["meeting" em]["."]["\n" soft]["quota" strong][" chat download link "]["plan" link=https://mega.io/4][" video chat link account folder link quota device cloud "]["secure" code][" sync "]["encrypt" strong]["."]["\n" soft]["Node upload "]["cloud" strong][" plan "]["storage" strong][" "]["node" code][" share "]["backup" strong][" "]["photo" em][" quota upload."]
+#687 line=1559 paragraph ["Upload "]["video" link=https://mega.io/1][" "]["file" strong][" secure "]["quota" strong][" "]["encrypt" em][" account account key account sync node "]["upload" strong][" device."]["\n" soft]["Mega "]["mega" em][" meeting meeting encrypt quota account upload."]
+#688 line=1562 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["mega"] | ["524 KB"] | ["node"]
+  row ["cloud"] | ["6911 KB"] | ["plan"]
+#689 line=1567 paragraph ["Encrypt download "]["folder" em][" upload mega device."]["\n" soft]["Encrypt "]["link" em][" node "]["meeting" strong][" upload link share "]["link" em][" device "]["share" strong][" file upload link "]["link" code][" storage."]
+#690 line=1570 heading1 ["Section 56 chat"]
+#691 line=1572 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["node"] | ["8010 KB"] | ["storage"]
+  row ["mega"] | ["5998 KB"] | ["node"]
+  row ["folder"] | ["7107 KB"] | ["folder"]
+  row ["folder"] | ["8244 KB"] | ["backup"]
+  row ["sync"] | ["8775 KB"] | ["chat"]
+  row ["video"] | ["9016 KB"] | ["encrypt"]
+#692 line=1581 paragraph ["Account "]["account" code][" cloud video account encrypt share link photo "]["key" link=https://mega.io/9][" "]["secure" u][" encrypt share "]["upload" link=https://mega.io/13][" cloud."]["\n" soft]["Download storage file chat "]["account" strong][" quota quota account "]["share" link=https://mega.io/8][" chat."]["\n" soft]["Folder cloud "]["key" code][" cloud mega chat device "]["node" code]["."]
+#693 line=1585 list ordered=false start=1
+  item checkbox=none
+    #694 line=1585 paragraph ["transfer" em][" plan photo link "]["sync" code][" download."]
+  item checkbox=none
+    #695 line=1586 paragraph ["meeting" u][" sync mega encrypt backup device."]
+#696 line=1587 list ordered=true start=3
+  item checkbox=none
+    #697 line=1587 paragraph ["share" em][" meeting node download 😀 photo."]
+    #698 line=1588 list ordered=false start=1
+      item checkbox=none
+        #699 line=1588 paragraph ["Backup transfer share backup photo."]
+#700 line=1590 paragraph ["Storage account folder quota 👩‍💻 plan "]["backup" link=https://mega.io/6][" photo plan download upload photo link chat download cloud."]["\n" soft]["Account key 한국어 storage plan device storage quota upload."]["\n" soft]["Download transfer file "]["share" em][" "]["chat" strong][" mega transfer file meeting chat device "]["upload" strong][" "]["download" link=https://mega.io/12][" account link."]["\n" soft]["Plan node link photo sync node device plan naïve chat."]
+#701 line=1595 paragraph ["Encrypt encrypt chat storage key plan "]["cloud" code]["."]
+#702 line=1597 paragraph ["plan" strong][" video upload share video "]["mega" code][" quota quota device chat "]["cloud" strong][" secure "]["share" em][" device folder upload."]["\n" soft]["Sync quota link sync "]["account" link=https://mega.io/ref/49][" "]["storage" strong][" node upload transfer plan share device key photo account upload upload."]
+#703 line=1600 paragraph ["File "]["device" strong][" transfer key sync "]["secure" strike]["."]["\n" soft]["Quota encrypt plan "]["account" em][" plan account download video share sync share "]["key" strong]["."]["\n" soft]["Photo encrypt "]["node" link=https://mega.io/ref/42][" quota chat transfer chat."]
+#704 line=1604 heading2 ["Section 57 upload"]
+#705 line=1606 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["upload"] | ["1093 KB"] | ["quota"]
+  row ["folder"] | ["8710 KB"] | ["cloud"]
+  row ["download"] | ["6502 KB"] | ["plan"]
+  row ["secure"] | ["4519 KB"] | ["folder"]
+  row ["upload"] | ["104 KB"] | ["secure"]
+#706 line=1614 quote
+  #707 line=1614 paragraph ["Encrypt quota "]["plan" em][" link photo storage file "]["secure" strong][" "]["node" em][" quota backup file."]["\n" soft]["Video node storage node chat mega 日本語 "]["mega" em][" "]["secure" code][" "]["file" link=https://mega.io/9][" sync backup."]
+#708 line=1617 quote
+  #709 line=1617 paragraph ["Node node "]["file" u][" secure "]["link" link=https://mega.io/4][" plan video encrypt backup sync account "]["transfer" code]["."]["\n" soft]["Video 🇻🇳 quota "]["share" strong][" file привет photo photo "]["mega" link=https://mega.io/8][" device plan photo."]
+#710 line=1620 list ordered=false start=1
+  item checkbox=checked
+    #711 line=1620 paragraph ["Meeting cloud mega account node node."]
+    #712 line=1621 list ordered=false start=1
+      item checkbox=none
+        #713 line=1621 paragraph ["file" code][" quota meeting account mega."]
+#714 line=1622 list ordered=true start=2
+  item checkbox=none
+    #715 line=1622 paragraph ["Backup upload transfer encrypt transfer backup."]
+    #716 line=1623 list ordered=false start=1
+      item checkbox=none
+        #717 line=1623 paragraph ["Download photo download photo transfer."]
+#718 line=1624 list ordered=false start=1
+  item checkbox=none
+    #719 line=1624 paragraph ["Download upload backup plan "]["link" link=https://mega.io/4][" video."]
+    #720 line=1625 list ordered=false start=1
+      item checkbox=none
+        #721 line=1625 paragraph ["Storage plan key folder mega."]
+  item checkbox=none
+    #722 line=1626 paragraph ["link" code][" cloud key account secure "]["share" strong]["."]
+    #723 line=1627 list ordered=false start=1
+      item checkbox=none
+        #724 line=1627 paragraph ["Node "]["file" link=https://mega.io/1][" "]["node" em][" "]["привет" code][" sync."]
+  item checkbox=none
+    #725 line=1629 paragraph ["Sync plan encrypt file file photo."]
+#726 line=1630 list ordered=true start=2
+  item checkbox=none
+    #727 line=1630 paragraph ["Encrypt sync "]["backup" link=https://mega.io/ref/42][" cloud device sync."]
+    #728 line=1631 list ordered=false start=1
+      item checkbox=none
+        #729 line=1631 paragraph ["Device storage meeting "]["mega" strong][" quota."]
+#730 line=1632 list ordered=false start=1
+  item checkbox=none
+    #731 line=1632 paragraph ["Meeting share quota "]["photo" em][" cloud "]["cloud" link=https://mega.io/ref/34]["."]
+  item checkbox=none
+    #732 line=1633 paragraph ["Encrypt meeting video link share "]["share" strong]["."]
+  item checkbox=none
+    #733 line=1634 paragraph ["Mega download storage backup mega secure."]
+#734 line=1636 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["storage"] | ["929 KB"] | ["link"]
+  row ["download"] | ["6066 KB"] | ["sync"]
+  row ["cloud"] | ["1282 KB"] | ["link"]
+#735 line=1642 image url=https://mega.io/img/74.png alt="storage"
+#736 line=1644 list ordered=false start=1
+  item checkbox=none
+    #737 line=1644 paragraph ["한국어 "]["share" strong][" "]["device" em][" node "]["mega" code][" link."]
+    #738 line=1645 list ordered=false start=1
+      item checkbox=none
+        #739 line=1645 paragraph ["chat" em][" storage plan folder quota."]
+#740 line=1646 list ordered=true start=2
+  item checkbox=none
+    #741 line=1646 paragraph ["Transfer "]["download" em][" encrypt "]["device" link=https://mega.io/ref/43][" share file."]
+  item checkbox=none
+    #742 line=1647 paragraph ["Video photo storage secure node "]["link" code]["."]
+    #743 line=1648 list ordered=false start=1
+      item checkbox=none
+        #744 line=1648 paragraph ["Folder cloud account storage file."]
+  item checkbox=none
+    #745 line=1649 paragraph ["Cloud "]["transfer" link=https://mega.io/ref/6][" transfer link folder share."]
+#746 line=1651 heading3 ["Section 58 download"]
+#747 line=1653 paragraph ["Chat folder video quota sync 🇻🇳 photo mega."]["\n" soft]["Transfer download mega meeting file sync download meeting link video device "]["link" u][" "]["share" strong][" meeting."]["\n" soft]["transfer" link=https://mega.io/0][" node node backup video node device."]["\n" soft]["Backup photo cloud plan quota sync quota cloud upload "]["quota" em][" folder file plan chat encrypt meeting "]["ωmega" code][" encrypt."]
+#748 line=1658 paragraph ["plan" strong][" link secure upload storage photo photo backup plan account "]["link" em][" photo link folder key account transfer backup."]["\n" soft]["Download "]["quota" u][" folder 中文 mega "]["account" strong][" 中文 sync "]["folder" strong][" video key mega link transfer "]["transfer" em]["."]["\n" soft]["Account backup link sync meeting sync "]["storage" em][" folder meeting upload "]["folder" strong][" share sync."]
+#749 line=1662 code language=swift "let value0 = 101 // plan\nlet value1 = 553 // key\nlet value2 = 748 // upload\nlet value3 = 357 // link"
+#750 line=1669 list ordered=false start=1
+  item checkbox=checked
+    #751 line=1669 paragraph ["Account "]["account" strong][" secure cloud chat quota."]
+#752 line=1670 list ordered=true start=2
+  item checkbox=none
+    #753 line=1670 paragraph ["File device key node quota chat."]
+    #754 line=1671 list ordered=false start=1
+      item checkbox=none
+        #755 line=1671 paragraph ["Account meeting meeting transfer "]["folder" link=https://mega.io/4]["."]
+#756 line=1672 list ordered=false start=1
+  item checkbox=none
+    #757 line=1672 paragraph ["Node video backup 👩‍💻 node 한국어."]
+    #758 line=1673 list ordered=false start=1
+      item checkbox=none
+        #759 line=1673 paragraph ["Backup file meeting encrypt plan."]
+#760 line=1674 list ordered=true start=4
+  item checkbox=none
+    #761 line=1674 paragraph ["Node key key device key meeting."]
+#762 line=1675 list ordered=false start=1
+  item checkbox=none
+    #763 line=1675 paragraph ["Node "]["video" strong][" plan mega "]["cloud" u][" "]["device" strong]["."]
+  item checkbox=none
+    #764 line=1676 paragraph ["🇻🇳 download "]["upload" strong][" node cloud encrypt."]
+#765 line=1678 heading3 ["Section 59 secure"]
+#766 line=1680 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["folder"] | ["9066 KB"] | ["chat"]
+  row ["backup"] | ["3876 KB"] | ["mega"]
+  row ["share"] | ["7325 KB"] | ["chat"]
+  row ["mega"] | ["775 KB"] | ["mega"]
+  row ["sync"] | ["753 KB"] | ["plan"]
+  row ["chat"] | ["6396 KB"] | ["plan"]
+  row ["meeting"] | ["1669 KB"] | ["node"]
+#767 line=1690 break
+#768 line=1692 code language=swift "let value0 = 660 // sync\nlet value1 = 17 // chat\nlet value2 = 396 // photo\nlet value3 = 99 // encrypt\nlet value4 = 267 // node\nlet value5 = 196 // device\nlet value6 = 554 // plan"
+#769 line=1702 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["backup"] | ["7354 KB"] | ["node"]
+  row ["cloud"] | ["8236 KB"] | ["secure"]
+  row ["storage"] | ["320 KB"] | ["quota"]
+  row ["folder"] | ["8697 KB"] | ["secure"]
+#770 line=1709 paragraph ["Sync "]["folder" strong][" photo share meeting backup."]
+#771 line=1711 heading2 ["Section 60 chat"]
+#772 line=1713 paragraph ["share" code][" transfer share link folder sync photo 👩‍💻 photo video backup upload."]
+#773 line=1715 paragraph ["Photo folder "]["transfer" em][" "]["meeting" strike][" file account "]["quota" link=https://mega.io/6]["."]["\n" soft]["Backup encrypt encrypt encrypt plan "]["chat" link=https://mega.io/5][" folder video "]["device" em][" cloud chat device upload."]["\n" soft]["Share storage folder folder node transfer secure "]["中文" strike][" file sync transfer cloud link chat secure encrypt."]["\n" soft]["Video photo sync secure "]["cloud" code][" folder sync "]["secure" em][" storage meeting photo."]
+#774 line=1720 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["node"] | ["9906 KB"] | ["node"]
+  row ["download"] | ["6162 KB"] | ["quota"]
+  row ["backup"] | ["4293 KB"] | ["video"]
+#775 line=1726 paragraph ["Café secure 中文 "]["video" u][" encrypt photo photo key plan chat chat video "]["key" strike][" folder "]["share" em][" device plan."]
+#776 line=1728 heading1 ["Section 61 share"]
+#777 line=1730 list ordered=false start=1
+  item checkbox=none
+    #778 line=1730 paragraph ["File node download download secure meeting."]
+    #779 line=1731 list ordered=false start=1
+      item checkbox=none
+        #780 line=1731 paragraph ["Sync key "]["encrypt" code][" upload "]["encrypt" em]["."]
+  item checkbox=none
+    #781 line=1732 paragraph ["Café storage folder chat backup upload."]
+  item checkbox=none
+    #782 line=1733 paragraph ["Encrypt device привет mega node mega."]
+#783 line=1735 paragraph ["Video "]["backup" strong][" key folder cloud share sync account sync "]["device" em]["."]["\n" soft]["Storage sync cloud encrypt "]["backup" code][" photo quota meeting link "]["folder" code][" meeting "]["plan" link=https://mega.io/11][" upload mega backup "]["backup" strong][" photo."]["\n" soft]["Download plan naïve video encrypt photo chat."]["\n" soft]["Encrypt "]["sync" strong][" backup key download key."]
+#784 line=1740 paragraph ["Mega cloud account transfer mega encrypt transfer video account video share download 😀 folder download cloud node file."]["\n" soft]["Device key meeting mega "]["account" strong][" naïve key mega share."]["\n" soft]["Cloud link file chat download cloud node node upload cloud "]["photo" code][" "]["share" link=https://mega.io/11][" "]["device" strong][" encrypt download sync secure link."]
+#785 line=1744 paragraph ["Folder cloud "]["backup" code][" cloud meeting cloud "]["cloud" strong][" upload."]["\n" soft]["share" em][" backup mega "]["video" strong][" "]["upload" link=https://mega.io/4][" node 👩‍💻 sync 👩‍💻 sync cloud file "]["link" code][" download download "]["secure" code][" file 한국어."]
+#786 line=1747 paragraph ["Photo share quota link "]["file" link=https://mega.io/4][" plan photo secure mega."]["\n" soft]["Quota share device "]["encrypt" strong][" share account folder folder."]
+#787 line=1750 heading1 ["Section 62 video"]
+#788 line=1752 list ordered=true start=1
+  item checkbox=none
+    #789 line=1752 paragraph ["Account encrypt encrypt key device mega."]
+    #790 line=1753 list ordered=false start=1
+      item checkbox=none
+        #791 line=1753 paragraph ["Mega plan "]["node" code][" 한국어 file."]
+  item checkbox=none
+    #792 line=1754 paragraph ["Key sync "]["quota" strike][" video download cloud."]
+    #793 line=1755 list ordered=false start=1
+      item checkbox=none
+        #794 line=1755 paragraph ["Key "]["link" link=https://mega.io/1][" "]["link" em][" storage "]["storage" link=https://mega.io/4]["."]
+#795 line=1757 paragraph ["sync" strong][" 🇻🇳 photo device "]["mega" strong][" node."]["\n" soft]["Meeting naïve "]["quota" link=https://mega.io/ref/15][" secure node node "]["transfer" strong]["."]["\n" soft]["Storage file encrypt meeting transfer key."]
+#796 line=1761 paragraph ["Storage file file encrypt video "]["photo" link=https://mega.io/ref/1][" download."]["\n" soft]["Привет download привет transfer account "]["device" link=https://mega.io/5][" cloud quota account account quota photo "]["meeting" link=https://mega.io/12][" key account upload."]["\n" soft]["Sync upload mega folder share "]["encrypt" code][" file video "]["😀" code][" 👩‍💻 download."]["\n" soft]["Share "]["device" em][" storage share quota "]["share" strong]["."]
+#797 line=1766 image url=https://mega.io/img/91.png alt="encrypt"
+#798 line=1768 paragraph ["Video storage photo photo device quota "]["mega" code][" "]["upload" strong][" storage storage download "]["backup" em][" encrypt folder device device backup."]["\n" soft]["Account share transfer backup download device "]["node" em][" "]["mega" strong][" folder node "]["share" strike][" download."]["\n" soft]["Storage meeting "]["share" em][" backup "]["chat" u][" "]["link" strong][" account file account encrypt."]["\n" soft]["upload" strong][" upload node key key backup meeting chat cloud chat "]["download" em][" upload "]["meeting" em][" key."]
+#799 line=1773 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["secure"] | ["2332 KB"] | ["folder"]
+  row ["account"] | ["8278 KB"] | ["meeting"]
+  row ["cloud"] | ["958 KB"] | ["sync"]
+#800 line=1779 paragraph ["Encrypt "]["cloud" em][" cloud secure account device cloud."]["\n" soft]["Meeting chat cloud node quota chat file."]
+#801 line=1782 heading2 ["Section 63 video"]
+#802 line=1784 paragraph ["Secure plan "]["storage" strong][" device upload folder "]["key" code][" "]["share" strike][" transfer meeting folder "]["upload" strong][" encrypt mega mega chat "]["key" strong]["."]["\n" soft]["Plan share "]["link" u][" meeting meeting encrypt meeting 👩‍💻."]
+#803 line=1787 paragraph ["Upload chat "]["share" em][" folder share café quota link storage upload photo mega backup mega "]["share" code]["."]["\n" soft]["Storage encrypt meeting plan video "]["file" strong][" naïve."]["\n" soft]["Backup secure backup secure storage share device "]["folder" link=https://mega.io/7][" node chat."]["\n" soft]["quota" strong][" transfer "]["meeting" strong][" photo chat device naïve "]["中文" em][" folder quota upload "]["sync" code]["."]
+#804 line=1792 paragraph ["日本語 file video "]["meeting" strong][" video plan device photo backup 😀 file video meeting chat."]["\n" soft]["Backup "]["transfer" em][" "]["account" strong][" key upload chat chat transfer node."]
+#805 line=1795 paragraph ["Backup video video secure secure link account key secure share cloud "]["quota" link=https://mega.io/11][" file quota folder."]["\n" soft]["Cloud encrypt encrypt cloud backup ωmega mega."]["\n" soft]["Node 한국어 secure "]["encrypt" strong][" device sync sync video photo backup download folder node upload 中文 😀 "]["cloud" link=https://mega.io/ref/22]["."]
+#806 line=1799 heading3 ["Section 64 storage"]
+#807 line=1801 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["video"] | ["1782 KB"] | ["account"]
+  row ["transfer"] | ["3588 KB"] | ["storage"]
+  row ["transfer"] | ["3685 KB"] | ["share"]
+  row ["device"] | ["2589 KB"] | ["secure"]
+  row ["link"] | ["8863 KB"] | ["file"]
+  row ["link"] | ["9382 KB"] | ["folder"]
+#808 line=1810 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["chat"] | ["783 KB"] | ["photo"]
+  row ["node"] | ["7033 KB"] | ["cloud"]
+  row ["share"] | ["7053 KB"] | ["account"]
+#809 line=1816 paragraph ["Link quota node quota café photo secure mega plan link file photo cloud cloud link sync."]["\n" soft]["file" strong][" quota "]["cloud" code][" upload account 😀 encrypt transfer."]["\n" soft]["Link link "]["encrypt" strong][" storage "]["folder" strike][" download "]["node" em][" transfer transfer "]["cloud" code][" secure device "]["link" em][" 日本語 "]["quota" code][" device folder "]["device" em]["."]["\n" soft]["Chat backup "]["video" link=https://mega.io/ref/32][" meeting share "]["backup" strike][" "]["upload" strong][" link download."]
+#810 line=1821 paragraph ["folder" em][" video download folder upload device "]["quota" link=https://mega.io/6][" share "]["share" link=https://mega.io/ref/5]["."]
+#811 line=1823 list ordered=false start=1
+  item checkbox=none
+    #812 line=1823 paragraph ["Video folder mega "]["secure" strong][" meeting sync."]
+  item checkbox=none
+    #813 line=1824 paragraph ["Folder cloud encrypt "]["download" em][" quota storage."]
+    #814 line=1825 list ordered=false start=1
+      item checkbox=none
+        #815 line=1825 paragraph ["Link backup meeting 🇻🇳 plan."]
+#816 line=1826 list ordered=true start=3
+  item checkbox=none
+    #817 line=1826 paragraph ["Quota file "]["encrypt" link=https://mega.io/ref/11][" mega chat quota."]
+#818 line=1828 heading2 ["Setext device"]
+#819 line=1831 paragraph ["Download file link photo mega quota account "]["meeting" strong][" video."]["\n" soft]["Chat secure mega cloud upload encrypt."]["\n" soft]["device" code][" upload café "]["🇻🇳" link=https://mega.io/3][" cloud folder cloud share."]["\n" soft]["Account ωmega sync backup "]["plan" code][" sync quota photo "]["photo" link=https://mega.io/8]["."]
+#820 line=1836 heading1 ["Section 65 account"]
+#821 line=1838 paragraph ["Storage secure chat cloud download cloud file folder file transfer."]["\n" soft]["link" strong][" encrypt "]["download" em][" upload video meeting mega encrypt."]["\n" soft]["Share download key file mega video storage meeting node."]
+#822 line=1842 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["node"] | ["3611 KB"] | ["secure"]
+  row ["encrypt"] | ["1273 KB"] | ["download"]
+#823 line=1847 quote
+  #824 line=1847 paragraph ["Secure "]["storage" code][" key download storage device chat backup meeting file "]["account" em][" key."]["\n" soft]["cloud" link=https://mega.io/0][" account mega cloud encrypt upload "]["backup" strong][" upload backup mega plan secure."]
+#825 line=1850 heading1 ["Section 66 encrypt"]
+#826 line=1852 paragraph ["Secure file device video plan meeting backup link key mega quota 한국어."]["\n" soft]["Account encrypt file storage sync file plan 中文."]
+#827 line=1855 list ordered=false start=1
+  item checkbox=none
+    #828 line=1855 paragraph ["Plan link backup sync file mega."]
+#829 line=1856 list ordered=true start=2
+  item checkbox=none
+    #830 line=1856 paragraph ["photo" link=https://mega.io/ref/13][" node upload upload quota 한국어."]
+#831 line=1857 list ordered=false start=1
+  item checkbox=none
+    #832 line=1857 paragraph ["Transfer encrypt 한국어 download storage upload."]
+#833 line=1859 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["plan"] | ["1235 KB"] | ["device"]
+  row ["storage"] | ["8828 KB"] | ["folder"]
+  row ["backup"] | ["7725 KB"] | ["key"]
+  row ["mega"] | ["6331 KB"] | ["quota"]
+  row ["meeting"] | ["4442 KB"] | ["plan"]
+  row ["upload"] | ["1867 KB"] | ["video"]
+  row ["quota"] | ["8646 KB"] | ["node"]
+#834 line=1869 break
+#835 line=1871 heading1 ["Section 67 folder"]
+#836 line=1873 quote
+  #837 line=1873 paragraph ["Node quota sync folder share device key naïve key encrypt photo video."]["\n" soft]["Café plan node quota "]["encrypt" strong][" "]["plan" code][" meeting secure "]["encrypt" strong][" mega cloud backup."]
+#838 line=1876 image url=https://mega.io/img/35.png alt="download"
+#839 line=1878 paragraph ["Quota video secure mega plan link backup share "]["upload" strong][" download "]["account" em][" quota 한국어 account upload key device download."]["\n" soft]["Account key account upload account sync cloud transfer backup."]["\n" soft]["Node plan cloud key backup meeting device."]
+#840 line=1882 list ordered=true start=1
+  item checkbox=none
+    #841 line=1882 paragraph ["Node plan storage encrypt encrypt meeting."]
+#842 line=1883 list ordered=false start=1
+  item checkbox=none
+    #843 line=1883 paragraph ["backup" strong][" download download folder storage "]["file" link=https://mega.io/ref/8]["."]
+#844 line=1884 list ordered=true start=3
+  item checkbox=none
+    #845 line=1884 paragraph ["Cloud device transfer photo cloud "]["node" em]["."]
+  item checkbox=none
+    #846 line=1885 paragraph ["video" link=https://mega.io/ref/40][" "]["secure" link=https://mega.io/1][" encrypt plan plan mega."]
+#847 line=1886 list ordered=false start=1
+  item checkbox=checked
+    #848 line=1886 paragraph ["Video 👩‍💻 folder transfer node encrypt."]
+#849 line=1888 paragraph ["mega" em][" upload ωmega key "]["secure" link=https://mega.io/ref/48][" storage mega photo link plan video cloud."]["\n" soft]["link" em][" "]["chat" em][" node "]["cloud" link=https://mega.io/3][" transfer "]["storage" em][" secure sync photo device download 🇻🇳 upload."]["\n" soft]["Mega "]["video" em][" file account "]["chat" em][" plan "]["chat" em]["."]
+#850 line=1892 paragraph ["Naïve mega file video download plan folder secure "]["한국어" strong][" mega."]["\n" soft]["Folder upload "]["encrypt" link=https://mega.io/2][" "]["encrypt" strong][" meeting storage chat meeting account encrypt "]["video" link=https://mega.io/ref/44]["."]
+#851 line=1895 heading2 ["Section 68 file"]
+#852 line=1897 paragraph ["Sync "]["backup" link=https://mega.io/1][" sync download key backup transfer cloud plan "]["transfer" code][" account "]["upload" em][" share folder video meeting folder."]["\n" soft]["👩‍💻 "]["link" link=https://mega.io/1][" transfer secure account account encrypt share file meeting node download."]["\n" soft]["Meeting backup node 中文 "]["meeting" em][" "]["mega" strike][" encrypt 😀 cloud meeting "]["chat" strong][" "]["quota" em][" download "]["node" strike][" "]["node" strong][" "]["link" em][" "]["quota" strong][" mega."]["\n" soft]["Sync chat chat quota "]["cloud" strong][" "]["backup" strong][" device secure download node photo."]
+#853 line=1902 paragraph ["<div>\nphoto html block\n</div>\n" blockhtml]
+#854 line=1906 code language=swift "let value0 = 230 // key\nlet value1 = 92 // folder\nlet value2 = 570 // mega\nlet value3 = 645 // encrypt\nlet value4 = 123 // account\nlet value5 = 561 // transfer\nlet value6 = 398 // chat"
+#855 line=1916 quote
+  #856 line=1916 paragraph ["Photo video link "]["share" strike][" cloud mega folder photo café share "]["meeting" strong][" file."]["\n" soft]["File "]["mega" em][" storage secure cloud cloud "]["photo" em][" video cloud storage plan device."]
+#857 line=1919 paragraph ["storage" em][" key backup account video upload transfer."]["\n" soft]["Device chat link account "]["storage" em][" mega "]["link" u][" backup share secure sync photo encrypt link device quota."]["\n" soft]["Upload upload "]["quota" link=https://mega.io/2][" plan download 😀 link sync."]["\n" soft]["Transfer "]["transfer" strong][" video video share device transfer "]["upload" strike][" 😀 sync backup share device."]
+#858 line=1924 paragraph ["Key 😀 "]["secure" strong][" mega upload ωmega "]["photo" link=https://mega.io/6][" storage account secure backup key."]
+#859 line=1926 heading2 ["Section 69 backup"]
+#860 line=1928 paragraph ["Mega meeting chat meeting backup device quota sync node encrypt transfer account."]
+#861 line=1930 paragraph ["한국어 "]["sync" link=https://mega.io/1][" backup storage "]["meeting" code][" account encrypt folder video naïve storage."]["\n" soft]["Sync account photo "]["quota" u][" device file "]["key" link=https://mega.io/6][" sync."]["\n" soft]["secure" em][" "]["photo" em][" meeting sync quota storage download video transfer meeting upload "]["device" link=https://mega.io/ref/25][" cloud share "]["share" strong][" chat."]
+#862 line=1934 code language=swift "let value0 = 518 // backup\nlet value1 = 973 // download\nlet value2 = 338 // secure\nlet value3 = 681 // key\nlet value4 = 969 // meeting\nlet value5 = 330 // video\nlet value6 = 769 // chat\nlet value7 = 909 // secure\nlet value8 = 360 // folder\nlet value9 = 989 // link\nlet value10 = 260 // secure\nlet value11 = 441 // download"
+#863 line=1949 paragraph ["Video key cloud chat link "]["download" em][" transfer share sync "]["backup" strong][" video "]["storage" em]["."]
+#864 line=1951 heading1 ["Section 70 upload"]
+#865 line=1953 paragraph ["Share "]["backup" em][" account transfer transfer file mega file secure node download "]["download" code][" transfer привет chat account mega quota."]["\n" soft]["Mega quota plan ωmega cloud chat share mega "]["share" strong][" storage photo transfer plan backup plan."]["\n" soft]["Key transfer meeting "]["download" code][" upload "]["backup" strong][" storage download."]
+#866 line=1957 paragraph ["sync" code][" sync link quota file file photo chat backup mega."]["\n" soft]["Device "]["secure" code][" "]["node" strong][" link "]["node" em][" backup account cloud."]["\n" soft]["Device account device sync encrypt device file secure photo account encrypt key mega plan."]["\n" soft]["Node folder "]["transfer" strong][" "]["storage" em][" "]["encrypt" code][" quota meeting."]
+#867 line=1962 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["key"] | ["2193 KB"] | ["mega"]
+  row ["quota"] | ["8003 KB"] | ["mega"]
+#868 line=1967 image url=https://mega.io/img/91.png alt="meeting"
+#869 line=1969 code language=swift "let value0 = 37 // folder\nlet value1 = 48 // device\nlet value2 = 600 // share\nlet value3 = 224 // secure\nlet value4 = 798 // share\nlet value5 = 603 // encrypt\nlet value6 = 147 // meeting\nlet value7 = 566 // transfer\nlet value8 = 914 // upload\nlet value9 = 229 // download\nlet value10 = 927 // account"
+#870 line=1983 list ordered=false start=1
+  item checkbox=none
+    #871 line=1983 paragraph ["Cloud backup transfer storage sync mega."]
+  item checkbox=none
+    #872 line=1984 paragraph ["Plan video plan plan "]["quota" code][" transfer."]
+  item checkbox=none
+    #873 line=1985 paragraph ["Cloud encrypt "]["photo" em][" cloud share video."]
+    #874 line=1986 list ordered=false start=1
+      item checkbox=none
+        #875 line=1986 paragraph ["device" code][" meeting "]["transfer" em][" 👩‍💻 device."]
+  item checkbox=none
+    #876 line=1987 paragraph ["Photo chat backup "]["photo" strong][" upload backup."]
+#877 line=1988 list ordered=true start=5
+  item checkbox=none
+    #878 line=1988 paragraph ["Video key chat device account "]["upload" code]["."]
+#879 line=1990 heading3 ["Section 71 storage"]
+#880 line=1992 code language=swift "let value0 = 578 // file\nlet value1 = 339 // encrypt\nlet value2 = 377 // account\nlet value3 = 677 // photo"
+#881 line=1999 quote
+  #882 line=1999 paragraph ["Upload meeting file download "]["meeting" strong][" sync secure "]["storage" strike][" node file storage folder."]["\n" soft]["video" strong][" "]["link" em][" meeting photo photo meeting node account mega storage photo sync."]
+#883 line=2002 paragraph ["Quota mega meeting encrypt device meeting "]["file" strong][" storage link share share download."]["\n" soft]["中文 encrypt chat 👩‍💻 "]["video" link=https://mega.io/4][" "]["meeting" strike][" "]["transfer" u][" "]["chat" em][" meeting "]["photo" link=https://mega.io/9][" "]["cloud" code][" secure file chat."]
+#884 line=2005 quote
+  #885 line=2005 paragraph ["Quota link device file sync encrypt storage storage download download share upload."]["\n" soft]["Upload chat "]["account" em][" photo "]["chat" code][" node node share café device folder key."]
+#886 line=2008 heading3 ["Section 72 cloud"]
+#887 line=2010 paragraph ["Sync file encrypt mega encrypt plan backup device encrypt."]["\n" soft]["Backup upload chat storage cloud key."]["\n" soft]["Account mega share folder meeting "]["привет" em][" node 😀 storage share привет."]["\n" soft]["Plan share plan "]["file" code][" encrypt folder chat folder storage backup sync photo device 한국어 sync."]
+#888 line=2015 code language=swift "let value0 = 973 // chat\nlet value1 = 253 // backup\nlet value2 = 768 // device\nlet value3 = 651 // plan\nlet value4 = 484 // quota\nlet value5 = 926 // upload\nlet value6 = 283 // plan\nlet value7 = 586 // encrypt\nlet value8 = 652 // quota\nlet value9 = 369 // link\nlet value10 = 636 // secure"
+#889 line=2029 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["meeting"] | ["1510 KB"] | ["video"]
+  row ["account"] | ["2910 KB"] | ["meeting"]
+  row ["meeting"] | ["6078 KB"] | ["video"]
+  row ["node"] | ["1087 KB"] | ["download"]
+#890 line=2036 heading2 ["Section 73 meeting"]
+#891 line=2038 paragraph ["Transfer folder chat node device meeting upload account share node "]["upload" link=https://mega.io/ref/12][" account "]["node" link=https://mega.io/ref/6][" "]["file" link=https://mega.io/ref/29][" account storage."]["\n" soft]["Sync encrypt upload naïve photo upload encrypt folder "]["key" em]["."]
+#892 line=2041 paragraph ["Mega sync secure mega transfer encrypt 日本語 "]["sync" code][" photo photo link share "]["quota" u][" photo sync storage node."]["\n" soft]["😀 "]["plan" em][" link meeting file "]["plan" strong][" encrypt "]["transfer" code][" "]["meeting" code][" "]["node" strong]["."]
+#893 line=2044 paragraph ["Storage file download backup sync folder encrypt "]["storage" em][" backup file "]["file" code][" 한국어 plan cloud link."]["\n" soft]["Encrypt backup encrypt file upload sync."]
+#894 line=2047 break
+#895 line=2049 heading2 ["Section 74 photo"]
+#896 line=2051 paragraph ["sync" em][" secure secure folder "]["cloud" em][" folder."]["\n" soft]["Folder "]["account" code][" mega device 🇻🇳 "]["photo" code][" encrypt."]
+#897 line=2054 quote
+  #898 line=2054 paragraph ["Secure transfer key backup encrypt quota folder node "]["quota" link=https://mega.io/ref/22][" "]["cloud" em][" video transfer."]["\n" soft]["Link download video storage share storage device transfer chat key upload naïve."]
+#899 line=2057 quote
+  #900 line=2057 paragraph ["Backup meeting key link "]["device" link=https://mega.io/ref/25][" quota download café quota "]["upload" strong][" key link."]["\n" soft]["Key "]["mega" strong][" backup plan folder mega key "]["plan" u][" "]["encrypt" link=https://mega.io/8][" share secure sync."]
+#901 line=2060 quote
+  #902 line=2060 paragraph ["cloud" strong][" storage transfer folder chat video device quota mega folder chat cloud."]["\n" soft]["upload" strong][" mega "]["한국어" code][" account file share folder secure photo "]["encrypt" strong][" key "]["upload" strong]["."]
+#903 line=2063 paragraph ["Encrypt plan node folder storage upload "]["node" strong][" encrypt secure photo 한국어 mega backup."]["\n" soft]["Chat encrypt "]["storage" strong][" device download file."]["\n" soft]["File "]["encrypt" em][" "]["encrypt" em][" "]["quota" strong][" secure link photo secure."]
+#904 line=2067 paragraph ["Link download mega device storage meeting video node secure link cloud upload video link."]
+#905 line=2069 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["quota"] | ["8812 KB"] | ["share"]
+  row ["key"] | ["6339 KB"] | ["upload"]
+  row ["cloud"] | ["4580 KB"] | ["mega"]
+  row ["share"] | ["9914 KB"] | ["backup"]
+#906 line=2076 heading2 ["Section 75 link"]
+#907 line=2078 quote
+  #908 line=2078 paragraph ["link" code][" link mega encrypt folder link sync mega chat folder "]["key" strong][" "]["chat" strong]["."]["\n" soft]["backup" code][" folder sync transfer "]["mega" em][" ωmega "]["meeting" link=https://mega.io/6][" meeting account chat mega transfer."]
+#909 line=2081 paragraph ["Chat share meeting encrypt meeting upload folder chat folder secure."]
+#910 line=2083 paragraph ["Link "]["backup" em][" "]["ωmega" u][" account cloud storage "]["upload" em][" secure "]["device" strong][" secure "]["upload" link=https://mega.io/10]["."]["\n" soft]["Folder file quota key "]["secure" em][" share "]["cloud" strong][" device upload."]["\n" soft]["account" link=https://mega.io/0][" "]["account" em][" backup key "]["sync" strike][" encrypt plan secure video "]["share" strong][" download 😀 backup device."]["\n" soft]["chat" em][" link chat upload plan meeting download node node."]
+#911 line=2088 paragraph ["quota" link=https://mega.io/0][" 😀 backup video "]["plan" em][" share."]
+#912 line=2090 break
+#913 line=2092 code language=swift "let value0 = 611 // upload\nlet value1 = 757 // video\nlet value2 = 719 // mega\nlet value3 = 628 // device"
+#914 line=2099 list ordered=true start=1
+  item checkbox=none
+    #915 line=2099 paragraph ["file" link=https://mega.io/0][" backup mega photo account storage."]
+    #916 line=2100 list ordered=false start=1
+      item checkbox=none
+        #917 line=2100 paragraph ["Secure share photo mega "]["key" link=https://mega.io/4]["."]
+  item checkbox=none
+    #918 line=2101 paragraph ["Share quota cloud download meeting "]["device" strong]["."]
+    #919 line=2102 list ordered=false start=1
+      item checkbox=none
+        #920 line=2102 paragraph ["plan" link=https://mega.io/0][" key naïve "]["share" strong][" cloud."]
+#921 line=2103 list ordered=false start=1
+  item checkbox=none
+    #922 line=2103 paragraph ["download" strike][" encrypt sync node key encrypt."]
+#923 line=2105 code language=swift "let value0 = 714 // sync\nlet value1 = 390 // mega\nlet value2 = 872 // video"
+#924 line=2111 heading3 ["Section 76 plan"]
+#925 line=2113 quote
+  #926 line=2113 paragraph ["Backup mega backup "]["cloud" code][" download file "]["chat" strong][" "]["mega" em][" photo key "]["quota" em][" sync."]["\n" soft]["Node cloud cloud file key video folder secure "]["key" strong][" "]["quota" strong][" key "]["device" code]["."]
+#927 line=2116 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["encrypt"] | ["4297 KB"] | ["cloud"]
+  row ["file"] | ["9965 KB"] | ["cloud"]
+  row ["share"] | ["7580 KB"] | ["plan"]
+  row ["folder"] | ["6633 KB"] | ["transfer"]
+  row ["key"] | ["9155 KB"] | ["quota"]
+#928 line=2124 code language=swift "let value0 = 718 // folder\nlet value1 = 446 // file\nlet value2 = 109 // chat\nlet value3 = 528 // meeting\nlet value4 = 434 // key\nlet value5 = 432 // folder\nlet value6 = 87 // node\nlet value7 = 584 // secure\nlet value8 = 846 // meeting"
+#929 line=2136 paragraph ["backup" em][" storage 🇻🇳 chat chat share upload node "]["photo" link=https://mega.io/ref/25][" folder secure plan backup "]["sync" strong][" "]["sync" strong][" video."]["\n" soft]["Meeting quota quota "]["cloud" u][" key folder 🇻🇳 mega "]["secure" strike][" mega upload link secure."]
+#930 line=2139 code language=swift "let value0 = 123 // key\nlet value1 = 299 // share\nlet value2 = 326 // share"
+#931 line=2145 heading3 ["Section 77 storage"]
+#932 line=2147 quote
+  #933 line=2147 paragraph ["sync" strong][" mega "]["file" strong][" "]["download" link=https://mega.io/3][" photo cloud account folder account plan folder backup."]["\n" soft]["Device transfer upload "]["mega" strong][" "]["share" u][" photo meeting device "]["link" strike][" file transfer chat."]
+#934 line=2150 list ordered=false start=1
+  item checkbox=none
+    #935 line=2150 paragraph ["Quota "]["video" strong][" "]["cloud" em][" share "]["café" link=https://mega.io/4][" node."]
+  item checkbox=none
+    #936 line=2151 paragraph ["Encrypt video sync transfer meeting download."]
+  item checkbox=none
+    #937 line=2152 paragraph ["Meeting upload "]["中文" code][" secure backup "]["key" link=https://mega.io/5]["."]
+#938 line=2154 paragraph ["Share café "]["plan" link=https://mega.io/2][" "]["plan" strong][" storage naïve video secure quota quota upload quota account "]["mega" em][" "]["storage" strong][" transfer device."]["\n" soft]["한국어 cloud upload file transfer cloud download backup backup "]["quota" strong][" "]["file" link=https://mega.io/10][" quota node account mega "]["upload" em][" "]["file" strong]["."]
+#939 line=2157 paragraph ["upload" strong][" secure transfer folder storage transfer storage "]["storage" code][" backup key share sync encrypt "]["chat" strong][" meeting link."]["\n" soft]["Link device mega device meeting link plan "]["transfer" strong][" node "]["encrypt" code][" transfer backup."]
+#940 line=2160 quote
+  #941 line=2160 paragraph ["photo" strong][" encrypt mega account "]["device" code][" meeting sync share chat file "]["quota" code][" key."]["\n" soft]["Quota account transfer device chat quota 日本語 naïve "]["quota" strong][" meeting 한국어 mega."]
+#942 line=2163 quote
+  #943 line=2163 paragraph ["link" u][" backup quota "]["cloud" strong][" quota download quota account upload quota привет file."]["\n" soft]["Photo transfer secure encrypt chat chat file encrypt backup sync key storage."]
+#944 line=2166 heading3 ["Section 78 chat"]
+#945 line=2168 list ordered=false start=1
+  item checkbox=none
+    #946 line=2168 paragraph ["Sync photo mega secure key link."]
+  item checkbox=none
+    #947 line=2169 paragraph ["Quota storage video café video "]["storage" strong]["."]
+    #948 line=2170 list ordered=false start=1
+      item checkbox=none
+        #949 line=2170 paragraph ["Device cloud transfer account storage."]
+#950 line=2171 list ordered=true start=3
+  item checkbox=none
+    #951 line=2171 paragraph ["Quota quota 🇻🇳 share folder account."]
+    #952 line=2172 list ordered=false start=1
+      item checkbox=none
+        #953 line=2172 paragraph ["Mega folder "]["file" link=https://mega.io/2][" download plan."]
+  item checkbox=none
+    #954 line=2173 paragraph ["Video storage upload download chat "]["download" link=https://mega.io/5]["."]
+#955 line=2174 list ordered=false start=1
+  item checkbox=none
+    #956 line=2174 paragraph ["chat" code][" chat encrypt photo quota transfer."]
+#957 line=2176 list ordered=true start=1
+  item checkbox=none
+    #958 line=2176 paragraph ["Photo plan cloud secure backup download."]
+  item checkbox=checked
+    #959 line=2177 paragraph ["Secure storage backup "]["backup" strong][" folder device."]
+    #960 line=2178 list ordered=false start=1
+      item checkbox=none
+        #961 line=2178 paragraph ["Cloud transfer upload file cloud."]
+  item checkbox=none
+    #962 line=2179 paragraph ["Node share backup folder sync key."]
+  item checkbox=none
+    #963 line=2180 paragraph ["File "]["cloud" link=https://mega.io/1][" upload "]["plan" link=https://mega.io/3][" storage share."]
+#964 line=2182 paragraph ["file" code][" "]["node" strong][" download account backup file link "]["secure" code]["."]["\n" soft]["Mega folder "]["transfer" strike][" video sync "]["backup" link=https://mega.io/5][" "]["storage" em][" upload folder node device "]["secure" code][" 日本語 "]["secure" strong][" chat "]["storage" em]["."]["\n" soft]["Download "]["日本語" strong][" meeting encrypt sync chat video "]["meeting" strong][" cloud."]["\n" soft]["Sync device file upload "]["folder" strong][" encrypt "]["file" strong][" folder "]["cloud" code][" "]["share" strong][" plan upload storage plan quota."]
+#965 line=2187 paragraph ["Plan account meeting key secure "]["cloud" strong][" download cloud "]["device" code]["."]
+#966 line=2189 paragraph ["🇻🇳 link "]["привет" em][" node quota chat transfer folder "]["secure" em][" storage plan share chat meeting device chat folder key."]["\n" soft]["Cloud plan photo photo meeting storage "]["plan" code][" backup link link."]["\n" soft]["Meeting sync "]["secure" strong][" video meeting mega "]["upload" strong][" upload quota."]
+#967 line=2193 code language=swift "let value0 = 783 // chat\nlet value1 = 590 // link\nlet value2 = 764 // share"
+#968 line=2199 code language=swift "let value0 = 116 // plan\nlet value1 = 659 // link\nlet value2 = 494 // cloud\nlet value3 = 392 // video\nlet value4 = 612 // upload\nlet value5 = 286 // file\nlet value6 = 44 // download\nlet value7 = 51 // meeting\nlet value8 = 760 // plan\nlet value9 = 148 // node\nlet value10 = 96 // file"
+#969 line=2213 list ordered=true start=1
+  item checkbox=none
+    #970 line=2213 paragraph ["Key folder meeting secure transfer key."]
+#971 line=2214 list ordered=false start=1
+  item checkbox=none
+    #972 line=2214 paragraph ["Transfer "]["share" code][" download video "]["storage" code][" "]["plan" code]["."]
+  item checkbox=none
+    #973 line=2215 paragraph ["Quota account folder folder chat link."]
+#974 line=2217 heading1 ["Section 79 backup"]
+#975 line=2219 paragraph ["Encrypt sync node cloud link sync naïve sync folder."]["\n" soft]["Sync "]["upload" em][" key cloud cloud transfer key video upload encrypt secure sync video folder transfer encrypt storage download."]["\n" soft]["Folder account folder node folder encrypt video transfer secure storage cloud plan."]["\n" soft]["device" link=https://mega.io/0][" "]["storage" strong][" transfer folder sync file file transfer "]["device" strong][" folder photo link quota "]["download" code][" storage backup storage "]["mega" code]["."]
+#976 line=2224 list ordered=true start=1
+  item checkbox=none
+    #977 line=2224 paragraph ["Encrypt plan 한국어 "]["chat" strong][" device "]["file" code]["."]
+#978 line=2225 list ordered=false start=1
+  item checkbox=checked
+    #979 line=2225 paragraph ["download" strong][" "]["photo" code][" sync file video photo."]
+  item checkbox=none
+    #980 line=2226 paragraph ["Link "]["file" strong][" meeting storage cloud secure."]
+  item checkbox=none
+    #981 line=2227 paragraph ["Link upload node quota sync ωmega."]
+#982 line=2229 paragraph ["Share plan download photo upload secure storage transfer 😀 photo encrypt share device mega encrypt transfer."]["\n" soft]["Secure upload transfer video secure "]["device" strike][" "]["sync" strong][" node key download transfer key node "]["device" strong][" device."]["\n" soft]["😀 download "]["file" strong][" key account video backup quota key naïve download link chat backup download quota."]
+#983 line=2233 paragraph ["cloud" link=https://mega.io/0][" download "]["backup" em][" encrypt "]["device" strike][" share plan account link photo quota key storage."]["\n" soft]["Plan chat "]["file" strong][" share transfer transfer 한국어 "]["chat" link=https://mega.io/7][" account meeting sync cloud sync sync."]
+#984 line=2236 paragraph ["Upload plan chat secure cloud folder chat link meeting encrypt transfer transfer secure transfer upload account sync."]["\n" soft]["Mega secure secure "]["share" strong][" backup transfer "]["file" em][" sync transfer quota download chat share."]["\n" soft]["Video video upload sync backup café "]["👩‍💻" strong][" "]["storage" em][" upload plan."]["\n" soft]["Transfer node video folder sync download storage file backup download backup meeting."]
+#985 line=2241 paragraph ["Share transfer "]["ωmega" em][" account storage secure mega plan link cloud file photo upload file key photo mega."]
+#986 line=2243 quote
+  #987 line=2243 paragraph ["Mega plan key chat storage backup secure file file share download video."]["\n" soft]["Sync encrypt folder video cloud account file encrypt key folder transfer folder."]
+#988 line=2246 heading2 ["Section 80 encrypt"]
+#989 line=2248 paragraph ["Sync download share link account device cloud folder share file "]["meeting" em][" video sync video photo "]["encrypt" em][" cloud."]
+#990 line=2250 break
+#991 line=2252 paragraph ["Video account photo folder link backup transfer backup transfer mega account meeting cloud account link "]["storage" strike]["."]["\n" soft]["Key file quota meeting meeting 中文 "]["account" em][" привет quota quota share account cloud download."]["\n" soft]["Share device "]["chat" em][" account key mega quota "]["meeting" strong][" link "]["download" strong][" photo meeting "]["video" strong][" download storage."]
+#992 line=2256 paragraph ["cloud" code][" quota share key storage account transfer meeting "]["quota" strike][" "]["node" strong][" folder encrypt secure device node mega storage."]["\n" soft]["Video account node device chat encrypt file sync video storage 🇻🇳 key storage video."]["\n" soft]["Link plan link encrypt folder chat key storage backup secure meeting upload download secure chat secure."]["\n" soft]["Account key encrypt file quota plan backup storage transfer upload "]["video" em]["."]
+#993 line=2261 paragraph ["Transfer backup cloud storage folder "]["cloud" em][" node link key storage."]["\n" soft]["Link cloud download file cloud sync file upload key "]["secure" code][" download chat "]["meeting" strong][" secure meeting "]["share" strong][" sync photo."]["\n" soft]["account" link=https://mega.io/ref/33][" chat "]["plan" link=https://mega.io/ref/32][" cloud chat quota upload."]["\n" soft]["Video file backup chat download device mega file account "]["key" em][" "]["chat" em][" account photo sync download plan."]
+#994 line=2266 list ordered=false start=1
+  item checkbox=none
+    #995 line=2266 paragraph ["Backup node chat download quota backup."]
+#996 line=2267 list ordered=true start=2
+  item checkbox=none
+    #997 line=2267 paragraph ["Link node cloud account chat "]["device" strike]["."]
+    #998 line=2268 list ordered=false start=1
+      item checkbox=none
+        #999 line=2268 paragraph ["Folder device photo "]["plan" em][" download."]
+#1000 line=2269 list ordered=false start=1
+  item checkbox=none
+    #1001 line=2269 paragraph ["Device "]["download" code][" quota "]["photo" code][" quota plan."]
+    #1002 line=2270 list ordered=false start=1
+      item checkbox=none
+        #1003 line=2270 paragraph ["Chat mega node secure secure."]
+  item checkbox=none
+    #1004 line=2271 paragraph ["Share download sync storage quota café."]
+    #1005 line=2272 list ordered=false start=1
+      item checkbox=none
+        #1006 line=2272 paragraph ["Device storage secure account encrypt."]
+#1007 line=2274 paragraph ["Sync account "]["👩‍💻" strong][" "]["meeting" code][" chat café."]["\n" soft]["Meeting download backup key meeting storage upload node upload backup plan transfer "]["device" strike]["."]["\n" soft]["Download upload sync "]["sync" strong][" "]["photo" u][" transfer plan account device account sync "]["plan" strong][" device chat."]
+#1008 line=2278 heading2 ["Section 81 chat"]
+#1009 line=2280 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["mega"] | ["8416 KB"] | ["link"]
+  row ["video"] | ["2974 KB"] | ["plan"]
+  row ["backup"] | ["3888 KB"] | ["storage"]
+  row ["secure"] | ["9688 KB"] | ["download"]
+  row ["account"] | ["1120 KB"] | ["share"]
+#1010 line=2288 break
+#1011 line=2290 break
+#1012 line=2292 list ordered=false start=1
+  item checkbox=none
+    #1013 line=2292 paragraph ["plan" strike][" "]["link" em][" link "]["meeting" em][" secure share."]
+  item checkbox=none
+    #1014 line=2293 paragraph ["Video quota account video folder account."]
+  item checkbox=none
+    #1015 line=2294 paragraph ["Device plan encrypt folder storage folder."]
+  item checkbox=none
+    #1016 line=2295 paragraph ["plan" link=https://mega.io/0][" naïve sync cloud device "]["meeting" strong]["."]
+    #1017 line=2296 list ordered=false start=1
+      item checkbox=none
+        #1018 line=2296 paragraph ["Meeting "]["secure" strong][" backup folder device."]
+  item checkbox=none
+    #1019 line=2297 paragraph ["Quota quota "]["secure" link=https://mega.io/2][" key cloud meeting."]
+    #1020 line=2298 list ordered=false start=1
+      item checkbox=none
+        #1021 line=2298 paragraph ["plan" u][" quota transfer node video."]
+#1022 line=2300 code language=swift "let value0 = 623 // plan\nlet value1 = 20 // meeting\nlet value2 = 803 // download\nlet value3 = 815 // node\nlet value4 = 33 // node"
+#1023 line=2308 code language=swift "let value0 = 660 // mega\nlet value1 = 234 // photo\nlet value2 = 133 // video\nlet value3 = 833 // plan\nlet value4 = 117 // account\nlet value5 = 984 // transfer\nlet value6 = 461 // plan\nlet value7 = 54 // folder\nlet value8 = 565 // file"
+#1024 line=2320 code language=swift "let value0 = 572 // node\nlet value1 = 102 // sync\nlet value2 = 406 // encrypt\nlet value3 = 145 // node\nlet value4 = 400 // device\nlet value5 = 977 // mega\nlet value6 = 473 // download"
+#1025 line=2330 heading1 ["Section 82 folder"]
+#1026 line=2332 image url=https://mega.io/img/76.png alt="file"
+#1027 line=2334 paragraph ["Video "]["mega" link=https://mega.io/1][" node encrypt download transfer chat photo "]["quota" em][" device file download account link "]["file" link=https://mega.io/ref/34][" file quota."]["\n" soft]["Mega transfer "]["secure" em][" mega key node account meeting quota sync "]["download" code][" meeting backup."]["\n" soft]["Upload quota account upload secure upload."]["\n" soft]["Storage video download mega encrypt account sync chat "]["photo" u][" transfer chat photo "]["folder" code][" node device."]
+#1028 line=2339 quote
+  #1029 line=2339 paragraph ["Video "]["device" link=https://mega.io/ref/24][" sync "]["plan" strong][" mega plan storage meeting link account "]["key" link=https://mega.io/10][" encrypt."]["\n" soft]["Device device quota "]["backup" link=https://mega.io/3][" device "]["device" em][" cloud "]["chat" strike][" backup cloud quota link."]
+#1030 line=2342 code language=swift "let value0 = 53 // share\nlet value1 = 220 // transfer\nlet value2 = 603 // upload\nlet value3 = 258 // download\nlet value4 = 388 // mega"
+#1031 line=2350 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["account"] | ["452 KB"] | ["meeting"]
+  row ["node"] | ["4237 KB"] | ["account"]
+  row ["upload"] | ["38 KB"] | ["meeting"]
+  row ["transfer"] | ["5633 KB"] | ["quota"]
+  row ["share"] | ["3125 KB"] | ["video"]
+  row ["device"] | ["8810 KB"] | ["meeting"]
+  row ["video"] | ["2304 KB"] | ["transfer"]
+  row ["photo"] | ["1481 KB"] | ["share"]
+#1032 line=2361 heading3 ["Section 83 video"]
+#1033 line=2363 list ordered=true start=1
+  item checkbox=none
+    #1034 line=2363 paragraph ["Download video video node key chat."]
+  item checkbox=none
+    #1035 line=2364 paragraph ["Device share secure backup device "]["日本語" strong]["."]
+#1036 line=2366 paragraph ["<div>\nlink html block\n</div>\n" blockhtml]
+#1037 line=2370 paragraph ["Naïve video sync "]["plan" link=https://mega.io/3][" node key "]["account" em][" photo link plan folder link "]["secure" strong]["."]
+#1038 line=2372 paragraph ["Photo "]["mega" link=https://mega.io/1][" account 👩‍💻 "]["download" em][" secure "]["account" em][" download."]
+#1039 line=2374 heading1 ["Section 84 device"]
+#1040 line=2376 quote
+  #1041 line=2376 paragraph ["Naïve plan link storage video sync chat upload encrypt café video "]["upload" link=https://mega.io/11]["."]["\n" soft]["Download key "]["device" strong][" "]["storage" code][" transfer "]["plan" link=https://mega.io/5][" "]["chat" em][" folder storage upload device node."]
+#1042 line=2379 paragraph ["Link encrypt chat file transfer "]["transfer" u][" 👩‍💻 photo photo device link file "]["account" em][" node secure."]["\n" soft]["Quota secure photo quota transfer link chat meeting upload."]["\n" soft]["Link upload mega secure cloud node backup secure link account download upload cloud download cloud share."]["\n" soft]["Folder link download backup mega share sync."]
+#1043 line=2384 quote
+  #1044 line=2384 paragraph ["Download link quota plan secure chat link link upload "]["中文" link=https://mega.io/9][" "]["node" strong][" cloud."]["\n" soft]["backup" em][" photo secure video cloud quota secure "]["storage" em][" chat node upload mega."]
+#1045 line=2387 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["plan"] | ["9666 KB"] | ["link"]
+  row ["account"] | ["5682 KB"] | ["link"]
+  row ["key"] | ["7681 KB"] | ["encrypt"]
+  row ["account"] | ["3645 KB"] | ["video"]
+  row ["device"] | ["3247 KB"] | ["upload"]
+  row ["key"] | ["1616 KB"] | ["upload"]
+  row ["upload"] | ["323 KB"] | ["secure"]
+#1046 line=2397 paragraph ["Plan upload "]["link" link=https://mega.io/ref/48][" "]["download" strong][" chat "]["link" em][" cloud "]["cloud" strike][" "]["video" code]["."]["\n" soft]["File encrypt node "]["account" em][" quota video."]["\n" soft]["transfer" link=https://mega.io/ref/23][" share cloud file storage mega storage."]
+#1047 line=2401 heading3 ["Section 85 download"]
+#1048 line=2403 quote
+  #1049 line=2403 paragraph ["Folder video meeting key download "]["😀" strike][" file plan backup mega "]["video" strong][" video."]["\n" soft]["Key backup file account "]["🇻🇳" strong][" "]["cloud" code][" photo folder "]["transfer" link=https://mega.io/8][" key transfer meeting."]
+#1050 line=2406 paragraph ["Backup encrypt plan "]["transfer" strong][" cloud meeting link "]["cloud" strong][" account storage plan "]["device" link=https://mega.io/ref/12][" chat 🇻🇳."]["\n" soft]["Mega meeting key node chat sync download cloud key file secure photo plan meeting file quota "]["share" strong]["."]
+#1051 line=2409 paragraph ["Chat sync secure plan account link photo mega "]["plan" em][" photo café cloud cloud encrypt."]["\n" soft]["Meeting key folder 한국어 "]["plan" em][" naïve transfer mega "]["download" code][" node download key "]["chat" code][" "]["meeting" link=https://mega.io/ref/21][" video."]["\n" soft]["日本語 "]["photo" strong][" device folder chat "]["download" code]["."]
+#1052 line=2413 heading3 ["Section 86 quota"]
+#1053 line=2415 code language=swift "let value0 = 903 // mega\nlet value1 = 344 // file\nlet value2 = 422 // meeting\nlet value3 = 441 // cloud\nlet value4 = 726 // encrypt\nlet value5 = 820 // folder\nlet value6 = 870 // link\nlet value7 = 222 // node\nlet value8 = 130 // secure\nlet value9 = 539 // encrypt"
+#1054 line=2428 paragraph ["Cloud sync secure encrypt photo "]["share" u][" account encrypt file "]["device" em][" upload folder 日本語."]["\n" soft]["Folder transfer "]["backup" strong][" download file "]["storage" strike][" node storage plan photo encrypt file."]["\n" soft]["download" code][" "]["key" code][" encrypt video "]["upload" link=https://mega.io/ref/40][" node "]["device" strong][" mega cloud."]
+#1055 line=2432 image url=https://mega.io/img/12.png alt="device"
+#1056 line=2434 paragraph ["Mega chat video share secure device 中文 download transfer mega "]["transfer" code][" storage file "]["photo" em]["."]["\n" soft]["日本語 chat quota meeting "]["cloud" em][" transfer backup upload "]["photo" strong][" photo transfer quota."]["\n" soft]["Key mega "]["folder" strong][" device naïve upload photo cloud file backup download file chat device."]["\n" soft]["Plan storage video node "]["plan" strong][" upload cloud node meeting."]
+#1057 line=2439 heading1 ["Section 87 storage"]
+#1058 line=2441 code language=swift "let value0 = 489 // quota\nlet value1 = 851 // device\nlet value2 = 241 // folder\nlet value3 = 465 // sync\nlet value4 = 984 // node\nlet value5 = 889 // photo\nlet value6 = 781 // backup\nlet value7 = 711 // share\nlet value8 = 279 // key\nlet value9 = 507 // account\nlet value10 = 740 // share"
+#1059 line=2455 image url=https://mega.io/img/95.png alt="sync"
+#1060 line=2457 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["chat"] | ["8619 KB"] | ["meeting"]
+  row ["video"] | ["3992 KB"] | ["transfer"]
+  row ["share"] | ["7851 KB"] | ["plan"]
+  row ["meeting"] | ["9068 KB"] | ["device"]
+  row ["plan"] | ["1516 KB"] | ["download"]
+  row ["account"] | ["1282 KB"] | ["upload"]
+  row ["download"] | ["9446 KB"] | ["sync"]
+  row ["folder"] | ["7891 KB"] | ["transfer"]
+#1061 line=2468 paragraph ["Привет upload "]["share" code][" "]["meeting" link=https://mega.io/3][" ωmega chat meeting account 한국어 video 中文 "]["plan" link=https://mega.io/11]["."]
+#1062 line=2470 code language=swift "let value0 = 741 // encrypt\nlet value1 = 404 // meeting\nlet value2 = 976 // storage"
+#1063 line=2476 list ordered=true start=1
+  item checkbox=none
+    #1064 line=2476 paragraph ["quota" em][" 日本語 cloud folder file "]["backup" em]["."]
+  item checkbox=none
+    #1065 line=2477 paragraph ["Storage share "]["mega" strong][" "]["key" link=https://mega.io/3][" key meeting."]
+#1066 line=2478 list ordered=false start=1
+  item checkbox=none
+    #1067 line=2478 paragraph ["Account "]["secure" strike][" "]["sync" em][" download device backup."]
+#1068 line=2480 heading2 ["Section 88 storage"]
+#1069 line=2482 paragraph ["Key mega key "]["photo" strike][" quota upload backup quota."]["\n" soft]["Sync "]["node" em][" backup share file plan "]["encrypt" link=https://mega.io/6][" meeting link."]
+#1070 line=2485 quote
+  #1071 line=2485 paragraph ["Download video link backup plan upload backup backup "]["folder" em][" upload mega video."]["\n" soft]["Video plan quota link "]["transfer" em][" "]["node" code][" account upload link meeting sync encrypt."]
+#1072 line=2488 paragraph ["Node upload node secure "]["chat" em][" share "]["plan" em][" plan "]["device" strong][" "]["backup" link=https://mega.io/9][" quota."]["\n" soft]["Link storage mega chat storage node quota upload link 👩‍💻 "]["sync" em][" upload."]["\n" soft]["Photo mega ωmega "]["한국어" link=https://mega.io/3][" "]["plan" em][" link sync link chat "]["mega" strong][" "]["file" strong]["."]
+#1073 line=2492 paragraph ["Download link sync "]["share" strike][" share mega download quota video backup "]["encrypt" strong][" backup backup transfer storage 中文 download."]["\n" soft]["meeting" code][" node 🇻🇳 video storage "]["photo" link=https://mega.io/5][" account."]["\n" soft]["photo" code][" video backup "]["backup" code][" "]["sync" strike][" account."]
+#1074 line=2496 paragraph ["Plan cloud sync quota download account link plan "]["folder" em][" link plan device link device "]["upload" strong][" chat "]["key" strong]["."]["\n" soft]["Folder photo transfer account photo "]["link" strong][" chat device "]["file" code][" device "]["upload" strong][" video device "]["plan" code][" mega chat cloud chat."]
+#1075 line=2499 paragraph ["<div>\nlink html block\n</div>\n" blockhtml]
+#1076 line=2503 heading1 ["Section 89 sync"]
+#1077 line=2505 paragraph ["🇻🇳 plan key node plan meeting."]["\n" soft]["Upload quota "]["transfer" strike][" video upload storage chat chat encrypt key download device account "]["quota" strong][" node transfer quota."]["\n" soft]["Device download folder meeting storage video device folder 한국어 key video node transfer backup device plan "]["encrypt" em][" photo."]["\n" soft]["plan" strong][" account quota device plan "]["plan" strong][" secure "]["node" link=https://mega.io/ref/12][" account."]
+#1078 line=2510 paragraph ["Node encrypt storage share meeting upload video "]["device" link=https://mega.io/ref/38][" "]["sync" link=https://mega.io/8]["."]["\n" soft]["Secure transfer 中文 chat cloud cloud file download."]
+#1079 line=2513 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["download"] | ["7703 KB"] | ["meeting"]
+  row ["folder"] | ["2624 KB"] | ["folder"]
+  row ["encrypt"] | ["9236 KB"] | ["upload"]
+  row ["plan"] | ["9783 KB"] | ["file"]
+  row ["quota"] | ["2417 KB"] | ["secure"]
+  row ["plan"] | ["234 KB"] | ["backup"]
+#1080 line=2522 paragraph ["Share encrypt "]["quota" strong][" photo upload chat video backup mega encrypt sync backup storage "]["backup" strong][" account node share."]["\n" soft]["node" strong][" "]["link" link=https://mega.io/1][" chat "]["meeting" code][" cloud "]["device" strong][" video cloud download 😀 folder encrypt."]["\n" soft]["Plan quota "]["transfer" link=https://mega.io/ref/24][" "]["transfer" link=https://mega.io/3][" привет link cloud share device cloud video device "]["share" em][" link account naïve."]["\n" soft]["Node download key download ωmega mega download download."]
+#1081 line=2527 heading2 ["Section 90 link"]
+#1082 line=2529 list ordered=false start=1
+  item checkbox=none
+    #1083 line=2529 paragraph ["Encrypt "]["device" strong][" transfer device "]["backup" em][" key."]
+  item checkbox=none
+    #1084 line=2530 paragraph ["key" em][" key meeting quota "]["device" strong][" "]["secure" em]["."]
+  item checkbox=none
+    #1085 line=2531 paragraph ["Meeting "]["中文" em][" quota secure chat node."]
+  item checkbox=none
+    #1086 line=2532 paragraph ["Share chat meeting "]["transfer" em][" plan "]["👩‍💻" strong]["."]
+  item checkbox=none
+    #1087 line=2533 paragraph ["Plan folder 👩‍💻 cloud photo encrypt."]
+  item checkbox=none
+    #1088 line=2535 paragraph ["File "]["file" code][" node "]["secure" em][" encrypt "]["日本語" strong]["."]
+    #1089 line=2536 list ordered=false start=1
+      item checkbox=none
+        #1090 line=2536 paragraph ["Photo quota "]["link" strong][" 日本語 chat."]
+  item checkbox=none
+    #1091 line=2537 paragraph ["Plan video backup device link plan."]
+#1092 line=2538 list ordered=true start=3
+  item checkbox=none
+    #1093 line=2538 paragraph ["File storage plan sync transfer backup."]
+#1094 line=2539 list ordered=false start=1
+  item checkbox=none
+    #1095 line=2539 paragraph ["Meeting meeting 🇻🇳 file transfer key."]
+  item checkbox=checked
+    #1096 line=2540 paragraph ["transfer" strong][" video "]["storage" strong][" download ωmega link."]
+#1097 line=2542 paragraph ["Folder cloud account download key storage "]["link" em][" node "]["sync" em][" storage account cloud backup secure video link secure."]["\n" soft]["Account photo transfer photo node folder download "]["link" em][" device cloud share backup backup quota."]["\n" soft]["Key photo device upload transfer node backup account link file download "]["transfer" strong][" download photo storage."]["\n" soft]["File "]["meeting" link=https://mega.io/1][" upload "]["device" strong][" transfer привет "]["cloud" link=https://mega.io/6][" quota cloud plan quota."]
+#1098 line=2547 image url=https://mega.io/img/68.png alt="file"
+#1099 line=2549 paragraph ["Chat "]["folder" link=https://mega.io/1][" encrypt link cloud video transfer meeting video key."]["\n" soft]["Encrypt "]["share" em][" plan backup video meeting key key."]
+#1100 line=2552 heading3 ["Section 91 encrypt"]
+#1101 line=2554 paragraph ["upload" em][" plan encrypt storage "]["storage" link=https://mega.io/ref/1][" backup "]["photo" strike][" storage backup video device."]
+#1102 line=2556 heading2 ["Setext storage"]
+#1103 line=2559 paragraph ["Secure download "]["storage" strong][" encrypt quota quota video "]["quota" strike][" device "]["cloud" em][" video secure device share."]
+#1104 line=2561 paragraph ["Link storage video transfer upload device."]["\n" soft]["Backup file quota quota video 한국어 download storage link "]["account" u]["."]["\n" soft]["Chat "]["device" strong][" backup transfer node link "]["😀" strong][" video "]["account" strong][" upload naïve "]["secure" code][" share backup."]["\n" soft]["Encrypt encrypt chat download meeting quota."]
+#1105 line=2566 paragraph ["Meeting transfer node secure node video account."]["\n" soft]["quota" em][" key photo transfer "]["video" link=https://mega.io/4][" "]["chat" link=https://mega.io/5][" device quota."]["\n" soft]["File file file secure "]["share" em][" "]["plan" link=https://mega.io/5][" transfer mega."]["\n" soft]["Photo storage link link "]["photo" strong][" node upload mega "]["account" em][" cloud link node photo "]["download" em][" quota photo "]["transfer" em][" folder."]
+#1106 line=2571 heading2 ["Section 92 storage"]
+#1107 line=2573 heading2 ["Setext download"]
+#1108 line=2576 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["chat"] | ["7750 KB"] | ["file"]
+  row ["sync"] | ["3512 KB"] | ["transfer"]
+  row ["plan"] | ["7085 KB"] | ["account"]
+  row ["link"] | ["7565 KB"] | ["backup"]
+  row ["encrypt"] | ["6816 KB"] | ["file"]
+  row ["link"] | ["8087 KB"] | ["upload"]
+  row ["photo"] | ["2105 KB"] | ["folder"]
+#1109 line=2586 code language=swift "let value0 = 26 // link\nlet value1 = 634 // file\nlet value2 = 904 // account\nlet value3 = 724 // sync"
+#1110 line=2593 list ordered=true start=1
+  item checkbox=none
+    #1111 line=2593 paragraph ["encrypt" strong][" "]["transfer" em][" key plan link folder."]
+  item checkbox=none
+    #1112 line=2594 paragraph ["Sync storage device backup "]["secure" em][" account."]
+#1113 line=2595 list ordered=false start=1
+  item checkbox=checked
+    #1114 line=2595 paragraph ["Sync file secure "]["mega" code][" "]["link" strong][" upload."]
+#1115 line=2597 list ordered=true start=1
+  item checkbox=none
+    #1116 line=2597 paragraph ["Key cloud chat account "]["upload" em][" storage."]
+#1117 line=2598 list ordered=false start=1
+  item checkbox=none
+    #1118 line=2598 paragraph ["Key plan video device sync meeting."]
+    #1119 line=2599 list ordered=false start=1
+      item checkbox=none
+        #1120 line=2599 paragraph ["device" strong][" transfer meeting "]["account" link=https://mega.io/3][" sync."]
+#1121 line=2600 list ordered=true start=3
+  item checkbox=none
+    #1122 line=2600 paragraph ["Video café file backup photo 😀."]
+#1123 line=2601 list ordered=false start=1
+  item checkbox=none
+    #1124 line=2601 paragraph ["Account quota transfer secure video share."]
+#1125 line=2602 list ordered=true start=5
+  item checkbox=none
+    #1126 line=2602 paragraph ["Folder node sync link secure encrypt."]
+    #1127 line=2603 list ordered=false start=1
+      item checkbox=none
+        #1128 line=2603 paragraph ["Quota "]["encrypt" strong][" upload key download."]
+#1129 line=2605 code language=swift "let value0 = 100 // meeting\nlet value1 = 236 // secure\nlet value2 = 785 // file\nlet value3 = 133 // cloud\nlet value4 = 409 // upload\nlet value5 = 108 // device"
+#1130 line=2614 paragraph ["meeting" strong][" key folder file folder account backup photo 中文 key "]["storage" strong][" video chat meeting key."]["\n" soft]["Upload download plan download chat "]["mega" strong][" "]["file" code][" quota share meeting download quota device meeting chat node "]["device" strong][" sync."]
+#1131 line=2617 table columns=left,right,center
+  header ["Name"] | ["Size"] | ["State"]
+  row ["node"] | ["1394 KB"] | ["backup"]
+  row ["plan"] | ["5910 KB"] | ["cloud"]
+  row ["encrypt"] | ["1860 KB"] | ["file"]
+  row ["sync"] | ["6748 KB"] | ["account"]
+  row ["download"] | ["316 KB"] | ["upload"]
+  row ["download"] | ["8646 KB"] | ["quota"]
+#1132 line=2626 heading2 ["Section 93 encrypt"]
+#1133 line=2628 paragraph ["😀 node video link photo node file secure chat video "]["café" code][" storage account."]["\n" soft]["Sync plan video "]["plan" code][" sync backup transfer plan "]["device" strong][" "]["folder" strike][" photo meeting "]["upload" strong][" node account quota."]["\n" soft]["Upload share encrypt link account secure plan backup quota folder "]["encrypt" strike][" file device key storage "]["node" strike]["."]["\n" soft]["Photo meeting folder "]["upload" em][" chat photo storage encrypt account storage encrypt secure."]
+#1134 line=2633 paragraph ["Upload "]["link" em][" encrypt link node backup "]["mega" link=https://mega.io/6][" storage sync chat meeting share mega storage storage "]["device" strong]["."]
+#1135 line=2635 paragraph ["Storage backup "]["upload" u][" "]["account" strong][" key "]["transfer" link=https://mega.io/ref/44][" secure backup backup photo video backup "]["download" em][" link."]
+#1136 line=2637 paragraph ["chat" strong][" cloud share backup "]["upload" em][" storage download chat mega cloud download 😀 key."]["\n" soft]["Device "]["folder" strike][" sync node chat meeting transfer secure "]["download" strike][" chat key upload video cloud secure account."]["\n" soft]["Node download "]["👩‍💻" strong][" upload folder key."]
+#1137 line=2641 paragraph ["file" strike][" encrypt 👩‍💻 key chat folder plan 😀 chat "]["account" link=https://mega.io/9][" plan device "]["photo" strong][" share quota backup."]["\n" soft]["Download encrypt cloud transfer plan "]["sync" em][" "]["upload" u][" chat backup file share."]["\n" soft]["Storage plan device backup node "]["upload" link=https://mega.io/5][" storage mega "]["photo" link=https://mega.io/8][" "]["link" link=https://mega.io/ref/20][" meeting photo."]["\n" soft]["Upload video sync storage plan "]["secure" em][" "]["cloud" em][" "]["file" strong][" device meeting link device link photo node backup."]

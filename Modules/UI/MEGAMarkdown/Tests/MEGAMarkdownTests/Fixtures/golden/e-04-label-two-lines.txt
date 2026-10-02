@@ -1,0 +1,1 @@
+#0 line=3 paragraph ["Use "]["foo bar" link=https://a.example/fb][" and "]["Foo" link=https://a.example/fb]["\n" soft link=https://a.example/fb]["Bar" link=https://a.example/fb]["."]

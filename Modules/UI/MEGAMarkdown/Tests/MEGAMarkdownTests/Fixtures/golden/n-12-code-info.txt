@@ -1,0 +1,4 @@
+#0 line=0 code language=swift linenums=1 "let a = 1"
+#1 line=4 code language=nil "tilde"
+#2 line=8 code language=nil "indented\ncode"
+#3 line=11 code language=nil ""

@@ -1,0 +1,15 @@
+#0 line=0 heading1 ["Review 2 inline inputs that the old parser agrees with"]
+#1 line=2 paragraph ["An empty tag pair stays literal."]
+#2 line=4 heading3 ["<u></u>" html]
+#3 line=6 list ordered=true start=1
+  item checkbox=none
+    #4 line=6 paragraph ["<u></u>" html]
+  item checkbox=none
+    #5 line=7 paragraph ["second"]
+#6 line=9 paragraph ["<u></u>" html]
+#7 line=11 paragraph ["An image with an empty URL is plain text."]
+#8 line=13 paragraph ["a"]
+#9 line=15 paragraph ["An object replacement character typed by the author stays in the alt text."]
+#10 line=17 image url=u.png alt="￼x"
+#11 line=19 paragraph ["An image title is kept on the run."]
+#12 line=21 image url=1.png alt="a"

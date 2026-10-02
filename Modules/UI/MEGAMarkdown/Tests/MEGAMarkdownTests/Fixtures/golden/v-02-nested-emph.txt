@@ -1,0 +1,1 @@
+#0 line=0 paragraph ["a " em]["b" em strong][" c" em][" and "]["a " strong]["b" em strong][" c" strong]

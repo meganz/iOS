@@ -8,7 +8,7 @@ import groovy.transform.Field
 @Field final String TEST_PLAN = 'MEGAModulesTests/MEGAModulesTests.xctestplan'
 @Field final String COVERAGE_FILE = 'fastlane/code_coverage_packages.md'
 // Used only when the selector fails. Normally the selector builds the coverage list from Package.swift.
-@Field final String DEFAULT_COVERAGE_TARGETS = 'MEGAAppPresentation,MEGAAppSDKRepo,MEGAAuthentication,Chat,ChatRepo,Accounts,CloudDrive,ContentLibraries,DeviceCenter,MEGASwift,Notifications,Settings,MEGAAnalytics,MEGAAnalyticsDomain,MEGAConnectivity,MEGADeeplinkHandling,MEGADomain,MEGAFoundation,MEGAInfrastructure,MEGAIntentDomain,MEGAL10n,MEGALogger,MEGAPermissions,MEGAPhotos,MEGAPickerFileProviderDomain,MEGASwiftUI,MEGAUI,MEGAUIComponent,MEGAUIKit,PhotosBrowser,Search,Video'
+@Field final String DEFAULT_COVERAGE_TARGETS = 'MEGAAppPresentation,MEGAAppSDKRepo,MEGAAuthentication,Chat,ChatRepo,Accounts,CloudDrive,ContentLibraries,DeviceCenter,MEGASwift,Notifications,Settings,MEGAAnalytics,MEGAAnalyticsDomain,MEGAConnectivity,MEGADeeplinkHandling,MEGADomain,MEGAFoundation,MEGAInfrastructure,MEGAIntentDomain,MEGAL10n,MEGALogger,MEGAMarkdown,MEGAPermissions,MEGAPhotos,MEGAPickerFileProviderDomain,MEGASwiftUI,MEGAUI,MEGAUIComponent,MEGAUIKit,PhotosBrowser,Search,Video'
 
 // [tests: 'ALL' | 'NONE' | comma list of test targets, coverage: comma list or '', reason: text]
 @Field Map selection = [tests: 'ALL', coverage: '', reason: 'not selected yet']

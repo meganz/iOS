@@ -1,0 +1,1 @@
+#0 line=0 paragraph ["www.mega.io" link=http://www.mega.io][" and "]["https://mega.io/x?y=1" link=https://mega.io/x?y=1][". and "]["a@b.com" link=mailto:a@b.com][" and "]["https://angle.io" link=https://angle.io][" and "]["c@d.com" link=mailto:c@d.com]

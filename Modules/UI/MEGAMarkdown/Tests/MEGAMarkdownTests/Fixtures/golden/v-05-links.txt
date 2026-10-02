@@ -1,0 +1,1 @@
+#0 line=0 paragraph ["a" link=https://x.com title="t"][" "]["b" link=https://ref.com][" "]["https://auto.com" link=https://auto.com][" "]["www.bare.com" link=http://www.bare.com][" "]["https://bare.com" link=https://bare.com]

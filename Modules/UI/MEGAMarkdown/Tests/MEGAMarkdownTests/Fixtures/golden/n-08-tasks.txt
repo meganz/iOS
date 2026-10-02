@@ -1,0 +1,16 @@
+#0 line=0 list ordered=false start=1
+  item checkbox=unchecked
+    #1 line=0 paragraph ["open"]
+  item checkbox=checked
+    #2 line=1 paragraph ["done"]
+  item checkbox=checked
+    #3 line=2 paragraph ["upper"]
+  item checkbox=none
+    #4 line=3 paragraph ["[ ]"]
+  item checkbox=none
+    #5 line=4 paragraph ["[ ]"]["\n" soft]["next line"]
+  item checkbox=none
+    #6 line=6 paragraph ["[x]not"]
+#7 line=7 list ordered=true start=1
+  item checkbox=unchecked
+    #8 line=7 paragraph ["ordered task"]

@@ -1,0 +1,8 @@
+#0 line=0 paragraph ["<div>\n*not em*\n</div>\n" blockhtml]
+#1 line=4 paragraph ["<!-- c -->\n" blockhtml]
+#2 line=6 list ordered=false start=1
+  item checkbox=none
+    #3 line=6 paragraph ["<p>in item</p>\n" blockhtml]
+#4 line=8 quote
+  #5 line=8 paragraph ["<div>in quote</div>\n" blockhtml]
+#6 line=11 paragraph ["<!---->\n" blockhtml]

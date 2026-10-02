@@ -1,0 +1,41 @@
+#0 line=0 quote
+  #1 line=0 quote
+    #2 line=0 quote
+      #3 line=0 quote
+        #4 line=0 quote
+          #5 line=0 quote
+            #6 line=0 quote
+              #7 line=0 quote
+                #8 line=0 quote
+                  #9 line=0 quote
+                    #10 line=0 paragraph ["deep quote"]
+#11 line=2 list ordered=false start=1
+  item checkbox=none
+    #12 line=2 paragraph ["level 0"]
+    #13 line=3 list ordered=false start=1
+      item checkbox=none
+        #14 line=3 paragraph ["level 1"]
+        #15 line=4 list ordered=false start=1
+          item checkbox=none
+            #16 line=4 paragraph ["level 2"]
+            #17 line=5 list ordered=false start=1
+              item checkbox=none
+                #18 line=5 paragraph ["level 3"]
+                #19 line=6 list ordered=false start=1
+                  item checkbox=none
+                    #20 line=6 paragraph ["level 4"]
+                    #21 line=7 list ordered=false start=1
+                      item checkbox=none
+                        #22 line=7 paragraph ["level 5"]
+                        #23 line=8 list ordered=false start=1
+                          item checkbox=none
+                            #24 line=8 paragraph ["level 6"]
+                            #25 line=9 list ordered=false start=1
+                              item checkbox=none
+                                #26 line=9 paragraph ["level 7"]
+                                #27 line=10 list ordered=false start=1
+                                  item checkbox=none
+                                    #28 line=10 paragraph ["level 8"]
+                                    #29 line=11 list ordered=false start=1
+                                      item checkbox=none
+                                        #30 line=11 paragraph ["level 9"]

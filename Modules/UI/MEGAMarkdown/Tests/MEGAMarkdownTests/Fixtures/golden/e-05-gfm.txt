@@ -1,0 +1,10 @@
+#0 line=0 table columns=left,right
+  header ["a"] | ["b"]
+  row ["1"] | ["x" strike]
+  row ["2"] | ["y"]
+#1 line=5 list ordered=false start=1
+  item checkbox=unchecked
+    #2 line=5 paragraph ["todo"]
+  item checkbox=checked
+    #3 line=6 paragraph ["done"]
+#4 line=8 paragraph ["gone" strike][" and "]["one" strike]

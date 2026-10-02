@@ -1,0 +1,27 @@
+#0 line=0 heading1 ["Review 2 inputs where the new parser differs from the old one on purpose"]
+#1 line=2 paragraph ["Two images with nothing between them keep both URLs. The old parser kept only the first."]
+#2 line=4 paragraph ["a" img=1.png]["b" img=2.png]
+#3 line=6 paragraph ["A task marker inside bold, code, a link or a tag is plain text. The old parser made a checkbox and lost the style."]
+#4 line=8 list ordered=false start=1
+  item checkbox=none
+    #5 line=8 paragraph ["[x]" strong][" bold marker"]
+  item checkbox=none
+    #6 line=9 paragraph ["[ ]" code][" code marker"]
+  item checkbox=none
+    #7 line=10 paragraph ["[x]" link=https://example.com][" link marker"]
+  item checkbox=none
+    #8 line=11 paragraph ["[x]" strong][" html marker"]
+#9 line=13 paragraph ["A tab after the marker is whitespace. The old parser needed a space."]
+#10 line=15 list ordered=false start=1
+  item checkbox=checked
+    #11 line=15 paragraph ["after tab"]
+#12 line=17 paragraph ["A style tag inside link text pairs only inside the link. The old parser kept every tag inside a link literal."]
+#13 line=19 paragraph ["<u>" html link=https://example.com]["</u>" html]
+#14 line=21 paragraph ["<u>" html link=https://example.com]["a" link=https://example.com]["</u>" html]
+#15 line=23 paragraph ["a" u link=https://example.com]
+#16 line=25 paragraph ["A link with empty text keeps a placeholder. The old parser dropped the link."]
+#17 line=27 paragraph ["￼" link=https://example.com][" tail"]
+#18 line=29 paragraph ["A task item that is only an image is an image block. The old parser kept a paragraph."]
+#19 line=31 list ordered=false start=1
+  item checkbox=checked
+    #20 line=31 image url=u.png alt="alt"

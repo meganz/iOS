@@ -1,0 +1,7 @@
+#0 line=0 heading1 ["Head"]
+#1 line=2 paragraph ["para"]["\n" soft]["line"]
+#2 line=5 list ordered=false start=1
+  item checkbox=none
+    #3 line=5 paragraph ["a"]
+  item checkbox=none
+    #4 line=6 paragraph ["b"]

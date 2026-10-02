@@ -1,0 +1,4 @@
+#0 line=0 code language=swift "let a = 1\n\n# not heading"
+#1 line=6 code language=nil "indented code"
+#2 line=8 paragraph ["<!-- comment\n# hidden\n-->\n" blockhtml]
+#3 line=12 heading1 ["Shown"]

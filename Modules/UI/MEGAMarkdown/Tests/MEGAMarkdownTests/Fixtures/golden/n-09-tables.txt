@@ -1,0 +1,5 @@
+#0 line=0 table columns=left,center,right
+  header ["a"] | ["b"] | ["c"]
+  row ["1"] | ["2"] | 
+  row ["1"] | ["2"] | ["3"]
+  row ["esc | pipe"] | ["u" u] | ["b" strong]

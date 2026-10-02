@@ -1,0 +1,4 @@
+#0 line=0 paragraph ["under" u][" "]["bold " strong]["both" em strong][" "]["<u>" html]["open"]
+#1 line=2 paragraph ["<span></em>" html][" "]["x" strong]["</i>" html][" "]["c" code][" "]["d" strike]
+#2 line=4 paragraph ["in bold" strong u][" and "]["upper" u]
+#3 line=6 paragraph ["soft"]["\n" soft]["line" u][" break"]

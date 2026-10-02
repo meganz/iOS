@@ -109,6 +109,14 @@
     {
       "parallelizable" : true,
       "target" : {
+        "containerPath" : "container:Modules\/UI\/MEGAMarkdown",
+        "identifier" : "MEGAMarkdownTests",
+        "name" : "MEGAMarkdownTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
         "containerPath" : "container:Modules\/Features\/Search",
         "identifier" : "SearchTests",
         "name" : "SearchTests"

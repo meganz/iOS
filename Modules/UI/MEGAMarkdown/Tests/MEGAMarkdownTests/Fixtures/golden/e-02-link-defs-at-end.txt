@@ -1,0 +1,6 @@
+#0 line=0 paragraph ["See "]["one" link=https://a.example/1][" and "]["two" link=https://a.example/2][" and [missing][nope]."]
+#1 line=2 quote
+  #2 line=2 paragraph ["quote with "]["three" link=https://a.example/3]
+#3 line=4 list ordered=false start=1
+  item checkbox=none
+    #4 line=4 paragraph ["item "]["four" link=https://a.example/4]

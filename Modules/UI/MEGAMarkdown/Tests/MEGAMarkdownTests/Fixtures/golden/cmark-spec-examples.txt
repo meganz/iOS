@@ -1,0 +1,3013 @@
+## spec 1 Tabs
+#0 line=0 code language=nil "foo\tbaz\t\tbim"
+
+## spec 2 Tabs
+#0 line=0 code language=nil "foo\tbaz\t\tbim"
+
+## spec 3 Tabs
+#0 line=0 code language=nil "a\ta\nὐ\ta"
+
+## spec 4 Tabs
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 paragraph ["bar"]
+
+## spec 5 Tabs
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 code language=nil "  bar"
+
+## spec 6 Tabs
+#0 line=0 quote
+  #1 line=0 code language=nil "  foo"
+
+## spec 7 Tabs
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 code language=nil "  foo"
+
+## spec 8 Tabs
+#0 line=0 code language=nil "foo\nbar"
+
+## spec 9 Tabs
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["bar"]
+        #4 line=2 list ordered=false start=1
+          item checkbox=none
+            #5 line=2 paragraph ["baz"]
+
+## spec 10 Tabs
+#0 line=0 heading1 ["Foo"]
+
+## spec 11 Tabs
+#0 line=0 break
+
+## spec 12 Precedence
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["`one"]
+  item checkbox=none
+    #2 line=1 paragraph ["two`"]
+
+## spec 13 Thematic breaks
+#0 line=0 break
+#1 line=1 break
+#2 line=2 break
+
+## spec 14 Thematic breaks
+#0 line=0 paragraph ["+++"]
+
+## spec 15 Thematic breaks
+#0 line=0 paragraph ["==="]
+
+## spec 16 Thematic breaks
+#0 line=0 paragraph ["--"]["\n" soft]["**"]["\n" soft]["__"]
+
+## spec 17 Thematic breaks
+#0 line=0 break
+#1 line=1 break
+#2 line=2 break
+
+## spec 18 Thematic breaks
+#0 line=0 code language=nil "***"
+
+## spec 19 Thematic breaks
+#0 line=0 paragraph ["Foo"]["\n" soft]["***"]
+
+## spec 20 Thematic breaks
+#0 line=0 break
+
+## spec 21 Thematic breaks
+#0 line=0 break
+
+## spec 22 Thematic breaks
+#0 line=0 break
+
+## spec 23 Thematic breaks
+#0 line=0 break
+
+## spec 24 Thematic breaks
+#0 line=0 break
+
+## spec 25 Thematic breaks
+#0 line=0 paragraph ["_ _ _ _ a"]
+#1 line=2 paragraph ["a------"]
+#2 line=4 paragraph ["---a---"]
+
+## spec 26 Thematic breaks
+#0 line=0 paragraph ["-" em]
+
+## spec 27 Thematic breaks
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+#2 line=1 break
+#3 line=2 list ordered=false start=1
+  item checkbox=none
+    #4 line=2 paragraph ["bar"]
+
+## spec 28 Thematic breaks
+#0 line=0 paragraph ["Foo"]
+#1 line=1 break
+#2 line=2 paragraph ["bar"]
+
+## spec 29 Thematic breaks
+#0 line=0 heading2 ["Foo"]
+#1 line=2 paragraph ["bar"]
+
+## spec 30 Thematic breaks
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["Foo"]
+#2 line=1 break
+#3 line=2 list ordered=false start=1
+  item checkbox=none
+    #4 line=2 paragraph ["Bar"]
+
+## spec 31 Thematic breaks
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["Foo"]
+  item checkbox=none
+    #2 line=1 break
+
+## spec 32 ATX headings
+#0 line=0 heading1 ["foo"]
+#1 line=1 heading2 ["foo"]
+#2 line=2 heading3 ["foo"]
+#3 line=3 heading4 ["foo"]
+#4 line=4 heading5 ["foo"]
+#5 line=5 heading6 ["foo"]
+
+## spec 33 ATX headings
+#0 line=0 paragraph ["####### foo"]
+
+## spec 34 ATX headings
+#0 line=0 paragraph ["#5 bolt"]
+#1 line=2 paragraph ["#hashtag"]
+
+## spec 35 ATX headings
+#0 line=0 paragraph ["## foo"]
+
+## spec 36 ATX headings
+#0 line=0 heading1 ["foo "]["bar" em][" *baz*"]
+
+## spec 37 ATX headings
+#0 line=0 heading1 ["foo"]
+
+## spec 38 ATX headings
+#0 line=0 heading3 ["foo"]
+#1 line=1 heading2 ["foo"]
+#2 line=2 heading1 ["foo"]
+
+## spec 39 ATX headings
+#0 line=0 code language=nil "# foo"
+
+## spec 40 ATX headings
+#0 line=0 paragraph ["foo"]["\n" soft]["# bar"]
+
+## spec 41 ATX headings
+#0 line=0 heading2 ["foo"]
+#1 line=1 heading3 ["bar"]
+
+## spec 42 ATX headings
+#0 line=0 heading1 ["foo"]
+#1 line=1 heading5 ["foo"]
+
+## spec 43 ATX headings
+#0 line=0 heading3 ["foo"]
+
+## spec 44 ATX headings
+#0 line=0 heading3 ["foo ### b"]
+
+## spec 45 ATX headings
+#0 line=0 heading1 ["foo#"]
+
+## spec 46 ATX headings
+#0 line=0 heading3 ["foo ###"]
+#1 line=1 heading2 ["foo ###"]
+#2 line=2 heading1 ["foo #"]
+
+## spec 47 ATX headings
+#0 line=0 break
+#1 line=1 heading2 ["foo"]
+#2 line=2 break
+
+## spec 48 ATX headings
+#0 line=0 paragraph ["Foo bar"]
+#1 line=1 heading1 ["baz"]
+#2 line=2 paragraph ["Bar foo"]
+
+## spec 49 ATX headings
+
+
+## spec 50 Setext headings
+#0 line=0 heading1 ["Foo "]["bar" em]
+#1 line=3 heading2 ["Foo "]["bar" em]
+
+## spec 51 Setext headings
+#0 line=0 heading1 ["Foo "]["bar" em]["\n" em soft]["baz" em]
+
+## spec 52 Setext headings
+#0 line=0 heading1 ["Foo "]["bar" em]["\n" em soft]["baz" em]
+
+## spec 53 Setext headings
+#0 line=0 heading2 ["Foo"]
+#1 line=3 heading1 ["Foo"]
+
+## spec 54 Setext headings
+#0 line=0 heading2 ["Foo"]
+#1 line=3 heading2 ["Foo"]
+#2 line=6 heading1 ["Foo"]
+
+## spec 55 Setext headings
+#0 line=0 code language=nil "Foo\n---\n\nFoo"
+#1 line=4 break
+
+## spec 56 Setext headings
+#0 line=0 heading2 ["Foo"]
+
+## spec 57 Setext headings
+#0 line=0 paragraph ["Foo"]["\n" soft]["---"]
+
+## spec 58 Setext headings
+#0 line=0 paragraph ["Foo"]["\n" soft]["= ="]
+#1 line=3 paragraph ["Foo"]
+#2 line=4 break
+
+## spec 59 Setext headings
+#0 line=0 heading2 ["Foo"]
+
+## spec 60 Setext headings
+#0 line=0 heading2 ["Foo\\"]
+
+## spec 61 Setext headings
+#0 line=0 heading2 ["`Foo"]
+#1 line=2 paragraph ["`"]
+#2 line=4 heading2 ["<a title=\"a lot"]
+#3 line=6 paragraph ["of dashes\"/>"]
+
+## spec 62 Setext headings
+#0 line=0 quote
+  #1 line=0 paragraph ["Foo"]
+#2 line=1 break
+
+## spec 63 Setext headings
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]["\n" soft]["bar"]["\n" soft]["==="]
+
+## spec 64 Setext headings
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["Foo"]
+#2 line=1 break
+
+## spec 65 Setext headings
+#0 line=0 heading2 ["Foo"]["\n" soft]["Bar"]
+
+## spec 66 Setext headings
+#0 line=0 break
+#1 line=1 heading2 ["Foo"]
+#2 line=3 heading2 ["Bar"]
+#3 line=5 paragraph ["Baz"]
+
+## spec 67 Setext headings
+#0 line=1 paragraph ["===="]
+
+## spec 68 Setext headings
+#0 line=0 break
+#1 line=1 break
+
+## spec 69 Setext headings
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+#2 line=1 break
+
+## spec 70 Setext headings
+#0 line=0 code language=nil "foo"
+#1 line=1 break
+
+## spec 71 Setext headings
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]
+#2 line=1 break
+
+## spec 72 Setext headings
+#0 line=0 heading2 ["> foo"]
+
+## spec 73 Setext headings
+#0 line=0 paragraph ["Foo"]
+#1 line=2 heading2 ["bar"]
+#2 line=4 paragraph ["baz"]
+
+## spec 74 Setext headings
+#0 line=0 paragraph ["Foo"]["\n" soft]["bar"]
+#1 line=3 break
+#2 line=5 paragraph ["baz"]
+
+## spec 75 Setext headings
+#0 line=0 paragraph ["Foo"]["\n" soft]["bar"]
+#1 line=2 break
+#2 line=3 paragraph ["baz"]
+
+## spec 76 Setext headings
+#0 line=0 paragraph ["Foo"]["\n" soft]["bar"]["\n" soft]["---"]["\n" soft]["baz"]
+
+## spec 77 Indented code blocks
+#0 line=0 code language=nil "a simple\n  indented code block"
+
+## spec 78 Indented code blocks
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 paragraph ["bar"]
+
+## spec 79 Indented code blocks
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 list ordered=false start=1
+      item checkbox=none
+        #3 line=2 paragraph ["bar"]
+
+## spec 80 Indented code blocks
+#0 line=0 code language=nil "<a/>\n*hi*\n\n- one"
+
+## spec 81 Indented code blocks
+#0 line=0 code language=nil "chunk1\n\nchunk2\n\n\n\nchunk3"
+
+## spec 82 Indented code blocks
+#0 line=0 code language=nil "chunk1\n  \n  chunk2"
+
+## spec 83 Indented code blocks
+#0 line=0 paragraph ["Foo"]["\n" soft]["bar"]
+
+## spec 84 Indented code blocks
+#0 line=0 code language=nil "foo"
+#1 line=1 paragraph ["bar"]
+
+## spec 85 Indented code blocks
+#0 line=0 heading1 ["Heading"]
+#1 line=1 code language=nil "foo"
+#2 line=2 heading2 ["Heading"]
+#3 line=4 code language=nil "foo"
+#4 line=5 break
+
+## spec 86 Indented code blocks
+#0 line=0 code language=nil "    foo\nbar"
+
+## spec 87 Indented code blocks
+#0 line=2 code language=nil "foo"
+
+## spec 88 Indented code blocks
+#0 line=0 code language=nil "foo  "
+
+## spec 89 Fenced code blocks
+#0 line=0 code language=nil "<\n >"
+
+## spec 90 Fenced code blocks
+#0 line=0 code language=nil "<\n >"
+
+## spec 91 Fenced code blocks
+#0 line=0 paragraph ["foo" code]
+
+## spec 92 Fenced code blocks
+#0 line=0 code language=nil "aaa\n~~~"
+
+## spec 93 Fenced code blocks
+#0 line=0 code language=nil "aaa\n```"
+
+## spec 94 Fenced code blocks
+#0 line=0 code language=nil "aaa\n```"
+
+## spec 95 Fenced code blocks
+#0 line=0 code language=nil "aaa\n~~~"
+
+## spec 96 Fenced code blocks
+
+
+## spec 97 Fenced code blocks
+#0 line=0 code language=nil "\n```\naaa"
+
+## spec 98 Fenced code blocks
+#0 line=0 quote
+  #1 line=0 code language=nil "aaa"
+#2 line=3 paragraph ["bbb"]
+
+## spec 99 Fenced code blocks
+#0 line=0 code language=nil "\n  "
+
+## spec 100 Fenced code blocks
+
+
+## spec 101 Fenced code blocks
+#0 line=0 code language=nil "aaa\naaa"
+
+## spec 102 Fenced code blocks
+#0 line=0 code language=nil "aaa\naaa\naaa"
+
+## spec 103 Fenced code blocks
+#0 line=0 code language=nil "aaa\n aaa\naaa"
+
+## spec 104 Fenced code blocks
+#0 line=0 code language=nil "```\naaa\n```"
+
+## spec 105 Fenced code blocks
+#0 line=0 code language=nil "aaa"
+
+## spec 106 Fenced code blocks
+#0 line=0 code language=nil "aaa"
+
+## spec 107 Fenced code blocks
+#0 line=0 code language=nil "aaa\n    ```"
+
+## spec 108 Fenced code blocks
+#0 line=0 paragraph [" " code]["\n" soft]["aaa"]
+
+## spec 109 Fenced code blocks
+#0 line=0 code language=nil "aaa\n~~~ ~~"
+
+## spec 110 Fenced code blocks
+#0 line=0 paragraph ["foo"]
+#1 line=1 code language=nil "bar"
+#2 line=4 paragraph ["baz"]
+
+## spec 111 Fenced code blocks
+#0 line=0 heading2 ["foo"]
+#1 line=2 code language=nil "bar"
+#2 line=5 heading1 ["baz"]
+
+## spec 112 Fenced code blocks
+#0 line=0 code language=ruby "def foo(x)\n  return 3\nend"
+
+## spec 113 Fenced code blocks
+#0 line=0 code language=ruby startline=3 $%@#$ "def foo(x)\n  return 3\nend"
+
+## spec 114 Fenced code blocks
+
+
+## spec 115 Fenced code blocks
+#0 line=0 paragraph ["aa" code]["\n" soft]["foo"]
+
+## spec 116 Fenced code blocks
+#0 line=0 code language=aa ``` ~~~ "foo"
+
+## spec 117 Fenced code blocks
+#0 line=0 code language=nil "``` aaa"
+
+## spec 118 HTML blocks
+#0 line=0 paragraph ["<table><tr><td>\n<pre>\n**Hello**,\n" blockhtml]
+#1 line=4 paragraph ["world" em]["."]["\n" soft]["</pre>" html]
+#2 line=6 paragraph ["</td></tr></table>\n" blockhtml]
+
+## spec 119 HTML blocks
+#0 line=0 paragraph ["<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>\n" blockhtml]
+#1 line=8 paragraph ["okay."]
+
+## spec 120 HTML blocks
+#0 line=0 paragraph [" <div>\n  *hello*\n         <foo><a>\n" blockhtml]
+
+## spec 121 HTML blocks
+#0 line=0 paragraph ["</div>\n*foo*\n" blockhtml]
+
+## spec 122 HTML blocks
+#0 line=0 paragraph ["<DIV CLASS=\"foo\">\n" blockhtml]
+#1 line=2 paragraph ["Markdown" em]
+#2 line=4 paragraph ["</DIV>\n" blockhtml]
+
+## spec 123 HTML blocks
+#0 line=0 paragraph ["<div id=\"foo\"\n  class=\"bar\">\n</div>\n" blockhtml]
+
+## spec 124 HTML blocks
+#0 line=0 paragraph ["<div id=\"foo\" class=\"bar\n  baz\">\n</div>\n" blockhtml]
+
+## spec 125 HTML blocks
+#0 line=0 paragraph ["<div>\n*foo*\n" blockhtml]
+#1 line=3 paragraph ["bar" em]
+
+## spec 126 HTML blocks
+#0 line=0 paragraph ["<div id=\"foo\"\n*hi*\n" blockhtml]
+
+## spec 127 HTML blocks
+#0 line=0 paragraph ["<div class\nfoo\n" blockhtml]
+
+## spec 128 HTML blocks
+#0 line=0 paragraph ["<div *???-&&&-<---\n*foo*\n" blockhtml]
+
+## spec 129 HTML blocks
+#0 line=0 paragraph ["<div><a href=\"bar\">*foo*</a></div>\n" blockhtml]
+
+## spec 130 HTML blocks
+#0 line=0 paragraph ["<table><tr><td>\nfoo\n</td></tr></table>\n" blockhtml]
+
+## spec 131 HTML blocks
+#0 line=0 paragraph ["<div></div>\n``` c\nint x = 33;\n```\n" blockhtml]
+
+## spec 132 HTML blocks
+#0 line=0 paragraph ["<a href=\"foo\">\n*bar*\n</a>\n" blockhtml]
+
+## spec 133 HTML blocks
+#0 line=0 paragraph ["<Warning>\n*bar*\n</Warning>\n" blockhtml]
+
+## spec 134 HTML blocks
+#0 line=0 paragraph ["<i class=\"foo\">\n*bar*\n</i>\n" blockhtml]
+
+## spec 135 HTML blocks
+#0 line=0 paragraph ["</ins>\n*bar*\n" blockhtml]
+
+## spec 136 HTML blocks
+#0 line=0 paragraph ["<del>\n*foo*\n</del>\n" blockhtml]
+
+## spec 137 HTML blocks
+#0 line=0 paragraph ["<del>\n" blockhtml]
+#1 line=2 paragraph ["foo" em]
+#2 line=4 paragraph ["</del>\n" blockhtml]
+
+## spec 138 HTML blocks
+#0 line=0 paragraph ["foo" em strike]
+
+## spec 139 HTML blocks
+#0 line=0 paragraph ["<pre language=\"haskell\"><code>\nimport Text.HTML.TagSoup\n\nmain :: IO ()\nmain = print $ parseTags tags\n</code></pre>\n" blockhtml]
+#1 line=6 paragraph ["okay"]
+
+## spec 140 HTML blocks
+#0 line=0 paragraph ["<script type=\"text/javascript\">\n// JavaScript example\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>\n" blockhtml]
+#1 line=5 paragraph ["okay"]
+
+## spec 141 HTML blocks
+#0 line=0 paragraph ["<style\n  type=\"text/css\">\nh1 {color:red;}\n\np {color:blue;}\n</style>\n" blockhtml]
+#1 line=6 paragraph ["okay"]
+
+## spec 142 HTML blocks
+#0 line=0 paragraph ["<style\n  type=\"text/css\">\n\nfoo\n" blockhtml]
+
+## spec 143 HTML blocks
+#0 line=0 quote
+  #1 line=0 paragraph ["<div>\nfoo\n" blockhtml]
+#2 line=3 paragraph ["bar"]
+
+## spec 144 HTML blocks
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["<div>\n" blockhtml]
+  item checkbox=none
+    #2 line=1 paragraph ["foo"]
+
+## spec 145 HTML blocks
+#0 line=0 paragraph ["<style>p{color:red;}</style>\n" blockhtml]
+#1 line=1 paragraph ["foo" em]
+
+## spec 146 HTML blocks
+#0 line=0 paragraph ["<!-- foo -->*bar*\n" blockhtml]
+#1 line=1 paragraph ["baz" em]
+
+## spec 147 HTML blocks
+#0 line=0 paragraph ["<script>\nfoo\n</script>1. *bar*\n" blockhtml]
+
+## spec 148 HTML blocks
+#0 line=0 paragraph ["<!-- Foo\n\nbar\n   baz -->\n" blockhtml]
+#1 line=4 paragraph ["okay"]
+
+## spec 149 HTML blocks
+#0 line=0 paragraph ["<?php\n\n  echo \'>\';\n\n?>\n" blockhtml]
+#1 line=5 paragraph ["okay"]
+
+## spec 150 HTML blocks
+#0 line=0 paragraph ["<!DOCTYPE html>\n" blockhtml]
+
+## spec 151 HTML blocks
+#0 line=0 paragraph ["<![CDATA[\nfunction matchwo(a,b)\n{\n  if (a < b && a < 0) then {\n    return 1;\n\n  } else {\n\n    return 0;\n  }\n}\n]]>\n" blockhtml]
+#1 line=12 paragraph ["okay"]
+
+## spec 152 HTML blocks
+#0 line=0 paragraph ["  <!-- foo -->\n" blockhtml]
+#1 line=2 code language=nil "<!-- foo -->"
+
+## spec 153 HTML blocks
+#0 line=0 paragraph ["  <div>\n" blockhtml]
+#1 line=2 code language=nil "<div>"
+
+## spec 154 HTML blocks
+#0 line=0 paragraph ["Foo"]
+#1 line=1 paragraph ["<div>\nbar\n</div>\n" blockhtml]
+
+## spec 155 HTML blocks
+#0 line=0 paragraph ["<div>\nbar\n</div>\n*foo*\n" blockhtml]
+
+## spec 156 HTML blocks
+#0 line=0 paragraph ["Foo"]["\n" soft]["<a href=\"bar\">" html]["\n" soft]["baz"]
+
+## spec 157 HTML blocks
+#0 line=0 paragraph ["<div>\n" blockhtml]
+#1 line=2 paragraph ["Emphasized" em][" text."]
+#2 line=4 paragraph ["</div>\n" blockhtml]
+
+## spec 158 HTML blocks
+#0 line=0 paragraph ["<div>\n*Emphasized* text.\n</div>\n" blockhtml]
+
+## spec 159 HTML blocks
+#0 line=0 paragraph ["<table>\n" blockhtml]
+#1 line=2 paragraph ["<tr>\n" blockhtml]
+#2 line=4 paragraph ["<td>\nHi\n</td>\n" blockhtml]
+#3 line=8 paragraph ["</tr>\n" blockhtml]
+#4 line=10 paragraph ["</table>\n" blockhtml]
+
+## spec 160 HTML blocks
+#0 line=0 paragraph ["<table>\n" blockhtml]
+#1 line=2 paragraph ["  <tr>\n" blockhtml]
+#2 line=4 code language=nil "<td>\n  Hi\n</td>"
+#3 line=8 paragraph ["  </tr>\n" blockhtml]
+#4 line=10 paragraph ["</table>\n" blockhtml]
+
+## spec 161 Link reference definitions
+#0 line=2 paragraph ["foo" link=/url title="title"]
+
+## spec 162 Link reference definitions
+#0 line=4 paragraph ["foo" link=/url title="the title"]
+
+## spec 163 Link reference definitions
+#0 line=2 paragraph ["Foo*bar]" link=my_(url) title="title (with parens)"]
+
+## spec 164 Link reference definitions
+#0 line=4 paragraph ["Foo bar" link=my%20url title="title"]
+
+## spec 165 Link reference definitions
+#0 line=6 paragraph ["foo" link=/url title="\ntitle\nline1\nline2\n"]
+
+## spec 166 Link reference definitions
+#0 line=0 paragraph ["[foo]: /url \'title"]
+#1 line=2 paragraph ["with blank line\'"]
+#2 line=4 paragraph ["[foo]"]
+
+## spec 167 Link reference definitions
+#0 line=3 paragraph ["foo" link=/url]
+
+## spec 168 Link reference definitions
+#0 line=0 paragraph ["[foo]:"]
+#1 line=2 paragraph ["[foo]"]
+
+## spec 169 Link reference definitions
+#0 line=2 paragraph ["foo"]
+
+## spec 170 Link reference definitions
+#0 line=0 paragraph ["[foo]: "]["<bar>" html]["(baz)"]
+#1 line=2 paragraph ["[foo]"]
+
+## spec 171 Link reference definitions
+#0 line=2 paragraph ["foo" link=/url%5Cbar*baz title="foo\"bar\\baz"]
+
+## spec 172 Link reference definitions
+#0 line=0 paragraph ["foo" link=url]
+
+## spec 173 Link reference definitions
+#0 line=0 paragraph ["foo" link=first]
+
+## spec 174 Link reference definitions
+#0 line=2 paragraph ["Foo" link=/url]
+
+## spec 175 Link reference definitions
+#0 line=2 paragraph ["αγω" link=/%CF%86%CE%BF%CF%85]
+
+## spec 176 Link reference definitions
+
+
+## spec 177 Link reference definitions
+#0 line=0 paragraph ["bar"]
+
+## spec 178 Link reference definitions
+#0 line=0 paragraph ["[foo]: /url \"title\" ok"]
+
+## spec 179 Link reference definitions
+#0 line=0 paragraph ["\"title\" ok"]
+
+## spec 180 Link reference definitions
+#0 line=0 code language=nil "[foo]: /url \"title\""
+#1 line=2 paragraph ["[foo]"]
+
+## spec 181 Link reference definitions
+#0 line=0 code language=nil "[foo]: /url"
+#1 line=4 paragraph ["[foo]"]
+
+## spec 182 Link reference definitions
+#0 line=0 paragraph ["Foo"]["\n" soft]["[bar]: /baz"]
+#1 line=3 paragraph ["[bar]"]
+
+## spec 183 Link reference definitions
+#0 line=0 heading1 ["Foo" link=/url]
+#1 line=2 quote
+  #2 line=2 paragraph ["bar"]
+
+## spec 184 Link reference definitions
+#0 line=0 heading1 ["bar"]
+#1 line=3 paragraph ["foo" link=/url]
+
+## spec 185 Link reference definitions
+#0 line=0 paragraph ["==="]["\n" soft]["foo" link=/url]
+
+## spec 186 Link reference definitions
+#0 line=5 paragraph ["foo" link=/foo-url title="foo"][","]["\n" soft]["bar" link=/bar-url title="bar"][","]["\n" soft]["baz" link=/baz-url]
+
+## spec 187 Link reference definitions
+#0 line=0 paragraph ["foo" link=/url]
+
+## spec 188 Link reference definitions
+
+
+## spec 189 Paragraphs
+#0 line=0 paragraph ["aaa"]
+#1 line=2 paragraph ["bbb"]
+
+## spec 190 Paragraphs
+#0 line=0 paragraph ["aaa"]["\n" soft]["bbb"]
+#1 line=3 paragraph ["ccc"]["\n" soft]["ddd"]
+
+## spec 191 Paragraphs
+#0 line=0 paragraph ["aaa"]
+#1 line=3 paragraph ["bbb"]
+
+## spec 192 Paragraphs
+#0 line=0 paragraph ["aaa"]["\n" soft]["bbb"]
+
+## spec 193 Paragraphs
+#0 line=0 paragraph ["aaa"]["\n" soft]["bbb"]["\n" soft]["ccc"]
+
+## spec 194 Paragraphs
+#0 line=0 paragraph ["aaa"]["\n" soft]["bbb"]
+
+## spec 195 Paragraphs
+#0 line=0 code language=nil "aaa"
+#1 line=1 paragraph ["bbb"]
+
+## spec 196 Paragraphs
+#0 line=0 paragraph ["aaa"]["\n" br]["bbb"]
+
+## spec 197 Blank lines
+#0 line=2 paragraph ["aaa"]
+#1 line=5 heading1 ["aaa"]
+
+## spec 198 Tables (extension)
+#0 line=0 table columns=left,left
+  header ["foo"] | ["bar"]
+  row ["baz"] | ["bim"]
+
+## spec 199 Tables (extension)
+#0 line=0 table columns=center,right
+  header ["abc"] | ["defghi"]
+  row ["bar"] | ["baz"]
+
+## spec 200 Tables (extension)
+#0 line=0 table columns=left
+  header ["f|oo"]
+  row ["b "]["|" code][" az"]
+  row ["b "]["|" strong][" im"]
+
+## spec 201 Tables (extension)
+#0 line=0 table columns=left,left
+  header ["abc"] | ["def"]
+  row ["bar"] | ["baz"]
+#1 line=3 quote
+  #2 line=3 paragraph ["bar"]
+
+## spec 202 Tables (extension)
+#0 line=0 table columns=left,left
+  header ["abc"] | ["def"]
+  row ["bar"] | ["baz"]
+  row ["bar"] | 
+#1 line=5 paragraph ["bar"]
+
+## spec 203 Tables (extension)
+#0 line=0 paragraph ["| abc | def |"]["\n" soft]["| --- |"]["\n" soft]["| bar |"]
+
+## spec 204 Tables (extension)
+#0 line=0 table columns=left,left
+  header ["abc"] | ["def"]
+  row ["bar"] | 
+  row ["bar"] | ["baz"]
+
+## spec 205 Tables (extension)
+#0 line=0 table columns=left,left
+  header ["abc"] | ["def"]
+
+## spec 206 Block quotes
+#0 line=0 quote
+  #1 line=0 heading1 ["Foo"]
+  #2 line=1 paragraph ["bar"]["\n" soft]["baz"]
+
+## spec 207 Block quotes
+#0 line=0 quote
+  #1 line=0 heading1 ["Foo"]
+  #2 line=1 paragraph ["bar"]["\n" soft]["baz"]
+
+## spec 208 Block quotes
+#0 line=0 quote
+  #1 line=0 heading1 ["Foo"]
+  #2 line=1 paragraph ["bar"]["\n" soft]["baz"]
+
+## spec 209 Block quotes
+#0 line=0 code language=nil "> # Foo\n> bar\n> baz"
+
+## spec 210 Block quotes
+#0 line=0 quote
+  #1 line=0 heading1 ["Foo"]
+  #2 line=1 paragraph ["bar"]["\n" soft]["baz"]
+
+## spec 211 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["bar"]["\n" soft]["baz"]["\n" soft]["foo"]
+
+## spec 212 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]
+#2 line=1 break
+
+## spec 213 Block quotes
+#0 line=0 quote
+  #1 line=0 list ordered=false start=1
+    item checkbox=none
+      #2 line=0 paragraph ["foo"]
+#3 line=1 list ordered=false start=1
+  item checkbox=none
+    #4 line=1 paragraph ["bar"]
+
+## spec 214 Block quotes
+#0 line=0 quote
+  #1 line=0 code language=nil "foo"
+#2 line=1 code language=nil "bar"
+
+## spec 215 Block quotes
+#0 line=1 paragraph ["foo"]
+
+## spec 216 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]["\n" soft]["- bar"]
+
+## spec 217 Block quotes
+
+
+## spec 218 Block quotes
+
+
+## spec 219 Block quotes
+#0 line=1 quote
+  #1 line=1 paragraph ["foo"]
+
+## spec 220 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]
+#2 line=2 quote
+  #3 line=2 paragraph ["bar"]
+
+## spec 221 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]["\n" soft]["bar"]
+
+## spec 222 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["foo"]
+  #2 line=2 paragraph ["bar"]
+
+## spec 223 Block quotes
+#0 line=0 paragraph ["foo"]
+#1 line=1 quote
+  #2 line=1 paragraph ["bar"]
+
+## spec 224 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["aaa"]
+#2 line=1 break
+#3 line=2 quote
+  #4 line=2 paragraph ["bbb"]
+
+## spec 225 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["bar"]["\n" soft]["baz"]
+
+## spec 226 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["bar"]
+#2 line=2 paragraph ["baz"]
+
+## spec 227 Block quotes
+#0 line=0 quote
+  #1 line=0 paragraph ["bar"]
+#2 line=2 paragraph ["baz"]
+
+## spec 228 Block quotes
+#0 line=0 quote
+  #1 line=0 quote
+    #2 line=0 quote
+      #3 line=0 paragraph ["foo"]["\n" soft]["bar"]
+
+## spec 229 Block quotes
+#0 line=0 quote
+  #1 line=0 quote
+    #2 line=0 quote
+      #3 line=0 paragraph ["foo"]["\n" soft]["bar"]["\n" soft]["baz"]
+
+## spec 230 Block quotes
+#0 line=0 quote
+  #1 line=0 code language=nil "code"
+#2 line=2 quote
+  #3 line=2 paragraph ["not code"]
+
+## spec 231 List items
+#0 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+#1 line=3 code language=nil "indented code"
+#2 line=5 quote
+  #3 line=5 paragraph ["A block quote."]
+
+## spec 232 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+    #2 line=3 code language=nil "indented code"
+    #3 line=5 quote
+      #4 line=5 paragraph ["A block quote."]
+
+## spec 233 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["one"]
+#2 line=2 paragraph ["two"]
+
+## spec 234 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["one"]
+    #2 line=2 paragraph ["two"]
+
+## spec 235 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["one"]
+#2 line=2 code language=nil " two"
+
+## spec 236 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["one"]
+    #2 line=2 paragraph ["two"]
+
+## spec 237 List items
+#0 line=0 quote
+  #1 line=0 quote
+    #2 line=0 list ordered=true start=1
+      item checkbox=none
+        #3 line=0 paragraph ["one"]
+        #4 line=2 paragraph ["two"]
+
+## spec 238 List items
+#0 line=0 quote
+  #1 line=0 quote
+    #2 line=0 list ordered=false start=1
+      item checkbox=none
+        #3 line=0 paragraph ["one"]
+    #4 line=2 paragraph ["two"]
+
+## spec 239 List items
+#0 line=0 paragraph ["-one"]
+#1 line=2 paragraph ["2.two"]
+
+## spec 240 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=3 paragraph ["bar"]
+
+## spec 241 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 code language=nil "bar"
+    #3 line=6 paragraph ["baz"]
+    #4 line=8 quote
+      #5 line=8 paragraph ["bam"]
+
+## spec 242 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["Foo"]
+    #2 line=2 code language=nil "bar\n\n\nbaz"
+
+## spec 243 List items
+#0 line=0 list ordered=true start=123456789
+  item checkbox=none
+    #1 line=0 paragraph ["ok"]
+
+## spec 244 List items
+#0 line=0 paragraph ["1234567890. not ok"]
+
+## spec 245 List items
+#0 line=0 list ordered=true start=0
+  item checkbox=none
+    #1 line=0 paragraph ["ok"]
+
+## spec 246 List items
+#0 line=0 list ordered=true start=3
+  item checkbox=none
+    #1 line=0 paragraph ["ok"]
+
+## spec 247 List items
+#0 line=0 paragraph ["-1. not ok"]
+
+## spec 248 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 code language=nil "bar"
+
+## spec 249 List items
+#0 line=0 list ordered=true start=10
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 code language=nil "bar"
+
+## spec 250 List items
+#0 line=0 code language=nil "indented code"
+#1 line=2 paragraph ["paragraph"]
+#2 line=4 code language=nil "more code"
+
+## spec 251 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 code language=nil "indented code"
+    #2 line=2 paragraph ["paragraph"]
+    #3 line=4 code language=nil "more code"
+
+## spec 252 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 code language=nil " indented code"
+    #2 line=2 paragraph ["paragraph"]
+    #3 line=4 code language=nil "more code"
+
+## spec 253 List items
+#0 line=0 paragraph ["foo"]
+#1 line=2 paragraph ["bar"]
+
+## spec 254 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+#2 line=2 paragraph ["bar"]
+
+## spec 255 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 paragraph ["bar"]
+
+## spec 256 List items
+#0 line=1 list ordered=false start=1
+  item checkbox=none
+    #1 line=1 paragraph ["foo"]
+  item checkbox=none
+    #2 line=3 code language=nil "bar"
+  item checkbox=none
+    #3 line=7 code language=nil "baz"
+
+## spec 257 List items
+#0 line=1 list ordered=false start=1
+  item checkbox=none
+    #1 line=1 paragraph ["foo"]
+
+## spec 258 List items
+#0 line=2 paragraph ["foo"]
+
+## spec 259 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=2 paragraph ["bar"]
+
+## spec 260 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=2 paragraph ["bar"]
+
+## spec 261 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=2 paragraph ["bar"]
+
+## spec 262 List items
+
+
+## spec 263 List items
+#0 line=0 paragraph ["foo"]["\n" soft]["*"]
+#1 line=3 paragraph ["foo"]["\n" soft]["1."]
+
+## spec 264 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+    #2 line=3 code language=nil "indented code"
+    #3 line=5 quote
+      #4 line=5 paragraph ["A block quote."]
+
+## spec 265 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+    #2 line=3 code language=nil "indented code"
+    #3 line=5 quote
+      #4 line=5 paragraph ["A block quote."]
+
+## spec 266 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+    #2 line=3 code language=nil "indented code"
+    #3 line=5 quote
+      #4 line=5 paragraph ["A block quote."]
+
+## spec 267 List items
+#0 line=0 code language=nil "1.  A paragraph\n    with two lines.\n\n        indented code\n\n    > A block quote."
+
+## spec 268 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+    #2 line=3 code language=nil "indented code"
+    #3 line=5 quote
+      #4 line=5 paragraph ["A block quote."]
+
+## spec 269 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["A paragraph"]["\n" soft]["with two lines."]
+
+## spec 270 List items
+#0 line=0 quote
+  #1 line=0 list ordered=true start=1
+    item checkbox=none
+      #2 line=0 quote
+        #3 line=0 paragraph ["Blockquote"]["\n" soft]["continued here."]
+
+## spec 271 List items
+#0 line=0 quote
+  #1 line=0 list ordered=true start=1
+    item checkbox=none
+      #2 line=0 quote
+        #3 line=0 paragraph ["Blockquote"]["\n" soft]["continued here."]
+
+## spec 272 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["bar"]
+        #4 line=2 list ordered=false start=1
+          item checkbox=none
+            #5 line=2 paragraph ["baz"]
+            #6 line=3 list ordered=false start=1
+              item checkbox=none
+                #7 line=3 paragraph ["boo"]
+
+## spec 273 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=1 paragraph ["bar"]
+  item checkbox=none
+    #3 line=2 paragraph ["baz"]
+  item checkbox=none
+    #4 line=3 paragraph ["boo"]
+
+## spec 274 List items
+#0 line=0 list ordered=true start=10
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["bar"]
+
+## spec 275 List items
+#0 line=0 list ordered=true start=10
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+#2 line=1 list ordered=false start=1
+  item checkbox=none
+    #3 line=1 paragraph ["bar"]
+
+## spec 276 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 list ordered=false start=1
+      item checkbox=none
+        #2 line=0 paragraph ["foo"]
+
+## spec 277 List items
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 list ordered=false start=1
+      item checkbox=none
+        #2 line=0 list ordered=true start=2
+          item checkbox=none
+            #3 line=0 paragraph ["foo"]
+
+## spec 278 List items
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 heading1 ["Foo"]
+  item checkbox=none
+    #2 line=1 heading2 ["Bar"]
+    #3 line=3 paragraph ["baz"]
+
+## spec 281 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=1 paragraph ["bar"]
+#3 line=2 list ordered=false start=1
+  item checkbox=none
+    #4 line=2 paragraph ["baz"]
+
+## spec 282 Lists
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=1 paragraph ["bar"]
+#3 line=2 list ordered=true start=3
+  item checkbox=none
+    #4 line=2 paragraph ["baz"]
+
+## spec 283 Lists
+#0 line=0 paragraph ["Foo"]
+#1 line=1 list ordered=false start=1
+  item checkbox=none
+    #2 line=1 paragraph ["bar"]
+  item checkbox=none
+    #3 line=2 paragraph ["baz"]
+
+## spec 284 Lists
+#0 line=0 paragraph ["The number of windows in my house is"]["\n" soft]["14.  The number of doors is 6."]
+
+## spec 285 Lists
+#0 line=0 paragraph ["The number of windows in my house is"]
+#1 line=1 list ordered=true start=1
+  item checkbox=none
+    #2 line=1 paragraph ["The number of doors is 6."]
+
+## spec 286 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=2 paragraph ["bar"]
+  item checkbox=none
+    #3 line=5 paragraph ["baz"]
+
+## spec 287 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["bar"]
+        #4 line=2 list ordered=false start=1
+          item checkbox=none
+            #5 line=2 paragraph ["baz"]
+            #6 line=5 paragraph ["bim"]
+
+## spec 288 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+  item checkbox=none
+    #2 line=1 paragraph ["bar"]
+#3 line=3 paragraph ["<!-- -->\n" blockhtml]
+#4 line=5 list ordered=false start=1
+  item checkbox=none
+    #5 line=5 paragraph ["baz"]
+  item checkbox=none
+    #6 line=6 paragraph ["bim"]
+
+## spec 289 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=2 paragraph ["notcode"]
+  item checkbox=none
+    #3 line=4 paragraph ["foo"]
+#4 line=6 paragraph ["<!-- -->\n" blockhtml]
+#5 line=8 code language=nil "code"
+
+## spec 290 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=1 paragraph ["b"]
+  item checkbox=none
+    #3 line=2 paragraph ["c"]
+  item checkbox=none
+    #4 line=3 paragraph ["d"]
+  item checkbox=none
+    #5 line=4 paragraph ["e"]
+  item checkbox=none
+    #6 line=5 paragraph ["f"]
+  item checkbox=none
+    #7 line=6 paragraph ["g"]
+
+## spec 291 Lists
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=2 paragraph ["b"]
+  item checkbox=none
+    #3 line=4 paragraph ["c"]
+
+## spec 292 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=1 paragraph ["b"]
+  item checkbox=none
+    #3 line=2 paragraph ["c"]
+  item checkbox=none
+    #4 line=3 paragraph ["d"]["\n" soft]["- e"]
+
+## spec 293 Lists
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=2 paragraph ["b"]
+#3 line=4 code language=nil "3. c"
+
+## spec 294 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=1 paragraph ["b"]
+  item checkbox=none
+    #3 line=3 paragraph ["c"]
+
+## spec 295 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=3 paragraph ["c"]
+
+## spec 296 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=1 paragraph ["b"]
+    #3 line=3 paragraph ["c"]
+  item checkbox=none
+    #4 line=4 paragraph ["d"]
+
+## spec 297 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=1 paragraph ["b"]
+  item checkbox=none
+    #3 line=4 paragraph ["d"]
+
+## spec 298 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+  item checkbox=none
+    #2 line=1 code language=nil "b"
+  item checkbox=none
+    #3 line=6 paragraph ["c"]
+
+## spec 299 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["b"]
+        #4 line=3 paragraph ["c"]
+  item checkbox=none
+    #5 line=4 paragraph ["d"]
+
+## spec 300 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+    #2 line=1 quote
+      #3 line=1 paragraph ["b"]
+  item checkbox=none
+    #4 line=3 paragraph ["c"]
+
+## spec 301 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+    #2 line=1 quote
+      #3 line=1 paragraph ["b"]
+    #4 line=2 code language=nil "c"
+  item checkbox=none
+    #5 line=5 paragraph ["d"]
+
+## spec 302 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+
+## spec 303 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["b"]
+
+## spec 304 Lists
+#0 line=0 list ordered=true start=1
+  item checkbox=none
+    #1 line=0 code language=nil "foo"
+    #2 line=4 paragraph ["bar"]
+
+## spec 305 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["bar"]
+    #4 line=3 paragraph ["baz"]
+
+## spec 306 Lists
+#0 line=0 list ordered=false start=1
+  item checkbox=none
+    #1 line=0 paragraph ["a"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=none
+        #3 line=1 paragraph ["b"]
+      item checkbox=none
+        #4 line=2 paragraph ["c"]
+  item checkbox=none
+    #5 line=4 paragraph ["d"]
+    #6 line=5 list ordered=false start=1
+      item checkbox=none
+        #7 line=5 paragraph ["e"]
+      item checkbox=none
+        #8 line=6 paragraph ["f"]
+
+## spec 307 Inlines
+#0 line=0 paragraph ["hi" code]["lo`"]
+
+## spec 308 Backslash escapes
+#0 line=0 paragraph ["!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"]
+
+## spec 309 Backslash escapes
+#0 line=0 paragraph ["\\\t\\A\\a\\ \\3\\φ\\«"]
+
+## spec 310 Backslash escapes
+#0 line=0 paragraph ["*not emphasized*"]["\n" soft]["<br/> not a tag"]["\n" soft]["[not a link](/foo)"]["\n" soft]["`not code`"]["\n" soft]["1. not a list"]["\n" soft]["* not a list"]["\n" soft]["# not a heading"]["\n" soft]["[foo]: /url \"not a reference\""]["\n" soft]["&ouml; not a character entity"]
+
+## spec 311 Backslash escapes
+#0 line=0 paragraph ["\\"]["emphasis" em]
+
+## spec 312 Backslash escapes
+#0 line=0 paragraph ["foo"]["\n" br]["bar"]
+
+## spec 313 Backslash escapes
+#0 line=0 paragraph ["\\[\\`" code]
+
+## spec 314 Backslash escapes
+#0 line=0 code language=nil "\\[\\]"
+
+## spec 315 Backslash escapes
+#0 line=0 code language=nil "\\[\\]"
+
+## spec 316 Backslash escapes
+#0 line=0 paragraph ["http://example.com?find=\\*" link=http://example.com?find=%5C*]
+
+## spec 317 Backslash escapes
+#0 line=0 paragraph ["<a href=\"/bar\\/)\">\n" blockhtml]
+
+## spec 318 Backslash escapes
+#0 line=0 paragraph ["foo" link=/bar* title="ti*tle"]
+
+## spec 319 Backslash escapes
+#0 line=0 paragraph ["foo" link=/bar* title="ti*tle"]
+
+## spec 320 Backslash escapes
+#0 line=0 code language=foo+bar "foo"
+
+## spec 321 Entity and numeric character references
+#0 line=0 paragraph ["  & © Æ Ď"]["\n" soft]["¾ ℋ ⅆ"]["\n" soft]["∲ ≧̸"]
+
+## spec 322 Entity and numeric character references
+#0 line=0 paragraph ["# Ӓ Ϡ �"]
+
+## spec 323 Entity and numeric character references
+#0 line=0 paragraph ["\" ആ ಫ"]
+
+## spec 324 Entity and numeric character references
+#0 line=0 paragraph ["&nbsp &x; &#; &#x;"]["\n" soft]["&#987654321;"]["\n" soft]["&#abcdef0;"]["\n" soft]["&ThisIsNotDefined; &hi?;"]
+
+## spec 325 Entity and numeric character references
+#0 line=0 paragraph ["&copy"]
+
+## spec 326 Entity and numeric character references
+#0 line=0 paragraph ["&MadeUpEntity;"]
+
+## spec 327 Entity and numeric character references
+#0 line=0 paragraph ["<a href=\"&ouml;&ouml;.html\">\n" blockhtml]
+
+## spec 328 Entity and numeric character references
+#0 line=0 paragraph ["foo" link=/f%C3%B6%C3%B6 title="föö"]
+
+## spec 329 Entity and numeric character references
+#0 line=0 paragraph ["foo" link=/f%C3%B6%C3%B6 title="föö"]
+
+## spec 330 Entity and numeric character references
+#0 line=0 code language=föö "foo"
+
+## spec 331 Entity and numeric character references
+#0 line=0 paragraph ["f&ouml;&ouml;" code]
+
+## spec 332 Entity and numeric character references
+#0 line=0 code language=nil "f&ouml;f&ouml;"
+
+## spec 333 Entity and numeric character references
+#0 line=0 paragraph ["*foo*"]["\n" soft]["foo" em]
+
+## spec 334 Entity and numeric character references
+#0 line=0 paragraph ["* foo"]
+#1 line=2 list ordered=false start=1
+  item checkbox=none
+    #2 line=2 paragraph ["foo"]
+
+## spec 335 Entity and numeric character references
+#0 line=0 paragraph ["foo\n\nbar"]
+
+## spec 336 Entity and numeric character references
+#0 line=0 paragraph ["\tfoo"]
+
+## spec 337 Entity and numeric character references
+#0 line=0 paragraph ["[a](url \"tit\")"]
+
+## spec 338 Code spans
+#0 line=0 paragraph ["foo" code]
+
+## spec 339 Code spans
+#0 line=0 paragraph ["foo ` bar" code]
+
+## spec 340 Code spans
+#0 line=0 paragraph ["``" code]
+
+## spec 341 Code spans
+#0 line=0 paragraph [" `` " code]
+
+## spec 342 Code spans
+#0 line=0 paragraph [" a" code]
+
+## spec 343 Code spans
+#0 line=0 paragraph [" b " code]
+
+## spec 344 Code spans
+#0 line=0 paragraph [" " code]["\n" soft]["  " code]
+
+## spec 345 Code spans
+#0 line=0 paragraph ["foo bar   baz" code]
+
+## spec 346 Code spans
+#0 line=0 paragraph ["foo " code]
+
+## spec 347 Code spans
+#0 line=0 paragraph ["foo   bar  baz" code]
+
+## spec 348 Code spans
+#0 line=0 paragraph ["foo\\" code]["bar`"]
+
+## spec 349 Code spans
+#0 line=0 paragraph ["foo`bar" code]
+
+## spec 350 Code spans
+#0 line=0 paragraph ["foo `` bar" code]
+
+## spec 351 Code spans
+#0 line=0 paragraph ["*foo"]["*" code]
+
+## spec 352 Code spans
+#0 line=0 paragraph ["[not a "]["link](/foo" code][")"]
+
+## spec 353 Code spans
+#0 line=0 paragraph ["<a href=\"" code]["\">`"]
+
+## spec 354 Code spans
+#0 line=0 paragraph ["<a href=\"`\">" html]["`"]
+
+## spec 355 Code spans
+#0 line=0 paragraph ["<http://foo.bar." code]["baz>`"]
+
+## spec 356 Code spans
+#0 line=0 paragraph ["http://foo.bar.`baz`"]
+
+## spec 357 Code spans
+#0 line=0 paragraph ["```foo``"]
+
+## spec 358 Code spans
+#0 line=0 paragraph ["`foo"]
+
+## spec 359 Code spans
+#0 line=0 paragraph ["`foo"]["bar" code]
+
+## spec 360 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" em]
+
+## spec 361 Emphasis and strong emphasis
+#0 line=0 paragraph ["a * foo bar*"]
+
+## spec 362 Emphasis and strong emphasis
+#0 line=0 paragraph ["a*\"foo\"*"]
+
+## spec 363 Emphasis and strong emphasis
+#0 line=0 paragraph ["* a *"]
+
+## spec 364 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo"]["bar" em]
+
+## spec 365 Emphasis and strong emphasis
+#0 line=0 paragraph ["5"]["6" em]["78"]
+
+## spec 366 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" em]
+
+## spec 367 Emphasis and strong emphasis
+#0 line=0 paragraph ["_ foo bar_"]
+
+## spec 368 Emphasis and strong emphasis
+#0 line=0 paragraph ["a_\"foo\"_"]
+
+## spec 369 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo_bar_"]
+
+## spec 370 Emphasis and strong emphasis
+#0 line=0 paragraph ["5_6_78"]
+
+## spec 371 Emphasis and strong emphasis
+#0 line=0 paragraph ["пристаням_стремятся_"]
+
+## spec 372 Emphasis and strong emphasis
+#0 line=0 paragraph ["aa_\"bb\"_cc"]
+
+## spec 373 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo-"]["(bar)" em]
+
+## spec 374 Emphasis and strong emphasis
+#0 line=0 paragraph ["_foo*"]
+
+## spec 375 Emphasis and strong emphasis
+#0 line=0 paragraph ["*foo bar *"]
+
+## spec 376 Emphasis and strong emphasis
+#0 line=0 paragraph ["*foo bar"]["\n" soft]["*"]
+
+## spec 377 Emphasis and strong emphasis
+#0 line=0 paragraph ["*(*foo)"]
+
+## spec 378 Emphasis and strong emphasis
+#0 line=0 paragraph ["(foo)" em]
+
+## spec 379 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["bar"]
+
+## spec 380 Emphasis and strong emphasis
+#0 line=0 paragraph ["_foo bar _"]
+
+## spec 381 Emphasis and strong emphasis
+#0 line=0 paragraph ["_(_foo)"]
+
+## spec 382 Emphasis and strong emphasis
+#0 line=0 paragraph ["(foo)" em]
+
+## spec 383 Emphasis and strong emphasis
+#0 line=0 paragraph ["_foo_bar"]
+
+## spec 384 Emphasis and strong emphasis
+#0 line=0 paragraph ["_пристаням_стремятся"]
+
+## spec 385 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo_bar_baz" em]
+
+## spec 386 Emphasis and strong emphasis
+#0 line=0 paragraph ["(bar)" em]["."]
+
+## spec 387 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" strong]
+
+## spec 388 Emphasis and strong emphasis
+#0 line=0 paragraph ["** foo bar**"]
+
+## spec 389 Emphasis and strong emphasis
+#0 line=0 paragraph ["a**\"foo\"**"]
+
+## spec 390 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo"]["bar" strong]
+
+## spec 391 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" strong]
+
+## spec 392 Emphasis and strong emphasis
+#0 line=0 paragraph ["__ foo bar__"]
+
+## spec 393 Emphasis and strong emphasis
+#0 line=0 paragraph ["__"]["\n" soft]["foo bar__"]
+
+## spec 394 Emphasis and strong emphasis
+#0 line=0 paragraph ["a__\"foo\"__"]
+
+## spec 395 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo__bar__"]
+
+## spec 396 Emphasis and strong emphasis
+#0 line=0 paragraph ["5__6__78"]
+
+## spec 397 Emphasis and strong emphasis
+#0 line=0 paragraph ["пристаням__стремятся__"]
+
+## spec 398 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo, bar, baz" strong]
+
+## spec 399 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo-"]["(bar)" strong]
+
+## spec 400 Emphasis and strong emphasis
+#0 line=0 paragraph ["**foo bar **"]
+
+## spec 401 Emphasis and strong emphasis
+#0 line=0 paragraph ["**(**foo)"]
+
+## spec 402 Emphasis and strong emphasis
+#0 line=0 paragraph ["(" em]["foo" em strong][")" em]
+
+## spec 403 Emphasis and strong emphasis
+#0 line=0 paragraph ["Gomphocarpus (" strong]["Gomphocarpus physocarpus" em strong][", syn." strong]["\n" strong soft]["Asclepias physocarpa" em strong][")" strong]
+
+## spec 404 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo \"" strong]["bar" em strong]["\" foo" strong]
+
+## spec 405 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]["bar"]
+
+## spec 406 Emphasis and strong emphasis
+#0 line=0 paragraph ["__foo bar __"]
+
+## spec 407 Emphasis and strong emphasis
+#0 line=0 paragraph ["__(__foo)"]
+
+## spec 408 Emphasis and strong emphasis
+#0 line=0 paragraph ["(" em]["foo" em strong][")" em]
+
+## spec 409 Emphasis and strong emphasis
+#0 line=0 paragraph ["__foo__bar"]
+
+## spec 410 Emphasis and strong emphasis
+#0 line=0 paragraph ["__пристаням__стремятся"]
+
+## spec 411 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo__bar__baz" strong]
+
+## spec 412 Emphasis and strong emphasis
+#0 line=0 paragraph ["(bar)" strong]["."]
+
+## spec 413 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar" em link=/url]
+
+## spec 414 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["\n" em soft]["bar" em]
+
+## spec 415 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar" em strong][" baz" em]
+
+## spec 416 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar baz" em]
+
+## spec 417 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" em]
+
+## spec 418 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" em]
+
+## spec 419 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar" em strong][" baz" em]
+
+## spec 420 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["bar" em strong]["baz" em]
+
+## spec 421 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo**bar" em]
+
+## spec 422 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em strong][" bar" em]
+
+## spec 423 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar" em strong]
+
+## spec 424 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["bar" em strong]
+
+## spec 425 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo"]["bar" em strong]["baz"]
+
+## spec 426 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo"]["bar" strong]["***baz"]
+
+## spec 427 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar baz bim" em strong][" bop" em]
+
+## spec 428 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar" em link=/url]
+
+## spec 429 Emphasis and strong emphasis
+#0 line=0 paragraph ["** is not an empty emphasis"]
+
+## spec 430 Emphasis and strong emphasis
+#0 line=0 paragraph ["**** is not an empty strong emphasis"]
+
+## spec 431 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " strong]["bar" strong link=/url]
+
+## spec 432 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]["\n" strong soft]["bar" strong]
+
+## spec 433 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " strong]["bar" em strong][" baz" strong]
+
+## spec 434 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar baz" strong]
+
+## spec 435 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" strong]
+
+## spec 436 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo bar" strong]
+
+## spec 437 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " strong]["bar" em strong][" baz" strong]
+
+## spec 438 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]["bar" em strong]["baz" strong]
+
+## spec 439 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em strong][" bar" strong]
+
+## spec 440 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " strong]["bar" em strong]
+
+## spec 441 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " strong]["bar baz" em strong]["\n" em strong soft]["bim" em strong][" bop" strong]
+
+## spec 442 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " strong]["bar" em strong link=/url]
+
+## spec 443 Emphasis and strong emphasis
+#0 line=0 paragraph ["__ is not an empty emphasis"]
+
+## spec 444 Emphasis and strong emphasis
+#0 line=0 paragraph ["____ is not an empty strong emphasis"]
+
+## spec 445 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo ***"]
+
+## spec 446 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["*" em]
+
+## spec 447 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["_" em]
+
+## spec 448 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo *****"]
+
+## spec 449 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["*" strong]
+
+## spec 450 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["_" strong]
+
+## spec 451 Emphasis and strong emphasis
+#0 line=0 paragraph ["*"]["foo" em]
+
+## spec 452 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["*"]
+
+## spec 453 Emphasis and strong emphasis
+#0 line=0 paragraph ["*"]["foo" strong]
+
+## spec 454 Emphasis and strong emphasis
+#0 line=0 paragraph ["***"]["foo" em]
+
+## spec 455 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]["*"]
+
+## spec 456 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["***"]
+
+## spec 457 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo ___"]
+
+## spec 458 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["_" em]
+
+## spec 459 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["*" em]
+
+## spec 460 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo _____"]
+
+## spec 461 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["_" strong]
+
+## spec 462 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo "]["*" strong]
+
+## spec 463 Emphasis and strong emphasis
+#0 line=0 paragraph ["_"]["foo" em]
+
+## spec 464 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["_"]
+
+## spec 465 Emphasis and strong emphasis
+#0 line=0 paragraph ["_"]["foo" strong]
+
+## spec 466 Emphasis and strong emphasis
+#0 line=0 paragraph ["___"]["foo" em]
+
+## spec 467 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]["_"]
+
+## spec 468 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]["___"]
+
+## spec 469 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]
+
+## spec 470 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]
+
+## spec 471 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]
+
+## spec 472 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em]
+
+## spec 473 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]
+
+## spec 474 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]
+
+## spec 475 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" strong]
+
+## spec 476 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em strong]
+
+## spec 477 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo" em strong]
+
+## spec 478 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo _bar" em][" baz_"]
+
+## spec 479 Emphasis and strong emphasis
+#0 line=0 paragraph ["foo " em]["bar *baz bim" em strong][" bam" em]
+
+## spec 480 Emphasis and strong emphasis
+#0 line=0 paragraph ["**foo "]["bar baz" strong]
+
+## spec 481 Emphasis and strong emphasis
+#0 line=0 paragraph ["*foo "]["bar baz" em]
+
+## spec 482 Emphasis and strong emphasis
+#0 line=0 paragraph ["*"]["bar*" link=/url]
+
+## spec 483 Emphasis and strong emphasis
+#0 line=0 paragraph ["_foo "]["bar_" link=/url]
+
+## spec 484 Emphasis and strong emphasis
+#0 line=0 paragraph ["*"]["<img src=\"foo\" title=\"*\"/>" html]
+
+## spec 485 Emphasis and strong emphasis
+#0 line=0 paragraph ["**"]["<a href=\"**\">" html]
+
+## spec 486 Emphasis and strong emphasis
+#0 line=0 paragraph ["__"]["<a href=\"__\">" html]
+
+## spec 487 Emphasis and strong emphasis
+#0 line=0 paragraph ["a " em]["*" em code]
+
+## spec 488 Emphasis and strong emphasis
+#0 line=0 paragraph ["a " em]["_" em code]
+
+## spec 489 Emphasis and strong emphasis
+#0 line=0 paragraph ["**a"]["http://foo.bar/?q=**" link=http://foo.bar/?q=**]
+
+## spec 490 Emphasis and strong emphasis
+#0 line=0 paragraph ["__a"]["http://foo.bar/?q=__" link=http://foo.bar/?q=__]
+
+## spec 491 Strikethrough (extension)
+#0 line=0 paragraph ["Hi" strike][" Hello, world!"]
+
+## spec 492 Strikethrough (extension)
+#0 line=0 paragraph ["This ~~has a"]
+#1 line=2 paragraph ["new paragraph~~."]
+
+## spec 493 Links
+#0 line=0 paragraph ["link" link=/uri title="title"]
+
+## spec 494 Links
+#0 line=0 paragraph ["link" link=/uri]
+
+## spec 495 Links
+#0 line=0 paragraph ["link"]
+
+## spec 496 Links
+#0 line=0 paragraph ["link"]
+
+## spec 497 Links
+#0 line=0 paragraph ["[link](/my uri)"]
+
+## spec 498 Links
+#0 line=0 paragraph ["link" link=/my%20uri]
+
+## spec 499 Links
+#0 line=0 paragraph ["[link](foo"]["\n" soft]["bar)"]
+
+## spec 500 Links
+#0 line=0 paragraph ["[link]("]["<foo\nbar>" html][")"]
+
+## spec 501 Links
+#0 line=0 paragraph ["a" link=b)c]
+
+## spec 502 Links
+#0 line=0 paragraph ["[link](<foo>)"]
+
+## spec 503 Links
+#0 line=0 paragraph ["[a](<b)c"]["\n" soft]["[a](<b)c>"]["\n" soft]["[a]("]["<b>" html]["c)"]
+
+## spec 504 Links
+#0 line=0 paragraph ["link" link=(foo)]
+
+## spec 505 Links
+#0 line=0 paragraph ["link" link=foo(and(bar))]
+
+## spec 506 Links
+#0 line=0 paragraph ["link" link=foo(and(bar)]
+
+## spec 507 Links
+#0 line=0 paragraph ["link" link=foo(and(bar)]
+
+## spec 508 Links
+#0 line=0 paragraph ["link" link=./foo):]
+
+## spec 509 Links
+#0 line=0 paragraph ["link" link=#fragment]
+#1 line=2 paragraph ["link" link=http://example.com#fragment]
+#2 line=4 paragraph ["link" link=http://example.com?foo=3#frag]
+
+## spec 510 Links
+#0 line=0 paragraph ["link" link=foo%5Cbar]
+
+## spec 511 Links
+#0 line=0 paragraph ["link" link=foo%20b%C3%A4]
+
+## spec 512 Links
+#0 line=0 paragraph ["link" link=%22title%22]
+
+## spec 513 Links
+#0 line=0 paragraph ["link" link=/url title="title"]["\n" soft]["link" link=/url title="title"]["\n" soft]["link" link=/url title="title"]
+
+## spec 514 Links
+#0 line=0 paragraph ["link" link=/url title="title \"\""]
+
+## spec 515 Links
+#0 line=0 paragraph ["link" link=/url%C2%A0%22title%22]
+
+## spec 516 Links
+#0 line=0 paragraph ["[link](/url \"title \"and\" title\")"]
+
+## spec 517 Links
+#0 line=0 paragraph ["link" link=/url title="title \"and\" title"]
+
+## spec 518 Links
+#0 line=0 paragraph ["link" link=/uri title="title"]
+
+## spec 519 Links
+#0 line=0 paragraph ["[link] (/uri)"]
+
+## spec 520 Links
+#0 line=0 paragraph ["link [foo [bar]]" link=/uri]
+
+## spec 521 Links
+#0 line=0 paragraph ["[link] bar](/uri)"]
+
+## spec 522 Links
+#0 line=0 paragraph ["[link "]["bar" link=/uri]
+
+## spec 523 Links
+#0 line=0 paragraph ["link [bar" link=/uri]
+
+## spec 524 Links
+#0 line=0 paragraph ["link " link=/uri]["foo " em link=/uri]["bar" em strong link=/uri][" " em link=/uri]["#" em code link=/uri]
+
+## spec 525 Links
+#0 line=0 paragraph ["moon" link=/uri]
+
+## spec 526 Links
+#0 line=0 paragraph ["[foo "]["bar" link=/uri]["](/uri)"]
+
+## spec 527 Links
+#0 line=0 paragraph ["[foo "]["[bar " em]["baz" em link=/uri]["](/uri)" em]["](/uri)"]
+
+## spec 528 Links
+#0 line=0 image url=uri3 alt="[foo](uri2)"
+
+## spec 529 Links
+#0 line=0 paragraph ["*"]["foo*" link=/uri]
+
+## spec 530 Links
+#0 line=0 paragraph ["foo *bar" link=baz*]
+
+## spec 531 Links
+#0 line=0 paragraph ["foo [bar" em][" baz]"]
+
+## spec 532 Links
+#0 line=0 paragraph ["[foo "]["<bar attr=\"](baz)\">" html]
+
+## spec 533 Links
+#0 line=0 paragraph ["[foo"]["](/uri)" code]
+
+## spec 534 Links
+#0 line=0 paragraph ["[foo"]["http://example.com/?search=](uri)" link=http://example.com/?search=%5D(uri)]
+
+## spec 535 Links
+#0 line=0 paragraph ["foo" link=/url title="title"]
+
+## spec 536 Links
+#0 line=0 paragraph ["link [foo [bar]]" link=/uri]
+
+## spec 537 Links
+#0 line=0 paragraph ["link [bar" link=/uri]
+
+## spec 538 Links
+#0 line=0 paragraph ["link " link=/uri]["foo " em link=/uri]["bar" em strong link=/uri][" " em link=/uri]["#" em code link=/uri]
+
+## spec 539 Links
+#0 line=0 paragraph ["moon" link=/uri]
+
+## spec 540 Links
+#0 line=0 paragraph ["[foo "]["bar" link=/uri]["]"]["ref" link=/uri]
+
+## spec 541 Links
+#0 line=0 paragraph ["[foo "]["bar " em]["baz" em link=/uri]["]"]["ref" link=/uri]
+
+## spec 542 Links
+#0 line=0 paragraph ["*"]["foo*" link=/uri]
+
+## spec 543 Links
+#0 line=0 paragraph ["foo *bar" link=/uri]
+
+## spec 544 Links
+#0 line=0 paragraph ["[foo "]["<bar attr=\"][ref]\">" html]
+
+## spec 545 Links
+#0 line=0 paragraph ["[foo"]["][ref]" code]
+
+## spec 546 Links
+#0 line=0 paragraph ["[foo"]["http://example.com/?search=][ref]" link=http://example.com/?search=%5D%5Bref%5D]
+
+## spec 547 Links
+#0 line=0 paragraph ["foo" link=/url title="title"]
+
+## spec 548 Links
+#0 line=0 paragraph ["Толпой" link=/url][" is a Russian word."]
+
+## spec 549 Links
+#0 line=3 paragraph ["Baz" link=/url]
+
+## spec 550 Links
+#0 line=0 paragraph ["[foo] "]["bar" link=/url title="title"]
+
+## spec 551 Links
+#0 line=0 paragraph ["[foo]"]["\n" soft]["bar" link=/url title="title"]
+
+## spec 552 Links
+#0 line=4 paragraph ["bar" link=/url1]
+
+## spec 553 Links
+#0 line=0 paragraph ["[bar][foo!]"]
+
+## spec 554 Links
+#0 line=0 paragraph ["[foo][ref[]"]
+#1 line=2 paragraph ["[ref[]: /uri"]
+
+## spec 555 Links
+#0 line=0 paragraph ["[foo][ref[bar]]"]
+#1 line=2 paragraph ["[ref[bar]]: /uri"]
+
+## spec 556 Links
+#0 line=0 paragraph ["[[[foo]]]"]
+#1 line=2 paragraph ["[[[foo]]]: /url"]
+
+## spec 557 Links
+#0 line=0 paragraph ["foo" link=/uri]
+
+## spec 558 Links
+#0 line=2 paragraph ["bar\\" link=/uri]
+
+## spec 559 Links
+#0 line=0 paragraph ["[]"]
+#1 line=2 paragraph ["[]: /uri"]
+
+## spec 560 Links
+#0 line=0 paragraph ["["]["\n" soft]["]"]
+#1 line=3 paragraph ["["]["\n" soft]["]: /uri"]
+
+## spec 561 Links
+#0 line=0 paragraph ["foo" link=/url title="title"]
+
+## spec 562 Links
+#0 line=0 paragraph ["foo" em link=/url title="title"][" bar" link=/url title="title"]
+
+## spec 563 Links
+#0 line=0 paragraph ["Foo" link=/url title="title"]
+
+## spec 564 Links
+#0 line=0 paragraph ["foo" link=/url title="title"]["\n" soft]["[]"]
+
+## spec 565 Links
+#0 line=0 paragraph ["foo" link=/url title="title"]
+
+## spec 566 Links
+#0 line=0 paragraph ["foo" em link=/url title="title"][" bar" link=/url title="title"]
+
+## spec 567 Links
+#0 line=0 paragraph ["["]["foo" em link=/url title="title"][" bar" link=/url title="title"]["]"]
+
+## spec 568 Links
+#0 line=0 paragraph ["[[bar "]["foo" link=/url]
+
+## spec 569 Links
+#0 line=0 paragraph ["Foo" link=/url title="title"]
+
+## spec 570 Links
+#0 line=0 paragraph ["foo" link=/url][" bar"]
+
+## spec 571 Links
+#0 line=0 paragraph ["[foo]"]
+
+## spec 572 Links
+#0 line=2 paragraph ["*"]["foo*" link=/url]
+
+## spec 573 Links
+#0 line=0 paragraph ["foo" link=/url2]
+
+## spec 574 Links
+#0 line=0 paragraph ["foo" link=/url1]
+
+## spec 575 Links
+#0 line=0 paragraph ["foo"]
+
+## spec 576 Links
+#0 line=0 paragraph ["foo" link=/url1]["(not a link)"]
+
+## spec 577 Links
+#0 line=0 paragraph ["[foo]"]["bar" link=/url]
+
+## spec 578 Links
+#0 line=0 paragraph ["foo" link=/url2]["baz" link=/url1]
+
+## spec 579 Links
+#0 line=0 paragraph ["[foo]"]["bar" link=/url1]
+
+## spec 580 Images
+#0 line=0 image url=/url alt="foo"
+
+## spec 581 Images
+#0 line=0 image url=train.jpg alt="foo bar"
+
+## spec 582 Images
+#0 line=0 image url=/url2 alt="foo bar"
+
+## spec 583 Images
+#0 line=0 image url=/url2 alt="foo bar"
+
+## spec 584 Images
+#0 line=0 image url=train.jpg alt="foo bar"
+
+## spec 585 Images
+#0 line=0 image url=train.jpg alt="foo bar"
+
+## spec 586 Images
+#0 line=0 image url=train.jpg alt="foo"
+
+## spec 587 Images
+#0 line=0 paragraph ["My "]["foo bar" img=/path/to/train.jpg title="title"]
+
+## spec 588 Images
+#0 line=0 image url=url alt="foo"
+
+## spec 589 Images
+#0 line=0 image url=/url alt=""
+
+## spec 590 Images
+#0 line=0 image url=/url alt="foo"
+
+## spec 591 Images
+#0 line=0 image url=/url alt="foo"
+
+## spec 592 Images
+#0 line=0 image url=/url alt="foo"
+
+## spec 593 Images
+#0 line=0 image url=/url alt="foo bar"
+
+## spec 594 Images
+#0 line=0 image url=/url alt="Foo"
+
+## spec 595 Images
+#0 line=0 paragraph ["foo" img=/url title="title"]["\n" soft]["[]"]
+
+## spec 596 Images
+#0 line=0 image url=/url alt="foo"
+
+## spec 597 Images
+#0 line=0 image url=/url alt="foo bar"
+
+## spec 598 Images
+#0 line=0 paragraph ["![[foo]]"]
+#1 line=2 paragraph ["[[foo]]: /url \"title\""]
+
+## spec 599 Images
+#0 line=0 image url=/url alt="Foo"
+
+## spec 600 Images
+#0 line=0 paragraph ["![foo]"]
+
+## spec 601 Images
+#0 line=0 paragraph ["!"]["foo" link=/url title="title"]
+
+## spec 602 Autolinks
+#0 line=0 paragraph ["http://foo.bar.baz" link=http://foo.bar.baz]
+
+## spec 603 Autolinks
+#0 line=0 paragraph ["http://foo.bar.baz/test?q=hello&id=22&boolean" link=http://foo.bar.baz/test?q=hello&id=22&boolean]
+
+## spec 604 Autolinks
+#0 line=0 paragraph ["irc://foo.bar:2233/baz" link=irc://foo.bar:2233/baz]
+
+## spec 605 Autolinks
+#0 line=0 paragraph ["MAILTO:FOO@BAR.BAZ" link=MAILTO:FOO@BAR.BAZ]
+
+## spec 606 Autolinks
+#0 line=0 paragraph ["a+b+c:d" link=a+b+c:d]
+
+## spec 607 Autolinks
+#0 line=0 paragraph ["made-up-scheme://foo,bar" link=made-up-scheme://foo,bar]
+
+## spec 608 Autolinks
+#0 line=0 paragraph ["http://../" link=http://../]
+
+## spec 609 Autolinks
+#0 line=0 paragraph ["localhost:5001/foo" link=localhost:5001/foo]
+
+## spec 610 Autolinks
+#0 line=0 paragraph ["<"]["http://foo.bar/baz" link=http://foo.bar/baz][" bim>"]
+
+## spec 611 Autolinks
+#0 line=0 paragraph ["http://example.com/\\[\\" link=http://example.com/%5C%5B%5C]
+
+## spec 612 Autolinks
+#0 line=0 paragraph ["foo@bar.example.com" link=mailto:foo@bar.example.com]
+
+## spec 613 Autolinks
+#0 line=0 paragraph ["foo+special@Bar.baz-bar0.com" link=mailto:foo+special@Bar.baz-bar0.com]
+
+## spec 614 Autolinks
+#0 line=0 paragraph ["<"]["foo+@bar.example.com" link=mailto:foo+@bar.example.com][">"]
+
+## spec 615 Autolinks
+#0 line=0 paragraph ["<>"]
+
+## spec 616 Autolinks
+#0 line=0 paragraph ["< "]["http://foo.bar" link=http://foo.bar][" >"]
+
+## spec 617 Autolinks
+#0 line=0 paragraph ["<m:abc>"]
+
+## spec 618 Autolinks
+#0 line=0 paragraph ["<foo.bar.baz>"]
+
+## spec 619 Autolinks
+#0 line=0 paragraph ["http://example.com" link=http://example.com]
+
+## spec 620 Autolinks
+#0 line=0 paragraph ["foo@bar.example.com" link=mailto:foo@bar.example.com]
+
+## spec 621 Autolinks (extension)
+#0 line=0 paragraph ["www.commonmark.org" link=http://www.commonmark.org]
+
+## spec 622 Autolinks (extension)
+#0 line=0 paragraph ["Visit "]["www.commonmark.org/help" link=http://www.commonmark.org/help][" for more information."]
+
+## spec 623 Autolinks (extension)
+#0 line=0 paragraph ["Visit "]["www.commonmark.org" link=http://www.commonmark.org]["."]
+#1 line=2 paragraph ["Visit "]["www.commonmark.org/a.b" link=http://www.commonmark.org/a.b]["."]
+
+## spec 624 Autolinks (extension)
+#0 line=0 paragraph ["www.google.com/search?q=Markup+(business)" link=http://www.google.com/search?q=Markup+(business)]
+#1 line=2 paragraph ["www.google.com/search?q=Markup+(business)" link=http://www.google.com/search?q=Markup+(business)]["))"]
+#2 line=4 paragraph ["("]["www.google.com/search?q=Markup+(business)" link=http://www.google.com/search?q=Markup+(business)][")"]
+#3 line=6 paragraph ["("]["www.google.com/search?q=Markup+(business)" link=http://www.google.com/search?q=Markup+(business)]
+
+## spec 625 Autolinks (extension)
+#0 line=0 paragraph ["www.google.com/search?q=(business))+ok" link=http://www.google.com/search?q=(business))+ok]
+
+## spec 626 Autolinks (extension)
+#0 line=0 paragraph ["www.google.com/search?q=commonmark&hl=en" link=http://www.google.com/search?q=commonmark&hl=en]
+#1 line=2 paragraph ["www.google.com/search?q=commonmark" link=http://www.google.com/search?q=commonmark]["&hl;"]
+
+## spec 627 Autolinks (extension)
+#0 line=0 paragraph ["www.commonmark.org/he" link=http://www.commonmark.org/he]["<lp"]
+
+## spec 628 Autolinks (extension)
+#0 line=0 paragraph ["http://commonmark.org" link=http://commonmark.org]
+#1 line=2 paragraph ["(Visit "]["https://encrypted.google.com/search?q=Markup+(business)" link=https://encrypted.google.com/search?q=Markup+(business)][")"]
+#2 line=4 paragraph ["Anonymous FTP is available at "]["ftp://foo.bar.baz" link=ftp://foo.bar.baz]["."]
+
+## spec 629 Autolinks (extension)
+#0 line=0 paragraph ["foo@bar.baz" link=mailto:foo@bar.baz]
+
+## spec 630 Autolinks (extension)
+#0 line=0 paragraph ["hello@mail+xyz.example isn\'t valid, but "]["hello+xyz@mail.example" link=mailto:hello+xyz@mail.example][" is."]
+
+## spec 631 Autolinks (extension)
+#0 line=0 paragraph ["a.b-c_d@a.b" link=mailto:a.b-c_d@a.b]
+#1 line=2 paragraph ["a.b-c_d@a.b" link=mailto:a.b-c_d@a.b]["."]
+#2 line=4 paragraph ["a.b-c_d@a.b-"]
+#3 line=6 paragraph ["a.b-c_d@a.b_"]
+
+## spec 632 Raw HTML
+#0 line=0 paragraph ["<a><bab><c2c>" html]
+
+## spec 633 Raw HTML
+#0 line=0 paragraph ["<a/><b2/>" html]
+
+## spec 634 Raw HTML
+#0 line=0 paragraph ["<a  /><b2\ndata=\"foo\" >" html]
+
+## spec 635 Raw HTML
+#0 line=0 paragraph ["<a foo=\"bar\" bam = \'baz <em>\"</em>\'\n_boolean zoop:33=zoop:33 />" html]
+
+## spec 636 Raw HTML
+#0 line=0 paragraph ["Foo "]["<responsive-image src=\"foo.jpg\" />" html]
+
+## spec 637 Raw HTML
+#0 line=0 paragraph ["<33> <__>"]
+
+## spec 638 Raw HTML
+#0 line=0 paragraph ["<a h*#ref=\"hi\">"]
+
+## spec 639 Raw HTML
+#0 line=0 paragraph ["<a href=\"hi\'> <a href=hi\'>"]
+
+## spec 640 Raw HTML
+#0 line=0 paragraph ["< a><"]["\n" soft]["foo><bar/ >"]["\n" soft]["<foo bar=baz"]["\n" soft]["bim!bop />"]
+
+## spec 641 Raw HTML
+#0 line=0 paragraph ["<a href=\'bar\'title=title>"]
+
+## spec 642 Raw HTML
+#0 line=0 paragraph ["</a></foo >" html]
+
+## spec 643 Raw HTML
+#0 line=0 paragraph ["</a href=\"foo\">"]
+
+## spec 644 Raw HTML
+#0 line=0 paragraph ["foo "]["<!-- this is a --\ncomment - with hyphens -->" html]
+
+## spec 645 Raw HTML
+#0 line=0 paragraph ["foo "]["<!-->" html][" foo -->"]
+#1 line=2 paragraph ["foo "]["<!--->" html][" foo -->"]
+
+## spec 646 Raw HTML
+#0 line=0 paragraph ["foo "]["<?php echo $a; ?>" html]
+
+## spec 647 Raw HTML
+#0 line=0 paragraph ["foo "]["<!ELEMENT br EMPTY>" html]
+
+## spec 648 Raw HTML
+#0 line=0 paragraph ["foo "]["<![CDATA[>&<]]>" html]
+
+## spec 649 Raw HTML
+#0 line=0 paragraph ["foo "]["<a href=\"&ouml;\">" html]
+
+## spec 650 Raw HTML
+#0 line=0 paragraph ["foo "]["<a href=\"\\*\">" html]
+
+## spec 651 Raw HTML
+#0 line=0 paragraph ["<a href=\"\"\">"]
+
+## spec 652 Disallowed Raw HTML (extension)
+#0 line=0 paragraph ["<strong>" html][" "]["<title>" html][" "]["<style>" html][" "]["<em>" html]
+#1 line=2 paragraph ["<blockquote>\n  <xmp> is disallowed.  <XMP> is also disallowed.\n</blockquote>\n" blockhtml]
+
+## spec 653 Hard line breaks
+#0 line=0 paragraph ["foo"]["\n" br]["baz"]
+
+## spec 654 Hard line breaks
+#0 line=0 paragraph ["foo"]["\n" br]["baz"]
+
+## spec 655 Hard line breaks
+#0 line=0 paragraph ["foo"]["\n" br]["baz"]
+
+## spec 656 Hard line breaks
+#0 line=0 paragraph ["foo"]["\n" br]["bar"]
+
+## spec 657 Hard line breaks
+#0 line=0 paragraph ["foo"]["\n" br]["bar"]
+
+## spec 658 Hard line breaks
+#0 line=0 paragraph ["foo" em]["\n" em br]["bar" em]
+
+## spec 659 Hard line breaks
+#0 line=0 paragraph ["foo" em]["\n" em br]["bar" em]
+
+## spec 660 Hard line breaks
+#0 line=0 paragraph ["code   span" code]
+
+## spec 661 Hard line breaks
+#0 line=0 paragraph ["code\\ span" code]
+
+## spec 662 Hard line breaks
+#0 line=0 paragraph ["<a href=\"foo  \nbar\">" html]
+
+## spec 663 Hard line breaks
+#0 line=0 paragraph ["<a href=\"foo\\\nbar\">" html]
+
+## spec 664 Hard line breaks
+#0 line=0 paragraph ["foo\\"]
+
+## spec 665 Hard line breaks
+#0 line=0 paragraph ["foo"]
+
+## spec 666 Hard line breaks
+#0 line=0 heading3 ["foo\\"]
+
+## spec 667 Hard line breaks
+#0 line=0 heading3 ["foo"]
+
+## spec 668 Soft line breaks
+#0 line=0 paragraph ["foo"]["\n" soft]["baz"]
+
+## spec 669 Soft line breaks
+#0 line=0 paragraph ["foo"]["\n" soft]["baz"]
+
+## spec 670 Textual content
+#0 line=0 paragraph ["hello $.;\'there"]
+
+## spec 671 Textual content
+#0 line=0 paragraph ["Foo χρῆν"]
+
+## spec 672 Textual content
+#0 line=0 paragraph ["Multiple     spaces"]
+
+## extensions 1 Tables
+#0 line=0 table columns=left,left
+  header ["abc"] | ["def"]
+  row ["ghi"] | ["jkl"]
+  row ["mno"] | ["pqr"]
+
+## extensions 2 Tables
+#0 line=0 paragraph ["Hello!"]
+#1 line=2 table columns=left,left
+  header ["abc" em] | ["セン"]
+  row ["1. Block elements inside cells don\'t work."] | 
+  row ["But "]["inline elements do" em strong]["."] | ["x"]
+#2 line=7 paragraph ["Hi!"]
+
+## extensions 3 Tables
+#0 line=0 paragraph ["| Not enough table | to be considered table |"]
+#1 line=2 paragraph ["| Not enough table | to be considered table |"]["\n" soft]["| Not enough table | to be considered table |"]
+#2 line=5 table columns=left,left
+  header ["Just enough table"] | ["to be considered table"]
+#3 line=8 paragraph ["| ---- | --- |"]
+#4 line=10 table columns=left
+  header ["x"]
+#5 line=13 table columns=left
+  header ["xyz"]
+
+## extensions 4 Tables
+#0 line=0 table columns=left,left
+  header ["abc"] | ["def"]
+  row ["xyz"] | ["ghi"]
+
+## extensions 5 Tables
+#0 line=0 paragraph ["Hello!"]
+#1 line=2 table columns=left,left
+  header ["abc" em] | ["セン"]
+  row ["this row has a space at the end"] | 
+  row ["But "]["inline elements do" em strong]["."] | ["x"]
+#2 line=7 paragraph ["Hi!"]
+
+## extensions 6 Tables
+#0 line=0 table columns=left,left,center,left,right
+  header ["aaa"] | ["bbb"] | ["ccc"] | ["ddd"] | ["eee"]
+  row ["fff"] | ["ggg"] | ["hhh"] | ["iii"] | ["jjj"]
+
+## extensions 7 Table cell count mismatches
+#0 line=0 paragraph ["| a | b | c |"]["\n" soft]["| --- | --- |"]["\n" soft]["| this | isn\'t | okay |"]
+
+## extensions 8 Table cell count mismatches
+#0 line=0 table columns=left,left,left
+  header ["a"] | ["b"] | ["c"]
+  row ["x"] |  | 
+  row ["a"] | ["b"] | 
+  row ["1"] | ["2"] | ["3"]
+
+## extensions 9 Embedded pipes
+#0 line=0 table columns=left,left
+  header ["a"] | ["b"]
+  row ["Escaped pipes are |okay|."] | ["Like | this."]
+  row ["Within "]["|code| is okay" code][" too."] | 
+  row ["c|" em strong code][" | complex"] | 
+  row ["don\'t "]["_reparse_" strong] | 
+
+## extensions 10 Oddly-formatted markers
+#0 line=0 table columns=left
+  header ["a"]
+
+## extensions 11 Escaping
+#0 line=0 table columns=left,left
+  header ["a"] | ["b"]
+  row ["\\"] | ["\\\\" code]
+  row ["\\\\"] | ["\\\\\\\\" code]
+  row ["_"] | ["\\_" code]
+  row ["|"] | ["|" code]
+  row ["\\a"] | ["\\a" code]
+#1 line=8 paragraph ["\\ "]["\\\\" code]
+#2 line=10 paragraph ["\\\\ "]["\\\\\\\\" code]
+#3 line=12 paragraph ["_ "]["\\_" code]
+#4 line=14 paragraph ["| "]["\\|" code]
+#5 line=16 paragraph ["\\a "]["\\a" code]
+
+## extensions 12 Embedded HTML
+#0 line=0 table columns=left
+  header ["a"]
+  row ["hello" strong]
+  row ["ok "]["<br>" html][" sure"]
+
+## extensions 13 Reference-style links
+#0 line=0 paragraph ["Here\'s a link to "]["Freedom Planet 2" link=http://www.freedomplanet2.com/]["."]
+#1 line=2 table columns=left
+  header ["Here\'s a link to "]["Freedom Planet 2" link=http://www.freedomplanet2.com/][" in a table header."]
+  row ["Here\'s a link to "]["Freedom Planet 2" link=http://www.freedomplanet2.com/][" in a table row."]
+
+## extensions 14 Sequential cells
+#0 line=0 table columns=left,left,left
+  header ["a"] | ["b"] | ["c"]
+  row ["d"] |  | ["e"]
+
+## extensions 15 Interaction with emphasis
+#0 line=0 table columns=left,left
+  header ["a"] | ["b"]
+  row ["(a)" em strong] | 
+
+## extensions 16 a table can be recognised when separated from a paragraph of text without an empty line
+#0 line=0 paragraph ["123"]["\n" soft]["456"]
+#1 line=0 table columns=left,left
+  header ["a"] | ["b"]
+  row ["d"] | ["e"]
+
+## extensions 17 Strikethroughs
+#0 line=0 paragraph ["A proper "]["strikethrough" strike]["."]
+
+## extensions 18 Strikethroughs
+#0 line=0 paragraph ["These are ~not strikethroughs."]
+#1 line=2 paragraph ["No, they are not~"]
+#2 line=4 paragraph ["This "]["is ~ legit" strike][" isn\'t ~ legit."]
+#3 line=6 paragraph ["This is not ~~~~~one~~~~~ huge strikethrough."]
+#4 line=8 paragraph ["one" strike][" "]["two" strike][" ~~~three~~~"]
+#5 line=10 paragraph ["No ~mismatch~~"]
+
+## extensions 19 Autolinks
+#0 line=0 paragraph [": "]["http://google.com" link=http://google.com][" "]["https://google.com" link=https://google.com]
+#1 line=2 paragraph ["http://google.com/å" link=http://google.com/%C3%A5][" "]["http://google.com/å" link=http://google.com/%C3%A5]
+#2 line=4 paragraph ["scyther@pokemon.com" link=mailto:scyther@pokemon.com]
+#3 line=6 paragraph ["scy.the_rbe-edr+ill@pokemon.com" link=mailto:scy.the_rbe-edr+ill@pokemon.com]
+#4 line=8 paragraph ["scyther@pokemon.com" link=mailto:scyther@pokemon.com]["."]
+#5 line=10 paragraph ["scyther@pokemon.com" link=mailto:scyther@pokemon.com]["/"]
+#6 line=12 paragraph ["scyther@pokemon.com" link=mailto:scyther@pokemon.com]["/"]["beedrill@pokemon.com" link=mailto:beedrill@pokemon.com]
+#7 line=14 paragraph ["mailto:scyther@pokemon.com" link=mailto:scyther@pokemon.com]
+#8 line=16 paragraph ["This is a "]["mailto:scyther@pokemon.com" link=mailto:scyther@pokemon.com]
+#9 line=18 paragraph ["mailto:scyther@pokemon.com" link=mailto:scyther@pokemon.com]["."]
+#10 line=20 paragraph ["mmmmailto:"]["scyther@pokemon.com" link=mailto:scyther@pokemon.com]
+#11 line=22 paragraph ["mailto:scyther@pokemon.com" link=mailto:scyther@pokemon.com]["/"]
+#12 line=24 paragraph ["mailto:scyther@pokemon.com" link=mailto:scyther@pokemon.com]["/message"]
+#13 line=26 paragraph ["mailto:scyther@pokemon.com" link=mailto:scyther@pokemon.com]["/"]["mailto:beedrill@pokemon.com" link=mailto:beedrill@pokemon.com]
+#14 line=28 paragraph ["xmpp:scyther@pokemon.com" link=xmpp:scyther@pokemon.com]
+#15 line=30 paragraph ["xmpp:scyther@pokemon.com" link=xmpp:scyther@pokemon.com]["."]
+#16 line=32 paragraph ["xmpp:scyther@pokemon.com/message" link=xmpp:scyther@pokemon.com/message]
+#17 line=34 paragraph ["xmpp:scyther@pokemon.com/message" link=xmpp:scyther@pokemon.com/message]["."]
+#18 line=36 paragraph ["Email me at:"]["scyther@pokemon.com" link=mailto:scyther@pokemon.com]
+#19 line=38 paragraph ["www.github.com" link=http://www.github.com][" "]["www.github.com/á" link=http://www.github.com/%C3%A1]
+#20 line=40 paragraph ["www.google.com/a_b" link=http://www.google.com/a_b]
+#21 line=42 paragraph ["Underscores not allowed in host name www.xxx.yyy._zzz"]
+#22 line=44 paragraph ["Underscores not allowed in host name www.xxx._yyy.zzz"]
+#23 line=46 paragraph ["Underscores allowed in domain name "]["www._xxx.yyy.zzz" link=http://www._xxx.yyy.zzz]
+#24 line=48 paragraph ["Autolink and " strong]["http://inlines" strong link=http://inlines]
+#25 line=50 image url=http://inline.com/image alt="http://inline.com/image"
+#26 line=52 paragraph ["a.w@b.c" link=mailto:a.w@b.c]
+#27 line=54 paragraph ["Full stop outside parens shouldn\'t be included "]["http://google.com/ok" link=http://google.com/ok]["."]
+#28 line=56 paragraph ["(Full stop inside parens shouldn\'t be included "]["http://google.com/ok" link=http://google.com/ok][".)"]
+#29 line=58 paragraph ["\""]["http://google.com" link=http://google.com]["\""]
+#30 line=60 paragraph ["\'"]["http://google.com" link=http://google.com]["\'"]
+#31 line=62 paragraph ["http://🍄.ga/" link=http://xn--ei8h.ga/][" "]["http://x🍄.ga/" link=http://xn--x-jq2s.ga/]
+
+## extensions 20 Autolinks
+#0 line=0 paragraph ["This shouldn\'t crash everything: ("]["A" em]["@_.A"]
+
+## extensions 21 Autolinks
+#0 line=0 paragraph ["These should not link:"]
+#1 line=2 list ordered=false start=1
+  item checkbox=none
+    #2 line=2 paragraph ["@a.b.c@. x"]
+  item checkbox=none
+    #3 line=3 paragraph ["n@.  b"]
+
+## extensions 22 HTML tag filter
+#0 line=0 paragraph ["This is "]["<xmp>" html][" not okay, but "]["this" strong][" "]["is" strong]["."]
+#1 line=2 paragraph ["<p>This is <xmp> not okay, but **this** <strong>is</strong>.</p>\n" blockhtml]
+#2 line=4 paragraph ["Nope, I won\'t have "]["<textarea>" html]["."]
+#3 line=6 paragraph ["<p>No <textarea> here either.</p>\n" blockhtml]
+#4 line=8 paragraph ["<p>This <random /> <thing> is okay</thing> though.</p>\n" blockhtml]
+#5 line=10 paragraph ["Yep, "]["<totally>" html]["okay"]["</totally>" html]["."]
+#6 line=12 paragraph ["<!-- HTML comments are okay, though. -->\n" blockhtml]
+#7 line=13 paragraph ["<!- But we\'re strict. ->"]["\n" soft]["<! No nonsense. >"]
+#8 line=15 paragraph ["<!-- Leave multiline comments the heck alone, though, okay?\nEven with {\"x\":\"y\"} or 1 > 2 or whatever. Even **markdown**.\n-->\n" blockhtml]
+#9 line=18 paragraph ["<!--- Support everything CommonMark\'s parser does. -->\n" blockhtml]
+#10 line=19 paragraph ["<!---->\n" blockhtml]
+#11 line=20 paragraph ["<!--thistoo-->\n" blockhtml]
+
+## extensions 23 Footnotes
+#0 line=0 paragraph ["This is some text![^1]. Other text.[^footnote]."]
+#1 line=2 paragraph ["Here\'s a thing[^other-note]."]
+#2 line=4 paragraph ["And another thing[^codeblock-note]."]
+#3 line=6 paragraph ["This doesn\'t have a referent[^nope]."]
+#4 line=9 paragraph ["[^other-note]:       no code block here (spaces are stripped away)"]
+#5 line=11 paragraph ["[^codeblock-note]:"]["\n" soft]["this is now a code block (8 spaces indentation)"]
+#6 line=14 paragraph ["[^1]: Some "]["bolded" em][" footnote definition."]
+#7 line=16 paragraph ["Hi!"]
+#8 line=18 paragraph ["[^footnote]:"]["\n" soft]["> Blockquotes can be in a footnote."]
+#9 line=21 code language=nil "    as well as code blocks\n\nor, naturally, simple paragraphs."
+#10 line=25 paragraph ["[^unused]: This is unused."]
+
+## extensions 24 When a footnote is used multiple times, we insert multiple backrefs.
+#0 line=0 paragraph ["This is some text. It has a footnote[^a-footnote]."]
+#1 line=2 paragraph ["This footnote is referenced[^a-footnote] multiple times, in lots of different places.[^a-footnote]"]
+#2 line=4 paragraph ["[^a-footnote]: This footnote definition should have three backrefs."]
+
+## extensions 25 Footnote reference labels are href escaped
+#0 line=0 paragraph ["Hello"]["^\">" link=pwned]["<script>" html link=pwned]["alert(1)" link=pwned]["</script>" html link=pwned]
+
+## extensions 26 Interop
+#0 line=0 paragraph ["www.google.com" strike link=http://www.google.com]
+#1 line=2 paragraph ["http://google.com" strike link=http://google.com]
+
+## extensions 27 Interop
+#0 line=0 table columns=left,left
+  header ["a"] | ["b"]
+  row ["https://github.com" link=https://github.com][" "]["www.github.com" link=http://www.github.com] | ["http://pokemon.com" link=http://pokemon.com]
+
+## extensions 28 Task lists
+#0 line=0 list ordered=false start=1
+  item checkbox=unchecked
+    #1 line=0 paragraph ["foo"]
+  item checkbox=checked
+    #2 line=1 paragraph ["bar"]
+
+## extensions 29 Task lists
+#0 line=0 list ordered=false start=1
+  item checkbox=checked
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=unchecked
+        #3 line=1 paragraph ["bar"]
+      item checkbox=checked
+        #4 line=2 paragraph ["baz"]
+  item checkbox=unchecked
+    #5 line=3 paragraph ["bim"]
+#6 line=5 paragraph ["Show a regular (non task) list to show that it has the same structure"]
+#7 line=6 list ordered=false start=1
+  item checkbox=none
+    #8 line=6 paragraph ["[@] foo"]
+    #9 line=7 list ordered=false start=1
+      item checkbox=none
+        #10 line=7 paragraph ["[@] bar"]
+      item checkbox=none
+        #11 line=8 paragraph ["[@] baz"]
+  item checkbox=none
+    #12 line=9 paragraph ["[@] bim"]
+
+## extensions 30 Task lists
+#0 line=0 list ordered=false start=1
+  item checkbox=checked
+    #1 line=0 paragraph ["foo"]
+    #2 line=1 list ordered=false start=1
+      item checkbox=unchecked
+        #3 line=1 paragraph ["bar"]
+      item checkbox=checked
+        #4 line=2 paragraph ["baz"]
+  item checkbox=unchecked
+    #5 line=3 paragraph ["bim"]
+#6 line=5 paragraph ["Show a regular (non task) list to show that it has the same structure"]
+#7 line=6 list ordered=false start=1
+  item checkbox=none
+    #8 line=6 paragraph ["[@] foo"]
+    #9 line=7 list ordered=false start=1
+      item checkbox=none
+        #10 line=7 paragraph ["[@] bar"]
+      item checkbox=none
+        #11 line=8 paragraph ["[@] baz"]
+  item checkbox=none
+    #12 line=9 paragraph ["[@] bim"]
+
+## regression 1 Regression tests
+#0 line=0 paragraph ["line1"]
+#1 line=2 paragraph ["line2"]
+
+## regression 2 Regression tests
+#0 line=0 paragraph ["By taking it apart"]
+#1 line=2 list ordered=false start=1
+  item checkbox=none
+    #2 line=2 paragraph ["alternative solutions"]
+#3 line=4 paragraph ["Repeatedly solving"]
+#4 line=6 list ordered=false start=1
+  item checkbox=none
+    #5 line=6 paragraph ["how techniques"]
+
+## regression 3 Regression tests
+#0 line=0 paragraph ["<h1>lorem</h1>\n" blockhtml]
+#1 line=2 paragraph ["<h2>lorem</h2>\n" blockhtml]
+#2 line=4 paragraph ["<h3>lorem</h3>\n" blockhtml]
+#3 line=6 paragraph ["<h4>lorem</h4>\n" blockhtml]
+#4 line=8 paragraph ["<h5>lorem</h5>\n" blockhtml]
+#5 line=10 paragraph ["<h6>lorem</h6>\n" blockhtml]
+
+## regression 4 Regression tests
+#0 line=0 heading2 ["hi"]
+
+## regression 5 Regression tests
+#0 line=0 paragraph ["a*"]["b c" em]
+
+## regression 6 Regression tests
+#0 line=0 paragraph ["[a]"]
+#1 line=2 paragraph ["[a]: <te"]["<st>" html]
+
+## regression 7 Regression tests
+#0 line=0 paragraph ["[a](te\\ st)"]
+
+## regression 8 Regression tests
+#0 line=0 paragraph ["this" em strong strike code]["\n" br]["this" em strong strike code]["\n" br]["this" em strong strike code]
+#1 line=4 paragraph ["this" em strong code]["\n" br]["this" em strong code]["\n" br]["this" em strong code]
+#2 line=8 paragraph ["this" em strong strike]["\n" br]["this" em strong strike]["\n" br]["this" em strong strike]
+#3 line=12 paragraph ["this" em strong]["\n" br]["this" em strong]["\n" br]["this" em strong]
+
+## regression 9 Regression tests
+#0 line=0 paragraph ["City:"]["\n" soft]["<span itemprop=\"contentLocation\" itemscope itemtype=\"https://schema.org/City\">" html]["\n" soft]["<meta itemprop=\"name\" content=\"Springfield\">" html]["\n" soft]["</span>" html]
+
+## regression 10 Regression tests
+#0 line=0 paragraph ["Hi" strike][" Hello, world!"]
+
+## regression 11 Regression tests
+#0 line=0 paragraph ["This "]["text" strike][" "]["is" strike][" ~~~curious~~~."]
+
+## regression 12 Regression tests
+#0 line=0 paragraph ["x" link=http://members.aon.at/~nkehrer/ibm_5110/emu5110.html]
+
+## regression 13 Regression tests
+#0 line=0 paragraph ["A footnote in a paragraph[^1]"]
+#1 line=2 table columns=left,left
+  header ["Column1"] | ["Column2"]
+  row ["foot [^1]"] | ["note"]
+#2 line=6 paragraph ["[^1]: a footnote"]
+
+## regression 14 Regression tests
+#0 line=0 paragraph ["City:"]["\n" soft]["<span itemprop=\"contentLocation\" itemscope itemtype=\"https://schema.org/City\">" html]["\n" soft]["<meta itemprop=\"name\" content=\"Springfield\">" html]["\n" soft]["</span>" html]
+
+## regression 15 Regression tests
+#0 line=0 paragraph ["[a](\\ b)"]
+#1 line=2 paragraph ["[a](<<b)"]
+#2 line=4 paragraph ["[a](<b"]["\n" soft][")"]
+
+## regression 16 Regression tests
+#0 line=0 paragraph ["[link](url ((title))"]
+
+## regression 17 Regression tests
+#0 line=0 paragraph ["</script>\n" blockhtml]
+#1 line=2 paragraph ["</pre>\n" blockhtml]
+#2 line=4 paragraph ["</style>\n" blockhtml]
+
+## regression 18 Regression tests
+#0 line=0 paragraph ["[a](<b) c>"]
+
+## regression 19 Regression tests
+#0 line=0 paragraph ["|"]["\n" soft]["-|"]
+
+## regression 20 Regression tests
+#0 line=0 paragraph ["This is some text. It has a citation.[^citation]"]
+#1 line=2 paragraph ["[^another-citation]: My second citation."]
+#2 line=4 paragraph ["[^citation]: This is a long winded parapgraph that also has another citation.[^another-citation]"]
+
+## regression 21 Regression tests
+#0 line=0 paragraph ["This is some text. It has two footnotes references, side-by-side without any spaces,"]["^footnote1" link=Goodbye.][" which are definitely not link references."]
+
+## regression 22 Regression tests
+#0 line=0 paragraph ["This is some text. Sometimes the autolinker splits up text into multiple nodes, hoping it will find a hyperlink, so this text has a footnote whose reference label begins with a "]["w" code][".[^widely-cited]"]
+#1 line=2 paragraph ["It has another footnote that contains many different characters (the autolinker was also breaking on "]["_" code][").[^sphinx-of-black-quartz_judge-my-vow-0123456789]"]
+#2 line=4 paragraph ["[^sphinx-of-black-quartz_judge-my-vow-0123456789]: so does this."]
+#3 line=6 paragraph ["[^widely-cited]: this renders properly."]
+
+## regression 23 Regression tests
+#0 line=0 paragraph ["|Tot.....[^"]["a" em]["]|"]
+
+## regression 24 Regression tests
+#0 line=0 paragraph ["[^"]["is" strike]["1]"]
+
+## regression 25 Regression tests
+#0 line=0 paragraph ["Hello world"]
+
+## regression 26 Regression tests
+#0 line=0 paragraph ["text" em][" "]["link" link=#section]
+
+## smart_punct 1 Smart punctuation
+#0 line=0 paragraph ["\"Hello,\" said the spider."]["\n" soft]["\"\'Shelob\' is my name.\""]
+
+## smart_punct 2 Smart punctuation
+#0 line=0 paragraph ["\'A\', \'B\', and \'C\' are letters."]
+
+## smart_punct 3 Smart punctuation
+#0 line=0 paragraph ["\'Oak,\' \'elm,\' and \'beech\' are names of trees."]["\n" soft]["So is \'pine.\'"]
+
+## smart_punct 4 Smart punctuation
+#0 line=0 paragraph ["\'He said, \"I want to go.\"\'"]
+
+## smart_punct 5 Smart punctuation
+#0 line=0 paragraph ["Were you alive in the 70\'s?"]
+
+## smart_punct 6 Smart punctuation
+#0 line=0 paragraph ["Here is some quoted \'"]["code" code]["\' and a \""]["quoted link" link=url]["\"."]
+
+## smart_punct 7 Smart punctuation
+#0 line=0 paragraph ["\'tis the season to be \'jolly\'"]
+
+## smart_punct 8 Smart punctuation
+#0 line=0 paragraph ["\'We\'ll use Jane\'s boat and John\'s truck,\' Jenna said."]
+
+## smart_punct 9 Smart punctuation
+#0 line=0 paragraph ["\"A paragraph with no closing quote."]
+#1 line=2 paragraph ["\"Second paragraph by same speaker, in fiction.\""]
+
+## smart_punct 10 Smart punctuation
+#0 line=0 paragraph ["[a]\'s b\'"]
+
+## smart_punct 11 Smart punctuation
+#0 line=0 paragraph ["\"This is not smart.\""]["\n" soft]["This isn\'t either."]["\n" soft]["5\'8\""]
+
+## smart_punct 12 Smart punctuation
+#0 line=0 paragraph ["Some dashes:  em---em"]["\n" soft]["en--en"]["\n" soft]["em --- em"]["\n" soft]["en -- en"]["\n" soft]["2--3"]
+
+## smart_punct 13 Smart punctuation
+#0 line=0 paragraph ["one-"]["\n" soft]["two--"]["\n" soft]["three---"]["\n" soft]["four----"]["\n" soft]["five-----"]["\n" soft]["six------"]["\n" soft]["seven-------"]["\n" soft]["eight--------"]["\n" soft]["nine---------"]["\n" soft]["thirteen-------------."]
+
+## smart_punct 14 Smart punctuation
+#0 line=0 paragraph ["Escaped hyphens: -- ---."]
+
+## smart_punct 15 Smart punctuation
+#0 line=0 paragraph ["Ellipses...and...and...."]
+
+## smart_punct 16 Smart punctuation
+#0 line=0 paragraph ["No ellipses..."]

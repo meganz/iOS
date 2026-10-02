@@ -1,0 +1,5 @@
+#0 line=0 paragraph ["<div>\n```\nnot a fence\n</div>\n" blockhtml]
+#1 line=5 heading1 ["Heading after"]
+#2 line=7 code language=nil "code"
+#3 line=11 paragraph ["Text "]["<span>" html]
+#4 line=12 code language=nil "</span> end\n\n# Last"

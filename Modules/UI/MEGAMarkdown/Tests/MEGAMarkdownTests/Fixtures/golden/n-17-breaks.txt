@@ -1,0 +1,1 @@
+#0 line=0 paragraph ["hard"]["\n" br]["break and"]["\n" br]["backslash"]["\n" soft]["bold" strong]["\n" strong soft]["soft" strong]
