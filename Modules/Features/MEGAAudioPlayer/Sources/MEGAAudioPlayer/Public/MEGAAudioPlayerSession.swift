@@ -24,4 +24,10 @@ public enum MEGAAudioPlayerSession {
     ) {
         DependencyInjection.localFileURLProvider = provider
     }
+
+    /// Hands the player the app's `leftOffItemRecordUseCase`, so a stopped track is added
+    /// to or dropped from the LeftOffItem store.
+    public static func registerLeftOffItemRecordUseCase(_ useCase: some LeftOffItemRecordUseCaseProtocol) {
+        DependencyInjection.leftOffItemRecordUseCase = useCase
+    }
 }

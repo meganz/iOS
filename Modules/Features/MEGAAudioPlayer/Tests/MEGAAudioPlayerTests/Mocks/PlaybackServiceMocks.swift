@@ -147,11 +147,12 @@ struct StubPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
 
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
 
+    @discardableResult
     func playbackStopped(
         for fingerprint: FingerprintEntity,
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
-    ) {}
+    ) -> PlaybackContinuationOutcomeEntity { .removed }
 
     func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {}
 }
@@ -240,12 +241,14 @@ struct SpyPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
 
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
 
+    @discardableResult
     func playbackStopped(
         for fingerprint: FingerprintEntity,
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
-    ) {
+    ) -> PlaybackContinuationOutcomeEntity {
         storage.mutate { $0.append(.saved(fingerprint)) }
+        return .saved
     }
 
     func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {

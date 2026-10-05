@@ -20,7 +20,9 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
     DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession()))
-    
+
+    private let leftOffItemsRecordUseCase: any LeftOffItemRecordUseCaseProtocol = LeftOffItemsRecordUseCase.shared
+
     private let miniPlayerHeight: CGFloat = 56.0
     
     var currentSeekTask: Task<Void, Never>? {
@@ -491,13 +493,27 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
     }
     
     func playbackStoppedForCurrentItem() {
-        guard let fingerprint = playerCurrentItem()?.node?.fingerprint else { return }
-        
-        playbackContinuationUseCase.playbackStopped(
+        guard let node = playerCurrentItem()?.node, let fingerprint = node.fingerprint else { return }
+
+        let outcome = playbackContinuationUseCase.playbackStopped(
             for: fingerprint,
             on: playerCurrentItemTime(),
             outOf: player?.duration ?? 0.0
         )
+
+        processOutcome(for: node, outcome: outcome)
+    }
+
+    private func processOutcome(for node: MEGANode, outcome: PlaybackContinuationOutcomeEntity) {
+        let handle = node.handle
+        let name = node.name ?? ""
+
+        Task {
+            switch outcome {
+            case .saved: await leftOffItemsRecordUseCase.record(handle: handle, name: name)
+            case .removed: await leftOffItemsRecordUseCase.remove(handle: handle)
+            }
+        }
     }
     
     func resettingAudioPlayer(shouldResetPlayback: Bool) {

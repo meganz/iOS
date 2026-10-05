@@ -33,6 +33,7 @@ final class AudioPlaybackService {
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let analyticsReporter: AudioPlaybackAnalyticsReporter
     private let audioNodeUpdatesUseCase: any AudioNodeUpdatesUseCaseProtocol
+    private let leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)?
 
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
@@ -89,7 +90,8 @@ final class AudioPlaybackService {
         notificationCenter: NotificationCenter = .default,
         playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase,
         analyticsReporter: AudioPlaybackAnalyticsReporter = AudioPlaybackAnalyticsReporter(tracker: DependencyInjection.analyticsTracker, accountUseCase: DependencyInjection.accountUseCase),
-        audioNodeUpdatesUseCase: some AudioNodeUpdatesUseCaseProtocol = AudioNodeUpdatesUseCase()
+        audioNodeUpdatesUseCase: some AudioNodeUpdatesUseCaseProtocol = AudioNodeUpdatesUseCase(),
+        leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)? = DependencyInjection.leftOffItemRecordUseCase
     ) {
         self.trackResolver = trackResolver
         self.streamingRepository = streamingRepository
@@ -99,6 +101,7 @@ final class AudioPlaybackService {
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.analyticsReporter = analyticsReporter
         self.audioNodeUpdatesUseCase = audioNodeUpdatesUseCase
+        self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
         bindEngineToState()
         observeAirPlayRouteChanges()
         setUpNowPlaying()
@@ -216,11 +219,43 @@ final class AudioPlaybackService {
               duration > Constants.minimumResumableDuration else {
             return
         }
-        playbackContinuationUseCase.playbackStopped(
+        let outcome = playbackContinuationUseCase.playbackStopped(
             for: fingerprint,
             on: engine.currentTime,
             outOf: duration
         )
+
+        processOutcome(outcome: outcome)
+    }
+
+    private func processOutcome(outcome: PlaybackContinuationOutcomeEntity) {
+        guard let leftOffItemRecordUseCase,
+              let (handle, name) = currentTrackHandleAndName else {
+            return
+        }
+
+        Task {
+            switch outcome {
+            case .saved: await leftOffItemRecordUseCase.record(handle: handle, name: name)
+            case .removed: await leftOffItemRecordUseCase.remove(handle: handle)
+            }
+        }
+    }
+
+    private var currentTrackHandleAndName: (handle: HandleEntity, name: String)? {
+        guard let track = playbackQueue.current else { return nil }
+        switch track {
+        case let .account(node): return (node.handle, node.name)
+        case let .folderLink(node): return handleAndName(of: node)
+        case let .fileLink(_, node): return node.flatMap { handleAndName(of: $0) }
+        case .offline: return nil
+        case let .offlineNode(node, _): return (node.handle, node.name)
+        }
+    }
+
+    private func handleAndName(of node: any PlayableNode) -> (handle: HandleEntity, name: String)? {
+        guard let name = node.name else { return nil }
+        return (node.handle, name)
     }
 
     private var currentTrackFingerprint: FingerprintEntity? {

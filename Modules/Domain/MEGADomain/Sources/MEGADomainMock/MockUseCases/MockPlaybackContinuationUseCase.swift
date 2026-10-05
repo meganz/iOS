@@ -18,8 +18,11 @@ public final class MockPlaybackContinuationUseCase: PlaybackContinuationUseCaseP
         setPreference_Calls.append(preferenceStatus)
     }
     
-    public func playbackStopped(for fingerprint: FingerprintEntity, on timeInterval: TimeInterval, outOf fullTimeInterval: TimeInterval) {
+    public var playbackStoppedOutcome: PlaybackContinuationOutcomeEntity = .removed
 
+    @discardableResult
+    public func playbackStopped(for fingerprint: FingerprintEntity, on timeInterval: TimeInterval, outOf fullTimeInterval: TimeInterval) -> PlaybackContinuationOutcomeEntity {
+        playbackStoppedOutcome
     }
 
     public func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {

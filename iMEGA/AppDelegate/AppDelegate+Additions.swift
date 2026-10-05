@@ -1008,6 +1008,13 @@ extension AppDelegate {
     }
 }
 
+// MARK: - Left off recording logic for Audio
+extension AppDelegate {
+    @objc func injectAudioPlayerDependencies() {
+        MEGAAudioPlayerSession.registerLeftOffItemRecordUseCase(LeftOffItemsRecordUseCase.shared)
+    }
+}
+
 // MARK: - Offline mode
 extension AppDelegate {
     /// Hands MEGAAppPresentation the app's reachability check and no-connection prompt, so

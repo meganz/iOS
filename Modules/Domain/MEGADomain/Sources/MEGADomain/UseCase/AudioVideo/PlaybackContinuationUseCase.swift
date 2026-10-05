@@ -1,14 +1,21 @@
 import Foundation
 import MEGASwift
 
+/// Whether a playback position was saved for resuming, or removed.
+public enum PlaybackContinuationOutcomeEntity: Sendable, Equatable {
+    case saved
+    case removed
+}
+
 public protocol PlaybackContinuationUseCaseProtocol: Sendable {
     func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity)
+    @discardableResult
     func playbackStopped(
         for fingerprint: FingerprintEntity,
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
-    )
+    ) -> PlaybackContinuationOutcomeEntity
     func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity)
 }
 
@@ -59,17 +66,20 @@ public final class PlaybackContinuationUseCase<
         currentPreference.mutate { $0 = preferenceStatus }
     }
     
+    @discardableResult
     public func playbackStopped(
         for fingerprint: FingerprintEntity,
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
-    ) {
+    ) -> PlaybackContinuationOutcomeEntity {
         guard timeInterval >= minimumPlaybackTime,
               fullTimeInterval - timeInterval >= Constants.completedPlaybackThreshold else {
-            return previousSessionRepo.removeSavedTimeInterval(for: fingerprint)
+            previousSessionRepo.removeSavedTimeInterval(for: fingerprint)
+            return .removed
         }
         
         previousSessionRepo.saveTimeInterval(timeInterval, for: fingerprint)
+        return .saved
     }
 
     public func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {

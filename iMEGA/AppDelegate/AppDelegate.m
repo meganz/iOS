@@ -133,6 +133,7 @@
     [self injectSearchDependencies];
     [self injectConnectivityLocalizations];
     [self injectOfflineModeDependencies];
+    [self injectAudioPlayerDependencies];
 
     [self initialiseModules];
     [self configureTransferServices];
