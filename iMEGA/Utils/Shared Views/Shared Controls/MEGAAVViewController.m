@@ -150,6 +150,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     CMTime mediaTime = CMTimeMake(self.player.currentTime.value, self.player.currentTime.timescale);
     Float64 second = CMTimeGetSeconds(mediaTime);
+    BOOL hasKnownDuration = CMTIME_IS_NUMERIC(self.player.currentItem.duration);
     
     NSString *fingerprint = [self fileFingerprint];
     
@@ -158,12 +159,22 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
             [self saveRecentlyWatchedVideoWithDestination:[NSNumber numberWithInt:0]
                                                 timescale:nil];
+            if (hasKnownDuration && self.node) {
+                [self.viewModel processLeftOffItemWithHandle:self.node.handle
+                                                        name:self.node.name
+                                                shouldRecord:NO];
+            }
         } else {
             if (self.node) {
                 [self saveRecentlyWatchedVideoWithDestination:[NSNumber numberWithLongLong:self.player.currentTime.value]
                                                     timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
             } else {
                 [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
+            }
+            if (hasKnownDuration && self.node) {
+                [self.viewModel processLeftOffItemWithHandle:self.node.handle
+                                                        name:self.node.name
+                                                shouldRecord:YES];
             }
         }
     }

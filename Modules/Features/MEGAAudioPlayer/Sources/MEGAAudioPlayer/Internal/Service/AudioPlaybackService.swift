@@ -35,6 +35,9 @@ final class AudioPlaybackService {
     private let audioNodeUpdatesUseCase: any AudioNodeUpdatesUseCaseProtocol
     private let leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)?
 
+    // Expose the task for left off item processing, to be used in test code.
+    private(set) var leftOffItemTask: Task<Void, Never>?
+
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
     private var metadataTask: Task<Void, Never>?
@@ -234,7 +237,7 @@ final class AudioPlaybackService {
             return
         }
 
-        Task {
+        leftOffItemTask = Task {
             switch outcome {
             case .saved: await leftOffItemRecordUseCase.record(handle: handle, name: name)
             case .removed: await leftOffItemRecordUseCase.remove(handle: handle)

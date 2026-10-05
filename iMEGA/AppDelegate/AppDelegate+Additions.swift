@@ -1008,10 +1008,11 @@ extension AppDelegate {
     }
 }
 
-// MARK: - Left off recording logic for Audio
+// MARK: - Continue Where You Left Off recording logic
 extension AppDelegate {
-    @objc func injectAudioPlayerDependencies() {
+    @objc func injectContinueWhereYouLeftOffDependencies() {
         MEGAAudioPlayerSession.registerLeftOffItemRecordUseCase(LeftOffItemsRecordUseCase.shared)
+        MEGAVideoPlayer.DependencyInjection.leftOffItemRecordUseCase = LeftOffItemsRecordUseCase.shared
     }
 }
 

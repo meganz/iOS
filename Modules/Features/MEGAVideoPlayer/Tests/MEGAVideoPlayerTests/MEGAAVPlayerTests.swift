@@ -205,13 +205,129 @@ struct MEGAAVPlayerTests {
         #expect(mockLoopUseCase.isLoopEnabled == false)
     }
 
+    // MARK: - Continue where you left off
+
+    @Test
+    func stop_whenPositionIsResumable_shouldRecordLeftOffItem() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let node = MockPlayableNode(handle: 42, name: "resumable.mp4")
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+        sut.currentNode = node
+        sut.currentTime = .seconds(20)
+        sut.duration = .seconds(60)
+
+        sut.stop()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.record_Calls.map(\.handle) == [42])
+        #expect(recordUseCase.record_Calls.map(\.name) == ["resumable.mp4"])
+        #expect(recordUseCase.remove_Calls.isEmpty)
+    }
+
+    @Test
+    func stop_whenPositionIsTooEarly_shouldRemoveLeftOffItem() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let node = MockPlayableNode(handle: 42, name: "too_early.mp4")
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+        sut.currentNode = node
+        sut.currentTime = .seconds(5)
+        sut.duration = .seconds(60)
+
+        sut.stop()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.remove_Calls == [42])
+        #expect(recordUseCase.record_Calls.isEmpty)
+    }
+
+    @Test
+    func stop_whenAlmostFinished_shouldRemoveLeftOffItem() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let node = MockPlayableNode(handle: 42, name: "almost_done.mp4")
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+        sut.currentNode = node
+        sut.currentTime = .seconds(59)
+        sut.duration = .seconds(60)
+
+        sut.stop()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.remove_Calls == [42])
+        #expect(recordUseCase.record_Calls.isEmpty)
+    }
+
+    @Test
+    func stop_whenDurationIsUnknown_shouldNotTouchLeftOffItem() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let node = MockPlayableNode(handle: 42, name: "unknown_duration.mp4")
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+        sut.currentNode = node
+
+        sut.stop()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.record_Calls.isEmpty)
+        #expect(recordUseCase.remove_Calls.isEmpty)
+    }
+
+    @Test
+    func stop_whenNoNodeLoaded_shouldNotTouchLeftOffItem() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+
+        sut.stop()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.record_Calls.isEmpty)
+        #expect(recordUseCase.remove_Calls.isEmpty)
+    }
+
+    @Test
+    func playNext_whenPositionIsResumable_shouldRecordOutgoingNode() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let node1 = MockPlayableNode(handle: 1, name: "v1.mp4")
+        let node2 = MockPlayableNode(handle: 2, name: "v2.mp4")
+        let node3 = MockPlayableNode(handle: 3, name: "v3.mp4")
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+        sut.loadNodeAndMonitorUpdate(for: node2, monitor: [node1, node2, node3])
+        await _ = sut.monitorVideoNodesUpdateTask?.value
+        sut.currentTime = .seconds(20)
+        sut.duration = .seconds(60)
+
+        sut.playNext()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.record_Calls.map(\.handle) == [2])
+        #expect(sut.nodeName == "v3.mp4")
+    }
+
+    @Test
+    func playPrevious_whenPositionIsResumable_shouldRecordOutgoingNode() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let node1 = MockPlayableNode(handle: 1, name: "v1.mp4")
+        let node2 = MockPlayableNode(handle: 2, name: "v2.mp4")
+        let node3 = MockPlayableNode(handle: 3, name: "v3.mp4")
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
+        sut.loadNodeAndMonitorUpdate(for: node2, monitor: [node1, node2, node3])
+        await _ = sut.monitorVideoNodesUpdateTask?.value
+        sut.currentTime = .seconds(20)
+        sut.duration = .seconds(60)
+
+        sut.playPrevious()
+        await sut.leftOffItemTask?.value
+
+        #expect(recordUseCase.record_Calls.map(\.handle) == [2])
+        #expect(sut.nodeName == "v1.mp4")
+    }
+
     private func makeSUT(
         streamingUseCase: some StreamingUseCaseProtocol = MockStreamingUseCase(),
         localFileURL: @escaping @Sendable (any PlayableNode) -> URL? = { _ in nil },
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol = MockResumePlaybackPositionUseCase(),
         videoNodesUseCase: some VideoNodesUseCaseProtocol =
             MockVideoNodesUseCase(),
-        videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol = MockVideoPlaybackLoopUseCase()
+        videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol = MockVideoPlaybackLoopUseCase(),
+        leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)? = MockLeftOffItemRecordUseCase()
     ) -> MEGAAVPlayer {
         return MEGAAVPlayer(
             streamingUseCase: streamingUseCase,
@@ -219,7 +335,8 @@ struct MEGAAVPlayerTests {
             notificationCenter: .default,
             resumePlaybackPositionUseCase: resumePlaybackPositionUseCase,
             videoNodesUseCase: videoNodesUseCase,
-            videoPlaybackLoopUseCase: videoPlaybackLoopUseCase
+            videoPlaybackLoopUseCase: videoPlaybackLoopUseCase,
+            leftOffItemRecordUseCase: leftOffItemRecordUseCase
         )
     }
 }

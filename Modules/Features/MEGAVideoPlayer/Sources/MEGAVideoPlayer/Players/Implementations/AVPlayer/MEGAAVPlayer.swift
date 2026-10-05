@@ -49,6 +49,7 @@ public final class MEGAAVPlayer {
 
     private var cancellables = Set<AnyCancellable>()
     public var monitorVideoNodesUpdateTask: Task<Void, Never>?
+    public private(set) var leftOffItemTask: Task<Void, Never>?
 
     private var throttleRateCancellable: AnyCancellable?
     private var throttleConfigurationTask: Task<Void, Never>?
@@ -62,6 +63,7 @@ public final class MEGAAVPlayer {
     private let resumePlaybackPositionUseCase: any ResumePlaybackPositionUseCaseProtocol
     private let videoNodesUseCase: any VideoNodesUseCaseProtocol
     private let videoPlaybackLoopUseCase: any VideoPlaybackLoopUseCaseProtocol
+    private let leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)?
 
     public init(
         streamingUseCase: some StreamingUseCaseProtocol,
@@ -69,7 +71,8 @@ public final class MEGAAVPlayer {
         notificationCenter: NotificationCenter,
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol,
         videoNodesUseCase: some VideoNodesUseCaseProtocol,
-        videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol
+        videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol,
+        leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)? = DependencyInjection.leftOffItemRecordUseCase
     ) {
         self.streamingUseCase = streamingUseCase
         self.localFileURL = localFileURL
@@ -77,6 +80,7 @@ public final class MEGAAVPlayer {
         self.resumePlaybackPositionUseCase = resumePlaybackPositionUseCase
         self.videoNodesUseCase = videoNodesUseCase
         self.videoPlaybackLoopUseCase = videoPlaybackLoopUseCase
+        self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
         self.isLoopEnabled = videoPlaybackLoopUseCase.isLoopEnabled
         self.statePublisher = stateSubject.eraseToAnyPublisher()
         self.currentTimePublisher = currentTimeSubject.eraseToAnyPublisher()
@@ -455,9 +459,27 @@ extension MEGAAVPlayer: NodeLoadable {
            currentTime.components.seconds < duration.components.seconds - 2 {
             let currentPosition = TimeInterval(currentTime.components.seconds)
             resumePlaybackPositionUseCase.savePlaybackPosition(currentPosition, for: node)
+            recordLeftOffItem(for: node)
         } else {
             resumePlaybackPositionUseCase.deletePlaybackPosition(for: node)
+            if duration.components.seconds > 0 {
+                removeLeftOffItem(for: node)
+            }
         }
+    }
+
+    private func recordLeftOffItem(for node: some PlayableNode) {
+        guard let leftOffItemRecordUseCase, let name = node.name else { return }
+
+        let handle = node.handle
+        leftOffItemTask = Task { await leftOffItemRecordUseCase.record(handle: handle, name: name) }
+    }
+
+    private func removeLeftOffItem(for node: some PlayableNode) {
+        guard let leftOffItemRecordUseCase else { return }
+
+        let handle = node.handle
+        leftOffItemTask = Task { await leftOffItemRecordUseCase.remove(handle: handle) }
     }
 
     private func observe(for playerItem: AVPlayerItem) {

@@ -21,6 +21,15 @@ public enum DependencyInjection {
         wrappedValue: { _ in nil }
     )
 
+    public static var leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)? {
+        get { leftOffItemRecordUseCaseStorage.wrappedValue }
+        set { leftOffItemRecordUseCaseStorage.mutate { $0 = newValue } }
+    }
+
+    private static let leftOffItemRecordUseCaseStorage = Atomic<(any LeftOffItemRecordUseCaseProtocol)?>(
+        wrappedValue: nil
+    )
+
     public static var playbackReporter: some PlaybackReporting {
         MEGALogPlaybackReporter()
     }

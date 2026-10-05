@@ -42,7 +42,9 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
         
         MEGAAuthentication.DependencyInjection.errorReportingUseCase = ErrorReportingUseCase()
+    }
 
+    @objc func injectViewedLinksDependencies() {
         ViewedLinks.DependencyInjection.errorReporting = ViewedLinksCrashlyticsErrorReporter()
     }
 
