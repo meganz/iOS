@@ -2,8 +2,7 @@
   "PDFPageConcurrentRenderBenchmarks/testConcurrentRendersOfDistinctPages": {
     "CPU Cycles": 6986092.64,
     "CPU Instructions Retired": 21022257.01,
-    "CPU Time": 1.61,
-    "Clock Monotonic Time": 0.12
+    "CPU Time": 1.61
   },
   "PDFPageConcurrentRenderBenchmarks/testConcurrentRendersOfSamePage": {
     "CPU Cycles": 4939874.49,
@@ -15,7 +14,6 @@
     "CPU Cycles": 846415.55,
     "CPU Instructions Retired": 2656835.0,
     "CPU Time": 0.2,
-    "Clock Monotonic Time": 0.03,
     "Longest Main Thread Stall": 17.93,
     "Main Thread Stalls Over 100 ms": 2,
     "Peak Heap Growth": 28.07
@@ -29,12 +27,10 @@
     "CPU Cycles": 252564.97,
     "CPU Instructions Retired": 426172.02,
     "CPU Time": 0.07,
-    "Clock Monotonic Time": 0.02,
     "Longest Main Thread Stall": 13.66,
     "Main Thread Stalls Over 100 ms": 2
   },
   "PDFThumbnailLoaderBenchmarks/testRenderThreeLandscapeScreenfuls": {
-    "Clock Monotonic Time": 0.09,
     "Peak Heap Growth": 139.44
   }
 }

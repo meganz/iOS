@@ -13,7 +13,9 @@ final class PDFThumbnailLoaderBenchmarks: BenchmarkCase {
     func testRenderScreenfulOfScannedPages() throws {
         let url = try BenchmarkDocuments.makeScannedDocument()
         let pages = 0..<ThumbnailGeometry.portraitScreenful
-        measure(metrics: [XCTClockMetric(), XCTCPUMetric(), MainThreadStallMetric(), PeakFootprintMetric()]) {
+        // No wall-clock metric, see `testConcurrentRendersOfDistinctPages` in
+        // `PDFPageConcurrentRenderBenchmarks`.
+        measure(metrics: [XCTCPUMetric(), MainThreadStallMetric(), PeakFootprintMetric()]) {
             let rendered = try? runOnMainLoop {
                 await Self.loadThumbnails(url: url, pages: pages, cell: ThumbnailGeometry.portraitCell).count
             }
@@ -25,7 +27,9 @@ final class PDFThumbnailLoaderBenchmarks: BenchmarkCase {
     func testRenderScreenfulOfTextPages() throws {
         let url = try BenchmarkDocuments.makeTextDocument()
         let pages = 0..<ThumbnailGeometry.portraitScreenful
-        measure(metrics: [XCTClockMetric(), XCTCPUMetric(), MainThreadStallMetric()]) {
+        // No wall-clock metric, see `testConcurrentRendersOfDistinctPages` in
+        // `PDFPageConcurrentRenderBenchmarks`.
+        measure(metrics: [XCTCPUMetric(), MainThreadStallMetric()]) {
             let rendered = try? runOnMainLoop {
                 await Self.loadThumbnails(url: url, pages: pages, cell: ThumbnailGeometry.portraitCell).count
             }
@@ -54,7 +58,9 @@ final class PDFThumbnailLoaderBenchmarks: BenchmarkCase {
     func testRenderThreeLandscapeScreenfuls() throws {
         let url = try BenchmarkDocuments.makeScannedDocument()
         let pages = 0..<(ThumbnailGeometry.landscapeScreenful * 3)
-        measure(metrics: [XCTClockMetric(), PeakFootprintMetric()]) {
+        // No wall-clock metric, see `testConcurrentRendersOfDistinctPages` in
+        // `PDFPageConcurrentRenderBenchmarks`.
+        measure(metrics: [PeakFootprintMetric()]) {
             let decodedBytes = try? runOnMainLoop {
                 await Self.loadThumbnails(url: url, pages: pages, cell: ThumbnailGeometry.landscapeCell)
             }

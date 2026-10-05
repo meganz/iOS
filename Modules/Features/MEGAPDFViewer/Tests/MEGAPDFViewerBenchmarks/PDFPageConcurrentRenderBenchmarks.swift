@@ -24,7 +24,11 @@ final class PDFPageConcurrentRenderBenchmarks: BenchmarkCase {
     func testConcurrentRendersOfDistinctPages() throws {
         let url = try BenchmarkDocuments.makeScannedDocument()
         let pages = Array(0..<Self.renderCount)
-        measure(metrics: [XCTClockMetric(), XCTCPUMetric()]) {
+        // No wall-clock metric: these renders run in parallel, so their time
+        // depends on how many cores the host has free, which CI does not pin.
+        // No benchmark measures the speed-up from rendering concurrently; the
+        // CPU metrics cover only the cost of each render.
+        measure(metrics: [XCTCPUMetric()]) {
             let rendered = try? runOnMainLoop { await Self.renderConcurrently(url: url, pages: pages) }
             XCTAssertEqual(rendered, pages.count)
         }
