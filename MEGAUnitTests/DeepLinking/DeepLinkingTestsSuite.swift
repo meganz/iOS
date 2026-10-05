@@ -410,6 +410,49 @@ struct DeepLinkingTestSuite {
         }
     }
 
+    // MARK: - Autoplay Link Tests
+    @Suite("Autoplay Link Tests - Verifies folder and collection URLs with the autoplay query key are detected for opening on the web.")
+    struct AutoplayLinkTests {
+        private static func url(_ urlString: String) -> NSURL? {
+            guard let url = URL(string: urlString) as? NSURL else {
+                Issue.record("Invalid URL string: \(urlString)")
+                return nil
+            }
+            return url
+        }
+
+        @Test("Folder and collection NSURL with the autoplay key is an autoplay link and keeps its native type", arguments: [
+            ("https://mega.nz/collection/uUhyQaqJ?autoplay=shuffle,randomstart#ISCVmkkuvBIdoiBXv5nMHQ", URLType.collection),
+            ("https://mega.nz/collection/p3IBQCiZ?autoplay#Nt8-bopPB8em4cOlKFqStA", .collection),
+            ("https://mega.app/collection/p3IBQCiZ?autoplay=#Nt8-bopPB8em4cOlKFqStA", .collection),
+            ("https://mega.nz/folder/1dICRLJS?autoplay=parameters#snJiad_4WfCKEK7bgPri3A", .folderLink),
+            ("https://mega.nz/folder/1dICRLJS?a=sdf&autoplay#snJiad_4WfCKEK7bgPri3A", .folderLink),
+            ("https://mega.app/folder/1dICRLJS?autoplay#snJiad_4WfCKEK7bgPri3A/folder/NHBR0KxQ", .folderLink),
+            ("https://testbed.preview.mega.co.nz/folder/1dICRLJS?autoplay#snJiad_4WfCKEK7bgPri3A", .folderLink)
+        ])
+        func autoplayLinkShouldBeDetected(urlString: String, expectedType: URLType) {
+            guard let url = Self.url(urlString) else { return }
+            #expect(url.mnz_isAutoplayLink, "Expected an autoplay link: \(urlString)")
+            #expect(url.mnz_type() == expectedType, "Expected \(expectedType) but got \(url.mnz_type()) for URL: \(urlString)")
+        }
+
+        @Test("NSURL without the autoplay key on a folder or collection https link is not an autoplay link", arguments: [
+            "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
+            "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
+            "https://mega.nz/folder/1dICRLJS?autoplayx=1#snJiad_4WfCKEK7bgPri3A",
+            "https://mega.nz/folder/1dICRLJS?a=autoplay#snJiad_4WfCKEK7bgPri3A",
+            "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A?autoplay",
+            "https://mega.nz/collection/p3IBQCiZ?Autoplay#Nt8-bopPB8em4cOlKFqStA",
+            "mega://collection/p3IBQCiZ?autoplay#Nt8-bopPB8em4cOlKFqStA",
+            "https://mega.nz/file/paBmgYJQ?autoplay#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "https://example.com/folder/1dICRLJS?autoplay#snJiad_4WfCKEK7bgPri3A"
+        ])
+        func nonAutoplayLinkShouldNotBeDetected(urlString: String) {
+            guard let url = Self.url(urlString) else { return }
+            #expect(!url.mnz_isAutoplayLink, "Expected not an autoplay link: \(urlString)")
+        }
+    }
+
     // MARK: - Recover Link Edge Case Tests
     @Suite("Recover Link Edge Case Tests - Verifies recovery-related edge cases.")
     struct RecoverLinkEdgeCaseTests {

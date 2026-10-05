@@ -719,7 +719,11 @@
             case URLTypeFileLink:
             case URLTypeFolderLink:
             case URLTypeCollection:
-                [self showSharedLinkForNoLoggedInUser:url];
+                if (url.mnz_isAutoplayLink) {
+                    [self showLink:url];
+                } else {
+                    [self showSharedLinkForNoLoggedInUser:url];
+                }
                 break;
                 
             default:

@@ -87,6 +87,7 @@ enum DeeplinkSchemeKey: String {
 
 enum DeeplinkQueryKey: String {
     case offer
+    case autoplay
 }
 
 extension URL {
@@ -224,6 +225,21 @@ extension NSURL {
     @objc var mnz_isMEGAUniversalLinkHost: Bool {
         guard let host = host?.lowercased() else { return false }
         return Self.universalLinkHosts.contains(host)
+    }
+
+    /// Folder and collection links carrying the `autoplay` query key start a slideshow on the web (WEB-19852).
+    /// The app doesn't support autoplay natively yet, so these links open in the browser instead (IOS-12720).
+    /// Detected by the presence of the key alone, as its value is optional and still evolving.
+    /// `mnz_type()` still reports them as `.folderLink` / `.collection`, so chat keeps their rich preview.
+    @objc var mnz_isAutoplayLink: Bool {
+        guard DeeplinkSchemeKey(rawValue: scheme ?? "") == .http,
+              host?.lowercased().contains("mega") == true,
+              let path,
+              [DeeplinkPathKey.folder, .collection].contains(where: { path.hasPrefix($0.rawValue) }),
+              let queryItems = URLComponents(url: self as URL, resolvingAgainstBaseURL: false)?.queryItems else {
+            return false
+        }
+        return queryItems.contains { $0.name == DeeplinkQueryKey.autoplay.rawValue }
     }
 
     private static let universalLinkHosts: Set<String> = [

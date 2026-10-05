@@ -696,8 +696,10 @@ extension AppDelegate {
             return
         }
         
-        switch url.mnz_type() {
-        case .default: 
+        // Autoplay links open in the in-app browser like any other link the app doesn't handle natively
+        let urlType = url.mnz_isAutoplayLink ? .default : url.mnz_type()
+        switch urlType {
+        case .default:
             // Added delay to show the mega app for a moment and not flash the in-app browser to the user
             Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(500))

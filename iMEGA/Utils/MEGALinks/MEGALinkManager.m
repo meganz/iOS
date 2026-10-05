@@ -299,6 +299,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeFolderLink:
+            if (url.mnz_isAutoplayLink) {
+                [MEGALinkManager openDefaultLink:url];
+                break;
+            }
             [MEGALinkManager showFolderLinkView];
             [MEGALinkManager resetLinkAndURLType];
             break;
@@ -520,6 +524,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
             break;
         case URLTypeCollection:
+            if (url.mnz_isAutoplayLink) {
+                [MEGALinkManager openDefaultLink:url];
+                break;
+            }
             [MEGALinkManager showCollectionLinkView];
             [MEGALinkManager resetLinkAndURLType];
             break;
