@@ -41,6 +41,18 @@ private struct MockPDFDocumentLoader: PDFDocumentLoading {
     }
 }
 
+/// Parses the first request only, like a file that disappears between the
+/// viewer's parse and the thumbnails' parse.
+private final class FirstLoadOnlyPDFDocumentLoader: PDFDocumentLoading {
+    private var hasLoaded = false
+
+    func loadDocument(url: URL) -> PDFDocument? {
+        guard !hasLoaded else { return nil }
+        hasLoaded = true
+        return MockPDFDocumentLoader.makeDocument()
+    }
+}
+
 @MainActor
 struct PDFViewerViewModelTests {
     private func makeSUT(
@@ -319,9 +331,30 @@ struct PDFViewerViewModelTests {
         }
         #expect(pageCount == 3)
         #expect(sut.currentPageIndex == 0)
+        #expect(sut.thumbnailLoader != nil)
         #expect(
             sut.pageIndicatorText == Strings.Localizable.PdfPreview.pageOfTotal(1, 3)
         )
+        task.cancel()
+    }
+
+    @Test func loadDocumentURL_thumbnailDocumentFailsToParse_hasNoThumbnailLoader() async {
+        let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: FirstLoadOnlyPDFDocumentLoader()
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(url))
+        await awaitDocumentParsed(sut)
+
+        #expect(sut.state.isReady)
+        #expect(sut.thumbnailLoader == nil)
         task.cancel()
     }
 

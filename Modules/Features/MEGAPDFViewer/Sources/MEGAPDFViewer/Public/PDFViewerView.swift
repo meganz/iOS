@@ -102,10 +102,12 @@ public struct PDFViewerView: View {
                     // likely when dismissing thumbnails view.
                     .opacity(viewModel.isShowingThumbnails ? 0 : 1)
 
-                    if viewModel.isShowingThumbnails {
+                    if viewModel.isShowingThumbnails,
+                       let thumbnailLoader = viewModel.thumbnailLoader {
                         PDFThumbnailGridView(
                             document: document,
-                            currentPage: viewModel.currentPageIndex
+                            currentPage: viewModel.currentPageIndex,
+                            thumbnailLoader: thumbnailLoader
                         )
                         .transition(.opacity)
                     }
@@ -194,11 +196,13 @@ public struct PDFViewerView: View {
                     }
                     .accessibilityLabel(Strings.Localizable.PdfPreview.contents)
 
-                    PDFThumbnailsToggleView(
-                        isActive: viewModel.isShowingThumbnails
-                    ) {
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            viewModel.isShowingThumbnails.toggle()
+                    if viewModel.thumbnailLoader != nil {
+                        PDFThumbnailsToggleView(
+                            isActive: viewModel.isShowingThumbnails
+                        ) {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                viewModel.isShowingThumbnails.toggle()
+                            }
                         }
                     }
                 }

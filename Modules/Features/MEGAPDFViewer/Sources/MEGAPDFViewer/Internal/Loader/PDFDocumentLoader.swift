@@ -1,5 +1,5 @@
 import Foundation
-@preconcurrency import PDFKit
+import PDFKit
 
 protocol PDFDocumentLoading {
     /// Returns nil when PDFKit cannot parse the file.

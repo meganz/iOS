@@ -52,6 +52,7 @@ final class PDFViewerViewModel {
     }
 
     private(set) var state: ViewState = .loading(progress: nil)
+    private(set) var thumbnailLoader: (any PDFThumbnailLoading)?
 
     private var failedState: ViewState.FailedState? {
         get { if case .failed(let failedState) = state { failedState } else { nil } }
@@ -74,8 +75,8 @@ final class PDFViewerViewModel {
 
 extension PDFViewerViewModel {
 
-    /// Held here rather than inside `PDFDisplayerView` for future MR:
-    /// The thumbnails grid will render from the same loaded document.
+    /// The instance `MEGAPDFView` draws from; nil until a parse succeeds.
+    /// Thumbnails render from a separate instance, see `loadDocument(at:)`.
     var pdfDocument: PDFDocument? {
         guard case .ready(let document, _) = state else { return nil }
         return document
@@ -109,6 +110,11 @@ extension PDFViewerViewModel {
             return
         }
         let pagingState = ViewState.PagingState(currentPageIndex: 0, pageCount: document.pageCount)
+        // Thumbnails render off the main thread, so they parse their own
+        // instance rather than sharing the one `MEGAPDFView` draws from.
+        if let thumbnailDocument = dependency.documentLoader.loadDocument(url: url) {
+            thumbnailLoader = PDFThumbnailLoader(document: thumbnailDocument)
+        }
         state = .ready(document: document, pagingState: pagingState)
     }
 

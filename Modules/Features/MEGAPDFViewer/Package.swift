@@ -24,6 +24,7 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../Transfer"),
+        .package(path: "../../Infrastracture/MEGABenchmark"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
@@ -46,6 +47,16 @@ let package = Package(
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
             ],
+            swiftSettings: settings
+        ),
+        // Benchmarks with XCTest metrics. They run only with TEST_RUNNER_MEGA_BENCH=1 (see scripts/benchmark.sh).
+        .testTarget(
+            name: "MEGAPDFViewerBenchmarks",
+            dependencies: [
+                "MEGAPDFViewer",
+                .product(name: "MEGABenchmark", package: "MEGABenchmark")
+            ],
+            exclude: ["Limits.json"],
             swiftSettings: settings
         )
     ],
