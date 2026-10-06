@@ -40,8 +40,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let router: any UpgradeAccountPlanRouting
     private let appVersion: String
 
-    private let canOpenURL: @Sendable (URL) async -> Bool
-    private let openURL: @Sendable (URL) async -> Void
+    /// Opens the external purchase page; `false` when the system could not open it.
+    private let openURL: @Sendable (URL) async -> Bool
     private let purchaseCompleteBehavior: PurchaseCompleteBehavior
 
     private var planList: [PlanEntity] = []
@@ -107,8 +107,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         viewType: UpgradeAccountPlanViewType,
         router: some UpgradeAccountPlanRouting,
         appVersion: String,
-        canOpenURL: @Sendable @escaping (URL) async -> Bool = { UIApplication.shared.canOpenURL($0) },
-        openURL: @Sendable @escaping (URL) async -> Void = { UIApplication.shared.open($0) },
+        openURL: @Sendable @escaping (URL) async -> Bool = { @MainActor in await UIApplication.shared.open($0) },
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
     ) {
         self.accountUseCase = accountUseCase
@@ -122,7 +121,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.viewType = viewType
         self.router = router
         self.appVersion = appVersion
-        self.canOpenURL = canOpenURL
         self.openURL = openURL
         self.purchaseCompleteBehavior = purchaseCompleteBehavior
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
@@ -629,11 +627,15 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
 
             if let externalLink = await externalLink(for: currentSelectedPlan) {
                 observeAccountUpdates()
-                await openURL(externalLink)
-                isLoading = false
-            } else {
-                await purchaseUseCase.purchasePlan(productIdentifier: currentSelectedPlan.productIdentifier)
+                if await openURL(externalLink) {
+                    isLoading = false
+                    return
+                }
+                // The browser never opened, so there is no website purchase to wait for; buy in-app instead.
+                observeAccountUpdatesTask?.cancel()
+                observeAccountUpdatesTask = nil
             }
+            await purchaseUseCase.purchasePlan(productIdentifier: currentSelectedPlan.productIdentifier)
         })
     }
 
@@ -701,8 +703,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                     default: nil
                     }
                 }()
-            ),
-            await canOpenURL(externalPurchaseLink)
+            )
         else { return nil }
 
         return externalPurchaseLink

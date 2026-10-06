@@ -266,12 +266,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             return
         }
 
-        Task { @MainActor in
-            let externalLinkOpener = MEGAInfrastructure.DependencyInjection.externalLinkOpener
-            if await externalLinkOpener.canOpenLink(with: url) {
-                externalLinkOpener.openExternalLink(with: url)
-            }
-        }
+        MEGAInfrastructure.DependencyInjection.externalLinkOpener.openExternalLink(with: url)
     }
 
     private func logout() async {

@@ -16,8 +16,8 @@ public struct RevampUpgradePlansDependency: Sendable {
     let accountDisplayName: @Sendable (AccountTypeEntity) -> String
     let domainName: String
     let appVersion: String
-    let canOpenURL: @Sendable (URL) async -> Bool
-    let openURL: @Sendable (URL) async -> Void
+    /// Opens the external purchase page; `false` when the system could not open it.
+    let openURL: @Sendable (URL) async -> Bool
     let notifyPurchaseSucceeded: @Sendable () -> Void
     let purchaseCompleteBehavior: PurchaseCompleteBehavior
     let dismissAction: @MainActor () -> Void
@@ -43,10 +43,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         accountDisplayName: @Sendable @escaping (AccountTypeEntity) -> String,
         domainName: String,
         appVersion: String,
-        canOpenURL: @Sendable @escaping (URL) async -> Bool = { UIApplication.shared.canOpenURL($0) },
-        openURL: @Sendable @escaping (URL) async -> Void = { url in
-            await MainActor.run { UIApplication.shared.open(url) }
-        },
+        openURL: @Sendable @escaping (URL) async -> Bool = { @MainActor in await UIApplication.shared.open($0) },
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
         dismissAction: @MainActor @escaping () -> Void = {},
@@ -64,7 +61,6 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.accountDisplayName = accountDisplayName
         self.domainName = domainName
         self.appVersion = appVersion
-        self.canOpenURL = canOpenURL
         self.openURL = openURL
         self.notifyPurchaseSucceeded = notifyPurchaseSucceeded
         self.purchaseCompleteBehavior = purchaseCompleteBehavior

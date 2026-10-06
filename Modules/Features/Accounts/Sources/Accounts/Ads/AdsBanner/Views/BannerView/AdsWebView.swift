@@ -94,11 +94,9 @@ struct AdsWebView: UIViewRepresentable {
                 return .allow
             }
             
-            guard UIApplication.shared.canOpenURL(url) else {
+            guard await UIApplication.shared.open(url) else {
                 return .cancel
             }
-            
-            await MainActor.run { UIApplication.shared.open(url) }
             adsWebView.adsTapAction()
             
             return .cancel

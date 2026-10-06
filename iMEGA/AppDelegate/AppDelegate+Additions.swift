@@ -704,10 +704,7 @@ extension AppDelegate {
         case .upgrade:
             DIContainer.tracker.trackAnalyticsEvent(with: SubscriptionOfferNotificationTappedEvent())
 
-            guard let deepLinkURL = URL(string: trimmedURL),
-                  UIApplication.shared.canOpenURL(deepLinkURL) else {
-                return
-            }
+            guard let deepLinkURL = URL(string: trimmedURL) else { return }
 
             // Before processing `.upgrade`, we need to check if there any blocking screen
             let interruptibility = PromoDialogInterruptibility(chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo))
@@ -716,10 +713,7 @@ extension AppDelegate {
             MEGALinkManager.linkURL = deepLinkURL
             showLink(deepLinkURL)
         default:
-            guard let deepLinkURL = URL(string: urlString),
-                  UIApplication.shared.canOpenURL(deepLinkURL) else {
-                return
-            }
+            guard let deepLinkURL = URL(string: urlString) else { return }
             UIApplication.shared.open(deepLinkURL)
         }
     }

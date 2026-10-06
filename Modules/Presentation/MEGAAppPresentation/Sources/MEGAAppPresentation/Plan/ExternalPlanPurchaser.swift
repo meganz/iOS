@@ -43,8 +43,8 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
     private let postPurchaseDelay: TimeInterval
     private let domainName: String
     private let appVersion: String
-    private let canOpenURL: @Sendable (URL) async -> Bool
-    private let openURL: @Sendable (URL) async -> Void
+    /// Opens the website; `false` when the system could not open it, which ends the attempt as a failure.
+    private let openURL: @Sendable (URL) async -> Bool
 
     private let outcomesSubject = PassthroughSubject<PlanPurchaseOutcome, Never>()
     /// Watches the account for the plan the user went off to buy. Runs from before the browser opens until
@@ -66,8 +66,7 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
         domainName: String,
         appVersion: String,
         postPurchaseDelay: TimeInterval = 1,
-        canOpenURL: @escaping @Sendable (URL) async -> Bool,
-        openURL: @escaping @Sendable (URL) async -> Void
+        openURL: @escaping @Sendable (URL) async -> Bool
     ) {
         self.linkProvider = linkProvider
         self.accountUseCase = accountUseCase
@@ -77,7 +76,6 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
         self.postPurchaseDelay = postPurchaseDelay
         self.domainName = domainName
         self.appVersion = appVersion
-        self.canOpenURL = canOpenURL
         self.openURL = openURL
     }
 
@@ -124,35 +122,43 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
     }
 
     private func openWebsite(for plan: PlanEntity, onWebsiteOpened: @escaping @MainActor () -> Void) async {
-        guard let url = await openableLink(for: plan) else {
-            endPurchasing()
-            tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
-            outcomesSubject.send(.failed)
+        guard let url = await link(for: plan) else {
+            failPurchase()
             return
         }
 
         // Started before the browser opens, so an account update that lands while the user is still on the
         // website is not missed.
         observeAccountUpdates(for: plan)
-        await openURL(url)
+        guard await openURL(url) else {
+            // The browser never opened, so there is no website purchase to wait for.
+            completionTask?.cancel()
+            completionTask = nil
+            failPurchase()
+            return
+        }
         endPurchasing()
         onWebsiteOpened()
     }
 
+    private func failPurchase() {
+        endPurchasing()
+        tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
+        outcomesSubject.send(.failed)
+    }
+
     // MARK: - Purchase steps
 
-    /// The website link for a plan, or `nil` when the route is no longer offered, no link can be built, or
-    /// the device cannot open it.
-    private func openableLink(for plan: PlanEntity) async -> URL? {
-        guard await linkProvider.shouldProvideExternalPurchase(),
-              let url = try? await linkProvider.externalPurchaseLink(
+    /// The website link for a plan, or `nil` when the route is no longer offered or no link can be built.
+    /// Whether the device can open it is only known when it is opened.
+    private func link(for plan: PlanEntity) async -> URL? {
+        guard await linkProvider.shouldProvideExternalPurchase() else { return nil }
+        return try? await linkProvider.externalPurchaseLink(
             domain: domainName,
             path: plan.externalPurchasePath,
             sourceApp: "iOS app Ver \(appVersion)",
             months: months(for: plan.subscriptionCycle)
-        ), await canOpenURL(url) else { return nil }
-
-        return url
+        )
     }
 
     private func months(for cycle: SubscriptionCycleEntity) -> Int? {

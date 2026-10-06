@@ -8,10 +8,10 @@ struct DeepLinkRouterTestSuite {
     // MARK: - Helpers
     @MainActor
     private static func makeSUTForExternalNavigation(
-        canOpenURLResult: Bool,
+        openResult: Bool,
         app: MEGAApp
     ) -> (router: DeepLinkRouter, mockAppLauncher: MockAppLauncher) {
-        let mockAppLauncher = MockAppLauncher(canOpenURLResult: canOpenURLResult)
+        let mockAppLauncher = MockAppLauncher(openResult: openResult)
         let appOpener = AppOpener(
             opener: mockAppLauncher,
             app: app
@@ -28,20 +28,13 @@ struct DeepLinkRouterTestSuite {
     }
     
     @MainActor
-    private static func assertAppOpened(
+    private static func assertOpenedURLs(
         router: DeepLinkRouter,
-        app: MEGAApp,
-        expectedURL: String?,
+        expectedURLs: [String],
         appLauncher: MockAppLauncher
     ) {
         router.openApp()
-        if let expectedURL = expectedURL {
-            #expect(appLauncher.open_calledTimes == 1, "Expected the app to open once.")
-            #expect(appLauncher.lastOpenedURL?.absoluteString == expectedURL, "Expected URL to be \(expectedURL), but got \(String(describing: appLauncher.lastOpenedURL?.absoluteString)).")
-        } else {
-            #expect(appLauncher.open_calledTimes == 0, "Expected the app to not open.")
-        }
-        #expect(appLauncher.canOpenURL_calledTimes == 1, "Expected canOpenURL to be called once.")
+        #expect(appLauncher.openedURLs.map(\.absoluteString) == expectedURLs, "Expected \(expectedURLs) to be opened in order, but got \(appLauncher.openedURLs.map(\.absoluteString)).")
     }
     
     // MARK: - App Link Tests
@@ -55,14 +48,13 @@ struct DeepLinkRouterTestSuite {
         ])
         func vpnLinkShouldOpenVPNAppIfInstalled(app: MEGAApp) {
             let (router, mockAppLauncher) = makeSUTForExternalNavigation(
-                canOpenURLResult: true,
+                openResult: true,
                 app: app
             )
             
-            assertAppOpened(
+            assertOpenedURLs(
                 router: router,
-                app: app,
-                expectedURL: app.scheme,
+                expectedURLs: [app.scheme],
                 appLauncher: mockAppLauncher
             )
         }
@@ -74,14 +66,14 @@ struct DeepLinkRouterTestSuite {
         ])
         func vpnLinkShouldOpenAppStoreIfAppNotInstalled(app: MEGAApp) {
             let (router, mockAppLauncher) = makeSUTForExternalNavigation(
-                canOpenURLResult: false,
+                openResult: false,
                 app: app
             )
             
-            assertAppOpened(
+            // The app scheme is tried first; the system reports it could not be opened, so the App Store follows.
+            assertOpenedURLs(
                 router: router,
-                app: app,
-                expectedURL: app.appStoreURL,
+                expectedURLs: [app.scheme, app.appStoreURL],
                 appLauncher: mockAppLauncher
             )
         }

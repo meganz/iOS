@@ -178,7 +178,6 @@ final class UpgradePlansContainerViewModel: ObservableObject {
                 accountUseCase: dependency.accountUseCase,
                 domainName: dependency.domainName,
                 appVersion: dependency.appVersion,
-                canOpenURL: dependency.canOpenURL,
                 openURL: dependency.openURL
             ),
             plans: plans,

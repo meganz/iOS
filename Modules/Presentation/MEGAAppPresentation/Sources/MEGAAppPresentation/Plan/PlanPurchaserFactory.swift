@@ -14,8 +14,7 @@ public protocol PlanPurchaserFactory: Sendable {
         accountUseCase: some AccountUseCaseProtocol,
         domainName: String,
         appVersion: String,
-        canOpenURL: @escaping @Sendable (URL) async -> Bool,
-        openURL: @escaping @Sendable (URL) async -> Void
+        openURL: @escaping @Sendable (URL) async -> Bool
     ) -> any ExternalPlanPurchasing
 }
 
@@ -45,8 +44,7 @@ public struct DefaultPlanPurchaserFactory: PlanPurchaserFactory {
         accountUseCase: some AccountUseCaseProtocol,
         domainName: String,
         appVersion: String,
-        canOpenURL: @escaping @Sendable (URL) async -> Bool,
-        openURL: @escaping @Sendable (URL) async -> Void
+        openURL: @escaping @Sendable (URL) async -> Bool
     ) -> any ExternalPlanPurchasing {
         ExternalPlanPurchaser(
             linkProvider: linkProvider,
@@ -56,7 +54,6 @@ public struct DefaultPlanPurchaserFactory: PlanPurchaserFactory {
             tracker: DIContainer.tracker,
             domainName: domainName,
             appVersion: appVersion,
-            canOpenURL: canOpenURL,
             openURL: openURL
         )
     }

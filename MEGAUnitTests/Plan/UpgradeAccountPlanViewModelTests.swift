@@ -1122,8 +1122,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             ),
             accountDetails: details,
             planList: planList,
-            canOpenURL: { _ in true },
-            openURL: { urlOpened.append($0) }
+            openURL: { urlOpened.append($0); return true }
         )
         
         await sut.setUpPlanTask?.value
@@ -1152,8 +1151,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             ),
             accountDetails: details,
             planList: planList,
-            canOpenURL: { _ in true },
-            openURL: { urlOpened.append($0) }
+            openURL: { urlOpened.append($0); return true }
         )
 
         await sut.setUpPlanTask?.value
@@ -1314,8 +1312,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         isFromAds: Bool = false,
         lastCloseAdsDate: Date? = nil,
         appVersion: String = "1.0.0",
-        canOpenURL: @Sendable @escaping (URL) async -> Bool = { _ in true },
-        openURL: @Sendable @escaping (URL) async -> Void = { _ in },
+        openURL: @Sendable @escaping (URL) async -> Bool = { _ in true },
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
         mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
@@ -1342,7 +1339,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             viewType: viewType,
             router: router,
             appVersion: appVersion,
-            canOpenURL: canOpenURL,
             openURL: openURL
         )
         return (sut, mockPurchaseUseCase)

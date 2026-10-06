@@ -51,8 +51,7 @@ public struct MockPlanPurchaserFactory: PlanPurchaserFactory {
         accountUseCase: some AccountUseCaseProtocol,
         domainName: String,
         appVersion: String,
-        canOpenURL: @escaping @Sendable (URL) async -> Bool,
-        openURL: @escaping @Sendable (URL) async -> Void
+        openURL: @escaping @Sendable (URL) async -> Bool
     ) -> any ExternalPlanPurchasing {
         externalPurchaser
     }

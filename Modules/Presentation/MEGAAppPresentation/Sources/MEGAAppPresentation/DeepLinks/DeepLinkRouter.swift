@@ -2,7 +2,6 @@ import UIKit
 
 @MainActor
 public protocol URLOpening {
-    func canOpenURL(_ url: URL) -> Bool
     func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any], completionHandler completion: (@MainActor @Sendable (Bool) -> Void)?)
 }
 
@@ -35,15 +34,27 @@ public struct AppOpener {
         self.logHandler = logHandler
     }
     
-    /// Attempts to open the external app or its App Store page.
+    /// Opens the external app, or its App Store page when the app is not installed.
+    ///
+    /// The app is opened without checking first: `canOpenURL` is deprecated, and the system reports
+    /// whether the open succeeded, which is the same information.
     public func openApp() {
-        if let appURL = URL(string: app.scheme), opener.canOpenURL(appURL) {
-            opener.open(appURL, options: [:], completionHandler: nil)
-        } else if let appStoreURL = URL(string: app.appStoreURL) {
-            opener.open(appStoreURL, options: [:], completionHandler: nil)
-        } else {
-            logHandler?("[DeepLink] Unable to open app or App Store for \(app).")
+        guard let appURL = URL(string: app.scheme) else {
+            openAppStore()
+            return
         }
+        opener.open(appURL, options: [:]) { opened in
+            guard !opened else { return }
+            openAppStore()
+        }
+    }
+
+    private func openAppStore() {
+        guard let appStoreURL = URL(string: app.appStoreURL) else {
+            logHandler?("[DeepLink] Unable to open app or App Store for \(app).")
+            return
+        }
+        opener.open(appStoreURL, options: [:], completionHandler: nil)
     }
 }
 

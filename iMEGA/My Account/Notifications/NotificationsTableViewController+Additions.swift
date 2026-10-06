@@ -126,7 +126,6 @@ extension NotificationsTableViewController {
         case .reloadData:
             tableView.reloadData()
         case .presentURLLink(let url):
-            guard UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url)
         }
     }

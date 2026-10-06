@@ -519,9 +519,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeAppSettings:
-            if ([UIApplication.sharedApplication canOpenURL:url]) {
-                [UIApplication.sharedApplication openURL:url options:@{} completionHandler:nil];
-            }
+            [UIApplication.sharedApplication openURL:url options:@{} completionHandler:nil];
             break;
         case URLTypeCollection:
             if (url.mnz_isAutoplayLink) {
