@@ -1289,6 +1289,7 @@
 		3744AB617EB5F611E298E686 /* ReplicatedFileProviderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */; };
 		B02BCFB337B55DE1784BD27D /* ReplicatedFileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */; };
 		061DA4BF4CEB2DAEF39E8409 /* ReplicatedFileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7818B713E5964C838E4D5CDD /* ReplicatedFileProviderItem.swift */; };
+		A1F3C2D4E5B6978812345601 /* FileProviderMemoryProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3C2D4E5B6978812345602 /* FileProviderMemoryProbe.swift */; };
 		B67012023DA8C6618416957D /* FileProviderDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F92BF44005E5E2786C269C7 /* FileProviderDownloadCoordinator.swift */; };
 		84F6E2823029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */; };
 		84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */; };
@@ -4184,6 +4185,7 @@
 		1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderEnumerator.swift; sourceTree = "<group>"; };
 		EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderExtension.swift; sourceTree = "<group>"; };
 		7818B713E5964C838E4D5CDD /* ReplicatedFileProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderItem.swift; sourceTree = "<group>"; };
+		A1F3C2D4E5B6978812345602 /* FileProviderMemoryProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderMemoryProbe.swift; sourceTree = "<group>"; };
 		84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEnoughStorageAlertRouter.swift; sourceTree = "<group>"; };
 		84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferIndicatorBarItemConfigurator.swift; sourceTree = "<group>"; };
 		8B8B4669F271D8CEDD945F9E /* PromoDialogInterruptibility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoDialogInterruptibility.swift; sourceTree = "<group>"; };
@@ -11291,6 +11293,7 @@
 		9005D6C895C5C1E877801498 /* Replicated */ = {
 			isa = PBXGroup;
 			children = (
+				A1F3C2D4E5B6978812345602 /* FileProviderMemoryProbe.swift */,
 				1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */,
 				EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */,
 				7818B713E5964C838E4D5CDD /* ReplicatedFileProviderItem.swift */,
@@ -16891,6 +16894,7 @@
 				A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */,
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
 				A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */,
+				A1F3C2D4E5B6978812345601 /* FileProviderMemoryProbe.swift in Sources */,
 				84DB3FEA2FDFEFBD00DD99EB /* FileProviderSession.swift in Sources */,
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
