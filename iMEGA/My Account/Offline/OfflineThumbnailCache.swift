@@ -103,9 +103,8 @@ final class OfflineThumbnailCache {
     /// anything else, since `requestThumbnail()` could not produce an image for it either.
     private func key(for url: URL) -> String? {
         guard url.isFileURL,
-              let modificationDate = try? url
-            .resourceValues(forKeys: [.contentModificationDateKey])
-            .contentModificationDate else {
+              let modificationDate = try? FileManager.default
+            .attributesOfItem(atPath: url.path)[.modificationDate] as? Date else {
             return nil
         }
         return "\(url.path)|\(modificationDate.timeIntervalSince1970)"
