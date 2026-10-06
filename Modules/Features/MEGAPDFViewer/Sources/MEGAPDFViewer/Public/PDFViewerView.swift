@@ -90,6 +90,8 @@ public struct PDFViewerView: View {
                     PDFDisplayerView(
                         document: document,
                         currentPage: $viewModel.currentPageIndex,
+                        isProgrammaticallyScrollingToCurrentPage:
+                            $viewModel.isProgrammaticallyScrollingToCurrentPage,
                         onLinkTapped: onLinkTapped,
                         onTap: {
                             withAnimation(.easeInOut(duration: 0.25)) {
@@ -107,7 +109,12 @@ public struct PDFViewerView: View {
                         PDFThumbnailGridView(
                             document: document,
                             currentPage: viewModel.currentPageIndex,
-                            thumbnailLoader: thumbnailLoader
+                            thumbnailLoader: thumbnailLoader,
+                            onSelect: { pageIndex in
+                                withAnimation(.easeInOut(duration: 0.25)) {
+                                    viewModel.didSelectThumbnail(at: pageIndex)
+                                }
+                            }
                         )
                         .transition(.opacity)
                     }

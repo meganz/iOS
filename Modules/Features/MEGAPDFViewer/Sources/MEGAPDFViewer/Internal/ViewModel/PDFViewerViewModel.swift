@@ -61,6 +61,7 @@ final class PDFViewerViewModel {
 
     var isChromeHidden = false
     var isShowingThumbnails = false
+    var isProgrammaticallyScrollingToCurrentPage = false
 
     private let dependency: Dependency
 
@@ -172,5 +173,17 @@ extension PDFViewerViewModel {
             pagingState.currentPageIndex + 1,
             pagingState.pageCount
         )
+    }
+
+    func didSelectThumbnail(at pageIndex: Int) {
+        scrollToPageIndex(pageIndex)
+        isShowingThumbnails = false
+    }
+
+    private func scrollToPageIndex(_ pageIndex: Int) {
+        guard let pageCount = pagingState?.pageCount,
+              (0..<pageCount).contains(pageIndex) else { return }
+        currentPageIndex = pageIndex
+        isProgrammaticallyScrollingToCurrentPage = true
     }
 }

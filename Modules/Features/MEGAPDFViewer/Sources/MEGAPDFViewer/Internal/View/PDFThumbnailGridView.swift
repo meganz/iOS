@@ -11,6 +11,7 @@ struct PDFThumbnailGridView: View {
     let document: PDFDocument
     let currentPage: Int
     let thumbnailLoader: any PDFThumbnailLoading
+    let onSelect: @MainActor (Int) -> Void
 
     private let columns = Array(
         repeating: GridItem(.flexible(), spacing: TokenSpacing._3),
@@ -20,11 +21,13 @@ struct PDFThumbnailGridView: View {
     init(
         document: PDFDocument,
         currentPage: Int,
-        thumbnailLoader: some PDFThumbnailLoading
+        thumbnailLoader: some PDFThumbnailLoading,
+        onSelect: @escaping @MainActor (Int) -> Void
     ) {
         self.document = document
         self.currentPage = currentPage
         self.thumbnailLoader = thumbnailLoader
+        self.onSelect = onSelect
     }
 
     var body: some View {
@@ -37,7 +40,8 @@ struct PDFThumbnailGridView: View {
                                 pageIndex: pageIndex,
                                 isCurrent: pageIndex == currentPage,
                                 renderSize: renderSize(forGridWidth: proxy.size.width),
-                                thumbnailLoader: thumbnailLoader
+                                thumbnailLoader: thumbnailLoader,
+                                onSelect: onSelect
                             )
                             .id(pageIndex)
                         }
@@ -77,27 +81,33 @@ private struct PDFViewerThumbnailCell: View {
     let isCurrent: Bool
     let renderSize: CGSize
     let thumbnailLoader: any PDFThumbnailLoading
+    let onSelect: @MainActor (Int) -> Void
 
     @Environment(\.displayScale) private var displayScale
     @State private var thumbnail: UIImage?
 
     var body: some View {
-        VStack(spacing: TokenSpacing._2) {
-            thumbnailContent
-                .aspectRatio(PDFThumbnailMetrics.aspectRatio, contentMode: .fit)
-                .background(TokenColors.Background.surface2.swiftUI)
-                .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
-                .overlay(
-                    RoundedRectangle(cornerRadius: TokenRadius.small)
-                        .strokeBorder(
-                            isCurrent
-                                ? TokenColors.Border.strongSelected.swiftUI
-                                : TokenColors.Border.subtle.swiftUI,
-                            lineWidth: isCurrent ? 2 : 1
-                        )
-                )
-            pageNumber
+        Button {
+            onSelect(pageIndex)
+        } label: {
+            VStack(spacing: TokenSpacing._2) {
+                thumbnailContent
+                    .aspectRatio(PDFThumbnailMetrics.aspectRatio, contentMode: .fit)
+                    .background(TokenColors.Background.surface2.swiftUI)
+                    .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: TokenRadius.small)
+                            .strokeBorder(
+                                isCurrent
+                                    ? TokenColors.Border.strongSelected.swiftUI
+                                    : TokenColors.Border.subtle.swiftUI,
+                                lineWidth: isCurrent ? 2 : 1
+                            )
+                    )
+                pageNumber
+            }
         }
+        .buttonStyle(.plain)
         // Truncated like the cache key in `PDFThumbnailLoader`, so a sub-pixel
         // layout change does not restart the render.
         .task(id: ThumbnailTaskID(

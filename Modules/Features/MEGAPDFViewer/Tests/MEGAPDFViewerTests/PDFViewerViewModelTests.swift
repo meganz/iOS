@@ -387,4 +387,43 @@ struct PDFViewerViewModelTests {
         task.cancel()
     }
 
+    @Test func didSelectThumbnail_navigatesToPageAndHidesThumbnails() async {
+        let (sut, task) = await loadedSUT(pageCount: 3)
+        sut.isShowingThumbnails = true
+
+        sut.didSelectThumbnail(at: 2)
+
+        #expect(sut.currentPageIndex == 2)
+        #expect(sut.isProgrammaticallyScrollingToCurrentPage)
+        #expect(!sut.isShowingThumbnails)
+        task.cancel()
+    }
+
+    @Test func didSelectThumbnail_outsideDocument_doesNotNavigate() async {
+        let (sut, task) = await loadedSUT(pageCount: 3)
+
+        sut.didSelectThumbnail(at: 3)
+
+        #expect(sut.currentPageIndex == 0)
+        #expect(!sut.isProgrammaticallyScrollingToCurrentPage)
+        task.cancel()
+    }
+
+    private func loadedSUT(pageCount: Int) async -> (PDFViewerViewModel, Task<Void, Never>) {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(
+                document: MockPDFDocumentLoader.makeDocument(pageCount: pageCount)
+            )
+        )
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        return (sut, task)
+    }
+
 }
