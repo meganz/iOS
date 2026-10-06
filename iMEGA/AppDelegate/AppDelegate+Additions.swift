@@ -1000,7 +1000,8 @@ extension AppDelegate {
 
 // MARK: - Continue Where You Left Off recording logic
 extension AppDelegate {
-    @objc func injectContinueWhereYouLeftOffDependencies() {
+    @objc func configureContinueWhereYouLeftOff() {
+        LeftOffItemsRecordUseCase.shared.startObservingLogout()
         MEGAAudioPlayerSession.registerLeftOffItemRecordUseCase(LeftOffItemsRecordUseCase.shared)
         MEGAVideoPlayer.DependencyInjection.leftOffItemRecordUseCase = LeftOffItemsRecordUseCase.shared
     }

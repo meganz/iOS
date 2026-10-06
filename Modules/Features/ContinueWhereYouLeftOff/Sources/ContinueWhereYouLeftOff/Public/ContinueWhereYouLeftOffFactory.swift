@@ -6,13 +6,15 @@ public enum ContinueWhereYouLeftOffFactory {
     public static func makeLeftOffItemsUseCase(
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        requestStatesRepository: some RequestStatesRepositoryProtocol
     ) -> some LeftOffItemsUseCaseProtocol {
         LeftOffItemsUseCase(
             repository: LeftOffItemsRepository(store: sharedStore),
             nodeUseCase: nodeUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            requestStatesRepository: requestStatesRepository
         )
     }
 }

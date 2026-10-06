@@ -5,19 +5,18 @@ import MEGADomain
 public struct ResolvedLeftOffItemEntity: Sendable, Identifiable, Equatable {
     public var id: HandleEntity { item.handle }
     public let item: LeftOffItemEntity
-    /// Video duration in seconds, when the node has one.
-    public let duration: TimeInterval?
+    public let node: NodeEntity
     /// Whether the resolved node is sensitive and the hidden-nodes feature is active for this account.
     /// When `true` the item is blurred on the UI.
     public let isSensitive: Bool
 
     public init(
         item: LeftOffItemEntity,
-        duration: TimeInterval? = nil,
+        node: NodeEntity,
         isSensitive: Bool = false
     ) {
         self.item = item
-        self.duration = duration
+        self.node = node
         self.isSensitive = isSensitive
     }
 }

@@ -22,7 +22,8 @@ struct LeftOffItemsUseCaseTests {
         repositoryError: LeftOffItemErrorEntity? = nil,
         excludeSensitives: Bool = false,
         isAccessible: Bool = true,
-        inheritedSensitivity: [HandleEntity: Result<Bool, any Error>] = [:]
+        inheritedSensitivity: [HandleEntity: Result<Bool, any Error>] = [:],
+        requestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> = EmptyAsyncSequence<RequestResponseEntity>().eraseToAnyAsyncSequence()
     ) -> (LeftOffItemsUseCase, MockLeftOffItemsRepository) {
         let repository = MockLeftOffItemsRepository(fetchItemsResult: stored, errorToThrow: repositoryError)
         repository.fetchItemsBatches = fetchBatches
@@ -40,7 +41,8 @@ struct LeftOffItemsUseCaseTests {
                 isAccessible: isAccessible,
                 isInheritingSensitivityResult: .success(false),
                 isInheritingSensitivityResults: inheritedSensitivity
-            )
+            ),
+            requestStatesRepository: MockRequestStatesRepository(requestFinishUpdates: requestFinishUpdates)
         )
         return (sut, repository)
     }
@@ -69,7 +71,7 @@ struct LeftOffItemsUseCaseTests {
 
         #expect(result.count == 1)
         #expect(result[0].item.name == "new name.mp4")
-        #expect(result[0].duration == 120)
+        #expect(result[0].node.duration == 120)
     }
 
     @Test("items keeps the stored name when the live node name is blank")
@@ -370,6 +372,36 @@ struct LeftOffItemsUseCaseTests {
         }
 
         #expect(ticks == 5)
+    }
+
+    @Test("changesSignalSequence emits a tick only for a successful fetch nodes completion")
+    func changesSignalSequenceTicksOnFetchNodesCompletion() async {
+        let finished = [
+            RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok)),
+            RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok)),
+            RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .badArguments))
+        ]
+        let (sut, _) = makeSUT(requestFinishUpdates: finished.async.eraseToAnyAsyncSequence())
+
+        var ticks = 0
+        for await _ in sut.changesSignalSequence() {
+            ticks += 1
+        }
+
+        #expect(ticks == 1)
+    }
+
+    @Test("items carries the resolved node")
+    func itemsCarriesResolvedNode() async throws {
+        let (sut, _) = makeSUT(
+            stored: [item(1)],
+            nodes: [1: NodeEntity(name: "clip.mp4", handle: 1, hasThumbnail: true)]
+        )
+
+        let result = try await sut.items(sortedBy: .lastAccessed, ascending: false)
+
+        #expect(result.first?.node.handle == 1)
+        #expect(result.first?.node.hasThumbnail == true)
     }
 
     // MARK: - Writes

@@ -12,13 +12,16 @@ package struct LeftOffItemsUseCase: LeftOffItemsUseCaseProtocol {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let requestStatesRepository: any RequestStatesRepositoryProtocol
 
     package init(
         repository: some LeftOffItemsRepositoryProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        requestStatesRepository: some RequestStatesRepositoryProtocol
     ) {
+        self.requestStatesRepository = requestStatesRepository
         self.repository = repository
         self.nodeUseCase = nodeUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
@@ -67,9 +70,16 @@ package struct LeftOffItemsUseCase: LeftOffItemsUseCaseProtocol {
     }
 
     package func changesSignalSequence() -> AnyAsyncSequence<Void> {
-        merge(
+        // In case of an offline cold launch, sdk won't be able to resolve the nodes
+        // and the Left of widget will stay empty
+        // In such case we need to listen to .fetchNodes completion signal to trigger the reload
+        let fetchNodesCompleted = requestStatesRepository.completedRequestUpdates
+            .filter { $0.type == .fetchNodes }
+            .map { _ in () }
+        return merge(
             repository.changesSignalSequence(),
-            nodeUseCase.nodeUpdates.map { _ in () }
+            nodeUseCase.nodeUpdates.map { _ in () },
+            fetchNodesCompleted
         )
         .eraseToAnyAsyncSequence()
     }
@@ -159,12 +169,12 @@ private struct InspectedLeftOffItem: Sendable {
 }
 
 private extension LeftOffItemEntity {
-    /// Map to a `ResolvedLeftOffItemEntity`, refreshing `name` and filling `duration` (seconds, when positive)
-    /// and `isSensitive` from the resolved live node. A blank live name keeps the stored one.
+    /// Map to a `ResolvedLeftOffItemEntity`, refreshing `name` and filling `isSensitive`
+    /// from the resolved live node. A blank live name keeps the stored one.
     func resolved(from node: NodeEntity, isSensitive: Bool) -> ResolvedLeftOffItemEntity {
         ResolvedLeftOffItemEntity(
             item: LeftOffItemEntity(handle: handle, name: node.name.isEmpty ? name : node.name, lastAccessed: lastAccessed),
-            duration: node.duration > 0 ? TimeInterval(node.duration) : nil,
+            node: node,
             isSensitive: isSensitive
         )
     }

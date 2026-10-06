@@ -134,7 +134,7 @@
     [self injectConnectivityLocalizations];
     [self injectOfflineModeDependencies];
     [self injectViewedLinksDependencies];
-    [self injectContinueWhereYouLeftOffDependencies];
+    [self configureContinueWhereYouLeftOff];
 
     [self initialiseModules];
     [self configureTransferServices];

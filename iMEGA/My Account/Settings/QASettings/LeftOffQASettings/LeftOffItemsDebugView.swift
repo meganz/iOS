@@ -83,8 +83,8 @@ struct LeftOffItemsDebugView: View {
     }
 
     private func durationText(for item: ResolvedLeftOffItemEntity) -> String {
-        guard let duration = item.duration else { return "no duration" }
-        return "duration \(Int(duration))s"
+        guard item.node.duration > 0 else { return "no duration" }
+        return "duration \(item.node.duration)s"
     }
 
     private var statusSection: some View {
@@ -122,7 +122,8 @@ final class LeftOffItemsDebugViewModel: ObservableObject {
                     repo: UserAttributeRepository.newRepo
                 )
             ),
-            sensitiveNodeUseCase: sensitiveNodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            requestStatesRepository: RequestStatesRepository.newRepo
         )
     }
 

@@ -26,6 +26,18 @@ final class LeftOffItemsRecordUseCase: LeftOffItemRecordUseCaseProtocol {
         self.isEnabled = isEnabled
     }
 
+    func startObservingLogout() {
+        _ = NotificationCenter.default.addObserver(
+            forName: .MEGALogout,
+            object: nil,
+            queue: nil
+        ) { [useCase] _ in
+            Task {
+                try? await useCase.clearHistory()
+            }
+        }
+    }
+
     func record(handle: HandleEntity, name: String) async {
         guard isEnabled(), !name.isEmpty else { return }
         // A recorded node can be a file link, therefore we need to check whether the recorded node
@@ -65,7 +77,8 @@ final class LeftOffItemsRecordUseCase: LeftOffItemRecordUseCaseProtocol {
                     repo: UserAttributeRepository.newRepo
                 )
             ),
-            sensitiveNodeUseCase: sensitiveNodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            requestStatesRepository: RequestStatesRepository.newRepo
         )
     }
 
