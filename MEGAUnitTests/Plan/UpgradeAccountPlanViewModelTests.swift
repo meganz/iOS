@@ -1122,16 +1122,49 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             ),
             accountDetails: details,
             planList: planList,
-            openURL: { urlOpened.append($0); return true }
+            openURL: { url in
+                urlOpened.append(url)
+                return true
+            }
         )
-        
+
         await sut.setUpPlanTask?.value
         sut.setSelectedPlan(.proI_monthly)
-        
+
         sut.didTap(.buyExternally)
         await sut.buyPlanTask?.value
-        
+
         XCTAssertEqual(urlOpened, [expectedURL])
+    }
+
+    @MainActor
+    func testDidTapBuyExternally_whenExternalLinkCannotBeOpened_shouldFallBackToInAppPurchase() async {
+        nonisolated(unsafe) var urlOpened = [URL]()
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
+        let expectedURL = URL(string: "https://www.example.com")!
+        let (sut, mockUseCase) = makeSUT(
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(
+                shouldProvideExternalPurchase: true,
+                externalPurchaseLink: .success(expectedURL)
+            ),
+            accountDetails: details,
+            planList: planList,
+            openURL: { url in
+                urlOpened.append(url)
+                return false
+            }
+        )
+
+        await sut.setUpPlanTask?.value
+        sut.setSelectedPlan(.proI_monthly)
+
+        sut.didTap(.buyExternally)
+        await sut.buyPlanTask?.value
+
+        XCTAssertEqual(urlOpened, [expectedURL], "The website is tried once before falling back.")
+        XCTAssertEqual(mockUseCase.purchasePlanCalled, 1, "A website that never opened falls back to the in-app purchase.")
+        XCTAssertNil(sut.observeAccountUpdatesTask, "No website purchase is pending, so the account watch must be cancelled.")
     }
 
     @MainActor
@@ -1151,7 +1184,10 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             ),
             accountDetails: details,
             planList: planList,
-            openURL: { urlOpened.append($0); return true }
+            openURL: { url in
+                urlOpened.append(url)
+                return true
+            }
         )
 
         await sut.setUpPlanTask?.value
