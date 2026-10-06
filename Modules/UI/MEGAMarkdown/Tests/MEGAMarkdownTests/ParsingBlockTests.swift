@@ -46,6 +46,16 @@ import Testing
         #expect(code.code == "line1\nline2")
     }
 
+    /// cmark turns every line end into "\n". Views split code on "\n" only, so a cmark update must keep this.
+    @Test(arguments: ["\r\n", "\r"])
+    func codeBlockLineEndsAreNewlines(lineEnd: String) throws {
+        let fenced = try #require(parse(["```swift", "a", "b", "```", ""].joined(separator: lineEnd)).first?.code)
+        #expect(fenced.language == "swift")
+        #expect(fenced.code == "a\nb")
+        let indented = try #require(parse(["para", "", "    a", "    b", ""].joined(separator: lineEnd)).last?.code)
+        #expect(indented.code == "a\nb")
+    }
+
     @Test func codeBlockDoesNotParseMarkdownInside() throws {
         let code = try #require(parse("```\n# not heading\n**x**\n```").first?.code)
         #expect(code.code == "# not heading\n**x**")

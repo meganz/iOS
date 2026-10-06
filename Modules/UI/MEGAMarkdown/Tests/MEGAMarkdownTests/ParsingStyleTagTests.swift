@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 import Testing
 
-// Inline HTML style tags written by the editor exporter (same names as MarkdownImporter.htmlStyleTags).
+// Inline HTML style tags for bold, italic, strike, code and underline (the names in StyleTag).
 @Suite struct ParsingStyleTagTests {
     private func paragraph(_ markdown: String) throws -> AttributedString {
         guard case .paragraph(let text) = try #require(parse(markdown).first).kind else {

@@ -1,6 +1,5 @@
 /// One inline HTML style tag like `<strong>` or `</em>`.
-/// The editor exporter writes these when `**`, `_`, `~~` or backticks cannot round-trip.
-/// The tag names match `MarkdownImporter.htmlStyleTags` in MEGAMarkdownEditor.
+/// They give a style where `**`, `_`, `~~` or backticks do not parse, and underline, which Markdown cannot write.
 struct StyleTag {
     enum Style {
         case bold

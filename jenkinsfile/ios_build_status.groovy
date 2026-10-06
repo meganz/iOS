@@ -10,6 +10,9 @@ import groovy.transform.Field
 // Loaded jenkinsfile/benchmarks.groovy. The stage and its post block share it.
 @Field def benchmarks = null
 
+// Loaded jenkinsfile/snapshot_tests.groovy. The stage and its post block share it.
+@Field def snapshotTests = null
+
 NODE_LABELS = 'mac-jenkins-slave-ios-xcode-26'
 
 def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
@@ -191,6 +194,7 @@ pipeline {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                                 script {
                                     envInjector.injectEnvs {
+                                        sh "bash scripts/print_ci_environment.sh"
                                         setupProjectDependencies()
                                         runUnitTestsStepReached = true
                                         sh "bundle exec fastlane run_tests_app"
@@ -207,6 +211,7 @@ pipeline {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                                 script {
                                     envInjector.injectEnvs {
+                                        sh "bash scripts/print_ci_environment.sh"
                                         setupProjectDependencies()
                                         packageTests = load('jenkinsfile/package_tests.groovy')
                                         packageTests.runPackageTests()
@@ -258,6 +263,7 @@ pipeline {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                                 script {
                                     envInjector.injectEnvs {
+                                        sh "bash scripts/print_ci_environment.sh"
                                         benchmarks = load('jenkinsfile/benchmarks.groovy')
                                         benchmarks.runBenchmarks { setupProjectDependencies() }
                                     }
@@ -273,6 +279,40 @@ pipeline {
                                         postBenchmarkReportToMR()
                                     }
                                 }
+                            }
+                        }
+                        cleanup {
+                            cleanWs(
+                                cleanWhenFailure: true,
+                                cleanWhenAborted: true,
+                                cleanWhenNotBuilt: true,
+                                cleanWhenUnstable: true,
+                                cleanWhenSuccess: true,
+                                disableDeferredWipeout: true,
+                                deleteDirs: true
+                            )
+                        }
+                    }
+                }
+                stage('Snapshot tests') {
+                    agent { label NODE_LABELS }
+                    steps {
+                        gitlabCommitStatus(name: 'Snapshot tests') {
+                            withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                script {
+                                    envInjector.injectEnvs {
+                                        sh "bash scripts/print_ci_environment.sh"
+                                        snapshotTests = load('jenkinsfile/snapshot_tests.groovy')
+                                        snapshotTests.runSnapshotTests()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            script {
+                                snapshotTests?.archiveSnapshotResults()
                             }
                         }
                         cleanup {

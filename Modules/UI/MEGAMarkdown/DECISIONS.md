@@ -10,6 +10,28 @@ Why the package is built this way.
 | API level | cmark C API directly, own tree walker with `cmark_iter`. No second tree, no recursion. | • **`swiftlang/swift-markdown`**: same C parser, plus a recursive copy to a Swift tree. 10 MB in 868 ms vs 136 ms, 2x memory. Stack overflow on 50,000 nested `>`. No autolink extension. Tree not `Sendable`. |
 | Inline model | Compact `InlineText` (`String` + `Int32` runs). `AttributedString` is built later, so a preview can convert only visible blocks. 10 MB in 264 ms. | • **`AttributedString` during the walk**: 10 MB in 2.2 s, about 5x more memory. 98% of Foundation's time was attributed-string building. |
 | Large input | Chunks of about 1 MiB, cut only where a cmark probe says the last leaf block is closed. Grow 2x on a rejected cut. Cap 8 MiB, then plain text. iPhone 15, 10 MB: peak 15 MB. First content 173 ms (simulator). | • **Whole-file tree**: about 20 MB per MB of input (2 GB at 100 MB). iPhone 15, 10 MB: peak 491 MB. First content 11.9 s (simulator).<br>• **Cut at blank lines, parse parts in parallel**: old prototype gave 11 wrong outputs, 7 visible (fence lines inside HTML, hidden definitions). |
+| Code in a right-to-left layout | A code block stays left to right: its text, its side scroll and its language label. The block itself still sits in the right-to-left layout. | • **Mirror like other text**: code is written left to right. Right-aligned lines hide the indent, and the side scroll would start at the end of the line. |
+
+## Preview display rules
+
+The rule for each choice: keep what matches GitHub. Else follow a standard. Else follow the Android preview
+(`feature/text-editor`, develop e430b4c2ee). Paths below are in that Android module.
+
+| Topic | Rule | Why |
+|---|---|---|
+| Blocks inside a list item or quote | 4 pt between them (`nestedBlockSpacing`). Top-level blocks keep `blockSpacing`. | Android `MarkdownBlockFrame.kt:55-57` (4 dp nested). |
+| Text direction | A paragraph, heading or list item takes the direction of its first strong letter. A right-to-left row is right-aligned, with its marker on the right. Quote bars follow the layout. Tables and code stay left to right. | Standard: UAX #9 rules P2 and P3, like HTML `dir="auto"`. Tables: GitHub. |
+| Ordered list with `)` | Shows "1.", like any ordered list. The model keeps no delimiter. | GitHub shows "1." too. |
+| Ordered task item | Shows the checkbox, not the number. | GitHub hides the number of a task item. |
+| Newline inside inline HTML | An unmatched tag stays literal, with its own newline. See PARSER.md "Inline HTML styles". | Android hides inline HTML. Showing raw text keeps every byte visible. |
+| Hyphens | Kept. SwiftUI `Text` may add a hyphen when it breaks a long word, also in a table cell URL ("www.github.-com"). Known limit. | SwiftUI has no public switch for hyphens. Typesetting the text as "zxx" (no language) stops them, but it also drops the line height of the reader's language. That can cut the accent marks of Vietnamese text. |
+| Inline code chip spacing | The box grows 2 pt but stays 2 pt from the word next to it. Two chips across one space meet halfway, 2 pt apart. | Android `MarkdownInlineCodeChips.kt:101-108`. |
+| Footnotes | Off. `[^1]` stays text or a link definition, like any label. | Android has no footnote extension. |
+| Link with empty text | Draws nothing, so it cannot be seen or tapped. | GitHub draws an empty `<a>` as nothing too. |
+| Quote bar | One unbroken bar through the whole quote, also across rows. | Android `MarkdownBlockFrame.kt:207-212`, GitHub `border-left`. |
+| Two links side by side | No added space. They can read as one link. Each part opens its own URL. | GitHub shows the same. |
+| Table column width | Fixed 140 pt columns. A wide table scrolls sideways. | Android `MarkdownNode.kt` (140 dp). |
+| Linked image with empty alt text | Draws nothing. Known limit for now. A later version may show the file name as link text. | Android and the browser rule for `alt=""`. |
 
 ## Source of truth
 
@@ -20,7 +42,7 @@ Each parser behaviour has one source of truth. A bug is output that differs from
 | CommonMark blocks and inlines | The HTML of cmark-gfm from the pinned `swift-cmark`, for the same input and the same extensions. | `CmarkReferenceTests`: every spec example, every fixture file, and 3,000 seeded mutations of spec examples. |
 | GFM tables, strikethrough and autolinks | The same cmark HTML. | `CmarkReferenceTests`. |
 | Task items | The GFM task list rule, with two fixes to cmark's `tasklist` extension (see "Task items"). | `ParsingNestingTests` and `ParserEdgeCaseTests`. The cmark comparison ignores task markers. |
-| Style tags like `<b>` and `<u>` | The tags the editor exporter writes. The names and the pairing rule live in `StyleTag.swift`. | `ParsingStyleTagTests`. The cmark comparison pairs tags with the same `StyleTag` rule (R5). |
+| Style tags like `<b>` and `<u>` | Bare tags for bold, italic, strike, code and underline. The names and the pairing rule live in `StyleTag.swift`. | `ParsingStyleTagTests`. The cmark comparison pairs tags with the same `StyleTag` rule (R5). |
 | Link and image URLs | RFC 3986. The URL keeps the destination cmark gives, encoded once. | Fixed strings in `ParsingInlineTests`. |
 | Display rules for the viewer | The rules R1 to R6 below. | `CmarkReferenceTests` checks that each rule is still needed. |
 | Chunked parsing | A whole-file parse of the same text. | `ChunkedParseTests`, `ChunkerEdgeTests` and `SpecCorpusChunkTests`. |
@@ -38,11 +60,11 @@ Each rule has the same ID in `CmarkReference.rules`. A test fails when a rule no
 
 | ID | Rule | Why |
 |---|---|---|
-| R1 | A block with no content is dropped: an empty heading or code block, a quote or list item with no content, and a table body row of empty cells. An ordered list then starts at its first kept item. An empty task item stays. | The viewer has nothing to show for an empty row. The editor writes `- [ ] ` for a new task, so that item must stay. |
+| R1 | A block with no content is dropped: an empty heading or code block, a quote or list item with no content, and a table body row of empty cells. A code block counts as empty after R2, so a block of only blank lines is dropped. A line of spaces is content. An ordered list then starts at its first kept item. An empty task item stays. | The viewer has nothing to show for an empty row. An empty task item stays, because `- [ ] ` is a valid task marker. |
 | R2 | A code block loses all trailing newlines. cmark keeps the blank lines before the closing fence. | Trailing blank lines would show as empty space at the end of the block. |
 | R3 | An image inside a link shows its alt text as the link text. | The model has one link per text run, so an image cannot sit inside a link. |
 | R4 | An image block has no title. An inline image keeps its title. | `ParsedBlock.Kind.image` has no title. |
-| R5 | Matched bare style tags style the text between them and are removed. | The editor writes these tags when Markdown syntax cannot round-trip. |
+| R5 | Matched bare style tags style the text between them and are removed. | Markdown has no syntax for underline, and `**`, `_`, `~~` or backticks do not always parse, for example `_` inside a word. These tags still give the style. |
 | R6 | A link inside a link keeps only the inner link. cmark nests an autolink inside link text. | The model has one link per text run. |
 
 A line break inside image alt text becomes a space, like cmark writes it. The words of the alt text stay apart.

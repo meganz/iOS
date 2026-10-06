@@ -4,8 +4,7 @@ A Markdown renderer and a rich + source Markdown editor for SwiftUI.
 It parses blocks with cmark-gfm (C, from `swiftlang/swift-cmark`). Everything else uses Apple APIs.
 
 - Parsing: cmark-gfm (CommonMark + GitHub Flavored Markdown tables, strikethrough and autolinks).
-- Inline-only text (`MarkdownLabel`): Foundation `AttributedString(markdown:)`.
-- Rendering: SwiftUI, in lazy rows.
+- Rendering: SwiftUI views. A big block can be split into rows, so a list view builds only the rows on screen.
 - Editing: rich mode has one `UITextView` per block. Source mode has one TextKit 2 `UITextView`.
 
 It matches the Android text editor (`feature/text-editor/text-editor-snowflake-components`).

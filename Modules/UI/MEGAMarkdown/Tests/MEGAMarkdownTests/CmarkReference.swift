@@ -172,7 +172,7 @@ enum CmarkReference {
     // MARK: - Rules
 
     static let rules: [Rule] = [
-        Rule(id: "R1", example: "#\n\n```\n```\n\n- \n- a\n\n>\n\n1. -\n1.\n1. b\n", apply: dropEmptyBlocks),
+        Rule(id: "R1", example: "#\n\n```\n```\n\n```\n\n```\n\n- \n- a\n\n>\n\n1. -\n1.\n1. b\n", apply: dropEmptyBlocks),
         Rule(id: "R2", example: "```\na\n\n\n```\n", apply: { replace(#"\n\n+</code></pre>"#, in: $0, with: "\n</code></pre>") }),
         Rule(id: "R3", example: "[![alt](j.png)](k)\n", apply: altTextForImagesInLinks),
         Rule(id: "R4", example: "![a](u.png \"t\")\n\n- ![b](v.png \"t\")\n", apply: imageBlocksWithoutTitle),
@@ -189,7 +189,8 @@ enum CmarkReference {
         while true {
             var next = result
             next = replace(#"<h[1-6]></h[1-6]>\n"#, in: next, with: removed)
-            next = replace(#"<pre><code( class="[^"]*")?></code></pre>\n"#, in: next, with: removed)
+            // A code block of only line ends is empty after R2.
+            next = replace(#"<pre><code( class="[^"]*")?>\n*</code></pre>\n"#, in: next, with: removed)
             next = replace("<blockquote>\n(?:\(removed))*</blockquote>\n", in: next, with: removed)
             next = replace("<li>\n?(?:\(removed))*</li>\n", in: next, with: emptyItem)
             next = replace(#"<(ul|ol)( start="\d+")?>\n(<li data-empty></li>\n)+</(ul|ol)>\n"#, in: next, with: removed)

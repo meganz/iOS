@@ -22,5 +22,29 @@
   "ParsingBenchmarks/testWholeParseTenMegabytes": {
     "Clock Monotonic Time": 1.53,
     "Peak Heap Growth": 685.68
+  },
+  "RendererBenchmarks/testOpenInlineCodeDocument": {
+    "Clock Monotonic Time": 0.24,
+    "Longest Main Thread Stall": 243.7,
+    "Main Thread Stalls Over 100 ms": 2,
+    "Peak Heap Growth": 6.21
+  },
+  "RendererBenchmarks/testOpenMixedDocument": {
+    "Clock Monotonic Time": 0.33,
+    "Longest Main Thread Stall": 332.4,
+    "Main Thread Stalls Over 100 ms": 3,
+    "Peak Heap Growth": 17.16
+  },
+  "RendererBenchmarks/testOpenTableDocument": {
+    "Clock Monotonic Time": 0.38,
+    "Longest Main Thread Stall": 379.49,
+    "Main Thread Stalls Over 100 ms": 3,
+    "Peak Heap Growth": 35.84
+  },
+  "RendererBenchmarks/testParentRedrawWithSameText": {
+    "CPU Cycles": 983630.29,
+    "CPU Instructions Retired": 2886772.48,
+    "CPU Time": 0.27,
+    "Clock Monotonic Time": 0.27
   }
 }

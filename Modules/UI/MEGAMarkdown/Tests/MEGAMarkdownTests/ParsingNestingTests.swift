@@ -77,7 +77,7 @@ import Testing
         #expect(list.items.map { $0.blocks.first?.paragraphText } == ["todo", "done", "Done too", "plain", "[ ]"])
     }
 
-    /// The editor writes `- [ ] ` for a new task. cmark gives the item no content, but the checkbox must stay.
+    /// `- [ ] ` is a valid task marker. cmark gives the item no content, but the checkbox must stay.
     @Test func emptyTaskItemKeepsItsCheckbox() throws {
         let list = try #require(parse("- [ ] \n- [x] a\n- [x] ").first?.list)
         #expect(list.items.map(\.checkbox) == [.unchecked, .checked, .checked])

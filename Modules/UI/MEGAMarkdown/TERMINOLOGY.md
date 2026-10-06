@@ -49,7 +49,7 @@ Only terms that are specific to Markdown, cmark, or this package are listed. Add
 | Piece | One collected text fragment with its context, inside one paragraph, heading or table cell, before style tags are applied. |
 | Placeholder | The `U+FFFC` character that stands in for an image with empty alt text, so the image is not lost during traversal. |
 | Nesting cap | The depth limit of 64 for quotes and list items. Deeper content joins the deepest open container. |
-| Image block | A paragraph that holds only images. It becomes one block with the first image's URL and the collected alt text. |
+| Image block | A paragraph of exactly one image with a URL. It becomes one block with that URL and the alt text. |
 
 ## Chunking
 

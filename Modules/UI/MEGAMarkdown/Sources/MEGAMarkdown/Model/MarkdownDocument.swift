@@ -29,7 +29,7 @@ public struct MarkdownBlock: Identifiable, Equatable, Sendable {
         case heading(level: Int, text: AttributedString)
         case paragraph(AttributedString)
         case list(MarkdownList)
-        /// `code` has no trailing newline.
+        /// `code` has no trailing newline. Its line ends are `\n`, also for CRLF or CR input.
         case codeBlock(language: String?, code: String)
         case blockQuote([MarkdownBlock])
         case table(MarkdownTable)

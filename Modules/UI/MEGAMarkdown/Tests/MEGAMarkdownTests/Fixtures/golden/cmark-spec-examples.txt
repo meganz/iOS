@@ -1624,7 +1624,7 @@
 #0 line=0 paragraph ["<http://foo.bar." code]["baz>`"]
 
 ## spec 356 Code spans
-#0 line=0 paragraph ["http://foo.bar.`baz`"]
+#0 line=0 paragraph ["http://foo.bar.`baz" link=http://foo.bar.%60baz]["`"]
 
 ## spec 357 Code spans
 #0 line=0 paragraph ["```foo``"]

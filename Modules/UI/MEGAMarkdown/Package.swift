@@ -22,7 +22,8 @@ let package = Package(
         // Markdown parser (cmark-gfm, C). Pinned: parser output must not change without review.
         .package(url: "https://github.com/swiftlang/swift-cmark.git", exact: "0.9.0"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
-        .package(path: "../../Infrastracture/MEGABenchmark")
+        .package(path: "../../Infrastracture/MEGABenchmark"),
+        .package(path: "../../Infrastracture/MEGASnapshot")
     ],
     targets: [
         .target(
@@ -50,6 +51,17 @@ let package = Package(
                 .product(name: "MEGABenchmark", package: "MEGABenchmark")
             ],
             exclude: ["Limits.json"],
+            swiftSettings: settings),
+        // Image snapshots. They run only from scripts/snapshot.sh, on a pinned simulator.
+        .testTarget(
+            name: "MEGAMarkdownSnapshotTests",
+            dependencies: [
+                "MEGAMarkdown",
+                "MEGADesignToken",
+                .product(name: "MEGASnapshot", package: "MEGASnapshot")
+            ],
+            exclude: ["__Snapshots__"],
+            resources: [.copy("Images")],
             swiftSettings: settings)
     ],
     swiftLanguageModes: [.v6]

@@ -2,7 +2,7 @@ import Foundation
 
 /// Internal parse result. Same shape as `MarkdownBlock`, but text is kept as cheap `InlineText`.
 /// `MarkdownParser.parse` converts all of it. The preview converts only the rows on screen.
-struct ParsedBlock: Equatable, Sendable {
+package struct ParsedBlock: Equatable, Sendable {
     /// 0-based line in the source text where this block starts.
     var sourceLine: Int
     var kind: Kind
@@ -13,6 +13,7 @@ struct ParsedBlock: Equatable, Sendable {
         /// Also HTML blocks: their text has the `.blockHTML` style, like Foundation.
         case paragraph(InlineText)
         case list(ParsedList)
+        /// Same rules as `MarkdownBlock.Kind.codeBlock`: no trailing newline, and `\n` line ends.
         case codeBlock(language: String?, code: String)
         case blockQuote([ParsedBlock])
         case table(ParsedTable)
@@ -33,7 +34,7 @@ struct ParsedListItem: Equatable, Sendable {
     var blocks: [ParsedBlock]
 }
 
-struct ParsedTable: Equatable, Sendable {
+package struct ParsedTable: Equatable, Sendable {
     var columns: [MarkdownTable.Column]
     var header: [InlineText]
     var rows: [[InlineText]]

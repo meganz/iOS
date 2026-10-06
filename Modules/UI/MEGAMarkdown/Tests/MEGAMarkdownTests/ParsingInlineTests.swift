@@ -53,7 +53,10 @@ import Testing
         ("[a](mailto:x@mega.io)", "mailto:x@mega.io"),
         ("[a](a%20b\\[1\\])", "a%20b%5B1%5D"),
         ("[a](http://[::1]/a%20b)", "http://[::1]/a%20b"),
-        ("[a](http://b\u{FC}cher.de/x%20\u{E4})", "http://xn--bcher-kva.de/x%20%C3%A4")
+        ("[a](http://b\u{FC}cher.de/x%20\u{E4})", "http://xn--bcher-kva.de/x%20%C3%A4"),
+        // Foundation rejects "`" in a host. It is encoded like cmark does, so the link stays.
+        ("<http://foo.bar.`baz>`", "http://foo.bar.%60baz"),
+        ("[a](http://a`b.c/d%20e)", "http://a%60b.c/d%20e")
     ])
     func linkURLIsEncodedOnce(markdown: String, url: String) throws {
         let text = try paragraph(markdown)

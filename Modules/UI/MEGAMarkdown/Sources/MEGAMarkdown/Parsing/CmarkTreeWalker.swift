@@ -196,7 +196,7 @@ struct CmarkTreeWalker {
             var blocks = frame.blocks
             var line = frame.line
             if blocks.isEmpty, checkbox != nil {
-                // An empty task item keeps its checkbox. The editor writes `- [ ] ` for a new task.
+                // An empty task item keeps its checkbox, because `- [ ] ` is a valid task marker.
                 blocks = [ParsedBlock(sourceLine: itemLine, kind: .paragraph(InlineText()))]
                 line = itemLine
             }
@@ -245,9 +245,9 @@ struct CmarkTreeWalker {
 
     private mutating func addCodeBlock(_ node: UnsafeMutablePointer<cmark_node>) {
         var code = literal(node)
-        // Foundation drops an empty code block (it has no text runs).
-        guard !code.isEmpty else { return }
+        // R2, then R1: a block of only line ends is empty after the strip, so it is dropped. Spaces stay.
         while code.hasSuffix("\n") { code.removeLast() }
+        guard !code.isEmpty else { return }
         let info = cmark_node_get_fence_info(node).map { String(cString: $0) } ?? ""
         addBlock(ParsedBlock(sourceLine: line(of: node), kind: .codeBlock(language: info.isEmpty ? nil : info, code: code)))
     }

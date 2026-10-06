@@ -1,6 +1,6 @@
 # MEGAMarkdown architecture
 
-This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, and internal chunking layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
+This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, and rendering layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
 
 Each implemented layer has a reference page with the full detail. Keep this guide short and put new detail in the reference pages.
 
@@ -11,7 +11,7 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Document model](#public-document-model) | Implemented | Public block tree and inline attributes shared by consumers. | This guide |
 | [Parser](#parsing-pipeline) | Implemented | Markdown syntax recognition, conversion, and behavior rules. | [PARSER.md](PARSER.md) |
 | [Large-input support](#large-input-support) | Internal helpers implemented | Safe chunk ranges and reference-definition collection. | [CHUNKING.md](CHUNKING.md) |
-| [Rendering and styling](#rendering-and-styling) | Coming soon | Inline and block presentation, themes, and user interaction. | |
+| [Rendering and styling](#rendering-and-styling) | Implemented | SwiftUI block views, rows for big blocks, and the theme. | |
 | [Large-file preview](#large-file-preview) | Coming soon | Connect chunking to background parsing and visible-content presentation. | |
 | [Editor model and mutations](#editor-model-and-mutations) | Coming soon | Editable state, selection, and document changes. | |
 | [Markdown import and export](#markdown-import-and-export) | Coming soon | Conversion between editable content and Markdown source. | |
@@ -71,7 +71,15 @@ The helper is internal and has no production caller. `MarkdownParser.parse` alwa
 
 ## Rendering and styling
 
-**Coming soon.** This section will describe how document blocks and inline attributes become views, including inline-only text, lists, tables, code, quotes, and images. It will cover theme values, environment propagation, link/image interaction, localization, Dynamic Type, and accessibility. Add the public view APIs and model-to-view diagram when the renderer lands.
+The views are SwiftUI. They are `package` API: other targets of this package use them.
+
+- `MarkdownView` shows short Markdown. It parses on the main thread and builds every block with `MarkdownBlockView`.
+- `PreviewRows` splits blocks into rows. A big block (long list, table, code or text) becomes many rows.
+  `PreviewRowView` draws one row: its chrome (quote bars, list markers, the gap below), then its content.
+- `InlineStyling` turns `InlineText` into `AttributedString` when a view draws it, so only drawn text pays for it.
+- The public API is the theme and the strings: `markdownTheme(_:)`, `markdownImageLoading(_:)` and `markdownPreviewStrings(_:)`.
+
+[DECISIONS.md](DECISIONS.md) has the display rules, with the reason for each.
 
 ## Large-file preview
 

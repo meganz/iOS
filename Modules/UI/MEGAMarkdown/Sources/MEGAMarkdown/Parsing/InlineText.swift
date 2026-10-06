@@ -30,13 +30,19 @@ struct InlineLink: Equatable, Sendable {
     /// cmark gives a destination with escapes and entities decoded. `URL(string:)` turns `%20` into `%2520`
     /// when the path also has a non-ASCII character or a `[`. So every byte outside RFC 3986 and outside the host is encoded first.
     static func makeURL(_ destination: String, relativeTo baseURL: URL?) -> URL? {
+        if let url = makeURL(destination, relativeTo: baseURL, encodesHostASCII: false) { return url }
+        // Foundation rejects some ASCII in a host, like "`". cmark encodes it, so the link keeps working.
+        return makeURL(destination, relativeTo: baseURL, encodesHostASCII: true)
+    }
+
+    private static func makeURL(_ destination: String, relativeTo baseURL: URL?, encodesHostASCII: Bool) -> URL? {
         let bytes = Array(destination.utf8)
         let host = hostRange(bytes)
         var encoded: [UInt8] = []
         encoded.reserveCapacity(bytes.count)
         for (index, byte) in bytes.enumerated() {
             // The host stays as written. Foundation turns a non-ASCII host into punycode and keeps `[::1]`.
-            let isInHost = host.contains(index)
+            let isInHost = host.contains(index) && !(encodesHostASCII && byte < 0x80)
             // A `%` that already starts an escape stays. A lone `%` is encoded.
             let isEscape = byte == UInt8(ascii: "%") && index + 2 < bytes.count && isHexDigit(bytes[index + 1]) && isHexDigit(bytes[index + 2])
             // RFC 3986 allows `[` and `]` only around an IPv6 host.
@@ -116,7 +122,7 @@ struct InlineRun: Equatable, Sendable {
 
 /// The text of one leaf block in a cheap form: a plain String plus style runs.
 /// It becomes `AttributedString` only when needed (the preview does it for visible rows only).
-struct InlineText: Equatable, Sendable {
+package struct InlineText: Equatable, Sendable {
     private(set) var text = ""
     /// Empty when the whole text is one plain run. That saves an array for most table cells and list items.
     private(set) var styledRuns: [InlineRun] = []
