@@ -12,6 +12,7 @@ final class NodeActionBuilder {
     private var label: MEGANodeLabel = .unknown
     private var isRestorable = false
     private var isPdf = false
+    private var isPDFViewerRevampEnabled = false
     private var isLink = false
     private var isIncomingShareChildView = false
     private var isExported = false
@@ -93,6 +94,11 @@ final class NodeActionBuilder {
     
     func setIsPdf(_ isPdf: Bool) -> NodeActionBuilder {
         self.isPdf = isPdf
+        return self
+    }
+
+    func setIsPDFViewerRevampEnabled(_ isEnabled: Bool) -> NodeActionBuilder {
+        self.isPDFViewerRevampEnabled = isEnabled
         return self
     }
     
@@ -426,7 +432,7 @@ final class NodeActionBuilder {
             nodeActions.append(.exportFileAction())
         }
         nodeActions.append(.sendToChatAction())
-        if isPdf {
+        if isPdf && !isPDFViewerRevampEnabled {
             nodeActions.append(.searchAction())
             if displayMode == .previewPdfPage {
                 nodeActions.append(.pdfThumbnailViewAction())

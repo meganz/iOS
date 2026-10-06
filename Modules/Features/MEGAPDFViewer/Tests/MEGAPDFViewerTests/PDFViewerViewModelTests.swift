@@ -60,14 +60,16 @@ struct PDFViewerViewModelTests {
         documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
         documentLoader: some PDFDocumentLoading = MockPDFDocumentLoader(
             document: MockPDFDocumentLoader.makeDocument()
-        )
+        ),
+        onMoreTapped: (@MainActor () -> Void)? = nil
     ) -> PDFViewerViewModel {
         PDFViewerViewModel(
             dependency: PDFViewerViewModel.Dependency(
                 pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: documentURLUseCase,
                 documentLoader: documentLoader,
-                fileName: "test.pdf"
+                fileName: "test.pdf",
+                onMoreTapped: onMoreTapped
             )
         )
     }
@@ -426,4 +428,95 @@ struct PDFViewerViewModelTests {
         return (sut, task)
     }
 
+    @Test func showsMoreButton_withoutOnMoreTapped_isFalseWhileLoading() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+
+        #expect(!sut.showsMoreButton)
+    }
+
+    @Test func showsMoreButton_withoutOnMoreTapped_isFalseWhenReady() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+
+        #expect(!sut.showsMoreButton)
+        task.cancel()
+    }
+
+    @Test func showsMoreButton_withOnMoreTapped_isTrueWhileLoading() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            onMoreTapped: {}
+        )
+
+        #expect(sut.showsMoreButton)
+    }
+
+    @Test func showsMoreButton_withOnMoreTapped_isTrueWhenReady() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            onMoreTapped: {}
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+
+        #expect(sut.showsMoreButton)
+        task.cancel()
+    }
+
+    @Test func showsMoreButton_withOnMoreTapped_isFalseWhenFailed() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(document: nil),
+            onMoreTapped: {}
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/damaged.pdf")))
+        continuation.finish()
+        await task.value
+
+        #expect(sut.state.isFailed)
+        #expect(!sut.showsMoreButton)
+    }
+
+    @Test func didTapMore_invokesOnMoreTappedOnce() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        var onMoreTappedCallCount = 0
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            onMoreTapped: { onMoreTappedCallCount += 1 }
+        )
+
+        sut.didTapMore()
+
+        #expect(onMoreTappedCallCount == 1)
+    }
 }

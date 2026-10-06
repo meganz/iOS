@@ -392,6 +392,7 @@ class NodeActionViewController: ActionSheetViewController {
         isInVersionsView: Bool = false,
         isBackupNode: Bool,
         isFromSharedItem: Bool = false,
+        isPDFViewerRevampEnabled: Bool = false,
         sender: Any
     ) {
         self.nodes = [node]
@@ -407,6 +408,7 @@ class NodeActionViewController: ActionSheetViewController {
             let actions = NodeActionBuilder()
                 .setDisplayMode(self.displayMode)
                 .setIsPdf(node.name?.pathExtension == "pdf")
+                .setIsPDFViewerRevampEnabled(isPDFViewerRevampEnabled)
                 .setIsLink(isLink)
                 .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
                 .setIsRestorable(viewModel.isRestorable(node: node.toNodeEntity(), isBackupNode: isBackupNode))

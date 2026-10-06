@@ -11,6 +11,7 @@ final class PDFViewerViewModel {
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoader: any PDFDocumentLoading
         let fileName: String
+        let onMoreTapped: (@MainActor () -> Void)?
     }
 
     enum ViewState: Equatable {
@@ -67,8 +68,16 @@ final class PDFViewerViewModel {
 
     var fileName: String { dependency.fileName }
 
+    var showsMoreButton: Bool {
+        dependency.onMoreTapped != nil && !state.isFailed
+    }
+
     init(dependency: Dependency) {
         self.dependency = dependency
+    }
+
+    func didTapMore() {
+        dependency.onMoreTapped?()
     }
 }
 

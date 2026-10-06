@@ -1231,6 +1231,33 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]) == true)
     }
+
+    @Test(arguments: [DisplayMode.previewPdfPage, .previewDocument])
+    func testDocumentPreviewPdf_pdfViewerRevampEnabled(displayMode: DisplayMode) {
+        actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setIsPdf(true)
+            .setIsPDFViewerRevampEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.download, .sendToChat]) == true)
+    }
+
+    @Test(arguments: [
+        (isExported: false, expectedActions: [MegaNodeActionType.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin]),
+        (isExported: true, expectedActions: [MegaNodeActionType.download, .manageLink, .removeLink, .exportFile, .sendToChat, .moveToRubbishBin])
+    ])
+    func testDocumentPreviewPdfOwner_pdfViewerRevampEnabled(isExported: Bool, expectedActions: [MegaNodeActionType]) {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setAccessLevel(.accessOwner)
+            .setIsPdf(true)
+            .setIsExported(isExported)
+            .setIsPDFViewerRevampEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: expectedActions) == true)
+    }
     
     @Test
     func testPreviewDocument() {

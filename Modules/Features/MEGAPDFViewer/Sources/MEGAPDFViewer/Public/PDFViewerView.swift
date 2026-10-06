@@ -14,6 +14,8 @@ public struct PDFViewerView: View {
         let fileName: String
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
+        /// Invoked when ••• is tapped. `nil` hides the ••• button.
+        let onMoreTapped: (@MainActor () -> Void)?
         /// Invoked when the user taps a link inside the document.
         let onLinkTapped: @MainActor (URL) -> Void
 
@@ -23,6 +25,7 @@ public struct PDFViewerView: View {
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
+            onMoreTapped: (@MainActor () -> Void)? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in }
         ) {
             self.init(
@@ -32,6 +35,7 @@ public struct PDFViewerView: View {
                 fileName: fileName,
                 transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 onClose: onClose,
+                onMoreTapped: onMoreTapped,
                 onLinkTapped: onLinkTapped
             )
         }
@@ -43,6 +47,7 @@ public struct PDFViewerView: View {
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
+            onMoreTapped: (@MainActor () -> Void)? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void
         ) {
             self.pdfDocumentSource = pdfDocumentSource
@@ -51,6 +56,7 @@ public struct PDFViewerView: View {
             self.fileName = fileName
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
+            self.onMoreTapped = onMoreTapped
             self.onLinkTapped = onLinkTapped
         }
     }
@@ -74,7 +80,8 @@ public struct PDFViewerView: View {
                     pdfDocumentSource: dependency.pdfDocumentSource,
                     documentURLUseCase: dependency.documentURLUseCase,
                     documentLoader: dependency.documentLoader,
-                    fileName: dependency.fileName
+                    fileName: dependency.fileName,
+                    onMoreTapped: dependency.onMoreTapped
                 )
             )
         )
@@ -188,11 +195,15 @@ public struct PDFViewerView: View {
         // indicator goes first and the more button keeps the trailing edge.
         transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
 
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {} label: {
-                MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
+        if viewModel.showsMoreButton {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.didTapMore()
+                } label: {
+                    MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
+                }
+                .accessibilityLabel(Strings.Localizable.more)
             }
-            .accessibilityLabel(Strings.Localizable.more)
         }
 
         if viewModel.state.isReady {

@@ -6,6 +6,7 @@ import MEGADomain
 import MEGAPDFViewer
 import MEGAPreference
 import MEGARepo
+import UIKit
 
 /// Routes PDF nodes to the revamped SwiftUI viewer (`MEGAPDFViewer`) when the
 /// `.pdfPreviewRevamp` feature flag is enabled. Legacy `PreviewDocumentViewController`
@@ -20,7 +21,9 @@ import MEGARepo
         makeViewController(
             fileName: node.name ?? "",
             pdfDocumentSource: .node(node.toNodeEntity()),
-            isLink: isLink
+            node: node,
+            isLink: isLink,
+            isFromSharedItem: isFromSharedItem
         )
     }
 
@@ -29,7 +32,9 @@ import MEGARepo
         makeViewController(
             fileName: node?.name ?? filePath.lastPathComponent,
             pdfDocumentSource: .local(URL(fileURLWithPath: filePath)),
-            isLink: isLink
+            node: node,
+            isLink: isLink,
+            isFromSharedItem: isFromSharedItem
         )
     }
 
@@ -39,19 +44,36 @@ import MEGARepo
     private static func makeViewController(
         fileName: String,
         pdfDocumentSource: PDFViewerDocumentSource,
-        isLink: Bool
+        node: MEGANode?,
+        isLink: Bool,
+        isFromSharedItem: Bool
     ) -> UIViewController {
         if #available(iOS 26.0, *) {
             AppearanceManager.setTranslucentNavigationBar(for: [PDFViewerViewController.self])
         }
 
         weak var presentedViewer: UIViewController?
+
+        var onMoreTapped: (@MainActor () -> Void)?
+        if let node {
+            onMoreTapped = {
+                guard let presentedViewer else { return }
+                presentNodeActions(
+                    for: node,
+                    from: presentedViewer,
+                    isLink: isLink,
+                    isFromSharedItem: isFromSharedItem
+                )
+            }
+        }
+
         let dependency = PDFViewerView.Dependency(
             pdfDocumentSource: pdfDocumentSource,
             downloadUseCase: makeDownloadNodeUseCase(isLink: isLink),
             fileName: fileName,
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             onClose: { presentedViewer?.dismiss(animated: true) },
+            onMoreTapped: onMoreTapped,
             onLinkTapped: { url in
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)

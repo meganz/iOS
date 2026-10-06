@@ -308,6 +308,7 @@
                                              isInVersionsView:[self isPreviewingVersion]
                                              isBackupNode:isBackupNode
                                              isFromSharedItem: self.isFromSharedItem
+                                             isPDFViewerRevampEnabled:NO
                                              sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
