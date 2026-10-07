@@ -50,7 +50,7 @@ let package = Package(
                 "MEGAMarkdown",
                 .product(name: "MEGABenchmark", package: "MEGABenchmark")
             ],
-            exclude: ["Limits.json"],
+            exclude: ["Limits.json", "Skipped.json"],
             swiftSettings: settings),
         // Image snapshots. They run only from scripts/snapshot.sh, on a pinned simulator.
         .testTarget(

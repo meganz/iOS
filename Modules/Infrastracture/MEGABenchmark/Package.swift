@@ -16,11 +16,18 @@ let package = Package(
     products: [
         .library(
             name: "MEGABenchmark",
-            targets: ["MEGABenchmark"])
+            targets: ["MEGABenchmark"]),
+        .library(
+            name: "MEGABenchmarkUI",
+            targets: ["MEGABenchmarkUI"])
     ],
     targets: [
         .target(
             name: "MEGABenchmark",
+            swiftSettings: settings),
+        // Helpers for UI tests. Only UI test bundles of benchmark host apps depend on it.
+        .target(
+            name: "MEGABenchmarkUI",
             swiftSettings: settings),
         .testTarget(
             name: "MEGABenchmarkTests",

@@ -1,6 +1,6 @@
 # MEGAMarkdown architecture
 
-This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, and rendering layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
+This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering and large-file preview layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
 
 Each implemented layer has a reference page with the full detail. Keep this guide short and put new detail in the reference pages.
 
@@ -12,7 +12,7 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Parser](#parsing-pipeline) | Implemented | Markdown syntax recognition, conversion, and behavior rules. | [PARSER.md](PARSER.md) |
 | [Large-input support](#large-input-support) | Internal helpers implemented | Safe chunk ranges and reference-definition collection. | [CHUNKING.md](CHUNKING.md) |
 | [Rendering and styling](#rendering-and-styling) | Implemented | SwiftUI block views, rows for big blocks, and the theme. | |
-| [Large-file preview](#large-file-preview) | Coming soon | Connect chunking to background parsing and visible-content presentation. | |
+| [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore and top-line reports. | [PREVIEW.md](PREVIEW.md) |
 | [Editor model and mutations](#editor-model-and-mutations) | Coming soon | Editable state, selection, and document changes. | |
 | [Markdown import and export](#markdown-import-and-export) | Coming soon | Conversion between editable content and Markdown source. | |
 | [Editor UI](#editor-ui) | Coming soon | Rich/source editing modes, controls, and accessibility. | |
@@ -65,7 +65,7 @@ flowchart TD
 
 [MarkdownChunker.swift](Sources/MEGAMarkdown/Parsing/MarkdownChunker.swift) cuts a large input into chunks. Each chunk parses to the same tree as the whole file would give for that range, so one cmark tree at a time is enough. The chunker only cuts where a cmark probe confirms the last block is closed. It also collects link reference definitions from all chunks and shares them, so a reference can point to a later chunk.
 
-The helper is internal and has no production caller. `MarkdownParser.parse` always parses the whole input.
+The helper is internal. The large-file preview drives it. `MarkdownParser.parse` always parses the whole input.
 
 [CHUNKING.md](CHUNKING.md) explains why chunks are needed, the cut rules, the definition prefix, and how a consumer should drive the chunker.
 
@@ -83,7 +83,16 @@ The views are SwiftUI. They are `package` API: other targets of this package use
 
 ## Large-file preview
 
-**Coming soon.** The chunking helpers above still need a consumer. This section will describe file loading, background parsing, reference-definition discovery, cancellation and stale-result handling, visible-content conversion, and loading/error/plain-text states. Document which objects retain the source and parsed blocks, and how the preview uses source lines for navigation.
+`MarkdownPreview` is the public reader for big text, up to `MarkdownPreview.sizeLimitInBytes` (100 MiB).
+
+- `PreviewPipeline` parses the text chunk by chunk off the main actor and sends the rows of each chunk as one batch.
+- `PreviewModel` (`@Observable`, owned by the view with `@State`) appends each batch to a `PreviewRowStore`.
+  The view starts the load with `.task(id:)`, so SwiftUI cancels an old load.
+- `PreviewRowList` shows the rows in a `MarkdownRowList`, one hosted `PreviewRowView` per row.
+  New rows are appended with a height guess each. Cells size themselves when they show.
+- The list restores a source line and reports the top line to the host. Rows keep their source line for this.
+
+[PREVIEW.md](PREVIEW.md) has the data flow, the threads, the row heights, the restore rules, the notices and the tests.
 
 ## Editor model and mutations
 
@@ -103,7 +112,7 @@ The views are SwiftUI. They are `package` API: other targets of this package use
 
 ## Testing
 
-The tests use Swift Testing and are included in the repository's [MEGAModulesTests plan](../../../MEGAModulesTests/MEGAModulesTests.xctestplan). Each reference page lists the tests for its layer: [parser tests](PARSER.md#tests-for-this-layer) and [chunking tests](CHUNKING.md#tests-for-this-layer).
+The tests use Swift Testing and are included in the repository's [MEGAModulesTests plan](../../../MEGAModulesTests/MEGAModulesTests.xctestplan). Each reference page lists the tests for its layer: [parser tests](PARSER.md#tests-for-this-layer), [chunking tests](CHUNKING.md#tests-for-this-layer) and [preview tests](PREVIEW.md#tests).
 
 ### Running tests
 

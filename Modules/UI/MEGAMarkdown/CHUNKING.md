@@ -99,8 +99,8 @@ The [chunk parity helper](Tests/MEGAMarkdownTests/ChunkedParseTests.swift) shows
 
 1. Call `next()` until it returns `nil`. Collect all chunks first. This also collects all
    definitions.
-2. Parse each chunk with `definitionPrefix(for: chunk)` in front. The preview parses each chunk right
-   away, so a reference to a definition in a later chunk stays literal text. The parity helper
+2. Parse each chunk with `definitionPrefix(for: chunk)` in front. `PreviewPipeline` parses each chunk
+   right away, so a reference to a definition in a later chunk stays literal text. The parity helper
    collects all chunks first, so it does not show this limit.
 3. Pass `lineOffset = chunk.lines.lowerBound - definitionLineCount(for: chunk)` to the tree walker. This removes
    the prefix lines and restores document-relative line numbers.

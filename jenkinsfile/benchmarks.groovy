@@ -34,7 +34,9 @@ def runBenchmarks(Closure setup) {
             script: "scripts/benchmark.sh '${packagePath}' --sim-name '${SIMULATOR_NAME}' --sim-os ${SIMULATOR_OS} --out '${output}'"
         )
         def packageReport = fileExists("${output}/report.md") ? readFile("${output}/report.md") : "No report. See the build log.\n"
-        report += "### ${name}\n\n${packageReport}\n"
+        // GitLab folds the table. A failed package starts open.
+        def open = status != 0 ? " open" : ""
+        report += "<details${open}>\n<summary><b>${name}</b></summary>\n\n${packageReport}\n</details>\n\n"
         if (status != 0) {
             failed << name
         }

@@ -4,7 +4,7 @@ A Markdown renderer and a rich + source Markdown editor for SwiftUI.
 It parses blocks with cmark-gfm (C, from `swiftlang/swift-cmark`). Everything else uses Apple APIs.
 
 - Parsing: cmark-gfm (CommonMark + GitHub Flavored Markdown tables, strikethrough and autolinks).
-- Rendering: SwiftUI views. A big block can be split into rows, so a list view builds only the rows on screen.
+- Rendering: SwiftUI views. A big block can be split into rows, so a list view builds only the rows on screen. The large-file preview shows one hosted SwiftUI row per `UICollectionView` cell.
 - Editing: rich mode has one `UITextView` per block. Source mode has one TextKit 2 `UITextView`.
 
 It matches the Android text editor (`feature/text-editor/text-editor-snowflake-components`).
@@ -27,9 +27,13 @@ It matches the Android text editor (`feature/text-editor/text-editor-snowflake-c
 
 ## Architecture
 
-See the [architecture guide](ARCHITECTURE.md) for the layers, the document model, and testing guidance. The guide grows with the implementation as rendering and editing are added. The [parser reference](PARSER.md) and the [chunking reference](CHUNKING.md) hold the details of the implemented layers.
+See the [architecture guide](ARCHITECTURE.md) for the layers, the document model, and testing guidance. The guide grows with the implementation as rendering and editing are added. The [parser reference](PARSER.md), the [chunking reference](CHUNKING.md) and the [large-file preview reference](PREVIEW.md) hold the details of the implemented layers.
 
 The [decision records](DECISIONS.md) explain why the package is built this way, with the measured data. The [terminology](TERMINOLOGY.md) defines the terms used in the docs, the code, and the tests.
+
+## Demo app
+
+The [demo app](DemoApp/README.md) opens generated test files in `MarkdownPreview` on a simulator or a device. It is not part of the MEGA app or CI.
 
 ## Benchmarks
 
@@ -38,7 +42,7 @@ bash scripts/benchmark.sh Modules/UI/MEGAMarkdown                          # fro
 bash scripts/benchmark.sh Modules/UI/MEGAMarkdown --only ParsingBenchmarks/testParseTwoMegabytes
 ```
 
-- The `MEGAMarkdownBenchmarks` target measures the parser with `XCTestCase.measure(metrics:)`: clock, CPU, and the peak heap growth sampler of `Modules/Infrastracture/MEGABenchmark`. See that package's README.
+- The `MEGAMarkdownBenchmarks` target measures the parser and the large-file preview with `XCTestCase.measure(metrics:)`: clock, CPU, and the peak heap growth sampler of `Modules/Infrastracture/MEGABenchmark`. See that package's README.
 - It runs only with `TEST_RUNNER_MEGA_BENCH=1`. The script sets it, builds Release with testability, runs one test at a time with no coverage, and writes `report.md`, `metrics.json` and `result.xcresult` under `derivedData/benchmarks/`. Without the variable the benchmarks are skipped, and the report then fails on the skipped tests.
 - The script fails when a test did not pass, when a test or metric named in `Tests/MEGAMarkdownBenchmarks/Limits.json` is missing, or when an average is outside its limit. The limits come from `--write-limits` on an iPhone 17 Pro iOS 26.4 simulator Release run, the device CI uses (3x the average for time, 1.5x for memory). They are a policy that catches a big regression, not a tight bound.
 - `testChunkedParseUsesLessMemoryThanWholeParse` keeps the chunked parse under half the heap of a whole parse, and under 150 MiB.

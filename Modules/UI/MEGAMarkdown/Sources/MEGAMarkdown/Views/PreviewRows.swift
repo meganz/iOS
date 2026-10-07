@@ -50,12 +50,14 @@ package enum PreviewRows {
     static let tableRowsPerPage = 50
 
     /// Rows of a small Markdown string, parsed whole.
-    /// Every block is split (row weight 0), so each row is one short, flat piece.
+    /// Blocks are split with the preview's row weight (`PreviewParseLimits.maxRowWeight`), so the rows match the preview.
     /// A caller can show each row with `PreviewRowView`, outside any list view.
     /// Returns no rows when the Markdown shows nothing. A caller that needs a visible item shows the source itself.
     package static func rows(forMarkdown markdown: String, softBreak: MarkdownSoftBreak) -> [PreviewRow] {
-        rows(for: CmarkParser.blocks(markdown, softBreak: softBreak) ?? [], maxWeight: 0)
+        rows(for: CmarkParser.blocks(markdown, softBreak: softBreak) ?? [], maxWeight: previewRowWeight)
     }
+
+    private static var previewRowWeight: Int { PreviewParseLimits().maxRowWeight }
 
     /// A lower `maxWeight` splits smaller blocks. 0 splits every block, so each row is one short, flat piece.
     static func rows(for blocks: [ParsedBlock], maxWeight: Int = maxRowWeight) -> [PreviewRow] {

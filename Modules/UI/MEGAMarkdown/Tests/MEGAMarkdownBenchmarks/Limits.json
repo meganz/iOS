@@ -1,4 +1,8 @@
 {
+  "MarkdownRowListBenchmarks/testAppendParseBatchAfter20Batches": {
+    "Longest Main Thread Stall": 15,
+    "Main Thread Stalls Over 100 ms": 0
+  },
   "ParsingBenchmarks/testChunkedParseTenMegabytes": {
     "CPU Cycles": 9656492.17,
     "CPU Instructions Retired": 37725880.32,
@@ -22,6 +26,140 @@
   "ParsingBenchmarks/testWholeParseTenMegabytes": {
     "Clock Monotonic Time": 1.53,
     "Peak Heap Growth": 685.68
+  },
+  "PreviewListFiftyMegabyteBenchmarks/testFling": {
+    "Late Frame Time": 100,
+    "Late Frames": 3,
+    "Longest Main Thread Stall": 40,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListFiftyMegabyteBenchmarks/testJumpToEnd": {
+    "Longest Main Thread Stall": 40,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListFiftyMegabyteBenchmarks/testMemoryOverLongScroll": {
+    "Longest Main Thread Stall": 60,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListFiftyMegabyteBenchmarks/testOpen": {
+    "Longest Main Thread Stall": 785,
+    "Main Thread Stalls Over 100 ms": 1
+  },
+  "PreviewListFiftyMegabyteBenchmarks/testOpenToFirstContent": {
+    "Longest Main Thread Stall": 80,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListFiftyMegabyteBenchmarks/testScroll": {
+    "Longest Main Thread Stall": 60,
+    "Main Thread Stalls Over 100 ms": 0,
+    "Peak Heap Growth": 60
+  },
+  "PreviewListHundredMegabyteBenchmarks/testFling": {
+    "Late Frame Time": 1000,
+    "Late Frames": 30,
+    "Longest Main Thread Stall": 160,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListHundredMegabyteBenchmarks/testJumpIntoBigCode": {
+    "Longest Main Thread Stall": 30,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListHundredMegabyteBenchmarks/testJumpIntoBigTable": {
+    "Longest Main Thread Stall": 585,
+    "Main Thread Stalls Over 100 ms": 1
+  },
+  "PreviewListHundredMegabyteBenchmarks/testJumpToEnd": {
+    "Longest Main Thread Stall": 30,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListHundredMegabyteBenchmarks/testOpen": {
+    "Longest Main Thread Stall": 610,
+    "Main Thread Stalls Over 100 ms": 1
+  },
+  "PreviewListHundredMegabyteBenchmarks/testOpenToFirstContent": {
+    "Longest Main Thread Stall": 70,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListHundredMegabyteBenchmarks/testScroll": {
+    "Longest Main Thread Stall": 210,
+    "Main Thread Stalls Over 100 ms": 8,
+    "Peak Heap Growth": 425
+  },
+  "PreviewListTenMegabyteBenchmarks/testFling": {
+    "Late Frame Time": 100,
+    "Late Frames": 3,
+    "Longest Main Thread Stall": 40,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testFlingWhileBatchesAppend": {
+    "Late Frame Time": 100,
+    "Late Frames": 12,
+    "Longest Main Thread Stall": 55,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testJumpToEnd": {
+    "Longest Main Thread Stall": 45,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testJumpToEndAfterBatchLoad": {
+    "Longest Main Thread Stall": 50,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testLoadWhileShown": {
+    "Longest Main Thread Stall": 75,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testOpen": {
+    "Longest Main Thread Stall": 190,
+    "Main Thread Stalls Over 100 ms": 1
+  },
+  "PreviewListTenMegabyteBenchmarks/testOpenToFirstContent": {
+    "Longest Main Thread Stall": 70,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testScroll": {
+    "Longest Main Thread Stall": 75,
+    "Main Thread Stalls Over 100 ms": 0,
+    "Peak Heap Growth": 60
+  },
+  "PreviewListTenMegabyteBenchmarks/testTextSizeChange": {
+    "Longest Main Thread Stall": 105,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testThemeChange": {
+    "Longest Main Thread Stall": 105,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTenMegabyteBenchmarks/testWidthChange": {
+    "Longest Main Thread Stall": 100,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTwoMegabyteBenchmarks/testFling": {
+    "Late Frame Time": 100,
+    "Late Frames": 3,
+    "Longest Main Thread Stall": 40,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTwoMegabyteBenchmarks/testJumpToEnd": {
+    "Longest Main Thread Stall": 45,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTwoMegabyteBenchmarks/testLoadWhileShown": {
+    "Longest Main Thread Stall": 75,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTwoMegabyteBenchmarks/testOpen": {
+    "Longest Main Thread Stall": 80,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTwoMegabyteBenchmarks/testOpenToFirstContent": {
+    "Longest Main Thread Stall": 80,
+    "Main Thread Stalls Over 100 ms": 0
+  },
+  "PreviewListTwoMegabyteBenchmarks/testScroll": {
+    "Longest Main Thread Stall": 60,
+    "Main Thread Stalls Over 100 ms": 0,
+    "Peak Heap Growth": 60
   },
   "RendererBenchmarks/testOpenInlineCodeDocument": {
     "Clock Monotonic Time": 0.24,

@@ -51,6 +51,27 @@ Only terms that are specific to Markdown, cmark, or this package are listed. Add
 | Nesting cap | The depth limit of 64 for quotes and list items. Deeper content joins the deepest open container. |
 | Image block | A paragraph of exactly one image with a URL. It becomes one block with that URL and the alt text. |
 
+## Row list
+
+| Term | Meaning |
+|---|---|
+| Row | One entry of a list model. The preview splits big blocks into rows (`PreviewRow`). |
+| Item | One cell of `MarkdownRowList`. In the preview one row is one item. A caller may map one row to several items, for example a large raw table. |
+| Estimate | A height guess from `MarkdownRowEstimator`, made before the item's cell exists. |
+| Measured height | The height a cell gave when it sized itself. It stays until the width, text size or theme changes, or the caller invalidates it. |
+| Anchor item | The item that stays at the same place on screen when every height changes: the pinned item, else the top item. |
+| Pinned item | The item whose cell stays attached while the list scrolls far away, for example a row whose text view has the keyboard focus. |
+
+## Large-file preview
+
+| Term | Meaning |
+|---|---|
+| Batch | The rows of one chunk, sent by `PreviewPipeline`. Rows are only appended, so a batch never changes an earlier row. |
+| Generation | A number that grows when the rows of a new text replace the old ones. The list then reads every row again and goes to the top. |
+| Restore line | The 0-based source line the host passes to open the preview at a saved place. |
+| Restore pin | After a restore jump, the row stays at the top for 1 s while the rows around it size themselves. A drag or a status bar tap ends it. Not the same as a pinned item. |
+| Top line | The source line of the top row. The preview reports it to the host when it changes. |
+
 ## Chunking
 
 | Term | Meaning |

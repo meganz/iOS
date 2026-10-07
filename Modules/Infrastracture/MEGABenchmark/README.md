@@ -17,6 +17,7 @@ simulator. `scripts/benchmark_report.py` then checks the numbers against a limit
 | `FrameHitchMetric` | Counts late display-link frames, a proxy for hitches: frames more than half a frame late, their total lateness, and the frame count. No frame at all is an error. | The block must turn the main run loop the whole time, like a scroll. |
 | `runOnMainLoop { }` | Runs async main-actor work inside a `measure` block by turning the main run loop. | |
 | `turnMainLoop(for:)`, `turnMainLoop(until:)` | Turn the main run loop for a time, or until a condition holds. | |
+| `ScrollBenchmark` (product `MEGABenchmarkUI`) | UI test helpers: `fling`, `waitForFirstCell`, `hitchMetrics(for:)` and `measureOptions`. Only UI test bundles of benchmark host apps use it. | iOS 26 for `hitchMetrics` |
 
 `FrameHitchMetric` sees main-thread delivery delays only. It does not see render-server or GPU hitches.
 

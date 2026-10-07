@@ -34,6 +34,108 @@ enum BenchmarkDocuments {
         return String(repeating: section, count: count)
     }
 
+    /// Every block kind, then the big blocks, repeated until the text reaches `targetBytes`.
+    /// One repeat holds about 10 MB of big blocks: a 1 MB paragraph, a 5 MB code block, a table of 100,000 rows,
+    /// a list of 100,000 items, a 1 MB quote and a 1 MB line with no space. No randomness.
+    static func makeAllKindsDocument(targetBytes: Int) -> String {
+        let unit = allKindsSection() + bigBlocks()
+        var document = ""
+        document.reserveCapacity(targetBytes + unit.utf8.count)
+        while document.utf8.count < targetBytes {
+            document += unit
+        }
+        return document
+    }
+
+    /// About 100 sections with one block of each kind.
+    private static func allKindsSection() -> String {
+        let headings = (1...6).map { String(repeating: "#", count: $0) + " Heading level \($0)" }.joined(separator: "\n\n")
+        let wideHeader = "|" + (1...70).map { " c\($0) |" }.joined()
+        let wideDelimiter = "|" + String(repeating: "---|", count: 70)
+        let wideRow = "|" + (1...70).map { " `v\($0)` |" }.joined()
+        let section = """
+        \(headings)
+
+        A paragraph with **bold**, *italic*, ~~strike~~, `inline code`, a [link](https://mega.io) and an autolink https://mega.io/docs.
+        It goes on after a soft break.\\
+        And after a hard break, with an inline image ![logo](https://mega.io/logo.png) in the text.
+
+        - bullet one
+        - bullet two
+          - nested two
+            - nested three
+              - nested four
+        - bullet with code and quote
+
+          ```
+          code in an item
+          ```
+
+          > quote in an item
+
+        7. ordered seven
+        8. ordered eight
+
+        - [ ] open task
+        - [x] done task
+
+        > A quote with *emphasis*.
+        >
+        > > A nested quote.
+        >
+        > - list in a quote
+        > - second item
+        >
+        > | A | B |
+        > |---|---|
+        > | 1 | 2 |
+
+        ```swift
+        let value = 42
+        let longLine = "\(String(repeating: "long code line ", count: 40))"
+        ```
+
+            indented code line one
+            indented code line two
+
+        | Left | Center | Right |
+        |:-----|:------:|------:|
+        | `a` | b | c |
+        | 1 | `2` | 3 |
+
+        \(wideHeader)
+        \(wideDelimiter)
+        \(wideRow)
+
+        ---
+
+        ![An image block](https://mega.io/image.png)
+
+
+        """
+        return String(repeating: section, count: 100)
+    }
+
+    private static func bigBlocks() -> String {
+        HugeBlock.allCases.map(\.markdown).joined(separator: "\n\n") + "\n\n"
+    }
+
+    /// One block that is a whole file on its own: 1 MB to 6 MB of one kind.
+    enum HugeBlock: String, CaseIterable {
+        case paragraph, code, table, list, quote, line
+
+        var markdown: String {
+            switch self {
+            case .paragraph: String(repeating: "Words of a very long paragraph with **bold** text. ", count: 20_000)
+            case .code: "```text\n" + (0..<250_000).map { "let line\($0) = \($0)" }.joined(separator: "\n") + "\n```"
+            case .table: "| Row | Value | Note |\n|---|:-:|--:|\n" + (0..<100_000).map { "| \($0) | v\($0) | `n` |" }.joined(separator: "\n")
+            case .list: (0..<100_000).map { "- item \($0)" }.joined(separator: "\n")
+            case .quote: (0..<20_000).map { "> Quoted paragraph \($0) with some words in it.\n>" }.joined(separator: "\n")
+            case .line: String(repeating: "x", count: 1_000_000)
+            }
+        }
+    }
+
     struct PathologicalInput {
         var name: String
         var markdown: String

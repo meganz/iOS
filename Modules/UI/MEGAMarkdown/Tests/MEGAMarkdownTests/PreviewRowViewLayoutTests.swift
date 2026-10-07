@@ -127,23 +127,10 @@ import UIKit
         #expect(height(of: PreviewRowView(row: item, baseURL: nil)) == height(of: PreviewRowView(row: code, baseURL: nil)))
     }
 
-    private static let windowSize = CGSize(width: 402, height: 874)
-
-    private struct TimedOut: Error {}
-
-    /// Polls `condition` every 10 ms. Throws when it is still false after `timeout`.
-    private static func waitUntil(timeout: Duration, _ condition: () throws -> Bool) async throws {
-        let deadline = ContinuousClock.now + timeout
-        while try !condition() {
-            guard ContinuousClock.now < deadline else { throw TimedOut() }
-            try await Task.sleep(for: .milliseconds(10))
-        }
-    }
-
     /// `view` drawn in `size` at the top of a window, at scale 1. Premultiplied RGBA or BGRA, 4 bytes per pixel.
     /// SwiftUI draws after the layout pass, so it polls until the window has any ink.
     private func pixels(of view: some View, size: CGSize) async throws -> (bytes: [UInt8], bytesPerRow: Int) {
-        let window = UIWindow(frame: CGRect(origin: .zero, size: Self.windowSize))
+        let window = UIWindow(frame: CGRect(origin: .zero, size: PreviewListWindow.phoneSize))
         // The test window has a safe area. The row must start at the window's top edge.
         let root = VStack(spacing: 0) {
             view.frame(width: size.width, height: size.height, alignment: .top)
@@ -157,11 +144,11 @@ import UIKit
         window.makeKeyAndVisible()
         defer { window.isHidden = true }
         var result: (bytes: [UInt8], bytesPerRow: Int) = ([], 0)
-        try await Self.waitUntil(timeout: .seconds(5)) {
+        try await PreviewListWindow.waitUntil(timeout: .seconds(5)) {
             let format = UIGraphicsImageRendererFormat()
             format.scale = 1
             format.opaque = false
-            let image = UIGraphicsImageRenderer(size: Self.windowSize, format: format).image { context in
+            let image = UIGraphicsImageRenderer(size: PreviewListWindow.phoneSize, format: format).image { context in
                 window.layer.render(in: context.cgContext)
             }
             let cgImage = try #require(image.cgImage)
