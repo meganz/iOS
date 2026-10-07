@@ -256,7 +256,7 @@ extension ChatViewController: @MainActor MessageCellDelegate, @MainActor Message
             present(viewController: photoBrowserVC)
         } else {
             dismissKeyboardIfRequired()
-            if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
+            if !PDFViewerRevampRouter.canOpen(fileName: node?.name ?? ""), let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
                 viewController.chatId = chatRoom.chatId
                 viewController.messageId = megaMessage.messageId
                 navigationController?.present(navController, animated: true)

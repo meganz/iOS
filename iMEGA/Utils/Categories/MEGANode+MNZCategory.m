@@ -102,8 +102,9 @@
                 return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeView isFromSharedItem:isFromSharedItem node:self presenter:viewController.navigationController] build];
             }
         }
-        if ([previewDocumentPath.pathExtension.lowercaseString isEqualToString:@"pdf"] && !isFolderLink && fileLink == nil && PDFViewerRevampRouter.isEnabled) {
-            return [PDFViewerRevampRouter viewControllerWithFilePath:previewDocumentPath node:self isLink:NO isFromSharedItem:isFromSharedItem];
+        if ([PDFViewerRevampRouter canOpenWithFileName:previewDocumentPath]) {
+            MEGANode *resolvedNode = isFolderLink ? [api authorizeNode:self] : self;
+            return [PDFViewerRevampRouter viewControllerForFilePath:previewDocumentPath node:resolvedNode isLink:isFolderLink isFromSharedItem:isFromSharedItem];
         }
 
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -134,8 +135,11 @@
                 return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:nodeToLoad presenter:viewController.navigationController] build];
             }
             
-            if ([self.name.pathExtension.lowercaseString isEqualToString:@"pdf"] && !isFolderLink && fileLink == nil && PDFViewerRevampRouter.isEnabled) {
-                return [PDFViewerRevampRouter viewControllerWithNode:self isLink:NO isFromSharedItem:isFromSharedItem];
+            if ([PDFViewerRevampRouter canOpenWithFileName:self.name]) {
+                // `authorizeNode:` returns nil for a node it cannot
+                // authorise, and the router needs a non-nil node.
+                MEGANode *resolvedNode = isFolderLink ? ([api authorizeNode:self] ?: self) : self;
+                return [PDFViewerRevampRouter viewControllerForResolvedNode:resolvedNode isLink:isFolderLink isFromSharedItem:isFromSharedItem];
             }
 
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];

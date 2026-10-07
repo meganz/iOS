@@ -508,20 +508,7 @@ static NSString *kisDirectory = @"kisDirectory";
     NSInteger selectedIndexFile = [[item objectForKey:kIndex] integerValue];
     previewController.currentPreviewItemIndex = selectedIndexFile;
 
-    switch (self.viewModePreference) {
-        case ViewModePreferenceEntityPerFolder:
-            break;
-            
-        case ViewModePreferenceEntityList:
-            [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
-            break;
-            
-        case ViewModePreferenceEntityThumbnail:
-            [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
-            break;
-        case ViewModePreferenceEntityMediaDiscovery:
-            break;
-    }
+    [self deselectItemAtIndexPath:indexPath];
     
     return previewController;
 }
@@ -560,6 +547,18 @@ static NSString *kisDirectory = @"kisDirectory";
     previewController.filePath = self.previewDocumentPath;
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     
+    [self deselectItemAtIndexPath:indexPath];
+    return navigationController;
+}
+
+- (UIViewController *)pdfViewerViewControllerForIndexPath:(NSIndexPath *)indexPath {
+    UIViewController *viewController = [PDFViewerRevampRouter viewControllerForFilePath:self.previewDocumentPath node:nil isLink:NO isFromSharedItem:NO];
+    
+    [self deselectItemAtIndexPath:indexPath];
+    return viewController;
+}
+
+- (void)deselectItemAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.viewModePreference) {
         case ViewModePreferenceEntityPerFolder:
             break;
@@ -574,7 +573,6 @@ static NSString *kisDirectory = @"kisDirectory";
         case ViewModePreferenceEntityMediaDiscovery:
             break;
     }
-    return navigationController;
 }
 
 - (void)changeEditingModeStatus {
@@ -717,6 +715,8 @@ static NSString *kisDirectory = @"kisDirectory";
             [self presentViewController:previewController animated:YES completion:nil];
         }
         
+    } else if ([PDFViewerRevampRouter canOpenWithFileName:self.previewDocumentPath]) {
+        [self presentViewController:[self pdfViewerViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || [FileExtensionGroupOCWrapper verifyIsEditableText:self.previewDocumentPath]) {
         [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     } else {
