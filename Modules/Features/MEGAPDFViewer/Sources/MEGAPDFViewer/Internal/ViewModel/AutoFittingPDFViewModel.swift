@@ -16,6 +16,7 @@ final class AutoFittingPDFViewModel {
     }
 
     @Published private(set) var zoomStateUpdate: ZoomStateUpdate?
+    @Published private(set) var didTriggerInitialScrollToTop = false
 
     var zoomState: ZoomState? {
         didSet {
@@ -28,6 +29,7 @@ final class AutoFittingPDFViewModel {
 
     func documentDidChange() {
         needsInitialFitAndTopScroll = true
+        didTriggerInitialScrollToTop = false
     }
 
     private func recalculateZoomStateUpdate() {
@@ -48,6 +50,11 @@ final class AutoFittingPDFViewModel {
                 : nil,
             shouldScrollToTop: needsInitialFitAndTopScroll
         )
+        // Must come after `zoomStateUpdate` is assigned: its sink applies the
+        // scroll to top synchronously, so this only fires once that landed.
+        if needsInitialFitAndTopScroll {
+            didTriggerInitialScrollToTop = true
+        }
         lastZoomScaleForSizeToFit = zoomState.zoomScaleForSizeToFit
         needsInitialFitAndTopScroll = false
     }

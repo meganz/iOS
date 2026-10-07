@@ -45,6 +45,84 @@ struct PDFViewerPagingScrollObservationMonitorTests {
     }
 
     @Test
+    func refreshAtTopReportsPageAtViewportCenterAndScrolledToTop() {
+        let dataSource = MockPDFViewerPagingScrollObservationMonitorDataSource(
+            currentPageIndexAtViewportCenter: 2,
+            estimatedCurrentPageIndex: 1,
+            isScrolledToTop: true
+        )
+        let sut = makeSUT(dataSource: dataSource)
+        let observedObject = ObservablePagingState()
+        var receivedPageIndex: Int?
+        var receivedIsScrolledToTop: Bool?
+        sut.onCurrentPageChange = { receivedPageIndex = $0 }
+        sut.onIsScrolledToTopChange = { receivedIsScrolledToTop = $0 }
+
+        startListeningToKeyValueEvents(sut, keyPathObject: observedObject)
+
+        #expect(receivedPageIndex == 2)
+        #expect(receivedIsScrolledToTop == true)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func scrolledToTopChangeIsReportedWhilePageStaysTheSame() async {
+        let dataSource = MockPDFViewerPagingScrollObservationMonitorDataSource(
+            currentPageIndexAtViewportCenter: 2,
+            estimatedCurrentPageIndex: nil,
+            isScrolledToTop: true
+        )
+        let sut = makeSUT(dataSource: dataSource)
+        let observedObject = ObservablePagingState()
+        var receivedPageIndices: [Int] = []
+        var receivedIsScrolledToTop: [Bool] = []
+        sut.onCurrentPageChange = { receivedPageIndices.append($0) }
+        sut.onIsScrolledToTopChange = { receivedIsScrolledToTop.append($0) }
+        startListeningToKeyValueEvents(sut, keyPathObject: observedObject)
+
+        await withCheckedContinuation { continuation in
+            sut.onIsScrolledToTopChange = { isScrolledToTop in
+                receivedIsScrolledToTop.append(isScrolledToTop)
+                continuation.resume()
+            }
+            dataSource.isScrolledToTop = false
+            observedObject.value = 1
+        }
+
+        #expect(receivedPageIndices == [2])
+        #expect(receivedIsScrolledToTop == [true, false])
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func unchangedScrolledToTopIsNotReportedAgain() async {
+        let dataSource = MockPDFViewerPagingScrollObservationMonitorDataSource(
+            currentPageIndexAtViewportCenter: 2,
+            estimatedCurrentPageIndex: nil,
+            isScrolledToTop: true
+        )
+        let sut = makeSUT(dataSource: dataSource)
+        let observedObject = ObservablePagingState()
+        var receivedPageIndices: [Int] = []
+        var receivedIsScrolledToTop: [Bool] = []
+        sut.onCurrentPageChange = { receivedPageIndices.append($0) }
+        sut.onIsScrolledToTopChange = { receivedIsScrolledToTop.append($0) }
+        startListeningToKeyValueEvents(sut, keyPathObject: observedObject)
+
+        // The page change proves the re-check ran, and the top state is read
+        // before the page in the same check.
+        await withCheckedContinuation { continuation in
+            sut.onCurrentPageChange = { pageIndex in
+                receivedPageIndices.append(pageIndex)
+                continuation.resume()
+            }
+            dataSource.currentPageIndexAtViewportCenter = 3
+            observedObject.value = 1
+        }
+
+        #expect(receivedPageIndices == [2, 3])
+        #expect(receivedIsScrolledToTop == [true])
+    }
+
+    @Test
     func refreshFallsBackToEstimatedPageAndSuppressesDuplicates() async {
         let dataSource = MockPDFViewerPagingScrollObservationMonitorDataSource(
             currentPageIndexAtViewportCenter: nil,
@@ -179,13 +257,16 @@ private final class MockPDFViewerPagingScrollObservationMonitorDataSource:
     PDFViewerPagingScrollObservationMonitorDataSource {
     var currentPageIndexAtViewportCenter: Int?
     var estimatedCurrentPageIndex: Int?
+    var isScrolledToTop: Bool
 
     init(
         currentPageIndexAtViewportCenter: Int?,
-        estimatedCurrentPageIndex: Int?
+        estimatedCurrentPageIndex: Int?,
+        isScrolledToTop: Bool = false
     ) {
         self.currentPageIndexAtViewportCenter = currentPageIndexAtViewportCenter
         self.estimatedCurrentPageIndex = estimatedCurrentPageIndex
+        self.isScrolledToTop = isScrolledToTop
     }
 }
 

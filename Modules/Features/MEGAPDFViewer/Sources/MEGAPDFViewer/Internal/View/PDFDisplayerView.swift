@@ -6,6 +6,8 @@ import UIKit
 @MainActor
 protocol MEGAPDFViewPageObservationDelegate: AnyObject {
     func pdfView(_ pdfView: MEGAPDFView, currentPageDidChange index: Int)
+    func pdfView(_ pdfView: MEGAPDFView, isScrolledToTopDidChange isScrolledToTop: Bool)
+    func pdfViewDidApplyInitialPageNavigation(_ pdfView: MEGAPDFView)
 }
 
 @MainActor
@@ -16,6 +18,7 @@ protocol MEGAPDFViewDocumentTapDelegate: AnyObject {
 final class MEGAPDFView: PDFView {
     private let autoFittingViewModel = AutoFittingPDFViewModel()
     private let programmaticPageScrollViewModel = PDFViewerProgrammaticPageScrollViewModel()
+    private let initialPageIndexScrollingViewModel = PDFViewerInitialPageIndexScrollingViewModel()
     private let pagingScrollObservationMonitor = PDFViewerPagingScrollObservationMonitor()
     private let singleTapHandler = PDFDocumentSingleTapHandler()
 
@@ -23,6 +26,13 @@ final class MEGAPDFView: PDFView {
 
     weak var pageObservationDelegate: (any MEGAPDFViewPageObservationDelegate)?
     weak var documentTapDelegate: (any MEGAPDFViewDocumentTapDelegate)?
+
+    /// Applied once the initial fit has scrolled to the top, which would
+    /// otherwise undo the jump.
+    var initialPageIndex: Int? {
+        get { initialPageIndexScrollingViewModel.initialPageIndex }
+        set { initialPageIndexScrollingViewModel.initialPageIndex = newValue }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +52,12 @@ final class MEGAPDFView: PDFView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        if let contentScrollView {
+            initialPageIndexScrollingViewModel.contentInsetState = .init(
+                scrollViewAdjustedContentInsetTop: contentScrollView.adjustedContentInset.top,
+                pdfViewSafeAreaInsetTop: safeAreaInsets.top
+            )
+        }
         autoFittingViewModel.zoomState = .init(
             zoomScale: scaleFactor,
             minZoomScale: minScaleFactor,
@@ -50,17 +66,6 @@ final class MEGAPDFView: PDFView {
     }
 
     func requestPageNavigation(to pageIndex: Int) {
-        // - Aligns the given page's top with the viewport's top, without
-        //   leaving extra space on the bottom or top.
-        // - The current page, as reported by the
-        //   `pagingScrollObservationMonitor`, is whatever page is at viewport
-        //   center. This can be a different value than `pageIndex` if the
-        //   page's height is short, such that the page does not reach the
-        //   viewport center after alignment.
-        // - We accept this for now - instead of forcing the current page index
-        //   to the index targeted by `go(to:)`, we will show the page index at
-        //   the viewport center, consistent with the page number updated when
-        //   the user starts scrolling the page.
         programmaticPageScrollViewModel.pageNavigationState = .init(
             pageIndex: pageIndex,
             pageCount: document?.pageCount ?? 0,
@@ -96,12 +101,32 @@ final class MEGAPDFView: PDFView {
             }
             .store(in: &subscriptions)
 
+        initialPageIndexScrollingViewModel.startObservingScrollToTop(
+            didTriggerInitialScrollToTop: autoFittingViewModel.$didTriggerInitialScrollToTop
+        )
+
+        initialPageIndexScrollingViewModel.$initialPageNavigationRequest
+            .compactMap { $0 }
+            .sink { [weak self] pageIndex in
+                guard let self else { return }
+                requestPageNavigation(to: pageIndex)
+                pageObservationDelegate?.pdfViewDidApplyInitialPageNavigation(self)
+            }
+            .store(in: &subscriptions)
+
         pagingScrollObservationMonitor.dataSource = self
         pagingScrollObservationMonitor.onCurrentPageChange = { [weak self] currentPageIndex in
             guard let self else { return }
             pageObservationDelegate?.pdfView(
                 self,
                 currentPageDidChange: currentPageIndex
+            )
+        }
+        pagingScrollObservationMonitor.onIsScrolledToTopChange = { [weak self] isScrolledToTop in
+            guard let self else { return }
+            pageObservationDelegate?.pdfView(
+                self,
+                isScrolledToTopDidChange: isScrolledToTop
             )
         }
     }
@@ -147,8 +172,13 @@ final class MEGAPDFView: PDFView {
         go(to: page)
 
         guard let contentScrollView else { return }
+        let pageFrame = contentScrollView.convert(
+            convert(page.bounds(for: displayBox), from: page),
+            from: self
+        )
         programmaticPageScrollViewModel.scrollContentState = .init(
             contentOffsetY: contentScrollView.contentOffset.y,
+            pageMidY: pageFrame.midY,
             adjustedContentInsetTop: contentScrollView.adjustedContentInset.top,
             adjustedContentInsetBottom: contentScrollView.adjustedContentInset.bottom,
             contentHeight: contentScrollView.contentSize.height,
@@ -197,14 +227,23 @@ extension MEGAPDFView: PDFViewerPagingScrollObservationMonitorDataSource {
         guard let document, let currentPage else { return nil }
         return document.index(for: currentPage)
     }
+
+    var isScrolledToTop: Bool {
+        guard document != nil, let contentScrollView else { return false }
+        return contentScrollView.contentOffset.y
+            <= -contentScrollView.adjustedContentInset.top + 0.5
+    }
 }
 
 struct PDFDisplayerView: UIViewRepresentable {
     let document: PDFDocument
     @Binding var currentPage: Int
     @Binding var isProgrammaticallyScrollingToCurrentPage: Bool
+    let initialPageIndex: Int?
     let onLinkTapped: @MainActor (URL) -> Void
     let onTap: @MainActor () -> Void
+    let onIsScrolledToTopChange: @MainActor (Bool) -> Void
+    let onInitialPageNavigationApplied: @MainActor () -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -212,6 +251,7 @@ struct PDFDisplayerView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> MEGAPDFView {
         let pdfView = MEGAPDFView(frame: .zero)
+        pdfView.initialPageIndex = initialPageIndex
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
         pdfView.delegate = context.coordinator
@@ -241,6 +281,14 @@ struct PDFDisplayerView: UIViewRepresentable {
 
         func pdfView(_ pdfView: MEGAPDFView, currentPageDidChange index: Int) {
             parent.currentPage = index
+        }
+
+        func pdfView(_ pdfView: MEGAPDFView, isScrolledToTopDidChange isScrolledToTop: Bool) {
+            parent.onIsScrolledToTopChange(isScrolledToTop)
+        }
+
+        func pdfViewDidApplyInitialPageNavigation(_ pdfView: MEGAPDFView) {
+            parent.onInitialPageNavigationApplied()
         }
 
         func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView) {

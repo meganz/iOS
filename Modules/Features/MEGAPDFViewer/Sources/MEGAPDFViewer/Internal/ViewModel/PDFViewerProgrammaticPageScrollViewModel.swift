@@ -17,6 +17,8 @@ final class PDFViewerProgrammaticPageScrollViewModel {
 
     struct ScrollContentState: Equatable {
         let contentOffsetY: CGFloat
+        /// The navigated page's vertical centre, in content coordinates.
+        let pageMidY: CGFloat
         let adjustedContentInsetTop: CGFloat
         let adjustedContentInsetBottom: CGFloat
         let contentHeight: CGFloat
@@ -34,7 +36,7 @@ final class PDFViewerProgrammaticPageScrollViewModel {
 
     var scrollContentState: ScrollContentState? {
         didSet {
-            clampScrollContentOffset()
+            centerPageInViewportClampedToDocumentScrollLimits()
         }
     }
 
@@ -50,25 +52,25 @@ final class PDFViewerProgrammaticPageScrollViewModel {
         )
     }
 
-    private func clampScrollContentOffset() {
+    private func centerPageInViewportClampedToDocumentScrollLimits() {
         guard let scrollContentState else { return }
+        // - Centres on the point that
+        //   `MEGAPDFView.currentPageIndexAtViewportCenter` reads the current
+        //   page from, so the reported page is the one navigated to unless the
+        //   offset is clamped.
+        // - A page taller than the viewport is centred too, not top-aligned:
+        //   whether the reader wants its top, middle or bottom is unknown, so
+        //   the centre is as good a landing point as any.
+        let centeredOffsetY = scrollContentState.pageMidY
+            - scrollContentState.viewportHeight / 2
         let minimumOffsetY = -scrollContentState.adjustedContentInsetTop
-        if scrollContentState.contentOffsetY < minimumOffsetY {
-            scrollContentOffsetY = minimumOffsetY
-            return
-        }
-
         let maximumOffsetY = max(
             minimumOffsetY,
             scrollContentState.contentHeight
                 - scrollContentState.viewportHeight
                 + scrollContentState.adjustedContentInsetBottom
         )
-        if scrollContentState.contentOffsetY > maximumOffsetY {
-            scrollContentOffsetY = maximumOffsetY
-            return
-        }
-
-        scrollContentOffsetY = nil
+        let offsetY = min(max(centeredOffsetY, minimumOffsetY), maximumOffsetY)
+        scrollContentOffsetY = offsetY == scrollContentState.contentOffsetY ? nil : offsetY
     }
 }

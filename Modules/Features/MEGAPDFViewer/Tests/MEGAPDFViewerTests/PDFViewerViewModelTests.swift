@@ -24,26 +24,9 @@ private final class MockPDFDocumentURLUseCase: PDFDocumentURLUseCaseProtocol {
     }
 }
 
-private struct MockPDFDocumentLoader: PDFDocumentLoading {
-    let document: PDFDocument?
-
-    func loadDocument(url: URL) -> PDFDocument? {
-        document
-    }
-    
-    /// A one-page document, so the loader mock can return something real.
-    static func makeDocument(pageCount: Int = 1) -> PDFDocument {
-        let document = PDFDocument()
-        for index in 0..<pageCount {
-            document.insert(PDFPage(), at: index)
-        }
-        return document
-    }
-}
-
 /// Parses the first request only, like a file that disappears between the
 /// viewer's parse and the thumbnails' parse.
-private final class FirstLoadOnlyPDFDocumentLoader: PDFDocumentLoading {
+private final class FirstLoadOnlyPDFDocumentLoader: PDFDocumentLoading, @unchecked Sendable {
     private var hasLoaded = false
 
     func loadDocument(url: URL) -> PDFDocument? {
@@ -61,13 +44,18 @@ struct PDFViewerViewModelTests {
         documentLoader: some PDFDocumentLoading = MockPDFDocumentLoader(
             document: MockPDFDocumentLoader.makeDocument()
         ),
+        lastPageUseCase: some PDFViewerLastPageUseCaseProtocol = MockPDFViewerLastPageUseCase(),
         onMoreTapped: (@MainActor () -> Void)? = nil
     ) -> PDFViewerViewModel {
         PDFViewerViewModel(
             dependency: PDFViewerViewModel.Dependency(
                 pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: documentURLUseCase,
-                documentLoader: documentLoader,
+                documentLoadingUseCase: PDFViewerDocumentLoadingUseCase(
+                    documentLoader: documentLoader,
+                    lastPageUseCase: lastPageUseCase
+                ),
+                lastPageUseCase: lastPageUseCase,
                 fileName: "test.pdf",
                 onMoreTapped: onMoreTapped
             )
@@ -328,7 +316,7 @@ struct PDFViewerViewModelTests {
         await awaitDocumentParsed(sut)
 
         let pageCount: Int? = switch sut.state {
-        case .ready(_, let pagingState): pagingState.pageCount
+        case .ready(let readyState): readyState.pagingState.pageCount
         default: nil
         }
         #expect(pageCount == 3)
@@ -411,7 +399,10 @@ struct PDFViewerViewModelTests {
         task.cancel()
     }
 
-    private func loadedSUT(pageCount: Int) async -> (PDFViewerViewModel, Task<Void, Never>) {
+    private func loadedSUT(
+        pageCount: Int,
+        lastPageUseCase: MockPDFViewerLastPageUseCase = MockPDFViewerLastPageUseCase()
+    ) async -> (PDFViewerViewModel, Task<Void, Never>) {
         let (stream, continuation) = AsyncThrowingStream.makeStream(
             of: PDFDocumentLoadEvent.self,
             throwing: (any Error).self
@@ -420,12 +411,131 @@ struct PDFViewerViewModelTests {
             documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
             documentLoader: MockPDFDocumentLoader(
                 document: MockPDFDocumentLoader.makeDocument(pageCount: pageCount)
-            )
+            ),
+            lastPageUseCase: lastPageUseCase
         )
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
         return (sut, task)
+    }
+
+    @Test func saveLastReadPage_whenReady_savesCurrentPageIndex() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase()
+        let (sut, task) = await loadedSUT(pageCount: 10, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.currentPageIndex = 3
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase) == [
+            .saveLastPageIndex(index: 3, documentIdentifier: "any-fingerprint")
+        ])
+    }
+
+    @Test func saveLastReadPage_whenReaderReturnsToFirstPage_savesZero() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase()
+        let (sut, task) = await loadedSUT(pageCount: 10, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.currentPageIndex = 3
+        sut.currentPageIndex = 0
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase) == [
+            .saveLastPageIndex(index: 0, documentIdentifier: "any-fingerprint")
+        ])
+    }
+
+    @Test func loadDocument_passesResumePageToView() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 4)
+        let (sut, task) = await loadedSUT(pageCount: 10, lastPageUseCase: lastPageUseCase)
+
+        #expect(sut.initialPageIndex == 4)
+        task.cancel()
+    }
+
+    @Test func saveLastReadPage_beforeInitialPageNavigationApplies_savesNothing() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 11)
+        let (sut, task) = await loadedSUT(pageCount: 20, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.isScrolledToTopDidChange(true)
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase).isEmpty)
+    }
+
+    @Test func saveLastReadPage_afterInitialPageNavigationApplies_savesCurrentPage() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 11)
+        let (sut, task) = await loadedSUT(pageCount: 20, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.initialPageNavigationDidApply()
+        sut.currentPageIndex = 11
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase) == [
+            .saveLastPageIndex(index: 11, documentIdentifier: "any-fingerprint")
+        ])
+    }
+
+    @Test func saveLastReadPage_whenScrolledToTop_savesFirstPage() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase()
+        let (sut, task) = await loadedSUT(pageCount: 10, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.currentPageIndex = 2
+        sut.isScrolledToTopDidChange(true)
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase) == [
+            .saveLastPageIndex(index: 0, documentIdentifier: "any-fingerprint")
+        ])
+    }
+
+    @Test func saveLastReadPage_afterLeavingTop_savesCurrentPage() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase()
+        let (sut, task) = await loadedSUT(pageCount: 10, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.currentPageIndex = 2
+        sut.isScrolledToTopDidChange(true)
+        sut.isScrolledToTopDidChange(false)
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase) == [
+            .saveLastPageIndex(index: 2, documentIdentifier: "any-fingerprint")
+        ])
+    }
+
+    @Test func saveLastReadPage_whenDocumentNotIdentified_savesNothing() async {
+        let lastPageUseCase = MockPDFViewerLastPageUseCase(
+            documentIdentifierForLastViewedPageIndexResult: nil
+        )
+        let (sut, task) = await loadedSUT(pageCount: 10, lastPageUseCase: lastPageUseCase)
+        task.cancel()
+
+        sut.currentPageIndex = 3
+        await sut.saveLastReadPage()
+
+        #expect(saveInvocations(lastPageUseCase).isEmpty)
+    }
+
+    @Test func saveLastReadPage_whenNotReady_savesNothing() async {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let lastPageUseCase = MockPDFViewerLastPageUseCase()
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            lastPageUseCase: lastPageUseCase
+        )
+
+        await sut.saveLastReadPage()
+
+        #expect(lastPageUseCase.invocations.isEmpty)
     }
 
     @Test func showsMoreButton_withoutOnMoreTapped_isFalseWhileLoading() {
@@ -518,5 +628,13 @@ struct PDFViewerViewModelTests {
         sut.didTapMore()
 
         #expect(onMoreTappedCallCount == 1)
+    }
+
+    private func saveInvocations(
+        _ lastPageUseCase: MockPDFViewerLastPageUseCase
+    ) -> [MockPDFViewerLastPageUseCase.Invocation] {
+        lastPageUseCase.invocations.filter {
+            if case .saveLastPageIndex = $0 { true } else { false }
+        }
     }
 }

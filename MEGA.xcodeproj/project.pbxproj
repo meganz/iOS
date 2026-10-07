@@ -2723,6 +2723,7 @@
 		D4A1F0C2B83E47519A6C0E32 /* ViewedLinksRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E31 /* ViewedLinksRecorder.swift */; };
 		C4F1A0010001000000000002 /* LeftOffItemsRecordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F1A0010001000000000001 /* LeftOffItemsRecordUseCase.swift */; };
 		D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */; };
+		D7086A32305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7086A31305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift */; };
 		D7B05EB5303C2F11004C5100 /* TransfersTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */; };
 		D7C5174530737F4F005F6FFD /* PDFViewerRevampRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C5174430737F49005F6FFD /* PDFViewerRevampRouterTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
@@ -5628,6 +5629,7 @@
 		C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsVisibilityViewModelTests.swift; sourceTree = "<group>"; };
 		C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandlerTests.swift; sourceTree = "<group>"; };
 		C70D09D7707039EB5A91C3AD /* QuotaEventSimulatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEventSimulatorView.swift; sourceTree = "<group>"; };
+		D7086A31305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift"; sourceTree = "<group>"; };
 		D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		D7C5174430737F49005F6FFD /* PDFViewerRevampRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouterTests.swift; sourceTree = "<group>"; };
 		DF6C8F6AB8CF06677C15C1F2 /* PromoLandingDialogLaunchPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoLandingDialogLaunchPresenter.swift; sourceTree = "<group>"; };
@@ -7313,6 +7315,7 @@
 				B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */,
 				B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */,
 				A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */,
+				D7086A31305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift */,
 				24B162B72C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift */,
 				B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */,
 				4147C2D21B4EE9BA00A37044 /* MEGAStore.h */,
@@ -15816,6 +15819,7 @@
 				5B12D03B241273D5006C3907 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */,
 				5BE689AF2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
+				D7086A32305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift in Sources */,
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				24B162B82C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift in Sources */,
 				B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */,

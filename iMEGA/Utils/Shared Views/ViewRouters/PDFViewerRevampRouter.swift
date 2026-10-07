@@ -81,6 +81,10 @@ import UIKit
         let dependency = PDFViewerView.Dependency(
             pdfDocumentSource: pdfDocumentSource,
             downloadUseCase: makeDownloadNodeUseCase(node: node),
+            lastPageUseCase: PDFViewerLastPageUseCase(
+                repository: PDFViewerLastPageRepository(store: MEGAStore.shareInstance()),
+                fingerprintRepository: PDFViewerDocumentFingerprintRepository(sdk: MEGASdk.shared)
+            ),
             fileName: fileName,
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             onClose: { presentedViewer?.dismiss(animated: true) },

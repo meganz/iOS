@@ -10,7 +10,8 @@ public struct PDFViewerView: View {
     public struct Dependency {
         let pdfDocumentSource: PDFViewerDocumentSource
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
-        let documentLoader: any PDFDocumentLoading
+        let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
+        let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
         let fileName: String
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
@@ -19,9 +20,11 @@ public struct PDFViewerView: View {
         /// Invoked when the user taps a link inside the document.
         let onLinkTapped: @MainActor (URL) -> Void
 
+        @MainActor
         public init(
             pdfDocumentSource: PDFViewerDocumentSource,
             downloadUseCase: some DownloadNodeUseCaseProtocol,
+            lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
@@ -31,7 +34,11 @@ public struct PDFViewerView: View {
             self.init(
                 pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: PDFDocumentURLUseCase(downloadUseCase: downloadUseCase),
-                documentLoader: PDFDocumentLoader(),
+                documentLoadingUseCase: PDFViewerDocumentLoadingUseCase(
+                    documentLoader: PDFDocumentLoader(),
+                    lastPageUseCase: lastPageUseCase
+                ),
+                lastPageUseCase: lastPageUseCase,
                 fileName: fileName,
                 transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 onClose: onClose,
@@ -40,10 +47,12 @@ public struct PDFViewerView: View {
             )
         }
 
+        @MainActor
         init(
             pdfDocumentSource: PDFViewerDocumentSource,
             documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
-            documentLoader: some PDFDocumentLoading,
+            documentLoadingUseCase: some PDFViewerDocumentLoadingUseCaseProtocol,
+            lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
@@ -52,7 +61,8 @@ public struct PDFViewerView: View {
         ) {
             self.pdfDocumentSource = pdfDocumentSource
             self.documentURLUseCase = documentURLUseCase
-            self.documentLoader = documentLoader
+            self.documentLoadingUseCase = documentLoadingUseCase
+            self.lastPageUseCase = lastPageUseCase
             self.fileName = fileName
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
@@ -79,7 +89,8 @@ public struct PDFViewerView: View {
                 dependency: PDFViewerViewModel.Dependency(
                     pdfDocumentSource: dependency.pdfDocumentSource,
                     documentURLUseCase: dependency.documentURLUseCase,
-                    documentLoader: dependency.documentLoader,
+                    documentLoadingUseCase: dependency.documentLoadingUseCase,
+                    lastPageUseCase: dependency.lastPageUseCase,
                     fileName: dependency.fileName,
                     onMoreTapped: dependency.onMoreTapped
                 )
@@ -99,12 +110,15 @@ public struct PDFViewerView: View {
                         currentPage: $viewModel.currentPageIndex,
                         isProgrammaticallyScrollingToCurrentPage:
                             $viewModel.isProgrammaticallyScrollingToCurrentPage,
+                        initialPageIndex: viewModel.initialPageIndex,
                         onLinkTapped: onLinkTapped,
                         onTap: {
                             withAnimation(.easeInOut(duration: 0.25)) {
                                 viewModel.isChromeHidden.toggle()
                             }
-                        }
+                        },
+                        onIsScrolledToTopChange: { viewModel.isScrolledToTopDidChange($0) },
+                        onInitialPageNavigationApplied: { viewModel.initialPageNavigationDidApply() }
                     )
                     .ignoresSafeArea()
                     // Makes Liquid Glass navbar/toolbar appearance update more
@@ -168,6 +182,7 @@ public struct PDFViewerView: View {
         .onDisappear {
             retryTask?.cancel()
             retryTask = nil
+            Task { await viewModel.saveLastReadPage() }
         }
     }
 

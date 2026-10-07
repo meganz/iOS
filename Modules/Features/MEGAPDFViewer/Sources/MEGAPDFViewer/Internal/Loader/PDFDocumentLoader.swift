@@ -1,7 +1,7 @@
 import Foundation
 import PDFKit
 
-protocol PDFDocumentLoading {
+protocol PDFDocumentLoading: Sendable {
     /// Returns nil when PDFKit cannot parse the file.
     func loadDocument(url: URL) -> PDFDocument?
 }

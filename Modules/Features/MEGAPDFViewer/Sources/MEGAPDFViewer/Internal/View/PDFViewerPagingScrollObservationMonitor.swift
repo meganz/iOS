@@ -5,6 +5,7 @@ import Foundation
 protocol PDFViewerPagingScrollObservationMonitorDataSource: AnyObject {
     var currentPageIndexAtViewportCenter: Int? { get }
     var estimatedCurrentPageIndex: Int? { get }
+    var isScrolledToTop: Bool { get }
 }
 
 @MainActor
@@ -34,7 +35,9 @@ final class PDFViewerPagingScrollObservationMonitor {
 
     weak var dataSource: (any PDFViewerPagingScrollObservationMonitorDataSource)?
     private var lastReportedPageIndex: Int?
+    private var lastReportedIsScrolledToTop: Bool?
     var onCurrentPageChange: ((Int) -> Void)?
+    var onIsScrolledToTopChange: ((Bool) -> Void)?
 
     /// Starts observing page updates from notifications and key-value changes.
     ///
@@ -79,10 +82,16 @@ final class PDFViewerPagingScrollObservationMonitor {
     private func teardownExistingObservations() {
         subscriptions.removeAll()
         lastReportedPageIndex = nil
+        lastReportedIsScrolledToTop = nil
     }
 
     private func checkDataSourceCurrentPageAndReportIfNeeded() {
         guard let dataSource else { return }
+        let isScrolledToTop = dataSource.isScrolledToTop
+        if lastReportedIsScrolledToTop != isScrolledToTop {
+            lastReportedIsScrolledToTop = isScrolledToTop
+            onIsScrolledToTopChange?(isScrolledToTop)
+        }
         let pageIndex = dataSource.currentPageIndexAtViewportCenter
             ?? dataSource.estimatedCurrentPageIndex
         guard let pageIndex, lastReportedPageIndex != pageIndex else { return }

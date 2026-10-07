@@ -44,14 +44,16 @@ struct PDFViewerProgrammaticPageScrollViewModelTests {
     }
 
     @Test(arguments: [
-        (-30.0, -20.0),
-        (500.0, 310.0)
+        (500.0, 300.0),
+        (100.0, -20.0),
+        (700.0, 310.0)
     ] as [(CGFloat, CGFloat)])
-    func outOfBoundsScrollContentOffsetPublishesBound(input: CGFloat, expected: CGFloat) {
+    func navigatedPageIsCenteredWithinScrollBounds(pageMidY: CGFloat, expected: CGFloat) {
         let sut = PDFViewerProgrammaticPageScrollViewModel()
 
         sut.scrollContentState = .init(
-            contentOffsetY: input,
+            contentOffsetY: 40,
+            pageMidY: pageMidY,
             adjustedContentInsetTop: 20,
             adjustedContentInsetBottom: 10,
             contentHeight: 700,
@@ -62,11 +64,12 @@ struct PDFViewerProgrammaticPageScrollViewModelTests {
     }
 
     @Test
-    func inBoundsScrollContentOffsetDoesNotPublishCommand() {
+    func alreadyCenteredPageDoesNotPublishCommand() {
         let sut = PDFViewerProgrammaticPageScrollViewModel()
 
         sut.scrollContentState = .init(
-            contentOffsetY: 40,
+            contentOffsetY: 300,
+            pageMidY: 500,
             adjustedContentInsetTop: 20,
             adjustedContentInsetBottom: 10,
             contentHeight: 700,

@@ -18,9 +18,11 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(path: "../../DataSource/MEGASDK"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../MEGASharedRepo/MEGASDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../Transfer"),
@@ -34,6 +36,8 @@ let package = Package(
                 "MEGAAssets",
                 "MEGADomain",
                 "MEGAL10n",
+                .product(name: "MEGASdk", package: "MEGASDK"),
+                "MEGASDKRepo",
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "Transfer"
