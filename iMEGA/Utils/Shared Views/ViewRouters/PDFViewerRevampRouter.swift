@@ -92,6 +92,8 @@ import UIKit
                 repository: PDFViewerLastPageRepository(store: MEGAStore.shareInstance()),
                 fingerprintRepository: PDFViewerDocumentFingerprintRepository(sdk: MEGASdk.shared)
             ),
+            leftOffItemRecordUseCase: LeftOffItemsRecordUseCase.shared,
+            node: node?.toNodeEntity(),
             fileName: fileName,
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             onClose: { presentedViewer?.dismiss(animated: true) },

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MEGAL10n
 import Observation
 @preconcurrency import PDFKit
@@ -11,6 +12,8 @@ final class PDFViewerViewModel {
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
         let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
+        let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
+        let node: NodeEntity?
         let fileName: String
         let onMoreTapped: (@MainActor () -> Void)?
     }
@@ -225,9 +228,26 @@ extension PDFViewerViewModel {
         // still the resume point, and the document shows its top instead.
         guard readyState.initialPageIndex == nil || didApplyInitialPageNavigation else { return }
         await dependency.lastPageUseCase.saveLastPageIndex(
-            pageIndexForLastViewed(),
+            pageIndexForLastViewedAndLeftOff(),
             forDocumentIdentifier: documentIdentifierForLastViewedPageIndex
         )
+    }
+
+    /// Records the document in Continue Where You Left Off, or removes it once
+    /// it is nearly finished, as the legacy viewer does.
+    func recordLeftOffItem() async {
+        guard let readyState,
+              let node = dependency.node,
+              !node.name.isEmpty,
+              readyState.pagingState.pageCount > 0
+        else { return }
+        let nearCompletionFraction = 0.9
+        let page = pageIndexForLastViewedAndLeftOff() + 1
+        if Double(page) / Double(readyState.pagingState.pageCount) < nearCompletionFraction {
+            await dependency.leftOffItemRecordUseCase.record(handle: node.handle, name: node.name)
+        } else {
+            await dependency.leftOffItemRecordUseCase.remove(handle: node.handle)
+        }
     }
 
     func isScrolledToTopDidChange(_ isScrolledToTop: Bool) {
@@ -238,7 +258,7 @@ extension PDFViewerViewModel {
         didApplyInitialPageNavigation = true
     }
 
-    private func pageIndexForLastViewed() -> Int {
+    private func pageIndexForLastViewedAndLeftOff() -> Int {
         if let initialPageIndex = readyState?.initialPageIndex, !didApplyInitialPageNavigation {
             return initialPageIndex
         }

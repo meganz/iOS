@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGADomainMock
 import MEGAL10n
 @testable import MEGAPDFViewer
 import Observation
@@ -45,6 +46,8 @@ struct PDFViewerViewModelTests {
             document: MockPDFDocumentLoader.makeDocument()
         ),
         lastPageUseCase: some PDFViewerLastPageUseCaseProtocol = MockPDFViewerLastPageUseCase(),
+        leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = MockLeftOffItemRecordUseCase(),
+        node: NodeEntity? = nil,
         onMoreTapped: (@MainActor () -> Void)? = nil
     ) -> PDFViewerViewModel {
         PDFViewerViewModel(
@@ -56,6 +59,8 @@ struct PDFViewerViewModelTests {
                     lastPageUseCase: lastPageUseCase
                 ),
                 lastPageUseCase: lastPageUseCase,
+                leftOffItemRecordUseCase: leftOffItemRecordUseCase,
+                node: node,
                 fileName: "test.pdf",
                 onMoreTapped: onMoreTapped
             )
@@ -401,7 +406,9 @@ struct PDFViewerViewModelTests {
 
     private func loadedSUT(
         pageCount: Int,
-        lastPageUseCase: MockPDFViewerLastPageUseCase = MockPDFViewerLastPageUseCase()
+        lastPageUseCase: MockPDFViewerLastPageUseCase = MockPDFViewerLastPageUseCase(),
+        leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
+        node: NodeEntity? = nil
     ) async -> (PDFViewerViewModel, Task<Void, Never>) {
         let (stream, continuation) = AsyncThrowingStream.makeStream(
             of: PDFDocumentLoadEvent.self,
@@ -412,7 +419,9 @@ struct PDFViewerViewModelTests {
             documentLoader: MockPDFDocumentLoader(
                 document: MockPDFDocumentLoader.makeDocument(pageCount: pageCount)
             ),
-            lastPageUseCase: lastPageUseCase
+            lastPageUseCase: lastPageUseCase,
+            leftOffItemRecordUseCase: leftOffItemRecordUseCase,
+            node: node
         )
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
@@ -478,6 +487,51 @@ struct PDFViewerViewModelTests {
         #expect(saveInvocations(lastPageUseCase) == [
             .saveLastPageIndex(index: 11, documentIdentifier: "any-fingerprint")
         ])
+    }
+
+    @Test(arguments: [(3, true), (7, true), (8, false), (9, false)])
+    func recordLeftOffItem_recordsUntilNearCompletion(pageIndex: Int, shouldRecord: Bool) async {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let (sut, task) = await loadedSUT(
+            pageCount: 10,
+            leftOffItemRecordUseCase: leftOffItemRecordUseCase,
+            node: NodeEntity(name: "report.pdf", handle: 7)
+        )
+        task.cancel()
+
+        sut.currentPageIndex = pageIndex
+        await sut.recordLeftOffItem()
+
+        #expect(leftOffItemRecordUseCase.record_Calls.map(\.handle) == (shouldRecord ? [7] : []))
+        #expect(leftOffItemRecordUseCase.remove_Calls == (shouldRecord ? [] : [7]))
+    }
+
+    @Test func recordLeftOffItem_beforeInitialPageNavigationApplies_usesStoredPage() async {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let (sut, task) = await loadedSUT(
+            pageCount: 10,
+            lastPageUseCase: MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 9),
+            leftOffItemRecordUseCase: leftOffItemRecordUseCase,
+            node: NodeEntity(name: "report.pdf", handle: 7)
+        )
+        task.cancel()
+
+        sut.isScrolledToTopDidChange(true)
+        await sut.recordLeftOffItem()
+
+        #expect(leftOffItemRecordUseCase.record_Calls.isEmpty)
+        #expect(leftOffItemRecordUseCase.remove_Calls == [7])
+    }
+
+    @Test func recordLeftOffItem_withoutNode_recordsNothing() async {
+        let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        let (sut, task) = await loadedSUT(pageCount: 10, leftOffItemRecordUseCase: leftOffItemRecordUseCase)
+        task.cancel()
+
+        await sut.recordLeftOffItem()
+
+        #expect(leftOffItemRecordUseCase.record_Calls.isEmpty)
+        #expect(leftOffItemRecordUseCase.remove_Calls.isEmpty)
     }
 
     @Test func saveLastReadPage_whenScrolledToTop_savesFirstPage() async {

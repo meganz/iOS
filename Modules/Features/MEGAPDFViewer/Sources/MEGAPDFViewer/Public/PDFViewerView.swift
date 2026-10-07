@@ -12,6 +12,10 @@ public struct PDFViewerView: View {
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
         let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
+        let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
+        /// The node recorded in Continue Where You Left Off; nil for a file
+        /// that has no node.
+        let node: NodeEntity?
         let fileName: String
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
@@ -25,6 +29,8 @@ public struct PDFViewerView: View {
             pdfDocumentSource: PDFViewerDocumentSource,
             downloadUseCase: some DownloadNodeUseCaseProtocol,
             lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
+            leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol,
+            node: NodeEntity?,
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
@@ -39,6 +45,8 @@ public struct PDFViewerView: View {
                     lastPageUseCase: lastPageUseCase
                 ),
                 lastPageUseCase: lastPageUseCase,
+                leftOffItemRecordUseCase: leftOffItemRecordUseCase,
+                node: node,
                 fileName: fileName,
                 transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 onClose: onClose,
@@ -53,6 +61,8 @@ public struct PDFViewerView: View {
             documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
             documentLoadingUseCase: some PDFViewerDocumentLoadingUseCaseProtocol,
             lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
+            leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol,
+            node: NodeEntity?,
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
@@ -63,6 +73,8 @@ public struct PDFViewerView: View {
             self.documentURLUseCase = documentURLUseCase
             self.documentLoadingUseCase = documentLoadingUseCase
             self.lastPageUseCase = lastPageUseCase
+            self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
+            self.node = node
             self.fileName = fileName
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
@@ -91,6 +103,8 @@ public struct PDFViewerView: View {
                     documentURLUseCase: dependency.documentURLUseCase,
                     documentLoadingUseCase: dependency.documentLoadingUseCase,
                     lastPageUseCase: dependency.lastPageUseCase,
+                    leftOffItemRecordUseCase: dependency.leftOffItemRecordUseCase,
+                    node: dependency.node,
                     fileName: dependency.fileName,
                     onMoreTapped: dependency.onMoreTapped
                 )
@@ -182,7 +196,10 @@ public struct PDFViewerView: View {
         .onDisappear {
             retryTask?.cancel()
             retryTask = nil
-            Task { await viewModel.saveLastReadPage() }
+            Task {
+                await viewModel.saveLastReadPage()
+                await viewModel.recordLeftOffItem()
+            }
         }
     }
 
