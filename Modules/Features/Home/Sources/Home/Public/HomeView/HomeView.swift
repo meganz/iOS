@@ -1,4 +1,5 @@
 import Combine
+import ContinueWhereYouLeftOff
 import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -26,6 +27,7 @@ public struct HomeView: View {
         case shortcut(ShortcutType)
         case recents
         case viewedLinks
+        case continueWhereYouLeftOff
         case widgetsCustomization
     }
 
@@ -282,6 +284,10 @@ public struct HomeView: View {
                 ),
                 tabBarHidden: $navigator.tabBarHidden
             )
+        case .continueWhereYouLeftOff:
+            TokenColors.Background.page.swiftUI
+                .navigationTitle(Strings.Localizable.Home.Customization.Widget.continueWhereYouLeftOff)
+                .navigationBarTitleDisplayMode(.inline)
         case .widgetsCustomization:
             HomeWidgetsCustomizationView(dependency:
                     .init(defaultLaunchDestinationUseCase: dependency.defaultLaunchDestinationUseCase)
@@ -420,7 +426,22 @@ public struct HomeView: View {
                     } else {
                         EmptyView()
                     }
-                case .continueWhereYouLeft, .doMoreWithMega:
+                case .continueWhereYouLeft:
+                    if isHomeRevampPhase2Enabled {
+                        ContinueWhereYouLeftOffWidgetView(
+                            dependency: ContinueWhereYouLeftOffWidgetView.Dependency(
+                                leftOffItemsUseCase: dependency.leftOffItemsUseCase,
+                                thumbnailUseCase: dependency.leftOffThumbnailUseCase,
+                                selectionHandler: searchResultsSelectionHandler,
+                                onOpenFullScreen: {
+                                    navigator.append(NavigationRoute.continueWhereYouLeftOff)
+                                }
+                            )
+                        )
+                    } else {
+                        EmptyView()
+                    }
+                case .doMoreWithMega:
                     if isHomeRevampPhase2Enabled {
                         Text("\(widget.rawValue)") // corresponding view will be added later
                             .frame(height: 30)

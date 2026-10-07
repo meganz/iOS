@@ -18,6 +18,15 @@ let package = Package(
         )
     ],
     dependencies: [
+        // UI
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(path: "../../UI/MEGASwiftUI"),
+
+        // Presentation
+        .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../Presentation/MEGAL10n"),
+
         // Domain
         .package(path: "../../Domain/MEGADomain"),
 
@@ -35,6 +44,11 @@ let package = Package(
         .target(
             name: "ContinueWhereYouLeftOff",
             dependencies: [
+                "MEGADesignToken",
+                "MEGASwiftUI",
+                "MEGAAppPresentation",
+                "MEGAAssets",
+                "MEGAL10n",
                 "MEGADomain",
                 "MEGAFoundation",
                 "MEGASwift",
@@ -53,6 +67,7 @@ let package = Package(
             dependencies: [
                 "ContinueWhereYouLeftOff",
                 "ContinueWhereYouLeftOffMock",
+                "MEGAAppPresentation",
                 "MEGADomain",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGASwift",

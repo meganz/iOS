@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import ContentLibraries
+import ContinueWhereYouLeftOff
 import Favourites
 import Home
 import MEGAAnalyticsiOS
@@ -148,7 +149,14 @@ extension HomeScreenFactory {
             tracker: DIContainer.tracker,
             featureFlagProvider: DIContainer.featureFlagProvider,
             promotedPlanProvider: PromotedPlanFactory.makeProvider(),
-            viewedLinksUseCase: ViewedLinksFactory.makeViewedLinksUseCase()
+            viewedLinksUseCase: ViewedLinksFactory.makeViewedLinksUseCase(),
+            leftOffItemsUseCase: ContinueWhereYouLeftOffFactory.makeLeftOffItemsUseCase(
+                nodeUseCase: nodeUseCase,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
+                requestStatesRepository: RequestStatesRepository.newRepo
+            ),
+            leftOffThumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
@@ -264,13 +272,16 @@ extension HomeScreenFactory {
         )
     }
 
+    private var sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol {
+        SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+        )
+    }
+
     private var sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol {
         SensitiveDisplayPreferenceUseCase(
-            sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo,
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo)
-            ),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo)
         )

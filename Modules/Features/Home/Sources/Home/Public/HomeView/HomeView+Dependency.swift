@@ -1,5 +1,6 @@
 import Combine
 import ContentLibraries
+import ContinueWhereYouLeftOff
 import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -56,6 +57,9 @@ extension HomeView {
         let promotedPlanProvider: @Sendable () async throws -> PlanEntity?
         // Viewed links widget
         let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
+        // Continue where you left off widget
+        let leftOffItemsUseCase: any LeftOffItemsUseCaseProtocol
+        let leftOffThumbnailUseCase: any ThumbnailUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -88,6 +92,8 @@ extension HomeView {
             featureFlagProvider: some FeatureFlagProviderProtocol,
             promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?,
             viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
+            leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
+            leftOffThumbnailUseCase: some ThumbnailUseCaseProtocol
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -119,6 +125,8 @@ extension HomeView {
             self.featureFlagProvider = featureFlagProvider
             self.promotedPlanProvider = promotedPlanProvider
             self.viewedLinksUseCase = viewedLinksUseCase
+            self.leftOffItemsUseCase = leftOffItemsUseCase
+            self.leftOffThumbnailUseCase = leftOffThumbnailUseCase
         }
     }
 }
