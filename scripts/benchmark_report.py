@@ -436,6 +436,33 @@ def drop_skipped(bundle, skipped):
         bundle[key] = {test: value for test, value in bundle[key].items() if not is_skipped(test, skipped)}
     bundle["runs"] = {key: per_test for key, per_test in bundle["runs"].items() if per_test}
 
+OK_STATUSES = ("ok", "NEW", "REMOVED")
+
+
+def print_table(header, rows):
+    print("| " + " | ".join(header) + " |")
+    print("|" + "---|" * len(header))
+    for row in rows:
+        print("| " + " | ".join(row) + " |")
+    print()
+
+
+def print_groups(header, rows):
+    """One group per test class. Failed rows stay open. Passed rows are folded, as a reference."""
+    suites = {}
+    for row in rows:
+        suites.setdefault(row[0].split("/")[0], []).append(row)
+    for suite, suite_rows in suites.items():
+        failed = [row for row in suite_rows if row[-1] not in OK_STATUSES]
+        passed = [row for row in suite_rows if row[-1] in OK_STATUSES]
+        print(f"**{suite}** {'FAILED' if failed else 'passed'}\n")
+        if failed:
+            print_table(header, failed)
+        if passed:
+            print(f"<details>\n<summary>Passed ({len(passed)})</summary>\n")
+            print_table(header, passed)
+            print("</details>\n")
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -564,11 +591,7 @@ def main():
             rows.append(row)
     rows += removed_rows
 
-    print("| " + " | ".join(header) + " |")
-    print("|" + "---|" * len(header))
-    for row in rows:
-        print("| " + " | ".join(row) + " |")
-    print()
+    print_groups(header, rows)
     for note in notes:
         print(f"NOTE: {note}")
     for test, reason in sorted(skipped.items()):

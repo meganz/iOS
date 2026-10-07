@@ -5,6 +5,7 @@ import cmark_gfm_extensions
 /// the parser tried before this one. `ParserGoldenTests` pins the output that matched it.
 struct CmarkTreeWalker {
     private let softBreak: MarkdownSoftBreak
+    private let mode: ParseMode
 
     private var frames = [Frame(kind: .document)]
     /// One entry per entered container node: true when it pushed a frame.
@@ -22,10 +23,15 @@ struct CmarkTreeWalker {
     private var contexts = [InlineContext()]
     private var extensionKinds: [UInt32: ExtensionKind] = [:]
     private var source: SourceText
+    /// The node of the current enter or exit event. `addBlock` reads its end line in editor mode.
+    private var currentNode: UnsafeMutablePointer<cmark_node>?
+    /// Editor mode only: the 0-based first and last source line of each top-level block, in block order.
+    private(set) var topLevelLines: [ClosedRange<Int>] = []
 
-    init(source: SourceText, softBreak: MarkdownSoftBreak, lineOffset: Int = 0, lastLine: Int = 0) {
+    init(source: SourceText, softBreak: MarkdownSoftBreak, mode: ParseMode = .viewer, lineOffset: Int = 0, lastLine: Int = 0) {
         self.source = source
         self.softBreak = softBreak
+        self.mode = mode
         self.lineOffset = lineOffset
         self.lastLine = lastLine
     }
@@ -37,6 +43,7 @@ struct CmarkTreeWalker {
             let event = cmark_iter_next(iterator)
             if event == CMARK_EVENT_DONE { break }
             guard let node = cmark_iter_get_node(iterator) else { continue }
+            currentNode = node
             if event == CMARK_EVENT_ENTER {
                 enter(node)
             } else if event == CMARK_EVENT_EXIT {
@@ -105,8 +112,8 @@ struct CmarkTreeWalker {
             finishParagraph(node)
         case CMARK_NODE_HEADING:
             let text = finishLeaf()
-            // Foundation drops an empty heading (it has no text runs).
-            guard !text.isEmpty else { return }
+            // Foundation drops an empty heading (it has no text runs). The editor keeps it, so no line is lost.
+            guard !text.isEmpty || mode == .editor else { return }
             addBlock(ParsedBlock(sourceLine: line(of: node), kind: .heading(level: Int(cmark_node_get_heading_level(node)), text: text)))
         case CMARK_NODE_IMAGE, CMARK_NODE_LINK:
             let context = contexts[contexts.count - 1]
@@ -189,7 +196,7 @@ struct CmarkTreeWalker {
         case .quote:
             nestingDepth -= 1
             // A quote with no content (for example only a link definition) is dropped, like Foundation.
-            guard let line = frame.line else { return }
+            guard let line = frame.line ?? (mode == .editor ? currentNode.map { line(of: $0) } : nil) else { return }
             addBlock(ParsedBlock(sourceLine: line, kind: .blockQuote(frame.blocks)))
         case .item(let checkbox):
             nestingDepth -= 1
@@ -201,7 +208,9 @@ struct CmarkTreeWalker {
                 line = itemLine
             }
             let index = frames.count - 1
-            if !blocks.isEmpty {
+            // Editor mode keeps an empty item: dropping it would lose its line on save.
+            if !blocks.isEmpty || mode == .editor {
+                if line == nil { line = itemLine }
                 if frames[index].firstKeptItem == nil {
                     frames[index].firstKeptItem = frames[index].itemCount
                     frames[index].line = line
@@ -237,6 +246,13 @@ struct CmarkTreeWalker {
     private mutating func addBlock(_ block: ParsedBlock) {
         lastLine = block.sourceLine
         let index = frames.count - 1
+        if index == 0, mode == .editor {
+            // A container's `sourceLine` is its first content line. Its own first line can be before it (`>` alone).
+            let start = currentNode.map { Int(cmark_node_get_start_line($0)) - 1 + lineOffset }.flatMap { $0 >= 0 ? min($0, block.sourceLine) : nil }
+                ?? block.sourceLine
+            let end = currentNode.map { Int(cmark_node_get_end_line($0)) - 1 + lineOffset } ?? block.sourceLine
+            topLevelLines.append(start...max(start, end))
+        }
         if frames[index].line == nil { frames[index].line = block.sourceLine }
         frames[index].blocks.append(block)
     }
@@ -245,9 +261,14 @@ struct CmarkTreeWalker {
 
     private mutating func addCodeBlock(_ node: UnsafeMutablePointer<cmark_node>) {
         var code = literal(node)
-        // R2, then R1: a block of only line ends is empty after the strip, so it is dropped. Spaces stay.
-        while code.hasSuffix("\n") { code.removeLast() }
-        guard !code.isEmpty else { return }
+        if mode == .editor {
+            // Only the end of the last line goes. Blank lines before the closing fence are code too.
+            if code.hasSuffix("\n") { code.removeLast() }
+        } else {
+            // A block of only line ends is empty after the strip, so it is dropped. Spaces stay.
+            while code.hasSuffix("\n") { code.removeLast() }
+            guard !code.isEmpty else { return }
+        }
         let info = cmark_node_get_fence_info(node).map { String(cString: $0) } ?? ""
         addBlock(ParsedBlock(sourceLine: line(of: node), kind: .codeBlock(language: info.isEmpty ? nil : info, code: code)))
     }
@@ -312,6 +333,8 @@ struct CmarkTreeWalker {
         }
         if isImage && context.link >= 0 {
             // Foundation drops an image URL inside a link. The alt text (or the placeholder) keeps the link.
+            // The editor must not take the alt text for link text, so it sees the image bit.
+            if mode == .editor { context.style.insert(.image) }
             context.inImage = true
             context.piecesBeforeImage = pieces.count
             contexts.append(context)

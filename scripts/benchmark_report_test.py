@@ -108,6 +108,20 @@ class ReportTests(unittest.TestCase):
                     written = handle.read()
             return code, text.strip().splitlines()[-1] if text.strip() else "", text, written
 
+    # MARK: grouping
+
+    def test_groups_by_class_with_passed_rows_folded(self):
+        _, _, text, _ = self.run_report(
+            bundle({"Slow/t": [metric("Clock", [3, 3])], "Fast/t": [metric("Clock", [1, 1])]}),
+            limits={"Slow/t": {"Clock": 2}, "Fast/t": {"Clock": 2}})
+        slow, fast = text.index("**Slow** FAILED"), text.index("**Fast** passed")
+        self.assertIn("OVER LIMIT", text[slow:fast] if slow < fast else text[slow:])
+        self.assertEqual(text.count("<details>"), 1)
+        self.assertEqual(text.count("<summary>Passed (1)</summary>"), 1)
+        folded = text[text.index("<details>"):text.index("</details>")]
+        self.assertIn("Fast/t", folded)
+        self.assertNotIn("Slow/t", folded)
+
     # MARK: limits
 
     def test_passes_within_limits(self):

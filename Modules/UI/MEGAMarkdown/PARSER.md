@@ -95,6 +95,17 @@ The conversion gives cmark's HTML output, except for the intended differences in
 
 [ParserDifferenceTests.swift](Tests/MEGAMarkdownTests/ParserDifferenceTests.swift) records deliberate differences and difficult inputs: multiline link labels retain their break, empty image blocks expose empty alt text, selected missing source positions are repaired, and deep nesting is bounded. A paragraph interrupted by a table can still share the table's reported starting line. Positions are not an exact source map.
 
+## Editor mode
+
+`CmarkParser.editorBlocks(_:)` parses for the rich editor, which writes Markdown back. It uses `ParseMode.editor`:
+
+- Empty headings, code blocks, quotes and list items stay. The viewer drops them (rule R1 in [DECISIONS.md](DECISIONS.md)).
+- A code block keeps the blank lines before its closing fence (rule R2 drops them).
+- The alt text of an image inside a link keeps the `.image` style. The viewer shows it as link text (rule R3).
+- Each top-level block comes with its first and last source line. A container's first line is its own first line, also when that line has no content (`>` alone).
+
+`MarkdownParser.parse` always uses `ParseMode.viewer`. [EDITOR.md](EDITOR.md) describes how the editor uses the result.
+
 ## Tests for this layer
 
 | Coverage | Where to read |

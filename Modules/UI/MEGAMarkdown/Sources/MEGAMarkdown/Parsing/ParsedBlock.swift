@@ -4,11 +4,11 @@ import Foundation
 /// `MarkdownParser.parse` converts all of it. The preview converts only the rows on screen.
 package struct ParsedBlock: Equatable, Sendable {
     /// 0-based line in the source text where this block starts.
-    var sourceLine: Int
-    var kind: Kind
+    package var sourceLine: Int
+    package var kind: Kind
 
     // Not `indirect`: the arrays already break the recursion, and a box per block costs memory.
-    enum Kind: Equatable, Sendable {
+    package enum Kind: Equatable, Sendable {
         case heading(level: Int, text: InlineText)
         /// Also HTML blocks: their text has the `.blockHTML` style, like Foundation.
         case paragraph(InlineText)
@@ -23,23 +23,23 @@ package struct ParsedBlock: Equatable, Sendable {
     }
 }
 
-struct ParsedList: Equatable, Sendable {
-    var isOrdered: Bool
-    var startIndex: Int
-    var items: [ParsedListItem]
+package struct ParsedList: Equatable, Sendable {
+    package var isOrdered: Bool
+    package var startIndex: Int
+    package var items: [ParsedListItem]
 }
 
-struct ParsedListItem: Equatable, Sendable {
-    var checkbox: MarkdownListItem.Checkbox?
-    var blocks: [ParsedBlock]
+package struct ParsedListItem: Equatable, Sendable {
+    package var checkbox: MarkdownListItem.Checkbox?
+    package var blocks: [ParsedBlock]
 }
 
 package struct ParsedTable: Equatable, Sendable {
-    var columns: [MarkdownTable.Column]
-    var header: [InlineText]
-    var rows: [[InlineText]]
+    package var columns: [MarkdownTable.Column]
+    package var header: [InlineText]
+    package var rows: [[InlineText]]
     /// 0-based source line of each row in `rows`. Dropped empty rows leave gaps, so an index is not a line.
-    var rowLines: [Int]
+    package var rowLines: [Int]
 }
 
 // MARK: - Conversion to the public model

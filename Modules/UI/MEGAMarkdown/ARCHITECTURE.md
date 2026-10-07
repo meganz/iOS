@@ -1,6 +1,6 @@
 # MEGAMarkdown architecture
 
-This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering and large-file preview layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
+This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering, large-file preview, editor model and Markdown import and export layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
 
 Each implemented layer has a reference page with the full detail. Keep this guide short and put new detail in the reference pages.
 
@@ -13,8 +13,8 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Large-input support](#large-input-support) | Internal helpers implemented | Safe chunk ranges and reference-definition collection. | [CHUNKING.md](CHUNKING.md) |
 | [Rendering and styling](#rendering-and-styling) | Implemented | SwiftUI block views, rows for big blocks, and the theme. | |
 | [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore and top-line reports. | [PREVIEW.md](PREVIEW.md) |
-| [Editor model and mutations](#editor-model-and-mutations) | Coming soon | Editable state, selection, and document changes. | |
-| [Markdown import and export](#markdown-import-and-export) | Coming soon | Conversion between editable content and Markdown source. | |
+| [Editor model and mutations](#editor-model-and-mutations) | Implemented | Editable state, selection, document changes, undo, and the clipboard. | [EDITOR.md](EDITOR.md) |
+| [Markdown import and export](#markdown-import-and-export) | Implemented | Conversion between editable content and Markdown source. | [EDITOR.md](EDITOR.md) |
 | [Editor UI](#editor-ui) | Coming soon | Rich/source editing modes, controls, and accessibility. | |
 | [App integration](#app-integration) | Coming soon | File lifecycle, navigation, saving, and host-provided behavior. | |
 
@@ -96,11 +96,26 @@ The views are SwiftUI. They are `package` API: other targets of this package use
 
 ## Editor model and mutations
 
-**Coming soon.** This section will define ownership of editable state, block and text identity during edits, selection, formatting operations, and undo/redo. Explain how editable state relates to `MarkdownDocument`, whose parser-assigned IDs are recreated on every parse. Add mutation examples and invariants with the implementation.
+The `MEGAMarkdownEditor` target holds the rich mode without UI. `RichEditor` is a value type: a UI keeps one, shows its `rows` and `selection`, and calls one method per user action.
+
+- `RichDocument` is a flat list of `RichBlock`s. Lists and quotes are rows with an indent or a depth.
+- `RichText` is plain text with style spans in UTF-16 offsets. It holds no Markdown syntax.
+- Each row has a `RichRowID` that stays the same while the row is edited. It is not related to the parser's block IDs, which change on every parse.
+- Undo keeps the replaced rows of each change, not whole documents. Keys in one row form one step.
+- Copy writes plain text and Markdown. Paste reads Markdown, also plain text from other apps.
+
+[EDITOR.md](EDITOR.md) has the model rules, the method for each user action, and the known limits.
 
 ## Markdown import and export
 
-**Coming soon.** This section will describe conversion between Markdown source and the editor model, supported round trips, normalization, and handling of unsupported syntax. Document rules for whitespace, escaping, links/images, HTML styles, and soft/hard breaks alongside focused round-trip tests.
+`RichMarkdownConverter` converts between Markdown and `RichDocument`. It parses with `ParseMode.editor`, which keeps the empty blocks the viewer drops.
+
+- A block the model cannot hold (tables, images, HTML, lists with block content) stays `.rawSource` with its exact source lines.
+- The import checks itself: it exports the rows, parses the export, and compares the meaning with the parse of the file. A block that changes stays raw.
+- The export escapes plain text, nests style markers, and writes HTML tags when markers cannot parse back.
+- A file that was not edited is never saved, so its bytes stay as they are.
+
+[EDITOR.md](EDITOR.md) has the import steps, the export rules, and the round-trip tests.
 
 ## Editor UI
 

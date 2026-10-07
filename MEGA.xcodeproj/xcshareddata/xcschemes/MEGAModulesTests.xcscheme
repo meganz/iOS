@@ -323,6 +323,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MEGAMarkdownEditor"
+               BuildableName = "MEGAMarkdownEditor"
+               BlueprintName = "MEGAMarkdownEditor"
+               ReferencedContainer = "container:Modules/UI/MEGAMarkdown">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CloudDrive"
                BuildableName = "CloudDrive"
                BlueprintName = "CloudDrive"

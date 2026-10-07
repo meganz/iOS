@@ -184,5 +184,97 @@
     "CPU Instructions Retired": 2886772.48,
     "CPU Time": 0.27,
     "Clock Monotonic Time": 0.27
+  },
+  "RichEditorBenchmarks/testBackspaceAtBlockStartsAtRichLimit": {
+    "CPU Cycles": 1080403.09,
+    "CPU Instructions Retired": 4098976.85,
+    "CPU Time": 0.29,
+    "Clock Monotonic Time": 0.29
+  },
+  "RichEditorBenchmarks/testBoldAcrossTheDocumentAtRichLimit": {
+    "CPU Cycles": 117633.96,
+    "CPU Instructions Retired": 518661.08,
+    "CPU Time": 0.04,
+    "Clock Monotonic Time": 0.04,
+    "Peak Heap Growth": 6.51
+  },
+  "RichEditorBenchmarks/testColdExportAtRichLimit": {
+    "CPU Cycles": 63514.79,
+    "CPU Instructions Retired": 267042.29,
+    "CPU Time": 0.02,
+    "Clock Monotonic Time": 0.02,
+    "Peak Heap Growth": 0.01
+  },
+  "RichEditorBenchmarks/testCopyAllAtRichLimit": {
+    "CPU Cycles": 223472.35,
+    "CPU Instructions Retired": 1093359.58,
+    "CPU Time": 0.06,
+    "Clock Monotonic Time": 0.06,
+    "Peak Heap Growth": 4.92
+  },
+  "RichEditorBenchmarks/testCutHalfAtRichLimit": {
+    "CPU Cycles": 210387.27,
+    "CPU Instructions Retired": 1079942.01,
+    "CPU Time": 0.06,
+    "Clock Monotonic Time": 0.06,
+    "Peak Heap Growth": 3.7
+  },
+  "RichEditorBenchmarks/testEnterAtRichLimit": {
+    "CPU Cycles": 1565578.46,
+    "CPU Instructions Retired": 5781733.36,
+    "CPU Time": 0.43,
+    "Clock Monotonic Time": 0.42,
+    "Peak Heap Growth": 6.36
+  },
+  "RichEditorBenchmarks/testExportAfterOneEditAtRichLimit": {
+    "CPU Cycles": 66919.76,
+    "CPU Instructions Retired": 280362.01,
+    "CPU Time": 0.02,
+    "Clock Monotonic Time": 0.02
+  },
+  "RichEditorBenchmarks/testLoadAtRichLimit": {
+    "CPU Cycles": 803589.38,
+    "CPU Instructions Retired": 3615800.32,
+    "CPU Time": 0.22,
+    "Clock Monotonic Time": 0.22,
+    "Memory Peak Physical": 22283.95,
+    "Memory Physical": 9.84,
+    "Peak Heap Growth": 48.58
+  },
+  "RichEditorBenchmarks/testLoadPhasesAtRichLimit": {
+    "Duration (Convert)": 0.03,
+    "Duration (Parse)": 0.07,
+    "Duration (Verify)": 0.09
+  },
+  "RichEditorBenchmarks/testPasteAtRichLimit": {
+    "CPU Cycles": 818397.24,
+    "CPU Instructions Retired": 3677745.23,
+    "CPU Time": 0.22,
+    "Clock Monotonic Time": 0.22,
+    "Peak Heap Growth": 49.58
+  },
+  "RichEditorBenchmarks/testSelectionSummaryOfManyStyledRows": {
+    "CPU Cycles": 77042.01,
+    "CPU Instructions Retired": 296355.85,
+    "CPU Time": 0.03,
+    "Clock Monotonic Time": 0.03
+  },
+  "RichEditorBenchmarks/testTypingInALongParagraph": {
+    "CPU Cycles": 1476477.55,
+    "CPU Instructions Retired": 8161177.47,
+    "CPU Time": 0.4,
+    "Clock Monotonic Time": 0.4,
+    "Peak Heap Growth": 0.39
+  },
+  "RichEditorBenchmarks/testUndoAndRedoAtRichLimit": {
+    "CPU Cycles": 26636.82,
+    "CPU Instructions Retired": 93407.77,
+    "CPU Time": 0.01,
+    "Clock Monotonic Time": 0.01
+  },
+  "RichEditorBenchmarks/testUndoHistoryMemoryAtRichLimit": {
+    "Memory Peak Physical": 24161.56,
+    "Memory Physical": 14.75,
+    "Peak Heap Growth": 6.39
   }
 }

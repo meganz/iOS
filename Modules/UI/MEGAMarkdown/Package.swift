@@ -15,7 +15,10 @@ let package = Package(
     products: [
         .library(
             name: "MEGAMarkdown",
-            targets: ["MEGAMarkdown"])
+            targets: ["MEGAMarkdown"]),
+        .library(
+            name: "MEGAMarkdownEditor",
+            targets: ["MEGAMarkdownEditor"])
     ],
     dependencies: [
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
@@ -35,6 +38,11 @@ let package = Package(
                 "MEGAFoundation"
             ],
             swiftSettings: settings),
+        // The rich editor model: Markdown import and export, editing, undo and the clipboard. No UI code.
+        .target(
+            name: "MEGAMarkdownEditor",
+            dependencies: ["MEGAMarkdown", "MEGAFoundation"],
+            swiftSettings: settings),
         .testTarget(
             name: "MEGAMarkdownTests",
             dependencies: [
@@ -43,11 +51,16 @@ let package = Package(
             ],
             resources: [.copy("Fixtures")],
             swiftSettings: settings),
+        .testTarget(
+            name: "MEGAMarkdownEditorTests",
+            dependencies: ["MEGAMarkdownEditor", "MEGAMarkdown"],
+            swiftSettings: settings),
         // Benchmarks with XCTest metrics. They run only with TEST_RUNNER_MEGA_BENCH=1 (see scripts/benchmark.sh).
         .testTarget(
             name: "MEGAMarkdownBenchmarks",
             dependencies: [
                 "MEGAMarkdown",
+                "MEGAMarkdownEditor",
                 .product(name: "MEGABenchmark", package: "MEGABenchmark")
             ],
             exclude: ["Limits.json", "Skipped.json"],

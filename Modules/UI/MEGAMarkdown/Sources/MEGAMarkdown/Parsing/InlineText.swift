@@ -3,29 +3,33 @@ import Foundation
 import SwiftUI
 
 /// Style bits of one inline run. Same meaning as the Foundation `InlinePresentationIntent` bits we use.
-struct InlineStyle: OptionSet, Hashable, Sendable {
-    let rawValue: UInt16
+package struct InlineStyle: OptionSet, Hashable, Sendable {
+    package let rawValue: UInt16
 
-    static let emphasized = InlineStyle(rawValue: 1 << 0)
-    static let stronglyEmphasized = InlineStyle(rawValue: 1 << 1)
-    static let strikethrough = InlineStyle(rawValue: 1 << 2)
-    static let code = InlineStyle(rawValue: 1 << 3)
-    static let softBreak = InlineStyle(rawValue: 1 << 4)
-    static let lineBreak = InlineStyle(rawValue: 1 << 5)
-    static let inlineHTML = InlineStyle(rawValue: 1 << 6)
-    static let blockHTML = InlineStyle(rawValue: 1 << 7)
-    static let underline = InlineStyle(rawValue: 1 << 8)
+    package init(rawValue: UInt16) {
+        self.rawValue = rawValue
+    }
+
+    package static let emphasized = InlineStyle(rawValue: 1 << 0)
+    package static let stronglyEmphasized = InlineStyle(rawValue: 1 << 1)
+    package static let strikethrough = InlineStyle(rawValue: 1 << 2)
+    package static let code = InlineStyle(rawValue: 1 << 3)
+    package static let softBreak = InlineStyle(rawValue: 1 << 4)
+    package static let lineBreak = InlineStyle(rawValue: 1 << 5)
+    package static let inlineHTML = InlineStyle(rawValue: 1 << 6)
+    package static let blockHTML = InlineStyle(rawValue: 1 << 7)
+    package static let underline = InlineStyle(rawValue: 1 << 8)
     /// The run's link is an image URL, not a link.
-    static let image = InlineStyle(rawValue: 1 << 9)
+    package static let image = InlineStyle(rawValue: 1 << 9)
     /// A U+FFFC the parser added for an empty link or alt text. It keeps the block alive and is not author text.
-    static let placeholder = InlineStyle(rawValue: 1 << 10)
+    package static let placeholder = InlineStyle(rawValue: 1 << 10)
 }
 
 /// A link or image target as written in the source.
-struct InlineLink: Equatable, Sendable {
-    var url: String
+package struct InlineLink: Equatable, Sendable {
+    package var url: String
     /// The optional title, like `[a](url "title")`. Empty when there is none.
-    var title: String
+    package var title: String
 
     /// cmark gives a destination with escapes and entities decoded. `URL(string:)` turns `%20` into `%2520`
     /// when the path also has a non-ASCII character or a `[`. So every byte outside RFC 3986 and outside the host is encoded first.
@@ -99,9 +103,9 @@ struct InlineLink: Equatable, Sendable {
 }
 
 /// One run of `InlineText`. It starts where the run before it ends. Stored small: big files have millions.
-struct InlineRun: Equatable, Sendable {
+package struct InlineRun: Equatable, Sendable {
     private var storedEnd: Int32
-    var style: InlineStyle
+    package var style: InlineStyle
     private var storedLink: Int32
 
     init(end: Int, style: InlineStyle, link: Int) {
@@ -111,32 +115,32 @@ struct InlineRun: Equatable, Sendable {
     }
 
     /// UTF-8 offset in `InlineText.text` where this run ends.
-    var end: Int {
+    package var end: Int {
         get { Int(storedEnd) }
         set { storedEnd = Int32(clamping: newValue) }
     }
 
     /// Index in `InlineText.links`, or -1.
-    var link: Int { Int(storedLink) }
+    package var link: Int { Int(storedLink) }
 }
 
 /// The text of one leaf block in a cheap form: a plain String plus style runs.
 /// It becomes `AttributedString` only when needed (the preview does it for visible rows only).
 package struct InlineText: Equatable, Sendable {
-    private(set) var text = ""
+    package private(set) var text = ""
     /// Empty when the whole text is one plain run. That saves an array for most table cells and list items.
     private(set) var styledRuns: [InlineRun] = []
     /// Link and image targets. URLs are resolved against the base URL on conversion.
-    let links: [InlineLink]
+    package let links: [InlineLink]
 
     init(links: [InlineLink] = []) {
         self.links = links
     }
 
-    var isEmpty: Bool { text.isEmpty }
+    package var isEmpty: Bool { text.isEmpty }
 
     /// All runs, with the plain run filled in.
-    var runs: [InlineRun] {
+    package var runs: [InlineRun] {
         guard styledRuns.isEmpty, !text.isEmpty else { return styledRuns }
         return [InlineRun(end: text.utf8.count, style: [], link: -1)]
     }

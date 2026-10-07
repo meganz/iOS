@@ -2,9 +2,18 @@ import cmark_gfm
 import cmark_gfm_extensions
 import Foundation
 
+/// How much the walker keeps.
+package enum ParseMode: Sendable {
+    /// Same output as Foundation's `AttributedString(markdown:)`: empty blocks are dropped (rules R1 and R2 in DECISIONS.md).
+    case viewer
+    /// For an editor that writes Markdown back: empty blocks stay, a code block keeps its trailing blank lines,
+    /// and alt text of an image inside a link keeps the image bit.
+    case editor
+}
+
 /// The only code that talks to the cmark-gfm C API, with `CmarkParser+ChunkProbe.swift` and `CmarkTreeWalker.swift`.
 /// The tree is walked with `cmark_iter` (no recursion), so deep nesting cannot overflow the stack.
-enum CmarkParser {
+package enum CmarkParser {
     /// Quotes and list items deeper than this are not opened. Their content joins the deepest open one.
     static let maxNestingDepth = 64
 
@@ -31,6 +40,22 @@ enum CmarkParser {
                 var walker = CmarkTreeWalker(source: source, softBreak: softBreak, lineOffset: lineOffset, lastLine: lastLine)
                 let blocks = walker.walk(root)
                 return (blocks, walker.lastBlockLine)
+            }
+        }
+    }
+
+    /// Editor mode: nothing is dropped, and each top-level block comes with its source lines.
+    /// `lines[i]` holds the 0-based first and last line of `blocks[i]`. Returns nil only when cmark cannot create a parser.
+    package static func editorBlocks(_ markdown: String) -> (blocks: [ParsedBlock], lines: [ClosedRange<Int>])? {
+        var source = markdown
+        return source.withUTF8 { body in
+            withTree(prefix: [], body: body) { root in
+                [UInt8]().withUnsafeBufferPointer { prefix in
+                    let text = CmarkTreeWalker.SourceText(prefix: prefix, body: body)
+                    var walker = CmarkTreeWalker(source: text, softBreak: .lineBreak, mode: .editor)
+                    let blocks = walker.walk(root)
+                    return (blocks, walker.topLevelLines)
+                }
             }
         }
     }

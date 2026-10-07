@@ -1,3 +1,6 @@
 {
-  "PreviewListTenMegabyteBenchmarks/testFlingWhileBatchesAppend": "Passes on an iPhone 15 with 0 late frames. Fails on the iPhone 17 Pro simulator on both a local Mac and the CI Mac, and the numbers change from run to run. Probably the simulator process on the Mac is slow. Not confirmed. Check it, then set new limits."
+  "PreviewListTenMegabyteBenchmarks/testFlingWhileBatchesAppend": "Passes on an iPhone 15 with 0 late frames. Fails on the iPhone 17 Pro simulator on both a local Mac and the CI Mac, and the numbers change from run to run. Probably the simulator process on the Mac is slow. Not confirmed. Check it, then set new limits.",
+  "RichEditorBenchmarks/testColdExportAtRichLimit": "Peak Heap Growth is 0.24 MiB on the CI Mac and 0.00 MiB on a local Mac. Find why the CI process is different, then set new limits.",
+  "RichEditorBenchmarks/testLoadAtRichLimit": "The CI process uses 78 MiB peak footprint and a local run uses 14 MiB. Memory Physical moves in 16 KB steps. Find why the CI process is different, then set new limits.",
+  "RichEditorBenchmarks/testUndoHistoryMemoryAtRichLimit": "The CI process uses 79 MiB peak footprint and a local run uses 15 MiB. Memory Physical moves in 16 KB steps. Find why the CI process is different, then set new limits."
 }
