@@ -3428,6 +3428,51 @@ public enum Strings {
       public static let downloadFilelist: Swift.String
       public static let preparingFileList: Swift.String
     }
+    public enum MarkdownEditor {
+      public enum Accessibility {
+        public static let continueAtEnd: Swift.String
+        public static let sourceEditor: Swift.String
+      }
+      public enum KeyCommand {
+        public static let indent: Swift.String
+        public static let outdent: Swift.String
+      }
+      public enum LinkDialog {
+        public static let linkLabel: Swift.String
+        public static let textLabel: Swift.String
+        public static let title: Swift.String
+      }
+      public enum Mode {
+        public static let plainText: Swift.String
+        public static let richText: Swift.String
+      }
+      public enum NewFile {
+        public static let create: Swift.String
+        public static let richTextFormatting: Swift.String
+      }
+      public enum TextStyle {
+        public static let body: Swift.String
+        public static let heading1: Swift.String
+        public static let heading2: Swift.String
+        public static let heading3: Swift.String
+        public static let heading4: Swift.String
+        public static let heading5: Swift.String
+        public static let heading6: Swift.String
+      }
+      public enum Toolbar {
+        public static let bold: Swift.String
+        public static let bulletedList: Swift.String
+        public static let code: Swift.String
+        public static let italic: Swift.String
+        public static let link: Swift.String
+        public static let numberedList: Swift.String
+        public static let quote: Swift.String
+        public static let strikethrough: Swift.String
+        public static let taskList: Swift.String
+        public static let textStyle: Swift.String
+        public static let underline: Swift.String
+      }
+    }
     public enum Media {
       public enum Audio {
         public enum Metadata {
