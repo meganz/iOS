@@ -26,7 +26,13 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
                 self?.tabBarController?.tabBar.isHidden ?? false
             },
             set: { [weak self] in
-                self?.tabBarController?.tabBar.isHidden = $0
+                guard let self else { return }
+                tabBarController?.tabBar.isHidden = $0
+                // On iOS 18 and below, toggling `isHidden` does not update SwiftUI's bottom inset for the tab bar,
+                // so bottom-anchored content like the floating button get obstructed under it. A layout pass refreshes it.
+                if #unavailable(iOS 26) {
+                    setNeedsLayout(in: self)
+                }
             }
         )
     }
@@ -128,6 +134,11 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
             hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         hostingViewController.didMove(toParent: self)
+    }
+
+    private func setNeedsLayout(in viewController: UIViewController) {
+        viewController.view.setNeedsLayout()
+        viewController.children.forEach(setNeedsLayout(in:))
     }
 
     // This is an old logic from the legacy home screen

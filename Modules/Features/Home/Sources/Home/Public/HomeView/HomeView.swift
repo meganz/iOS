@@ -285,9 +285,15 @@ public struct HomeView: View {
                 tabBarHidden: $navigator.tabBarHidden
             )
         case .continueWhereYouLeftOff:
-            TokenColors.Background.page.swiftUI
-                .navigationTitle(Strings.Localizable.Home.Customization.Widget.continueWhereYouLeftOff)
-                .navigationBarTitleDisplayMode(.inline)
+            ContinueWhereYouLeftOffView(
+                dependency: ContinueWhereYouLeftOffView.Dependency(
+                    leftOffItemsUseCase: dependency.leftOffItemsUseCase,
+                    thumbnailUseCase: dependency.leftOffThumbnailUseCase,
+                    selectionHandler: searchResultsSelectionHandler,
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                ),
+                tabBarHidden: $navigator.tabBarHidden
+            )
         case .widgetsCustomization:
             HomeWidgetsCustomizationView(dependency:
                     .init(defaultLaunchDestinationUseCase: dependency.defaultLaunchDestinationUseCase)

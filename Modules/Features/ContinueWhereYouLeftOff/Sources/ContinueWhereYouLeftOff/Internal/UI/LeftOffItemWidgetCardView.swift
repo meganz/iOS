@@ -34,14 +34,15 @@ struct LeftOffItemWidgetCardView: View {
         Button(action: onTap) {
             VStack(alignment: .leading, spacing: TokenSpacing._2) {
                 preview
+                    .sensitive(card.isSensitive ? .blur : .none)
                 nameRow
+                    .sensitive(card.isSensitive ? .opacity : .none)
             }
             .frame(width: Layout.cardWidth, height: Layout.cardHeight)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel([card.name, card.durationText].compactMap { $0 }.joined(separator: ", "))
-        .sensitive(card.isSensitive ? .opacity : .none)
         .task(id: card.node.hasThumbnail) {
             await viewModel.loadThumbnail(for: card.node)
         }
