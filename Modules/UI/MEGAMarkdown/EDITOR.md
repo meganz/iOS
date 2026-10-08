@@ -1,6 +1,6 @@
 # MEGAMarkdown rich editor model reference
 
-The rich mode of the editor without its UI: the document model, Markdown import and export, editing, undo, the
+The model layer of the rich editor: the document model, Markdown import and export, editing, undo, the
 clipboard and the save check. It lives in the `MEGAMarkdownEditor` target. The [architecture guide](ARCHITECTURE.md)
 gives the overview. The parser it builds on is in [PARSER.md](PARSER.md).
 

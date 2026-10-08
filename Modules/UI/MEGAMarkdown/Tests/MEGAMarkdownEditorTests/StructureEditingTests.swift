@@ -77,6 +77,13 @@ struct StructureEditingTests {
         #expect(backspace([quote("a", depth: 2)], at: 0)?.0 == [quote("a")])
     }
 
+    @Test func backspaceOnAnEmptyItemBelowAnItemJoinsTheItemAbove() {
+        let result = backspace([bullet("ab"), bullet("")], at: 1)
+        #expect(result?.0 == [bullet("ab")])
+        #expect(result?.1 == RichPosition(blockIndex: 0, offset: 2))
+        #expect(backspace([bullet("")], at: 0)?.0 == [paragraph("")])
+    }
+
     @Test func backspaceJoinsAParagraphIntoTheBlockBefore() {
         let result = backspace([bullet("ab"), paragraph("cd", (0..<2, .bold))], at: 1)
         #expect(result?.0 == [.listItem(RichListItem(isOrdered: false), text: rich("abcd", (2..<4, .bold)))])

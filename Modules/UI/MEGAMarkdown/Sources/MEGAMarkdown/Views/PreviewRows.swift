@@ -53,8 +53,22 @@ package enum PreviewRows {
     /// Blocks are split with the preview's row weight (`PreviewParseLimits.maxRowWeight`), so the rows match the preview.
     /// A caller can show each row with `PreviewRowView`, outside any list view.
     /// Returns no rows when the Markdown shows nothing. A caller that needs a visible item shows the source itself.
-    package static func rows(forMarkdown markdown: String, softBreak: MarkdownSoftBreak) -> [PreviewRow] {
-        rows(for: CmarkParser.blocks(markdown, softBreak: softBreak) ?? [], maxWeight: previewRowWeight)
+    /// `definitions` holds link reference definitions only, for example those of the rest of the file.
+    /// They are parsed before the Markdown, so `[text][label]` resolves, and they give no rows.
+    package static func rows(forMarkdown markdown: String, softBreak: MarkdownSoftBreak, definitions: String = "") -> [PreviewRow] {
+        guard !definitions.isEmpty else {
+            return rows(for: CmarkParser.blocks(markdown, softBreak: softBreak) ?? [], maxWeight: previewRowWeight)
+        }
+        // A blank line after the definitions, so the Markdown starts a new block, like the chunker's prefix.
+        var prefix = Array(definitions.utf8)
+        if prefix.last != 10 { prefix.append(10) }
+        prefix.append(10)
+        let prefixLines = prefix.reduce(0) { $0 + ($1 == 10 ? 1 : 0) }
+        var source = markdown
+        let blocks = source.withUTF8 { body in
+            CmarkParser.blocks(prefix: prefix, body: body, softBreak: softBreak, lineOffset: -prefixLines, lastLine: 0)?.blocks
+        }
+        return rows(for: blocks ?? [], maxWeight: previewRowWeight)
     }
 
     private static var previewRowWeight: Int { PreviewParseLimits().maxRowWeight }

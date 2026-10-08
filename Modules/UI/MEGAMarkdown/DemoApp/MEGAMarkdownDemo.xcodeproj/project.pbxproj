@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C0DE00000000000000000011 /* MEGAMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = C0DE00000000000000000010 /* MEGAMarkdown */; };
 		C0DE00000000000000000015 /* MEGAFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C0DE00000000000000000014 /* MEGAFoundation */; };
+		C0DE00000000000000000061 /* MEGAMarkdownEditor in Frameworks */ = {isa = PBXBuildFile; productRef = C0DE00000000000000000060 /* MEGAMarkdownEditor */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 			files = (
 				C0DE00000000000000000015 /* MEGAFoundation in Frameworks */,
 				C0DE00000000000000000011 /* MEGAMarkdown in Frameworks */,
+				C0DE00000000000000000061 /* MEGAMarkdownEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +87,7 @@
 			name = MEGAMarkdownDemo;
 			packageProductDependencies = (
 				C0DE00000000000000000010 /* MEGAMarkdown */,
+				C0DE00000000000000000060 /* MEGAMarkdownEditor */,
 				C0DE00000000000000000014 /* MEGAFoundation */,
 			);
 			productName = MEGAMarkdownDemo;
@@ -272,6 +275,10 @@
 		C0DE00000000000000000014 /* MEGAFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAFoundation;
+		};
+		C0DE00000000000000000060 /* MEGAMarkdownEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAMarkdownEditor;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

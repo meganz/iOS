@@ -142,6 +142,37 @@ struct MarkdownRowListTests {
         }
     }
 
+    /// The data source changes before `replaceItems`. A layout pass that is due then runs first, with the old
+    /// index paths, and fills cells with the new items. Every cell must still show its own item at its height.
+    @Test(arguments: [false, true])
+    func cellsMadeBeforeTheUpdateShowTheirOwnItem(prefetches: Bool) async throws {
+        let host = Host(source: FakeRowSource(count: 100))
+        defer { host.close() }
+        host.view.isPrefetchingEnabled = prefetches
+        try await host.settle()
+
+        // A scroll without a layout pass: the cells below the old screen are made in the update's first pass.
+        host.view.contentOffset.y += 300
+        host.source.texts[5] = "Item 5 split"
+        host.source.heights.replaceSubrange(6..<6, with: [40, 41, 42, 43])
+        host.source.texts.replaceSubrange(6..<6, with: ["New A", "New B", "New C", "New D"])
+        host.list.replaceItems(5..<6, newCount: 5, keepingFirst: 1)
+        try await host.settle()
+
+        var wrong: [String] = []
+        for y in stride(from: CGFloat(0), through: 1_500, by: 200) {
+            try await host.scroll(to: y)
+            for item in host.visibleItems {
+                let text = host.textField(item)?.text
+                let height = host.list.cell(forItem: item)?.frame.height
+                if text != host.source.texts[item] || height != host.source.heights[item] {
+                    wrong.append("item \(item): '\(text ?? "nil")' \(height ?? -1), expected '\(host.source.texts[item])' \(host.source.heights[item])")
+                }
+            }
+        }
+        #expect(wrong.isEmpty, "\(wrong)")
+    }
+
     /// A height change of one item moves only the items below it. The cell is not configured again.
     @Test func invalidateHeightMovesOnlyItemsBelow() async throws {
         let host = Host(source: FakeRowSource(count: 60, estimate: nil))

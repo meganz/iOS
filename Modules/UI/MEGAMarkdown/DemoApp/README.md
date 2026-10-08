@@ -1,6 +1,6 @@
 # MEGAMarkdown demo app
 
-A small iOS app for testing the `MEGAMarkdown` package by hand.
+A small iOS app for testing the `MEGAMarkdown` and `MEGAMarkdownEditor` packages by hand.
 It is not part of the MEGA app target or CI.
 
 ## What it does
@@ -25,6 +25,8 @@ It is not part of the MEGA app target or CI.
   The Settings sheet holds the base URL, for example `https://github.com/owner/repo/blob/main`.
   The app adds the path below `TestFiles`. An empty URL hides the button.
 - The Source button in the navigation bar switches between the preview and the raw text (read-only).
+- The Edit button opens the file in `MarkdownEditor`, in rich mode. The mode picker in the options menu switches to the source editor.
+  The editor writes the text back to the file, so the preview shows the edit. Sync replaces an edited test file again.
 
 ## Test files
 

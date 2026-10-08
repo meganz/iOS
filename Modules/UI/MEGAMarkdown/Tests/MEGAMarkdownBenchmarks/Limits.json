@@ -203,7 +203,7 @@
     "CPU Instructions Retired": 267042.29,
     "CPU Time": 0.02,
     "Clock Monotonic Time": 0.02,
-    "Peak Heap Growth": 0.01
+    "Peak Heap Growth": 0.5
   },
   "RichEditorBenchmarks/testCopyAllAtRichLimit": {
     "CPU Cycles": 223472.35,
@@ -237,8 +237,6 @@
     "CPU Instructions Retired": 3615800.32,
     "CPU Time": 0.22,
     "Clock Monotonic Time": 0.22,
-    "Memory Peak Physical": 22283.95,
-    "Memory Physical": 9.84,
     "Peak Heap Growth": 48.58
   },
   "RichEditorBenchmarks/testLoadPhasesAtRichLimit": {
@@ -273,8 +271,6 @@
     "Clock Monotonic Time": 0.01
   },
   "RichEditorBenchmarks/testUndoHistoryMemoryAtRichLimit": {
-    "Memory Peak Physical": 24161.56,
-    "Memory Physical": 14.75,
     "Peak Heap Growth": 6.39
   }
 }

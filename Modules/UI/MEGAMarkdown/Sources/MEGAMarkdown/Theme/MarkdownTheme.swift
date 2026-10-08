@@ -57,6 +57,14 @@ public struct MarkdownTheme: Equatable, Sendable {
         .system(size: inlineCodeFontSize * scale, design: .monospaced)
     }
 
+    /// Raises inline code so its glyphs are centered on the body text, like the centered text boxes in Figma.
+    /// `scale` is a `@ScaledMetric(relativeTo: .body)` of 1 in the view.
+    func inlineCodeBaselineOffset(scale: CGFloat) -> CGFloat {
+        let body = UIFont.preferredFont(forTextStyle: .body, compatibleWith: UITraitCollection(preferredContentSizeCategory: .large))
+        let code = UIFont.monospacedSystemFont(ofSize: inlineCodeFontSize, weight: .regular)
+        return ((body.ascender + body.descender) - (code.ascender + code.descender)) / 2 * scale
+    }
+
     /// Font for a heading level. Levels outside 1...6 use the nearest one.
     public func headingFont(_ level: Int) -> Font {
         guard !headingFonts.isEmpty else { return bodyFont }
@@ -126,8 +134,9 @@ public enum MarkdownImageLoading: Sendable {
 // MARK: - Environment
 
 extension EnvironmentValues {
-    @Entry var markdownTheme = MarkdownTheme.default
-    @Entry var markdownImageLoading = MarkdownImageLoading.altTextOnly
+    /// Package access, so the editor target passes the same theme and image loading to its rows as the preview.
+    @Entry package var markdownTheme = MarkdownTheme.default
+    @Entry package var markdownImageLoading = MarkdownImageLoading.altTextOnly
     /// True inside a block quote. Paragraphs use the quote text color there.
     @Entry var markdownInQuote = false
 }

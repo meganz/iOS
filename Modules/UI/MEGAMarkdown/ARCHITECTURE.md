@@ -1,6 +1,6 @@
 # MEGAMarkdown architecture
 
-This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering, large-file preview, editor model and Markdown import and export layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
+This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering, large-file preview, editor model, Markdown import and export, and editor UI layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
 
 Each implemented layer has a reference page with the full detail. Keep this guide short and put new detail in the reference pages.
 
@@ -15,7 +15,7 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore and top-line reports. | [PREVIEW.md](PREVIEW.md) |
 | [Editor model and mutations](#editor-model-and-mutations) | Implemented | Editable state, selection, document changes, undo, and the clipboard. | [EDITOR.md](EDITOR.md) |
 | [Markdown import and export](#markdown-import-and-export) | Implemented | Conversion between editable content and Markdown source. | [EDITOR.md](EDITOR.md) |
-| [Editor UI](#editor-ui) | Coming soon | Rich/source editing modes, controls, and accessibility. | |
+| [Editor UI](#editor-ui) | Implemented | Rich/source editing modes, controls, and accessibility. | [EDITOR-UI.md](EDITOR-UI.md) |
 | [App integration](#app-integration) | Coming soon | File lifecycle, navigation, saving, and host-provided behavior. | |
 
 ## Public document model
@@ -96,7 +96,7 @@ The views are SwiftUI. They are `package` API: other targets of this package use
 
 ## Editor model and mutations
 
-The `MEGAMarkdownEditor` target holds the rich mode without UI. `RichEditor` is a value type: a UI keeps one, shows its `rows` and `selection`, and calls one method per user action.
+The `MEGAMarkdownEditor` target holds the rich editor model and the editor UI (`Sources/MEGAMarkdownEditor/UI/`). `RichEditor` is a value type: a UI keeps one, shows its `rows` and `selection`, and calls one method per user action.
 
 - `RichDocument` is a flat list of `RichBlock`s. Lists and quotes are rows with an indent or a depth.
 - `RichText` is plain text with style spans in UTF-16 offsets. It holds no Markdown syntax.
@@ -119,7 +119,7 @@ The `MEGAMarkdownEditor` target holds the rich mode without UI. `RichEditor` is 
 
 ## Editor UI
 
-**Coming soon.** This section will describe rich and source editing modes, bindings and callbacks, text-system integration, keyboard and selection behavior, formatting controls, and mode transitions. Include localization, accessibility, focus, and text input behavior as the UI is implemented.
+`MarkdownEditor` shows the editor in rich or source mode. Rich mode shows one row per block in a `MarkdownRowList`, and a text row is an editable `UITextView`. Source mode is one `UITextView` on TextKit 1. See [EDITOR-UI.md](EDITOR-UI.md) for the files, focus, saving and tests.
 
 ## App integration
 
@@ -127,7 +127,7 @@ The `MEGAMarkdownEditor` target holds the rich mode without UI. `RichEditor` is 
 
 ## Testing
 
-The tests use Swift Testing and are included in the repository's [MEGAModulesTests plan](../../../MEGAModulesTests/MEGAModulesTests.xctestplan). Each reference page lists the tests for its layer: [parser tests](PARSER.md#tests-for-this-layer), [chunking tests](CHUNKING.md#tests-for-this-layer) and [preview tests](PREVIEW.md#tests).
+The tests use Swift Testing and are included in the repository's [MEGAModulesTests plan](../../../MEGAModulesTests/MEGAModulesTests.xctestplan). Each reference page lists the tests for its layer: [parser tests](PARSER.md#tests-for-this-layer), [chunking tests](CHUNKING.md#tests-for-this-layer) and [preview tests](PREVIEW.md#tests). The editor tests are listed in [EDITOR-UI.md](EDITOR-UI.md).
 
 ### Running tests
 

@@ -89,6 +89,12 @@ extension RichDocument {
 
         switch block {
         case .listItem, .quote, .heading:
+            // An empty top-level item below another item goes away. The caret lands at the end of that item.
+            if case .listItem(let item, let text) = block, text.isEmpty, item.indent == 0, item.startNumber == nil,
+               blockIndex > 0, case .listItem(_, let aboveText) = blocks[blockIndex - 1] {
+                result.blocks.remove(at: blockIndex)
+                return (result, RichPosition(blockIndex: blockIndex - 1, offset: aboveText.length))
+            }
             guard let stepped = Self.removingOneLevel(block) else { return nil }
             result.blocks[blockIndex] = stepped
             result.handOffStartNumber(from: block, at: blockIndex)

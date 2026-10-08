@@ -43,12 +43,8 @@ extension RichEditor {
     mutating func saveLink(_ target: RichLinkTarget, urlText: String, label: String) -> Bool {
         let typedURL = urlText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard var text = richText(at: target) else { return false }
-        let oldLink = text.link(at: target.range).flatMap { span -> RichLink? in
-            if case .link(let value) = span.style { value } else { nil }
-        }
-        // An unchanged URL stays as it is, even when it has spaces the dialog would not accept as new text.
-        let isSameURL = oldLink.map { $0.destination.hasSameBytes(as: typedURL) } ?? false
-        guard let destination = isSameURL ? oldLink?.destination : RichLinkURL.destination(from: typedURL) else { return false }
+        let oldLink = existingLink(at: target, in: text)
+        guard let destination = Self.destination(for: typedURL, oldLink: oldLink) else { return false }
         let newLabel = label.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? typedURL : label
         var range = target.range
         if !text.slice(range).text.hasSameBytes(as: newLabel) {
@@ -61,10 +57,30 @@ extension RichEditor {
         return true
     }
 
+    /// The rule of the dialog's Save button. It is the same rule `saveLink` uses for the URL.
+    func canSaveLink(_ target: RichLinkTarget, urlText: String) -> Bool {
+        let typedURL = urlText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let oldLink = richText(at: target).flatMap { existingLink(at: target, in: $0) }
+        return Self.destination(for: typedURL, oldLink: oldLink) != nil
+    }
+
     /// Removes the links inside the target. Link text outside it keeps its link.
     mutating func removeLink(_ target: RichLinkTarget) {
         guard let text = richText(at: target) else { return }
         write(text.removingLinks(in: target.range), at: target, caret: target.range.upperBound)
+    }
+
+    private func existingLink(at target: RichLinkTarget, in text: RichText) -> RichLink? {
+        text.link(at: target.range).flatMap { span -> RichLink? in
+            if case .link(let value) = span.style { value } else { nil }
+        }
+    }
+
+    /// The destination to save, or nil when the URL is not valid.
+    /// An unchanged URL stays as it is, even when it has spaces the dialog would not accept as new text.
+    private static func destination(for typedURL: String, oldLink: RichLink?) -> String? {
+        if let oldLink, oldLink.destination.hasSameBytes(as: typedURL) { return oldLink.destination }
+        return RichLinkURL.destination(from: typedURL)
     }
 
     /// nil when the block or the range no longer exists.

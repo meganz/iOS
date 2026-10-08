@@ -105,7 +105,8 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
   A row without a letter follows the layout.
   Tables and code stay left to right in every layout.
 - Only the list scrolls to the top on a status bar tap. Code and table rows turn off `scrollsToTop` on their own scroll views.
-- There is no text selection: SwiftUI `.textSelection` turns off the inline code chip renderer.
+- There is no text selection. Text with inline code is drawn by TextKit in `InlineCodeText`, which has no selection.
+  In a table cell, SwiftUI `.textSelection` would turn off the inline code chip renderer.
 
 ## Notices and errors
 

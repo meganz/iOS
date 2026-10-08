@@ -15,6 +15,13 @@ extension MarkdownTheme {
         /// Body font with digits of one width, for list numbers.
         package let numberFont: UIFont
         package let inlineCodeFont: UIFont
+        /// Figma: the code line is as tall as a body line, with a 1 pt border above and below.
+        /// A line of a paragraph with inline code is as tall as the chip.
+        package let inlineCodeChipHeight: CGFloat
+        /// Figma: the space between the chips of two lines of one paragraph.
+        package let inlineCodeLineGap: CGFloat
+        /// See `MarkdownTheme.inlineCodeBaselineOffset(scale:)`.
+        package let inlineCodeBaselineOffset: CGFloat
         package let codeFont: UIFont
         package let languageFont: UIFont
         /// Levels 1...6.
@@ -87,9 +94,32 @@ extension MarkdownTheme {
             blockSpacing = theme.blockSpacing
             nestedBlockSpacing = theme.nestedBlockSpacing
             headingTopSpacing = theme.headingTopSpacing
+            inlineCodeChipHeight = UIFontMetrics(forTextStyle: .body)
+                .scaledValue(for: Self.inlineCodeChipHeightAtDefaultSize, compatibleWith: traits)
+            inlineCodeLineGap = UIFontMetrics(forTextStyle: .body).scaledValue(for: TokenSpacing._1, compatibleWith: traits)
+            inlineCodeBaselineOffset = UIFontMetrics(forTextStyle: .body)
+                .scaledValue(for: theme.inlineCodeBaselineOffset(scale: 1), compatibleWith: traits)
             checkboxSize = UIFontMetrics(forTextStyle: .body).scaledValue(for: TokenSpacing._6, compatibleWith: traits)
             checkboxBaselineOffset = UIFontMetrics(forTextStyle: .body)
                 .scaledValue(for: MarkdownBlockView.checkboxBaselineOffset, compatibleWith: traits)
+        }
+
+        /// `inlineCodeChipHeight` at the default text size. A `@ScaledMetric` of it gives the same height in SwiftUI.
+        package static let inlineCodeChipHeightAtDefaultSize: CGFloat = {
+            let body = UIFont.preferredFont(forTextStyle: .body, compatibleWith: UITraitCollection(preferredContentSizeCategory: .large))
+            return body.ascender - body.descender + 2 * InlineCodeLayoutManager.borderWidth
+        }()
+
+        /// SwiftUI line spacing of a paragraph with inline code, at the default text size. Its lines are body lines,
+        /// so the spacing adds the chip's border above and below and the gap. Lines then step like editor lines.
+        package static let inlineCodeTextLineSpacingAtDefaultSize = 2 * InlineCodeLayoutManager.borderWidth + TokenSpacing._1
+
+        /// The first baseline from the top of text in `baseFont`. Text with inline code centers its lines in the chip.
+        /// Text that starts with inline code gives the raised baseline of the code, so the list marker lines up with it.
+        package func firstBaseline(of baseFont: UIFont, hasInlineCode: Bool, startsWithInlineCode: Bool) -> CGFloat {
+            guard hasInlineCode else { return baseFont.ascender }
+            let centered = baseFont.ascender + max(inlineCodeChipHeight - (baseFont.ascender - baseFont.descender), 0) / 2
+            return startsWithInlineCode ? centered - inlineCodeBaselineOffset : centered
         }
 
         package static func usesDefaultFonts(_ theme: MarkdownTheme) -> Bool {

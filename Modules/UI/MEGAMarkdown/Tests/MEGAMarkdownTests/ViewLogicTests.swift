@@ -57,7 +57,7 @@ import Testing
     @Test func linkRunGetsThemeColorAndUnderline() throws {
         var theme = MarkdownTheme.default
         theme.linkColor = .purple
-        let styled = theme.styledInline(try AttributedString(markdown: "go [here](https://mega.io) now"), codeFont: theme.inlineCodeFont(scale: 1))
+        let styled = theme.styledInline(try AttributedString(markdown: "go [here](https://mega.io) now"), codeFont: theme.inlineCodeFont(scale: 1), codeBaselineOffset: 0)
         let linkRun = try #require(styled.runs.first { $0.link != nil })
         #expect(linkRun.foregroundColor == .purple)
         #expect(linkRun.underlineStyle == .single)
@@ -70,7 +70,7 @@ import Testing
 
     @Test func inlineCodeRunGetsCodeFontAndBackground() throws {
         let theme = MarkdownTheme.default
-        let styled = theme.styledInline(try AttributedString(markdown: "run `swift test` please"), codeFont: theme.inlineCodeFont(scale: 1))
+        let styled = theme.styledInline(try AttributedString(markdown: "run `swift test` please"), codeFont: theme.inlineCodeFont(scale: 1), codeBaselineOffset: 0)
         let codeRun = try #require(styled.runs.first { $0.inlinePresentationIntent?.contains(.code) == true })
         #expect(String(styled[codeRun.range].characters) == "swift test")
         #expect(codeRun.font == .system(size: 14, design: .monospaced))

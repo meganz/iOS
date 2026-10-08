@@ -27,13 +27,13 @@ It matches the Android text editor (`feature/text-editor/text-editor-snowflake-c
 
 ## Architecture
 
-See the [architecture guide](ARCHITECTURE.md) for the layers, the document model, and testing guidance. The guide grows with the implementation as rendering and editing are added. The [parser reference](PARSER.md), the [chunking reference](CHUNKING.md) the [large-file preview reference](PREVIEW.md) and the [rich editor model reference](EDITOR.md) hold the details of the implemented layers.
+See the [architecture guide](ARCHITECTURE.md) for the layers, the document model, and testing guidance. The guide grows with the implementation as rendering and editing are added. The [parser reference](PARSER.md), the [chunking reference](CHUNKING.md) the [large-file preview reference](PREVIEW.md) the [rich editor model reference](EDITOR.md) and the [editor UI reference](EDITOR-UI.md) hold the details of the implemented layers.
 
 The [decision records](DECISIONS.md) explain why the package is built this way, with the measured data. The [terminology](TERMINOLOGY.md) defines the terms used in the docs, the code, and the tests.
 
 ## Demo app
 
-The [demo app](DemoApp/README.md) opens generated test files in `MarkdownPreview` on a simulator or a device. It is not part of the MEGA app or CI.
+The [demo app](DemoApp/README.md) opens generated test files in `MarkdownPreview` and `MarkdownEditor` on a simulator or a device. It is not part of the MEGA app or CI.
 
 ## Benchmarks
 

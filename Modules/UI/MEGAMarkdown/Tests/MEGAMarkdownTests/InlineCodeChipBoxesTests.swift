@@ -2,7 +2,7 @@ import CoreGraphics
 @testable import MEGAMarkdown
 import Testing
 
-/// The chip box rule: 2 pt padding, but at least 2 pt to the word or chip next to it.
+/// The chip box rule: 3 pt padding, but at least 2 pt to the word or chip next to it.
 @Suite struct InlineCodeChipBoxesTests {
     /// Glyphs of one line, 10 pt high, from (x, width) pairs.
     private func glyph(_ x: CGFloat, _ width: CGFloat, chip: Bool = false, blank: Bool = false) -> ChipLineGlyph {
@@ -11,11 +11,24 @@ import Testing
 
     @Test func aChipAloneGrowsByThePadding() throws {
         let box = try #require(InlineCodeChipBoxes.boxes([glyph(10, 8, chip: true), glyph(18, 8, chip: true)]).first)
-        #expect(box.minX == 8)
-        #expect(box.maxX == 28)
+        #expect(box.minX == 7)
+        #expect(box.maxX == 29)
     }
 
-    /// A space of 3 pt: the padding would leave 1 pt to the word, so the box stays 2 pt from it.
+    /// The box is as tall as asked and centered on the glyphs, so a chip can be taller than the font.
+    @Test func aBoxWithAHeightIsCenteredOnTheGlyphs() throws {
+        let box = try #require(InlineCodeChipBoxes.boxes([glyph(10, 8, chip: true)], height: 16).first)
+        #expect(box.height == 16)
+        #expect(box.midY == 5)
+    }
+
+    /// At the start of a line the box reaches past the text edge. The text view keeps room for it.
+    @Test func aBoxAtTheLineStartReachesPastTheEdge() throws {
+        let box = try #require(InlineCodeChipBoxes.boxes([glyph(0, 8, chip: true)]).first)
+        #expect(box.minX == -3)
+    }
+
+    /// A space of 3 pt: the padding would leave no room to the word, so the box stays 2 pt from it.
     @Test func aChipKeepsTwoPointsToTheWordBeforeAndAfter() throws {
         let glyphs = [glyph(0, 8), glyph(8, 3), glyph(11, 8, chip: true), glyph(19, 3), glyph(22, 8)]
         let box = try #require(InlineCodeChipBoxes.boxes(glyphs).first)

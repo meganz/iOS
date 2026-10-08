@@ -8,12 +8,13 @@ let maxTextMeasureCharacters = 50_000
 extension MarkdownTheme {
     /// Adds theme styles for inline code and links on top of what `Text` already
     /// draws from the Foundation inline attributes (bold, italic, strikethrough, code).
-    func styledInline(_ text: AttributedString, codeFont: Font) -> AttributedString {
+    func styledInline(_ text: AttributedString, codeFont: Font, codeBaselineOffset: CGFloat) -> AttributedString {
         var result = text
         for run in text.runs {
             let intent = run.inlinePresentationIntent ?? []
             if intent.contains(.code) {
                 result[run.range].font = codeFont
+                result[run.range].baselineOffset = codeBaselineOffset
                 // iOS 17 has no text renderer, so the run keeps its own fill. `inlineText` drops it on iOS 18 and later.
                 result[run.range].backgroundColor = inlineCodeBackground
                 result[run.range].foregroundColor = inlineCodeColor
@@ -43,17 +44,40 @@ func splitForMeasuring(_ text: AttributedString, maxLength: Int = maxTextMeasure
 }
 
 /// Shows inline Markdown text. Splits very long text into several stacked `Text` views.
+/// Text with inline code goes to `InlineCodeText`, so its chip lines match the rich editor and Figma.
 struct InlineTextView: View {
     let text: AttributedString
     let font: Font
     let color: Color
+    /// The heading level of `font`. Nil: body text.
+    var headingLevel: Int?
 
     @Environment(\.markdownTheme) private var theme
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.legibilityWeight) private var legibilityWeight
     @ScaledMetric(relativeTo: .body) private var codeScale: CGFloat = 1
 
     var body: some View {
         let shown = Self.withoutHTMLBlockLineEnd(text)
-        let pieces = splitForMeasuring(theme.styledInline(shown, codeFont: theme.inlineCodeFont(scale: codeScale)))
+        if shown.runs.contains(where: { $0.inlinePresentationIntent?.contains(.code) == true }) {
+            let traits = InlineCodeText.traits(dynamicTypeSize: dynamicTypeSize, legibilityWeight: legibilityWeight)
+            let startsWithCode = shown.runs.first?.inlinePresentationIntent?.contains(.code) == true
+            let baseline = InlineCodeText.firstBaseline(headingLevel: headingLevel, startsWithCode: startsWithCode, traits: traits, theme: theme)
+            InlineCodeText(text: shown, headingLevel: headingLevel, color: color)
+                .alignmentGuide(.firstTextBaseline) { _ in baseline }
+                // The view has room on each side for the chip. The text stays at the row's edges.
+                .padding(.horizontal, -InlineCodeTextView.inset)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            plainText(shown)
+        }
+    }
+
+    @ViewBuilder
+    private func plainText(_ shown: AttributedString) -> some View {
+        let codeOffset = theme.inlineCodeBaselineOffset(scale: codeScale)
+        let styled = theme.styledInline(shown, codeFont: theme.inlineCodeFont(scale: codeScale), codeBaselineOffset: codeOffset)
+        let pieces = splitForMeasuring(styled)
         VStack(alignment: .leading, spacing: 0) {
             // Most text is one piece. A plain child skips the `ForEach` item work on each layout.
             if pieces.count == 1 {
@@ -67,7 +91,7 @@ struct InlineTextView: View {
         .font(font)
         .foregroundStyle(color)
         .tint(theme.linkColor)
-        .inlineCodeChips(theme, for: shown)
+        .inlineCodeChips(theme, for: shown, scale: codeScale)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -157,11 +181,12 @@ struct ChipLineGlyph: Equatable {
 enum InlineCodeChipBoxes {
     /// The chip boxes of one line of glyphs, in order.
     /// - Figma ends a box at the last letter, so blanks at the end of a box are left out.
-    /// - A box grows by `TokenSpacing._1` on each side, but it stays `margin` inside the glyph next to it,
+    /// - A box grows by `InlineCodeLayoutManager.chipPadding` on each side, but it stays `margin` inside the glyph next to it,
     ///   like Android (`MarkdownInlineCodeChips.kt`). So a word space stays visible next to a chip.
     /// - Two chips with only a space between them meet halfway, `margin` apart.
-    /// - A box stays inside the text's left edge (x = 0).
-    static func boxes(_ glyphs: [ChipLineGlyph]) -> [CGRect] {
+    /// - At the start or end of a line the box reaches past the text edge, like Figma.
+    /// - A box is `height` tall, centered on the code glyphs. Nil: as tall as the glyphs.
+    static func boxes(_ glyphs: [ChipLineGlyph], height: CGFloat? = nil) -> [CGRect] {
         var boxes: [(rect: CGRect, glyphs: ClosedRange<Int>)] = []
         var index = 0
         while index < glyphs.count {
@@ -180,16 +205,16 @@ enum InlineCodeChipBoxes {
             let ink = glyphs[first...last].dropFirst().reduce(glyphs[first].rect) { $0.union($1.rect) }
             // Neighbours by position, not by text order, so right-to-left lines work too.
             let others = glyphs.indices.filter { $0 < first || $0 > last }.map { glyphs[$0].rect }
-            var minX = ink.minX - TokenSpacing._1
-            var maxX = ink.maxX + TokenSpacing._1
+            var minX = ink.minX - InlineCodeLayoutManager.chipPadding
+            var maxX = ink.maxX + InlineCodeLayoutManager.chipPadding
             if let leftNeighbour = others.filter({ $0.maxX <= ink.minX + 0.5 }).max(by: { $0.maxX < $1.maxX }) {
                 minX = max(minX, min(leftNeighbour.minX + margin, ink.minX))
             }
             if let rightNeighbour = others.filter({ $0.minX >= ink.maxX - 0.5 }).min(by: { $0.minX < $1.minX }) {
                 maxX = min(maxX, max(rightNeighbour.maxX - margin, ink.maxX))
             }
-            minX = max(minX, 0)
-            boxes.append((CGRect(x: minX, y: ink.minY, width: max(maxX - minX, 0), height: ink.height), first...last))
+            let boxHeight = height ?? ink.height
+            boxes.append((CGRect(x: minX, y: ink.midY - boxHeight / 2, width: max(maxX - minX, 0), height: boxHeight), first...last))
         }
         boxes.sort { $0.rect.minX < $1.rect.minX }
         for pairIndex in boxes.indices.dropFirst() {
@@ -218,10 +243,16 @@ enum InlineCodeChipBoxes {
 struct InlineCodeChipRenderer: TextRenderer {
     let fill: Color
     let border: Color
+    /// See `MarkdownTheme.Resolved.inlineCodeChipHeight`.
+    let height: CGFloat
+    let borderWidth = InlineCodeLayoutManager.borderWidth
 
     func draw(layout: Text.Layout, in context: inout GraphicsContext) {
         let starts = Self.chipStarts(in: layout)
-        let chips = layout.flatMap { Self.chipRects(in: $0, starts: starts) }
+        // A line of only code is as tall as the mono font. The chip then keeps the gap to the next line.
+        let chips = layout.flatMap { line in
+            Self.chipRects(in: line, starts: starts, height: min(height, line.typographicBounds.rect.height + 2 * borderWidth))
+        }
         for rect in chips {
             context.fill(Path(roundedRect: rect, cornerRadius: TokenRadius.small), with: .color(fill))
         }
@@ -229,10 +260,10 @@ struct InlineCodeChipRenderer: TextRenderer {
             context.draw(line)
         }
         // After the text, so nothing covers the border.
-        let inset = Self.borderWidth / 2
+        let inset = borderWidth / 2
         for rect in chips {
             let path = Path(roundedRect: rect.insetBy(dx: inset, dy: inset), cornerRadius: TokenRadius.small)
-            context.stroke(path, with: .color(border), lineWidth: Self.borderWidth)
+            context.stroke(path, with: .color(border), lineWidth: borderWidth)
         }
     }
 
@@ -249,7 +280,7 @@ struct InlineCodeChipRenderer: TextRenderer {
     }
 
     /// One box per group of side-by-side code runs in a line, so bold code inside a chip is still one chip.
-    static func chipRects(in line: Text.Layout.Line, starts: [Int: Text.Layout.CharacterIndex]) -> [CGRect] {
+    static func chipRects(in line: Text.Layout.Line, starts: [Int: Text.Layout.CharacterIndex], height: CGFloat) -> [CGRect] {
         var glyphs: [ChipLineGlyph] = []
         for run in line {
             let chip = run[InlineCodeChip.self]
@@ -262,20 +293,29 @@ struct InlineCodeChipRenderer: TextRenderer {
                 glyphs.append(ChipLineGlyph(rect: slice.typographicBounds.rect, isChip: chip != nil, isBlank: isBlank))
             }
         }
-        return InlineCodeChipBoxes.boxes(glyphs)
+        return InlineCodeChipBoxes.boxes(glyphs, height: height)
     }
 
-    // No design token for border width.
-    static let borderWidth: CGFloat = 1
 }
 
 extension View {
     /// Draws the border around `inline code`. iOS 17 has no `textRenderer`, so code keeps only its fill there.
     /// Text without inline code keeps the normal SwiftUI drawing. Only text that needs a chip goes through the renderer.
+    /// Text with inline code gets the line spacing and the top and bottom room of the chip, so its lines match Figma.
+    /// `scale` is a `@ScaledMetric(relativeTo: .body)` of 1 in the view.
     @ViewBuilder
-    func inlineCodeChips(_ theme: MarkdownTheme, for text: AttributedString) -> some View {
-        if #available(iOS 18.0, *), text.runs.contains(where: { $0.inlinePresentationIntent?.contains(.code) == true }) {
-            textRenderer(InlineCodeChipRenderer(fill: theme.inlineCodeBackground, border: theme.inlineCodeBorderColor))
+    func inlineCodeChips(_ theme: MarkdownTheme, for text: AttributedString, scale: CGFloat) -> some View {
+        if text.runs.contains(where: { $0.inlinePresentationIntent?.contains(.code) == true }) {
+            let spaced = lineSpacing(MarkdownTheme.Resolved.inlineCodeTextLineSpacingAtDefaultSize * scale)
+                .padding(.vertical, InlineCodeLayoutManager.borderWidth * scale)
+            if #available(iOS 18.0, *) {
+                let height = MarkdownTheme.Resolved.inlineCodeChipHeightAtDefaultSize * scale
+                spaced.textRenderer(
+                    InlineCodeChipRenderer(fill: theme.inlineCodeBackground, border: theme.inlineCodeBorderColor, height: height)
+                )
+            } else {
+                spaced
+            }
         } else {
             self
         }

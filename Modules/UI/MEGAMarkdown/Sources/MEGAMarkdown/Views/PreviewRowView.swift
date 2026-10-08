@@ -40,7 +40,7 @@ private struct PreviewRowContent: View {
             let seamGap = shown.characters.count < attributed.characters.count ? lineGap(headingLevel: headingLevel) : 0
             if let headingLevel {
                 let font = theme.headingFont(min(max(headingLevel, 1), 6))
-                InlineTextView(text: shown, font: font, color: theme.headingColor)
+                InlineTextView(text: shown, font: font, color: theme.headingColor, headingLevel: headingLevel)
                     .padding(.top, isFirst && row.chrome.decorations.isEmpty ? theme.headingTopSpacing : 0)
                     .padding(.bottom, seamGap)
                     .accessibilityAddTraits(.isHeader)

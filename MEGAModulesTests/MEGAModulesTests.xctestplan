@@ -123,6 +123,15 @@
       }
     },
     {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/UI\/MEGAMarkdown",
+        "identifier" : "MEGAMarkdownEditorHostedTests",
+        "name" : "MEGAMarkdownEditorHostedTests"
+      }
+    },
+    {
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Features\/Search",

@@ -13,6 +13,9 @@ package final class MarkdownRowList: NSObject {
     /// An item to show at the same place after the next layout pass, and its top relative to the top edge.
     private var pendingAnchor: (item: Int, distance: CGFloat)?
     private var themeVersion = 0
+    /// True in `replaceItems` until its update block runs. The items configured then are in `itemsConfiguredEarly`.
+    private var isBeforeUpdate = false
+    private var itemsConfiguredEarly: [Int] = []
 
     /// Fonts and spacing of the estimates. A change makes every height a guess again.
     package var theme = MarkdownTheme.default {
@@ -38,7 +41,9 @@ package final class MarkdownRowList: NSObject {
         self.dataSource = dataSource
         super.init()
         registration = UICollectionView.CellRegistration { [weak self] cell, _, item in
-            self?.dataSource?.configure(cell, forItem: item)
+            guard let self else { return }
+            if isBeforeUpdate { itemsConfiguredEarly.append(item) }
+            self.dataSource?.configure(cell, forItem: item)
         }
         view.backgroundColor = .clear
         view.allowsSelection = false
@@ -120,8 +125,13 @@ package final class MarkdownRowList: NSObject {
         let keptPaths = (old.lowerBound..<(old.lowerBound + kept)).map(path)
         let deleted = ((old.lowerBound + kept)..<old.upperBound).map(path)
         let inserted = ((old.lowerBound + kept)..<(old.lowerBound + newCount)).map(path)
+        // The data source already has the new items. A layout pass that is due runs first in the batch update,
+        // with the old index paths. A cell made then, for example a prefetched cell, gets the wrong item.
+        isBeforeUpdate = true
+        itemsConfiguredEarly = []
         UIView.performWithoutAnimation {
             view.performBatchUpdates {
+                isBeforeUpdate = false
                 layout.heights.replaceSubrange(old, with: values)
                 for later in (section + 1)..<layout.sectionStarts.count {
                     layout.sectionStarts[later] += newCount - old.count
@@ -130,6 +140,17 @@ package final class MarkdownRowList: NSObject {
                 if !inserted.isEmpty { view.insertItems(at: inserted) }
                 if !keptPaths.isEmpty { view.reconfigureItems(at: keptPaths) }
             }
+        }
+        // A cell made early below `old` moved with the update. A reload gives it a new cell and a new size.
+        // Items above `old` did not change, kept items are configured again above, and deleted items are gone.
+        let moved = itemsConfiguredEarly.filter { $0 >= old.upperBound }.map { $0 + newCount - old.count }
+        itemsConfiguredEarly = []
+        guard !moved.isEmpty else { return }
+        for item in moved {
+            layout.heights.invalidate(item)
+        }
+        UIView.performWithoutAnimation {
+            view.reloadItems(at: moved.map(indexPath))
         }
     }
 
@@ -142,6 +163,12 @@ package final class MarkdownRowList: NSObject {
         }
         UIView.performWithoutAnimation {
             view.reconfigureItems(at: valid.map(indexPath))
+            // UIKit sizes a reconfigured cell once with its old content and marks it measured. A second pass
+            // after the new content is in makes the cell size itself to it.
+            view.layoutIfNeeded()
+            for item in valid {
+                invalidateHeight(ofItem: item)
+            }
         }
     }
 

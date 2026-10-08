@@ -14,7 +14,7 @@ struct MarkdownBlockView: View {
     var body: some View {
         switch block.kind {
         case .heading(let level, let text):
-            InlineTextView(text: text, font: theme.headingFont(min(max(level, 1), 6)), color: theme.headingColor)
+            InlineTextView(text: text, font: theme.headingFont(min(max(level, 1), 6)), color: theme.headingColor, headingLevel: level)
                 .padding(.top, nested ? 0 : theme.headingTopSpacing)
                 .accessibilityAddTraits(.isHeader)
         case .paragraph(let text):

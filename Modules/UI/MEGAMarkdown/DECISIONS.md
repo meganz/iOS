@@ -33,13 +33,27 @@ The rule for each choice: keep what matches GitHub. Else follow a standard. Else
 | Ordered task item | Shows the checkbox, not the number. | GitHub hides the number of a task item. |
 | Newline inside inline HTML | An unmatched tag stays literal, with its own newline. See PARSER.md "Inline HTML styles". | Android hides inline HTML. Showing raw text keeps every byte visible. |
 | Hyphens | Kept. SwiftUI `Text` may add a hyphen when it breaks a long word, also in a table cell URL ("www.github.-com"). Known limit. | SwiftUI has no public switch for hyphens. Typesetting the text as "zxx" (no language) stops them, but it also drops the line height of the reader's language. That can cut the accent marks of Vietnamese text. |
-| Inline code chip spacing | The box grows 2 pt but stays 2 pt from the word next to it. Two chips across one space meet halfway, 2 pt apart. | Android `MarkdownInlineCodeChips.kt:101-108`. |
+| Inline code chip spacing | The box grows 3 pt (2 pt padding and the 1 pt border) but stays 2 pt from the word next to it. Two chips across one space meet halfway, 2 pt apart. At the start or end of a line the box reaches 3 pt past the text edge. | Figma for the padding and the edge. Android `MarkdownInlineCodeChips.kt:101-108` for the word spacing. |
+| Inline code lines | Every line of a paragraph with inline code is as tall as the chip: a body line plus the border above and below. Lines have a 2 pt gap. The code is raised so its glyphs are centered on the body text. Preview and editor draw this text with TextKit 1 and `InlineCodeLayoutManager`. | Figma. SwiftUI `Text` sizes a line of only code by the mono font and has no line height before iOS 26, so it cannot keep these lines. |
 | Footnotes | Off. `[^1]` stays text or a link definition, like any label. | Android has no footnote extension. |
 | Link with empty text | Draws nothing, so it cannot be seen or tapped. | GitHub draws an empty `<a>` as nothing too. |
 | Quote bar | One unbroken bar through the whole quote, also across rows. | Android `MarkdownBlockFrame.kt:207-212`, GitHub `border-left`. |
 | Two links side by side | No added space. They can read as one link. Each part opens its own URL. | GitHub shows the same. |
 | Table column width | Fixed 140 pt columns. A wide table scrolls sideways. | Android `MarkdownNode.kt` (140 dp). |
 | Linked image with empty alt text | Draws nothing. Known limit for now. A later version may show the file name as link text. | Android and the browser rule for `alt=""`. |
+
+## Editor UI
+
+| Topic | Rule | Why |
+|---|---|---|
+| Source mode text system | TextKit 1. | In a 10 MB file a key at the end took 877 ms worst case on TextKit 2 and 0 to 22 ms on TextKit 1. A 100 MB file only opens on TextKit 1. Writing Tools shows its panel only. |
+| Empty row | No placeholder text. | The row keeps the font of its kind, so the caret has the height of the text. |
+| Paste into a code block | Plain text. Other rows read Markdown first. | Code is plain text. Markdown marks or fences would end up in the code. |
+| Copy | One pasteboard item with plain text and Markdown. | Other apps read the plain text. The editor reads both types. |
+| Own save | The binding gets the Markdown after 1 s idle, on a mode switch, on disappear and on resign active. | The binding is the only save channel. |
+| Loaded text after a save | Not the editor's own text any more. It reloads rich mode. | A host that sets the original text back expects to see it. |
+| Block over 100,000 units | Rich mode refuses the file and shows the source with a notice. | One text view holds a whole block, and a key costs time in proportion to its length. |
+| Code lines | Wrap in the editor. The preview scrolls them sideways. | An editable text view has no sideways scroll per row. |
 
 ## Source of truth
 

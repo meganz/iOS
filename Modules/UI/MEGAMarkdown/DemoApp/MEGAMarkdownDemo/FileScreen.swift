@@ -1,4 +1,5 @@
 import MEGAMarkdown
+import MEGAMarkdownEditor
 import SwiftUI
 import UIKit
 
@@ -17,6 +18,9 @@ struct FileScreen: View {
     @State private var softBreak: SoftBreakMode
     @State private var topLine = 0
     @State private var gitHubPage: URL?
+    /// The text in the editor. The editor writes it back to the file.
+    @State private var editedText = ""
+    @State private var saveError: String?
     /// Read once. The preview saves a new line on every report, and a live value would jump the list back to it.
     @State private var startLine: Int?
 
@@ -39,6 +43,10 @@ struct FileScreen: View {
                 Text(MarkdownPreviewStrings.english.tooLarge)
                     .multilineTextAlignment(.center)
                     .padding()
+            case .unreadable:
+                Text("This file is not valid UTF-8 or cannot be read. The demo does not open it, so it cannot overwrite it.")
+                    .multilineTextAlignment(.center)
+                    .padding()
             case .text(let text):
                 switch mode {
                 case .preview:
@@ -51,6 +59,14 @@ struct FileScreen: View {
                     .markdownImageLoading(imageMode.loading)
                 case .source:
                     SourceTextView(text: text)
+                case .richEditor, .sourceEditor:
+                    MarkdownEditor(
+                        // Saves in the setter, so the last edit is written even when this view leaves at once.
+                        markdown: Binding(get: { editedText }, set: { editedText = $0; save($0) }),
+                        mode: Binding(get: { mode == .richEditor ? .rich : .source }, set: { mode = $0 == .rich ? .richEditor : .sourceEditor }),
+                        baseURL: entry.url.deletingLastPathComponent()
+                    )
+                    .markdownImageLoading(imageMode.loading)
                 }
             }
         }
@@ -77,6 +93,10 @@ struct FileScreen: View {
 
     private var statusBar: some View {
         HStack {
+            if let saveError {
+                Text(saveError)
+                    .foregroundStyle(.red)
+            }
             Text(entry.byteCount.formatted(.byteCount(style: .file)))
             Spacer()
             Text("Top line \(topLine + 1)")
@@ -94,6 +114,10 @@ struct FileScreen: View {
             Button(mode == .preview ? "Source" : "Preview") {
                 mode = mode == .preview ? .source : .preview
             }
+            Button("Edit") {
+                mode = .richEditor
+            }
+            .disabled(mode == .richEditor || mode == .sourceEditor || !isText)
             if entry.isTestFile, let url = gitHubURL {
                 Button("GitHub") {
                     gitHubPage = url
@@ -119,8 +143,28 @@ struct FileScreen: View {
         }
     }
 
+    /// Writes the edited text to the file, so the preview and the next open show it.
+    /// A synced test file is replaced again by the next Sync.
+    private func save(_ text: String) {
+        do {
+            try text.write(to: entry.url, atomically: true, encoding: .utf8)
+            saveError = nil
+            content = .text(text)
+        } catch {
+            saveError = "Save failed: \(error.localizedDescription)"
+        }
+    }
+
+    private var isText: Bool {
+        if case .text = content { return true }
+        return false
+    }
+
     private func reload() async {
-        content = await FileContent.load(entry.url)
+        let loaded = await FileContent.load(entry.url)
+        // The editor must start with the file text, so mounting it writes nothing.
+        if case .text(let text) = loaded { editedText = text }
+        content = loaded
     }
 
     /// The base URL plus the file path below `TestFiles`, one percent-encoded part at a time.
@@ -141,11 +185,15 @@ struct FileScreen: View {
 enum FileScreenMode: CaseIterable {
     case preview
     case source
+    case richEditor
+    case sourceEditor
 
     var title: String {
         switch self {
         case .preview: "Preview"
-        case .source: "Source"
+        case .source: "Source (read-only)"
+        case .richEditor: "Rich editor"
+        case .sourceEditor: "Source editor"
         }
     }
 }
@@ -211,13 +259,14 @@ enum SoftBreakMode: CaseIterable {
 enum FileContent: Equatable, Sendable {
     case text(String)
     case tooLarge
+    case unreadable
 
-    /// Reads off the main thread. Bad UTF-8 bytes become U+FFFD, like other text viewers.
+    /// Reads off the main thread. A file that is not valid UTF-8 is unreadable, so it is never written back.
     @concurrent
     static func load(_ url: URL) async -> FileContent {
         let size = (try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
         guard size <= MarkdownPreview.sizeLimitInBytes else { return .tooLarge }
-        guard let data = try? Data(contentsOf: url) else { return .text("") }
-        return .text(String(decoding: data, as: UTF8.self))
+        guard let data = try? Data(contentsOf: url), let text = String(data: data, encoding: .utf8) else { return .unreadable }
+        return .text(text)
     }
 }

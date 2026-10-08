@@ -90,11 +90,12 @@ struct TableBlockView: View {
 
     /// `text` must already be `capped`.
     private func cell(_ text: AttributedString, alignment: MarkdownTable.Alignment, isHeader: Bool) -> some View {
-        inlineText(theme.styledInline(text, codeFont: theme.inlineCodeFont(scale: codeScale)))
+        let codeOffset = theme.inlineCodeBaselineOffset(scale: codeScale)
+        return inlineText(theme.styledInline(text, codeFont: theme.inlineCodeFont(scale: codeScale), codeBaselineOffset: codeOffset))
             .font(isHeader ? theme.bodyFont.bold() : theme.bodyFont)
             .foregroundStyle(theme.bodyColor)
             .tint(theme.linkColor)
-            .inlineCodeChips(theme, for: text)
+            .inlineCodeChips(theme, for: text, scale: codeScale)
             .multilineTextAlignment(textAlignment(alignment))
             .fixedSize(horizontal: false, vertical: true)
             .padding(TokenSpacing._3)
