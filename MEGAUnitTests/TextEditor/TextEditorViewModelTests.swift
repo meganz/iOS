@@ -29,13 +29,15 @@ final class TextEditorViewModelTests: XCTestCase {
                 textEditorModel = TextEditorModel(
                     textFile: textFile,
                     textEditorMode: textEditorMode,
-                    accessLevel: nodeAccessLevel
+                    accessLevel: nodeAccessLevel,
+                    resumeReadingOffset: nil
                 )
             } else {
                 textEditorModel = TextEditorModel(
                     textFile: textFile,
                     textEditorMode: textEditorMode,
-                    accessLevel: nil
+                    accessLevel: nil,
+                    resumeReadingOffset: nil
                 )
             }
             
@@ -60,7 +62,8 @@ final class TextEditorViewModelTests: XCTestCase {
                 uploadFileUseCase: mockUploadFileUC,
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
-                backupsUseCase: mockBackupsUC
+                backupsUseCase: mockBackupsUC,
+                resumeTextPositionUseCase: MockResumeTextPositionUseCase()
             )
             test(viewModel: viewModel,
                  action: .setUpView,
@@ -90,7 +93,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorLoadModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: textEditorMode,
-            accessLevel: nil
+            accessLevel: nil,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsLoadModel = TextEditorNavbarItemsModel(
@@ -102,7 +106,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
-            accessLevel: nodeAccessLevel
+            accessLevel: nodeAccessLevel,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel(
@@ -122,6 +127,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode,
             tracker: tracker
         )
@@ -171,7 +177,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorLoadModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: textEditorMode,
-            accessLevel: nil
+            accessLevel: nil,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
@@ -190,6 +197,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
         
@@ -223,7 +231,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorLoadModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: textEditorMode,
-            accessLevel: nil
+            accessLevel: nil,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
@@ -242,6 +251,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
         
@@ -281,6 +291,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle,
             nodeEntity: mockNode
         )
@@ -290,7 +301,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
-            accessLevel: nodeAccessLevel
+            accessLevel: nodeAccessLevel,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
@@ -333,6 +345,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
         
@@ -373,6 +386,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
         
@@ -403,6 +417,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
         
@@ -435,6 +450,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
         
@@ -473,7 +489,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         let createContent = "create content"
@@ -501,7 +518,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         let createContent = "create content"
@@ -531,7 +549,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         let createContent = "create content"
@@ -569,7 +588,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         test(viewModel: viewModel,
@@ -598,6 +618,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
         
@@ -628,6 +649,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
                 backupsUseCase: mockBackupsUC,
+                resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
                 tracker: tracker
             )
             
@@ -664,13 +686,15 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         let textEditorModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .edit,
-            accessLevel: nil
+            accessLevel: nil,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
@@ -710,6 +734,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             tracker: tracker
         )
         
@@ -742,13 +767,15 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         let textEditorModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .edit,
-            accessLevel: nil
+            accessLevel: nil,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
@@ -786,7 +813,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         test(viewModel: viewModel,
@@ -815,7 +843,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         test(viewModel: viewModel,
@@ -841,6 +870,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
         
@@ -870,7 +900,8 @@ final class TextEditorViewModelTests: XCTestCase {
                 uploadFileUseCase: mockUploadFileUC,
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
-                backupsUseCase: mockBackupsUC
+                backupsUseCase: mockBackupsUC,
+                resumeTextPositionUseCase: MockResumeTextPositionUseCase()
             )
             
             test(viewModel: viewModel,
@@ -895,7 +926,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         test(viewModel: viewModel,
@@ -924,13 +956,15 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
         
         let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
-            accessLevel: nodeAccessLevel
+            accessLevel: nodeAccessLevel,
+            resumeReadingOffset: nil
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
@@ -966,6 +1000,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode,
             tracker: tracker
         )
@@ -994,7 +1029,8 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
         test(viewModel: viewModel,
@@ -1022,6 +1058,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode,
             tracker: tracker
         )
@@ -1153,6 +1190,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
         
@@ -1193,6 +1231,8 @@ final class TextEditorViewModelTests: XCTestCase {
         downloadNodeUseCase: MockDownloadNodeUseCase = MockDownloadNodeUseCase(),
         nodeUseCase: MockNodeDataUseCase = MockNodeDataUseCase(),
         backupsUseCase: MockBackupsUseCase = MockBackupsUseCase(),
+        resumeTextPositionUseCase: MockResumeTextPositionUseCase = MockResumeTextPositionUseCase(),
+        leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
         tracker: MockTracker = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1205,8 +1245,10 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: downloadNodeUseCase,
             nodeUseCase: nodeUseCase,
             backupsUseCase: backupsUseCase,
+            resumeTextPositionUseCase: resumeTextPositionUseCase,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
+            leftOffItemRecordUseCase: leftOffItemRecordUseCase,
             tracker: tracker)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

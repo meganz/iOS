@@ -98,6 +98,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             downloadNodeUseCase: downloadUC,
             nodeUseCase: nodeDataUC,
             backupsUseCase: backupsUC,
+            resumeTextPositionUseCase: ResumeTextPositionUseCase(preferenceUseCase: PreferenceUseCase.default),
             parentHandle: parentHandle,
             nodeEntity: nodeEntity
         )

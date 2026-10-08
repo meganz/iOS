@@ -7,6 +7,8 @@ struct TextEditorModel: Equatable {
         textEditorMode == .create || textEditorMode == .edit
     }
     let accessLevel: NodeAccessTypeEntity?
+    /// Last-read position for the editor to start at. Note: This is character offset, not the scroll content offset. 
+    let resumeReadingOffset: Int?
 }
 
 struct NavbarItemModel: Equatable {

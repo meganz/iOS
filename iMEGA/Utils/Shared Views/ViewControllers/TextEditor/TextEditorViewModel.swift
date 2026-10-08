@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 import MEGAL10n
+import MEGASwift
 
 enum TextEditorViewAction: ActionType {
     case setUpView
@@ -19,6 +20,8 @@ enum TextEditorViewAction: ActionType {
     case importNode
     case exportFile(sender: Any)
     case editAfterOpen
+    case updateReadingPosition(anchor: Int?, progress: Double)
+    case saveReadingPosition
 }
 
 @objc enum TextEditorMode: Int, CaseIterable {
@@ -80,7 +83,15 @@ final class TextEditorViewModel: ViewModelType {
     private var isBackupNode: Bool = false
     private var downloadTask: Task<Void, any Error>?
     private let tracker: any AnalyticsTracking
-    
+    private let resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol
+    private let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
+    /// Character offset of the top visible character. It is a position
+    /// in the text, so it still points at the same words after a rotation or a font size change.
+    private var readingAnchor: Int?
+
+    /// How far down the laid out text the reader has scrolled, value ranges from 0 to 1.
+    private var lastProgress: Double?
+
     init(
         router: some TextEditorViewRouting,
         textFile: TextFile,
@@ -89,8 +100,10 @@ final class TextEditorViewModel: ViewModelType {
         downloadNodeUseCase: any DownloadNodeUseCaseProtocol,
         nodeUseCase: any NodeUseCaseProtocol,
         backupsUseCase: any BackupsUseCaseProtocol,
+        resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil,
+        leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = LeftOffItemsRecordUseCase.shared,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
@@ -100,8 +113,10 @@ final class TextEditorViewModel: ViewModelType {
         self.downloadNodeUseCase = downloadNodeUseCase
         self.nodeUseCase = nodeUseCase
         self.backupsUseCase = backupsUseCase
+        self.resumeTextPositionUseCase = resumeTextPositionUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
+        self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
         self.tracker = tracker
     }
     
@@ -122,6 +137,7 @@ final class TextEditorViewModel: ViewModelType {
             uploadFile()
         case .dismissTextEditorVC:
             tracker.trackAnalyticsEvent(with: TextEditorCloseMenuToolbarEvent())
+            saveReadingPosition()
             router.dismissTextEditorVC()
         case .editFile:
             tracker.trackAnalyticsEvent(with: TextEditorEditMenuToolbarEvent())
@@ -142,13 +158,19 @@ final class TextEditorViewModel: ViewModelType {
         case .exportFile(sender: let button):
             tracker.trackAnalyticsEvent(with: TextEditorExportFileMenuToolbarEvent())
             exportFile(sender: button)
+        case .updateReadingPosition(let anchor, let progress):
+            if let anchor { readingAnchor = anchor }
+            lastProgress = progress
+        case .saveReadingPosition:
+            processLeftOffItem()
+            saveReadingPosition()
         }
     }
     
     // MARK: - Private functions
     private func setupView(shallUpdateContent: Bool) {
         tracker.trackAnalyticsEvent(with: TextEditorScreenEvent())
-        
+
         var isNodeInRubbishBin = false
         if let nodeHandle = nodeEntity?.handle {
             isNodeInRubbishBin = nodeUseCase.isInRubbishBin(nodeHandle: nodeHandle)
@@ -224,7 +246,21 @@ final class TextEditorViewModel: ViewModelType {
                 switch result {
                 case .failure:
                     self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload))
-                case .success:
+                case .success(let transfer):
+                    // after a successful upload (aka file was edited), the old reading position is
+                    // stale therefore we need to delete it.
+                    self.deleteReadingPosition()
+                    let previousHandle = self.nodeEntity?.handle
+                    if let node = self.uploadFileUseCase.nodeForHandle(transfer.nodeHandle) {
+                        self.nodeEntity = node
+                    }
+                    // An edit creates a new node, so the entry stored under the old handle would
+                    // show up as a second row for the same file.
+                    if let previousHandle, previousHandle != self.nodeEntity?.handle {
+                        Task { [leftOffItemRecordUseCase = self.leftOffItemRecordUseCase] in
+                            await leftOffItemRecordUseCase.remove(handle: previousHandle)
+                        }
+                    }
                     if self.textEditorMode == .edit {
                         self.textEditorMode = .view
                         self.setupView(shallUpdateContent: false)
@@ -343,10 +379,17 @@ final class TextEditorViewModel: ViewModelType {
     private func makeTextEditorModel() -> TextEditorModel {
         switch textEditorMode {
         case .view:
+            // We don't support reading position for markdown preview
+            // therefore `resumeReadingOffset` should be nil for markdown.
+            // currently `resumeReadingOffset` doesn't have any effect on markdown preview
+            // but we still add the gate to strengthen the logic anyways
+
+            let isMarkdown = textFile.fileName.fileExtensionGroup.isMarkdownText
             return TextEditorModel(
                 textFile: textFile,
                 textEditorMode: textEditorMode,
-                accessLevel: nodeAccessLevel()
+                accessLevel: nodeAccessLevel(),
+                resumeReadingOffset: isMarkdown ? nil : readingAnchor ?? storedReadingOffset
             )
         case .load,
              .edit,
@@ -354,9 +397,68 @@ final class TextEditorViewModel: ViewModelType {
             return TextEditorModel(
                 textFile: textFile,
                 textEditorMode: textEditorMode,
-                accessLevel: nil
+                accessLevel: nil,
+                resumeReadingOffset: nil
             )
         }
+    }
+
+    // MARK: - Reading position
+
+    private var storedReadingOffset: Int? {
+        guard let nodeEntity else { return nil }
+        return resumeTextPositionUseCase.readingOffset(for: nodeEntity)
+    }
+
+    /// The anchor says where to resume. The progress says how much of the laid out content has been
+    /// seen, which is what the thresholds below mean.
+    private func saveReadingPosition() {
+        guard textEditorMode == .view,
+              let nodeEntity,
+              let anchor = readingAnchor,
+              let progress = lastProgress else { return }
+
+        guard progress > Constants.minimumSavedPosition,
+              progress < Constants.endOfFilePosition else {
+            // Outside the thresholds there is nothing worth resuming: the reader is back at the start
+            // or has finished. Any earlier position is stale, so it has to go.
+            resumeTextPositionUseCase.deleteReadingOffset(for: nodeEntity)
+            return
+        }
+
+        resumeTextPositionUseCase.saveReadingOffset(anchor, for: nodeEntity)
+    }
+
+    private func deleteReadingPosition() {
+        guard let nodeEntity else { return }
+        readingAnchor = nil
+        lastProgress = nil
+        resumeTextPositionUseCase.deleteReadingOffset(for: nodeEntity)
+    }
+
+    // MARK: - Left off item
+
+    private func processLeftOffItem() {
+        guard textEditorMode == .view, let nodeEntity, !nodeEntity.name.isEmpty else { return }
+
+        let nearCompletionFraction = 0.9
+        // Where the reader stopped, which is the same point the resume position returns to.
+        let shouldRecordLeftOffItem = (lastProgress ?? 0) < nearCompletionFraction
+        let handle = nodeEntity.handle
+        let name = nodeEntity.name
+
+        Task { [leftOffItemRecordUseCase] in
+            if shouldRecordLeftOffItem {
+                await leftOffItemRecordUseCase.record(handle: handle, name: name)
+            } else {
+                await leftOffItemRecordUseCase.remove(handle: handle)
+            }
+        }
+    }
+
+    private enum Constants {
+        static let minimumSavedPosition: Double = 0.1
+        static let endOfFilePosition: Double = 0.95
     }
     
     private func makeNavbarItemsModel() -> TextEditorNavbarItemsModel {

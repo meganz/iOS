@@ -18,6 +18,9 @@ final class TextEditorViewController: UIViewController {
     }()
     
     private var markdownSupportTextViewController: UIViewController?
+    /// The character offset (if any) the text view need to jump to at first render. Nil means no offset to jump to and 0 means
+    /// textView starts from top
+    private var resumeLastReadOffset: Int?
 
     private weak var activityIndicator: UIActivityIndicatorView?
     private weak var progressView: UIProgressView?
@@ -47,9 +50,39 @@ final class TextEditorViewController: UIViewController {
         registerForTraitChangesAffectingEditor()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // There's a case where user closes the screen while the textView is still scrolling,
+        // In which case we also need to save the reading position 
+        reportAndSaveReadingPosition()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard !textView.isHidden, let offset = resumeLastReadOffset else { return }
+        resumeLastReadOffset = nil
+        restoreLegacyTextViewPosition(offset)
+    }
+
+    /// A rotation reflows the text, so an offset in points no longer points at the same line.
+    /// The character anchor is captured before the transition and re-applied after it.
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        guard !textView.isHidden else { return }
+
+        let anchor = currentLegacyTextViewAnchor
+        coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+            self?.restoreLegacyTextViewPosition(anchor)
+        }
+    }
+
     private func setupTextView() {
         view.backgroundColor = TokenColors.Background.page
         textView.backgroundColor = TokenColors.Background.page
+        textView.delegate = self
         view.addSubview(textView)
         
         NSLayoutConstraint.activate([
@@ -458,6 +491,11 @@ extension TextEditorViewController: ViewType {
     func registerForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidChangeFrame(notification:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    @objc func didEnterBackground() {
+        reportAndSaveReadingPosition()
     }
     
     @objc func keyboardDidChangeFrame(notification: NSNotification) {
@@ -485,38 +523,142 @@ extension TextEditorViewController {
             if textEditorModel.textFile.fileName.fileExtensionGroup.isMarkdownText {
                 renderTextUsingMarkdownSupportRenderingOnView(textEditorModel)
             } else {
-                renderTextUsingLegacyTextView(isEditable: false)
+                renderTextUsingLegacyTextView(isEditable: false, resumeReadingOffset: textEditorModel.resumeReadingOffset)
             }
         case .edit:
-            renderTextUsingLegacyTextView(isEditable: true)
+            renderTextUsingLegacyTextView(isEditable: true, resumeReadingOffset: nil)
         case .create, .load:
             break
         }
     }
     
     private func renderTextUsingMarkdownSupportRenderingOnView(_ textEditorModel: TextEditorModel) {
+        let isRebuild = markdownSupportTextViewController != nil
+        removeMarkdownSupportTextRenderingFromView()
+
         let markdownTextView = MarkdownSupportTextView(
             viewModel: MarkdownSupportTextViewModel(string: textEditorModel.textFile.content)
         )
         let controller = UIHostingController(rootView: markdownTextView)
         controller.view.backgroundColor = .clear
         markdownSupportTextViewController = controller
-        add(controller, container: view)
-        
+        add(controller, container: view, animate: !isRebuild)
+
         textView.isHidden = true
     }
     
-    private func renderTextUsingLegacyTextView(isEditable: Bool) {
-        if !isEditable {
-            textView.setContentOffset(.zero, animated: false)
-        }
+    private func renderTextUsingLegacyTextView(isEditable: Bool, resumeReadingOffset: Int?) {
         textView.isEditable = isEditable
         textView.isHidden = false
         removeMarkdownSupportTextRenderingFromView()
+
+        guard !isEditable else {
+            resumeLastReadOffset = nil
+            return
+        }
+
+        // The restore needs the final content size. It is only correct once the bottom toolbar and
+        // safe area have been applied, which has not happened yet at this point,
+        // so we need to wait for the next layout pass in `viewDidLayoutSubiews()`
+        resumeLastReadOffset = resumeReadingOffset ?? 0
+        view.setNeedsLayout()
     }
-    
+
+    /// The anchor is a character offset, not a point offset, so it survives the reflow caused by a
+    /// rotation or a font size change.
+    private func restoreLegacyTextViewPosition(_ offset: Int?) {
+        UIView.performWithoutAnimation { applyLegacyTextViewPosition(offset) }
+        reportLegacyTextViewPosition()
+    }
+
+    private func applyLegacyTextViewPosition(_ offset: Int?) {
+        textView.layoutIfNeeded()
+        let length = legacyTextViewLength
+        guard let offset, offset > 0, length > 0 else {
+            textView.setContentOffset(.zero, animated: false)
+            return
+        }
+
+        let characterIndex = min(offset, length - 1)
+
+        // We want to scroll the textView so that characterIndex is visible at the top-left corner
+        // of the viewport. A simple way to achieve this is to (1) jump to the bottom of the textVie first
+        // and (2) scroll back using `scrollRangeToVisible`
+        // Without (1), `scrollRangeToVisible` will scroll from the top and stop when
+        // characterIndex is barely visible which put it at the bottom edge of the textView
+        // which is not what we want
+        textView.setContentOffset(CGPoint(x: 0, y: legacyTextViewMaximumOffset), animated: false)
+        textView.scrollRangeToVisible(NSRange(location: characterIndex, length: 0))
+    }
+
+    private func reportAndSaveReadingPosition() {
+        // We don't support reading position for markdown. So
+        // checking `!textView.isHidden` to exclude markdown types.
+        guard !textView.isHidden else { return }
+
+        reportLegacyTextViewPosition()
+        viewModel.dispatch(.saveReadingPosition)
+    }
+
+    /// A file opened and closed without scrolling never reports anything, so the progress has to be
+    /// sent once the restore has settled.
+    private func reportLegacyTextViewPosition() {
+        guard !textView.isEditable else { return }
+
+        viewModel.dispatch(
+            .updateReadingPosition(
+                anchor: currentLegacyTextViewAnchor,
+                progress: currentLegacyTextViewProgress
+            )
+        )
+    }
+
+    private var legacyTextViewMaximumOffset: CGFloat {
+        max(textView.contentSize.height - textView.bounds.height, 0)
+    }
+
+    private var legacyTextViewLength: Int {
+        textView.offset(from: textView.beginningOfDocument, to: textView.endOfDocument)
+    }
+
+    /// The offset the character at the top of the visible viewport.
+    private var currentLegacyTextViewAnchor: Int? {
+        guard let textPosition = textView.closestPosition(to: textView.contentOffset) else { return nil }
+        return textView.offset(from: textView.beginningOfDocument, to: textPosition)
+    }
+
+    /// How far the content has been seen: In form of the fraction of the laid out height.
+    /// - A file that fits on one screen is considered completely seen
+    /// - A file scrolled to the bottom is also consider completely seen
+    private var currentLegacyTextViewProgress: Double {
+        let maximumOffset = legacyTextViewMaximumOffset
+        guard maximumOffset > 0 else { return 1 }
+        guard textView.contentOffset.y < maximumOffset - 1 else { return 1 }
+
+        return max(textView.contentOffset.y / maximumOffset, 0)
+    }
+
     private func removeMarkdownSupportTextRenderingFromView() {
         remove(childViewController: markdownSupportTextViewController)
         markdownSupportTextViewController = nil
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension TextEditorViewController: UITextViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !textView.isEditable,
+              scrollView.isDragging || scrollView.isDecelerating else { return }
+        viewModel.dispatch(.updateReadingPosition(anchor: nil, progress: currentLegacyTextViewProgress))
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard !decelerate else { return }
+        reportLegacyTextViewPosition()
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        reportLegacyTextViewPosition()
     }
 }
