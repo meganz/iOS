@@ -1,31 +1,51 @@
 import Foundation
 @testable import MEGA
+import MEGAAppPresentationMock
 import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomain
+import MEGADomainMock
 import Testing
 
 @Suite("PDFViewerRevampRouter.canOpen")
 struct PDFViewerRevampRouterCanOpenTests {
     @Test(
-        "a pdf extension in any case is opened with the flag on",
+        "a pdf extension in any case is opened with the remote flag on",
         arguments: ["a.pdf", "a.PDF", "a.Pdf", "/path/to/Report.pdf"]
     )
-    func pdfExtension_flagOn_isOpened(fileName: String) {
-        #expect(PDFViewerRevampRouter.canOpen(fileName: fileName, isFeatureEnabled: true))
+    func pdfExtension_remoteFlagOn_isOpened(fileName: String) {
+        #expect(canOpen(fileName: fileName, isLocalFlagOn: false, isRemoteFlagOn: true))
+    }
+
+    @Test("a pdf is opened with the local flag on")
+    func pdfExtension_localFlagOn_isOpened() {
+        #expect(canOpen(fileName: "a.pdf", isLocalFlagOn: true, isRemoteFlagOn: false))
+    }
+
+    @Test("a pdf is opened with both flags on")
+    func pdfExtension_bothFlagsOn_isOpened() {
+        #expect(canOpen(fileName: "a.pdf", isLocalFlagOn: true, isRemoteFlagOn: true))
+    }
+
+    @Test("a pdf is not opened with both flags off")
+    func pdfExtension_bothFlagsOff_isNotOpened() {
+        #expect(!canOpen(fileName: "a.pdf", isLocalFlagOn: false, isRemoteFlagOn: false))
     }
 
     @Test(
         "anything that does not end in a pdf extension is not opened",
         arguments: ["a.pdf.txt", "pdf", "a.pdfx", "a", ""]
     )
-    func otherExtension_flagOn_isNotOpened(fileName: String) {
-        #expect(!PDFViewerRevampRouter.canOpen(fileName: fileName, isFeatureEnabled: true))
+    func otherExtension_flagsOn_isNotOpened(fileName: String) {
+        #expect(!canOpen(fileName: fileName, isLocalFlagOn: true, isRemoteFlagOn: true))
     }
 
-    @Test("a pdf is not opened with the flag off")
-    func pdfExtension_flagOff_isNotOpened() {
-        #expect(!PDFViewerRevampRouter.canOpen(fileName: "a.pdf", isFeatureEnabled: false))
+    private func canOpen(fileName: String, isLocalFlagOn: Bool, isRemoteFlagOn: Bool) -> Bool {
+        PDFViewerRevampRouter.canOpen(
+            fileName: fileName,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.pdfPreviewRevamp: isLocalFlagOn]),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosPdfPreviewRevamp: isRemoteFlagOn])
+        )
     }
 }
 

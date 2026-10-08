@@ -10,20 +10,27 @@ import MEGASwift
 import UIKit
 
 /// Routes PDF nodes to the revamped SwiftUI viewer (`MEGAPDFViewer`) when the
-/// `.pdfPreviewRevamp` feature flag is enabled. Legacy `PreviewDocumentViewController`
-/// remains the fallback and keeps handling non-PDF documents.
+/// `.pdfPreviewRevamp` or `.iosPdfPreviewRevamp` feature flag is enabled.
+/// Legacy `PreviewDocumentViewController` remains the fallback and keeps
+/// handling non-PDF documents.
 @objc final class PDFViewerRevampRouter: NSObject {
-    private static var isEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .pdfPreviewRevamp)
-    }
-
-    /// The flag is on and the extension is `pdf`, ignoring case.
+    /// Either flag is on and the extension is `pdf`, ignoring case.
     @objc static func canOpen(fileName: String) -> Bool {
-        canOpen(fileName: fileName, isFeatureEnabled: isEnabled)
+        canOpen(
+            fileName: fileName,
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase
+        )
     }
 
-    static func canOpen(fileName: String, isFeatureEnabled: Bool) -> Bool {
-        isFeatureEnabled && fileName.pathExtension == "pdf"
+    static func canOpen(
+        fileName: String,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol
+    ) -> Bool {
+        let isFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .pdfPreviewRevamp)
+            || remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosPdfPreviewRevamp)
+        return isFeatureEnabled && fileName.pathExtension == "pdf"
     }
 
     /// Viewer for a PDF downloaded from `resolvedNode` as it is.
