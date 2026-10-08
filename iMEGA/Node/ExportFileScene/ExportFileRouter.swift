@@ -115,14 +115,21 @@ final class ExportFileRouter: ExportFileViewRouting {
             }
         }
         
+        let presentingViewController = UIApplication.mnz_presentingViewController()
         if let viewSender = sender as? UIView {
             activityViewController.popoverPresentationController?.sourceView = viewSender
             activityViewController.popoverPresentationController?.sourceRect = popoverSourceRect ?? viewSender.bounds
         } else if let buttonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = buttonSender
+        } else if let popover = activityViewController.popoverPresentationController {
+            // A sender that is neither a view nor a bar button leaves the iPad popover without an anchor, which
+            // UIKit rejects with an exception. Centre it on the presenting view instead; anchoring to the view itself
+            // keeps it centred when the device rotates or the window is resized.
+            popover.sourceItem = presentingViewController.view
+            popover.permittedArrowDirections = []
         }
         
-        UIApplication.mnz_presentingViewController().present(activityViewController, animated: true, completion: nil)
+        presentingViewController.present(activityViewController, animated: true, completion: nil)
     }
     
     func showProgressView() {
