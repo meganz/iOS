@@ -33,7 +33,7 @@ class UnzipManager
             next if entry.name.start_with?('._')      
             entry_destination = File.join(destination_path, entry.name)
             File.delete(entry_destination) if File.exist?(entry_destination)
-            entry.extract(entry_destination)
+            entry.extract(destination_directory: destination_path)
           end
         end
     end
