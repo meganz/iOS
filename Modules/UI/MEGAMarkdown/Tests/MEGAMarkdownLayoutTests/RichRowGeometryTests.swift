@@ -97,6 +97,8 @@ struct RichRowGeometryTests {
         defer { harness.close() }
         let row = try #require((0..<harness.model.rowCount).first { harness.model.row(at: $0).block.plainText == "A paragraph before the list." })
         harness.placeCaret(row: row, offset: 2)
+        // A scroll without a layout pass: the update's first pass makes the cells below the old screen.
+        harness.list.view.contentOffset.y += 300
         harness.model.paste(RichPasteContent(markdown: "- [ ] Pasted A\n- [x] Pasted B\n- Bullet C\n"))
         harness.flushLayout()
         for step in 0..<8 {
