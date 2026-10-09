@@ -90,8 +90,10 @@ public struct PlayerOverlayView: View {
                     }
 
                     if viewModel.isControlsVisible {
-                        topToolbar
-                        centerPlaybackButtons
+                        if !viewModel.isScrubbing {
+                            topToolbar
+                            centerPlaybackButtons
+                        }
                         bottomToolbar(isLandscape: isLandscape)
                     }
                     
@@ -142,7 +144,7 @@ public struct PlayerOverlayView: View {
     }
 
     private var backgroundColor: Color {
-        if viewModel.isControlsVisible {
+        if viewModel.isControlsVisible && !viewModel.isScrubbing {
             TokenColors.Background.blur.swiftUI
         } else {
             Color.clear

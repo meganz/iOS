@@ -894,6 +894,28 @@ struct PlayerOverlayViewModelTests {
         #expect(mockPlayer.pauseCallCount == expectedPauseCallCount)
     }
 
+    /// While scrubbing, the overlay hides the top toolbar, the playback buttons and the dimming layer
+    /// based on `isScrubbing`, so the drag must publish its start and end. `isControlsVisible` is left
+    /// untouched, so the controls reappear on their own once the finger lifts.
+    @Test
+    func seekBarDrag_shouldPublishScrubbingWithoutHidingControls() async {
+        let sut = makeSUT()
+        sut.duration = .seconds(100)
+        sut.state = .playing
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+        var publishedValues: [Bool] = []
+        let cancellable = sut.$isScrubbing.sink { publishedValues.append($0) }
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 10, y: 10), in: frame)
+        #expect(sut.isControlsVisible == true)
+
+        await sut.endSeekBarDrag(at: CGPoint(x: 20, y: 10), in: frame)
+
+        #expect(publishedValues == [false, true, false])
+        #expect(sut.isControlsVisible == true)
+        cancellable.cancel()
+    }
+
     @Test(arguments: [
         (PlaybackState.playing, 1),
         (.paused, 0)
