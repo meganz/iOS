@@ -10,7 +10,7 @@ struct KeyboardOverlapTests {
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 700))
         let view = UIView(frame: window.bounds)
         window.addSubview(view)
-        window.makeKeyAndVisible()
+        window.isHidden = false
         return (window, view)
     }
 

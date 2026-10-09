@@ -134,7 +134,7 @@ struct MarkdownEditorHostTests {
     private static func show(_ view: some View) -> UIWindow {
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 700))
         window.rootViewController = UIHostingController(rootView: view)
-        window.makeKeyAndVisible()
+        window.isHidden = false
         return window
     }
 

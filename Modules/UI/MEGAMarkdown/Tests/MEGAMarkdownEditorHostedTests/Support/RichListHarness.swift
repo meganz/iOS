@@ -48,7 +48,9 @@ final class RichListHarness {
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: width, height: height))
         hosting = UIHostingController(rootView: Root(adapter: adapter, layoutDirection: layoutDirection, colorScheme: colorScheme, dynamicType: dynamicType))
         window.rootViewController = hosting
-        window.makeKeyAndVisible()
+        // Never the key window: a row still takes the focus, but no software keyboard shows.
+        // A real keyboard comes up at a different time in each run and makes the list shorter.
+        window.isHidden = false
         window.layoutIfNeeded()
         list.view.layoutIfNeeded()
     }

@@ -57,7 +57,9 @@ final class EditorWindow {
         model = Model(text: text, mode: mode)
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 700))
         window.rootViewController = UIHostingController(rootView: Host(model: model))
-        window.makeKeyAndVisible()
+        // Never the key window: a row still takes the focus, but no software keyboard shows.
+        // A real keyboard comes up at a different time in each run and makes the list shorter.
+        window.isHidden = false
     }
 
     func close() {

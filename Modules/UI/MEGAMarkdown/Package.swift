@@ -56,8 +56,8 @@ let package = Package(
             name: "MEGAMarkdownEditorTests",
             dependencies: ["MEGAMarkdownEditor", "MEGAMarkdown"],
             swiftSettings: settings),
-        // Editor tests in a window on the simulator. Results depend on the simulator and on timing (see EDITOR-UI.md),
-        // so the CI test plan has this target turned off.
+        // Editor tests with the focus, on the simulator. Their windows are never key, so no real keyboard
+        // changes the layout (see EDITOR-UI.md), and the CI test plan runs this target.
         .testTarget(
             name: "MEGAMarkdownEditorHostedTests",
             dependencies: ["MEGAMarkdownEditor", "MEGAMarkdown"],

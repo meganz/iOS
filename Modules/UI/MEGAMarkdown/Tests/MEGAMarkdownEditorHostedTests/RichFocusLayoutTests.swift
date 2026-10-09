@@ -66,10 +66,14 @@ struct RichFocusLayoutTests {
         try await harness.waitUntil { harness.focusedTextView != nil }
         try await harness.settle(100)
         let view = harness.list.view
+        #expect(view.contentOffset.y > 0, "the list did not scroll to the caret")
+        let item = harness.adapter.items(forRow: Self.emptyItemRow).lowerBound
+        // The focus scroll leaves the row at the bottom edge. There the gap would push the caret off screen,
+        // and the list would rightly scroll. In the middle, nothing may scroll.
+        view.contentOffset.y = harness.list.itemFrame(at: item).midY - view.bounds.height / 2
+        try await harness.settle(100)
         let offset = view.contentOffset.y
         let bottomInset = view.contentInset.bottom
-        #expect(offset > 0, "the list did not scroll to the caret")
-        let item = harness.adapter.items(forRow: Self.emptyItemRow).lowerBound
         let rowTop = view.convert(harness.list.itemFrame(at: item), to: nil).minY
 
         try harness.type("\n")

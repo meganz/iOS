@@ -187,16 +187,15 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | `SelectionSnapshotTests` | A selection over text, a divider and a Hebrew row, both directions, light and dark. |
 | `EditorSnapshotTests` | Rows of every kind in both directions, light and dark, a large text size, the controls and the notices. |
 
-Tests that need a window on the simulator are in `MEGAMarkdownEditorHostedTests`.
-Their results depend on the simulator and on timing:
+Tests that need the focus are in `MEGAMarkdownEditorHostedTests`, and the CI test plan runs them.
+Their windows are visible but never the key window:
 
-- UIKit can skip a `scrollRectToVisible` call. Then a caret row stays off screen and gets no focus.
-- The keyboard is system state. A software keyboard sends real frame changes, and these replace the test frames.
-- Some tests sleep for a fixed time, then check a save or a layout. A slow machine can miss that time.
-- A window closed without `endEditing(true)` can keep the keyboard for the next test. The test order changes between runs.
-- Each wait gives up after 5 s. A busy machine can need longer.
-
-So the CI test plan has this target turned off. Run it locally with the `MEGAMarkdown-Package` scheme.
+- A row still takes the focus, but no software keyboard shows.
+- A real keyboard comes up at a different time in each run and makes the list shorter.
+  A caret row could then end off screen in one run and not in the next.
+- A test that needs a keyboard posts its frame as a notification, so the frame is the same on every run.
+- Tests with the `.hostedUI` trait run one at a time, because they share the first responder.
+- Some tests still wait for a save timer or for rich mode to load. Each wait gives up after 5 s.
 
 Layout tests that do not need the focus are in `MEGAMarkdownLayoutTests`, and the CI test plan runs them.
 `RichLayoutHarness` keeps them stable on every run:

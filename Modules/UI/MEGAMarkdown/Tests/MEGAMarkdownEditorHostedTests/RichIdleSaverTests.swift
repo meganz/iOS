@@ -18,7 +18,7 @@ struct RichIdleSaverTests {
     private func host(_ model: RichEditorModel) -> UIWindow {
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 200))
         window.rootViewController = UIHostingController(rootView: RichIdleSaver(model: model, delay: Self.delay))
-        window.makeKeyAndVisible()
+        window.isHidden = false
         return window
     }
 

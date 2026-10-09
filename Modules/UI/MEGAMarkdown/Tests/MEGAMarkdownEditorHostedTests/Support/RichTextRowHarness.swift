@@ -49,7 +49,9 @@ final class RichTextRowHarness: RichTextRowHost {
         input = Input(block: blocks[row], version: model.version)
         model.onEditorChange = { [weak self] in self?.changes.append($0) }
         window.rootViewController = UIHostingController(rootView: Host(input: input, host: self))
-        window.makeKeyAndVisible()
+        // Never the key window: a row still takes the focus, but no software keyboard shows.
+        // A real keyboard comes up at a different time in each run and makes the list shorter.
+        window.isHidden = false
         window.layoutIfNeeded()
     }
 
