@@ -2,10 +2,10 @@ import AVFoundation
 import Foundation
 
 /// Parsed, UI-agnostic metadata read from an audio file's embedded tags
-/// (ID3 frames for MP3, iTunes / MP4 atoms for m4a / aac). AVFoundation's
-/// common-key abstraction maps both tag formats onto the same keys
-/// (`TPE1`/`©ART` → artist, `APIC`/`covr` → artwork, …), so a single read
-/// path covers every container the player supports.
+/// (ID3 frames for MP3, iTunes / MP4 atoms for m4a / aac, Vorbis comments for FLAC).
+/// AVFoundation's common-key abstraction maps every tag format onto the same keys
+/// (`TPE1`/`©ART`/`ARTIST` → artist, `APIC`/`covr`/`METADATA_BLOCK_PICTURE` → artwork, …),
+/// so the same lookup covers every container the player supports.
 struct AudioMetadata: Sendable, Equatable {
     var title: String?
     var artist: String?
@@ -29,7 +29,14 @@ struct AudioMetadataLoader: AudioMetadataLoading {
         let asset = AVURLAsset(url: url)
 
         try Task.checkCancellation()
-        let items = try await asset.load(.commonMetadata)
+        var items = try await asset.load(.commonMetadata)
+        if items.isEmpty {
+            // FLAC's Vorbis comments are not a public metadata format, so they never reach
+            // `.commonMetadata` even though each item carries the right `commonKey`. Fall back
+            // to every item and match on `commonKey`. AVFoundation only returns these items
+            // from iOS 26, so FLAC tags stay unread before that.
+            items = try await asset.load(.metadata)
+        }
         try Task.checkCancellation()
 
         return AudioMetadata(
