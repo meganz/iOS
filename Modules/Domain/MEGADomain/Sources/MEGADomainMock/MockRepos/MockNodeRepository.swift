@@ -8,6 +8,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
     public let folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]>
     private let node: NodeEntity?
+    private let nodesForHandle: [HandleEntity: NodeEntity]
     private let rubbishBinNode: NodeEntity?
     private let nodeRoot: NodeEntity?
     private let nodeAccessLevel: NodeAccessTypeEntity
@@ -25,6 +26,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
 
     public init(
         node: NodeEntity? = nil,
+        nodesForHandle: [HandleEntity: NodeEntity] = [:],
         rubbishBinNode: NodeEntity? = nil,
         nodeRoot: NodeEntity? = nil,
         nodeAccessLevel: NodeAccessTypeEntity = .unknown,
@@ -43,6 +45,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         isS4ContainerNode: Bool = false
     ) {
         self.node = node
+        self.nodesForHandle = nodesForHandle
         self.rubbishBinNode = rubbishBinNode
         self.nodeRoot = nodeRoot
         self.nodeAccessLevel = nodeAccessLevel
@@ -63,7 +66,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        node
+        nodesForHandle[handle] ?? node
     }
     
     public func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {

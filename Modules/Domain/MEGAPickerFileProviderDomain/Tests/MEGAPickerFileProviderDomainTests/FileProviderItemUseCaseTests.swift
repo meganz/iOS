@@ -133,6 +133,93 @@ struct FileProviderItemUseCaseTests {
         #expect(items.map(\.childCount) == [3, nil])
     }
 
+    @Test
+    func presentableItem_whenTheNodeTreeIsNotLoaded_throwsCannotSynchronize() {
+        let sut = makeSUT(nodeRepo: MockNodeRepository())
+
+        #expect(throws: NSFileProviderError(.cannotSynchronize)) {
+            try sut.presentableItem(for: NSFileProviderItemIdentifier("10"))
+        }
+    }
+
+    @Test(arguments: [NSFileProviderItemIdentifier.rootContainer, .trashContainer])
+    func presentableItem_forAContainer_isTheContainer(identifier: NSFileProviderItemIdentifier) throws {
+        let sut = makeSUT(nodeRepo: MockNodeRepository(rubbishBinNode: Self.rubbishNode, nodeRoot: Self.rootNode))
+
+        #expect(try sut.presentableItem(for: identifier) == sut.item(for: identifier))
+    }
+
+    @Test
+    func presentableItem_forAMissingRubbishBin_throwsCannotSynchronize() {
+        let sut = makeSUT(nodeRepo: MockNodeRepository(nodeRoot: Self.rootNode))
+
+        #expect(throws: NSFileProviderError(.cannotSynchronize)) {
+            try sut.presentableItem(for: .trashContainer)
+        }
+    }
+
+    @Test
+    func presentableItem_forANodeInAFolder_hasTheFolderAsParent() throws {
+        let folder = NodeEntity(handle: 20, base64Handle: "20", parentHandle: Self.rootNode.handle, isFolder: true)
+        let node = NodeEntity(handle: 10, base64Handle: "10", parentHandle: folder.handle, isFile: true)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [folder, node]))
+
+        let item = try sut.presentableItem(for: NSFileProviderItemIdentifier("10"))
+
+        #expect(item == FileProviderItemEntity(identifier: NSFileProviderItemIdentifier("10"), parentIdentifier: NSFileProviderItemIdentifier("20"), node: node))
+    }
+
+    @Test
+    func presentableItem_forANodeInTheRubbishBin_hasTheTrashAsParent() throws {
+        let node = NodeEntity(handle: 10, base64Handle: "10", parentHandle: Self.rubbishNode.handle, isFile: true)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [node]))
+
+        #expect(try sut.presentableItem(for: NSFileProviderItemIdentifier("10"))?.parentIdentifier == .trashContainer)
+    }
+
+    @Test
+    func presentableItem_forAMissingNode_isNil() throws {
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: []))
+
+        #expect(try sut.presentableItem(for: NSFileProviderItemIdentifier("10")) == nil)
+    }
+
+    @Test
+    func presentableItem_forAnEarlierVersionOfAFile_isNil() throws {
+        let file = NodeEntity(handle: 20, base64Handle: "20", parentHandle: Self.rootNode.handle, isFile: true)
+        let version = NodeEntity(handle: 10, base64Handle: "10", parentHandle: file.handle, isFile: true)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [file, version]))
+
+        #expect(try sut.presentableItem(for: NSFileProviderItemIdentifier("10")) == nil)
+    }
+
+    @Test
+    func presentableItem_forANodeOutsideTheCloudDriveAndTheRubbishBin_isNil() throws {
+        let incomingShare = NodeEntity(handle: 20, base64Handle: "20", parentHandle: 99, isFolder: true)
+        let node = NodeEntity(handle: 10, base64Handle: "10", parentHandle: incomingShare.handle, isFile: true)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [incomingShare, node]))
+
+        #expect(try sut.presentableItem(for: NSFileProviderItemIdentifier("10")) == nil)
+    }
+
+    @Test(arguments: [(true, false), (false, true)])
+    func presentableItem_forASensitiveNode_isNil(isMarkedSensitive: Bool, isInheritingSensitivity: Bool) throws {
+        let node = NodeEntity(handle: 10, base64Handle: "10", parentHandle: Self.rootNode.handle, isFile: true, isMarkedSensitive: isMarkedSensitive)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [node], isInheritingSensitivity: isInheritingSensitivity))
+
+        #expect(try sut.presentableItem(for: NSFileProviderItemIdentifier("10")) == nil)
+    }
+
+    private func makeNodeRepo(nodes: [NodeEntity], isInheritingSensitivity: Bool = false) -> MockNodeRepository {
+        let allNodes = nodes + [Self.rootNode, Self.rubbishNode]
+        return MockNodeRepository(
+            nodesForHandle: Dictionary(uniqueKeysWithValues: allNodes.map { ($0.handle, $0) }),
+            rubbishBinNode: Self.rubbishNode,
+            nodeRoot: Self.rootNode,
+            isInheritingSensitivityResult: .success(isInheritingSensitivity)
+        )
+    }
+
     private func makeSUT(
         filesSearchRepo: MockFilesSearchRepository = MockFilesSearchRepository(),
         nodeRepo: MockNodeRepository = MockNodeRepository(),
