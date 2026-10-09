@@ -29,6 +29,23 @@ import Testing
         #expect(styled.canStyle)
     }
 
+    /// The Link button is on exactly when a tap edits a link. "go here x" has a link on "here".
+    @Test func linkButtonIsOnWhenATapEditsALink() {
+        let blocks = [paragraph("go here x", (3..<7, link("https://mega.nz")))]
+        func isLinkOn(_ selection: RichSelection) -> Bool {
+            var target = editor(blocks)
+            target.select(selection)
+            return RichToolbarState(editor: target).isLinkOn
+        }
+        #expect(isLinkOn(.caret(position(0, 5))))
+        #expect(isLinkOn(.caret(position(0, 3))))
+        #expect(isLinkOn(.caret(position(0, 7))))
+        #expect(isLinkOn(.range(1..<7, inBlock: 0)))
+        #expect(isLinkOn(.range(4..<6, inBlock: 0)))
+        #expect(!isLinkOn(.caret(position(0, 1))))
+        #expect(!isLinkOn(.range(0..<2, inBlock: 0)))
+    }
+
     @Test func codeRowsTakeNoStyle() {
         #expect(!state([.codeBlock(language: nil, code: "x")]).canStyle)
         #expect(!state([.thematicBreak]).canStyle)

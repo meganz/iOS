@@ -114,6 +114,8 @@ final class RichTextView: UITextView {
             selectedRange = NSRange(location: 0, length: 0)
         }
         setSelectionFromModel(selection)
+        // A caret move makes UIKit copy the attributes of the character before it. After a link that is the link look.
+        onTypingStylesChange?()
     }
 
     // MARK: - Size

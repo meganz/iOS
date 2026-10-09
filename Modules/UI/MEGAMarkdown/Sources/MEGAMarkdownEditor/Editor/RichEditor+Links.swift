@@ -28,6 +28,12 @@ extension RichEditor {
         return RichLinkTarget(blockIndex: selection.start.blockIndex, range: range)
     }
 
+    /// True when the link dialog would edit a link here, not add one. Typing at a link end is still plain.
+    var editsLinkAtSelection: Bool {
+        guard let target = linkTarget(), let text = richText(at: target) else { return false }
+        return text.link(at: target.range) != nil
+    }
+
     func linkDraft(for target: RichLinkTarget) -> RichLinkDraft {
         guard let text = richText(at: target) else { return RichLinkDraft(url: "", text: "", isEditing: false) }
         let label = text.slice(target.range).text

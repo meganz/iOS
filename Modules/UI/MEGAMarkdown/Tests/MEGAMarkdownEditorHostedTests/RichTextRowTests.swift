@@ -51,6 +51,22 @@ struct RichTextRowTests {
         #expect(!font.fontDescriptor.symbolicTraits.contains(.traitBold))
     }
 
+    /// The link dialog takes the focus. When the row gets it back with the caret after the new link, typed text is plain.
+    @Test func typingAfterASavedLinkIsPlain() async throws {
+        let harness = RichTextRowHarness(blocks: [paragraph("")])
+        defer { harness.close() }
+        let textView = try focusedTextView(harness, caret: 0)
+        harness.model.beginLinkEditing()
+        textView.resignFirstResponder()
+        #expect(harness.model.saveLink(urlText: "u", label: "go"))
+        harness.reconfigure()
+        try await harness.settle()
+        textView.focusFromModel(selection: NSRange(location: 2, length: 0))
+        harness.type("x", into: textView)
+        #expect(harness.model.row(at: 0).block == paragraph("gox", (0..<2, .link(RichLink(destination: "u", title: "")))))
+        #expect(textView.attributedText.attribute(.underlineStyle, at: 2, effectiveRange: nil) == nil)
+    }
+
     /// A keyboard announced one range and changed another of the same length. The model ends with the view's bytes.
     @Test func editAtAnotherRangeThanAnnouncedEndsWithEqualBytes() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abcd")])

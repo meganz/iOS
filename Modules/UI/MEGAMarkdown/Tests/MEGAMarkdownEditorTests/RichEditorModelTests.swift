@@ -87,10 +87,10 @@ import Testing
         #expect(model.saveLink(urlText: "https://mega.nz", label: "here"))
         #expect(model.linkDialog == nil)
         #expect(model.row(at: 0).block == paragraph("go here", (3..<7, link("https://mega.nz"))))
-        // A link does not continue past its end, so the caret after it shows no link.
-        #expect(!model.toolbar.isLinkOn)
-        model.select(.caret(position(0, 5)))
+        // A tap with the caret after the link edits it, so the button shows as on.
         #expect(model.toolbar.isLinkOn)
+        model.select(.caret(position(0, 1)))
+        #expect(!model.toolbar.isLinkOn)
     }
 
     @Test func linkDialogRemovesALink() {

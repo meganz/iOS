@@ -32,7 +32,8 @@ struct RichToolbarState: Equatable, Sendable {
         // One pass over the selection: it runs after every action, also after Select All.
         let summary = editor.selectionSummary
         activeStyles = summary.activeStyles.filter { !$0.isLink }
-        isLinkOn = summary.activeStyles.contains { $0.isLink }
+        // The button shows what a tap does. A caret at a link edge or a range that touches a link edits that link.
+        isLinkOn = editor.editsLinkAtSelection
         canStyle = summary.hasText
         canEditLink = summary.hasText && editor.selection.isInOneBlock
         let index = editor.selection.start.blockIndex
