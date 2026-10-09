@@ -103,6 +103,9 @@ struct SourceTextView: UIViewRepresentable, Equatable {
 /// A far caret jump (Find, ⌘↓, a selection set in code) must not animate:
 /// each frame of the scroll lays out the text it passes, about 2 s for a jump to the end of 10 MB.
 final class SourceUITextView: UITextView {
+    /// Tests use a named pasteboard: reading the general one without a user action waits for permission.
+    var pasteboard = UIPasteboard.general
+
     private lazy var keyboard: KeyboardOverlap = {
         let keyboard = KeyboardOverlap()
         keyboard.onChange = { [weak self] in self?.setNeedsLayout() }
@@ -128,5 +131,16 @@ final class SourceUITextView: UITextView {
     override func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
         let isFar = abs(contentOffset.y - self.contentOffset.y) > bounds.height
         super.setContentOffset(contentOffset, animated: animated && !isFar)
+    }
+
+    /// A copy from rich mode has a Markdown type next to the plain text.
+    /// Source mode shows Markdown, so a paste takes that type first and keeps the syntax.
+    override func paste(_ sender: Any?) {
+        guard let data = pasteboard.data(forPasteboardType: RichClipboardContent.markdownType),
+              let markdown = String(data: data, encoding: .utf8) else {
+            super.paste(sender)
+            return
+        }
+        insertText(markdown)
     }
 }

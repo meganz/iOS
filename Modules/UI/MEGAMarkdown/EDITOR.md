@@ -149,7 +149,8 @@ A copy gives one pasteboard item with two types:
 - In a text block, a first pasted paragraph joins the text before the caret. Later pasted paragraphs take the kind of
   a list item or quote target. Other pasted blocks keep their kind. The text after the caret joins the last pasted paragraph.
 - In a code block, the plain text goes in as code.
-- A source mode can paste the Markdown type as text. That gives the Markdown syntax of a rich copy.
+- Source mode pastes the Markdown type first, as text. So a rich copy keeps its Markdown syntax there.
+  Without that type, source mode pastes the plain text.
 
 ## Save check
 
