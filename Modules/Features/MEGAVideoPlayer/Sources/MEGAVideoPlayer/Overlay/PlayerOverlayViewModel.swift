@@ -32,11 +32,11 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isExternalPlaybackActive: Bool = false
     @Published var audioTrackSelection: AudioTrackSelection?
     @Published var isAudioTrackMenuPresented: Bool = false
+    /// Whether a finger is currently on the seek bar
+    @Published private(set) var isScrubbing = false
     private(set) var shouldShowPhotoPermissionAlert = false
     private var shouldShowAudioTrackMenu = false
     private var isHoldToSpeed = false
-    /// Whether a finger is currently on the seek bar
-    private(set) var isScrubbing = false
     private var shouldResumeAfterScrub = false
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
