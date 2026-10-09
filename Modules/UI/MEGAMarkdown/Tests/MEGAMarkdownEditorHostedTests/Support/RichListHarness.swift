@@ -38,7 +38,8 @@ final class RichListHarness {
         height: CGFloat = 700,
         layoutDirection: LayoutDirection = .leftToRight,
         colorScheme: ColorScheme = .light,
-        dynamicType: DynamicTypeSize = .large
+        dynamicType: DynamicTypeSize = .large,
+        isKey: Bool = false
     ) throws {
         guard case .loaded(let load) = RichEditorLoad.make(markdown) else {
             throw HarnessError(description: "The markdown did not load as a rich document")
@@ -48,9 +49,13 @@ final class RichListHarness {
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: width, height: height))
         hosting = UIHostingController(rootView: Root(adapter: adapter, layoutDirection: layoutDirection, colorScheme: colorScheme, dynamicType: dynamicType))
         window.rootViewController = hosting
-        // Never the key window: a row still takes the focus, but no software keyboard shows.
+        // Not key by default: a row still takes the focus, but no software keyboard shows.
         // A real keyboard comes up at a different time in each run and makes the list shorter.
-        window.isHidden = false
+        if isKey {
+            window.makeKeyAndVisible()
+        } else {
+            window.isHidden = false
+        }
         window.layoutIfNeeded()
         list.view.layoutIfNeeded()
     }

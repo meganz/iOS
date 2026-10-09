@@ -38,18 +38,33 @@ struct RichRowAdapterTests {
         #expect(harness.list.pinnedItem == 1)
     }
 
-    /// Enter on the last row on screen: the new row is below the visible area, and it still gets the keyboard.
+    /// Enter on the last row above the keyboard: the new row is below the visible area.
+    /// It still gets the focus, and its caret shows above the keyboard.
     @Test func enterAtTheBottomEdgeScrollsToTheNewRow() async throws {
-        let harness = try RichListHarness(Self.paragraphs, height: 400)
-        defer { harness.close() }
-        let lastVisible = try #require(harness.list.view.indexPathsForVisibleItems.map(\.item).max())
+        let harness = try RichListHarness(Self.paragraphs, height: 700)
+        defer {
+            NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
+            harness.close()
+        }
+        // The window starts at the screen origin, so this frame is also in window coordinates.
+        let keyboardTop: CGFloat = 400
+        NotificationCenter.default.post(
+            name: UIResponder.keyboardWillChangeFrameNotification,
+            object: nil,
+            userInfo: [UIResponder.keyboardFrameEndUserInfoKey: NSValue(cgRect: CGRect(x: 0, y: keyboardTop, width: 390, height: 300))]
+        )
+        let view = harness.list.view
+        try await harness.waitUntil { harness.adapter.keyboard.frame != nil }
+        let viewport = view.bounds.inset(by: view.adjustedContentInset)
+        let lastVisible = try #require(view.indexPathsForVisibleItems.map(\.item).filter { harness.list.itemFrame(at: $0).intersects(viewport) }.max())
         harness.focus(row: lastVisible, caret: harness.model.row(at: lastVisible).block.length)
         try await harness.waitUntil { harness.focusedTextView != nil }
         try harness.type("\n")
         try await harness.waitUntil { harness.focusedTextView?.text == "" }
         let textView = try #require(harness.focusedTextView)
-        let frame = textView.convert(textView.bounds, to: harness.list.view)
-        #expect(harness.list.view.bounds.intersects(frame))
+        let caret = textView.convert(textView.caretRect(for: try #require(textView.selectedTextRange?.end)), to: nil)
+        let list = view.convert(view.bounds, to: nil)
+        #expect(caret.minY >= list.minY && caret.maxY <= min(list.maxY, keyboardTop), "caret \(caret) is outside \(list.minY)...\(keyboardTop)")
     }
 
     /// A cell that took a key holds the model version of that key. After it is reused, it must still take the new row's text.
