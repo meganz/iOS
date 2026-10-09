@@ -170,6 +170,7 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | Test | What it checks |
 |---|---|
 | `RichTextRowTests`, `RichTextStylerTests` | One row: typing, Enter, Backspace, Tab, arrows, marked text, older and newer inputs, styles. |
+| `RichTextRowFocusTests` | One row with the focus: a style turned off for the next key, a user caret move, and plain text typed after inline code or after a saved link. |
 | `RichRowAdapterTests` | The list: own edits, Enter at the bottom edge, joins, undo, a pinned row 20 screens away, height changes. |
 | `RichEditorControlsTests` | Atomic rows, the selection responder and handler, the toolbar, focus hand-overs when a row gets a new text view. |
 | `RichRowClipboardTests`, `RichPasteboardTests` | Copy, cut, paste and the edit menu in one row. |
@@ -178,7 +179,7 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | `RichListLayoutParityTests` | After each kind of edit, the item heights equal the heights of a list read again from the model. A row that stepped out of a list has no marker. |
 | `RichRowGeometryTests` | After Enter on the last list item, a paste, a scroll and a fast scroll to the end, each cell shows its own row at the height of its content, and no cell overlaps the next one. |
 | `RichPreviewLayoutParityTests` | Each row with inline code has the same height in the editor and in the preview. |
-| `RichInlineCodeLayoutTests` | Plain text typed after inline code keeps the code baseline and the row height. The list marker baseline matches the text. |
+| `RichInlineCodeLayoutTests` | A row with inline code is as tall as the chip, with the line gap between wrapped lines. The list marker baseline matches the text. |
 | `RichItemMapTests`, `RichChangePlanTests`, `RichChromeIndexTests`, `RichRawRenderCacheTests` | The pure adapter parts. `RichChromeIndexTests` compares the chrome with the preview rows. |
 | `SelectionGeometryTests` | The pure rules of the selection over rows: handle zones, the grabbed end, taps, autoscroll speed and how the head moves. |
 | `CrossBlockSelectionControllerTests`, `SelectionDragTests` | Selection over rows in a window: the highlight and handle rects (also right to left and off screen), ⇧ with arrows, undo, Select All, a second controller on the same rows, and drags through the controller's touch entry points. |
@@ -206,7 +207,10 @@ Layout tests that do not need the focus are in `MEGAMarkdownLayoutTests`, and th
 - `rowProblems()` checks each cell on screen. The height is measured, the cell is as tall as its content,
   the text view shows its own row, and no cell overlaps the next one.
 
+`RichTextRowTests` types into a row without the focus, through the text view delegate. Its `RichTextRowHarness` follows the same rules.
+
 A test that needs the focus, the keyboard, a timer or a save stays in `MEGAMarkdownEditorHostedTests`.
+Without the focus, a style turned off at the caret does not reach the next key, and a caret move is not reported.
 
 These benchmarks in `MEGAMarkdownBenchmarks` were measured once. `Limits.json` has no limits for them:
 

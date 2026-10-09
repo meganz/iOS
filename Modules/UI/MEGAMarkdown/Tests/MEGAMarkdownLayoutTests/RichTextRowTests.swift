@@ -3,13 +3,12 @@ import MEGAMarkdown
 import Testing
 import UIKit
 
-// Needs the iOS simulator. One editable row in a window, typed into like a keyboard.
+// One editable row in a window, typed into like a keyboard. The row has no focus.
+// Tests that need the focus are in `RichTextRowFocusTests` of `MEGAMarkdownEditorHostedTests`.
 @MainActor
-@Suite(.serialized, .hostedUI, .timeLimit(.minutes(1)))
 struct RichTextRowTests {
-    private func focusedTextView(_ harness: RichTextRowHarness, caret: Int) throws -> RichTextView {
+    private func textView(_ harness: RichTextRowHarness, caret: Int) throws -> RichTextView {
         let textView = try #require(harness.textView)
-        textView.becomeFirstResponder()
         textView.selectedRange = NSRange(location: caret, length: 0)
         return textView
     }
@@ -29,7 +28,7 @@ struct RichTextRowTests {
     @Test func typingReachesTheModel() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abc")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 3)
+        let textView = try textView(harness, caret: 3)
         harness.changes = []
         harness.type("x", into: textView)
         #expect(harness.model.row(at: 0).block == paragraph("abcx"))
@@ -37,41 +36,11 @@ struct RichTextRowTests {
         #expect(harness.model.selection == .caret(position(0, 4)))
     }
 
-    /// A style turned off at the caret stays off for the next key.
-    @Test func typingKeepsAStyleTurnedOffAtTheCaret() throws {
-        let harness = RichTextRowHarness(blocks: [paragraph("bold", (0..<4, .bold))])
-        defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 2)
-        harness.model.select(.caret(position(0, 2)))
-        harness.model.toggleStyle(.bold)
-        textView.onTypingStylesChange?()
-        harness.type("x", into: textView)
-        #expect(harness.model.row(at: 0).block == paragraph("boxld", (0..<2, .bold), (3..<5, .bold)))
-        let font = try #require(textView.attributedText.attribute(.font, at: 2, effectiveRange: nil) as? UIFont)
-        #expect(!font.fontDescriptor.symbolicTraits.contains(.traitBold))
-    }
-
-    /// The link dialog takes the focus. When the row gets it back with the caret after the new link, typed text is plain.
-    @Test func typingAfterASavedLinkIsPlain() async throws {
-        let harness = RichTextRowHarness(blocks: [paragraph("")])
-        defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
-        harness.model.beginLinkEditing()
-        textView.resignFirstResponder()
-        #expect(harness.model.saveLink(urlText: "u", label: "go"))
-        harness.reconfigure()
-        try await harness.settle()
-        textView.focusFromModel(selection: NSRange(location: 2, length: 0))
-        harness.type("x", into: textView)
-        #expect(harness.model.row(at: 0).block == paragraph("gox", (0..<2, .link(RichLink(destination: "u", title: "")))))
-        #expect(textView.attributedText.attribute(.underlineStyle, at: 2, effectiveRange: nil) == nil)
-    }
-
     /// A keyboard announced one range and changed another of the same length. The model ends with the view's bytes.
     @Test func editAtAnotherRangeThanAnnouncedEndsWithEqualBytes() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abcd")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 4)
+        let textView = try textView(harness, caret: 4)
         _ = textView.delegate?.textView?(textView, shouldChangeTextIn: NSRange(location: 0, length: 0), replacementText: "x")
         textView.insertText("x")
         #expect(textView.text == "abcdx")
@@ -81,7 +50,7 @@ struct RichTextRowTests {
     @Test func enterSplitsTheRowInTheModel() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abcd")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 2)
+        let textView = try textView(harness, caret: 2)
         harness.type("\n", into: textView)
         #expect(harness.model.rowCount == 2)
         #expect(harness.model.row(at: 1).block == paragraph("cd"))
@@ -93,7 +62,7 @@ struct RichTextRowTests {
     @Test func lineBreakGoesToTheAnnouncedRange() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abc omw")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 7)
+        let textView = try textView(harness, caret: 7)
         let allowed = textView.delegate?.textView?(textView, shouldChangeTextIn: NSRange(location: 4, length: 3), replacementText: "on my\nway")
         #expect(allowed == false)
         #expect(harness.model.rowCount == 2)
@@ -103,21 +72,21 @@ struct RichTextRowTests {
 
     /// Dictation and code insert text without asking the delegate. The model still splits the row,
     /// and the row's next input takes the line break out of the view.
-    @Test func lineBreakWithoutTheDelegateStillSplits() async throws {
+    @Test func lineBreakWithoutTheDelegateStillSplits() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abcd")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 2)
+        let textView = try textView(harness, caret: 2)
         textView.insertText("\n")
         #expect(harness.model.rowCount == 2)
         harness.reconfigure()
-        try await harness.settle()
+        harness.flushLayout()
         #expect(textView.text == "ab")
     }
 
     @Test func enterOnAnEmptyLastCodeLineLeavesTheBlock() throws {
         let harness = RichTextRowHarness(blocks: [.codeBlock(language: nil, code: "a\n")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 2)
+        let textView = try textView(harness, caret: 2)
         harness.type("\n", into: textView)
         #expect(harness.model.rowCount == 2)
         #expect(harness.model.row(at: 0).block == .codeBlock(language: nil, code: "a"))
@@ -126,7 +95,7 @@ struct RichTextRowTests {
     @Test func backspaceAtTheStartRemovesStructure() throws {
         let harness = RichTextRowHarness(blocks: [heading(2, "Title")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
+        let textView = try textView(harness, caret: 0)
         textView.deleteBackward()
         #expect(harness.model.row(at: 0).block == paragraph("Title"))
     }
@@ -134,7 +103,7 @@ struct RichTextRowTests {
     @Test func tabIndentsAListItem() throws {
         let harness = RichTextRowHarness(blocks: [bullet("a"), bullet("b")], row: 1)
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
+        let textView = try textView(harness, caret: 0)
         harness.model.select(.caret(position(1, 0)))
         let tab = try #require(textView.keyCommands?.first { $0.input == "\t" && $0.modifierFlags.isEmpty })
         #expect(tab.wantsPriorityOverSystemBehavior)
@@ -143,58 +112,50 @@ struct RichTextRowTests {
     }
 
     /// An input the view already holds, or an older one, never overwrites a typed key.
-    @Test func olderInputDoesNotOverwriteTypedText() async throws {
+    @Test func olderInputDoesNotOverwriteTypedText() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abc")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 3)
+        let textView = try textView(harness, caret: 3)
         harness.type("x", into: textView)
         // SwiftUI draws the row again with the input it had: version 0, text "abc".
         harness.input.block = paragraph("abc")
-        try await harness.settle()
+        harness.flushLayout()
         #expect(textView.text == "abcx")
     }
 
     /// Undo gives a newer input with the old text. The view takes it.
-    @Test func newerInputReplacesTheText() async throws {
+    @Test func newerInputReplacesTheText() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abc")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 3)
+        let textView = try textView(harness, caret: 3)
         harness.type("x", into: textView)
         textView.undoManager?.undo()
         harness.reconfigure()
-        try await harness.settle()
+        harness.flushLayout()
         #expect(textView.text == "abc")
     }
 
     /// Text the input method still owns is never replaced. The newer input is written when it ends.
-    @Test func markedTextIsNotOverwritten() async throws {
+    @Test func markedTextIsNotOverwritten() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abc")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 3)
+        let textView = try textView(harness, caret: 3)
         textView.setMarkedText("か", selectedRange: NSRange(location: 1, length: 0))
         #expect(textView.undoManager == nil)
         harness.input.block = paragraph("other")
         harness.input.version += 5
-        try await harness.settle()
+        harness.flushLayout()
         #expect(textView.text == "abcか")
         textView.unmarkText()
-        try await harness.settle()
+        harness.flushLayout()
         #expect(textView.markedTextRange == nil)
         #expect(textView.undoManager === harness.modelUndoManager)
-    }
-
-    @Test func userCaretMoveSelectsInTheModel() throws {
-        let harness = RichTextRowHarness(blocks: [paragraph("abcd")])
-        defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
-        textView.selectedRange = NSRange(location: 1, length: 2)
-        #expect(harness.model.selection == .range(1..<3, inBlock: 0))
     }
 
     @Test func modelSelectionIsNotReportedBack() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("abcd")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
+        let textView = try textView(harness, caret: 0)
         harness.changes = []
         textView.setSelectionFromModel(NSRange(location: 2, length: 0))
         #expect(harness.changes.isEmpty)
@@ -205,7 +166,7 @@ struct RichTextRowTests {
     @Test func heightChangeIsReportedOncePerNewLine() throws {
         let harness = RichTextRowHarness(blocks: [paragraph("")])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
+        let textView = try textView(harness, caret: 0)
         harness.type("a", into: textView)
         let afterFirst = harness.heightChanges
         for _ in 0..<5 { harness.type("a", into: textView) }
@@ -217,7 +178,7 @@ struct RichTextRowTests {
     @Test func arrowsLeaveOnlyAtTheEdges() throws {
         let harness = RichTextRowHarness(blocks: [paragraph(String(repeating: "word ", count: 30))])
         defer { harness.close() }
-        let textView = try focusedTextView(harness, caret: 0)
+        let textView = try textView(harness, caret: 0)
         let upInputs = { textView.keyCommands?.filter { $0.input == UIKeyCommand.inputUpArrow && $0.modifierFlags.isEmpty } ?? [] }
         let downInputs = { textView.keyCommands?.filter { $0.input == UIKeyCommand.inputDownArrow && $0.modifierFlags.isEmpty } ?? [] }
         #expect(upInputs().count == 1)

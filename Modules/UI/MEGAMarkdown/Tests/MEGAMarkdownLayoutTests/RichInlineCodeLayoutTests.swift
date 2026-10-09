@@ -3,9 +3,9 @@ import MEGAMarkdown
 import Testing
 import UIKit
 
-// Needs the iOS simulator. Plain text typed after inline code must not move the code text or change the row height.
+// The height and the first baseline of a row with inline code.
+// The test that types plain text after code needs the focus. It is in `RichTextRowFocusTests`.
 @MainActor
-@Suite(.serialized, .hostedUI, .timeLimit(.minutes(1)))
 struct RichInlineCodeLayoutTests {
     /// The y of the baseline of the glyph, in the text view.
     private func baseline(of textView: RichTextView, glyph: Int) -> CGFloat {
@@ -13,31 +13,6 @@ struct RichInlineCodeLayoutTests {
         manager.ensureLayout(for: textView.textContainer)
         let line = manager.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
         return line.minY + manager.location(forGlyphAt: glyph).y
-    }
-
-    @Test(arguments: [
-        paragraph("ab", (0..<2, .code)),
-        .listItem(RichListItem(isOrdered: false), text: RichText("ab", spans: [RichSpan(range: 0..<2, style: .code)]))
-    ])
-    func plainTextAfterCodeKeepsTheCodeAndTheRowHeight(block: RichBlock) async throws {
-        let harness = RichTextRowHarness(blocks: [block])
-        defer { harness.close() }
-        let textView = try #require(harness.textView)
-        textView.becomeFirstResponder()
-        try await harness.settle()
-        textView.selectedRange = NSRange(location: 2, length: 0)
-        let width: CGFloat = 300
-        let heightBefore = textView.fittingSize(width: width).height
-        let baselineBefore = baseline(of: textView, glyph: 0)
-
-        harness.model.toggleStyle(.code)
-        textView.onTypingStylesChange?()
-        harness.type(" cd", into: textView)
-        try await harness.settle()
-
-        #expect(textView.text == "ab cd")
-        #expect(abs(textView.fittingSize(width: width).height - heightBefore) < 0.5, "row height changed")
-        #expect(abs(baseline(of: textView, glyph: 0) - baselineBefore) < 0.5, "code baseline moved")
     }
 
     /// Figma: a line with inline code is as tall as the chip. Wrapped lines have the line gap between them.
