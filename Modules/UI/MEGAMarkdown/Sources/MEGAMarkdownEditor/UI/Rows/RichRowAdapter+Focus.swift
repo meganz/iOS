@@ -36,11 +36,11 @@ extension RichRowAdapter {
         }
     }
 
-    /// The selection is not in one text row: the selection responder takes the keyboard, and no row is pinned.
-    /// Select All does not scroll, like a system text view. Other selections show their end row.
+    /// The selection responder takes the keyboard, and no row is pinned. Select All does not scroll, like a system
+    /// text view. Other selections show the row of their head (else their end row).
     func focusOutsideRows() {
         list.pinnedItem = nil
-        let row = model.selection.end.blockIndex
+        let row = (selectionHandler?.selectionHead ?? model.selection.end).blockIndex
         if row < model.rowCount, !selectsWholeDocument {
             list.scrollToItem(items(forRow: row).lowerBound, rect: nil) {}
         }

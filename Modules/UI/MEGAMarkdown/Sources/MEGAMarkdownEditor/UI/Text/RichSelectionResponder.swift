@@ -13,6 +13,8 @@ protocol RichSelectionHandler: AnyObject {
     func modelDidChange()
     /// Select All from a row, the selection responder or ⌘A. The handler selects the document and can show its menu.
     func selectAll()
+    /// The end of the model's selection that the user moves, when the handler knows it. The list scrolls to it.
+    var selectionHead: RichPosition? { get }
 }
 
 /// Takes the keyboard when the selection has no text view: a divider or raw block, or a selection over rows.

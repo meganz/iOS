@@ -128,13 +128,14 @@ import Testing
         let result = rows("```swift\n" + lines.joined(separator: "\n") + "\n```")
         var joined: [String] = []
         for (index, row) in result.enumerated() {
-            guard case .codePiece(let language, let code, let isFirst, let isLast) = row.content else {
+            guard case .codePiece(let language, let code, let isFirst, let isLast, let continuesLine) = row.content else {
                 Issue.record("row \(index) is not a code piece")
                 return
             }
             #expect(language == (index == 0 ? "swift" : nil))
             #expect(isFirst == (index == 0))
             #expect(isLast == (index == result.count - 1))
+            #expect(!continuesLine)
             joined.append(code)
         }
         #expect(joined.joined(separator: "\n") == lines.joined(separator: "\n"))
@@ -146,10 +147,15 @@ import Testing
         let longLine = String(repeating: "a", count: 20_000)
         let result = rows("```\n" + longLine + "\n```")
         let codes = result.compactMap { row -> String? in
-            if case .codePiece(_, let code, _, _) = row.content { return code }
+            if case .codePiece(_, let code, _, _, _) = row.content { return code }
+            return nil
+        }
+        let continues = result.compactMap { row -> Bool? in
+            if case .codePiece(_, _, _, _, let continuesLine) = row.content { return continuesLine }
             return nil
         }
         #expect(codes.count == 3)
+        #expect(continues == [false, true, true])
         #expect(codes.dropFirst().allSatisfy { $0.hasPrefix(PreviewRows.codeContinuationMarker) })
         #expect(codes.map { $0.replacingOccurrences(of: PreviewRows.codeContinuationMarker, with: "") }.joined() == longLine)
     }

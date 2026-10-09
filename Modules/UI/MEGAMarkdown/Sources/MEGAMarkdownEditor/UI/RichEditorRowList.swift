@@ -8,6 +8,11 @@ struct RichEditorRowList: UIViewRepresentable {
     let adapter: RichRowAdapter
     let baseURL: URL?
 
+    /// Lives as long as the list view, so the selection over rows has an owner.
+    func makeCoordinator() -> CrossBlockSelectionController {
+        CrossBlockSelectionController(adapter: adapter)
+    }
+
     func makeUIView(context: Context) -> MarkdownRowListView {
         let view = adapter.list.view
         // Space above the first row and below the last.
@@ -15,7 +20,14 @@ struct RichEditorRowList: UIViewRepresentable {
         view.alwaysBounceVertical = true
         view.accessibilityIdentifier = "editor.rich.list"
         adapter.list.reloadAll()
+        context.coordinator.attach()
         return view
+    }
+
+    static func dismantleUIView(_ view: MarkdownRowListView, coordinator: CrossBlockSelectionController) {
+        coordinator.detach()
+        // The editor is leaving. SwiftUI may remove the rows in any order, so drop the keyboard here.
+        view.endEditing(true)
     }
 
     func updateUIView(_ view: MarkdownRowListView, context: Context) {
@@ -40,10 +52,5 @@ struct RichEditorRowList: UIViewRepresentable {
         adapter.imageLoading = environment.markdownImageLoading
         adapter.theme = environment.markdownTheme
         adapter.strings = environment.markdownEditorStrings
-    }
-
-    static func dismantleUIView(_ view: MarkdownRowListView, coordinator: ()) {
-        // The editor is leaving. SwiftUI may remove the rows in any order, so drop the keyboard here.
-        view.endEditing(true)
     }
 }

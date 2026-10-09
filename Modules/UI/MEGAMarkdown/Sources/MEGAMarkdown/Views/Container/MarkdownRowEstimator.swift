@@ -71,9 +71,9 @@ package struct MarkdownRowEstimator: Sendable {
             height = isFirst
                 ? textHeight(units: text.text.utf8.count, headingLevel: level, depth: depth)
                 : wrappedHeight(units: text.text.utf8.count, depth: depth, line: level == nil ? bodyLine : headingLine)
-        case .codePiece(let language, let code, let isFirst, let isLast):
+        case .codePiece(let language, let code, let isFirst, let isLast, _):
             height = codeHeight(lines: Self.lineCount(code), hasLanguage: language != nil, isFirst: isFirst, isLast: isLast)
-        case .plainText(let code, let isFirst, let isLast):
+        case .plainText(let code, let isFirst, let isLast, _):
             height = codeHeight(lines: Self.lineCount(code), hasLanguage: false, isFirst: isFirst, isLast: isLast)
         case .tablePage(_, let rows, let isFirst, _):
             height = tableHeight(rows: rows.count + (isFirst ? 1 : 0))

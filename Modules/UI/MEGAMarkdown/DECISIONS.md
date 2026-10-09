@@ -55,6 +55,15 @@ The rule for each choice: keep what matches GitHub. Else follow a standard. Else
 | Block over 100,000 units | Rich mode refuses the file and shows the source with a notice. | One text view holds a whole block, and a key costs time in proportion to its length. |
 | Code lines | Wrap in the editor. The preview scrolls them sideways. | An editable text view has no sideways scroll per row. |
 
+## Selection over rows
+
+| Decision | Picked | Alternatives and why not |
+|---|---|---|
+| Selection over rows | Inside one row the text view keeps its own selection. When a handle drag leaves its row, a layer on the list takes the touch over. It moves the head with the finger, scrolls the list near its edges, and gives the model the selection when the finger lifts. Simulator, a mixed text of about 480,000 characters (`SelectionBenchmarks`): 10,000 pt of autoscroll take 7.25 s with a selection and 7.24 s without. The package supports iOS 17, but the selection display, the handle zones and the drag cancel are checked only on iOS 18.6 and 26.4. | • **One text input over the whole document**: about 40 `UITextInput` methods over rows that may have no cell, and it fights each row's text view for the keyboard.<br>• **Rows of whole blocks only (a select mode)**: no selection inside a text.<br>• **Merge neighbour rows into one text view**: breaks one row per block, and still stops at lists, code and dividers. |
+| Highlight and handles of a selection over rows | `UITextSelectionDisplayInteraction` on the list, fed by a small `UITextInput` that gives the carets and rects of the rows on screen. The handles and the highlight look like the system's. | • **TextKit temporary attributes**: they exist only on macOS.<br>• **A drawn overlay in each row and a tint on divider rows**: works, but needs code in every row and a new row configuration for dividers. |
+| Preview selection | Whole blocks only, across blocks. A long press selects one block, the handles grow the selection block by block, and Copy writes plain text. It shares the selection display, the handles and the autoscroll with the editor. | • **Character selection with SwiftUI `Text`**: needs own glyph geometry, through `TextRenderer` on iOS 18 and later only.<br>• **A `UITextView` per text row**: a second renderer that must look the same, and more memory per row. |
+| Edit menu of a selection over rows | The menu sits on the keyboard responder of the list and shows the edit actions that responder can do. The items are the system's, already translated, and ⌘C, ⌘X, ⌘V and ⌘A run the same actions. | • **A menu on the list view**: the system items check the list view's responder chain, which cannot copy, so no item shows. Own items would need five new strings. |
+
 ## Source of truth
 
 Each parser behaviour has one source of truth. A bug is output that differs from it, when no rule below explains the difference. Any other difference is a product decision. Add it to this file first, then change the code.

@@ -9,11 +9,13 @@ package struct PreviewRow: Equatable, Sendable {
         case block(ParsedBlock)
         /// Part of a long paragraph (`headingLevel` nil) or heading.
         case textPiece(InlineText, headingLevel: Int?, isFirst: Bool)
-        case codePiece(language: String?, code: String, isFirst: Bool, isLast: Bool)
+        /// Part of a big code block. `continuesLine` is true when the piece starts with the rest of a line
+        /// that the piece before cut. Its text then starts with `PreviewRows.codeContinuationMarker`.
+        case codePiece(language: String?, code: String, isFirst: Bool, isLast: Bool, continuesLine: Bool)
         /// Some rows of a big table. `rows` are indexes into `table.rows`.
         case tablePage(ParsedTable, rows: Range<Int>, isFirst: Bool, isLast: Bool)
-        /// Raw source lines, shown when a part of the file is too big to format.
-        case plainText(String, isFirst: Bool, isLast: Bool)
+        /// Raw source lines, shown when a part of the file is too big to format. `continuesLine` as for `codePiece`.
+        case plainText(String, isFirst: Bool, isLast: Bool, continuesLine: Bool)
         /// Tells the reader that the content below is not the full formatted file.
         case notice(Notice)
     }
@@ -165,7 +167,12 @@ package enum PreviewRows {
             let lines = text.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n")
             let pieces = Self.codePieces(lines)
             for (index, piece) in pieces.enumerated() {
-                let content = PreviewRow.Content.plainText(piece.text, isFirst: index == 0, isLast: index == pieces.count - 1)
+                let content = PreviewRow.Content.plainText(
+                    piece.text,
+                    isFirst: index == 0,
+                    isLast: index == pieces.count - 1,
+                    continuesLine: piece.continuesLine
+                )
                 add(PreviewRow(sourceLine: firstLine + piece.lineOffset, content: content), gap: index == 0 ? .nested : .none)
             }
         }
@@ -266,7 +273,8 @@ package enum PreviewRows {
                     language: index == 0 ? language : nil,
                     code: piece.text,
                     isFirst: index == 0,
-                    isLast: index == pieces.count - 1
+                    isLast: index == pieces.count - 1,
+                    continuesLine: piece.continuesLine
                 )
                 // +1: fenced code starts on the line after the fence. Indented code is then one line off (only for big blocks).
                 let pieceLine = index == 0 ? line : line + 1 + piece.lineOffset
@@ -338,6 +346,8 @@ package enum PreviewRows {
             var text: String
             /// Lines before this piece inside the code.
             var lineOffset: Int
+            /// True when the piece starts with the rest of a cut line, not with a new line.
+            var continuesLine = false
         }
 
         /// Pieces of at most `codePieceLines` lines and about `codePieceBytes` bytes.
@@ -346,21 +356,23 @@ package enum PreviewRows {
             var lines: [String] = []
             var bytes = 0
             var startLine = 0
+            var continuesLine = false
             for (lineNumber, line) in code.split(separator: "\n", omittingEmptySubsequences: false).enumerated() {
                 for (partIndex, part) in longLineParts(line).enumerated() {
                     // A cut line goes on in the next part. The marker makes the cut visible.
                     let text = partIndex == 0 ? String(part) : codeContinuationMarker + part
                     if !lines.isEmpty, lines.count >= codePieceLines || bytes + text.utf8.count > codePieceBytes {
-                        pieces.append(CodePiece(text: lines.joined(separator: "\n"), lineOffset: startLine))
+                        pieces.append(CodePiece(text: lines.joined(separator: "\n"), lineOffset: startLine, continuesLine: continuesLine))
                         lines = []
                         bytes = 0
                         startLine = lineNumber
+                        continuesLine = partIndex > 0
                     }
                     lines.append(text)
                     bytes += text.utf8.count + 1
                 }
             }
-            pieces.append(CodePiece(text: lines.joined(separator: "\n"), lineOffset: startLine))
+            pieces.append(CodePiece(text: lines.joined(separator: "\n"), lineOffset: startLine, continuesLine: continuesLine))
             return pieces
         }
 

@@ -26,6 +26,7 @@ struct RichEditorControlsTests {
         func modelDidChange() { modelChanges += 1 }
         var selectAllCount = 0
         func selectAll() { selectAllCount += 1 }
+        var selectionHead: RichPosition? { nil }
     }
 
     @Test func selectionHandlerHearsEveryActionOnce() async throws {

@@ -48,7 +48,7 @@ private struct PreviewRowContent: View {
                 InlineTextView(text: shown, font: theme.bodyFont, color: inQuote ? theme.quoteTextColor : theme.bodyColor)
                     .padding(.bottom, seamGap)
             }
-        case .codePiece(let language, let code, let isFirst, let isLast):
+        case .codePiece(let language, let code, let isFirst, let isLast, _):
             CodeBlockView(language: language, code: code, isFirst: isFirst, isLast: isLast)
         case .tablePage(let table, let rows, let isFirst, let isLast):
             TableBlockView(
@@ -58,7 +58,7 @@ private struct PreviewRowContent: View {
                 isFirstPage: isFirst,
                 isLastPage: isLast
             )
-        case .plainText(let text, let isFirst, let isLast):
+        case .plainText(let text, let isFirst, let isLast, _):
             CodeBlockView(language: nil, code: text, isFirst: isFirst, isLast: isLast)
         case .notice(let notice):
             Text(notice == .shownAsPlainText ? strings.shownAsPlainText : strings.restTooLarge)

@@ -105,8 +105,25 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
   A row without a letter follows the layout.
   Tables and code stay left to right in every layout.
 - Only the list scrolls to the top on a status bar tap. Code and table rows turn off `scrollsToTop` on their own scroll views.
-- There is no text selection. Text with inline code is drawn by TextKit in `InlineCodeText`, which has no selection.
-  In a table cell, SwiftUI `.textSelection` would turn off the inline code chip renderer.
+
+## Block selection
+
+The reader selects whole blocks, not characters. `PreviewSelectionController` holds the selection, because the
+preview has no model. It draws with the same parts as the editor's selection over rows: `SelectionDisplayInput`,
+`SelectionDragWatcher` and `SelectionAutoScroller`.
+
+- A long press selects the block under the finger. Moving on grows the selection block by block.
+  A long press inside the selection selects the block under the finger again. A long press on a notice does nothing.
+- The handles grow or shrink the selection by whole blocks. The list scrolls while the finger holds near its top or bottom edge.
+- A split block is selected with all its rows: every text piece, code piece or table page.
+  A list item and a quote child are blocks of their own.
+- The edit menu shows Copy and Select All. It points at the part of the selection on screen.
+- Copy writes plain text only: the text of the blocks without Markdown syntax, blocks joined by a blank line.
+  Table cells are joined by a tab. A long code line cut over several pieces is joined back, without the `↪ ` marker.
+  Notices are never copied. Select All and a handle drag can still reach over them.
+- A tap outside the selection clears it. A scroll keeps it. A new text clears it.
+- Text inside a block cannot be selected. Text with inline code is drawn by TextKit in `InlineCodeText`, which has
+  no selection. In a table cell, SwiftUI `.textSelection` would turn off the inline code chip renderer.
 
 ## Notices and errors
 
@@ -130,6 +147,8 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
 | `PreviewRowListTests` | Text size, color scheme, direction, status bar tap, full width, theme, strings and `openURL` changes, an image loading change in the same update as a batch. |
 | `MarkdownPreviewTests` | The too large message, the spinner, a restore with the real chunk size, host bars. |
 | `PreviewSnapshotTests` | Images of all blocks, an accessibility text size, the plain-text notice, a restored place and host bars. |
+| `PreviewSelectionTests` | Long press and handle drags by whole blocks, a long press inside the selection or on a notice, autoscroll, taps, the menu bounds, a selection in a later batch, Copy of split blocks and cut code lines, Select All, a new text, detach, right to left. |
+| `PreviewSelectionSnapshotTests` | Blocks selected over a paragraph, a list item, a divider, code and a Hebrew row, both directions, light and dark. |
 
 Window tests poll a condition every 10 ms. They do not sleep for a fixed time.
 
@@ -165,3 +184,13 @@ Its first rows wait for the whole parse. Same simulator, Release, 2026-10-04, lo
 | Line of 1 MB with no space | 0.03 s | 23 ms |
 
 A Debug build opens the table in 1.34 s. Most of that is the tree walk, which Debug does not optimize.
+
+`PreviewSelectionBenchmarks` runs on 10 MB with every row parsed. `Limits.json` has no limits for it.
+iPhone 17 Pro simulator, iOS 26.4, Release, 2026-10-08, five runs each. The machine was very busy
+(load average up to 139), so the numbers are rough:
+
+| Measure | Average |
+|---|---|
+| 100 screens of scroll with Select All (`testScrollWithSelectAllTenMegabytes`) | 3.17 s (2.30 to 5.24 s), longest main-thread stall 276 ms |
+| 100 screens of scroll without a selection (`testScrollWithoutASelectionTenMegabytes`) | 2.29 s, longest main-thread stall 32 ms |
+| Plain text of a Select All on 10 MB (`testCopySelectAllTenMegabytes`) | 0.04 s, longest main-thread stall 43 ms |

@@ -16,7 +16,8 @@ struct RichRowView: View {
 
     let content: Content
     let chrome: MarkdownRowChrome
-    /// An atomic row (divider or raw block) that the selection covers.
+    /// An atomic row (divider or raw block) that the selection covers. The selection layer draws its highlight.
+    /// The row only tells VoiceOver.
     let isSelected: Bool
     let theme: MarkdownTheme
     let strings: MarkdownEditorStrings
@@ -96,7 +97,6 @@ struct RichRowView: View {
             .environment(\.openURL, OpenURLAction { _ in .handled })
             .contentShape(Rectangle())
             .onTapGesture { onSelectAtomic?() }
-            .background(isSelected ? TokenColors.Background.surface2.swiftUI : Color.clear)
             .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 

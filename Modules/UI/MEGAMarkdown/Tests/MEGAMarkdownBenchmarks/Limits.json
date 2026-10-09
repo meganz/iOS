@@ -196,7 +196,7 @@
     "CPU Instructions Retired": 518661.08,
     "CPU Time": 0.04,
     "Clock Monotonic Time": 0.04,
-    "Peak Heap Growth": 6.51
+    "Peak Heap Growth": 12
   },
   "RichEditorBenchmarks/testColdExportAtRichLimit": {
     "CPU Cycles": 63514.79,

@@ -105,11 +105,11 @@ struct PreviewRowListRestoreTests {
     private func checkCodeRowIsShown(_ list: MarkdownRowListView, sourceLocation: SourceLocation = #_sourceLocation) throws {
         let coordinator = try Window.coordinator(of: list)
         let codeRow = Window.visibleCells(list).first { item, _ in
-            if case .codePiece(_, let code, _, _) = coordinator.store[item].content { return code.hasPrefix("let value1") }
+            if case .codePiece(_, let code, _, _, _) = coordinator.store[item].content { return code.hasPrefix("let value1") }
             return false
         }
         let item = try #require(codeRow?.item, "the code block must be on screen", sourceLocation: sourceLocation)
-        guard case .codePiece(_, let code, true, true) = coordinator.store[item].content else {
+        guard case .codePiece(_, let code, true, true, _) = coordinator.store[item].content else {
             Issue.record("row \(item) is not the whole code block", sourceLocation: sourceLocation)
             return
         }

@@ -28,6 +28,7 @@ struct PreviewRowList: UIViewRepresentable {
         view.alwaysBounceVertical = true
         view.accessibilityIdentifier = "markdown.preview.list"
         view.delegate = context.coordinator
+        context.coordinator.selection.attach()
         return view
     }
 

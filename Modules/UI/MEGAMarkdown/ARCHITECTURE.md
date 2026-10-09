@@ -12,10 +12,10 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Parser](#parsing-pipeline) | Implemented | Markdown syntax recognition, conversion, and behavior rules. | [PARSER.md](PARSER.md) |
 | [Large-input support](#large-input-support) | Internal helpers implemented | Safe chunk ranges and reference-definition collection. | [CHUNKING.md](CHUNKING.md) |
 | [Rendering and styling](#rendering-and-styling) | Implemented | SwiftUI block views, rows for big blocks, and the theme. | |
-| [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore and top-line reports. | [PREVIEW.md](PREVIEW.md) |
+| [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore and top-line reports, block selection. | [PREVIEW.md](PREVIEW.md) |
 | [Editor model and mutations](#editor-model-and-mutations) | Implemented | Editable state, selection, document changes, undo, and the clipboard. | [EDITOR.md](EDITOR.md) |
 | [Markdown import and export](#markdown-import-and-export) | Implemented | Conversion between editable content and Markdown source. | [EDITOR.md](EDITOR.md) |
-| [Editor UI](#editor-ui) | Implemented | Rich/source editing modes, controls, and accessibility. | [EDITOR-UI.md](EDITOR-UI.md) |
+| [Editor UI](#editor-ui) | Implemented | Rich/source editing modes, controls, selection over rows, and accessibility. | [EDITOR-UI.md](EDITOR-UI.md) |
 | [App integration](#app-integration) | Coming soon | File lifecycle, navigation, saving, and host-provided behavior. | |
 
 ## Public document model
@@ -92,7 +92,7 @@ The views are SwiftUI. They are `package` API: other targets of this package use
   New rows are appended with a height guess each. Cells size themselves when they show.
 - The list restores a source line and reports the top line to the host. Rows keep their source line for this.
 
-[PREVIEW.md](PREVIEW.md) has the data flow, the threads, the row heights, the restore rules, the notices and the tests.
+[PREVIEW.md](PREVIEW.md) has the data flow, the threads, the row heights, the restore rules, the block selection, the notices and the tests.
 
 ## Editor model and mutations
 
@@ -119,7 +119,7 @@ The `MEGAMarkdownEditor` target holds the rich editor model and the editor UI (`
 
 ## Editor UI
 
-`MarkdownEditor` shows the editor in rich or source mode. Rich mode shows one row per block in a `MarkdownRowList`, and a text row is an editable `UITextView`. Source mode is one `UITextView` on TextKit 1. See [EDITOR-UI.md](EDITOR-UI.md) for the files, focus, saving and tests.
+`MarkdownEditor` shows the editor in rich or source mode. Rich mode shows one row per block in a `MarkdownRowList`, and a text row is an editable `UITextView`. Source mode is one `UITextView` on TextKit 1. See [EDITOR-UI.md](EDITOR-UI.md) for the files, focus, the selection over rows, saving and tests.
 
 ## App integration
 

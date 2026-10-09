@@ -40,7 +40,8 @@ A change in the repo needs no new build: tap Sync on the first screen.
   It removes the files that left the repo. `Documents/TestFiles-manifest.json` keeps the hashes.
 - `large-files/too-large-101mib-over-limit.md` is over 100 MB, and GitHub rejects files of that size.
   The app writes this file itself after a sync, when it is missing.
-- `editing/selection` and `preview/selection` list steps for text and block selection. This app has no selection, so it shows them in the preview only.
+- `editing/selection` and `preview/selection` list steps for text and block selection.
+  Open them with Edit to try the selection over rows, or in the preview to select whole blocks.
 
 `scripts/make_test_files.py` writes the repo content. Each file name says what the case is.
 The script uses the package fixtures under `Tests/MEGAMarkdownTests/Fixtures`.

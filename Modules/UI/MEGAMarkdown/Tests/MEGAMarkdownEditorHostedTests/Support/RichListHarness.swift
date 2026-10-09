@@ -115,3 +115,10 @@ final class RichListHarness {
         }
     }
 }
+
+extension RichListHarness {
+    /// The selection layer of the list. `RichEditorRowList.makeCoordinator()` makes it.
+    var selectionController: CrossBlockSelectionController? {
+        adapter.selectionHandler as? CrossBlockSelectionController
+    }
+}

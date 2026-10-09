@@ -72,6 +72,18 @@ Only terms that are specific to Markdown, cmark, or this package are listed. Add
 | Restore pin | After a restore jump, the row stays at the top for 1 s while the rows around it size themselves. A drag or a status bar tap ends it. Not the same as a pinned item. |
 | Top line | The source line of the top row. The preview reports it to the host when it changes. |
 
+## Selection
+
+| Term | Meaning |
+|---|---|
+| Selection over rows | A selection in the rich editor whose ends are in different rows, or a divider or raw block selected whole. `CrossBlockSelectionController` draws it. |
+| Anchor, head | The two ends of a selection. The anchor stays. The head follows the finger, or ⇧ with an arrow. Not the same as an anchor item. |
+| Native selection | A range inside one text row. The row's `UITextView` draws it with its own handles. |
+| Handle zone | The touch area of a handle (`SelectionGeometry.handleZone`). Only a touch that starts there can start a handle drag. |
+| Takeover | The list layer takes a native handle drag over once the finger leaves its row by more than `SelectionGeometry.takeoverMargin`. |
+| Autoscroll | The list scrolls while a selection drag holds the finger in the zone at its top or bottom edge (`SelectionAutoScroller`). |
+| Block selection | The preview selection (`PreviewSelectionController`). It always holds whole blocks, with every row of a split block. |
+
 ## Chunking
 
 | Term | Meaning |

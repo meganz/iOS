@@ -149,7 +149,7 @@ import Testing
         #expect(rows[1].content == .notice(.shownAsPlainText))
         #expect(rows[1].sourceLine == 2)
         let plain = rows.dropFirst(2).compactMap { row -> String? in
-            if case .plainText(let text, _, _) = row.content { return text }
+            if case .plainText(let text, _, _, _) = row.content { return text }
             return nil
         }
         #expect(plain.count == rows.count - 2)

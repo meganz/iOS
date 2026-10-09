@@ -89,9 +89,9 @@ struct MarkdownRowEstimatorTests {
         #expect(estimator.height(of: first) == lines * estimator.headingLine + estimator.headingTopSpacing)
         #expect(estimator.height(of: later) == lines * estimator.headingLine)
 
-        let code = PreviewRow(sourceLine: 0, content: .codePiece(language: "swift", code: "a\nb\nc", isFirst: true, isLast: false))
+        let code = PreviewRow(sourceLine: 0, content: .codePiece(language: "swift", code: "a\nb\nc", isFirst: true, isLast: false, continuesLine: false))
         #expect(estimator.height(of: code) == estimator.codeHeight(lines: 3, hasLanguage: true, isFirst: true, isLast: false))
-        let plain = PreviewRow(sourceLine: 0, content: .plainText("a\nb", isFirst: false, isLast: true))
+        let plain = PreviewRow(sourceLine: 0, content: .plainText("a\nb", isFirst: false, isLast: true, continuesLine: false))
         #expect(estimator.height(of: plain) == estimator.codeHeight(lines: 2, hasLanguage: false, isFirst: false, isLast: true))
         let notice = PreviewRow(sourceLine: 0, content: .notice(.restTooLarge))
         #expect(estimator.height(of: notice) == 2 * estimator.bodyLine)

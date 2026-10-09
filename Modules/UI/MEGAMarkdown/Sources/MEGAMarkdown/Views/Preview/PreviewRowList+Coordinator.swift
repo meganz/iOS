@@ -9,6 +9,8 @@ extension PreviewRowList {
     @MainActor
     final class Coordinator: NSObject {
         private(set) lazy var list = makeList()
+        /// Block selection with the edit menu.
+        private(set) lazy var selection = makeSelection()
         private(set) var store = PreviewRowStore()
         private var generation: Int?
         private(set) var isComplete = false
@@ -55,8 +57,16 @@ extension PreviewRowList {
             list.view.onLayout = { [weak self] in
                 anchorLayout?()
                 self?.didLayout()
+                self?.selection.refreshDisplay()
             }
             return list
+        }
+
+        private func makeSelection() -> PreviewSelectionController {
+            let selection = PreviewSelectionController(list: list) { [weak self] in self?.store ?? PreviewRowStore() }
+            // A restore must not move the list under a selection the user is making.
+            selection.onBegin = { [weak self] in self?.endRestore() }
+            return selection
         }
 
         // MARK: - Update
@@ -87,6 +97,7 @@ extension PreviewRowList {
                 let isNewText = generation != nil
                 generation = parent.generation
                 store = parent.store
+                selection.clear()
                 pin = nil
                 pendingJump = nil
                 reportedLine = nil
@@ -111,6 +122,7 @@ extension PreviewRowList {
 
         func stop() {
             isStopped = true
+            selection.detach()
             pin = nil
             pendingJump = nil
             pendingRestoreLine = nil

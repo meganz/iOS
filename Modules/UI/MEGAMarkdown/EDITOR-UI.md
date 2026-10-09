@@ -90,6 +90,8 @@ It never writes while text is marked. View and model text are compared by bytes.
 text row goes to that row's text view: the row is pinned, and its text view becomes first responder. A row without
 a cell is scrolled to first. A row with a cell only scrolls its caret into view, so a new gap below it does not move it.
 Any other selection goes to `RichSelectionResponder`, with no pinned row. Select All does not scroll.
+A selection over rows scrolls to the row of its head, the end the user moved (`RichSelectionHandler.selectionHead`).
+So after a drag the list stays at the finger, and ⇧↑ shows the row it reached.
 
 A new nesting level or heading changes the row's view tree, so SwiftUI replaces its text view. The removed view tells
 the adapter, and the new view takes the keyboard one turn later.
@@ -108,6 +110,43 @@ the adapter, and the new view takes the keyboard one turn later.
 | Copy, cut, paste | Through the model and `RichPasteboard`. A paste into a text row is parsed as Markdown, never typed. A paste into a code block is plain text. |
 
 Undo and redo use the model's stack through `ModelUndoManager`. A text view has no undo manager while text is marked.
+
+### Selection over rows
+
+A selection inside one row stays with that row's text view: its handles, menu and loupe are the system's.
+A selection that spans rows belongs to `CrossBlockSelectionController`. The model holds it. The controller keeps its
+direction: the anchor stays, and the head moves.
+
+`SelectionDisplayInput`, `SelectionDragWatcher`, `SelectionAutoScroller` and `SelectionGeometry` are in the
+`MEGAMarkdown` target, in `Sources/MEGAMarkdown/Views/Selection/`. The preview uses them too.
+
+| Part | What it does |
+|---|---|
+| `SelectionDisplayInput` | A small `UITextInput` for `UITextSelectionDisplayInteraction` on the list. It gives the carets and highlight rects of the rows on screen, so the handles and highlight look like the system's. An end whose row is off screen gets a rect at that row's stored frame. A divider or raw block can span several items. Its caret before the block (offset 0) is on the first item. Its caret after the block (offset 1) is on the last item. |
+| `SelectionDragWatcher` | Sees every touch on the list. It never blocks another recognizer. It takes a touch over only for a selection drag. |
+| `CrossBlockSelectionController+Drag` | A native handle drag that leaves its row is taken over: the other end of the native range is the anchor, the head follows the finger. The handles of a selection over rows drag the same way. The model gets the selection once, when the finger lifts. Then the edit menu shows, if the selection still spans rows. |
+| `SelectionAutoScroller` | Scrolls the list while the finger holds in a 54 pt zone at its top or bottom edge, up to 1,500 pt/s. |
+
+Rules:
+
+- Only a touch that starts on a native handle (`SelectionGeometry.handleZone`: 22 pt on each side of its caret,
+  20 pt past it on the knob side and 8 pt on the other side) can take over. A swipe from elsewhere
+  in the row scrolls. The model's selection names the row of the native range. So a touch on the start knob counts
+  also when the knob reaches over the row above.
+- A content change during a drag (⌘X, undo) ends the drag. The model's selection then shows, and the lift changes nothing.
+- After every model change the controller reads the model's selection. Over rows, or a divider or raw block selected
+  whole: the highlight and handles show, also after undo, redo and Select All. Inside one text row: they go.
+- A divider or raw block shows only this highlight, no background of its own. The highlight covers the block and
+  leaves out the gap below it.
+- A tap on a handle or inside the highlight shows the edit menu and keeps the selection. A tap elsewhere places a
+  caret. A scroll keeps the selection. A touch the system cancels still hands a drag's selection to the model.
+- A touch inside the highlight stops the row's own recognizers, but not the list pan. So a checkbox tap or a long
+  press inside a selection does nothing while the selection shows.
+- The edit menu sits on `RichSelectionResponder`, so it shows the responder's own edit actions as system items.
+  It points at the part of the selection on screen.
+- ⇧ with an arrow at a row edge moves the head one row and keeps the anchor.
+- Focus moves only through `RichRowAdapter.focusSelection()`. The controller draws nothing while the adapter applies
+  a change.
 
 ### Differences from the preview
 
@@ -139,6 +178,10 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | `RichListLayoutParityTests` | After each kind of edit, the item heights equal the heights of a list read again from the model. A row that stepped out of a list has no marker. |
 | `RichInlineCodeLayoutTests` | Plain text typed after inline code keeps the code baseline and the row height. The list marker baseline matches the text. |
 | `RichItemMapTests`, `RichChangePlanTests`, `RichChromeIndexTests`, `RichRawRenderCacheTests` | The pure adapter parts. `RichChromeIndexTests` compares the chrome with the preview rows. |
+| `SelectionGeometryTests` | The pure rules of the selection over rows: handle zones, the grabbed end, taps, autoscroll speed and how the head moves. |
+| `CrossBlockSelectionControllerTests`, `SelectionDragTests` | Selection over rows in a window: the highlight and handle rects (also right to left and off screen), ⇧ with arrows, undo, Select All, a second controller on the same rows, and drags through the controller's touch entry points. |
+| `SelectionEdgeCaseTests` | The list follows the head after a drag and after ⇧↑, the start knob over the row above, the menu bounds on screen, ⌘X or ⌘B during a drag, and the handles at a table split into pages. |
+| `SelectionSnapshotTests` | A selection over text, a divider and a Hebrew row, both directions, light and dark. |
 | `EditorSnapshotTests` | Rows of every kind in both directions, light and dark, a large text size, the controls and the notices. |
 
 Tests that need a window on the simulator are in `MEGAMarkdownEditorHostedTests`.
@@ -161,6 +204,10 @@ These benchmarks in `MEGAMarkdownBenchmarks` were measured once. `Limits.json` h
 | `RichEditorUIBenchmarks.testOpenRichModeAtLimitMainThread` | 0.09 s, longest main-thread stall 90 ms. |
 | `RichEditorUIBenchmarks.testOpenSourceModeTwoMegabytes`, `...TenMegabytes` | 0.02 s and 0.03 s. |
 | `RichToolbarBenchmarks.testToolbarAfterSelectAllAt167kRows` | 0.01 s per toolbar read. |
+| `SelectionBenchmarks.testAutoscrollWithASelection`, `...WithoutASelection` | 10,000 pt of autoscroll: 7.25 s with a selection and 7.24 s without, 0 late frames with a selection. |
+| `SelectionBenchmarks.testScrollWithSelectAll`, `...WithoutASelection` | 100 screens: 6.03 s with Select All and 6.21 s without. |
+| `SelectionBenchmarks.testHeadMovesOverVisibleRows` | 300 head moves in 0.02 s, longest main-thread stall 16 ms. |
+| `SelectionBenchmarks.testSelectAllShowsTheSelection` | 0.07 s, longest main-thread stall 72 ms. |
 | `RichChromeIndexBenchmarks.testRebuildAt167kRows` | 0.12 s for the whole index. An edit builds only the rows around it: under 1 ms. |
 
 ## Known limits
@@ -171,3 +218,5 @@ These benchmarks in `MEGAMarkdownBenchmarks` were measured once. `Limits.json` h
 | Opening rich mode at the limit | The main thread stalls about 90 ms while the list estimates every row. |
 | A row that gets a new nesting level or heading | Its text view is replaced. The keyboard moves to the new view one turn later. Not checked on a device. |
 | Writing Tools in source mode | Panel only: TextKit 1 has no inline Writing Tools. |
+| A selection over rows with VoiceOver | No announcement of the selected rows. Select All and a hardware keyboard work. |
+| A native handle drag that leaves its row | Taken over by a touch on the list. The text view's own drag has no public cancel, so its recognizers are turned off and on. The package supports iOS 17, but the selection display, the handle zones and the drag cancel are checked only on iOS 18.6 and 26.4. |

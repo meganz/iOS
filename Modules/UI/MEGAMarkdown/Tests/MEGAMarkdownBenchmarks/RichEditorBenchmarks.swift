@@ -101,6 +101,8 @@ final class RichEditorBenchmarks: BenchmarkCase {
     }
 
     /// Bold over the whole document: one change to thousands of blocks.
+    /// The true heap peak is about 8 MiB, so the `Peak Heap Growth` limit is 1.5x that: 12 MiB.
+    /// The change takes about 10 ms and the heap is read every 5 ms, so a fast Mac often reports less.
     func testBoldAcrossTheDocumentAtRichLimit() {
         var loaded = RichEditor(markdown: Self.atLimit)
         loaded.selectAll()
