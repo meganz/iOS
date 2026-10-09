@@ -59,7 +59,10 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
     }
     
     public func saveNode(from transfer: TransferEntity) async -> Bool {
-        guard let name = transfer.fileName, let transferUrl = urlForTransfer(transfer: transfer, nodeName: name) else {
+        // A batch or folder download also finishes its outer transfer, which has no file of its own but can
+        // carry the app data of a single-file batch. Only the file sub-transfers are saved.
+        guard !transfer.isFolderTransfer,
+              let name = transfer.fileName, let transferUrl = urlForTransfer(transfer: transfer, nodeName: name) else {
             return false
         }
 
