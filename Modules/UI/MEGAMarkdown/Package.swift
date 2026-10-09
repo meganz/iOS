@@ -62,6 +62,12 @@ let package = Package(
             name: "MEGAMarkdownEditorHostedTests",
             dependencies: ["MEGAMarkdownEditor", "MEGAMarkdown"],
             swiftSettings: settings),
+        // Rich mode layout after edits and scrolls, on the simulator. No focus, no keyboard and no fixed waits,
+        // so the CI test plan runs this target.
+        .testTarget(
+            name: "MEGAMarkdownLayoutTests",
+            dependencies: ["MEGAMarkdownEditor", "MEGAMarkdown"],
+            swiftSettings: settings),
         // Benchmarks with XCTest metrics. They run only with TEST_RUNNER_MEGA_BENCH=1 (see scripts/benchmark.sh).
         .testTarget(
             name: "MEGAMarkdownBenchmarks",

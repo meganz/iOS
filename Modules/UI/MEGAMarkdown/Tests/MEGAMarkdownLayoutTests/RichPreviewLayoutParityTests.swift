@@ -4,10 +4,10 @@ import SwiftUI
 import Testing
 import UIKit
 
-// Needs the iOS simulator. Rows with inline code are drawn by two code paths: UIKit in the editor and SwiftUI in
+// Rows with inline code are drawn by two code paths: UIKit in the editor and SwiftUI in
 // the preview. Each row must have the same height in both.
 @MainActor
-@Suite(.serialized, .hostedUI, .timeLimit(.minutes(1)))
+@Suite(.timeLimit(.minutes(1)))
 struct RichPreviewLayoutParityTests {
     private static let inlineCode = """
     A paragraph with `code` in it.
@@ -32,27 +32,35 @@ struct RichPreviewLayoutParityTests {
     private func previewHeights(_ markdown: String, size: DynamicTypeSize) async throws -> [CGFloat] {
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: Self.width, height: 3_000))
         window.rootViewController = UIHostingController(rootView: MarkdownPreview(markdown).environment(\.dynamicTypeSize, size))
-        window.makeKeyAndVisible()
+        window.isHidden = false
         defer {
             window.isHidden = true
             window.rootViewController = nil
         }
-        var last: [CGFloat] = []
-        var stable = 0
-        // The preview measures its rows in its own display pass, so wait until the heights stop changing.
-        for _ in 0..<100 {
-            try await Task.sleep(for: .milliseconds(30))
+        // The preview parses off the main thread, so wait for its rows. The layout after that is synchronous.
+        let clock = ContinuousClock()
+        let deadline = clock.now + .seconds(10)
+        var list = Self.list(in: window)
+        while list.map({ $0.numberOfItems(inSection: 0) == 0 }) ?? true {
+            guard clock.now < deadline else {
+                throw RichLayoutHarness.HarnessError(description: "The preview showed no rows")
+            }
+            try await Task.sleep(for: .milliseconds(10))
             window.layoutIfNeeded()
-            guard let list = Self.list(in: window) else { continue }
+            list = Self.list(in: window)
+        }
+        guard let list else { return [] }
+        var last: [CGFloat] = []
+        for _ in 0..<8 {
+            window.layoutIfNeeded()
             list.layoutIfNeeded()
             let heights = (0..<list.numberOfItems(inSection: 0)).compactMap {
                 list.layoutAttributesForItem(at: IndexPath(item: $0, section: 0))?.frame.height
             }
-            stable = heights == last && !heights.isEmpty ? stable + 1 : 0
+            if heights == last { return heights }
             last = heights
-            if stable >= 5 { return heights }
         }
-        throw RichListHarness.HarnessError(description: "The preview heights did not settle: \(last)")
+        throw RichLayoutHarness.HarnessError(description: "The preview heights did not settle: \(last)")
     }
 
     private static func list(in window: UIWindow) -> MarkdownRowListView? {
@@ -67,10 +75,9 @@ struct RichPreviewLayoutParityTests {
     @Test(arguments: [DynamicTypeSize.large, .accessibility3])
     func everyRowWithInlineCodeHasThePreviewHeight(size: DynamicTypeSize) async throws {
         let preview = try await previewHeights(Self.inlineCode, size: size)
-        let harness = try RichListHarness(Self.inlineCode, width: Self.width, height: 3_000, dynamicType: size)
+        let harness = try RichLayoutHarness(Self.inlineCode, width: Self.width, height: 3_000, dynamicType: size)
         defer { harness.close() }
-        try await harness.settle(300)
-        let editor = (0..<harness.list.itemCount).map { harness.list.itemFrame(at: $0).height }
+        let editor = harness.heights
         #expect(preview.count == editor.count, "preview \(preview), editor \(editor)")
         for (index, pair) in zip(preview, editor).enumerated() {
             #expect(abs(pair.0 - pair.1) < 1, "item \(index): preview \(pair.0), editor \(pair.1). preview \(preview), editor \(editor)")

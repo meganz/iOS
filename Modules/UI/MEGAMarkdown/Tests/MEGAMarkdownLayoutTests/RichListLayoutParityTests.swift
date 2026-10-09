@@ -3,10 +3,9 @@ import MEGAMarkdown
 import Testing
 import UIKit
 
-// Needs the iOS simulator. After an edit, a list that was updated row by row must have the same item heights
+// After an edit, a list that was updated row by row must have the same item heights
 // as the same list read again from the model.
 @MainActor
-@Suite(.serialized, .hostedUI, .timeLimit(.minutes(1)))
 struct RichListLayoutParityTests {
     nonisolated fileprivate static let tasks = "- [ ] one\n- [ ] two\n- [ ] three\n- [ ] four\n\nParagraph\n\n- bullet\n"
     nonisolated fileprivate static let ordered = "1. a\n2. b\n3. c\n4. d\n\nText\n"
@@ -44,7 +43,7 @@ struct RichListLayoutParityTests {
             }
         }
 
-        /// One user action each. The test lets the list settle between them, like separate key presses.
+        /// One user action each. The test runs the layout between them, like separate key presses.
         var steps: [@MainActor (RichEditorModel) -> Void] {
             let back: @MainActor (RichEditorModel) -> Void = { $0.deleteBackward() }
             let enter: @MainActor (RichEditorModel) -> Void = { $0.insertParagraphBreak() }
@@ -71,29 +70,24 @@ struct RichListLayoutParityTests {
         }
     }
 
-    private func heights(_ harness: RichListHarness) -> [CGFloat] {
-        (0..<harness.list.itemCount).map { harness.list.itemFrame(at: $0).height }
-    }
-
     @Test(arguments: Scenario.allCases)
-    func updatedRowsHaveTheHeightsOfAFreshRead(scenario: Scenario) async throws {
-        let harness = try RichListHarness(scenario.markdown)
+    func updatedRowsHaveTheHeightsOfAFreshRead(scenario: Scenario) throws {
+        let harness = try RichLayoutHarness(scenario.markdown)
         defer { harness.close() }
-        harness.focus(row: scenario.start.row, caret: scenario.start.offset)
-        try await harness.waitUntil { harness.focusedTextView != nil }
+        harness.placeCaret(row: scenario.start.row, offset: scenario.start.offset)
         for step in scenario.steps {
             step(harness.model)
-            // No forced layout pass: the list sizes its cells in its own display pass, like in the app.
-            try await Task.sleep(for: .milliseconds(80))
+            harness.flushLayout()
+            let problems = harness.rowProblems()
+            #expect(problems.isEmpty, "\(problems)")
         }
-        try await Task.sleep(for: .milliseconds(150))
         if let row = scenario.plainRow {
             #expect(harness.adapter.chrome[row].decorations.isEmpty, "row \(row) still has \(harness.adapter.chrome[row].decorations)")
         }
-        let live = heights(harness)
+        let live = harness.heights
         harness.adapter.reloadAll()
-        try await harness.settle(150)
-        let fresh = heights(harness)
+        harness.flushLayout()
+        let fresh = harness.heights
         #expect(live.count == fresh.count, "live \(live), fresh \(fresh)")
         for (index, pair) in zip(live, fresh).enumerated() {
             #expect(abs(pair.0 - pair.1) < 0.5, "item \(index): live \(pair.0), fresh \(pair.1). live \(live), fresh \(fresh)")

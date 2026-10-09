@@ -176,6 +176,8 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | `RichKeyboardTests` | The last rows scroll above the keyboard. Select All does not scroll. |
 | `SourceEditorUIKitTests`, `MarkdownEditorSaveTests` | Source mode, notices, mode switches and every save path. |
 | `RichListLayoutParityTests` | After each kind of edit, the item heights equal the heights of a list read again from the model. A row that stepped out of a list has no marker. |
+| `RichRowGeometryTests` | After Enter on the last list item, a paste, a scroll and a fast scroll to the end, each cell shows its own row at the height of its content, and no cell overlaps the next one. |
+| `RichPreviewLayoutParityTests` | Each row with inline code has the same height in the editor and in the preview. |
 | `RichInlineCodeLayoutTests` | Plain text typed after inline code keeps the code baseline and the row height. The list marker baseline matches the text. |
 | `RichItemMapTests`, `RichChangePlanTests`, `RichChromeIndexTests`, `RichRawRenderCacheTests` | The pure adapter parts. `RichChromeIndexTests` compares the chrome with the preview rows. |
 | `SelectionGeometryTests` | The pure rules of the selection over rows: handle zones, the grabbed end, taps, autoscroll speed and how the head moves. |
@@ -194,6 +196,17 @@ Their results depend on the simulator and on timing:
 - Each wait gives up after 5 s. A busy machine can need longer.
 
 So the CI test plan has this target turned off. Run it locally with the `MEGAMarkdown-Package` scheme.
+
+Layout tests that do not need the focus are in `MEGAMarkdownLayoutTests`, and the CI test plan runs them.
+`RichLayoutHarness` keeps them stable on every run:
+
+- The window is visible but never the key window. No row takes the focus, so no keyboard shows.
+- A test drives the model, then calls `flushLayout()`. It runs layout passes until the heights stop changing.
+- A test has no sleep. Only the preview waits, because it parses off the main thread.
+- `rowProblems()` checks each cell on screen. The height is measured, the cell is as tall as its content,
+  the text view shows its own row, and no cell overlaps the next one.
+
+A test that needs the focus, the keyboard, a timer or a save stays in `MEGAMarkdownEditorHostedTests`.
 
 These benchmarks in `MEGAMarkdownBenchmarks` were measured once. `Limits.json` has no limits for them:
 

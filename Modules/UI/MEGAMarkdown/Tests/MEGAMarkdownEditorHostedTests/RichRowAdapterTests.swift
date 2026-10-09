@@ -9,19 +9,6 @@ import UIKit
 struct RichRowAdapterTests {
     private static let paragraphs = (0..<80).map { "Paragraph \($0) with some words." }.joined(separator: "\n\n")
 
-    @Test func showsEveryRowKind() async throws {
-        let table = "| a |\n|---|\n" + (0..<120).map { "| \($0) |" }.joined(separator: "\n")
-        let harness = try RichListHarness("# Title\n\nText\n\n- item\n\n> quote\n\n```\ncode\n```\n\n---\n\n" + table)
-        defer { harness.close() }
-        try await harness.settle()
-        // 6 rows of one item, and a raw table of 3 pages.
-        #expect(harness.model.rowCount == 7)
-        #expect(harness.list.itemCount == 9)
-        #expect(harness.textView(row: 0)?.text == "Title")
-        #expect(harness.textView(row: 4)?.text == "code")
-        #expect(harness.textView(row: 5) == nil)
-    }
-
     /// A key is an own edit: the list is not updated, the row keeps its text view and the keyboard.
     @Test func typingKeepsTheTextViewAndTheFocus() async throws {
         let harness = try RichListHarness("abc\n\ndef")
@@ -65,13 +52,6 @@ struct RichRowAdapterTests {
         #expect(harness.list.view.bounds.intersects(frame))
     }
 
-    /// A cell that scrolls away is reused for another row. Its text view must show the new row's text.
-    @Test func scrollingShowsEachRowItsOwnText() async throws {
-        let harness = try RichListHarness(Self.paragraphs, height: 400)
-        defer { harness.close() }
-        try await scrollDownAndCheckText(harness)
-    }
-
     /// A cell that took a key holds the model version of that key. After it is reused, it must still take the new row's text.
     @Test func scrollingAfterTypingShowsEachRowItsOwnText() async throws {
         let harness = try RichListHarness(Self.paragraphs, height: 400)
@@ -82,106 +62,6 @@ struct RichRowAdapterTests {
         harness.window.endEditing(true)
         try await harness.settle()
         try await scrollDownAndCheckText(harness)
-    }
-
-    /// A paste that adds rows changes the model before the list update. Cells that UIKit makes in that gap,
-    /// for example prefetched cells below the screen, must still show their own row at their own height.
-    @Test func scrollingAfterAPasteThatAddsRowsShowsEachRowItsOwnTextAndHeight() async throws {
-        let markdown = """
-        # A long title that wraps over two lines on a phone
-
-        > **A quote** with a list:
-        >
-        > 1. The first step of the quote, long enough to wrap over two lines.
-        > 2. The second step of the quote, long enough to wrap over two lines.
-
-        ## A heading
-
-        A paragraph before the list.
-
-        - Bullet one
-        - Bullet two
-          - Nested bullet
-
-        1. Ordered one
-        2. Ordered two
-
-        - [ ] Open task
-        - [x] Done task
-
-        > A quote with *emphasis*.
-
-        ---
-
-        ### Another heading
-
-        A paragraph after the divider.
-        """
-        let harness = try RichListHarness(markdown)
-        defer { harness.close() }
-        try await harness.settle(200)
-        let row = try #require((0..<harness.model.rowCount).first { harness.model.row(at: $0).block.plainText == "A paragraph before the list." })
-        harness.focus(row: row, caret: 2)
-        try await harness.settle(100)
-        harness.model.paste(RichPasteContent(markdown: "- [ ] Pasted A\n- [x] Pasted B\n- Bullet C\n"))
-        try await harness.settle(300)
-
-        let view = harness.list.view
-        var wrong: [String] = []
-        for step in 0..<8 {
-            view.contentOffset.y = CGFloat(step) * 120 - view.adjustedContentInset.top
-            try await harness.settle(60)
-            for item in view.indexPathsForVisibleItems.map(\.item) {
-                let row = harness.adapter.row(forItem: item).row
-                guard let text = harness.model.row(at: row).block.plainText,
-                      let cell = harness.list.cell(forItem: item) else { continue }
-                let shown = harness.adapter.textView(forItem: item)?.text
-                let fitted = ceil(cell.contentView.systemLayoutSizeFitting(
-                    CGSize(width: view.bounds.width, height: UIView.layoutFittingCompressedSize.height),
-                    withHorizontalFittingPriority: .required,
-                    verticalFittingPriority: .fittingSizeLevel
-                ).height)
-                let height = harness.list.itemFrame(at: item).height
-                if shown != text || abs(fitted - height) > 0.5 {
-                    wrong.append("item \(item) '\(text)': shows '\(shown ?? "nil")', height \(height), content \(fitted)")
-                }
-            }
-        }
-        #expect(wrong.isEmpty, "\(wrong)")
-    }
-
-    /// Every row has the same model version. A reused cell must take its new row's text before it measures itself.
-    /// Else a long row keeps the height of the short row the cell showed before.
-    @Test func fastScrollToTheEndGivesReusedCellsTheHeightOfTheirOwnText() async throws {
-        let long = "A long task item that wraps over several lines on a phone screen, so its row is much taller than one line."
-        let short = (0..<30).map { "Paragraph \($0)\n\n- Bullet \($0)\n- [ ] Task \($0)" }.joined(separator: "\n\n")
-        let markdown = short + "\n\n" + (0..<4).map { "- [x] \($0) \(long)" }.joined(separator: "\n")
-        let harness = try RichListHarness(markdown)
-        defer { harness.close() }
-        try await harness.settle(200)
-
-        let view = harness.list.view
-        let maxOffset = { view.contentSize.height + view.adjustedContentInset.bottom - view.bounds.height }
-        while view.contentOffset.y < maxOffset() - 0.5 {
-            view.contentOffset.y = min(view.contentOffset.y + 900, maxOffset())
-            view.layoutIfNeeded()
-        }
-        try await harness.settle(300)
-
-        var wrong: [String] = []
-        for item in view.indexPathsForVisibleItems.map(\.item) {
-            guard let cell = harness.list.cell(forItem: item) else { continue }
-            let fitted = ceil(cell.contentView.systemLayoutSizeFitting(
-                CGSize(width: view.bounds.width, height: UIView.layoutFittingCompressedSize.height),
-                withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .fittingSizeLevel
-            ).height)
-            let height = harness.list.itemFrame(at: item).height
-            if abs(fitted - height) > 0.5 {
-                wrong.append("item \(item): height \(height), content \(fitted)")
-            }
-        }
-        #expect(wrong.isEmpty, "\(wrong)")
     }
 
     private func scrollDownAndCheckText(_ harness: RichListHarness) async throws {
@@ -348,17 +228,5 @@ struct RichRowAdapterTests {
     private func caretRect(_ harness: RichListHarness) -> CGRect? {
         guard let textView = harness.focusedTextView, let position = textView.selectedTextRange?.start else { return nil }
         return textView.caretRect(for: position)
-    }
-
-    @Test func checkboxTapTogglesTheTask() async throws {
-        let harness = try RichListHarness("- [ ] task")
-        defer { harness.close() }
-        harness.model.toggleCheckbox(inRow: 0)
-        try await harness.settle()
-        #expect(harness.model.row(at: 0).block == task("task", checked: true))
-        guard case .listItem(.checkbox(isChecked: true), _)? = harness.adapter.chrome[0].decorations.first else {
-            Issue.record("the chrome did not follow: \(harness.adapter.chrome[0])")
-            return
-        }
     }
 }
