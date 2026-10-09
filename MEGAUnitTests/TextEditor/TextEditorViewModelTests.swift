@@ -214,6 +214,55 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor func testAction_setUpView_Load_tempDownload_success_extensionlessBinary_showsPreview() async throws {
+        let textFile = TextFile(fileName: "binary")
+        let mockRouter = MockTextEditorViewRouter()
+
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let testPath = directory.appendingPathComponent(textFile.fileName).path
+        // Valid UTF-8, so decoding alone would open it as text; the NUL byte marks it as binary.
+        try Data([0x68, 0x69, 0x00]).write(to: URL(fileURLWithPath: testPath))
+
+        let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
+        let textEditorMode: TextEditorMode = .load
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: textEditorMode,
+            uploadFileUseCase: MockUploadFileUseCase(),
+            downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity)),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            nodeEntity: NodeEntity(handle: 123, isFile: true)
+        )
+
+        await test(viewModel: viewModel,
+                   action: .setUpView,
+                   expectedCommands: [
+                    .setupLoadViews,
+                    .configView(
+                        TextEditorModel(textFile: textFile, textEditorMode: textEditorMode, accessLevel: nil, resumeReadingOffset: nil),
+                        shallUpdateContent: false,
+                        isInRubbishBin: false,
+                        isBackupNode: false
+                    ),
+                    .setupNavbarItems(TextEditorNavbarItemsModel(
+                        leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
+                        rightItem: nil,
+                        textEditorMode: textEditorMode
+                    )),
+                    .updateProgressView(progress: Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes))
+                   ]
+        )
+        await Task.megaYield()
+
+        XCTAssertEqual(mockRouter.presentPreviewDocVC_calledTimes, 1)
+    }
+
     @MainActor func testAction_setUpView_Load_tempDownload_failed() async {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_failed")
         let mockRouter = MockTextEditorViewRouter()

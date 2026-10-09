@@ -161,7 +161,7 @@
 - (void)loadPreview {
     NSURL *url = [self documentUrl];
 
-    if ([FileExtensionGroupOCWrapper verifyIsEditableText:url.path]) {
+    if ([FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:url.path]) {
         self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
     }
     

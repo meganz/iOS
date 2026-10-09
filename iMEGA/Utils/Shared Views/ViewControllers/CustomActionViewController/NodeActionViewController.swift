@@ -599,7 +599,10 @@ class NodeActionViewController: ActionSheetViewController {
             let nodeEntity = node.toNodeEntity()
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
-            let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
+            let isEditableTextFile = node.isFile() && FileExtensionGroupOCWrapper.verify(
+                isEditableText: node.name,
+                fileSize: node.size?.uint64Value ?? 0
+            )
             let isTakedown = node.isTakenDown()
             let isVerifyContact = displayMode == .sharedItem &&
             shouldShowVerifyContact &&

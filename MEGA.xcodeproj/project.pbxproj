@@ -1934,6 +1934,7 @@
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
+		4EC25A6F1E9087E23465B28B /* FileExtensionGroupOCWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B281BDECD0DBA96396302F /* FileExtensionGroupOCWrapperTests.swift */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55E756F2CFD5DA80011FE14 /* OverDiskQuotaViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55E756E2CFD5DA70011FE14 /* OverDiskQuotaViewRouter.swift */; };
@@ -4850,6 +4851,7 @@
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerTests.swift; sourceTree = "<group>"; };
+		C8B281BDECD0DBA96396302F /* FileExtensionGroupOCWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionGroupOCWrapperTests.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55E756E2CFD5DA70011FE14 /* OverDiskQuotaViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewRouter.swift; sourceTree = "<group>"; };
 		B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGAPurchase.swift; sourceTree = "<group>"; };
@@ -11983,6 +11985,7 @@
 				A874D305263FF683000861DB /* ViewControllers */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */,
+				C8B281BDECD0DBA96396302F /* FileExtensionGroupOCWrapperTests.swift */,
 				0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */,
 				BF25A3732E41894B00583D88 /* MEGAProcessAssetTests.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
@@ -17064,6 +17067,7 @@
 				943DBBC62CB93AF900B8B14C /* ExportFileViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
+				4EC25A6F1E9087E23465B28B /* FileExtensionGroupOCWrapperTests.swift in Sources */,
 				835EBCD12DCA0B7C00AD1E57 /* FileLinkViewModelTests.swift in Sources */,
 				679F2FDFB5787FB4FCA14346 /* FilesExplorerOfflineTests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,

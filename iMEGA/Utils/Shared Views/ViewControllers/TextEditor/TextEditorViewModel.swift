@@ -360,6 +360,10 @@ final class TextEditorViewModel: ViewModelType {
     
     private func handleDownloadCompletion(_ transferEntity: TransferEntity) {
         guard let path = transferEntity.path else { return }
+        guard FileExtensionGroupOCWrapper.verify(isEditableTextFileAtPath: path) else {
+            router.showPreviewDocVC(fromFilePath: path, showUneditableError: shouldEditAfterOpen)
+            return
+        }
         do {
             var encode: String.Encoding = .utf8
             textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)

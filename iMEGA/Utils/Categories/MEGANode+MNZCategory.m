@@ -94,7 +94,7 @@
                 previewController.currentPreviewItemIndex = 0;
                 return previewController;
             }
-        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name]) {
+        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:previewDocumentPath]) {
             NSStringEncoding encode;
             NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:&encode error:nil];
             if (textContent != nil) {
@@ -128,7 +128,7 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name]) {
+            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name fileSize:self.size.unsignedLongLongValue]) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
                 // Authorized up front: the download goes through MEGASdk.shared, which has no link node in its tree.
                 MEGANode *nodeToLoad = isFolderLink ? [api authorizeNode:self] : self;

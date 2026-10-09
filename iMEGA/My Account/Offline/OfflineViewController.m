@@ -357,7 +357,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 [tmpOfflineItems addObject:tempDictionary];
                 
                 if (!isDirectory) {
-                    if (![self shouldSkipQLPreviewForFile:fileName]) {
+                    if (![self shouldSkipQLPreviewForFileAtPath:filePath]) {
                         offsetIndex++;
                     }
                 }
@@ -402,7 +402,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         [tempDictionary setValue:[NSNumber numberWithInt:multimediaOffsetIndex] forKey:kIndex];
                         multimediaOffsetIndex++;
                         [tmpOfflineMultimediaFiles addObject:[fileURL path]];
-                    } else if (![self shouldSkipQLPreviewForFile:fileName]) {
+                    } else if (![self shouldSkipQLPreviewForFileAtPath:fileURL.path]) {
                         [tempDictionary setValue:[NSNumber numberWithInt:nonMultimediaOffsetIndex] forKey:kIndex];
                         nonMultimediaOffsetIndex++;
                         [tmpOfflineFiles addObject:[fileURL path]];
@@ -423,8 +423,8 @@ static NSString *kisDirectory = @"kisDirectory";
     });
 }
 
-- (BOOL)shouldSkipQLPreviewForFile:(NSString *)fileName {
-    return [FileExtensionGroupOCWrapper verifyIsMultiMedia:fileName] || [FileExtensionGroupOCWrapper verifyIsEditableText:fileName] || [fileName.pathExtension isEqualToString:@"pdf"];
+- (BOOL)shouldSkipQLPreviewForFileAtPath:(NSString *)filePath {
+    return [FileExtensionGroupOCWrapper verifyIsMultiMedia:filePath] || [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:filePath] || [filePath.pathExtension isEqualToString:@"pdf"];
 }
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
@@ -717,7 +717,7 @@ static NSString *kisDirectory = @"kisDirectory";
         
     } else if ([PDFViewerRevampRouter canOpenWithFileName:self.previewDocumentPath]) {
         [self presentViewController:[self pdfViewerViewControllerForIndexPath:indexPath] animated:YES completion:nil];
-    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || [FileExtensionGroupOCWrapper verifyIsEditableText:self.previewDocumentPath]) {
+    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:self.previewDocumentPath]) {
         [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     } else {
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath isMultimedia: NO];
