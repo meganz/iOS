@@ -60,6 +60,9 @@ public struct HomeView: View {
         dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
     }
 
+    // Product team decided to put customization on hold, so we temprarily disable it
+    private var isWidgetCustomizationEnabled: Bool { false }
+
     /// The selection handlers Home is given, each wrapped so that a tap on a file which would need
     /// downloading while offline reports that instead of opening nothing (IOS-12409)
     private var searchResultsSelectionHandler: some NodeSelectionHandling {
@@ -182,7 +185,7 @@ public struct HomeView: View {
             .navigationTitle(Strings.Localizable.home)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if isHomeRevampPhase2Enabled {
+                if isWidgetCustomizationEnabled {
                     dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 2)
 
                     if #available(iOS 26.0, *) {
@@ -242,7 +245,7 @@ public struct HomeView: View {
             .task { viewModel.reloadWidgets() }
             .onAppear {
                 viewModel.trackHomeScreenAppear()
-                promotionalDialogViewModel.presentIfNeeded(featureEnabled: isHomeRevampPhase2Enabled)
+                promotionalDialogViewModel.presentIfNeeded(featureEnabled: isWidgetCustomizationEnabled)
             }
     }
 

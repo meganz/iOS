@@ -46,8 +46,17 @@ struct LeftOffItemsSearchResultsProvider: LeftOffItemsResultsProviding {
     }
 
     func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        // Note about the .prepend(()):
+        // When we open a left off item inside ContinueWhereYouLeftOffView and close it, we'll upsert that item
+        // to the store and we would expect the SearchResultsView to refresh and reflect the upsert
+        // which will put the item to the top of the list
+        // However the upsert happens in parallel with the refresh, so the refresh won't catch that upsert and
+        // won't correctly update the UI
+        // A workaround is to prepend trigger an extra update signal after the refresh, then
+        // searchResultUpdateSignalSequence will update and reflect the upsert correctly
         leftOffItemsUseCase
             .changesSignalSequence()
+            .prepend(())
             .map { SearchResultUpdateSignal.generic }
             .eraseToAnyAsyncSequence()
     }
