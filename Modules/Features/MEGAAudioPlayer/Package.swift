@@ -50,7 +50,8 @@ let package = Package(
             dependencies: [
                 "MEGAAudioPlayer",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
-            ]
+            ],
+            resources: [.copy("Fixtures")]
         )
     ]
 )
