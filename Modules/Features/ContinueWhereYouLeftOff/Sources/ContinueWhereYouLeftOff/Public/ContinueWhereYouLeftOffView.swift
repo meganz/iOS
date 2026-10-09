@@ -13,22 +13,26 @@ public struct ContinueWhereYouLeftOffView: View {
         let leftOffItemsUseCase: any LeftOffItemsUseCaseProtocol
         let thumbnailUseCase: any ThumbnailUseCaseProtocol
         let selectionHandler: any NodeSelectionHandling
+        let makeOfflineNodeTapDispatcher: () -> OfflineAwareNodeTapDispatcher
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
 
         public init(
             leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
             thumbnailUseCase: some ThumbnailUseCaseProtocol,
             selectionHandler: some NodeSelectionHandling,
+            makeOfflineNodeTapDispatcher: @escaping () -> OfflineAwareNodeTapDispatcher,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         ) {
             self.leftOffItemsUseCase = leftOffItemsUseCase
             self.thumbnailUseCase = thumbnailUseCase
             self.selectionHandler = selectionHandler
+            self.makeOfflineNodeTapDispatcher = makeOfflineNodeTapDispatcher
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
         }
     }
 
     @StateObject private var viewModel: LeftOffItemsViewModel
+    @StateObject private var offlineNodeTapGate: LeftOffItemsOfflineNodeTapGate
     @Binding private var tabBarHidden: Bool
     @Environment(\.dismiss) private var dismiss
     private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
@@ -38,11 +42,16 @@ public struct ContinueWhereYouLeftOffView: View {
         tabBarHidden: Binding<Bool>
     ) {
         let selectionHandler = dependency.selectionHandler
+        let gate = LeftOffItemsOfflineNodeTapGate(dispatcher: dependency.makeOfflineNodeTapDispatcher())
+        _offlineNodeTapGate = StateObject(wrappedValue: gate)
         _viewModel = StateObject(
             wrappedValue: LeftOffItemsViewModel(
                 leftOffItemsUseCase: dependency.leftOffItemsUseCase,
                 thumbnailUseCase: dependency.thumbnailUseCase,
-                openNode: { selectionHandler.handle(selection: NodeSelection(handle: $0, siblings: [])) }
+                openNode: {
+                    gate.handler(wrapping: selectionHandler)
+                        .handle(selection: NodeSelection(handle: $0, siblings: []))
+                }
             )
         )
         _tabBarHidden = tabBarHidden
@@ -93,6 +102,7 @@ public struct ContinueWhereYouLeftOffView: View {
                     Text(Strings.Localizable.ContinueWhereYouLeftOff.Clear.Confirmation.message)
                 }
             )
+            .snackBar($offlineNodeTapGate.snackBar)
             .miniPlayerAware()
             .environment(\.editMode, $viewModel.editMode)
             .onAppear {

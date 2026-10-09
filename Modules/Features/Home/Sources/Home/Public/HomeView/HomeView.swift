@@ -292,7 +292,8 @@ public struct HomeView: View {
                 dependency: ContinueWhereYouLeftOffView.Dependency(
                     leftOffItemsUseCase: dependency.leftOffItemsUseCase,
                     thumbnailUseCase: dependency.leftOffThumbnailUseCase,
-                    selectionHandler: searchResultsSelectionHandler,
+                    selectionHandler: dependency.searchResultsSelectionHandler,
+                    makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
                     transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 ),
                 tabBarHidden: $navigator.tabBarHidden
