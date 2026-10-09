@@ -175,6 +175,7 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | `RichEditorControlsTests` | Atomic rows, the selection responder and handler, the toolbar, focus hand-overs when a row gets a new text view. |
 | `RichRowClipboardTests`, `RichPasteboardTests` | Copy, cut, paste and the edit menu in one row. |
 | `RichKeyboardTests` | The last rows scroll above the keyboard. Select All does not scroll. |
+| `RichLateKeyboardTests` | A keyboard that comes after the focus scroll or after Enter at the bottom edge. The caret stays on screen when the list gets shorter and when a keyboard frame covers it. |
 | `SourceEditorUIKitTests`, `MarkdownEditorSaveTests` | Source mode, notices, mode switches and every save path. |
 | `RichListLayoutParityTests` | After each kind of edit, the item heights equal the heights of a list read again from the model. A row that stepped out of a list has no marker. |
 | `RichRowGeometryTests` | After Enter on the last list item, a paste, a scroll and a fast scroll to the end, each cell shows its own row at the height of its content, and no cell overlaps the next one. |
