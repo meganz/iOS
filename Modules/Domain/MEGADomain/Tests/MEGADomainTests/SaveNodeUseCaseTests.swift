@@ -23,6 +23,14 @@ struct SaveNodeUseCaseTests {
         nodeHandle: 123,
         fileName: "test.txt"
     )
+    private let batchTransfer = TransferEntity(
+        path: "",
+        nodeHandle: .invalid,
+        fileName: "",
+        isFolderTransfer: true,
+        folderTransferTag: -1,
+        appData: ">SaveInPhotosApp"
+    )
     private let invalidTransfer = TransferEntity(
         path: nil,
         nodeHandle: 123,
@@ -117,6 +125,17 @@ struct SaveNodeUseCaseTests {
         #expect(result == false)
     }
     
+    @Test("Batch transfer carrying save to Photos app data should be skipped without triggering fallback")
+    func testSaveNode_withBatchTransfer_shouldSkipWithoutTriggeringFallback() async {
+        let (result, saveMediaToPhotoFailureHandler) = await executeSaveNode(
+            transfer: batchTransfer,
+            isURLImage: true,
+            photosLibraryError: .videoNotSaved
+        )
+        #expect(result == false)
+        #expect(saveMediaToPhotoFailureHandler.fallback_calledTimes == 0)
+    }
+
     @Test("Fallback to making offline for image should trigger fallback")
     func testSaveNode_whenFallbackForImage_shouldTriggerFallback() async {
         let (result, saveMediaToPhotoFailureHandler) = await executeSaveNode(
