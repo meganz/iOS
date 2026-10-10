@@ -24,6 +24,8 @@ class AppGroupContainerTests: XCTestCase {
                 XCTAssertEqual(directoryURL, try XCTUnwrap(url?.appendingPathComponent("logs", isDirectory: true)))
             case .groupSupport:
                 XCTAssertEqual(directoryURL, try XCTUnwrap(url?.appendingPathComponent("GroupSupport", isDirectory: true)))
+            case .fileProviderSync:
+                XCTAssertEqual(directoryURL, try XCTUnwrap(url?.appendingPathComponent("FileProviderSync", isDirectory: true)))
             }
         }
     }

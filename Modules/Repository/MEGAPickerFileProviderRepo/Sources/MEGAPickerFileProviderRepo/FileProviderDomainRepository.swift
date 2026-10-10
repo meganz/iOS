@@ -29,10 +29,8 @@ public struct FileProviderDomainRepository: FileProviderDomainRepositoryProtocol
     }
 
     public func addDomain() async throws {
-        // One fixed domain whichever account is logged in, so Files only ever shows one MEGA location. Logout
-        // removes it, which drops the previous account's cached items before the next account logs in.
-        let domain = NSFileProviderDomain(identifier: NSFileProviderDomainIdentifier("mega"), displayName: "MEGA")
-        try await NSFileProviderManager.add(domain)
+        // Logout removes the domain, which drops the previous account's cached items before the next account logs in.
+        try await NSFileProviderManager.add(.mega)
     }
 
     public func removeAllDomains() async throws {

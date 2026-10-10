@@ -74,6 +74,24 @@ struct FileProviderItemEntityTests {
         #expect(item.metadataVersion != shifted.metadataVersion)
     }
 
+    @Test
+    func versionHash_isTheSameForTheSameNodeState() {
+        let item = makeItem(node: NodeEntity(name: "a.txt", fingerprint: "f", isFile: true, modificationTime: Self.modificationTime))
+        let sameItem = makeItem(node: NodeEntity(name: "a.txt", fingerprint: "f", isFile: true, modificationTime: Self.modificationTime))
+
+        #expect(item.versionHash == sameItem.versionHash)
+    }
+
+    @Test
+    func versionHash_changesWithEitherVersion() {
+        let item = makeItem(node: NodeEntity(name: "a.txt", fingerprint: "f", isFile: true, modificationTime: Self.modificationTime))
+        let edited = makeItem(node: NodeEntity(name: "a.txt", fingerprint: "g", isFile: true, modificationTime: Self.modificationTime))
+        let renamed = makeItem(node: NodeEntity(name: "b.txt", fingerprint: "f", isFile: true, modificationTime: Self.modificationTime))
+
+        #expect(item.versionHash != edited.versionHash)
+        #expect(item.versionHash != renamed.versionHash)
+    }
+
     private func makeItem(
         parentIdentifier: NSFileProviderItemIdentifier = .rootContainer,
         node: NodeEntity,
@@ -101,5 +119,26 @@ struct NSFileProviderPageOffsetTests {
     ])
     func offset_ofPageThatIsNotAnOffset_isZero(pageData: Data) {
         #expect(NSFileProviderPage(pageData).offset == 0)
+    }
+}
+
+struct FileProviderChangeAnchorEntityTests {
+    @Test
+    func syncAnchor_givesBackTheAnchorItWasCreatedWith() throws {
+        let anchor = FileProviderChangeAnchorEntity(storeID: UUID(), generation: 2, offset: 345)
+
+        #expect(try NSFileProviderSyncAnchor(anchor).changeAnchor == anchor)
+    }
+
+    @Test
+    func syncAnchor_fromBeforeChangesWereTracked_hasNoChangeAnchor() {
+        #expect(NSFileProviderSyncAnchor(Data("0".utf8)).changeAnchor == nil)
+    }
+
+    @Test
+    func syncAnchor_fitsTheSystemsLimit() throws {
+        let anchor = FileProviderChangeAnchorEntity(storeID: UUID(), generation: .max, offset: .max)
+
+        #expect(try NSFileProviderSyncAnchor(anchor).rawValue.count <= 500)
     }
 }

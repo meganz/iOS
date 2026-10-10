@@ -7,6 +7,7 @@ public struct AppGroupContainer: Sendable {
         case fileExtension = "File Provider Storage"
         case logs = "logs"
         case groupSupport = "GroupSupport"
+        case fileProviderSync = "FileProviderSync"
     }
 
     private let fileManager: FileManager

@@ -53,6 +53,18 @@ public extension FileProviderItemEntity {
         ])
     }
 
+    /// Both versions in 64 bits, what a snapshot stores for each child. It is the same in every process (FNV-1a), so
+    /// a hash saved in one launch can be compared in another.
+    var versionHash: UInt64 {
+        var hash: UInt64 = 0xcbf29ce484222325
+        // The length prefix keeps two different pairs of versions from making the same bytes.
+        let bytes = withUnsafeBytes(of: UInt64(contentVersion.count).littleEndian) { Data($0) } + contentVersion + metadataVersion
+        for byte in bytes {
+            hash = (hash ^ UInt64(byte)) &* 0x100000001b3
+        }
+        return hash
+    }
+
     private static func seconds(_ date: Date) -> Int64 {
         Int64(date.timeIntervalSince1970)
     }

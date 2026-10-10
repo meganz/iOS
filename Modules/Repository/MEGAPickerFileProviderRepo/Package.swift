@@ -38,7 +38,7 @@ let package = Package(
         ),
         .testTarget(
             name: "MEGAPickerFileProviderRepoTests",
-            dependencies: ["MEGAPickerFileProviderRepo"],
+            dependencies: ["MEGAPickerFileProviderRepo", "MEGAPickerFileProviderDomain"],
             swiftSettings: settings
         )
     ],
