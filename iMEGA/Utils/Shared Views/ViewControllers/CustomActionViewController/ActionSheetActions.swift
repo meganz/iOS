@@ -225,6 +225,11 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.Link.Button.copyToOffline, image: .copyToOffline, type: .download)
     }
 
+    /// The pre-revamp folder link rows keep their wording but take the offline icon of the folder link toolbar.
+    class func folderLinkDownloadAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.General.downloadToOffline, image: .copyToOffline, type: .download)
+    }
+
     /// Saving a non-media file to the device, through the system share sheet where Save to Files lives.
     /// Media keeps `saveToPhotosAction()`, which sends it straight to the Photos library.
     class func downloadToDeviceAction() -> NodeAction {

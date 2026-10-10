@@ -376,7 +376,7 @@ final class NodeActionBuilder {
 
     /// What the sheet offered before the revamp, kept for as long as the flag can be turned off.
     private func legacyNodeInsideFolderLinkActions() -> [NodeAction] {
-        var nodeActions: [NodeAction] = [.importAction(), .downloadAction()]
+        var nodeActions: [NodeAction] = [.importAction(), .folderLinkDownloadAction()]
 
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())

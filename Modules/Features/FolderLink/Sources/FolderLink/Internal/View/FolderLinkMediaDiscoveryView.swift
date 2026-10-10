@@ -232,7 +232,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         FolderLinkBottomBarActionButton(action: .downloadToFiles, selection: $viewModel.bottomBarAction)
         
         Spacer()
-        FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
+        FolderLinkBottomBarActionButton(action: .addToCloudDrive, isLinkRevampEnabled: true, selection: $viewModel.bottomBarAction)
         
         Spacer()
         FolderLinkBottomBarActionButton(action: .saveToPhotos, selection: $viewModel.bottomBarAction)

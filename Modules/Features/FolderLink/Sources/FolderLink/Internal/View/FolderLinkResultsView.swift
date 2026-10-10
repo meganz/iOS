@@ -275,7 +275,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         FolderLinkBottomBarActionButton(action: .downloadToFiles, selection: $viewModel.bottomBarAction)
 
         Spacer()
-        FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
+        FolderLinkBottomBarActionButton(action: .addToCloudDrive, isLinkRevampEnabled: true, selection: $viewModel.bottomBarAction)
 
         if viewModel.shouldIncludeSaveToPhotosBottomAction {
             Spacer()
