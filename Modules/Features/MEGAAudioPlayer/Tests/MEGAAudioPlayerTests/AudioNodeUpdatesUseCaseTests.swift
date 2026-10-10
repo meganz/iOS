@@ -124,15 +124,78 @@ struct AudioNodeUpdatesUseCaseTests {
         #expect(batches.map { $0.map(\.handle) } == [[2]])
     }
 
+    // MARK: - Replacement
+
+    /// A replaced file becomes a version of the file that replaced it — the update is a
+    /// move whose new parent is a file.
+    @Test("A file that became a version is reported as replaced by the file above it")
+    func versionedNode_isReplacedByItsParent() async {
+        let sut = makeSUT(
+            batches: [[NodeEntity(changeTypes: .parent, handle: 1, parentHandle: 2, isFile: true)]],
+            nodesByHandle: [
+                2: file(2, name: "new.mp3", parent: 10),
+                10: folder(10)
+            ]
+        )
+
+        let batches = await collectReplaced(sut)
+
+        #expect(batches.map { $0.mapValues(\.handle) } == [[1: 2]])
+        #expect(batches.first?[1]?.name == "new.mp3")
+    }
+
+    @Test("Replacements arriving together resolve to the latest version")
+    func chainOfVersions_resolvesToTheLatest() async {
+        let sut = makeSUT(
+            batches: [[NodeEntity(changeTypes: .parent, handle: 1, parentHandle: 2, isFile: true)]],
+            nodesByHandle: [
+                2: file(2, parent: 3),
+                3: file(3, parent: 10),
+                10: folder(10)
+            ]
+        )
+
+        let batches = await collectReplaced(sut)
+
+        #expect(batches.map { $0.mapValues(\.handle) } == [[1: 3]])
+    }
+
+    /// Moves and Rubbish Bin moves are reported the same way, but land under a folder.
+    @Test("A node moved into a folder is not a replacement")
+    func nodeMovedIntoAFolder_isNotReplaced() async {
+        let sut = makeSUT(
+            batches: [[NodeEntity(changeTypes: .parent, handle: 1, parentHandle: 10, isFile: true)]],
+            nodesByHandle: [10: folder(10)]
+        )
+
+        let batches = await collectReplaced(sut)
+
+        #expect(batches.isEmpty)
+    }
+
+    /// With file versioning off the replaced file is deleted — indistinguishable from a
+    /// deletion, so it is left to be one.
+    @Test("A removed node is not a Cloud Drive replacement, even next to a new file with its name")
+    func removedNode_isNotReplacedInTheCloudDrive() async {
+        let sut = makeSUT(batches: [[
+            NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 1, parentHandle: 10, isFile: true),
+            NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 10, isFile: true)
+        ]])
+
+        let batches = await collectReplaced(sut)
+
+        #expect(batches.isEmpty)
+    }
+
     // MARK: - Folder link
 
     @Test("A node removed from the folder-link tree counts as deleted")
     func folderLink_removedNode_isDeleted() async {
         let sut = makeSUT(folderLinkBatches: [[NodeEntity(changeTypes: .removed, handle: 1)]])
 
-        let batches = await collectFolderLink(sut)
+        let batches = await collectRemovedFolderLink(sut)
 
-        #expect(batches == [[1]])
+        #expect(batches == [[1: nil]])
     }
 
     /// A folder link only ever shows the tree under the shared folder, so anything the
@@ -145,7 +208,7 @@ struct AudioNodeUpdatesUseCaseTests {
             isInRubbishBin: true
         )
 
-        let batches = await collectFolderLink(sut)
+        let batches = await collectRemovedFolderLink(sut)
 
         #expect(batches.isEmpty, "the account SDK cannot resolve a folder-link handle, so its Rubbish Bin answer is meaningless here")
     }
@@ -183,16 +246,106 @@ struct AudioNodeUpdatesUseCaseTests {
         #expect(batches.map { $0.map(\.handle) } == [[2]], "the first update is dropped rather than emitted empty")
     }
 
+    // MARK: - Folder link replacement
+
+    /// A folder link shows no versions: the replaced file leaves the tree and a file with
+    /// its name arrives in its folder, in the same update.
+    @Test("A removed file with a new file of its name in its folder is replaced, not deleted")
+    func folderLink_removedFileWithANewNamesake_isReplaced() async {
+        let batches: [[NodeEntity]] = [[
+            NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 1, parentHandle: 10, isFile: true),
+            NodeEntity(changeTypes: .counter, handle: 10, isFolder: true),
+            NodeEntity(changeTypes: [.new, .name], name: "song.mp3", handle: 2, parentHandle: 10, isFile: true)
+        ]]
+        let nodes = [HandleEntity(2): StubPlayableNode(handle: 2, name: "song.mp3")]
+
+        let removals = await collectRemovedFolderLink(makeSUT(folderLinkBatches: batches, folderLinkNodes: nodes))
+
+        #expect(removals == [[1: 2]], "a replacement is not a deletion")
+    }
+
+    @Test(
+        "A removed file without exactly one new namesake in its folder is deleted",
+        arguments: [
+            ("another folder", [NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 20, isFile: true)]),
+            ("another name", [NodeEntity(changeTypes: .new, name: "other.mp3", handle: 2, parentHandle: 10, isFile: true)]),
+            ("two namesakes", [
+                NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 10, isFile: true),
+                NodeEntity(changeTypes: .new, name: "song.mp3", handle: 3, parentHandle: 10, isFile: true)
+            ]),
+            ("a folder, not a file", [NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 10, isFolder: true)])
+        ]
+    )
+    func folderLink_removedFileWithoutOneNamesake_isDeleted(scenario: String, added: [NodeEntity]) async {
+        let removed = NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 1, parentHandle: 10, isFile: true)
+        let batches = [[removed] + added]
+        let nodes = [HandleEntity(2): StubPlayableNode(handle: 2), 3: StubPlayableNode(handle: 3)]
+
+        let removals = await collectRemovedFolderLink(makeSUT(folderLinkBatches: batches, folderLinkNodes: nodes))
+
+        #expect(removals == [[1: nil]], "\(scenario)")
+    }
+
+    @Test("Two removed namesakes and one new file leave it open which was replaced, so both are deleted")
+    func folderLink_twoRemovedNamesakes_areDeleted() async {
+        let batches: [[NodeEntity]] = [[
+            NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 1, parentHandle: 10, isFile: true),
+            NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 3, parentHandle: 10, isFile: true),
+            NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 10, isFile: true)
+        ]]
+        let nodes = [HandleEntity(2): StubPlayableNode(handle: 2)]
+
+        let removals = await collectRemovedFolderLink(makeSUT(folderLinkBatches: batches, folderLinkNodes: nodes))
+
+        #expect(removals == [[1: nil, 3: nil]])
+    }
+
+    /// Only one update can pair the two; split across updates, the removal stands alone.
+    @Test("A removal and a new namesake in separate updates are a deletion")
+    func folderLink_removalAndNamesakeInSeparateUpdates_isADeletion() async {
+        let batches: [[NodeEntity]] = [
+            [NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 1, parentHandle: 10, isFile: true)],
+            [NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 10, isFile: true)]
+        ]
+        let nodes = [HandleEntity(2): StubPlayableNode(handle: 2)]
+
+        let removals = await collectRemovedFolderLink(makeSUT(folderLinkBatches: batches, folderLinkNodes: nodes))
+
+        #expect(removals == [[1: nil]])
+    }
+
+    @Test("A replaced file whose replacing file can no longer be found is reported as simply gone")
+    func folderLink_unresolvableNewFile_isReportedWithoutANode() async {
+        let batches: [[NodeEntity]] = [[
+            NodeEntity(changeTypes: .removed, name: "song.mp3", handle: 1, parentHandle: 10, isFile: true),
+            NodeEntity(changeTypes: .new, name: "song.mp3", handle: 2, parentHandle: 10, isFile: true)
+        ]]
+
+        let removals = await collectRemovedFolderLink(makeSUT(folderLinkBatches: batches))
+
+        #expect(removals == [[1: nil]], "paired, but with nothing to stand in")
+    }
+
     // MARK: - Helpers
+
+    private func file(_ handle: HandleEntity, name: String = "", parent: HandleEntity) -> NodeEntity {
+        NodeEntity(name: name, handle: handle, parentHandle: parent, isFile: true)
+    }
+
+    private func folder(_ handle: HandleEntity) -> NodeEntity {
+        NodeEntity(handle: handle, isFolder: true)
+    }
 
     private func makeSUT(
         batches: [[NodeEntity]] = [],
         folderLinkBatches: [[NodeEntity]] = [],
         isInRubbishBin: Bool = false,
-        folderLinkNodes: [HandleEntity: StubPlayableNode] = [:]
+        folderLinkNodes: [HandleEntity: StubPlayableNode] = [:],
+        nodesByHandle: [HandleEntity: NodeEntity] = [:]
     ) -> AudioNodeUpdatesUseCase {
         AudioNodeUpdatesUseCase(
             nodeRepository: MockNodeRepository(
+                nodesForHandle: nodesByHandle,
                 nodeUpdates: finiteSequence(of: batches),
                 folderLinkNodeUpdates: finiteSequence(of: folderLinkBatches)
             ),
@@ -234,9 +387,18 @@ struct AudioNodeUpdatesUseCaseTests {
         return batches
     }
 
-    private func collectFolderLink(_ sut: AudioNodeUpdatesUseCase) async -> [Set<HandleEntity>] {
-        var batches: [Set<HandleEntity>] = []
-        for await batch in sut.deletedFolderLinkNodeHandles {
+    /// Each removed node's handle, mapped to the handle of the node that replaced it
+    private func collectRemovedFolderLink(_ sut: AudioNodeUpdatesUseCase) async -> [[HandleEntity: HandleEntity?]] {
+        var batches: [[HandleEntity: HandleEntity?]] = []
+        for await batch in sut.removedFolderLinkNodes {
+            batches.append(batch.mapValues { $0?.handle })
+        }
+        return batches
+    }
+
+    private func collectReplaced(_ sut: AudioNodeUpdatesUseCase) async -> [[HandleEntity: NodeEntity]] {
+        var batches: [[HandleEntity: NodeEntity]] = []
+        for await batch in sut.replacedNodes {
             batches.append(batch)
         }
         return batches

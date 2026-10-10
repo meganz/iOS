@@ -14,6 +14,8 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
     private let didPlayToEndSubject = PassthroughSubject<Void, Never>()
 
     private(set) var playedURLs: [URL] = []
+    /// The URLs loaded without starting, in order — a subset of `playedURLs`.
+    private(set) var loadedPausedURLs: [URL] = []
     private(set) var seekedSeconds: [TimeInterval] = []
     private(set) var togglePlayPauseCallCount = 0
     private(set) var pauseCallCount = 0
@@ -23,6 +25,8 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
 
     /// `true` while an item is loaded — i.e. something can actually be heard.
     private(set) var isItemLoaded = false
+
+    private(set) var isPlaybackIntended = false
 
     /// Duration reported for every item handed to `play(url:)`.
     var itemDuration: TimeInterval = 100
@@ -58,17 +62,25 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
         didPlayToEndSubject.eraseToAnyPublisher()
     }
 
-    func play(url: URL) {
+    func play(url: URL, autoplay: Bool) {
         playedURLs.append(url)
+        // As the real engine: a play asked for while nothing was loaded still stands
+        isPlaybackIntended = autoplay || isPlaybackIntended
+        if !isPlaybackIntended { loadedPausedURLs.append(url) }
         isItemLoaded = true
         currentTimeSubject.send(0)
         durationSubject.send(itemDuration)
-        playbackStatusSubject.send(stallsBeforeFirstFrame ? .buffering : .playing)
+        if isPlaybackIntended {
+            playbackStatusSubject.send(stallsBeforeFirstFrame ? .buffering : .playing)
+        } else {
+            playbackStatusSubject.send(.paused)
+        }
     }
 
     func unloadCurrentItem() {
         unloadCallCount += 1
         isItemLoaded = false
+        isPlaybackIntended = false
         currentTimeSubject.send(0)
         durationSubject.send(nil)
         playbackStatusSubject.send(.idle)
@@ -76,11 +88,13 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
 
     func togglePlayPause() {
         togglePlayPauseCallCount += 1
-        playbackStatusSubject.send(playbackStatusSubject.value == .playing ? .paused : .playing)
+        isPlaybackIntended = playbackStatusSubject.value != .playing
+        playbackStatusSubject.send(isPlaybackIntended ? .playing : .paused)
     }
 
     func pause() {
         pauseCallCount += 1
+        isPlaybackIntended = false
         playbackStatusSubject.send(.paused)
     }
 
@@ -95,11 +109,13 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
 
     func replay() {
         replayCallCount += 1
+        isPlaybackIntended = true
         currentTimeSubject.send(0)
     }
 
     func stop() {
         stopCallCount += 1
+        isPlaybackIntended = false
     }
 
     // MARK: - Test drivers
@@ -125,6 +141,11 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
     /// The running item stalls part-way through.
     func simulateStall() {
         playbackStatusSubject.send(.buffering)
+    }
+
+    /// The system pauses the player (a phone call, say) — the listener still wants it playing.
+    func simulateInterruption() {
+        playbackStatusSubject.send(.paused)
     }
 }
 
@@ -177,14 +198,16 @@ actor StubAudioMetadataCache: AudioMetadataCacheProtocol {
     func removeAll() {}
 }
 
-/// Feeds deletions in on demand, standing in for the SDK's node updates.
+/// Feeds node changes in on demand, standing in for the SDK's node updates.
 struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
     let deletedNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
-    let deletedFolderLinkNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
+    let replacedNodes: AnyAsyncSequence<[HandleEntity: NodeEntity]>
+    let removedFolderLinkNodes: AnyAsyncSequence<[HandleEntity: (any PlayableNode)?]>
     let renamedNodes: AnyAsyncSequence<[NodeEntity]>
     let renamedFolderLinkNodes: AnyAsyncSequence<[any PlayableNode]>
     private let continuation: AsyncStream<Set<HandleEntity>>.Continuation
-    private let folderLinkContinuation: AsyncStream<Set<HandleEntity>>.Continuation
+    private let replacementContinuation: AsyncStream<[HandleEntity: NodeEntity]>.Continuation
+    private let folderLinkContinuation: AsyncStream<[HandleEntity: (any PlayableNode)?]>.Continuation
     private let renameContinuation: AsyncStream<[NodeEntity]>.Continuation
     private let folderLinkRenameContinuation: AsyncStream<[any PlayableNode]>.Continuation
 
@@ -193,8 +216,12 @@ struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
         deletedNodeHandles = stream.eraseToAnyAsyncSequence()
         self.continuation = continuation
 
-        let (folderLinkStream, folderLinkContinuation) = AsyncStream<Set<HandleEntity>>.makeStream()
-        deletedFolderLinkNodeHandles = folderLinkStream.eraseToAnyAsyncSequence()
+        let (replacementStream, replacementContinuation) = AsyncStream<[HandleEntity: NodeEntity]>.makeStream()
+        replacedNodes = replacementStream.eraseToAnyAsyncSequence()
+        self.replacementContinuation = replacementContinuation
+
+        let (folderLinkStream, folderLinkContinuation) = AsyncStream<[HandleEntity: (any PlayableNode)?]>.makeStream()
+        removedFolderLinkNodes = folderLinkStream.eraseToAnyAsyncSequence()
         self.folderLinkContinuation = folderLinkContinuation
 
         let (renameStream, renameContinuation) = AsyncStream<[NodeEntity]>.makeStream()
@@ -210,8 +237,19 @@ struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
         continuation.yield(handles)
     }
 
+    /// - Parameter replacements: the replacing node, keyed by the replaced node's handle
+    func simulateReplacement(_ replacements: [HandleEntity: NodeEntity]) {
+        replacementContinuation.yield(replacements)
+    }
+
     func simulateFolderLinkDeletion(ofNodeHandles handles: Set<HandleEntity>) {
-        folderLinkContinuation.yield(handles)
+        folderLinkContinuation.yield(Dictionary(uniqueKeysWithValues: handles.map { ($0, (any PlayableNode)?.none) }))
+    }
+
+    /// - Parameter removals: the replacing node, keyed by the removed node's handle — `nil` for one
+    ///   that is simply gone, so one update can carry replacements and deletions together
+    func simulateFolderLinkRemoval(_ removals: [HandleEntity: (any PlayableNode)?]) {
+        folderLinkContinuation.yield(removals)
     }
 
     func simulateRename(of nodes: [NodeEntity]) {

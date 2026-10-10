@@ -58,6 +58,38 @@ struct PlaybackEngineObservationTests {
         #expect(await poll { engine.duration } == 5)
     }
 
+    /// The player is already paused, so loading without starting changes nothing the
+    /// status observation would report — the engine has to publish `.paused` itself, or
+    /// it stays on `.loading` and the player shows a throbber that never goes away.
+    @Test("an item loaded without autoplay reads as paused, still gets its duration, and does not start")
+    func itemLoadedWithoutAutoplayReadsPaused() async throws {
+        let engine = PlaybackEngine(notificationCenter: NotificationCenter())
+
+        engine.play(url: try Self.silentWav(seconds: 5), autoplay: false)
+
+        #expect(engine.currentStatusForTesting == .paused)
+        #expect(!engine.isPlaybackIntended)
+        #expect(await poll { engine.duration } == 5)
+        #expect(engine.currentStatusForTesting == .paused, "loading the item must not start it")
+        #expect(engine.currentTime == 0)
+    }
+
+    /// A replaced track, paused, is unloaded while its new file resolves; a play tapped in
+    /// that gap already sets the player going, so the item plays — and has to be meant to,
+    /// or an interruption that ends would leave it silent.
+    @Test("a play asked for while nothing was loaded starts an item loaded without autoplay, as intended")
+    func playAskedForBeforeLoadStartsTheItem() async throws {
+        let engine = PlaybackEngine(notificationCenter: NotificationCenter())
+        engine.unloadCurrentItem()
+        engine.togglePlayPause()
+
+        engine.play(url: try Self.silentWav(seconds: 5), autoplay: false)
+
+        #expect(engine.isPlaybackIntended, "resumes after an interruption")
+        let status = await poll { engine.currentStatusForTesting == .playing ? PlaybackStatus.playing : nil }
+        #expect(status == .playing)
+    }
+
     @Test("a loaded item reports playing through the real observation")
     func loadedItemReportsItsStatus() async throws {
         let engine = PlaybackEngine(notificationCenter: NotificationCenter())

@@ -49,19 +49,21 @@ final class AudioPlaybackService {
     private var sleepTimerTask: Task<Void, Never>?
 
     /// Runs for the lifetime of the service: the SDK keeps reporting node changes
-    private var nodeUpdatesTask: Task<Void, Never>?
+    private var deletedNodesTask: Task<Void, Never>?
 
     /// The folder-link SDK's own stream, which only bears on folder-link playback
-    private var folderLinkNodeUpdatesTask: Task<Void, Never>?
+    private var removedFolderLinkNodesTask: Task<Void, Never>?
 
     private var renamedNodesTask: Task<Void, Never>?
 
     private var renamedFolderLinkNodesTask: Task<Void, Never>?
 
+    private var replacedNodesTask: Task<Void, Never>?
+
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
     private var playGeneration = 0
-    
+
     /// The queue's pre-shuffle track order, kept while shuffle is on
     private var unshuffledTracks: [PlaybackTrack]?
 
@@ -476,7 +478,7 @@ extension AudioPlaybackService: PlaybackControllable {
         evaluateResumeWhenReady()
     }
 
-    private func playCurrent() {
+    private func playCurrent(autoplay: Bool = true) {
         metadataTask?.cancel()
         metadataTask = nil
         resolutionTask?.cancel()
@@ -507,7 +509,7 @@ extension AudioPlaybackService: PlaybackControllable {
         // A verdict we already hold is applied inline, so offline files and
         // already-checked tracks start without waiting a turn.
         if let known = trackResolver.cachedResolution(for: track) {
-            playTrack(track, resolution: known, generation: generation)
+            playTrack(track, resolution: known, generation: generation, autoplay: autoplay)
             return
         }
 
@@ -515,11 +517,16 @@ extension AudioPlaybackService: PlaybackControllable {
             guard let self else { return }
             let resolution = await trackResolver.resolve(track)
             guard !Task.isCancelled, generation == playGeneration else { return }
-            playTrack(track, resolution: resolution, generation: generation)
+            playTrack(track, resolution: resolution, generation: generation, autoplay: autoplay)
         }
     }
 
-    private func playTrack(_ track: PlaybackTrack, resolution: AudioURLResolution, generation: Int) {
+    private func playTrack(
+        _ track: PlaybackTrack,
+        resolution: AudioURLResolution,
+        generation: Int,
+        autoplay: Bool
+    ) {
         switch resolution {
         case .resolved(let url):
             metadataTask = Task { [metadataCache, weak self] in
@@ -530,7 +537,7 @@ extension AudioPlaybackService: PlaybackControllable {
                 }
                 self.markArtworkResolved(generation: generation)
             }
-            engine.play(url: url)
+            engine.play(url: url, autoplay: autoplay)
 
         case .takenDown:
             playbackBlockedSubject.send(.takenDown)
@@ -612,32 +619,52 @@ extension AudioPlaybackService: PlaybackControllable {
     // MARK: - Node updates
 
     private func bindNodeUpdates() {
-        nodeUpdatesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
+        deletedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
             for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedNodeHandles {
                 guard !Task.isCancelled else { return }
                 await self?.handleDeletedNodes(withHandles: deletedNodeHandles, isFolderLink: false)
             }
         }
 
-        folderLinkNodeUpdatesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
-            for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedFolderLinkNodeHandles {
+        removedFolderLinkNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
+            for await removals in audioNodeUpdatesUseCase.removedFolderLinkNodes {
                 guard !Task.isCancelled else { return }
-                await self?.handleDeletedNodes(withHandles: deletedNodeHandles, isFolderLink: true)
+                await self?.handleRemovedFolderLinkNodes(removals)
+            }
+        }
+
+        replacedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
+            for await replacements in audioNodeUpdatesUseCase.replacedNodes {
+                guard !Task.isCancelled else { return }
+                await self?.replaceNodes(isFolderLink: false) { $0.replacingNodes(replacements) }
             }
         }
 
         renamedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
             for await renamedNodes in audioNodeUpdatesUseCase.renamedNodes {
                 guard !Task.isCancelled else { return }
-                await self?.refreshTracks(isFolderLink: false) { $0.refreshingNodes(renamedNodes) }
+                await self?.replaceNodes(isFolderLink: false) { $0.refreshingNodes(renamedNodes) }
             }
         }
 
         renamedFolderLinkNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
             for await renamedNodes in audioNodeUpdatesUseCase.renamedFolderLinkNodes {
                 guard !Task.isCancelled else { return }
-                await self?.refreshTracks(isFolderLink: true) { $0.refreshingFolderLinkNodes(renamedNodes) }
+                await self?.replaceNodes(isFolderLink: true) { $0.refreshingFolderLinkNodes(renamedNodes) }
             }
+        }
+    }
+
+    /// Replacements go in first, so a deletion that skips the playing track lands on a new file
+    /// rather than loading the old one only to restart it
+    private func handleRemovedFolderLinkNodes(_ removals: [HandleEntity: (any PlayableNode)?]) {
+        let replacements = removals.compactMapValues { $0 }
+        if replacements.isNotEmpty {
+            replaceNodes(isFolderLink: true) { $0.replacingFolderLinkNodes(replacements) }
+        }
+        let deletedHandles = Set(removals.keys).subtracting(replacements.keys)
+        if deletedHandles.isNotEmpty {
+            handleDeletedNodes(withHandles: deletedHandles, isFolderLink: true)
         }
     }
 
@@ -665,19 +692,27 @@ extension AudioPlaybackService: PlaybackControllable {
         }
     }
 
-    /// Swaps fresh node snapshots into the queue in place — playback is not interrupted
-    ///
-    /// - Parameter refresh: the tracks with fresh snapshots swapped in, `nil` when none was affected
-    private func refreshTracks(
+    private func replaceNodes(
         isFolderLink: Bool,
-        _ refresh: ([PlaybackTrack]) -> [PlaybackTrack]?
+        _ replace: ([PlaybackTrack]) -> [PlaybackTrack]?
     ) {
         guard let currentSource, currentSource.isFolderLink == isFolderLink,
-              let tracks = refresh(playbackQueue.tracks) else { return }
+              let tracks = replace(playbackQueue.tracks) else { return }
 
+        let playingTrackID = playbackQueue.current?.id
+        // Read before `playCurrent` unloads the item, which clears it: unlike the status, it
+        // holds through an interruption and a play tapped while the last new file was loading
+        let autoplay = engine.isPlaybackIntended
         playbackQueue = PlaybackQueue(tracks: tracks, currentIndex: playbackQueue.currentIndex)
-        if let unshuffled = unshuffledTracks.flatMap(refresh) {
+        if let unshuffled = unshuffledTracks.flatMap(replace) {
             unshuffledTracks = unshuffled
+        }
+
+        // A track's id is its node's handle: a fresh snapshot keeps it, a replacing file does not
+        let isPlayingTrackReplaced = playingTrackID != nil && playbackQueue.current?.id != playingTrackID
+        if isPlayingTrackReplaced {
+            clearResumeState()
+            playCurrent(autoplay: autoplay)
         }
     }
 

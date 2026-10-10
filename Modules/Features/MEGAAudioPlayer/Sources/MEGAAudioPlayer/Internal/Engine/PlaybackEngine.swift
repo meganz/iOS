@@ -16,8 +16,13 @@ protocol PlaybackEngineProtocol: AnyObject {
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
     var playbackRatePublisher: AnyPublisher<Float, Never> { get }
     var didPlayToEndPublisher: AnyPublisher<Void, Never> { get }
+    /// Whether the listener wants the track playing — it outlasts a system pause (an
+    /// interruption) and a play asked for while nothing is loaded, until the next unload.
+    var isPlaybackIntended: Bool { get }
 
-    func play(url: URL)
+    /// Loads `url`, starting it only when `autoplay` is set or a play was asked for since the last
+    /// unload — otherwise it waits, paused, at the start.
+    func play(url: URL, autoplay: Bool)
     /// Detach the loaded item without ending the session — see the implementation.
     func unloadCurrentItem()
     func togglePlayPause()
@@ -27,6 +32,12 @@ protocol PlaybackEngineProtocol: AnyObject {
     /// Restart the current item from the beginning (used for repeat-one).
     func replay()
     func stop()
+}
+
+extension PlaybackEngineProtocol {
+    func play(url: URL) {
+        play(url: url, autoplay: true)
+    }
 }
 
 // MARK: - PlaybackEngine
@@ -51,7 +62,7 @@ final class PlaybackEngine {
     /// Engine-lifetime subscriptions
     private var cancellables = Set<AnyCancellable>()
 
-    private var isPlaybackIntended = false
+    private(set) var isPlaybackIntended = false
     private var isInterrupted = false
 
     /// The address the loaded item was built from, before any AirPlay rewrite
@@ -118,7 +129,7 @@ extension PlaybackEngine: PlaybackEngineProtocol {
 // MARK: - Playback Control
 
 extension PlaybackEngine {
-    func play(url: URL) {
+    func play(url: URL, autoplay: Bool) {
         resetSeekGate()
         configureAudioSession()
         currentURL = url
@@ -131,8 +142,13 @@ extension PlaybackEngine {
         playbackStatusSubject.send(.loading)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
-        isPlaybackIntended = true
-        player.play()
+        // A play asked for while nothing was loaded yet still stands
+        isPlaybackIntended = autoplay || isPlaybackIntended
+        if isPlaybackIntended {
+            player.play()
+        } else {
+            publishCurrentStatus()
+        }
     }
 
     /// Detach whatever is loaded without ending the session
