@@ -178,13 +178,14 @@ final class InlineCodeTextView: UIView {
     }
 
     /// The height of the text at `width`. The last line has no gap below it.
+    /// Not rounded, like the rich editor row. The list cell rounds the whole row up.
     func height(forWidth width: CGFloat) -> CGFloat {
         if let lastFit, lastFit.width == width {
             return lastFit.height
         }
         container.size = CGSize(width: width - 2 * Self.inset, height: .greatestFiniteMagnitude)
         layoutManager.ensureLayout(for: container)
-        let height = ceil(layoutManager.textHeight(usedHeight: layoutManager.usedRect(for: container).height))
+        let height = layoutManager.textHeight(usedHeight: layoutManager.usedRect(for: container).height)
         lastFit = (width, height)
         return height
     }

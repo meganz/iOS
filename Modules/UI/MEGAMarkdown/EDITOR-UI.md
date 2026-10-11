@@ -159,6 +159,7 @@ and `editorParity`). These differences are intended:
 | An empty list item | Not shown (the viewer parse drops it). | Shown with its marker, to type in. |
 | A link | Opens. | Is text to edit. In a raw block it does nothing. |
 | A raw block that shows nothing (definitions only) | Nothing. | Its source, dimmed, so it can be selected and deleted. |
+| A list item at an accessibility text size | Its height. | Up to 1 pt taller: the marker can sit a fraction of a point lower, and the cell rounds the row up. |
 
 ## Source mode
 
@@ -179,7 +180,7 @@ The view owns the text while the user types. `SourceTextSync` writes it to the b
 | `SourceEditorUIKitTests`, `MarkdownEditorSaveTests` | Source mode, notices, mode switches and every save path. |
 | `RichListLayoutParityTests` | After each kind of edit, the item heights equal the heights of a list read again from the model. A row that stepped out of a list has no marker. |
 | `RichRowGeometryTests` | After Enter on the last list item, a paste, a scroll and a fast scroll to the end, each cell shows its own row at the height of its content, and no cell overlaps the next one. |
-| `RichPreviewLayoutParityTests` | Each row with inline code has the same height in the editor and in the preview. |
+| `RichPreviewLayoutParityTests` | Each row with inline code has the same height in the editor and in the preview, up to 1 pt at accessibility text sizes. Every row height in both lists is a whole point. |
 | `RichInlineCodeLayoutTests` | A row with inline code is as tall as the chip, with the line gap between wrapped lines. The list marker baseline matches the text. |
 | `RichItemMapTests`, `RichChangePlanTests`, `RichChromeIndexTests`, `RichRawRenderCacheTests` | The pure adapter parts. `RichChromeIndexTests` compares the chrome with the preview rows. |
 | `SelectionGeometryTests` | The pure rules of the selection over rows: handle zones, the grabbed end, taps, autoscroll speed and how the head moves. |

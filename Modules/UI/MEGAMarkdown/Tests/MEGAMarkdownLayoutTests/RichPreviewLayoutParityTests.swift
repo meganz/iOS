@@ -79,8 +79,22 @@ struct RichPreviewLayoutParityTests {
         defer { harness.close() }
         let editor = harness.heights
         #expect(preview.count == editor.count, "preview \(preview), editor \(editor)")
+        // Known gap: at accessibility text sizes the editor's list marker can sit a fraction of a point lower,
+        // and the cell rounds that up to 1 pt more. Heights are whole points, so other sizes must be equal.
+        let allowed: CGFloat = size.isAccessibilitySize ? 1 : 0
         for (index, pair) in zip(preview, editor).enumerated() {
-            #expect(abs(pair.0 - pair.1) < 1, "item \(index): preview \(pair.0), editor \(pair.1). preview \(preview), editor \(editor)")
+            #expect(abs(pair.0 - pair.1) <= allowed, "item \(index): preview \(pair.0), editor \(pair.1). preview \(preview), editor \(editor)")
         }
+    }
+
+    /// A row that keeps its estimate keeps a fractional height and puts the rows below it off the pixel grid.
+    @Test(arguments: [DynamicTypeSize.large, .accessibility3])
+    func everyRowHasAWholePointHeight(size: DynamicTypeSize) async throws {
+        let preview = try await previewHeights(Self.inlineCode, size: size)
+        let harness = try RichLayoutHarness(Self.inlineCode, width: Self.width, height: 3_000, dynamicType: size)
+        defer { harness.close() }
+        let editor = harness.heights
+        #expect(preview.allSatisfy { $0 == $0.rounded() }, "preview \(preview)")
+        #expect(editor.allSatisfy { $0 == $0.rounded() }, "editor \(editor)")
     }
 }

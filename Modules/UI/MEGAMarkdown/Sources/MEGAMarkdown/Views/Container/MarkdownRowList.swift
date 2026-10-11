@@ -233,8 +233,10 @@ package final class MarkdownRowList: NSObject {
         MarkdownRowEstimator(width: view.bounds.width, traits: view.traitCollection, theme: theme)
     }
 
+    /// Rounded up like a measured cell. The layout keeps a height when the measured one is less than 0.5 pt away,
+    /// so a fractional guess would stay and put the next rows off the pixel grid.
     private func estimate(_ item: Int, _ estimator: MarkdownRowEstimator) -> CGFloat {
-        dataSource?.estimatedHeight(ofItem: item, using: estimator) ?? 0
+        ceil(dataSource?.estimatedHeight(ofItem: item, using: estimator) ?? 0)
     }
 
     private func estimates(_ items: Range<Int>) -> [CGFloat] {
