@@ -15,11 +15,11 @@ struct FileLinkFlowUseCaseTests {
         #expect(resolvedFileLink.link == "link")
     }
 
-    @Test("initial start with a key embedded in the link shows the unavailable page when the key is invalid")
-    func initialStart_invalidKey_throwsLinkUnavailable() async {
+    @Test("initial start with an invalid key embedded in the link reports an invalid key instead of the unavailable page")
+    func initialStart_invalidKey_throwsInvalidDecryptionKey() async {
         let sut = makeSUT(repositoryResult: .failure(.invalidDecryptionKey))
 
-        await #expect(throws: FileLinkFlowErrorEntity.linkUnavailable(.generic)) {
+        await #expect(throws: FileLinkFlowErrorEntity.invalidDecryptionKey) {
             try await sut.initialStart(with: "link")
         }
     }

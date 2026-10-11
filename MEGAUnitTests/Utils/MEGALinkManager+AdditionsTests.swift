@@ -27,6 +27,21 @@ final class MEGALinkManager_AdditionsTests: XCTestCase {
                        URL(string: "https://\(DIContainer.domainName)/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"))
     }
     
+    func testPublicHandleFromLink_withOrWithoutKey_returnsHandle() {
+        let links = [
+            "https://mega.nz/file/p3IBQCiZ",
+            "https://mega.nz/file/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStAWrongKeyXXXXXXXXXXXXX",
+            "https://mega.nz/folder/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
+            "https://mega.nz/folder/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA/folder/aBcDeFgH",
+            "https://mega.nz/#!p3IBQCiZ!Nt8-bopPB8em4cOlKFqStA",
+            "https://mega.nz/#F!p3IBQCiZ!Nt8-bopPB8em4cOlKFqStA"
+        ]
+
+        for link in links {
+            XCTAssertEqual(MEGALinkManager.publicHandle(fromLink: link), "p3IBQCiZ", link)
+        }
+    }
+
     func testShouldOpenWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeNotModerator_shouldReturnTrue() {
         let request = MockChatRequest()
         let chatSdk = MockChatSDK(

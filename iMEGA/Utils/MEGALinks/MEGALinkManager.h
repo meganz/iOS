@@ -40,6 +40,9 @@ NS_SWIFT_UI_ACTOR
 
 + (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder;
 
+/// The public handle of a file or folder link, whether or not the link carries a key.
++ (NSString *)publicHandleFromLink:(NSString *)link;
+
 + (void)processLinkURL:( NSURL * _Nullable)url;
 
 + (void)showLinkNotValid;

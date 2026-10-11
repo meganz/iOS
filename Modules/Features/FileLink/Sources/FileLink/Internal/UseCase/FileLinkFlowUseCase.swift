@@ -30,8 +30,8 @@ package protocol FileLinkFlowUseCaseProtocol: Sendable {
 
 /// This handles the file link flow: resolve the public node the link points at, so the screen can show
 /// the file behind it.
-/// When first opening the file link, initialStart(with:) is used. If missingDecryptionKey error is
-/// returned, confirmDecryptionKey(with:decryptionKey:) is used.
+/// When first opening the file link, initialStart(with:) is used. If missingDecryptionKey or
+/// invalidDecryptionKey error is returned, confirmDecryptionKey(with:decryptionKey:) is used.
 package struct FileLinkFlowUseCase: FileLinkFlowUseCaseProtocol {
     private let fileLinkRepository: any FileLinkRepositoryProtocol
     private let fileLinkBuilder: any FileLinkBuilderProtocol
@@ -46,24 +46,22 @@ package struct FileLinkFlowUseCase: FileLinkFlowUseCaseProtocol {
         self.fileLinkBuilder = fileLinkBuilder
     }
 
-    /// In this flow, an invalid decryption key means the key came embedded in the link itself, so
-    /// the error page is shown immediately (.linkUnavailable(.generic)).
-    /// Check the confirmDecryptionKey flow for the difference.
+    /// An invalid key embedded in the link is reported as such rather than as an unavailable link: the
+    /// file still exists, so the user is offered to type the right key in, as on the web client.
     package func initialStart(with link: String) async throws(FileLinkFlowErrorEntity) -> ResolvedFileLinkEntity {
         do {
             let node = try await fileLinkRepository.publicNode(for: link)
             return ResolvedFileLinkEntity(node: node, link: link)
         } catch {
             throw switch error {
-            case .invalidDecryptionKey: .linkUnavailable(.generic)
+            case .invalidDecryptionKey: .invalidDecryptionKey
             case .missingDecryptionKey: .missingDecryptionKey
             case let .linkUnavailable(reason): .linkUnavailable(reason)
             }
         }
     }
 
-    /// In this flow, unlike the initialStart flow, an invalid decryption key does not show the error
-    /// page. The user typed the key in, so they are told it is invalid and asked for it again.
+    /// An invalid key the user typed in is reported so they can be asked for it again.
     /// Reports `fullLink` rather than the link it was asked with: the one the user was given carries no key,
     /// so it is of no use to whatever the screen does with the file next.
     package func confirmDecryptionKey(

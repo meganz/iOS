@@ -41,7 +41,7 @@ struct FolderLinkFlowUseCaseTests {
         @Test(
             "When login throws error, should rethrow expected error",
             arguments: [
-                (FolderLinkLoginErrorEntity.invalidDecryptionKey, FolderLinkFlowErrorEntity.linkUnavailable(.generic)),
+                (FolderLinkLoginErrorEntity.invalidDecryptionKey, FolderLinkFlowErrorEntity.invalidDecryptionKey),
                 (FolderLinkLoginErrorEntity.missingDecryptionKey, FolderLinkFlowErrorEntity.missingDecryptionKey),
                 (FolderLinkLoginErrorEntity.linkUnavailable(.generic), FolderLinkFlowErrorEntity.linkUnavailable(.generic))
             ]
@@ -58,7 +58,7 @@ struct FolderLinkFlowUseCaseTests {
         @Test(
             "When fetchNodes throws error, should rethrow expected error",
             arguments: [
-                (FolderLinkFetchNodesErrorEntity.invalidDecryptionKey, FolderLinkFlowErrorEntity.linkUnavailable(.generic)),
+                (FolderLinkFetchNodesErrorEntity.invalidDecryptionKey, FolderLinkFlowErrorEntity.invalidDecryptionKey),
                 (FolderLinkFetchNodesErrorEntity.missingDecryptionKey, FolderLinkFlowErrorEntity.missingDecryptionKey),
                 (FolderLinkFetchNodesErrorEntity.linkUnavailable(.generic), FolderLinkFlowErrorEntity.linkUnavailable(.generic))
             ]

@@ -13,7 +13,7 @@ package protocol FolderLinkFlowUseCaseProtocol: Sendable {
 }
 
 /// This handle the folder link flow: Login in to folder link -> fetchNodes to have the nodes are available -> get the root folder link node
-/// When first opening the folder link, the initialStart(with:) is used. If missingDecryptionKey error is returned, confirmDecryptionKey(with:decryptionKey:) is used
+/// When first opening the folder link, the initialStart(with:) is used. If missingDecryptionKey or invalidDecryptionKey error is returned, confirmDecryptionKey(with:decryptionKey:) is used
 package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
     private let folderLinkLoginUseCase: any FolderLinkLoginUseCaseProtocol
     private let folderLinkLogoutUseCase: any FolderLinkLogoutUseCaseProtocol
@@ -35,21 +35,21 @@ package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
         self.folderLinkLogoutUseCase = folderLinkLogoutUseCase
     }
     
-    /// In this flow, if invalidDecryptionKey error is returned, error page is shown immediately (.linkUnavailable(.generic))
-    /// Check confirmDecryptionKey flow for difference
+    /// An invalid key embedded in the link is reported as such rather than as an unavailable link: the
+    /// folder still exists, so the user is offered to type the right key in, as on the web client.
     package func initialStart(with link: String) async throws(FolderLinkFlowErrorEntity) -> NodeEntity {
         do {
             try await folderLinkLoginUseCase.login(to: link)
             try await folderLinkFetchNodesUseCase.fetchNodes()
         } catch let loginError as FolderLinkLoginErrorEntity {
             throw switch loginError {
-            case .invalidDecryptionKey: .linkUnavailable(.generic)
+            case .invalidDecryptionKey: .invalidDecryptionKey
             case .missingDecryptionKey: .missingDecryptionKey
             case let .linkUnavailable(reason): .linkUnavailable(reason)
             }
         } catch let fetchNodesError as FolderLinkFetchNodesErrorEntity {
             throw switch fetchNodesError {
-            case .invalidDecryptionKey: .linkUnavailable(.generic)
+            case .invalidDecryptionKey: .invalidDecryptionKey
             case .missingDecryptionKey: .missingDecryptionKey
             case let .linkUnavailable(reason): .linkUnavailable(reason)
             }
@@ -60,9 +60,7 @@ package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
         return try rootFolderLink()
     }
     
-    /// In this flow, if invalidDecryptionKey error is returned, unlike initialStart flow, error page is not shown
-    /// Instead, alert that input decryption key is invalid, and asking for input decryption key again.
-    /// Check confirmDecryptionKey flow for difference
+    /// An invalid key the user typed in is reported so they can be asked for it again.
     package func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FolderLinkFlowErrorEntity) -> NodeEntity {
         let fullLink = await folderLinkBuilder.build(link: link, with: decryptionKey)
         

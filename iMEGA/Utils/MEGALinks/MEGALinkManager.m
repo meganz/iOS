@@ -263,10 +263,21 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 #pragma mark - Manage MEGA links
 
 + (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
-    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
-    NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
+    return [MEGASdk.shared buildPublicLinkForHandle:[self publicHandleFromLink:link] key:key isFolder:isFolder];
+}
+
++ (NSString *)publicHandleFromLink:(NSString *)link {
+    // Same markers, in the same order, as the SDK's link parser: the handle is what follows them,
+    // so a key already in the link (a wrong one the user is replacing) is left out.
+    for (NSString *marker in @[@"#F!", @"folder/", @"#!", @"file/"]) {
+        NSRange markerRange = [link rangeOfString:marker];
+        if (markerRange.location != NSNotFound && link.length >= NSMaxRange(markerRange) + 8) {
+            return [link substringWithRange:NSMakeRange(NSMaxRange(markerRange), 8)];
+        }
+    }
     
-    return [MEGASdk.shared buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
+    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
+    return [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
 }
 
 + (void)processLinkURL:(NSURL * _Nullable)url {
