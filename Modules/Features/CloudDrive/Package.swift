@@ -25,6 +25,9 @@ let package = Package(
         .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
+        .package(path: "../../Infrastracture/MEGASnapshot"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
@@ -41,7 +44,9 @@ let package = Package(
                 "MEGADesignToken",
                 "MEGADomain",
                 "MEGAL10n",
+                "MEGASwift",
                 "MEGASwiftUI",
+                "MEGAUIComponent",
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             resources: [
@@ -54,6 +59,7 @@ let package = Package(
             dependencies: [
                 "CloudDrive",
                 "MEGAL10n",
+                "MEGASwift",
                 "MEGASwiftUI",
                 "MEGATest",
                 .product(
@@ -69,6 +75,18 @@ let package = Package(
                     package: "swift-async-algorithms"
                 )
             ]
+        ),
+        // Image snapshots. They run only from scripts/snapshot.sh, on a pinned simulator.
+        .testTarget(
+            name: "CloudDriveSnapshotTests",
+            dependencies: [
+                "CloudDrive",
+                "MEGADesignToken",
+                "MEGAL10n",
+                .product(name: "MEGASnapshot", package: "MEGASnapshot")
+            ],
+            exclude: ["__Snapshots__"],
+            swiftSettings: settings
         )
     ],
     swiftLanguageModes: [.v6]

@@ -1,5 +1,5 @@
 {
-  "originHash" : "2a29724b5b1b3eb786dc2898a41e77380fecd1d8fc925e1aa4d1f03bb3c4a70b",
+  "originHash" : "278dfae05d643ed55a42aedef3c29ab829d4a6f43b9b5bc30f6c4cb627eca83f",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -115,7 +115,7 @@
       "location" : "https://github.com/meganz/MEGADesignToken.git",
       "state" : {
         "branch" : "main",
-        "revision" : "17725f23155dc1a809ddb43ea03ad736c97f4b70"
+        "revision" : "e96bb559f2a0d5b8afbcf0888b6f02eebe0deabe"
       }
     },
     {
@@ -179,6 +179,15 @@
       "state" : {
         "revision" : "ebc7251dd5b37f627c93698e4374084d98409633",
         "version" : "1.28.2"
+      }
+    },
+    {
+      "identity" : "swift-snapshot-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
+      "state" : {
+        "revision" : "42a086182681cf661f5c47c9b7dc3931de18c6d7",
+        "version" : "1.17.6"
       }
     },
     {
