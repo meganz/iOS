@@ -27,11 +27,22 @@ class ExplorerBaseViewController: UIViewController {
         registerForAppearanceChanges()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
 
-        if isToolbarShown {
+        guard isToolbarShown else { return }
+        // Not a swipe back: end Select mode now, while tabBarController is still reachable.
+        guard let transitionCoordinator, transitionCoordinator.isInteractive else {
             endEditingMode()
+            return
+        }
+        // Swipe back: keep Select mode if the user cancels the swipe. tabBarController is nil when the
+        // swipe ends, so keep the tab bar here to show it again (Select mode hides it on iOS 26).
+        let tabBar = tabBarController?.tabBar
+        transitionCoordinator.notifyWhenInteractionChanges { [weak self] context in
+            guard !context.isCancelled else { return }
+            self?.endEditingMode()
+            tabBar?.alpha = 1
         }
     }
 

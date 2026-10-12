@@ -50,6 +50,29 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        showTabBarWhenPoppedInSelectionMode()
+    }
+
+    private func showTabBarWhenPoppedInSelectionMode() {
+        guard let navigationController,
+              !navigationController.viewControllers.contains(self),
+              let tabBar = tabBarController?.tabBar,
+              tabBar.alpha == 0 else { return }
+
+        // No transition (pop without animation): show the tab bar now.
+        guard let transitionCoordinator else {
+            tabBar.alpha = 1
+            return
+        }
+        // Animated pop: show the tab bar when the pop finishes; skip it if the user cancels a swipe back.
+        transitionCoordinator.animate(alongsideTransition: nil) { context in
+            guard !context.isCancelled else { return }
+            tabBar.alpha = 1
+        }
+    }
 }
 
 extension NewCloudDriveViewController: TextFileEditable {}

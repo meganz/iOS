@@ -161,6 +161,15 @@ public struct FavouritesView: View {
             tabBarHidden = editMode.isEditing
             miniPlayerVisibility.isHidden = editMode.isEditing
         }
+        .onAppear {
+            tabBarHidden = viewModel.editMode.isEditing
+            miniPlayerVisibility.isHidden = viewModel.editMode.isEditing
+        }
+        .onDisappear {
+            guard viewModel.editMode.isEditing else { return }
+            tabBarHidden = false
+            miniPlayerVisibility.isHidden = false
+        }
         .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)
         }
