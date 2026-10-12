@@ -15,7 +15,6 @@ final class PDFViewerViewModel {
         let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
         let node: NodeEntity?
         let fileName: String
-        let onMoreTapped: (@MainActor () -> Void)?
     }
 
     enum ViewState: Equatable {
@@ -76,10 +75,6 @@ final class PDFViewerViewModel {
 
     var fileName: String { dependency.fileName }
 
-    var showsMoreButton: Bool {
-        dependency.onMoreTapped != nil && !state.isFailed
-    }
-
     private var readyState: ViewState.ReadyState? {
         get { if case .ready(let readyState) = state { readyState } else { nil } }
         set { if let newValue, state.isReady { state = .ready(newValue) } }
@@ -87,10 +82,6 @@ final class PDFViewerViewModel {
 
     init(dependency: Dependency) {
         self.dependency = dependency
-    }
-
-    func didTapMore() {
-        dependency.onMoreTapped?()
     }
 }
 

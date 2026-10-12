@@ -1909,6 +1909,7 @@
 		ABCD12754000000000000001 /* MEGATextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD12754000000000000002 /* MEGATextEditor */; };
 		D715B5113074D39E00FB2D31 /* PDFViewerRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */; };
 		D715B5133074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */; };
+		D715B5A23075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5A13075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift */; };
 		ABCD12560000000000000007 /* PreviewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */; };
 		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
@@ -4844,6 +4845,7 @@
 		ABCD12754000000000000003 /* MEGATextEditor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATextEditor; sourceTree = "<group>"; };
 		D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouter.swift; sourceTree = "<group>"; };
 		D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFViewerRevampRouter+NodeActions.swift"; sourceTree = "<group>"; };
+		D715B5A13075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouterNodeActionsTests.swift; sourceTree = "<group>"; };
 		ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDocumentViewModel.swift; sourceTree = "<group>"; };
 		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
@@ -6802,6 +6804,7 @@
 				248A03192A79025200F183A2 /* Shared Controls */,
 				A8F6624D2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift */,
 				94A1445D2C9DE47000C34A98 /* PasteImagePreviewViewModelTests.swift */,
+				D715B5A13075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift */,
 				D7C5174430737F49005F6FFD /* PDFViewerRevampRouterTests.swift */,
 				770E96755EE94E78BEAA9687 /* PreviewDocumentViewModelTests.swift */,
 			);
@@ -17311,6 +17314,7 @@
 				BFC060F628A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift in Sources */,
 				B54387B42CCF81A7002E6B3B /* PasswordReminderViewModelTests.swift in Sources */,
 				94A1445E2C9DE47A00C34A98 /* PasteImagePreviewViewModelTests.swift in Sources */,
+				D715B5A23075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift in Sources */,
 				D7C5174530737F4F005F6FFD /* PDFViewerRevampRouterTests.swift in Sources */,
 				25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */,
 				946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */,

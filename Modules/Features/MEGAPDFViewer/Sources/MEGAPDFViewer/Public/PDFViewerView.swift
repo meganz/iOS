@@ -19,8 +19,8 @@ public struct PDFViewerView: View {
         let fileName: String
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
-        /// Invoked when ••• is tapped. `nil` hides the ••• button.
-        let onMoreTapped: (@MainActor () -> Void)?
+        /// `nil` hides the ••• button.
+        let moreMenuDependencies: PDFViewerMoreMenuDependencies?
         /// Invoked when the user taps a link inside the document.
         let onLinkTapped: @MainActor (URL) -> Void
 
@@ -34,7 +34,7 @@ public struct PDFViewerView: View {
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
-            onMoreTapped: (@MainActor () -> Void)? = nil,
+            moreMenuDependencies: PDFViewerMoreMenuDependencies? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in }
         ) {
             self.init(
@@ -50,7 +50,7 @@ public struct PDFViewerView: View {
                 fileName: fileName,
                 transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 onClose: onClose,
-                onMoreTapped: onMoreTapped,
+                moreMenuDependencies: moreMenuDependencies,
                 onLinkTapped: onLinkTapped
             )
         }
@@ -66,7 +66,7 @@ public struct PDFViewerView: View {
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
-            onMoreTapped: (@MainActor () -> Void)? = nil,
+            moreMenuDependencies: PDFViewerMoreMenuDependencies? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void
         ) {
             self.pdfDocumentSource = pdfDocumentSource
@@ -78,7 +78,7 @@ public struct PDFViewerView: View {
             self.fileName = fileName
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
-            self.onMoreTapped = onMoreTapped
+            self.moreMenuDependencies = moreMenuDependencies
             self.onLinkTapped = onLinkTapped
         }
     }
@@ -90,12 +90,15 @@ public struct PDFViewerView: View {
 
     private let onLinkTapped: @MainActor (URL) -> Void
 
-    private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
+    private let moreToolbarContent: PDFViewerMoreToolbarContent
 
     public init(dependency: Dependency) {
         onClose = dependency.onClose
         onLinkTapped = dependency.onLinkTapped
-        transferIndicatorToolbarFactory = dependency.transferIndicatorToolbarFactory
+        moreToolbarContent = PDFViewerMoreToolbarContent(
+            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+            moreMenuDependencies: dependency.moreMenuDependencies
+        )
         _viewModel = State(
             initialValue: PDFViewerViewModel(
                 dependency: PDFViewerViewModel.Dependency(
@@ -105,8 +108,7 @@ public struct PDFViewerView: View {
                     lastPageUseCase: dependency.lastPageUseCase,
                     leftOffItemRecordUseCase: dependency.leftOffItemRecordUseCase,
                     node: dependency.node,
-                    fileName: dependency.fileName,
-                    onMoreTapped: dependency.onMoreTapped
+                    fileName: dependency.fileName
                 )
             )
         )
@@ -223,20 +225,7 @@ public struct PDFViewerView: View {
             )
         }
 
-        // Trailing items lay out in the order they are declared, so the
-        // indicator goes first and the more button keeps the trailing edge.
-        transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
-
-        if viewModel.showsMoreButton {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    viewModel.didTapMore()
-                } label: {
-                    MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
-                }
-                .accessibilityLabel(Strings.Localizable.more)
-            }
-        }
+        moreToolbarContent.documentLoadFailed(viewModel.state.isFailed)
 
         if viewModel.state.isReady {
             ToolbarItemGroup(placement: .bottomBar) {

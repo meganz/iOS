@@ -71,18 +71,28 @@ import UIKit
         }
 
         weak var presentedViewer: UIViewController?
+        weak var moreAnchor: UIView?
+        weak var moreBarItem: UIBarButtonItem?
 
-        var onMoreTapped: (@MainActor () -> Void)?
+        var moreMenuDependencies: PDFViewerMoreMenuDependencies?
         if let node {
-            onMoreTapped = {
-                guard let presentedViewer else { return }
-                presentNodeActions(
-                    for: node,
-                    from: presentedViewer,
-                    isLink: isLink,
-                    isFromSharedItem: isFromSharedItem
+            moreMenuDependencies = PDFViewerMoreMenuDependencies(
+                onMoreTapped: { onPresented in
+                    presentNodeActions(
+                        for: node,
+                        from: presentedViewer,
+                        anchor: moreAnchor,
+                        barItem: moreBarItem,
+                        isLink: isLink,
+                        isFromSharedItem: isFromSharedItem,
+                        onPresented: onPresented
+                    )
+                },
+                fullScreenIPadMorePopoverAnchorReadyCallbacks: .init(
+                    onMoreAnchorReadyForMenuPresentation: { moreAnchor = $0 },
+                    onMoreBarItemReadyForMenuPresentation: { moreBarItem = $0 }
                 )
-            }
+            )
         }
 
         let dependency = PDFViewerView.Dependency(
@@ -97,7 +107,7 @@ import UIKit
             fileName: fileName,
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             onClose: { presentedViewer?.dismiss(animated: true) },
-            onMoreTapped: onMoreTapped,
+            moreMenuDependencies: moreMenuDependencies,
             onLinkTapped: { url in
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)
