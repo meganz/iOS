@@ -1110,6 +1110,7 @@ struct CloudDriveViewControllerFactory {
         let router = self.router
         return CloudDriveNodeInsertionRouter(
             navigationController: navigationController,
+            isMarkdownEditorEnabled: { TextEditorViewModel.isMarkdownEditorEnabled() },
             openNodeHandler: { node in
                 Self.open(node: node, router: router)
             }

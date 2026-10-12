@@ -18,7 +18,7 @@ final class HomeUploadingViewModelTests: XCTestCase {
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
             createContextMenuUseCase: MockCreateContextMenuUseCase(),
             tracker: tracker,
-            router: FileUploadingRouter(baseViewController: UIViewController(), photoPicker: MockMEGAPhotoPicker())
+            router: FileUploadingRouter(baseViewController: UIViewController(), photoPicker: MockMEGAPhotoPicker(), isMarkdownEditorEnabled: { false })
         )
     }
     

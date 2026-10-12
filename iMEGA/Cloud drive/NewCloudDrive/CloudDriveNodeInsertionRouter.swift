@@ -18,15 +18,25 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     private unowned let navigationController: UINavigationController
     private let openNodeHandler: (NodeEntity) -> Void
     private let photoPicker: any MEGAPhotoPickerProtocol
+    private let isMarkdownEditorEnabled: () -> Bool
 
-    init(navigationController: UINavigationController, openNodeHandler: @escaping (NodeEntity) -> Void) {
+    init(
+        navigationController: UINavigationController,
+        isMarkdownEditorEnabled: @escaping () -> Bool,
+        openNodeHandler: @escaping (NodeEntity) -> Void
+    ) {
         self.navigationController = navigationController
+        self.isMarkdownEditorEnabled = isMarkdownEditorEnabled
         self.openNodeHandler = openNodeHandler
         self.photoPicker = MEGAPhotoPicker(presenter: navigationController)
     }
 
     func createTextFileAlert(for nodeEntity: NodeEntity) {
-        CreateTextFileAlertViewRouter(presenter: navigationController, parentHandle: nodeEntity.handle).start()
+        CreateTextFileAlertViewRouter(
+            presenter: navigationController,
+            parentHandle: nodeEntity.handle,
+            isMarkdownEditorEnabled: isMarkdownEditorEnabled()
+        ).start()
     }
 
     func createNewFolder(for nodeEntity: NodeEntity) {

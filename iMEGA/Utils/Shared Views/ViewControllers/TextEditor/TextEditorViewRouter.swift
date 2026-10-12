@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPreference
 import MEGARepo
+import MEGATextEditor
 
 @objc protocol TextFileEditable { }
 
@@ -23,19 +24,22 @@ final class TextEditorViewRouter: NSObject {
     private var megaNode: MEGANode?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
+    private let isMarkdownEditorEnabled: Bool
     
     @objc convenience init(
         textFile: TextFile,
         textEditorMode: TextEditorMode,
         isFromSharedItem: Bool = false,
         node: MEGANode? = nil,
-        presenter: UIViewController? = nil
+        presenter: UIViewController? = nil,
+        isMarkdownEditorEnabled: Bool
     ) {
         self.init(textFile: textFile,
                   textEditorMode: textEditorMode,
                   isFromSharedItem: isFromSharedItem,
                   nodeEntity: node?.toNodeEntity(),
-                  presenter: presenter)
+                  presenter: presenter,
+                  isMarkdownEditorEnabled: isMarkdownEditorEnabled)
         self.megaNode = node
     }
     
@@ -44,7 +48,8 @@ final class TextEditorViewRouter: NSObject {
         textEditorMode: TextEditorMode,
         isFromSharedItem: Bool = false,
         nodeEntity: NodeEntity? = nil,
-        presenter: UIViewController? = nil
+        presenter: UIViewController? = nil,
+        isMarkdownEditorEnabled: Bool
     ) {
         self.textFile = textFile
         self.textEditorMode = textEditorMode
@@ -52,6 +57,7 @@ final class TextEditorViewRouter: NSObject {
         self.nodeEntity = nodeEntity
         self.parentHandle = nodeEntity?.parentHandle
         self.presenter = presenter
+        self.isMarkdownEditorEnabled = isMarkdownEditorEnabled
     }
     
     convenience init(
@@ -59,10 +65,51 @@ final class TextEditorViewRouter: NSObject {
         textEditorMode: TextEditorMode,
         isFromSharedItem: Bool = false,
         parentHandle: HandleEntity? = nil,
-        presenter: UIViewController
+        presenter: UIViewController,
+        isMarkdownEditorEnabled: Bool
     ) {
-        self.init(textFile: textFile, textEditorMode: textEditorMode, isFromSharedItem: isFromSharedItem, nodeEntity: nil, presenter: presenter)
+        self.init(
+            textFile: textFile,
+            textEditorMode: textEditorMode,
+            isFromSharedItem: isFromSharedItem,
+            nodeEntity: nil,
+            presenter: presenter,
+            isMarkdownEditorEnabled: isMarkdownEditorEnabled
+        )
         self.parentHandle = parentHandle
+    }
+
+    // MARK: - Markdown
+
+    /// `.load` uses the node size, so the size check runs before the download. A new file has no node and size 0.
+    /// `.view` keeps the legacy screen: only `buildMarkdownScreen()` shows checked UTF-8 text on the Markdown screen.
+    private var screenRoute: MarkdownTextEditorRoute {
+        guard textEditorMode != .view else { return .otherFile }
+        return MarkdownTextEditorRoute(fileName: textFile.fileName, sizeInBytes: nodeEntity?.size ?? 0, isEnabled: isMarkdownEditorEnabled)
+    }
+
+    /// The alert for a Markdown file over the preview limit. Download works like Export: the file opens in another app.
+    /// Without a node or a presenter there is nothing to export, so only Cancel shows.
+    static func makeMarkdownTooLargeAlert(node: NodeEntity?, presenter: UIViewController?) -> UIAlertController {
+        let size = String.memoryStyleString(fromByteCount: Int64(clamping: node?.size ?? 0))
+        let alert = UIAlertController(
+            title: Strings.Localizable.MarkdownEditor.FileTooLarge.title,
+            message: Strings.Localizable.MarkdownEditor.FileTooLarge.message(size),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
+        if let node, let presenter {
+            alert.addAction(UIAlertAction(title: Strings.Localizable.download, style: .default) { [weak presenter] _ in
+                guard let presenter else { return }
+                ExportFileRouter(presenter: presenter, sender: presenter.view).export(node: node)
+            })
+        }
+        return alert
+    }
+
+    /// Shows the text file on the Markdown screen. The caller has already checked the size and decoded the text as UTF-8.
+    func buildMarkdownScreen() -> UIViewController {
+        makeNavigationController(rootedAt: MarkdownTextEditorViewController(viewModel: makeViewModel(isMarkdownScreen: true)))
     }
 }
 
@@ -70,6 +117,28 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     
     // MARK: - U-R-MVVM Routing
     @objc func build() -> UIViewController {
+        switch screenRoute {
+        case .tooLarge:
+            return Self.makeMarkdownTooLargeAlert(node: nodeEntity, presenter: presenter)
+        case .markdownFile:
+            return buildMarkdownScreen()
+        case .otherFile:
+            return makeNavigationController(rootedAt: TextEditorViewController(viewModel: makeViewModel(isMarkdownScreen: false)))
+        }
+    }
+
+    private func makeNavigationController(rootedAt vc: UIViewController) -> MEGANavigationController {
+        vc.title = textFile.fileName
+        baseViewController = vc
+
+        let nav = MEGANavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        navigationController = nav
+
+        return nav
+    }
+
+    private func makeViewModel(isMarkdownScreen: Bool) -> TextEditorViewModel {
         let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
         let fileSystemRepository = FileSystemRepository.sharedRepo
@@ -100,19 +169,12 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             backupsUseCase: backupsUC,
             resumeTextPositionUseCase: ResumeTextPositionUseCase(preferenceUseCase: PreferenceUseCase.default),
             parentHandle: parentHandle,
-            nodeEntity: nodeEntity
+            nodeEntity: nodeEntity,
+            isMarkdownScreen: isMarkdownScreen
         )
-        let vc = TextEditorViewController(viewModel: vm)
-        vc.title = textFile.fileName
-        baseViewController = vc
-        
-        let nav = MEGANavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .fullScreen
-        navigationController = nav
-        
-        return nav
+        return vm
     }
-    
+
     @objc func start() {
         presenter?.present(build(), animated: true, completion: nil)
     }
@@ -202,7 +264,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func exportFile(from node: NodeEntity, sender button: Any) {
-        guard let vc = baseViewController as? TextEditorViewController else { return }
+        guard let vc = baseViewController else { return }
         ExportFileRouter(presenter: vc, sender: button).export(node: node)
     }
     

@@ -57,6 +57,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MEGATextEditor"
+               BuildableName = "MEGATextEditor"
+               BlueprintName = "MEGATextEditor"
+               ReferencedContainer = "container:Modules/Features/MEGATextEditor">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "MEGAAppSDKRepo"
                BuildableName = "MEGAAppSDKRepo"
                BlueprintName = "MEGAAppSDKRepo"

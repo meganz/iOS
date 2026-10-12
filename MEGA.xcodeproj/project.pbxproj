@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1A754000000000000000015 /* NodeActionsTextFileEditPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000005 /* NodeActionsTextFileEditPresenterTests.swift */; };
+		E1A754000000000000000014 /* CreateTextFileAlertViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000004 /* CreateTextFileAlertViewRouterTests.swift */; };
+		E1A754000000000000000030 /* TextEditorViewModelMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000020 /* TextEditorViewModelMarkdownTests.swift */; };
+		E1A754000000000000000031 /* TextEditorFileNameAlertsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000021 /* TextEditorFileNameAlertsTests.swift */; };
+		E1A754000000000000000013 /* TextEditorViewRouterMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000003 /* TextEditorViewRouterMarkdownTests.swift */; };
+		E1A754000000000000000012 /* TextEditorBarItemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000002 /* TextEditorBarItemsTests.swift */; };
+		E1A754000000000000000011 /* MarkdownTextEditorViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000001 /* MarkdownTextEditorViewControllerTests.swift */; };
 		7A653A928B76589C6F669D70 /* MNZCrashProtectionReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AB49FB57430E522FD09427 /* MNZCrashProtectionReporter.m */; };
 		ACD32B086D637FA69BFF1403 /* NSMutableDictionaryCrashProtectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DA5F7541945185B21058FB /* NSMutableDictionaryCrashProtectionTests.swift */; };
 		FA7DCED2B36746A6451FC050 /* MNZMethodSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2E241A214D3F82B8CA765 /* MNZMethodSwizzler.m */; };
@@ -1899,6 +1906,7 @@
 		AB123720000000000000F002 /* PromoDialogBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F001 /* PromoDialogBlocking.swift */; };
 		AB123720000000000000F004 /* PromoDialogInterruptibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */; };
 		ABCD12550000000000000001 /* MEGAPDFViewer in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD12550000000000000002 /* MEGAPDFViewer */; };
+		ABCD12754000000000000001 /* MEGATextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD12754000000000000002 /* MEGATextEditor */; };
 		D715B5113074D39E00FB2D31 /* PDFViewerRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */; };
 		D715B5133074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */; };
 		ABCD12560000000000000007 /* PreviewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */; };
@@ -2776,6 +2784,11 @@
 		FE1EB000000000000000000B /* FileLinkActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA000000000000000000B /* FileLinkActionHandler.swift */; };
 		FE1EB0000000000000000101 /* AlbumLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */; };
 		FE1EB0000000000000000102 /* AlbumLinkEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */; };
+		E1A754000000000000000049 /* TextEditorBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000033 /* TextEditorBarItems.swift */; };
+		E1A754000000000000000050 /* TextEditorFileNameAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000034 /* TextEditorFileNameAlerts.swift */; };
+		E1A754000000000000000051 /* MarkdownTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000035 /* MarkdownTextEditorViewController.swift */; };
+		E1A754000000000000000052 /* NodeActionsTextFileEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000036 /* NodeActionsTextFileEditPresenter.swift */; };
+		E1A754000000000000000053 /* TextEditorOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000037 /* TextEditorOpener.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2893,6 +2906,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E1A754000000000000000005 /* NodeActionsTextFileEditPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionsTextFileEditPresenterTests.swift; sourceTree = "<group>"; };
+		E1A754000000000000000004 /* CreateTextFileAlertViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewRouterTests.swift; sourceTree = "<group>"; };
+		E1A754000000000000000020 /* TextEditorViewModelMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModelMarkdownTests.swift; sourceTree = "<group>"; };
+		E1A754000000000000000021 /* TextEditorFileNameAlertsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorFileNameAlertsTests.swift; sourceTree = "<group>"; };
+		E1A754000000000000000003 /* TextEditorViewRouterMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewRouterMarkdownTests.swift; sourceTree = "<group>"; };
+		E1A754000000000000000002 /* TextEditorBarItemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorBarItemsTests.swift; sourceTree = "<group>"; };
+		E1A754000000000000000001 /* MarkdownTextEditorViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextEditorViewControllerTests.swift; sourceTree = "<group>"; };
 		C141E1F0A5EF52D0BD35BC53 /* MNZCrashProtectionReporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNZCrashProtectionReporter.h; sourceTree = "<group>"; };
 		87AB49FB57430E522FD09427 /* MNZCrashProtectionReporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MNZCrashProtectionReporter.m; sourceTree = "<group>"; };
 		93DA5F7541945185B21058FB /* NSMutableDictionaryCrashProtectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableDictionaryCrashProtectionTests.swift; sourceTree = "<group>"; };
@@ -4821,6 +4841,7 @@
 		AB123720000000000000F001 /* PromoDialogBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoDialogBlocking.swift; sourceTree = "<group>"; };
 		AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoDialogInterruptibilityTests.swift; sourceTree = "<group>"; };
 		ABCD12550000000000000003 /* MEGAPDFViewer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPDFViewer; sourceTree = "<group>"; };
+		ABCD12754000000000000003 /* MEGATextEditor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATextEditor; sourceTree = "<group>"; };
 		D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouter.swift; sourceTree = "<group>"; };
 		D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFViewerRevampRouter+NodeActions.swift"; sourceTree = "<group>"; };
 		ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDocumentViewModel.swift; sourceTree = "<group>"; };
@@ -5717,6 +5738,11 @@
 		FE1EA000000000000000000B /* FileLinkActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkActionHandler.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkUnavailableView.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkEmptyView.swift; sourceTree = "<group>"; };
+		E1A754000000000000000033 /* TextEditorBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorBarItems.swift; sourceTree = "<group>"; };
+		E1A754000000000000000034 /* TextEditorFileNameAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorFileNameAlerts.swift; sourceTree = "<group>"; };
+		E1A754000000000000000035 /* MarkdownTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextEditorViewController.swift; sourceTree = "<group>"; };
+		E1A754000000000000000036 /* NodeActionsTextFileEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionsTextFileEditPresenter.swift; sourceTree = "<group>"; };
+		E1A754000000000000000037 /* TextEditorOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorOpener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -5788,6 +5814,7 @@
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
 				A835E49E2ED0636B004CE294 /* MEGASwiftUIMock in Frameworks */,
+				ABCD12754000000000000001 /* MEGATextEditor in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
 				A5DF52D92EB1BAB9003E890F /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
@@ -5968,8 +5995,14 @@
 			isa = PBXGroup;
 			children = (
 				94E33C962C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift */,
+				E1A754000000000000000004 /* CreateTextFileAlertViewRouterTests.swift */,
+				E1A754000000000000000001 /* MarkdownTextEditorViewControllerTests.swift */,
+				E1A754000000000000000002 /* TextEditorBarItemsTests.swift */,
+				E1A754000000000000000021 /* TextEditorFileNameAlertsTests.swift */,
+				E1A754000000000000000020 /* TextEditorViewModelMarkdownTests.swift */,
 				0D2E4B0F2623B2EB00F4804A /* TextEditorViewModelReadingPositionTests.swift */,
 				0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */,
+				E1A754000000000000000003 /* TextEditorViewRouterMarkdownTests.swift */,
 			);
 			path = TextEditor;
 			sourceTree = "<group>";
@@ -6391,6 +6424,7 @@
 				9422636D2B445FF60010B667 /* DisplayModeTests.swift */,
 				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
 				A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */,
+				E1A754000000000000000005 /* NodeActionsTextFileEditPresenterTests.swift */,
 				9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */,
 				BF5F118B2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift */,
 				B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */,
@@ -6446,7 +6480,11 @@
 				12466827275DBE0500C94335 /* CreateTextFileAlertViewController.swift */,
 				1246682C275DBE0500C94335 /* CreateTextFileAlertViewModel.swift */,
 				12466825275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift */,
+				E1A754000000000000000035 /* MarkdownTextEditorViewController.swift */,
+				E1A754000000000000000033 /* TextEditorBarItems.swift */,
+				E1A754000000000000000034 /* TextEditorFileNameAlerts.swift */,
 				12466829275DBE0500C94335 /* TextEditorModel.swift */,
+				E1A754000000000000000037 /* TextEditorOpener.swift */,
 				12466828275DBE0500C94335 /* TextEditorViewController.swift */,
 				1246682A275DBE0500C94335 /* TextEditorViewModel.swift */,
 				1246682B275DBE0500C94335 /* TextEditorViewRouter.swift */,
@@ -10850,6 +10888,7 @@
 				94B09E532B84CC86007D6B84 /* NodeActions+NodeActionsDelegateHandler.swift */,
 				94B09E3F2B84CC86007D6B84 /* NodeActions.swift */,
 				94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */,
+				E1A754000000000000000036 /* NodeActionsTextFileEditPresenter.swift */,
 				94B09E412B84CC86007D6B84 /* NodeBrowserView.swift */,
 				94B09E542B84CC86007D6B84 /* NodeBrowserViewModel.swift */,
 				94B09E512B84CC86007D6B84 /* NodeSource.swift */,
@@ -11126,6 +11165,7 @@
 				14C12FCD2FA343D30021D501 /* MEGAAudioPlayer */,
 				ABCD12550000000000000003 /* MEGAPDFViewer */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
+				ABCD12754000000000000003 /* MEGATextEditor */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
 				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
 				A52F1E382EBCE55800D3A2E9 /* Notifications */,
@@ -14066,6 +14106,7 @@
 				995403F72E3CD0F500468F84 /* KMTransferUtils */,
 				994890EA2E4D70B100CBDC33 /* MEGAVideoPlayer */,
 				ABCD12550000000000000002 /* MEGAPDFViewer */,
+				ABCD12754000000000000002 /* MEGATextEditor */,
 				A5DF52D82EB1BAB9003E890F /* MEGAUIComponent */,
 				A5E136852EB4FF9A004BDD4F /* MEGASdk */,
 				A5E136882EB4FFB3004BDD4F /* MEGAChatSdk */,
@@ -14478,6 +14519,7 @@
 				A5EA94192EB5EDBF009778D3 /* XCLocalSwiftPackageReference "Modules/Features/MEGAPhotos" */,
 				A5EA941A2EB5EDF6009778D3 /* XCLocalSwiftPackageReference "Modules/Features/MEGAVideoPlayer" */,
 				ABCD12550000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGAPDFViewer" */,
+				ABCD12754000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGATextEditor" */,
 				A5EA941B2EB5EE27009778D3 /* XCLocalSwiftPackageReference "Modules/MEGASharedRepo/MEGAStoreKit" */,
 				A5EA941C2EB5EE55009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Notifications" */,
 				5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */,
@@ -15648,6 +15690,7 @@
 				B69AF66828A1E5190022B094 /* ManageChatHistoryTableViewController.swift in Sources */,
 				B69AF66B28A1E5190022B094 /* ManageChatHistoryViewModel.swift in Sources */,
 				B69AF66228A1E5190022B094 /* ManageChatHistoryViewRouter.swift in Sources */,
+				E1A754000000000000000051 /* MarkdownTextEditorViewController.swift in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
 				E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */,
@@ -15913,6 +15956,7 @@
 				94B09E6A2B84CC87007D6B84 /* NodeActions+NodeActionsDelegateHandler.swift in Sources */,
 				94B09E572B84CC87007D6B84 /* NodeActions.swift in Sources */,
 				94B09E552B84CC87007D6B84 /* NodeActionsDelegateHandler.swift in Sources */,
+				E1A754000000000000000052 /* NodeActionsTextFileEditPresenter.swift in Sources */,
 				0EE89C732BA8FAAF00956F1D /* NodeActionTableViewCell.swift in Sources */,
 				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
 				5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */,
@@ -16425,7 +16469,10 @@
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				B594599D2CCF9CDF0061A34C /* TestPasswordViewModel.swift in Sources */,
 				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
+				E1A754000000000000000049 /* TextEditorBarItems.swift in Sources */,
+				E1A754000000000000000050 /* TextEditorFileNameAlerts.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
+				E1A754000000000000000053 /* TextEditorOpener.swift in Sources */,
 				12466830275DBE0500C94335 /* TextEditorViewController.swift in Sources */,
 				12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */,
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
@@ -17051,6 +17098,7 @@
 				0E69C0F52DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift in Sources */,
 				BF67D77F2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift in Sources */,
 				94E33C972C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift in Sources */,
+				E1A754000000000000000014 /* CreateTextFileAlertViewRouterTests.swift in Sources */,
 				0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				941A019A2CB44F250057C99D /* DeepLinkingTestsSuite.swift in Sources */,
@@ -17106,6 +17154,7 @@
 				0E80B31D2DC4834100582D55 /* LoginRoutingViewModelTests.swift in Sources */,
 				B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */,
 				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
+				E1A754000000000000000011 /* MarkdownTextEditorViewControllerTests.swift in Sources */,
 				0E380B2A2EEB7942000991B9 /* MediaAlbumTabContentViewModelTests.swift in Sources */,
 				25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */,
 				0E380B452EEB9946000991B9 /* MediaTabViewModelTests.swift in Sources */,
@@ -17219,6 +17268,7 @@
 				837B9C0B24781B1600D409B4 /* NodeActionBuilderTests.swift in Sources */,
 				250B11A62CBC844100E2743E /* NodeActionBuilderTestSuite.swift in Sources */,
 				0EC465162D87E10000EDA214 /* NodeActionResponderTests.swift in Sources */,
+				E1A754000000000000000015 /* NodeActionsTextFileEditPresenterTests.swift in Sources */,
 				2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */,
 				250B11A42CBC840C00E2743E /* NodeActionViewModelTests.swift in Sources */,
 				9482F73C2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift in Sources */,
@@ -17342,8 +17392,12 @@
 				C43EC4A32CDB01C400556C4C /* Task+Yield.swift in Sources */,
 				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
 				B52CE0DD2CD094DF0083889E /* TestPasswordViewModelTests.swift in Sources */,
+				E1A754000000000000000012 /* TextEditorBarItemsTests.swift in Sources */,
+				E1A754000000000000000031 /* TextEditorFileNameAlertsTests.swift in Sources */,
+				E1A754000000000000000030 /* TextEditorViewModelMarkdownTests.swift in Sources */,
 				0D2E4B102623B2EB00F4804A /* TextEditorViewModelReadingPositionTests.swift in Sources */,
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
+				E1A754000000000000000013 /* TextEditorViewRouterMarkdownTests.swift in Sources */,
 				25CF5EBE2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift in Sources */,
 				0EE989412EEFBA6E00367F28 /* TimelinePendingSelectionTests.swift in Sources */,
 				0EE9893A2EEFBA6E00367F27 /* TimelineProjectionTests.swift in Sources */,
@@ -19301,6 +19355,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/MEGAPDFViewer;
 		};
+		ABCD12754000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGATextEditor" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/MEGATextEditor;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -19838,6 +19896,10 @@
 		ABCD12550000000000000002 /* MEGAPDFViewer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPDFViewer;
+		};
+		ABCD12754000000000000002 /* MEGATextEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGATextEditor;
 		};
 		B51616482B83361900C6E842 /* Notifications */ = {
 			isa = XCSwiftPackageProductDependency;

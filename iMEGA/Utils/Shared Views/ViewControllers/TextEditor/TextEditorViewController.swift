@@ -145,17 +145,7 @@ extension TextEditorViewController: ViewType {
     }
     
     private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isBackupNode: Bool) {
-        if #available(iOS 26.0, *) {
-            navigationItem.titleView = NavigationTitleView(
-                title: textEditorModel.textFile.fileName
-            )
-            .toWrappedUIView(
-                shouldEnableGlassEffect: false,
-                padding: .init(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._3, trailing: TokenSpacing._3)
-            )
-        } else {
-            navigationItem.title = textEditorModel.textFile.fileName
-        }
+        TextEditorBarItems.applyTitle(textEditorModel.textFile.fileName, to: navigationItem, shouldEnableGlassEffect: false)
 
         let contentOffset = textView.contentOffset
         if shallUpdateContent {
@@ -181,7 +171,10 @@ extension TextEditorViewController: ViewType {
         }
         
         if textEditorModel.textEditorMode == .view && !isInRubbishBin {
-            configToolbar(accessLevel: isBackupNode ? .read : textEditorModel.accessLevel ?? .unknown)
+            toolbarItems = TextEditorBarItems.bottomBarItems(
+                accessLevel: isBackupNode ? .read : textEditorModel.accessLevel ?? .unknown,
+                target: self
+            )
             navigationController?.setToolbarHidden(false, animated: true)
         } else {
             toolbarItems = nil
@@ -286,81 +279,25 @@ extension TextEditorViewController: ViewType {
     }
     
     private func configDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel) {
-        let duplicateNameAC = UIAlertController(
-            title: textEditorDuplicateNameAlertModel.alertTitle,
-            message: textEditorDuplicateNameAlertModel.alertMessage,
-            preferredStyle: .alert
-        )
-        duplicateNameAC.addAction(
-            UIAlertAction(
-                title: textEditorDuplicateNameAlertModel.renameButtonTitle,
-                style: .default,
-                handler: { _ in
-                    self.viewModel.dispatch(.renameFile)
-                }
-            )
-        )
-        duplicateNameAC.addAction(
-            UIAlertAction(
-                title: textEditorDuplicateNameAlertModel.replaceButtonTitle,
-                style: .default,
-                handler: { _ in
-                    self.viewModel.dispatch(.uploadFile)
-                    self.viewModel.dispatch(.dismissTextEditorVC)
-                }
-            )
-        )
-        duplicateNameAC.addAction(
-            UIAlertAction(
-                title: textEditorDuplicateNameAlertModel.cancelButtonTitle,
-                style: .cancel,
-                handler: nil
-            )
+        let duplicateNameAC = TextEditorFileNameAlerts.makeDuplicateNameAlert(
+            textEditorDuplicateNameAlertModel,
+            onRename: { [weak self] in
+                self?.viewModel.dispatch(.renameFile)
+            },
+            onReplace: { [weak self] in
+                self?.viewModel.dispatch(.uploadFile)
+                self?.viewModel.dispatch(.dismissTextEditorVC)
+            }
         )
         UIApplication.mnz_presentingViewController().present(duplicateNameAC, animated: true, completion: nil)
     }
     
     private func configRenameAlert(_ textEditorRenameAlertModel: TextEditorRenameAlertModel) {
-        let renameAC = UIAlertController(
-            title: textEditorRenameAlertModel.alertTitle,
-            message: textEditorRenameAlertModel.alertMessage,
-            preferredStyle: .alert
-        )
-        renameAC.addTextField {(textField) in
-            textField.text = textEditorRenameAlertModel.textFileName
-            textField.placeholder = textEditorRenameAlertModel.textFileName
-            textField.addTarget(self, action: #selector(self.renameAlertTextFieldBeginEdit), for: .editingDidBegin)
-            textField.addTarget(self, action: #selector(self.renameAlertTextFieldDidChange), for: .editingChanged)
+        let renameAC = TextEditorFileNameAlerts.makeRenameAlert(textEditorRenameAlertModel) { [weak self] newInputName in
+            guard let self, MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+            viewModel.dispatch(.renameFileTo(newInputName: newInputName))
+            TextEditorBarItems.applyTitle(newInputName, to: navigationItem, shouldEnableGlassEffect: true)
         }
-        renameAC.addAction(
-            UIAlertAction(
-                title: Strings.Localizable.cancel,
-                style: .cancel,
-                handler: nil
-            )
-        )
-        let renameAction = UIAlertAction(
-            title: Strings.Localizable.rename,
-            style: .default,
-            handler: { _ in
-                guard let newInputName = renameAC.textFields?.first?.text else { return }
-                if MEGAReachabilityManager.isReachableHUDIfNot() {
-                    self.viewModel.dispatch(.renameFileTo(newInputName: newInputName))
-                    if #available(iOS 26.0, *) {
-                        self.navigationItem.titleView = NavigationTitleView(
-                            title: newInputName
-                        )
-                        .toWrappedUIView(
-                            shouldEnableGlassEffect: true,
-                            padding: .init(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._3, trailing: TokenSpacing._3)
-                        )
-                    } else {
-                        self.navigationItem.title = newInputName
-                    }
-                }
-            })
-        renameAction.isEnabled = false
-        renameAC.addAction(renameAction)
         UIApplication.mnz_presentingViewController().present(renameAC, animated: true, completion: nil)
     }
     
@@ -380,72 +317,6 @@ extension TextEditorViewController: ViewType {
         present(discardChangesAC, animated: true, completion: nil)
     }
     
-    private func configToolbar(accessLevel: NodeAccessTypeEntity) {
-        let flexibleItem =
-            UIBarButtonItem(
-                barButtonSystemItem: .flexibleSpace,
-                target: nil,
-                action: nil
-            )
-        let downloadBarButtonItem =
-            UIBarButtonItem(
-                image: MEGAAssets.UIImage.offline,
-                style: .plain,
-                target: self,
-                action: #selector(downloadTapped)
-            )
-        var toolbarItems = [downloadBarButtonItem, flexibleItem]
-        
-        if accessLevel != .read {
-            let editBarButtonItem =
-                UIBarButtonItem(
-                    image: MEGAAssets.UIImage.edittext,
-                    style: .plain,
-                    target: self,
-                    action: #selector(editTapped)
-                )
-            toolbarItems.append(editBarButtonItem)
-            toolbarItems.append(flexibleItem)
-        }
-        
-        if accessLevel == .owner {
-            let exportFileBarButtonItem =
-                UIBarButtonItem(
-                    image: MEGAAssets.UIImage.downloadToDisk,
-                    style: .plain,
-                    target: self,
-                    action: #selector(exportFileTapped(button:))
-                )
-            toolbarItems.append(exportFileBarButtonItem)
-        } else {
-            let importBarButtonItem =
-                UIBarButtonItem(
-                    image: MEGAAssets.UIImage.import,
-                    style: .plain,
-                    target: self,
-                    action: #selector(importTapped)
-                )
-            toolbarItems.append(importBarButtonItem)
-        }
-        self.toolbarItems = toolbarItems
-    }
-    
-    @objc private func downloadTapped() {
-        viewModel.dispatch(.downloadToOffline)
-    }
-    
-    @objc private func editTapped() {
-        viewModel.dispatch(.editFile)
-    }
-    
-    @objc private func exportFileTapped(button: UIBarButtonItem) {
-        viewModel.dispatch(.exportFile(sender: button))
-    }
-    
-    @objc private func importTapped() {
-        viewModel.dispatch(.importNode)
-    }
-    
     @objc private func cancelTapped() {
         viewModel.dispatch(.cancelText(content: textView.text))
     }
@@ -460,32 +331,6 @@ extension TextEditorViewController: ViewType {
     
     @objc private func moreTapped(button: UIButton) {
         viewModel.dispatch(.showActions(sender: button))
-    }
-    
-    @objc private func renameAlertTextFieldBeginEdit(textField: UITextField) {
-        guard let name = textField.text else { return }
-        let nsName = name as NSString
-        let beginning = textField.beginningOfDocument
-        var end: UITextPosition
-        if (nsName.pathExtension == "") && (name == nsName.deletingPathExtension) {
-            end = textField.endOfDocument
-        } else {
-            let fileNameRange = nsName.range(of: ".", options: .backwards)
-            end = textField.position(from: beginning, offset: fileNameRange.location) ?? textField.endOfDocument
-        }
-        let textRange = textField.textRange(from: beginning, to: end)
-        textField.selectedTextRange = textRange
-    }
-    
-    @objc private func renameAlertTextFieldDidChange(textField: UITextField) {
-        if let newFileAC = UIApplication.mnz_visibleViewController() as? UIAlertController {
-            let rightButtonAction = newFileAC.actions.last
-            let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
-            textField.textColor = containsInvalidChars ? UIColor.systemRed : UIColor.label
-            let empty = textField.text?.mnz_isEmpty() ?? true
-            let noChange = textField.text == textField.placeholder
-            rightButtonAction?.isEnabled = (!empty && !containsInvalidChars && !noChange)
-        }
     }
     
     func registerForNotifications() {
@@ -510,6 +355,25 @@ extension TextEditorViewController: ViewType {
     @objc func keyboardDidHide(notification: NSNotification) {
         textView.contentInset = .zero
         textView.scrollIndicatorInsets = textView.contentInset
+    }
+}
+
+// MARK: - TextEditorBarItemTarget
+extension TextEditorViewController: TextEditorBarItemTarget {
+    func downloadTapped() {
+        viewModel.dispatch(.downloadToOffline)
+    }
+
+    func editTapped() {
+        viewModel.dispatch(.editFile)
+    }
+
+    func exportFileTapped(button: UIBarButtonItem) {
+        viewModel.dispatch(.exportFile(sender: button))
+    }
+
+    func importTapped() {
+        viewModel.dispatch(.importNode)
     }
 }
 

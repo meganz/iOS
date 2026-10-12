@@ -526,7 +526,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeNewTextFile:
-            [[CreateTextFileAlertViewRouter.alloc initWithPresenter:UIApplication.mnz_presentingViewController] start];
+            [[CreateTextFileAlertViewRouter.alloc initWithPresenter:UIApplication.mnz_presentingViewController isMarkdownEditorEnabled:TextEditorOpener.isMarkdownEditorEnabled] start];
             break;
             
         case URLTypeAppSettings:

@@ -191,7 +191,8 @@ extension HomeScreenFactory {
         FileUploadingRouter(
             navigationController: navigationController,
             baseViewController: UIViewController(),
-            photoPicker: MEGAPhotoPicker(presenter: navigationController)
+            photoPicker: MEGAPhotoPicker(presenter: navigationController),
+            isMarkdownEditorEnabled: { TextEditorViewModel.isMarkdownEditorEnabled() }
         )
     }
     

@@ -103,7 +103,12 @@ extension NodeActions {
             editTextFile: { [weak navigationController] node in
                 guard let navigationController else { return }
                 if let megaNode = sdk.node(forHandle: node.handle) {
-                    megaNode.mnz_editTextFile(in: navigationController)
+                    let presenter = NodeActionsTextFileEditPresenter.presenter(
+                        for: node,
+                        in: navigationController,
+                        isMarkdownEditorEnabled: TextEditorViewModel.isMarkdownEditorEnabled()
+                    )
+                    megaNode.mnz_editTextFile(in: presenter)
                 }
             },
             shareOrManageLink: { [weak navigationController] nodes in

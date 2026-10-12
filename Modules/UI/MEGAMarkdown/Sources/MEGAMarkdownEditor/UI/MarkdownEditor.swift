@@ -159,8 +159,10 @@ public struct MarkdownEditor: View {
         }
         let sourceSync = sourceSync
         let richModel = richModel
-        flusher?.action = {
-            sourceSync.flush()
+        // Weak, because the host owns the flusher and the binding of the sync owns the host.
+        // After the view goes away, a flush does nothing. The view already flushed on disappear.
+        flusher?.action = { [weak sourceSync, weak richModel] in
+            sourceSync?.flush()
             richModel?.exportChanges()
         }
     }

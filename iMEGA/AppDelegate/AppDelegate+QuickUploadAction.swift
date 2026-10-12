@@ -28,7 +28,7 @@ extension AppDelegate {
         let nodeRepository = NodeRepository.newRepo
         let nodeRouter = HomeScreenFactory().makeRouter(navController: navigationController, tracker: DIContainer.tracker)
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
-        let nodeInsertionRouter = CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { node in
+        let nodeInsertionRouter = CloudDriveNodeInsertionRouter(navigationController: navigationController, isMarkdownEditorEnabled: { TextEditorViewModel.isMarkdownEditorEnabled() }, openNodeHandler: { node in
             Task { @MainActor in
                 nodeRouter.didTapNode(nodeHandle: node.handle, sourcePage: .unknown)
             }

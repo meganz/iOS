@@ -21,14 +21,18 @@ final class FileUploadingRouter {
     private weak var baseViewController: UIViewController?
     
     private var photoPicker: any MEGAPhotoPickerProtocol
+
+    private let isMarkdownEditorEnabled: () -> Bool
     
     // MARK: - Initialiser
 
     init(
         navigationController: UINavigationController? = nil,
         baseViewController: UIViewController,
-        photoPicker: some MEGAPhotoPickerProtocol
+        photoPicker: some MEGAPhotoPickerProtocol,
+        isMarkdownEditorEnabled: @escaping () -> Bool
     ) {
+        self.isMarkdownEditorEnabled = isMarkdownEditorEnabled
         self.navigationController = navigationController
         self.baseViewController = baseViewController
         self.photoPicker = photoPicker
@@ -39,7 +43,7 @@ final class FileUploadingRouter {
         case .albumNew:
             presentPhotoAlbumSelectionNewFlow()
         case .textFile:
-            CreateTextFileAlertViewRouter(presenter: navigationController).start()
+            CreateTextFileAlertViewRouter(presenter: navigationController, isMarkdownEditorEnabled: isMarkdownEditorEnabled()).start()
         case .camera:
             presentCameraViewController()
         case .imports:

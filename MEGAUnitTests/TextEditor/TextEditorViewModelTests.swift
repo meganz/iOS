@@ -1367,10 +1367,13 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     var dismissBrowserVC_calledTimes = 0
     var chooseDestination_calledTimes = 0
     var showActions_calledTimes = 0
+    var showActions_sender: Any?
     var reloadData_calledTimes = 0
     var presentPreviewDocVC_calledTimes = 0
+    var presentPreviewDocVC_path: String?
     var importNode_calledTimes = 0
     var exportFile_calledTimes = 0
+    var exportFile_sender: Any?
     var showDownloadTransfer_calledTimes = 0
     var sendToChat_calledTimes = 0
     var restoreTextFile_calledTimes = 0
@@ -1398,10 +1401,12 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     
     func showActions(nodeHandle: HandleEntity, delegate: some NodeActionViewControllerDelegate, sender button: Any) {
         showActions_calledTimes += 1
+        showActions_sender = button
     }
     
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
         presentPreviewDocVC_calledTimes += 1
+        presentPreviewDocVC_path = path
     }
     
     func importNode(nodeHandle: HandleEntity?) {
@@ -1410,6 +1415,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     
     func exportFile(from node: NodeEntity, sender button: Any) {
         exportFile_calledTimes += 1
+        exportFile_sender = button
     }
     
     func showDownloadTransfer(node: NodeEntity) {

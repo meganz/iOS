@@ -5,6 +5,7 @@ import MEGASwift
 public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked Sendable {
     private let duplicate: Bool
     @Atomic public var newName: String?
+    @Atomic public var hasExistFileParentHandles: [HandleEntity] = []
     private let uploadFileResult: (Result<Void, TransferErrorEntity>)?
     private let uploadSupportFileResult: (Result<TransferEntity, TransferErrorEntity>)?
     private let cancelTransferResult: (Result<Void, TransferErrorEntity>)
@@ -49,6 +50,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
     
     public func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
         $newName.mutate { $0 = name }
+        $hasExistFileParentHandles.mutate { $0.append(parentHandle) }
         return duplicate
     }
 

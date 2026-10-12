@@ -4,6 +4,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwift
+import MEGATextEditor
 
 enum TextEditorViewAction: ActionType {
     case setUpView
@@ -83,6 +84,7 @@ final class TextEditorViewModel: ViewModelType {
     private var isBackupNode: Bool = false
     private var downloadTask: Task<Void, any Error>?
     private let tracker: any AnalyticsTracking
+    private let isMarkdownScreen: Bool
     private let resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol
     private let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
     /// Character offset of the top visible character. It is a position
@@ -103,6 +105,7 @@ final class TextEditorViewModel: ViewModelType {
         resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil,
+        isMarkdownScreen: Bool = false,
         leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = LeftOffItemsRecordUseCase.shared,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
@@ -116,8 +119,16 @@ final class TextEditorViewModel: ViewModelType {
         self.resumeTextPositionUseCase = resumeTextPositionUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
+        self.isMarkdownScreen = isMarkdownScreen
         self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
         self.tracker = tracker
+    }
+
+    /// The Markdown screens are on when the Markdown editor remote feature flag is on.
+    static func isMarkdownEditorEnabled(
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+    ) -> Bool {
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMarkdownEditor)
     }
     
     func dispatch(_ action: TextEditorViewAction) {
@@ -366,7 +377,17 @@ final class TextEditorViewModel: ViewModelType {
         }
         do {
             var encode: String.Encoding = .utf8
-            textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
+            if isMarkdownScreen {
+                // The Markdown views need valid UTF-8. Other bytes go to the document preview, like any file that does not decode.
+                let data = try Data(contentsOf: URL(fileURLWithPath: path))
+                guard let text = MarkdownTextEditorText.decode(data) else {
+                    router.showPreviewDocVC(fromFilePath: path, showUneditableError: shouldEditAfterOpen)
+                    return
+                }
+                textFile.content = text
+            } else {
+                textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
+            }
             textFile.encode = encode.rawValue
             if shouldEditAfterOpen {
                 editFile(shallUpdateContent: true)
