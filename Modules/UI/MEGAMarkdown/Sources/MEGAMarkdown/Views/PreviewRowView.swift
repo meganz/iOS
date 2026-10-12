@@ -60,8 +60,8 @@ private struct PreviewRowContent: View {
             )
         case .plainText(let text, let isFirst, let isLast, _):
             CodeBlockView(language: nil, code: text, isFirst: isFirst, isLast: isLast)
-        case .notice(let notice):
-            Text(notice == .shownAsPlainText ? strings.shownAsPlainText : strings.restTooLarge)
+        case .notice:
+            Text(strings.shownAsPlainText)
                 .font(theme.bodyFont.italic())
                 .foregroundStyle(theme.codeLanguageColor)
                 .accessibilityIdentifier("markdown.preview.notice")

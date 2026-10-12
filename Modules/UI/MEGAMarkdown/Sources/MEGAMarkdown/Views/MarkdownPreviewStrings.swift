@@ -6,20 +6,16 @@ public struct MarkdownPreviewStrings: Equatable, Sendable {
     public var tooLarge: String
     /// Shown above a part of the file that is too big to format. That part follows as plain text.
     public var shownAsPlainText: String
-    /// Shown at the end when the rest of the file is not shown, to keep memory use safe.
-    public var restTooLarge: String
 
-    public init(tooLarge: String, shownAsPlainText: String, restTooLarge: String) {
+    public init(tooLarge: String, shownAsPlainText: String) {
         self.tooLarge = tooLarge
         self.shownAsPlainText = shownAsPlainText
-        self.restTooLarge = restTooLarge
     }
 
     /// English texts. The environment uses them when the host passes no strings.
     public static let english = MarkdownPreviewStrings(
         tooLarge: "This file is too large to preview.",
-        shownAsPlainText: "This part is too large to format. It is shown as plain text.",
-        restTooLarge: "The rest of this file is too large to preview."
+        shownAsPlainText: "This part is too large to format. It is shown as plain text."
     )
 }
 

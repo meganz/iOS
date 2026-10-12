@@ -1,6 +1,6 @@
 # MEGAMarkdown architecture
 
-This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering, large-file preview, editor model, Markdown import and export, and editor UI layers are implemented. Sections marked **Coming soon** outline future responsibilities; their APIs and implementation decisions will be filled in with the corresponding changes.
+This guide is the overview of the package. It names each layer, its public contract, and where the details live. The model, parser, internal chunking, rendering, large-file preview, editor model, Markdown import and export, editor UI and app integration layers are implemented.
 
 Each implemented layer has a reference page with the full detail. Keep this guide short and put new detail in the reference pages.
 
@@ -16,7 +16,7 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Editor model and mutations](#editor-model-and-mutations) | Implemented | Editable state, selection, document changes, undo, and the clipboard. | [EDITOR.md](EDITOR.md) |
 | [Markdown import and export](#markdown-import-and-export) | Implemented | Conversion between editable content and Markdown source. | [EDITOR.md](EDITOR.md) |
 | [Editor UI](#editor-ui) | Implemented | Rich/source editing modes, controls, selection over rows, and accessibility. | [EDITOR-UI.md](EDITOR-UI.md) |
-| [App integration](#app-integration) | Coming soon | File lifecycle, navigation, saving, and host-provided behavior. | |
+| [App integration](#app-integration) | Implemented | The MEGATextEditor package checks the file size, shows the preview or the editor, and gives the app strings. | [MEGATextEditor README](../../Features/MEGATextEditor/README.md) |
 
 ## Public document model
 
@@ -123,7 +123,15 @@ The `MEGAMarkdownEditor` target holds the rich editor model and the editor UI (`
 
 ## App integration
 
-**Coming soon.** This section will explain how the host app loads and saves files, presents previews and editors, supplies themes and localized strings, and handles links and image resources. Document lifecycle and error handling at the package boundary, with a minimal integration example once an app flow uses the package.
+The MEGA app reaches the package through `MEGATextEditor` in `Modules/Features`. That package shows the views in `MarkdownTextEditorContentView`. The host screen owns the navigation bar and the toolbar.
+
+Before it reads or downloads a file, the host calls `MarkdownTextEditorRoute`. It checks the name and compares the size with `MarkdownPreview.sizeLimitInBytes`. A bigger file is not read.
+
+The host decodes the bytes with `MarkdownTextEditorText.decode`. Bytes that are not valid UTF-8 never reach the views.
+
+It shows `MarkdownPreview` to read and `MarkdownEditor` in `.rich` mode to edit. The editor shows the source when rich mode cannot show the text.
+
+Before a save it calls `MarkdownTextEditorContentState.flushEditor()`. That calls `MarkdownEditorFlusher.flush()`. Then it reads `text`.
 
 ## Testing
 
@@ -165,6 +173,6 @@ For an intentional output change, set `TEST_RUNNER_MARKDOWN_WRITE_GOLDENS` to th
 
 ## Extending the guide
 
-Update this guide in the same MR that adds or changes an implementation layer. Replace the relevant **Coming soon** text with a short summary of the APIs, data flow, and limitations, then update the layer's status above. Put the full detail in a reference page next to this guide and link it from the layers table.
+Update this guide in the same MR that adds or changes an implementation layer. Write a short summary of the APIs, data flow, and limitations, then update the layer's status above. Put the full detail in a reference page next to this guide and link it from the layers table.
 
 Keep unimplemented responsibilities clearly marked; a placeholder does not commit to a particular UI framework or state-management design. The README remains the package entry point, while this guide explains the implementation and the remaining layers.

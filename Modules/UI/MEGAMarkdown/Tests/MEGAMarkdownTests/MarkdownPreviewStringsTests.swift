@@ -5,7 +5,7 @@ import Testing
 struct MarkdownPreviewStringsTests {
     @Test func englishHasNoEmptyString() {
         let fields = Mirror(reflecting: MarkdownPreviewStrings.english).children
-        #expect(fields.count == 3)
+        #expect(fields.count == 2)
         for field in fields {
             let value = field.value as? String
             #expect(value?.isEmpty == false, "\(field.label ?? "?") is empty")

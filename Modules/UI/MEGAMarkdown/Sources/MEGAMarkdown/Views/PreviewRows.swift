@@ -23,8 +23,6 @@ package struct PreviewRow: Equatable, Sendable {
     package enum Notice: Equatable, Sendable {
         /// The rows below are raw source text.
         case shownAsPlainText
-        /// The rest of the file is not shown (memory limit).
-        case restTooLarge
     }
 
     package var sourceLine: Int
