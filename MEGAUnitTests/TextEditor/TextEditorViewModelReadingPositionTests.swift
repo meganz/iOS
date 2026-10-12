@@ -106,6 +106,20 @@ struct TextEditorViewModelReadingPositionTests {
         #expect(recordUseCase.record_Calls.isEmpty)
     }
 
+    @Test("Does not record a file from a link, because Home can only reopen files of the account")
+    func linkFileIsNotRecordedAsLeftOffItem() async throws {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase, isLink: true)
+
+        sut.dispatch(.updateReadingPosition(anchor: 500, progress: 0.5))
+        sut.dispatch(.saveReadingPosition)
+        // A record would run in a task, so the test gives that task time to run.
+        try await Task.sleep(for: .milliseconds(200))
+
+        #expect(recordUseCase.record_Calls.isEmpty)
+        #expect(recordUseCase.remove_Calls.isEmpty)
+    }
+
     // MARK: - Node identity after an edit
 
     @Test("Uses the node the upload produced, not the one the editor opened")
@@ -146,7 +160,8 @@ struct TextEditorViewModelReadingPositionTests {
         textEditorMode: TextEditorMode = .view,
         uploadFileUseCase: MockUploadFileUseCase = MockUploadFileUseCase(),
         resumeTextPositionUseCase: MockResumeTextPositionUseCase = MockResumeTextPositionUseCase(),
-        leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
+        leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
+        isLink: Bool = false
     ) -> TextEditorViewModel {
         TextEditorViewModel(
             router: MockTextEditorViewRouter(),
@@ -159,6 +174,7 @@ struct TextEditorViewModelReadingPositionTests {
             resumeTextPositionUseCase: resumeTextPositionUseCase,
             parentHandle: 1,
             nodeEntity: NodeEntity(name: fileName, fingerprint: "fingerprint", handle: 1, isFile: true),
+            isLink: isLink,
             leftOffItemRecordUseCase: leftOffItemRecordUseCase,
             tracker: MockTracker()
         )

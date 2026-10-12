@@ -25,6 +25,11 @@ final class TextEditorViewRouter: NSObject {
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     private let isMarkdownEditorEnabled: Bool
+    /// True for a file from a folder link or a file link. The file is in no SDK tree of the account,
+    /// so download and import use the link flows.
+    private var isLink = false
+    /// The public link of a file link. It is nil for a file inside a folder link.
+    private var fileLink: String?
     
     @objc convenience init(
         textFile: TextFile,
@@ -32,7 +37,9 @@ final class TextEditorViewRouter: NSObject {
         isFromSharedItem: Bool = false,
         node: MEGANode? = nil,
         presenter: UIViewController? = nil,
-        isMarkdownEditorEnabled: Bool
+        isMarkdownEditorEnabled: Bool,
+        isLink: Bool = false,
+        fileLink: String? = nil
     ) {
         self.init(textFile: textFile,
                   textEditorMode: textEditorMode,
@@ -41,6 +48,8 @@ final class TextEditorViewRouter: NSObject {
                   presenter: presenter,
                   isMarkdownEditorEnabled: isMarkdownEditorEnabled)
         self.megaNode = node
+        self.isLink = isLink
+        self.fileLink = fileLink
     }
     
     init(
@@ -170,7 +179,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             resumeTextPositionUseCase: ResumeTextPositionUseCase(preferenceUseCase: PreferenceUseCase.default),
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
-            isMarkdownScreen: isMarkdownScreen
+            isMarkdownScreen: isMarkdownScreen,
+            isLink: isLink
         )
         return vm
     }
@@ -236,7 +246,11 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let previewVC = nc?.viewControllers.first as? PreviewDocumentViewController
         previewVC?.filePath = path
         previewVC?.showUnknownEncodeHud = showUneditableError
-        if let nodeHandle = nodeEntity?.handle {
+        if isLink {
+            previewVC?.node = megaNode
+            previewVC?.isLink = true
+            previewVC?.fileLink = fileLink
+        } else if let nodeHandle = nodeEntity?.handle {
             previewVC?.nodeHandle = nodeHandle
         }
         nc?.modalPresentationStyle = .fullScreen
@@ -247,6 +261,10 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func importNode(nodeHandle: HandleEntity?) {
+        if isLink {
+            importLinkNode()
+            return
+        }
         guard let nodeHandle = nodeHandle,
               let node = MEGASdk.shared.node(forHandle: nodeHandle) else {
             return
@@ -270,6 +288,10 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     
     func showDownloadTransfer(node: NodeEntity) {
         guard let navigationController = navigationController else {
+            return
+        }
+        if isLink {
+            downloadLinkNode(node, presenter: navigationController)
             return
         }
         
@@ -361,5 +383,28 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         guard let baseViewController else { return }
         HideFilesAndFoldersRouter(presenter: baseViewController)
             .unhideNodes([node])
+    }
+}
+
+// MARK: - Links
+extension TextEditorViewRouter {
+    /// A file link downloads by its public link. A file inside a folder link downloads through the folder link SDK.
+    private func downloadLinkNode(_ node: NodeEntity, presenter: UIViewController) {
+        if let fileLink, let linkURL = URL(string: fileLink) {
+            DownloadLinkRouter(link: linkURL, isFolderLink: false, presenter: presenter).start()
+        } else {
+            DownloadLinkRouter(nodes: [node], isFolderLink: true, presenter: presenter).start()
+        }
+    }
+
+    /// The import keeps the text screen open, like the document preview. Without a session it shows onboarding first.
+    private func importLinkNode() {
+        guard let megaNode, let baseViewController else { return }
+        ImportLinkRouter(
+            isFolderLink: fileLink == nil,
+            nodes: [megaNode],
+            presenter: baseViewController,
+            dismissBeforePresent: false
+        ).start()
     }
 }

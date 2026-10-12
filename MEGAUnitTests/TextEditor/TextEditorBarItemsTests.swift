@@ -53,12 +53,12 @@ struct TextEditorBarItemsTests {
         #expect(items.contains { $0.action == Self.editAction } == false)
     }
 
-    @Test func unknownAccessSeesDownloadEditImport() {
+    @Test func unknownAccessSeesDownloadImportWithoutEdit() {
         let target = Target()
 
         let items = Self.actionItems(.unknown, target: target)
 
-        #expect(items.map(\.action) == [Self.downloadAction, Self.editAction, Self.importAction])
+        #expect(items.map(\.action) == [Self.downloadAction, Self.importAction])
     }
 
     @Test func itemsTargetTheGivenObject() {

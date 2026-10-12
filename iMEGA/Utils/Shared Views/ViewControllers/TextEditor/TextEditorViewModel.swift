@@ -85,6 +85,8 @@ final class TextEditorViewModel: ViewModelType {
     private var downloadTask: Task<Void, any Error>?
     private let tracker: any AnalyticsTracking
     private let isMarkdownScreen: Bool
+    /// A file from a folder link or a file link. The user does not own it, so the screen is read only.
+    private let isLink: Bool
     private let resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol
     private let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
     /// Character offset of the top visible character. It is a position
@@ -106,6 +108,7 @@ final class TextEditorViewModel: ViewModelType {
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil,
         isMarkdownScreen: Bool = false,
+        isLink: Bool = false,
         leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = LeftOffItemsRecordUseCase.shared,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
@@ -120,6 +123,7 @@ final class TextEditorViewModel: ViewModelType {
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
         self.isMarkdownScreen = isMarkdownScreen
+        self.isLink = isLink
         self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
         self.tracker = tracker
     }
@@ -464,7 +468,8 @@ final class TextEditorViewModel: ViewModelType {
     // MARK: - Left off item
 
     private func processLeftOffItem() {
-        guard textEditorMode == .view, let nodeEntity, !nodeEntity.name.isEmpty else { return }
+        // Home can only reopen files of the account, and a link file is not one.
+        guard !isLink, textEditorMode == .view, let nodeEntity, !nodeEntity.name.isEmpty else { return }
 
         let nearCompletionFraction = 0.9
         // Where the reader stopped, which is the same point the resume position returns to.
@@ -495,9 +500,10 @@ final class TextEditorViewModel: ViewModelType {
                 textEditorMode: textEditorMode
             )
         case .view:
+            // The node actions need a node of the account, so a link file has no More button.
             return TextEditorNavbarItemsModel(
                 leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-                rightItem: NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
+                rightItem: isLink ? nil : NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
                 textEditorMode: textEditorMode
             )
         case .edit,
@@ -511,7 +517,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func nodeAccessLevel() -> NodeAccessTypeEntity {
-        isBackupNode ? .read : nodeUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
+        isBackupNode || isLink ? .read : nodeUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     
     private func uploadTo(_ parentHandle: HandleEntity) {

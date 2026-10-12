@@ -11,11 +11,23 @@ final class TextEditorOpener: NSObject {
         TextEditorViewModel.isMarkdownEditorEnabled()
     }
 
+    /// A file from a folder link or a file link opens read only on the Markdown screen.
+    /// Other text files and Markdown files over the size limit keep the document preview.
+    @objc static func opensLinkFileInTextEditor(fileName: String, sizeInBytes: UInt64) -> Bool {
+        opensLinkFileInTextEditor(fileName: fileName, sizeInBytes: sizeInBytes, isMarkdownEditorEnabled: isMarkdownEditorEnabled)
+    }
+
+    static func opensLinkFileInTextEditor(fileName: String, sizeInBytes: UInt64, isMarkdownEditorEnabled: Bool) -> Bool {
+        MarkdownTextEditorRoute(fileName: fileName, sizeInBytes: sizeInBytes, isEnabled: isMarkdownEditorEnabled) == .markdownFile
+    }
+
     /// Opens a cached text file. Returns nil when the text cannot be decoded, so the caller can try other viewers.
     @objc static func makeCachedTextViewController(
         node: MEGANode,
         filePath: String,
         isFromSharedItem: Bool,
+        isLink: Bool,
+        fileLink: String?,
         presenter: UIViewController?
     ) -> UIViewController? {
         let fileName = node.name ?? ""
@@ -39,7 +51,9 @@ final class TextEditorOpener: NSObject {
                 isFromSharedItem: isFromSharedItem,
                 node: node,
                 presenter: presenter,
-                isMarkdownEditorEnabled: isMarkdownEditorEnabled
+                isMarkdownEditorEnabled: isMarkdownEditorEnabled,
+                isLink: isLink,
+                fileLink: fileLink
             )
         }
     }

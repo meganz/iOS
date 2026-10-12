@@ -7,10 +7,10 @@ public enum MarkdownTextEditorBottomBarItem: Equatable, Sendable {
     case export
     case `import`
 
-    /// Download always. Edit unless the access is read only. Export for the owner, else Import.
+    /// Download always. Edit only with write access, so an unknown access cannot edit. Export for the owner, else Import.
     public static func items(for accessType: NodeAccessTypeEntity) -> [MarkdownTextEditorBottomBarItem] {
         var items: [MarkdownTextEditorBottomBarItem] = [.download]
-        if accessType != .read {
+        if accessType != .read && accessType != .unknown {
             items.append(.edit)
         }
         items.append(accessType == .owner ? .export : .import)

@@ -28,7 +28,8 @@ struct MarkdownTextEditorViewControllerTests {
         fileName: String = "notes.md",
         content: String = "",
         parentHandle: HandleEntity? = nil,
-        nodeEntity: NodeEntity? = NodeEntity(name: "notes.md", handle: 77, isFile: true, size: 10)
+        nodeEntity: NodeEntity? = NodeEntity(name: "notes.md", handle: 77, isFile: true, size: 10),
+        isLink: Bool = false
     ) -> Fixture {
         let router = MockTextEditorViewRouter()
         let tracker = MockTracker()
@@ -44,6 +45,7 @@ struct MarkdownTextEditorViewControllerTests {
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
+            isLink: isLink,
             tracker: tracker
         )
         let sut = MarkdownTextEditorViewController(viewModel: viewModel)
@@ -244,6 +246,19 @@ struct MarkdownTextEditorViewControllerTests {
         Self.configure(fixture.sut, mode: .edit, accessLevel: nil)
 
         #expect(fixture.sut.toolbarItems == nil)
+    }
+
+    @Test func linkFileShowsDownloadAndImportWithoutMore() async throws {
+        // The account owns no link file, even when the SDK reports another access level.
+        let fixture = Self.makeFixture(accessLevel: .owner, isLink: true)
+
+        fixture.viewModel.dispatch(.setUpView)
+        try await Self.waitForSetUp(fixture.sut)
+
+        let actions = fixture.sut.toolbarItems?.compactMap(\.action)
+        #expect(actions == [#selector((any TextEditorBarItemTarget).downloadTapped), #selector((any TextEditorBarItemTarget).importTapped)])
+        let right = fixture.sut.navigationItem.rightBarButtonItems ?? []
+        #expect(right.contains { $0.image == MEGAAssets.UIImage.moreNavigationBar } == false)
     }
 
     @Test func moreTapPassesBarButtonItemAsSender() throws {

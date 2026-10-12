@@ -138,14 +138,16 @@ extension MarkdownTextEditorViewController: ViewType {
             navigationItem.rightBarButtonItems = nil
         case .view:
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: model.leftItem.title, style: .plain, target: self, action: #selector(closeTapped))
-            navigationItem.rightBarButtonItems = [
-                UIBarButtonItem(
-                    image: model.rightItem?.image ?? MEGAAssets.UIImage.moreNavigationBar,
-                    style: .plain,
-                    target: self,
-                    action: #selector(moreTapped(button:))
-                )
-            ]
+            navigationItem.rightBarButtonItems = model.rightItem.map { rightItem in
+                [
+                    UIBarButtonItem(
+                        image: rightItem.image ?? MEGAAssets.UIImage.moreNavigationBar,
+                        style: .plain,
+                        target: self,
+                        action: #selector(moreTapped(button:))
+                    )
+                ]
+            }
         case .edit, .create:
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: model.leftItem.title, style: .plain, target: self, action: #selector(cancelTapped))
             let saveItem = UIBarButtonItem(title: model.rightItem?.title, style: .plain, target: self, action: #selector(saveTapped))

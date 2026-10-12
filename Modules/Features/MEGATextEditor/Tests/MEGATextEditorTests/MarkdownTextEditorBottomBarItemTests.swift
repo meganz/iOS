@@ -8,9 +8,9 @@ struct MarkdownTextEditorBottomBarItemTests {
         (.full, [.download, .edit, .import]),
         (.readWrite, [.download, .edit, .import]),
         (.read, [.download, .import]),
-        (.unknown, [.download, .edit, .import])
+        (.unknown, [.download, .import])
     ])
-    func bottomBarItemsMatchLegacyRule(accessType: NodeAccessTypeEntity, expected: [MarkdownTextEditorBottomBarItem]) {
+    func bottomBarItemsFollowAccessLevel(accessType: NodeAccessTypeEntity, expected: [MarkdownTextEditorBottomBarItem]) {
         #expect(MarkdownTextEditorBottomBarItem.items(for: accessType) == expected)
     }
 }

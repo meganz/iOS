@@ -82,6 +82,12 @@
         previewDocumentPath = nil;
     }
     
+    // A link file is read only, so only the Markdown screen takes it. Other text files keep the document preview.
+    BOOL opensLinkTextFile = isFolderLink && [TextEditorOpener opensLinkFileInTextEditorWithFileName:self.name ?: @"" sizeInBytes:self.size.unsignedLongLongValue];
+    BOOL opensTextEditor = [viewController conformsToProtocol:@protocol(TextFileEditable)] || opensLinkTextFile;
+    // The file link screen opens a file with no view controller. The text screen still needs a presenter for its fallback.
+    UIViewController *textPresenter = opensLinkTextFile ? (viewController.navigationController ?: UIApplication.mnz_presentingViewController) : viewController.navigationController;
+    
     if (previewDocumentPath) {
         if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name]) {
             NSURL *path = [NSURL fileURLWithPath:previewDocumentPath];
@@ -94,8 +100,9 @@
                 previewController.currentPreviewItemIndex = 0;
                 return previewController;
             }
-        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:previewDocumentPath]) {
-            UIViewController *textController = [TextEditorOpener makeCachedTextViewControllerWithNode:self filePath:previewDocumentPath isFromSharedItem:isFromSharedItem presenter:viewController.navigationController];
+        } else if (opensTextEditor && [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:previewDocumentPath]) {
+            MEGANode *textNode = isFolderLink ? ([api authorizeNode:self] ?: self) : self;
+            UIViewController *textController = [TextEditorOpener makeCachedTextViewControllerWithNode:textNode filePath:previewDocumentPath isFromSharedItem:isFromSharedItem isLink:isFolderLink fileLink:fileLink presenter:textPresenter];
             if (textController != nil) {
                 return textController;
             }
@@ -126,11 +133,11 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name fileSize:self.size.unsignedLongLongValue]) {
+            if (opensTextEditor && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name fileSize:self.size.unsignedLongLongValue]) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
                 // Authorized up front: the download goes through MEGASdk.shared, which has no link node in its tree.
-                MEGANode *nodeToLoad = isFolderLink ? [api authorizeNode:self] : self;
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:nodeToLoad presenter:viewController.navigationController isMarkdownEditorEnabled:TextEditorOpener.isMarkdownEditorEnabled] build];
+                MEGANode *nodeToLoad = isFolderLink ? ([api authorizeNode:self] ?: self) : self;
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:nodeToLoad presenter:textPresenter isMarkdownEditorEnabled:TextEditorOpener.isMarkdownEditorEnabled isLink:isFolderLink fileLink:fileLink] build];
             }
             
             if ([PDFViewerRevampRouter canOpenWithFileName:self.name]) {

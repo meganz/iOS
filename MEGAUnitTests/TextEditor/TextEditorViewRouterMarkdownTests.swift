@@ -175,6 +175,24 @@ struct TextEditorViewRouterMarkdownTests {
         #expect(Self.openCachedFile(atPath: "/nonexistent/a.txt", fileName: "a.txt") == nil)
     }
 
+    // MARK: - Link files
+
+    @Test func linkMarkdownUnderTheLimitOpensInTextEditor() {
+        #expect(TextEditorOpener.opensLinkFileInTextEditor(fileName: "a.md", sizeInBytes: Self.limit, isMarkdownEditorEnabled: true))
+    }
+
+    @Test func linkPlainTextKeepsDocumentPreview() {
+        #expect(!TextEditorOpener.opensLinkFileInTextEditor(fileName: "a.txt", sizeInBytes: 10, isMarkdownEditorEnabled: true))
+    }
+
+    @Test func linkMarkdownOverTheLimitKeepsDocumentPreview() {
+        #expect(!TextEditorOpener.opensLinkFileInTextEditor(fileName: "a.md", sizeInBytes: Self.limit + 1, isMarkdownEditorEnabled: true))
+    }
+
+    @Test func linkMarkdownWithGateOffKeepsDocumentPreview() {
+        #expect(!TextEditorOpener.opensLinkFileInTextEditor(fileName: "a.md", sizeInBytes: 10, isMarkdownEditorEnabled: false))
+    }
+
     // MARK: - Too large alert
 
     @Test func tooLargeAlertOffersDownloadAndCancel() throws {
