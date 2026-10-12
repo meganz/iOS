@@ -4,14 +4,18 @@ import MEGAPickerFileProviderDomain
 
 public struct FileProviderDomainRepository: FileProviderDomainRepositoryProtocol {
     public static var newRepo: FileProviderDomainRepository {
-        FileProviderDomainRepository(builtInPlugInsURL: Bundle.main.builtInPlugInsURL)
+        FileProviderDomainRepository(builtInPlugInsURL: Bundle.main.builtInPlugInsURL, syncDirectoryURL: FileProviderSyncDirectory.url)
     }
 
     private let builtInPlugInsURL: URL?
+    private let syncDirectoryURL: URL
 
-    /// - Parameter builtInPlugInsURL: The app's `PlugIns` directory, where the File Provider extension is embedded.
-    public init(builtInPlugInsURL: URL?) {
+    /// - Parameters:
+    ///   - builtInPlugInsURL: The app's `PlugIns` directory, where the File Provider extension is embedded.
+    ///   - syncDirectoryURL: Where the extension keeps its sync data.
+    public init(builtInPlugInsURL: URL?, syncDirectoryURL: URL) {
         self.builtInPlugInsURL = builtInPlugInsURL
+        self.syncDirectoryURL = syncDirectoryURL
     }
 
     /// The extension's principal class is set by the `MEGA_FILE_PROVIDER_PRINCIPAL_CLASS` build setting, so the
@@ -35,5 +39,12 @@ public struct FileProviderDomainRepository: FileProviderDomainRepositoryProtocol
 
     public func removeAllDomains() async throws {
         try await NSFileProviderManager.removeAllDomains()
+    }
+
+    public func removeSyncData() throws {
+        guard FileManager.default.fileExists(atPath: syncDirectoryURL.path) else {
+            return
+        }
+        try FileManager.default.removeItem(at: syncDirectoryURL)
     }
 }

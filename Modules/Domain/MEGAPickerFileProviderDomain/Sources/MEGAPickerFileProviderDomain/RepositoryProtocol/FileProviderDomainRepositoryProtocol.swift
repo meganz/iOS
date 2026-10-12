@@ -6,4 +6,6 @@ public protocol FileProviderDomainRepositoryProtocol: RepositoryProtocol, Sendab
     var isReplicatedExtensionEnabled: Bool { get }
     func addDomain() async throws
     func removeAllDomains() async throws
+    /// Deletes the snapshots and the change queue the extension keeps for the domain.
+    func removeSyncData() async throws
 }

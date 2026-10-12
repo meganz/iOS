@@ -13,13 +13,13 @@ struct FileProviderDomainUseCaseTests {
     }
 
     @Test
-    func registerDomain_whenReplicatedExtensionIsDisabled_removesAllDomains() async throws {
+    func registerDomain_whenReplicatedExtensionIsDisabled_removesAllDomainsAndTheSyncData() async throws {
         let repository = MockFileProviderDomainRepository(isReplicatedExtensionEnabled: false)
         let sut = FileProviderDomainUseCase(repository: repository)
 
         try await sut.registerDomain()
 
-        #expect(repository.messages == [.removeAllDomains])
+        #expect(repository.messages == [.removeAllDomains, .removeSyncData])
     }
 
     @Test
@@ -51,6 +51,7 @@ private final class MockFileProviderDomainRepository: FileProviderDomainReposito
     enum Message: Equatable {
         case addDomain
         case removeAllDomains
+        case removeSyncData
     }
 
     static var newRepo: MockFileProviderDomainRepository {
@@ -73,6 +74,11 @@ private final class MockFileProviderDomainRepository: FileProviderDomainReposito
 
     func removeAllDomains() async throws {
         messages.append(.removeAllDomains)
+        if let error { throw error }
+    }
+
+    func removeSyncData() async throws {
+        messages.append(.removeSyncData)
         if let error { throw error }
     }
 }

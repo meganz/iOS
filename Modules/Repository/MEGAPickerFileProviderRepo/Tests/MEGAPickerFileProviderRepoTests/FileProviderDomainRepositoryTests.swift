@@ -11,7 +11,7 @@ struct FileProviderDomainRepositoryTests {
         let plugInsURL = try makePlugInsDirectory(extensionAttributes: ["NSExtensionPrincipalClass": principalClass])
         defer { try? FileManager.default.removeItem(at: plugInsURL) }
 
-        let sut = FileProviderDomainRepository(builtInPlugInsURL: plugInsURL)
+        let sut = makeSUT(builtInPlugInsURL: plugInsURL)
 
         #expect(sut.isReplicatedExtensionEnabled == expected)
     }
@@ -21,7 +21,7 @@ struct FileProviderDomainRepositoryTests {
         let plugInsURL = try makePlugInsDirectory(extensionAttributes: [:])
         defer { try? FileManager.default.removeItem(at: plugInsURL) }
 
-        let sut = FileProviderDomainRepository(builtInPlugInsURL: plugInsURL)
+        let sut = makeSUT(builtInPlugInsURL: plugInsURL)
 
         #expect(sut.isReplicatedExtensionEnabled == false)
     }
@@ -30,16 +30,45 @@ struct FileProviderDomainRepositoryTests {
     func isReplicatedExtensionEnabled_whenExtensionIsNotEmbedded_returnsFalse() {
         let plugInsURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
 
-        let sut = FileProviderDomainRepository(builtInPlugInsURL: plugInsURL)
+        let sut = makeSUT(builtInPlugInsURL: plugInsURL)
 
         #expect(sut.isReplicatedExtensionEnabled == false)
     }
 
     @Test
     func isReplicatedExtensionEnabled_whenAppHasNoPlugIns_returnsFalse() {
-        let sut = FileProviderDomainRepository(builtInPlugInsURL: nil)
+        let sut = makeSUT(builtInPlugInsURL: nil)
 
         #expect(sut.isReplicatedExtensionEnabled == false)
+    }
+
+    @Test
+    func removeSyncData_deletesTheSyncDirectory() throws {
+        let syncDirectoryURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let snapshotsURL = syncDirectoryURL.appendingPathComponent("Snapshots", isDirectory: true)
+        try FileManager.default.createDirectory(at: snapshotsURL, withIntermediateDirectories: true)
+        try Data("snapshot".utf8).write(to: snapshotsURL.appendingPathComponent("root.snapshot"))
+        defer { try? FileManager.default.removeItem(at: syncDirectoryURL) }
+        let sut = makeSUT(builtInPlugInsURL: nil, syncDirectoryURL: syncDirectoryURL)
+
+        try sut.removeSyncData()
+
+        #expect(FileManager.default.fileExists(atPath: syncDirectoryURL.path) == false)
+    }
+
+    @Test
+    func removeSyncData_withoutSyncDirectory_doesNotThrow() throws {
+        let syncDirectoryURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let sut = makeSUT(builtInPlugInsURL: nil, syncDirectoryURL: syncDirectoryURL)
+
+        try sut.removeSyncData()
+    }
+
+    private func makeSUT(
+        builtInPlugInsURL: URL?,
+        syncDirectoryURL: URL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    ) -> FileProviderDomainRepository {
+        FileProviderDomainRepository(builtInPlugInsURL: builtInPlugInsURL, syncDirectoryURL: syncDirectoryURL)
     }
 
     private func makePlugInsDirectory(extensionAttributes: [String: String]) throws -> URL {

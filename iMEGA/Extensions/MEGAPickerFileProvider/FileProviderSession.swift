@@ -1,6 +1,7 @@
 import FileProvider
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPickerFileProviderDomain
 import MEGARepo
 
 /// Process-wide single-flight loginTask for the File Provider extension.
@@ -15,6 +16,10 @@ actor FileProviderSession {
 
     private var loginTask: Task<Void, any Error>?
     private let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
+
+    private var nodeTreeObservation: Task<Void, Never>?
+    private var isNodeTreeCurrent = false
+    private var nodeTreeWaiters: [UUID: CheckedContinuation<Bool, Never>] = [:]
 
     /// `notAuthenticated` carrying `PickerConstant.passcodeEnabled`, which `DocumentActionViewController`
     /// turns into the "disable your passcode" prompt instead of the generic "please log in" one.
@@ -46,6 +51,7 @@ actor FileProviderSession {
         // Steady state: a previous loginTask already logged in and fetched nodes.
         guard MEGASdk.shared.isLoggedIn() == 0 else { return }
 
+        observeNodeTree()
         let task = Task {
             let authUseCase = AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo)
             guard let sessionId = authUseCase.sessionId() else {
@@ -70,6 +76,38 @@ actor FileProviderSession {
             // got cancelled mid-await can never null it out while the loginTask is still in flight.
             loginTask = nil
             throw error
+        }
+    }
+
+    /// Waits for the node tree to catch up with the server, which `ensureReady()` does not: fetchNodes finishes
+    /// before the changes made while the process was not running have been received.
+    /// - Returns: Whether it caught up within `timeout`.
+    func waitUntilNodeTreeIsCurrent(timeout: Duration) async -> Bool {
+        guard !isNodeTreeCurrent else { return true }
+
+        let id = UUID()
+        let timeoutTask = Task {
+            try? await Task.sleep(for: timeout)
+            nodeTreeWaiters.removeValue(forKey: id)?.resume(returning: false)
+        }
+        defer { timeoutTask.cancel() }
+        return await withCheckedContinuation { nodeTreeWaiters[id] = $0 }
+    }
+
+    /// Started before login, so that the report that follows fetchNodes is not missed.
+    private func observeNodeTree() {
+        guard nodeTreeObservation == nil else { return }
+
+        let nodeTreeUseCase = FileProviderNodeTreeUseCase(eventRepo: EventRepository.newRepo)
+        nodeTreeObservation = Task {
+            guard await nodeTreeUseCase.nodeTreeCaughtUp() else {
+                MEGALogError("[Picker] Event updates ended before the node tree caught up")
+                return
+            }
+            MEGALogDebug("[Picker] Node tree caught up")
+            isNodeTreeCurrent = true
+            nodeTreeWaiters.values.forEach { $0.resume(returning: true) }
+            nodeTreeWaiters = [:]
         }
     }
 

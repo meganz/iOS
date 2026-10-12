@@ -3,10 +3,10 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPickerFileProviderDomain
 
-/// Enumerates the children of a container one page at a time.
+/// Enumerates the children of a container one page at a time, recording each page in the container's snapshot.
 ///
-/// Changes are not tracked yet: every enumeration reports no changes against a fixed anchor, so the system never
-/// finds a gap it would have to rescan for. The working set is empty for the same reason.
+/// Changes reach the system through the working set (`ReplicatedWorkingSetEnumerator`), so this enumerator reports
+/// none against a fixed anchor.
 final class ReplicatedFileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable {
     private static var syncAnchor: NSFileProviderSyncAnchor {
         NSFileProviderSyncAnchor(Data("0".utf8))
@@ -14,33 +14,36 @@ final class ReplicatedFileProviderEnumerator: NSObject, NSFileProviderEnumerator
 
     /// Used when the system does not suggest a page size. Each page builds all of its items at once, so this is
     /// kept small for the extension's memory limit.
-    private static let defaultPageSize = 200
+    static let defaultPageSize = 200
 
     private let containerIdentifier: NSFileProviderItemIdentifier
     private let itemUseCase: any FileProviderItemUseCaseProtocol
+    private let enumerationSnapshotUseCase: any FileProviderEnumerationSnapshotUseCaseProtocol
 
-    init(containerIdentifier: NSFileProviderItemIdentifier, itemUseCase: some FileProviderItemUseCaseProtocol) {
+    init(
+        containerIdentifier: NSFileProviderItemIdentifier,
+        itemUseCase: some FileProviderItemUseCaseProtocol,
+        enumerationSnapshotUseCase: some FileProviderEnumerationSnapshotUseCaseProtocol
+    ) {
         self.containerIdentifier = containerIdentifier
         self.itemUseCase = itemUseCase
+        self.enumerationSnapshotUseCase = enumerationSnapshotUseCase
     }
 
     func invalidate() {}
 
     func enumerateItems(for observer: any NSFileProviderEnumerationObserver, startingAt page: NSFileProviderPage) {
-        guard containerIdentifier != .workingSet else {
-            observer.finishEnumerating(upTo: nil)
-            return
-        }
-
         let offset = page.offset
         let pageSize = observer.suggestedPageSize.flatMap { $0 > 0 ? $0 : nil } ?? Self.defaultPageSize
-        Task { [containerIdentifier, itemUseCase] in
+        Task { [containerIdentifier, itemUseCase, enumerationSnapshotUseCase] in
             do {
                 try await FileProviderSession.shared.ensureReady()
                 let items = try await itemUseCase.children(
                     of: containerIdentifier,
                     page: SearchPageEntity(startingOffset: offset, pageSize: pageSize)
                 )
+                // Recorded before the system has them: a snapshot may hold more than the system, never less.
+                try await enumerationSnapshotUseCase.didEnumerate(items, in: containerIdentifier)
                 observer.didEnumerate(items.map(ReplicatedFileProviderItem.init(entity:)))
                 // A short page is the last one.
                 observer.finishEnumerating(upTo: items.count < pageSize ? nil : NSFileProviderPage(offset: offset + items.count))

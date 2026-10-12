@@ -8,7 +8,8 @@ import MEGARepo
 /// Entry point of the File Provider extension on `NSFileProviderReplicatedExtension`.
 ///
 /// Only used when the `MEGA_FILE_PROVIDER_PRINCIPAL_CLASS` build setting points at it; `FileProviderExtension`
-/// stays the shipping implementation until the switch. For now it only serves browsing and downloading.
+/// stays the shipping implementation until the switch. For now it serves browsing and downloading, and keeps what
+/// Files shows in step with remote changes.
 final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
     /// Changes MEGA has nowhere to keep. The system sets the last used date whenever a file is opened, including
     /// when Files hands it over to another app.
@@ -32,6 +33,36 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     /// Built on every use for the same reason as `itemUseCase`.
     private var contentUseCase: some FileProviderContentUseCaseProtocol {
         FileProviderContentUseCase(downloadRepo: FileProviderDownloadRepository.newRepo)
+    }
+
+    private var enumerationSnapshotUseCase: some FileProviderEnumerationSnapshotUseCaseProtocol {
+        FileProviderEnumerationSnapshotUseCase(snapshotRepo: FileProviderSnapshotRepository.newRepo)
+    }
+
+    /// Built on every use for the same reason as `itemUseCase`.
+    private var folderComparisonUseCase: some FileProviderFolderComparisonUseCaseProtocol {
+        FileProviderFolderComparisonUseCase(
+            itemUseCase: itemUseCase,
+            snapshotRepo: FileProviderSnapshotRepository.newRepo,
+            changeQueueRepo: FileProviderChangeQueueRepository.newRepo,
+            workingSetSignalRepo: FileProviderWorkingSetSignalRepository.newRepo
+        )
+    }
+
+    /// Built on every use for the same reason as `itemUseCase`.
+    private var workingSetEnumerator: ReplicatedWorkingSetEnumerator {
+        ReplicatedWorkingSetEnumerator(
+            workingSetItemsUseCase: FileProviderWorkingSetItemsUseCase(
+                itemUseCase: itemUseCase,
+                snapshotRepo: FileProviderSnapshotRepository.newRepo,
+                enumerationSnapshotUseCase: enumerationSnapshotUseCase
+            ),
+            changesUseCase: FileProviderChangesUseCase(
+                itemUseCase: itemUseCase,
+                snapshotRepo: FileProviderSnapshotRepository.newRepo,
+                changeQueueRepo: FileProviderChangeQueueRepository.newRepo
+            )
+        )
     }
 
     // Nothing here may create `MEGASdk.shared` before `copyDatabasesFromMainApp()`: an SDK that opens its
@@ -190,7 +221,20 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         guard !credentialUseCase.isPasscodeEnabled() else {
             throw FileProviderSession.passcodeEnabledError
         }
-        return ReplicatedFileProviderEnumerator(containerIdentifier: containerItemIdentifier, itemUseCase: itemUseCase)
+        guard containerItemIdentifier != .workingSet else {
+            return workingSetEnumerator
+        }
+
+        // The system asks for an enumerator of every folder it shows, which is when the folder is compared.
+        let folderComparisonUseCase = folderComparisonUseCase
+        Task {
+            await FolderComparisonCoordinator.shared.compareChildren(of: containerItemIdentifier, using: folderComparisonUseCase)
+        }
+        return ReplicatedFileProviderEnumerator(
+            containerIdentifier: containerItemIdentifier,
+            itemUseCase: itemUseCase,
+            enumerationSnapshotUseCase: enumerationSnapshotUseCase
+        )
     }
 
     // MARK: - Private
