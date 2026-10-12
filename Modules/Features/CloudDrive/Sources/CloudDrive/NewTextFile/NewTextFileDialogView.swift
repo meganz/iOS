@@ -69,7 +69,7 @@ public struct NewTextFileDialogView: View {
                     .font(.headline)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .frame(maxWidth: .infinity, minHeight: 48)
-                    .background(Color(uiColor: .secondarySystemFill), in: Capsule())
+                    .background(TokenColors.Button.secondary.swiftUI, in: Capsule())
             }
             Button {
                 viewModel.didTapCreate()

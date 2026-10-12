@@ -36,7 +36,13 @@ struct NewTextFileNameField: UIViewRepresentable {
         context.coordinator.onChange = onChange
         context.coordinator.onSubmit = onSubmit
         if textField.text != text {
+            // Setting the text moves the caret to the end. The box changes only the extension, so keep the caret.
+            let caretOffset = textField.selectedTextRange.map { textField.offset(from: textField.beginningOfDocument, to: $0.start) }
             textField.text = text
+            if let caretOffset,
+               let caret = textField.position(from: textField.beginningOfDocument, offset: min(caretOffset, text.utf16.count)) {
+                textField.selectedTextRange = textField.textRange(from: caret, to: caret)
+            }
         }
         textField.textColor = isInvalid ? TokenColors.Text.error : TokenColors.Text.primary
     }
