@@ -22,4 +22,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosTransfersRevamp = "itr"
     case iosQuotaWarningsRevampPhaseTwo = "iqwr2"
     case iosPdfPreviewRevamp = "ipdfr"
+    case iosMarkdownEditor = "imde"
 }
