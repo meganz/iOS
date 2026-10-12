@@ -3433,6 +3433,10 @@ public enum Strings {
         public static let continueAtEnd: Swift.String
         public static let sourceEditor: Swift.String
       }
+      public enum FileTooLarge {
+        public static func message(_ p1: Any) -> Swift.String
+        public static let title: Swift.String
+      }
       public enum KeyCommand {
         public static let indent: Swift.String
         public static let outdent: Swift.String
@@ -3449,6 +3453,14 @@ public enum Strings {
       public enum NewFile {
         public static let create: Swift.String
         public static let richTextFormatting: Swift.String
+      }
+      public enum Notice {
+        public static let fileTooLargeForRichText: Swift.String
+        public static let lineTooLong: Swift.String
+        public static let sectionTooLongForRichText: Swift.String
+      }
+      public enum Preview {
+        public static let sectionShownAsPlainText: Swift.String
       }
       public enum TextStyle {
         public static let body: Swift.String

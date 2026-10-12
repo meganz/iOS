@@ -5314,3 +5314,15 @@
 "markdownEditor.toolbar.link"="Link";
 /* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
 "markdownEditor.linkDialog.linkLabel"="Link";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="File too large to preview";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="Download the file (%@) to open it in another app.";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="This section is too large to display with formatting. It’s shown as plain text.";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="This file is too large for formatted editing. You can still edit it as plain text.";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="A section of this file is too long for formatted editing. You can still edit the file as plain text.";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="One line in this file is unusually long. Editing that line may be slow.";
