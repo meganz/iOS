@@ -20,7 +20,9 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 
                 viewModel.searchDebouncer.start { [weak self] in
                     Task { @MainActor in
-                        self?.search(by: searchString, showsHUD: showsHUD)
+                        // The query may have been edited or cleared while this search was pending
+                        guard let self, self.searchController.searchBar.text == searchString else { return }
+                        self.search(by: searchString, showsHUD: showsHUD)
                     }
                 }
             }
