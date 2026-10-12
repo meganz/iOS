@@ -262,14 +262,15 @@ final class SearchControllerWrapper: NSObject {
     }
     
     func cancelSearch() {
+        searchText = nil
         onCancel?()
         searchController.searchBar.text = ""
         searchController.isActive = false
     }
     
-    /// This function is use when we want to assign the wrapper to a ViewController.
+    /// This function is used when we want to assign the wrapper to a ViewController.
     /// Discussion: The function is needed because in case we assign and unassign a searchController to a VC, the OS will automatically clear the search text.
-    /// Therefore we need to use this function when we  re-attach the searchController to a VC so that the search text can still be instact.
+    /// Therefore we need to use this function when we  re-attach the searchController to a VC so that the search text can still be intact.
     /// - Parameter vc: The ViewController we want to attach the searchController to.
     func attachToViewController(_ vc: UIViewController) {
         vc.navigationItem.searchController = searchController
@@ -312,6 +313,7 @@ extension SearchControllerWrapper: UISearchResultsUpdating {
 // MARK: - UISearchBarDelegate
 extension SearchControllerWrapper: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchText = nil
         onCancel?()
     }
 }
