@@ -47,7 +47,7 @@ struct NewTextFileDialogLayoutTests {
     }
 
     @Test func nameFieldKeepsTheCaretWhenTheRichTextBoxChangesTheName() async throws {
-        let viewModel = NewTextFileDialogViewModel(onCreate: { _ in }, onCancel: {})
+        let viewModel = NewTextFileDialogViewModel(onCreate: { _ in true }, onCancel: {})
         let host = UIHostingController(rootView: NewTextFileDialogView(viewModel: viewModel, focusesOnAppear: true))
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 402, height: 874))
         window.rootViewController = host

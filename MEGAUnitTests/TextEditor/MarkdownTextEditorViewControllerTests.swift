@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
 import MEGAAssets
 import MEGADomain
@@ -387,6 +388,47 @@ struct MarkdownTextEditorViewControllerTests {
         plainText.performWithSender(nil, target: nil)
 
         #expect(fixture.sut.contentState.textEditorMode == .plainText)
+    }
+
+    @Test func choosingPlainTextTracksPlainTextModeEventOnce() throws {
+        let fixture = Self.makeFixture(mode: .edit)
+        Self.configure(fixture.sut, mode: .edit, accessLevel: nil)
+
+        try Self.performModeAction(.plainText, in: fixture)
+
+        #expect(Self.trackedEventNames(fixture) == [String(describing: TextEditorPlainTextModeMenuItemEvent.self)])
+    }
+
+    @Test func choosingRichTextTracksRichTextModeEventOnce() throws {
+        let fixture = Self.makeFixture(mode: .edit)
+        Self.configure(fixture.sut, mode: .edit, accessLevel: nil)
+        fixture.sut.contentState.textEditorMode = .plainText
+
+        try Self.performModeAction(.richText, in: fixture)
+
+        #expect(Self.trackedEventNames(fixture) == [String(describing: TextEditorRichTextModeMenuItemEvent.self)])
+    }
+
+    @Test func choosingTheActiveModeTracksOneEvent() throws {
+        let fixture = Self.makeFixture(mode: .edit)
+        Self.configure(fixture.sut, mode: .edit, accessLevel: nil)
+
+        try Self.performModeAction(.richText, in: fixture)
+
+        #expect(Self.trackedEventNames(fixture) == [String(describing: TextEditorRichTextModeMenuItemEvent.self)])
+    }
+
+    private static func performModeAction(_ mode: MarkdownTextEditorMode, in fixture: Fixture) throws {
+        let menu = try #require(modeItem(of: fixture.sut)?.menu)
+        let action = try #require(menu.children.compactMap { $0 as? UIAction }.first { $0.title == mode.title })
+        action.performWithSender(nil, target: nil)
+    }
+
+    private static func trackedEventNames(_ fixture: Fixture) -> [String] {
+        // The screen event from setting up the view is not a mode event.
+        fixture.tracker.trackedEventIdentifiers
+            .map { String(describing: type(of: $0)) }
+            .filter { $0.hasSuffix("ModeMenuItemEvent") }
     }
 
     @Test func saveTapUploadsEditorText() async throws {

@@ -170,6 +170,7 @@ extension MarkdownTextEditorViewController: ViewType {
 
     private func makeModeAction(_ mode: MarkdownTextEditorMode, modeItem: UIBarButtonItem) -> UIAction {
         UIAction(title: mode.title, state: mode == contentState.textEditorMode ? .on : .off) { [weak self, weak modeItem] _ in
+            self?.viewModel.dispatch(.selectMarkdownMode(mode))
             self?.contentState.textEditorMode = mode
             // The bar is not rebuilt after a menu choice, so the value is set here.
             modeItem?.accessibilityValue = mode.title

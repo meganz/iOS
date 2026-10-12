@@ -26,7 +26,7 @@ struct NewTextFileDialogSnapshotTests {
     }
 
     private static func makeDialog(fileName: String) -> NewTextFileDialogView {
-        let viewModel = NewTextFileDialogViewModel(onCreate: { _ in }, onCancel: {})
+        let viewModel = NewTextFileDialogViewModel(onCreate: { _ in true }, onCancel: {})
         viewModel.setFileName(fileName)
         return NewTextFileDialogView(viewModel: viewModel, focusesOnAppear: false)
     }

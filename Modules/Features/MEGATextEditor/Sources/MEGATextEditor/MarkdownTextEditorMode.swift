@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAL10n
 import MEGAMarkdownEditor
 
@@ -10,6 +11,14 @@ public enum MarkdownTextEditorMode: CaseIterable, Equatable, Sendable {
         switch self {
         case .plainText: Strings.Localizable.MarkdownEditor.Mode.plainText
         case .richText: Strings.Localizable.MarkdownEditor.Mode.richText
+        }
+    }
+
+    /// The analytics event sent when the user picks this mode in the mode menu.
+    public var menuItemEvent: any EventIdentifier {
+        switch self {
+        case .plainText: TextEditorPlainTextModeMenuItemEvent()
+        case .richText: TextEditorRichTextModeMenuItemEvent()
         }
     }
 

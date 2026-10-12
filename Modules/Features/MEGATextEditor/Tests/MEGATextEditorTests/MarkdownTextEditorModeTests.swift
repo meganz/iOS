@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAL10n
 import MEGAMarkdownEditor
 @testable import MEGATextEditor
@@ -18,5 +19,13 @@ struct MarkdownTextEditorModeTests {
         #expect(MarkdownTextEditorMode.richText.editorMode == .rich)
         #expect(MarkdownTextEditorMode(editorMode: .source) == .plainText)
         #expect(MarkdownTextEditorMode(editorMode: .rich) == .richText)
+    }
+
+    @Test func menuItemEventForRichTextIsRichTextModeMenuItemEvent() {
+        #expect(MarkdownTextEditorMode.richText.menuItemEvent is TextEditorRichTextModeMenuItemEvent)
+    }
+
+    @Test func menuItemEventForPlainTextIsPlainTextModeMenuItemEvent() {
+        #expect(MarkdownTextEditorMode.plainText.menuItemEvent is TextEditorPlainTextModeMenuItemEvent)
     }
 }

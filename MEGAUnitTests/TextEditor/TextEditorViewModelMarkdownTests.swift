@@ -1,9 +1,11 @@
 import Foundation
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGATextEditor
 import Testing
 
 @MainActor
@@ -13,6 +15,7 @@ struct TextEditorViewModelMarkdownTests {
         let router: MockTextEditorViewRouter
         let path: String
         let commands: CommandLog
+        let tracker: MockTracker
     }
 
     private final class CommandLog {
@@ -62,6 +65,7 @@ struct TextEditorViewModelMarkdownTests {
             stage: .none
         )
         let router = MockTextEditorViewRouter()
+        let tracker = MockTracker()
         let sut = TextEditorViewModel(
             router: router,
             textFile: TextFile(fileName: fileName),
@@ -73,11 +77,11 @@ struct TextEditorViewModelMarkdownTests {
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: NodeEntity(handle: 123, isFile: true),
             isMarkdownScreen: isMarkdownScreen,
-            tracker: MockTracker()
+            tracker: tracker
         )
         let log = CommandLog()
         sut.invokeCommand = { log.commands.append($0) }
-        return Fixture(sut: sut, router: router, path: path, commands: log)
+        return Fixture(sut: sut, router: router, path: path, commands: log, tracker: tracker)
     }
 
     /// The download runs in a task. The test waits until the screen shows the file or the document preview opens.
@@ -143,5 +147,53 @@ struct TextEditorViewModelMarkdownTests {
         #expect(shown.textFile.content == "héllo")
         #expect(shown.textFile.encode == String.Encoding.utf16.rawValue)
         #expect(fixture.router.presentPreviewDocVC_calledTimes == 0)
+    }
+
+    // MARK: - Mode menu analytics
+
+    private static func trackedEventNames(_ fixture: Fixture) -> [String] {
+        fixture.tracker.trackedEventIdentifiers.map { String(describing: type(of: $0)) }
+    }
+
+    private static func makeModeFixture() throws -> Fixture {
+        try makeFixture(fileName: "notes.md", bytes: Array("# Title".utf8), isMarkdownScreen: true)
+    }
+
+    @Test func selectRichTextModeTracksRichTextModeMenuItemEventOnce() throws {
+        let fixture = try Self.makeModeFixture()
+
+        fixture.sut.dispatch(.selectMarkdownMode(.richText))
+
+        #expect(Self.trackedEventNames(fixture) == [String(describing: TextEditorRichTextModeMenuItemEvent.self)])
+    }
+
+    @Test func selectPlainTextModeTracksPlainTextModeMenuItemEventOnce() throws {
+        let fixture = try Self.makeModeFixture()
+
+        fixture.sut.dispatch(.selectMarkdownMode(.plainText))
+
+        #expect(Self.trackedEventNames(fixture) == [String(describing: TextEditorPlainTextModeMenuItemEvent.self)])
+    }
+
+    @Test func selectSameModeTwiceTracksTwoEvents() throws {
+        let fixture = try Self.makeModeFixture()
+
+        fixture.sut.dispatch(.selectMarkdownMode(.richText))
+        fixture.sut.dispatch(.selectMarkdownMode(.richText))
+
+        let richName = String(describing: TextEditorRichTextModeMenuItemEvent.self)
+        #expect(Self.trackedEventNames(fixture) == [richName, richName])
+    }
+
+    @Test func setUpViewTracksNoModeMenuItemEvent() throws {
+        let fixture = try Self.makeModeFixture()
+
+        fixture.sut.dispatch(.setUpView)
+
+        let modeEventNames = [
+            String(describing: TextEditorRichTextModeMenuItemEvent.self),
+            String(describing: TextEditorPlainTextModeMenuItemEvent.self)
+        ]
+        #expect(Self.trackedEventNames(fixture).allSatisfy { !modeEventNames.contains($0) })
     }
 }

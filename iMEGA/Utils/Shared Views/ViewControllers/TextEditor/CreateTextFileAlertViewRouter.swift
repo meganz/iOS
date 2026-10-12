@@ -51,12 +51,14 @@ import SwiftUI
         return hostingController
     }
 
-    private func didTapCreate(_ fileName: String) {
-        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+    /// Returns false when the dialog stays open because there is no network.
+    private func didTapCreate(_ fileName: String) -> Bool {
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return false }
         // The closed dialog may be freed before this runs, and it is the only owner of the router.
         baseViewController?.dismiss(animated: true) {
             self.createTextFile(fileName)
         }
+        return true
     }
 
     @objc func start() {

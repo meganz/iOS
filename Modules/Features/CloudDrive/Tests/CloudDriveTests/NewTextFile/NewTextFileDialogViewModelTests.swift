@@ -6,7 +6,7 @@ import Testing
 @MainActor
 struct NewTextFileDialogViewModelTests {
     private func makeSUT() -> NewTextFileDialogViewModel {
-        NewTextFileDialogViewModel(onCreate: { _ in }, onCancel: {})
+        NewTextFileDialogViewModel(onCreate: { _ in true }, onCancel: {})
     }
 
     private final class Calls {
@@ -15,7 +15,13 @@ struct NewTextFileDialogViewModelTests {
     }
 
     private func makeSUT(calls: Calls) -> NewTextFileDialogViewModel {
-        NewTextFileDialogViewModel(onCreate: { calls.created.append($0) }, onCancel: { calls.cancelCount += 1 })
+        NewTextFileDialogViewModel(
+            onCreate: {
+                calls.created.append($0)
+                return true
+            },
+            onCancel: { calls.cancelCount += 1 }
+        )
     }
 
     @Test func startsWithTxtNameAndBoxUnchecked() {

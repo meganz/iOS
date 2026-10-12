@@ -24,7 +24,8 @@ let package = Package(
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Infrastracture/MEGASnapshot"),
-        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -36,7 +37,8 @@ let package = Package(
                 "MEGAL10n",
                 "MEGAAssets",
                 "MEGASwift",
-                "MEGADesignToken"
+                "MEGADesignToken",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             swiftSettings: settings
         ),
@@ -47,7 +49,8 @@ let package = Package(
                 .product(name: "MEGAMarkdown", package: "MEGAMarkdown"),
                 .product(name: "MEGAMarkdownEditor", package: "MEGAMarkdown"),
                 "MEGADomain",
-                "MEGAL10n"
+                "MEGAL10n",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             swiftSettings: settings
         ),

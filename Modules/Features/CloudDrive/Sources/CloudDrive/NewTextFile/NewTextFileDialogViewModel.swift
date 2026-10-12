@@ -1,3 +1,5 @@
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAL10n
 import MEGASwift
 import Observation
@@ -9,13 +11,21 @@ public final class NewTextFileDialogViewModel {
     public private(set) var fileName = ".txt"
 
     @ObservationIgnored private var lastPlainExtension = "txt"
-    @ObservationIgnored private let onCreate: (String) -> Void
+    @ObservationIgnored private let tracker: any AnalyticsTracking
+    @ObservationIgnored private let onCreate: (String) -> Bool
     @ObservationIgnored private let onCancel: () -> Void
 
     /// - Parameters:
+    ///   - tracker: Receives the created event.
     ///   - onCreate: Called with the file name, without the spaces at the ends.
+    ///     Returns false when the dialog stays open, for example with no network.
     ///   - onCancel: Called when the user closes the dialog.
-    public init(onCreate: @escaping (String) -> Void, onCancel: @escaping () -> Void) {
+    public init(
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        onCreate: @escaping (String) -> Bool,
+        onCancel: @escaping () -> Void
+    ) {
+        self.tracker = tracker
         self.onCreate = onCreate
         self.onCancel = onCancel
     }
@@ -25,7 +35,7 @@ public final class NewTextFileDialogViewModel {
     /// True when the extension of the name is a Markdown extension.
     /// Setting it is a tap on the box. Only a tap saves the extension, so unchecking can bring it back.
     public var isRichTextChecked: Bool {
-        get { fileName.contains(".") && fileName.fileExtensionGroup.isMarkdownText }
+        get { Self.isMarkdownName(fileName) }
         set {
             guard newValue != isRichTextChecked else { return }
             let (baseName, currentExtension) = splitExtension(of: fileName)
@@ -60,8 +70,13 @@ public final class NewTextFileDialogViewModel {
         fileName = name
     }
 
+    /// Sends the created event only when the dialog closes to create the file.
+    /// A tap that keeps the dialog open, such as with no network, sends nothing.
     public func didTapCreate() {
-        onCreate(fileName.trimmingCharacters(in: .whitespaces))
+        guard isCreateEnabled else { return }
+        let name = fileName.trimmingCharacters(in: .whitespaces)
+        guard onCreate(name) else { return }
+        tracker.trackAnalyticsEvent(with: Self.isMarkdownName(name) ? RichTextFileCreatedEvent() : PlainTextFileCreatedEvent())
     }
 
     /// The return key creates the file only when the name is valid.
@@ -75,6 +90,10 @@ public final class NewTextFileDialogViewModel {
     }
 
     // MARK: - Private
+
+    private static func isMarkdownName(_ name: String) -> Bool {
+        name.contains(".") && name.fileExtensionGroup.isMarkdownText
+    }
 
     /// A name without a dot has no extension.
     private func splitExtension(of name: String) -> (baseName: String, extension: String?) {

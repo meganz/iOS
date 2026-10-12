@@ -23,6 +23,7 @@ enum TextEditorViewAction: ActionType {
     case editAfterOpen
     case updateReadingPosition(anchor: Int?, progress: Double)
     case saveReadingPosition
+    case selectMarkdownMode(_ mode: MarkdownTextEditorMode)
 }
 
 @objc enum TextEditorMode: Int, CaseIterable {
@@ -142,6 +143,8 @@ final class TextEditorViewModel: ViewModelType {
                 isBackupNode = backupsUseCase.isBackupNode(nodeEntity)
             }
             setupView(shallUpdateContent: true)
+        case .selectMarkdownMode(let mode):
+            tracker.trackAnalyticsEvent(with: mode.menuItemEvent)
         case .saveText(let content):
             saveText(content: content)
         case .renameFile:
