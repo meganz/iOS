@@ -43,7 +43,11 @@ public func assertHostedSnapshot(
     for style in [UIUserInterfaceStyle.light, .dark] {
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: width, height: height))
         window.overrideUserInterfaceStyle = style
-        window.rootViewController = UIHostingController(rootView: content)
+        let host = UIHostingController(rootView: content)
+        // The window takes the simulator's notch and home bar insets.
+        // With them, a bar pinned to the bottom of the content is drawn outside the image.
+        host.safeAreaRegions = []
+        window.rootViewController = host
         window.makeKeyAndVisible()
         defer {
             window.rootViewController = nil
