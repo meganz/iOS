@@ -51,16 +51,17 @@ UI Layer  →  Presentation Layer  →  Domain Layer  ←  Data Layer
 
 ## SwiftUI MVVM (Preferred)
 
-New features use SwiftUI. ViewModel is `ObservableObject` with `@Published` properties. Data binding via Combine.
+New features use SwiftUI. A new ViewModel is a `@MainActor @Observable final class`. Use `ObservableObject` with `@Published` only when Combine code subscribes to its properties.
 
 ```swift
 struct PhotoCell: View {
-    @StateObject var viewModel: PhotoCellViewModel
+    @State var viewModel: PhotoCellViewModel
 }
 
-final class PhotoCellViewModel: ObservableObject {
-    @Published var thumbnailContainer: ImageContainer
-    @Published var isSelected: Bool = false
+@MainActor @Observable
+final class PhotoCellViewModel {
+    var thumbnailContainer: ImageContainer
+    var isSelected: Bool = false
 }
 ```
 
@@ -111,14 +112,14 @@ Each module is a standalone Swift Package (`Package.swift`) with explicit produc
 | Layer | Location |
 |---|---|
 | DataSource | `Modules/DataSource/MEGASDK`, `MEGAChatSDK` (git submodules) |
-| Repository | `Modules/Repository/MEGARepo`, `MEGASDKRepo`, `ChatRepo`, etc. |
+| Repository | `Modules/Repository/MEGARepo`, `MEGAAppSDKRepo`, `ChatRepo`, etc. |
 | Domain | `Modules/Domain/MEGADomain` |
-| Presentation | `Modules/Presentation/MEGAPresentation`, `MEGAAppPresentation` |
-| Features (16) | `Modules/Features/{Accounts,Chat,CloudDrive,…}` |
+| Presentation | `Modules/Presentation/MEGAAppPresentation` (`MEGAPresentation` is in `Modules/MEGASharedRepo/`) |
+| Features (28) | `Modules/Features/{Accounts,Chat,CloudDrive,…}` |
 | UI | `Modules/UI/MEGASwiftUI`, `MEGAUIKit`, `MEGAUI` |
-| Infrastructure | `Modules/Infrastructure/MEGAFoundation`, `MEGASwift`, `MEGAPermissions`, etc. |
+| Infrastructure | `Modules/Infrastracture/MEGAFoundation`, `MEGAPermissions`, etc. (`MEGASwift` is in `Modules/MEGASharedRepo/`) |
 
-`Modules/MEGASharedRepo/` is a git submodule with ~34 additional shared modules (authentication, analytics, connectivity, deep linking, etc.).
+`Modules/MEGASharedRepo/` is a git submodule with additional shared modules (authentication, analytics, connectivity, deep linking, etc.).
 
 `iMEGA/` is the legacy UIKit layer being migrated. **New features go into `Modules/Features/`**, not `iMEGA/`.
 
