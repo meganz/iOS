@@ -16,6 +16,7 @@ final class EditorWindow {
         var text: String
         /// Every value the editor wrote to the binding.
         @ObservationIgnored var writes: [String] = []
+        @ObservationIgnored let flusher = MarkdownEditorFlusher()
 
         init(text: String, mode: MarkdownEditorMode) {
             self.text = text
@@ -41,7 +42,7 @@ final class EditorWindow {
 
         var body: some View {
             if model.isShown {
-                MarkdownEditor(markdown: model.binding, mode: $model.mode)
+                MarkdownEditor(markdown: model.binding, mode: $model.mode, flusher: model.flusher)
                     .environment(\.richIdleDelay, EditorWindow.idleDelay)
             }
         }

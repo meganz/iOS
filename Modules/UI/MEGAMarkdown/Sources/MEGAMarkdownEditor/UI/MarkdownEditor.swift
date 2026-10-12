@@ -2,6 +2,19 @@ import MEGADesignToken
 import MEGAFoundation
 import SwiftUI
 
+/// Lets a host write the edits that wait for the idle save. Call `flush()` before you read the binding to save.
+@MainActor
+public final class MarkdownEditorFlusher {
+    var action: (@MainActor () -> Void)?
+
+    public init() {}
+
+    /// Writes the waiting edits to the binding at once. Does nothing when there are none.
+    public func flush() {
+        action?()
+    }
+}
+
 public enum MarkdownEditorMode: Equatable, Sendable {
     /// WYSIWYG block editor. No Markdown syntax on screen.
     case rich
@@ -10,7 +23,7 @@ public enum MarkdownEditorMode: Equatable, Sendable {
 }
 
 /// Markdown editor with a rich mode and a source mode. Edits reach `markdown` after 1 s idle, on a mode switch,
-/// on disappear and on app background. The binding must store the value at once (for example `@State`).
+/// on disappear, on app background and when the host calls `MarkdownEditorFlusher.flush()`. The binding must store the value at once (for example `@State`).
 /// It must return exactly the value written. Any other new value is an outside change.
 /// An outside change replaces the unsaved edits. In rich mode it also clears the undo history.
 public struct MarkdownEditor: View {
@@ -19,6 +32,8 @@ public struct MarkdownEditor: View {
 
     @Binding private var markdown: String
     @Binding private var mode: MarkdownEditorMode
+    /// Lets the host write the waiting edits at once. nil when the host does not need it.
+    private let flusher: MarkdownEditorFlusher?
     /// Resolves relative links and images of blocks shown read-only in rich mode.
     private let baseURL: URL?
     /// Why rich mode shows the source instead. Decided on appear, on a mode change, and on an outside change in rich mode.
@@ -41,10 +56,17 @@ public struct MarkdownEditor: View {
     ///   - markdown: The Markdown text. Rich-mode edits are written back only when the export changed.
     ///   - mode: Rich or source mode. Files over `richModeCharacterLimit` always show the source.
     ///   - baseURL: Resolves relative links and images.
-    public init(markdown: Binding<String>, mode: Binding<MarkdownEditorMode>, baseURL: URL? = nil) {
+    ///   - flusher: Lets the host write the waiting edits before it reads `markdown`.
+    public init(
+        markdown: Binding<String>,
+        mode: Binding<MarkdownEditorMode>,
+        baseURL: URL? = nil,
+        flusher: MarkdownEditorFlusher? = nil
+    ) {
         _markdown = markdown
         _mode = mode
         self.baseURL = baseURL
+        self.flusher = flusher
     }
 
     private var richModel: RichEditorModel? {
@@ -135,6 +157,12 @@ public struct MarkdownEditor: View {
         richModel?.onExport = { [$markdown] text in
             $markdown.wrappedValue = text
         }
+        let sourceSync = sourceSync
+        let richModel = richModel
+        flusher?.action = {
+            sourceSync.flush()
+            richModel?.exportChanges()
+        }
     }
 
     /// Drops the rich model. A save that is still running must not write to the binding any more.
@@ -150,22 +178,20 @@ public struct MarkdownEditor: View {
 
     private var sourceEditor: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if mode == .rich, let richRefusal {
-                Text(richRefusal.notice(in: strings))
-                    .font(.footnote)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                    .padding(TokenSpacing._3)
-                    .accessibilityIdentifier("editor.richRefusalNotice")
+            // At most one banner. A long line also refuses rich text, so its warning explains both.
+            if sourceLimit == .lineTooLong {
+                sourceBanner(strings.lineTooLongNotice, identifier: "editor.lineTooLongNotice")
+            } else if mode == .rich, let richRefusal {
+                sourceBanner(richRefusal.notice(in: strings), identifier: "editor.richRefusalNotice")
             }
             switch sourceLimit {
-            case .editable:
+            case .editable, .lineTooLong:
+                // A long line still opens, because the banner warns that each key can be slow there.
                 // Plain text mode shows no toolbar, because it edits raw Markdown. Figma `4938:32467`: monospace footnote,
                 // text 16 from the sides. The text view already pads the line and insets 8 at the top, so add only the rest.
                 SourceTextView(markdown: markdown, sync: sourceSync)
                     .equatable()
                     .padding(.horizontal, TokenSpacing._5 - NSTextContainer().lineFragmentPadding)
-            case .lineTooLong:
-                sourceNotice(strings.lineTooLongNotice)
             case .fileTooLarge:
                 sourceNotice(strings.fileTooLargeToEditNotice)
             case nil:
@@ -174,6 +200,14 @@ public struct MarkdownEditor: View {
             }
         }
         .background(TokenColors.Background.page.swiftUI)
+    }
+
+    private func sourceBanner(_ text: String, identifier: String) -> some View {
+        Text(text)
+            .font(.footnote)
+            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            .padding(TokenSpacing._3)
+            .accessibilityIdentifier(identifier)
     }
 
     private func sourceNotice(_ text: String) -> some View {

@@ -351,8 +351,15 @@ struct EditorSnapshotTests {
         await assertHostedSnapshot(of: editor(markdown), height: 300, isReady: Self.afterOneSecond())
     }
 
-    @Test func lineTooLongToEdit() async {
+    /// A long line opens the source with a warning, because each key in that line can be slow.
+    @Test func lineTooLongShowsSourceWithWarning() async {
         let markdown = String(repeating: "x", count: SourceTextLimit.maxLineLength + 1)
         await assertHostedSnapshot(of: editor(markdown, mode: .source), height: 300, isReady: Self.afterOneSecond())
+    }
+
+    /// The long line also refuses rich text. Only the long-line warning shows, not a second notice.
+    @Test func lineTooLongInRichModeShowsOneWarning() async {
+        let markdown = String(repeating: "x", count: SourceTextLimit.maxLineLength + 1)
+        await assertHostedSnapshot(of: editor(markdown), height: 300, isReady: Self.afterOneSecond())
     }
 }

@@ -173,7 +173,7 @@ public struct MarkdownEditorStrings: Equatable, Sendable {
         linkCancel: "Cancel",
         fileTooLargeNotice: "This file is too large for rich text. Showing the Markdown source.",
         blockTooLongForRichNotice: "This file has a block that is too long for rich text. Showing the Markdown source.",
-        lineTooLongNotice: "This file has a line that is too long to edit.",
+        lineTooLongNotice: "This file has a very long line, so editing may be slow.",
         fileTooLargeToEditNotice: "This file is too large to edit.",
         sourceEditor: "Markdown source",
         continueAtEnd: "Continue at the end"

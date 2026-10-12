@@ -7,7 +7,7 @@ The views of the Markdown editor: rich mode, source mode, the toolbar and the sa
 ## Public API
 
 ```swift
-MarkdownEditor(markdown: $markdown, mode: $mode, baseURL: nil)
+MarkdownEditor(markdown: $markdown, mode: $mode, baseURL: nil, flusher: flusher)
     .markdownEditorStrings(strings)
     .markdownTheme(theme)
     .markdownImageLoading(.altTextOnly)
@@ -16,6 +16,7 @@ MarkdownEditor(markdown: $markdown, mode: $mode, baseURL: nil)
 | Name | What it is |
 |---|---|
 | `MarkdownEditor` | The editor view. `markdown` is the save channel: the editor writes the new text into it. |
+| `MarkdownEditorFlusher` | Lets the host write the waiting edits at once. Call `flush()` before you read `markdown` to save. |
 | `MarkdownEditorMode` | `.rich` (no Markdown syntax on screen) or `.source` (plain text). |
 | `MarkdownEditor.richModeCharacterLimit` | 500,000 UTF-16 units. A larger file opens rich mode as source, with a notice. |
 | `MarkdownEditorStrings` | Every string the editor shows. The init has no defaults, so a new string breaks the host's build. `.english` is the default. |
@@ -28,7 +29,7 @@ The binding must store a value at once, for example `@State`.
 |---|---|
 | Rich mode, file over 500,000 UTF-16 units | The source, with `fileTooLargeNotice` above it. |
 | Rich mode, one text block over 100,000 UTF-16 units | The source, with `blockTooLongForRichNotice` above it. Checked when rich mode opens. |
-| A line over 100,000 UTF-16 units | `lineTooLongNotice` and no text view. |
+| A line over 100,000 UTF-16 units | The source, with `lineTooLongNotice` above it. Each key in that line can be slow. In rich mode this is the only notice. |
 | A file over 100 MiB | `fileTooLargeToEditNotice` and no text view. |
 
 A block that grows past 100,000 units while the user edits stays in rich mode.
@@ -40,7 +41,8 @@ The editor writes the binding:
 - 1 s after the last change (`RichIdleSaver` in rich mode, the source view's own timer in source mode),
 - on a mode switch,
 - on disappear,
-- when the app resigns active.
+- when the app resigns active,
+- when the host calls `MarkdownEditorFlusher.flush()`.
 
 A file the user did not edit is never written, also after a trip through rich mode. The rich model compares exports,
 not files. Its own write comes back through the binding and is recognized by `RichEditorModel.holds(_:)`, so it does
