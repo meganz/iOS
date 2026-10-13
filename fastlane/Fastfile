@@ -303,7 +303,10 @@ platform :ios do
       parallel_testing: true,
       concurrent_workers: 2,
       skip_build: true,
-      number_of_retries: 20
+      number_of_retries: 20,
+      # Judge each test by its last attempt, like xcodebuild does.
+      # A test that passes on retry must not fail the build.
+      output_remove_retry_attempts: true
     )
   end
 
@@ -322,7 +325,10 @@ platform :ios do
       parallel_testing: true,
       concurrent_workers: 2,
       skip_build: true,
-      number_of_retries: 20
+      number_of_retries: 20,
+      # Judge each test by its last attempt, like xcodebuild does.
+      # A test that passes on retry must not fail the build.
+      output_remove_retry_attempts: true
     }
     # only_testing is a comma list of test targets. An empty list would run every test.
     only_testing = options[:only_testing].to_s.strip

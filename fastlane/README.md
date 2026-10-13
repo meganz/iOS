@@ -69,6 +69,14 @@ Calculate app size and post it to the MR
 
 
 
+### post_flaky_tests
+
+```sh
+[bundle exec] fastlane post_flaky_tests
+```
+
+
+
 ----
 
 

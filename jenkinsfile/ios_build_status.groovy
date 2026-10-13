@@ -66,6 +66,46 @@ def postErrors() {
     executeFastlaneTask("post_errors", false)
 }
 
+// Writes outputs/errors.md for failed tests or build errors, and outputs/flaky_tests.md for flaky tests.
+// A parser error is logged and never changes the build result.
+def runErrorParsingKit(String arguments = '') {
+    // No tests ran, so there is no xcresult to read.
+    if (!fileExists('derivedData/Logs/Test')) {
+        return
+    }
+    dir("scripts/ErrorParsingKit/") {
+        def status = sh(script: "swift run ErrorParsingKit ${arguments}".trim(), returnStatus: true)
+        if (status != 0) {
+            echo "Warning: ErrorParsingKit failed with exit code ${status}"
+        }
+    }
+}
+
+def postFlakyTests() {
+    // Report only. Any problem here is logged and never changes the build result.
+    try {
+        artifactStasher.unstashArtifact('swift-packages-flaky-tests')
+
+        def mainAppFlakyTests = fileExists('outputs/flaky_tests.md') ?
+                                    readFile('outputs/flaky_tests.md') : ''
+        def packagesFlakyTests = fileExists('outputs/flaky_tests_packages.md') ?
+                                    readFile('outputs/flaky_tests_packages.md') : ''
+        if (!mainAppFlakyTests && !packagesFlakyTests) {
+            return
+        }
+        def separator = (mainAppFlakyTests && packagesFlakyTests) ? '\n\n' : ''
+
+        writeFile file: 'outputs/flaky_tests.md',
+                 text: "${mainAppFlakyTests}${separator}${packagesFlakyTests}"
+
+        executeFastlaneTask("post_flaky_tests", false)
+    } catch (InterruptedException e) {
+        throw e
+    } catch (Exception e) {
+        echo "Flaky tests report failed: ${e}"
+    }
+}
+
 def postAppSizeToMR() {
     executeFastlaneTask("post_app_size_to_mr")
 }
@@ -130,10 +170,7 @@ pipeline {
                     sh 'swift run'
                 }
                 postBuildWarnings()
-                dir("scripts/ErrorParsingKit/") {
-                    sh 'swift run ErrorParsingKit --is-main-app-target true'
-                }
-
+                // ErrorParsingKit already ran in the always block, which runs before this block.
                 artifactStasher.unstashArtifact('swift-packages-errors')
 
                 def packagesErrors = fileExists('outputs/errors_packages.md') ? 
@@ -186,6 +223,10 @@ pipeline {
         always {
             script {
                 envInjector.injectEnvs {
+                    // Runs first, so an error in a later step cannot stop the error report of the failure block.
+                    // A flaky test does not fail the build, so it is reported on success too.
+                    runErrorParsingKit('--is-main-app-target true')
+                    postFlakyTests()
                     postWarningAboutFilesChanged(10)
                 }
             }
@@ -241,12 +282,21 @@ pipeline {
                         }
                     }
                     post {
+                        // Jenkins runs always before failure, so failure can read outputs/errors.md.
+                        always {
+                            script {
+                                envInjector.injectEnvs {
+                                    runErrorParsingKit()
+                                    if (fileExists('outputs/flaky_tests.md')) {
+                                        sh 'cp outputs/flaky_tests.md outputs/flaky_tests_packages.md'
+                                        artifactStasher.stashArtifact('swift-packages-flaky-tests', 'outputs/flaky_tests_packages.md')
+                                    }
+                                }
+                            }
+                        }
                         failure {
                             script {
                                 envInjector.injectEnvs {
-                                    dir("scripts/ErrorParsingKit/") {
-                                        sh 'swift run'
-                                    }
                                     if (fileExists('outputs/errors.md')) {
                                         sh 'cp outputs/errors.md outputs/errors_packages.md'
                                         artifactStasher.stashArtifact('swift-packages-errors', 'outputs/errors_packages.md')

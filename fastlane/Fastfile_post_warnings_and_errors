@@ -16,6 +16,15 @@
     )
   end
 
+  lane :post_flaky_tests do | options |
+    post_markdown_to_gitlab_mr_note(
+      markdown_path: ENV["FLAKY_TESTS_MARKDOWN_PATH"],
+      mr: options[:mr],
+      token: options[:token],
+      kind: "flaky tests"
+    )
+  end
+
   private_lane :post_markdown_to_gitlab_mr_note do |options|
     markdown_path      = options[:markdown_path]
     mr_number = options[:mr]

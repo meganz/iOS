@@ -6,6 +6,7 @@ import XCResultKit
 struct ErrorParsingKit: ParsableCommand {
     lazy var filePath = "./../../derivedData/Logs/Test"
     lazy var errorFilePath = "./../../outputs/errors.md"
+    lazy var flakyTestsFilePath = "./../../outputs/flaky_tests.md"
 
     @Option(help: "is the main app target")
     var isMainAppTarget: Bool = false
@@ -55,7 +56,7 @@ struct ErrorParsingKit: ParsableCommand {
             }
 
             errorText += "</details>"
-            try write(text: errorText)
+            try write(text: errorText, to: errorFilePath)
         } else if actions.map(\.actionResult.status).contains(where: { $0 == "failed" }) {
             var failedTestCasesText = """
             ## Test Failures - \(isMainAppTarget ? "Main App Target" : "Swift Packages")
@@ -83,12 +84,93 @@ struct ErrorParsingKit: ParsableCommand {
             }
 
             failedTestCasesText += "</details>"
-            try write(text: failedTestCasesText)
+            try write(text: failedTestCasesText, to: errorFilePath)
         }
+
+        try writeFlakyTests(from: xcresultURL)
     }
 
-    mutating private func write(text: String) throws {
-        let outputURL = URL(fileURLWithPath: errorFilePath)
+    // MARK: - Flaky tests
+
+    // A flaky test failed in one attempt, and its last attempt passed or was skipped.
+    // The build passes, so this report is the only place that names the test.
+    mutating private func writeFlakyTests(from xcresultURL: URL) throws {
+        let flakyTests = try readTestNodes(from: xcresultURL).flatMap { findFlakyTests(in: $0, path: []) }
+        guard !flakyTests.isEmpty else { return }
+
+        var flakyTestsText = """
+        ## Flaky Tests - \(isMainAppTarget ? "Main App Target" : "Swift Packages")
+        These tests failed at least once, then passed or were skipped on retry.
+        <details open>
+        <summary>Flaky tests: \(flakyTests.count)</summary>
+
+        &nbsp; | Error | Test Case
+        --- | --- | ---
+
+        """
+
+        for flakyTest in flakyTests {
+            flakyTestsText += "⚠️ | \(tableCellText(flakyTest.message)) | \(tableCellText(flakyTest.name))\n"
+        }
+
+        flakyTestsText += "</details>"
+        try write(text: flakyTestsText, to: flakyTestsFilePath)
+    }
+
+    // A new line or a "|" would break the Markdown table row.
+    // GitLab reads text such as "<nil>" as an HTML tag and hides it.
+    private func tableCellText(_ text: String) -> String {
+        text
+            .replacingOccurrences(of: "\n", with: " ")
+            .replacingOccurrences(of: "|", with: "\\|")
+            .replacingOccurrences(of: "<", with: "&lt;")
+    }
+
+    // The legacy summaries in XCResultKit do not list the retries of Swift Testing tests.
+    // The test-results format lists every attempt for XCTest and Swift Testing.
+    private func readTestNodes(from xcresultURL: URL) throws -> [TestNode] {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
+        process.arguments = ["xcresulttool", "get", "test-results", "tests", "--path", xcresultURL.path]
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        try process.run()
+        // Read before waiting, so a large output cannot fill the pipe and block the process.
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        process.waitUntilExit()
+        guard process.terminationStatus == 0 else {
+            throw NSError(
+                domain: "ErrorParsingKit",
+                code: 3,
+                userInfo: [NSLocalizedDescriptionKey: "xcresulttool failed with exit code \(process.terminationStatus)"]
+            )
+        }
+        return try JSONDecoder().decode(TestResults.self, from: data).testNodes
+    }
+
+    // A node with "Repetition" children is one test run: a test case,
+    // or one argument set of a parameterized Swift Testing test.
+    private func findFlakyTests(in node: TestNode, path: [String]) -> [FlakyTest] {
+        let children = node.children ?? []
+        let nodeName = node.nodeType == "Arguments" ? "arguments: \(node.name)" : node.name
+        let repetitions = children.filter { $0.nodeType == "Repetition" }
+
+        guard repetitions.isEmpty else {
+            guard let firstFailure = repetitions.first(where: { $0.result == "Failed" }),
+                  repetitions.last?.result != "Failed" else {
+                return []
+            }
+            let message = firstFailure.children?.first(where: { $0.nodeType == "Failure Message" })?.name ?? "-"
+            return [FlakyTest(name: (path + [nodeName]).joined(separator: "->"), message: message)]
+        }
+
+        // The test plan name is the scheme name, which adds nothing to the test name.
+        let childPath = node.nodeType == "Test Plan" ? path : path + [nodeName]
+        return children.flatMap { findFlakyTests(in: $0, path: childPath) }
+    }
+
+    private func write(text: String, to path: String) throws {
+        let outputURL = URL(fileURLWithPath: path)
         let directoryURL = outputURL.deletingLastPathComponent()
         try FileManager.default.createDirectory(at: directoryURL,
                                                 withIntermediateDirectories: true,
@@ -173,4 +255,21 @@ struct ErrorParsingKit: ParsableCommand {
             collectFailedTests(from: test.subtestGroups, failedTests: &failedTests, passedTests: &passedTests)
         }
     }
+}
+
+// The parts of `xcresulttool get test-results tests` output that the flaky test report reads.
+private struct TestResults: Decodable {
+    let testNodes: [TestNode]
+}
+
+private struct TestNode: Decodable {
+    let nodeType: String
+    let name: String
+    let result: String?
+    let children: [TestNode]?
+}
+
+private struct FlakyTest {
+    let name: String
+    let message: String
 }
