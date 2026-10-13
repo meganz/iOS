@@ -37,3 +37,26 @@
       UI.message("No #{kind} markdown file found at: #{file_path}")
     end
   end
+
+  # Posts outputs/l10n_lint.md and updates the same comment on later runs.
+  # update_only:true updates an earlier comment but never adds a new one.
+  lane :post_l10n_lint_report_to_mr do | options |
+    file_path = File.join(File.expand_path('..', __dir__), "outputs/l10n_lint.md")
+    unless File.exist?(file_path)
+      UI.message("No localization check report found at: #{file_path}")
+      next
+    end
+
+    begin
+      post_markdown_to_mr(
+        merge_request_url: ENV["PROJECT_URL"] + "/merge_requests/#{options[:mr]}/notes",
+        token: options[:token],
+        markdown_path: file_path,
+        marker: "<!-- l10n-lint -->",
+        update_only: options[:update_only].to_s == "true"
+      )
+    rescue => e
+      # The check is report only, so a failed post must not fail the build.
+      UI.important("Could not post the localization check: #{e.message}")
+    end
+  end

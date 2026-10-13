@@ -75,6 +75,24 @@ def postBenchmarkReportToMR() {
     executeFastlaneTask("post_benchmark_report_to_mr", false)
 }
 
+def postL10nLintReportToMR() {
+    // Report only. Any problem here is logged and never changes the build result.
+    try {
+        withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+            // This runs before setupProjectDependencies, so fastlane needs its gems here.
+            sh "bundle install"
+            def options = load('jenkinsfile/l10n_lint.groovy').runLocalizationCheck()
+            if (options != null) {
+                executeFastlaneTask("post_l10n_lint_report_to_mr ${options}".trim(), false)
+            }
+        }
+    } catch (InterruptedException e) {
+        throw e
+    } catch (Exception e) {
+        echo "Localization check failed: ${e}"
+    }
+}
+
 def setupProjectDependencies() {
     sh "bundle install"
     sh "git submodule foreach --recursive git clean -xfd"
@@ -195,6 +213,8 @@ pipeline {
                                 script {
                                     envInjector.injectEnvs {
                                         sh "bash scripts/print_ci_environment.sh"
+                                        // Runs first so the MR comment arrives early without its own agent.
+                                        postL10nLintReportToMR()
                                         setupProjectDependencies()
                                         runUnitTestsStepReached = true
                                         sh "bundle exec fastlane run_tests_app"
