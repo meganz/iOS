@@ -11,9 +11,11 @@ final class PDFViewerViewModel {
         let pdfDocumentSource: PDFViewerDocumentSource
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
+        let outlineLoadingUseCase: any PDFOutlineLoadingUseCaseProtocol
         let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
         let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
         let node: NodeEntity?
+        let nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol
         let fileName: String
     }
 
@@ -24,10 +26,50 @@ final class PDFViewerViewModel {
                 var pageCount: Int
             }
 
+            struct OutlineState: Equatable {
+                struct OutlineLoadingState: Equatable {
+                    let shouldLoadOutline: Bool
+                    let outlineDocumentURL: URL?
+                    var isLoadingOutline = false
+
+                    init(_ state: PDFViewerDocumentLoadingState.ReadyState.OutlineLoadingState) {
+                        shouldLoadOutline = state.shouldLoadOutline
+                        outlineDocumentURL = state.outlineDocumentURL
+                    }
+                }
+
+                var outlineItems: PDFOutlineItems
+                var outlineLoadingState: OutlineLoadingState?
+                var isShowingOutline: Bool
+                var activeOutlineItemID: String?
+
+                init(outlineLoadingState: OutlineLoadingState) {
+                    self.init(
+                        outlineItems: PDFOutlineItems(inOutlineOrder: [], inPageOrder: []),
+                        outlineLoadingState: outlineLoadingState,
+                        isShowingOutline: false,
+                        activeOutlineItemID: nil
+                    )
+                }
+
+                init(
+                    outlineItems: PDFOutlineItems,
+                    outlineLoadingState: OutlineLoadingState?,
+                    isShowingOutline: Bool,
+                    activeOutlineItemID: String?
+                ) {
+                    self.outlineItems = outlineItems
+                    self.outlineLoadingState = outlineLoadingState
+                    self.isShowingOutline = isShowingOutline
+                    self.activeOutlineItemID = activeOutlineItemID
+                }
+            }
+
             let document: PDFDocument
             var pagingState: PagingState
             let documentIdentifierForLastViewedPageIndex: String?
             let initialPageIndex: Int?
+            var outlineState: OutlineState
         }
 
         struct FailedState: Equatable {
@@ -70,6 +112,7 @@ final class PDFViewerViewModel {
     var isProgrammaticallyScrollingToCurrentPage = false
     @ObservationIgnored private var isScrolledToTop = false
     @ObservationIgnored private var didApplyInitialPageNavigation = false
+    @ObservationIgnored private var outlineLoadGeneration = 0
 
     private let dependency: Dependency
 
@@ -104,7 +147,7 @@ extension PDFViewerViewModel {
     /// design: SwiftUI restarts `.task` on every appearance, and a document
     /// already parsed is not resolved again.
     func loadDocumentFromSource() async {
-        guard pdfDocument == nil else { return }
+        if pdfDocument != nil { return }
         let events = dependency.documentURLUseCase.localDocumentURL(for: dependency.pdfDocumentSource)
         do {
             for try await event in events {
@@ -124,6 +167,7 @@ extension PDFViewerViewModel {
 
     private func loadDocument(at url: URL) async throws {
         let loadingState = try await dependency.documentLoadingUseCase.loadDocument(at: url)
+        guard !Task.isCancelled else { return }
         switch loadingState {
         case .failed:
             fail(.documentUnreadable)
@@ -139,7 +183,10 @@ extension PDFViewerViewModel {
                 ),
                 documentIdentifierForLastViewedPageIndex:
                     readyState.documentIdentifierForLastViewedPageIndex,
-                initialPageIndex: readyState.initialPageIndex
+                initialPageIndex: readyState.initialPageIndex,
+                outlineState: ViewState.ReadyState.OutlineState(
+                    outlineLoadingState: .init(readyState.outlineLoadingState)
+                )
             ))
         }
     }
@@ -199,6 +246,106 @@ extension PDFViewerViewModel {
               (0..<pageCount).contains(pageIndex) else { return }
         currentPageIndex = pageIndex
         isProgrammaticallyScrollingToCurrentPage = true
+    }
+}
+
+// MARK: - Outline
+
+extension PDFViewerViewModel {
+
+    private var outlineState: ViewState.ReadyState.OutlineState? {
+        get {
+            readyState?.outlineState
+        }
+        set {
+            guard let newValue else { return }
+            readyState?.outlineState = newValue
+        }
+    }
+
+    var outlineItems: [PDFOutlineItem] {
+        outlineState?.outlineItems.inOutlineOrder ?? []
+    }
+
+    var pageSortedOutlineItems: [PDFOutlineItem] {
+        outlineState?.outlineItems.inPageOrder ?? []
+    }
+
+    var isShowingOutline: Bool {
+        get { outlineState?.isShowingOutline ?? false }
+        set { outlineState?.isShowingOutline = newValue }
+    }
+
+    private(set) var isLoadingOutline: Bool {
+        get { outlineState?.outlineLoadingState?.isLoadingOutline ?? false }
+        set { outlineState?.outlineLoadingState?.isLoadingOutline = newValue }
+    }
+
+    private var shouldLoadOutline: Bool {
+        outlineState?.outlineLoadingState?.shouldLoadOutline ?? false
+    }
+
+    var outlineDocumentURL: URL? {
+        outlineState?.outlineLoadingState?.outlineDocumentURL
+    }
+
+    private(set) var activeOutlineItemID: String? {
+        get { outlineState?.activeOutlineItemID }
+        set { outlineState?.activeOutlineItemID = newValue }
+    }
+
+    var showsOutlineButton: Bool {
+        guard let outlineState else { return false }
+        return (outlineState.outlineLoadingState?.shouldLoadOutline ?? false) ||
+            !outlineState.outlineItems.inOutlineOrder.isEmpty
+    }
+
+    /// Loads a pending outline after document readiness or a view appearance.
+    /// - A new call supersedes any outline load still in progress.
+    func loadOutlineIfNeeded() async {
+        guard shouldLoadOutline, let outlineDocumentURL else { return }
+        outlineLoadGeneration += 1
+        let generation = outlineLoadGeneration
+        isLoadingOutline = true
+        let items = await dependency.outlineLoadingUseCase.loadOutline(
+            documentURL: outlineDocumentURL
+        )
+        guard generation == outlineLoadGeneration else { return }
+        isLoadingOutline = false
+        guard !Task.isCancelled else { return }
+        updateOutlineState(loadedOutlineItems: items)
+    }
+
+    private func updateOutlineState(loadedOutlineItems: PDFOutlineItems) {
+        guard let previous = outlineState else { return }
+        let isShowingOutline = previous.isShowingOutline &&
+            !loadedOutlineItems.inOutlineOrder.isEmpty
+        let activeOutlineItemID = isShowingOutline
+            ? dependency.nearestOutlineItemUseCase.activeItem(
+                forPageIndex: currentPageIndex,
+                in: loadedOutlineItems.inPageOrder
+            )?.id
+            : nil
+        outlineState = ViewState.ReadyState.OutlineState(
+            outlineItems: loadedOutlineItems,
+            outlineLoadingState: nil,
+            isShowingOutline: isShowingOutline,
+            activeOutlineItemID: activeOutlineItemID
+        )
+    }
+
+    func didOpenOutline() {
+        activeOutlineItemID = dependency.nearestOutlineItemUseCase.activeItem(
+            forPageIndex: currentPageIndex,
+            in: pageSortedOutlineItems
+        )?.id
+        isShowingOutline = true
+    }
+
+    func didSelectOutlineItem(_ item: PDFOutlineItem) {
+        scrollToPageIndex(item.pageIndex)
+        isShowingThumbnails = false
+        isShowingOutline = false
     }
 }
 

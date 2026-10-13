@@ -37,6 +37,81 @@ private final class FirstLoadOnlyPDFDocumentLoader: PDFDocumentLoading, @uncheck
     }
 }
 
+private actor DelayedPDFViewerDocumentLoadingUseCase: PDFViewerDocumentLoadingUseCaseProtocol {
+    private var hasStartedLoading = false
+    private var startContinuation: CheckedContinuation<Void, Never>?
+    private var loadContinuation: CheckedContinuation<Void, Never>?
+
+    nonisolated func loadDocument(at url: URL) async throws(CancellationError) -> PDFViewerDocumentLoadingState {
+        await waitForFinish()
+        return .failed
+    }
+
+    private func waitForFinish() async {
+        await withCheckedContinuation {
+            loadContinuation = $0
+            hasStartedLoading = true
+            startContinuation?.resume()
+            startContinuation = nil
+        }
+    }
+
+    func waitUntilLoadingStarts() async {
+        guard !hasStartedLoading else { return }
+        await withCheckedContinuation { startContinuation = $0 }
+    }
+
+    func finishLoading() {
+        loadContinuation?.resume()
+        loadContinuation = nil
+    }
+}
+
+private actor DelayedPDFOutlineReader: PDFOutlineReading {
+    let items: PDFOutlineItems
+    private var hasStartedReading = false
+    private var firstReadWasCancelled = false
+    private var readCount = 0
+    private var startContinuation: CheckedContinuation<Void, Never>?
+    private var readContinuation: CheckedContinuation<Void, Never>?
+
+    init(items: PDFOutlineItems) {
+        self.items = items
+    }
+
+    nonisolated func shouldLoadOutline(document: PDFDocument) -> Bool {
+        (document.outlineRoot?.numberOfChildren ?? 0) > 0
+    }
+
+    func outlineItems(
+        forDocumentAt url: URL,
+        documentLoader: some PDFDocumentLoading
+    ) async -> PDFOutlineItems {
+        readCount += 1
+        guard readCount == 1 else { return items }
+        hasStartedReading = true
+        startContinuation?.resume()
+        startContinuation = nil
+        await withCheckedContinuation { readContinuation = $0 }
+        firstReadWasCancelled = Task.isCancelled
+        return items
+    }
+
+    func waitUntilReadingStarts() async {
+        guard !hasStartedReading else { return }
+        await withCheckedContinuation { startContinuation = $0 }
+    }
+
+    func finishReading() {
+        readContinuation?.resume()
+        readContinuation = nil
+    }
+
+    func numberOfReads() -> Int { readCount }
+
+    func wasFirstReadCancelled() -> Bool { firstReadWasCancelled }
+}
+
 @MainActor
 struct PDFViewerViewModelTests {
     private func makeSUT(
@@ -45,21 +120,31 @@ struct PDFViewerViewModelTests {
         documentLoader: some PDFDocumentLoading = MockPDFDocumentLoader(
             document: MockPDFDocumentLoader.makeDocument()
         ),
+        documentLoadingUseCase: (any PDFViewerDocumentLoadingUseCaseProtocol)? = nil,
         lastPageUseCase: some PDFViewerLastPageUseCaseProtocol = MockPDFViewerLastPageUseCase(),
         leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = MockLeftOffItemRecordUseCase(),
-        node: NodeEntity? = nil
+        node: NodeEntity? = nil,
+        outlineReader: any PDFOutlineReading = MockPDFOutlineReader(),
+        nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol = PDFNearestOutlineItemUseCase()
     ) -> PDFViewerViewModel {
-        PDFViewerViewModel(
+        let outlineLoadingUseCase = PDFOutlineLoadingUseCase(
+            documentLoader: documentLoader,
+            outlineReader: outlineReader
+        )
+        return PDFViewerViewModel(
             dependency: PDFViewerViewModel.Dependency(
                 pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: documentURLUseCase,
-                documentLoadingUseCase: PDFViewerDocumentLoadingUseCase(
+                documentLoadingUseCase: documentLoadingUseCase ?? PDFViewerDocumentLoadingUseCase(
                     documentLoader: documentLoader,
+                    outlineLoadingUseCase: outlineLoadingUseCase,
                     lastPageUseCase: lastPageUseCase
                 ),
+                outlineLoadingUseCase: outlineLoadingUseCase,
                 lastPageUseCase: lastPageUseCase,
                 leftOffItemRecordUseCase: leftOffItemRecordUseCase,
                 node: node,
+                nearestOutlineItemUseCase: nearestOutlineItemUseCase,
                 fileName: "test.pdf"
             )
         )
@@ -148,6 +233,28 @@ struct PDFViewerViewModelTests {
         #expect(sut.pdfDocument == nil)
         #expect(sut.state == .failed(.init(.documentUnreadable, isShowingDamagedFileAlert: true)))
         #expect(!sut.isChromeHidden)
+    }
+
+    @Test func loadDocumentURL_cancelledWhileLoading_ignoresLateResult() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let delayedLoadingUseCase = DelayedPDFViewerDocumentLoadingUseCase()
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoadingUseCase: delayedLoadingUseCase
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        continuation.finish()
+        await delayedLoadingUseCase.waitUntilLoadingStarts()
+        task.cancel()
+        await delayedLoadingUseCase.finishLoading()
+        await task.value
+
+        #expect(sut.state == .loading(progress: nil))
     }
 
     @Test func loadDocumentURL_streamThrows_setsFailedState() async {
@@ -318,11 +425,17 @@ struct PDFViewerViewModelTests {
 
         await awaitDocumentParsed(sut)
 
-        let pageCount: Int? = switch sut.state {
-        case .ready(let readyState): readyState.pagingState.pageCount
+        let readyState: PDFViewerViewModel.ViewState.ReadyState? = switch sut.state {
+        case .ready(let readyState): readyState
         default: nil
         }
-        #expect(pageCount == 3)
+        #expect(readyState?.pagingState.pageCount == 3)
+        #expect(readyState?.outlineState.outlineItems.inOutlineOrder.isEmpty == true)
+        #expect(readyState?.outlineState.outlineItems.inPageOrder.isEmpty == true)
+        #expect(readyState?.outlineState.outlineLoadingState?.shouldLoadOutline == false)
+        #expect(readyState?.outlineState.outlineLoadingState?.isLoadingOutline == false)
+        #expect(readyState?.outlineState.isShowingOutline == false)
+        #expect(readyState?.outlineState.activeOutlineItemID == nil)
         #expect(sut.currentPageIndex == 0)
         #expect(sut.thumbnailLoader != nil)
         #expect(
@@ -596,5 +709,317 @@ struct PDFViewerViewModelTests {
         lastPageUseCase.invocations.filter {
             if case .saveLastPageIndex = $0 { true } else { false }
         }
+    }
+
+    @Test func outline_beforeLoad_isHiddenWithNoItems() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+
+        #expect(sut.outlineItems.isEmpty)
+        #expect(!sut.isShowingOutline)
+        #expect(!sut.showsOutlineButton)
+    }
+
+    @Test func loadDocumentURL_readyEvent_carriesOutlineItems() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let outline = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0), item("1", page: 4)],
+            inPageOrder: [item("0", page: 0), item("1", page: 4)]
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(document: documentWithOutline()),
+            outlineReader: MockPDFOutlineReader(items: outline)
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        await sut.loadOutlineIfNeeded()
+
+        #expect(sut.outlineItems == outline.inOutlineOrder)
+        #expect(sut.pageSortedOutlineItems == outline.inPageOrder)
+        #expect(sut.showsOutlineButton)
+        task.cancel()
+    }
+
+    @Test func loadDocumentURL_outlineReadingContinuesAfterReady() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let outline = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0)],
+            inPageOrder: [item("0", page: 0)]
+        )
+        let reader = DelayedPDFOutlineReader(items: outline)
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(document: documentWithOutline()),
+            outlineReader: reader
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        let outlineTask = Task { await sut.loadOutlineIfNeeded() }
+        await reader.waitUntilReadingStarts()
+
+        #expect(sut.state.isReady)
+        #expect(sut.isLoadingOutline)
+        #expect(sut.showsOutlineButton)
+        #expect(sut.outlineItems.isEmpty)
+        sut.didOpenOutline()
+        #expect(sut.isShowingOutline)
+        #expect(sut.activeOutlineItemID == nil)
+
+        await reader.finishReading()
+        await outlineTask.value
+
+        #expect(sut.outlineItems == outline.inOutlineOrder)
+        #expect(sut.activeOutlineItemID == "0")
+        #expect(!sut.isLoadingOutline)
+        task.cancel()
+    }
+
+    @Test func loadDocumentURL_cancelledOutlineReading_discardsResult() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let outline = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0)],
+            inPageOrder: [item("0", page: 0)]
+        )
+        let reader = DelayedPDFOutlineReader(items: outline)
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(document: documentWithOutline()),
+            outlineReader: reader
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        let outlineTask = Task { await sut.loadOutlineIfNeeded() }
+        await reader.waitUntilReadingStarts()
+        outlineTask.cancel()
+        await reader.finishReading()
+        await outlineTask.value
+
+        #expect(sut.state.isReady)
+        #expect(!sut.isLoadingOutline)
+        #expect(sut.outlineItems.isEmpty)
+        task.cancel()
+    }
+
+    @Test func loadDocumentURL_restartedTask_resumesPendingOutlineRead() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let outline = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0)],
+            inPageOrder: [item("0", page: 0)]
+        )
+        let reader = DelayedPDFOutlineReader(items: outline)
+        let useCase = MockPDFDocumentURLUseCase(stream: stream)
+        let sut = makeSUT(
+            documentURLUseCase: useCase,
+            documentLoader: MockPDFDocumentLoader(document: documentWithOutline()),
+            outlineReader: reader
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        let outlineTask = Task { await sut.loadOutlineIfNeeded() }
+        await reader.waitUntilReadingStarts()
+        outlineTask.cancel()
+        await reader.finishReading()
+        await outlineTask.value
+
+        #expect(await reader.wasFirstReadCancelled())
+        #expect(!sut.isLoadingOutline)
+        await sut.loadDocumentFromSource()
+        await sut.loadOutlineIfNeeded()
+
+        let readCount = await reader.numberOfReads()
+        #expect(readCount == 2)
+        #expect(useCase.localDocumentURLCallCount == 1)
+        #expect(sut.outlineItems == outline.inOutlineOrder)
+        #expect(!sut.isLoadingOutline)
+        task.cancel()
+    }
+
+    @Test func loadDocumentURL_restartedOutlineTaskWhilePreviousReadIsPending_loadsItems() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let outline = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0)],
+            inPageOrder: [item("0", page: 0)]
+        )
+        let reader = DelayedPDFOutlineReader(items: outline)
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(document: documentWithOutline()),
+            outlineReader: reader
+        )
+
+        let documentTask = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        let firstOutlineTask = Task { await sut.loadOutlineIfNeeded() }
+        await reader.waitUntilReadingStarts()
+        firstOutlineTask.cancel()
+
+        let secondOutlineTask = Task { await sut.loadOutlineIfNeeded() }
+        await secondOutlineTask.value
+
+        #expect(await reader.numberOfReads() == 2)
+        #expect(sut.outlineItems == outline.inOutlineOrder)
+        #expect(!sut.isLoadingOutline)
+
+        await reader.finishReading()
+        await firstOutlineTask.value
+        #expect(sut.outlineItems == outline.inOutlineOrder)
+        #expect(!sut.isLoadingOutline)
+        documentTask.cancel()
+    }
+
+    @Test func loadDocumentURL_noOutlineItems_hidesOutlineButton() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+
+        #expect(!sut.showsOutlineButton)
+        task.cancel()
+    }
+
+    @Test func didOpenOutline_beforeFirstItem_hasNoHighlight() async {
+        let sut = await loadedSUT(
+            items: PDFOutlineItems(
+                inOutlineOrder: [item("0", page: 3)],
+                inPageOrder: [item("0", page: 3)]
+            )
+        )
+        sut.currentPageIndex = 1
+
+        sut.didOpenOutline()
+
+        #expect(sut.activeOutlineItemID == nil)
+        #expect(sut.isShowingOutline)
+    }
+
+    @Test func didOpenOutline_setsHighlightFromCurrentPage() async {
+        let items = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0), item("1", page: 4), item("2", page: 8)],
+            inPageOrder: [item("0", page: 0), item("1", page: 4), item("2", page: 8)]
+        )
+        let sut = await loadedSUT(items: items)
+        sut.currentPageIndex = 5
+
+        sut.didOpenOutline()
+
+        #expect(sut.activeOutlineItemID == "1")
+        #expect(sut.isShowingOutline)
+    }
+
+    @Test func currentPageChange_doesNotRecalculateHighlight() async {
+        let items = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0), item("1", page: 4), item("2", page: 8)],
+            inPageOrder: [item("0", page: 0), item("1", page: 4), item("2", page: 8)]
+        )
+        let sut = await loadedSUT(items: items)
+        sut.currentPageIndex = 5
+        sut.didOpenOutline()
+
+        sut.currentPageIndex = 8
+
+        #expect(sut.activeOutlineItemID == "1")
+    }
+
+    @Test func reopenOutline_refreshesHighlight() async {
+        let items = PDFOutlineItems(
+            inOutlineOrder: [item("0", page: 0), item("1", page: 4), item("2", page: 8)],
+            inPageOrder: [item("0", page: 0), item("1", page: 4), item("2", page: 8)]
+        )
+        let sut = await loadedSUT(items: items)
+        sut.currentPageIndex = 5
+        sut.didOpenOutline()
+        sut.isShowingOutline = false
+        sut.currentPageIndex = 8
+
+        sut.didOpenOutline()
+
+        #expect(sut.activeOutlineItemID == "2")
+    }
+
+    @Test func didSelectOutlineItem_navigatesAndClosesSheetAndThumbnails() async {
+        let sut = await loadedSUT(items: PDFOutlineItems(
+            inOutlineOrder: [item("2", page: 2)],
+            inPageOrder: [item("2", page: 2)]
+        ))
+        sut.isShowingOutline = true
+        sut.isShowingThumbnails = true
+
+        sut.didSelectOutlineItem(item("2", page: 2))
+
+        #expect(sut.currentPageIndex == 2)
+        #expect(sut.isProgrammaticallyScrollingToCurrentPage)
+        #expect(!sut.isShowingOutline)
+        #expect(!sut.isShowingThumbnails)
+    }
+
+    private func documentWithOutline() -> PDFDocument {
+        let document = MockPDFDocumentLoader.makeDocument(pageCount: 10)
+        let root = PDFOutline()
+        root.insertChild(PDFOutline(), at: 0)
+        document.outlineRoot = root
+        return document
+    }
+
+    private func item(_ id: String, page: Int, level: Int = 0) -> PDFOutlineItem {
+        PDFOutlineItem(id: id, title: id, level: level, pageIndex: page)
+    }
+
+    private func loadedSUT(
+        items: PDFOutlineItems,
+        nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol =
+            PDFNearestOutlineItemUseCase()
+    ) async -> PDFViewerViewModel {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(
+                document: documentWithOutline()
+            ),
+            outlineReader: MockPDFOutlineReader(items: items),
+            nearestOutlineItemUseCase: nearestOutlineItemUseCase
+        )
+
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        await sut.loadOutlineIfNeeded()
+        task.cancel()
+        return sut
     }
 }

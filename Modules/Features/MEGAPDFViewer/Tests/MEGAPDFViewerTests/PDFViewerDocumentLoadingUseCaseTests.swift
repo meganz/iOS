@@ -1,7 +1,7 @@
 import Foundation
-@testable import MEGAPDFViewer
 import PDFKit
 import Testing
+@testable import MEGAPDFViewer
 
 @MainActor
 struct PDFViewerDocumentLoadingUseCaseTests {
@@ -70,12 +70,51 @@ struct PDFViewerDocumentLoadingUseCaseTests {
         #expect(lastPageUseCase.invocations == [.documentIdentifierForLastViewedPageIndex(url: url)])
     }
 
+    @Test func loadDocument_withOutline_reportsPresence() async throws {
+        let sut = makeSUT(
+            document: documentWithOutline(),
+            lastPageUseCase: MockPDFViewerLastPageUseCase()
+        )
+
+        guard case .ready(let readyState) = try await sut.loadDocument(at: url) else {
+            Issue.record("Expected .ready")
+            return
+        }
+
+        #expect(readyState.outlineLoadingState.shouldLoadOutline)
+        #expect(readyState.outlineLoadingState.outlineDocumentURL == url)
+    }
+
+    @Test func loadDocument_withoutOutline_reportsAbsence() async throws {
+        let sut = makeSUT(lastPageUseCase: MockPDFViewerLastPageUseCase())
+
+        guard case .ready(let readyState) = try await sut.loadDocument(at: url) else {
+            Issue.record("Expected .ready")
+            return
+        }
+
+        #expect(!readyState.outlineLoadingState.shouldLoadOutline)
+        #expect(readyState.outlineLoadingState.outlineDocumentURL == nil)
+    }
+
+    private func documentWithOutline() -> PDFDocument {
+        let document = MockPDFDocumentLoader.makeDocument()
+        let root = PDFOutline()
+        root.insertChild(PDFOutline(), at: 0)
+        document.outlineRoot = root
+        return document
+    }
+
     private func makeSUT(
         document: PDFDocument? = MockPDFDocumentLoader.makeDocument(),
         lastPageUseCase: MockPDFViewerLastPageUseCase
     ) -> PDFViewerDocumentLoadingUseCase {
         PDFViewerDocumentLoadingUseCase(
             documentLoader: MockPDFDocumentLoader(document: document),
+            outlineLoadingUseCase: PDFOutlineLoadingUseCase(
+                documentLoader: MockPDFDocumentLoader(document: document),
+                outlineReader: MockPDFOutlineReader()
+            ),
             lastPageUseCase: lastPageUseCase
         )
     }

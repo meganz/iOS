@@ -93,6 +93,14 @@ if [ -e "$OUT/result.xcresult" ]; then
     exit 2
 fi
 
+# The outline PDFs are generated on the host before Xcode copies test resources.
+if [ "$TARGET" = "MEGAPDFViewerBenchmarks" ]; then
+    FIXTURES="$PACKAGE/Tests/$TARGET/OutlineFixtures"
+    mkdir -p "$FIXTURES"
+    swiftc "$ROOT"/scripts/benchmark-fixtures/pdf-outline/*.swift -o "$OUT/pdf-outline-fixture-gen" || exit 2
+    "$OUT/pdf-outline-fixture-gen" "$FIXTURES" || exit 2
+fi
+
 # Each skipped test is left out of the run. The report lists it with its reason.
 SKIP_ARGS=()
 if [ -n "$SKIPPED" ]; then

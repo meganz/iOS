@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../MEGASharedRepo/MEGASDKRepo"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../Transfer"),
@@ -48,6 +49,7 @@ let package = Package(
             name: "MEGAPDFViewerTests",
             dependencies: [
                 "MEGAPDFViewer",
+                "MEGASwift",
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
             ],
@@ -61,6 +63,7 @@ let package = Package(
                 .product(name: "MEGABenchmark", package: "MEGABenchmark")
             ],
             exclude: ["Limits.json"],
+            resources: [.copy("OutlineFixtures")],
             swiftSettings: settings
         )
     ],

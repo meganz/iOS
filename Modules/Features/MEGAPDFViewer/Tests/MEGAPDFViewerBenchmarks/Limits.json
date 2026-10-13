@@ -1,36 +1,132 @@
 {
+  "PDFOutlineReaderBenchmarks/testBookLike100": {
+    "CPU Cycles": 74933.94,
+    "CPU Instructions Retired": 323766.66,
+    "CPU Time": 0.03,
+    "Clock Monotonic Time": 0.03,
+    "Longest Main Thread Stall": 12.07,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testBookLike1000": {
+    "CPU Cycles": 811218.81,
+    "CPU Instructions Retired": 3503205.75,
+    "CPU Time": 0.17,
+    "Clock Monotonic Time": 0.17,
+    "Longest Main Thread Stall": 12.53,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testBookLike20000": {
+    "CPU Cycles": 6136428.18,
+    "CPU Instructions Retired": 28952128.29,
+    "CPU Time": 1.23,
+    "Clock Monotonic Time": 1.21,
+    "Longest Main Thread Stall": 13.33,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testBookLike5000": {
+    "CPU Cycles": 1916146.92,
+    "CPU Instructions Retired": 8790048.21,
+    "CPU Time": 0.41,
+    "Clock Monotonic Time": 0.39,
+    "Longest Main Thread Stall": 13.63,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testDeep100": {
+    "CPU Cycles": 71234.91,
+    "CPU Instructions Retired": 327549.6,
+    "CPU Time": 0.03,
+    "Clock Monotonic Time": 0.03,
+    "Longest Main Thread Stall": 12.87,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testDeep1000": {
+    "CPU Cycles": 820562.13,
+    "CPU Instructions Retired": 3541269.09,
+    "CPU Time": 0.17,
+    "Clock Monotonic Time": 0.17,
+    "Longest Main Thread Stall": 13.03,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testDeep20000": {
+    "CPU Cycles": 6800007.72,
+    "CPU Instructions Retired": 31847204.34,
+    "CPU Time": 1.37,
+    "Clock Monotonic Time": 1.35,
+    "Longest Main Thread Stall": 13.45,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testDeep5000": {
+    "CPU Cycles": 1958571.36,
+    "CPU Instructions Retired": 9014736.69,
+    "CPU Time": 0.41,
+    "Clock Monotonic Time": 0.41,
+    "Longest Main Thread Stall": 13.99,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testFlat100": {
+    "CPU Cycles": 71228.82,
+    "CPU Instructions Retired": 328770.15,
+    "CPU Time": 0.03,
+    "Clock Monotonic Time": 0.03,
+    "Longest Main Thread Stall": 12.39,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testFlat1000": {
+    "CPU Cycles": 985217.22,
+    "CPU Instructions Retired": 4242185.19,
+    "CPU Time": 0.21,
+    "Clock Monotonic Time": 0.21,
+    "Longest Main Thread Stall": 13.61,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testFlat20000": {
+    "CPU Cycles": 79815977.49,
+    "CPU Instructions Retired": 336086772.51,
+    "CPU Time": 16.35,
+    "Clock Monotonic Time": 16.17,
+    "Longest Main Thread Stall": 16.37,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFOutlineReaderBenchmarks/testFlat5000": {
+    "CPU Cycles": 6457576.44,
+    "CPU Instructions Retired": 27909562.29,
+    "CPU Time": 1.33,
+    "Clock Monotonic Time": 1.31,
+    "Longest Main Thread Stall": 14.19,
+    "Main Thread Stalls Over 100 ms": 2
+  },
   "PDFPageConcurrentRenderBenchmarks/testConcurrentRendersOfDistinctPages": {
-    "CPU Cycles": 6986092.64,
-    "CPU Instructions Retired": 21022257.01,
-    "CPU Time": 1.61
+    "CPU Cycles": 6531738.99,
+    "CPU Instructions Retired": 20922432.72,
+    "CPU Time": 1.47
   },
   "PDFPageConcurrentRenderBenchmarks/testConcurrentRendersOfSamePage": {
-    "CPU Cycles": 4939874.49,
-    "CPU Instructions Retired": 20163834.88,
-    "CPU Time": 1.13,
+    "CPU Cycles": 5340468.57,
+    "CPU Instructions Retired": 20115792.39,
+    "CPU Time": 1.11,
     "Clock Monotonic Time": 1.07
   },
   "PDFThumbnailLoaderBenchmarks/testRenderScreenfulOfScannedPages": {
-    "CPU Cycles": 846415.55,
-    "CPU Instructions Retired": 2656835.0,
-    "CPU Time": 0.2,
-    "Longest Main Thread Stall": 17.93,
+    "CPU Cycles": 838888.29,
+    "CPU Instructions Retired": 2667433.32,
+    "CPU Time": 0.19,
+    "Longest Main Thread Stall": 15.33,
     "Main Thread Stalls Over 100 ms": 2,
-    "Peak Heap Growth": 28.07
+    "Peak Heap Growth": 29.85
   },
   "PDFThumbnailLoaderBenchmarks/testRenderScreenfulOfScannedPagesOnMainThread": {
     "Clock Monotonic Time": 0.15,
-    "Longest Main Thread Stall": 147.42,
+    "Longest Main Thread Stall": 144.91,
     "Main Thread Stalls Over 100 ms": 2
   },
   "PDFThumbnailLoaderBenchmarks/testRenderScreenfulOfTextPages": {
-    "CPU Cycles": 252564.97,
-    "CPU Instructions Retired": 426172.02,
+    "CPU Cycles": 245931.45,
+    "CPU Instructions Retired": 420913.95,
     "CPU Time": 0.07,
-    "Longest Main Thread Stall": 13.66,
+    "Longest Main Thread Stall": 13.91,
     "Main Thread Stalls Over 100 ms": 2
   },
   "PDFThumbnailLoaderBenchmarks/testRenderThreeLandscapeScreenfuls": {
-    "Peak Heap Growth": 139.44
+    "Peak Heap Growth": 94.88
   }
 }

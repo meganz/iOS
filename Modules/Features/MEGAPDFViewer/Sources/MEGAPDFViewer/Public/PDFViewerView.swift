@@ -11,11 +11,13 @@ public struct PDFViewerView: View {
         let pdfDocumentSource: PDFViewerDocumentSource
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
+        let outlineLoadingUseCase: any PDFOutlineLoadingUseCaseProtocol
         let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
         let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
         /// The node recorded in Continue Where You Left Off; nil for a file
         /// that has no node.
         let node: NodeEntity?
+        let nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol
         let fileName: String
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
@@ -37,16 +39,24 @@ public struct PDFViewerView: View {
             moreMenuDependencies: PDFViewerMoreMenuDependencies? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in }
         ) {
+            let documentLoader = PDFDocumentLoader()
+            let outlineLoadingUseCase = PDFOutlineLoadingUseCase(
+                documentLoader: documentLoader,
+                outlineReader: PDFOutlineReader()
+            )
             self.init(
                 pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: PDFDocumentURLUseCase(downloadUseCase: downloadUseCase),
                 documentLoadingUseCase: PDFViewerDocumentLoadingUseCase(
-                    documentLoader: PDFDocumentLoader(),
+                    documentLoader: documentLoader,
+                    outlineLoadingUseCase: outlineLoadingUseCase,
                     lastPageUseCase: lastPageUseCase
                 ),
+                outlineLoadingUseCase: outlineLoadingUseCase,
                 lastPageUseCase: lastPageUseCase,
                 leftOffItemRecordUseCase: leftOffItemRecordUseCase,
                 node: node,
+                nearestOutlineItemUseCase: PDFNearestOutlineItemUseCase(),
                 fileName: fileName,
                 transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 onClose: onClose,
@@ -60,9 +70,11 @@ public struct PDFViewerView: View {
             pdfDocumentSource: PDFViewerDocumentSource,
             documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
             documentLoadingUseCase: some PDFViewerDocumentLoadingUseCaseProtocol,
+            outlineLoadingUseCase: some PDFOutlineLoadingUseCaseProtocol,
             lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
             leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol,
             node: NodeEntity?,
+            nearestOutlineItemUseCase: some PDFNearestOutlineItemUseCaseProtocol,
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
@@ -72,9 +84,11 @@ public struct PDFViewerView: View {
             self.pdfDocumentSource = pdfDocumentSource
             self.documentURLUseCase = documentURLUseCase
             self.documentLoadingUseCase = documentLoadingUseCase
+            self.outlineLoadingUseCase = outlineLoadingUseCase
             self.lastPageUseCase = lastPageUseCase
             self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
             self.node = node
+            self.nearestOutlineItemUseCase = nearestOutlineItemUseCase
             self.fileName = fileName
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
@@ -105,9 +119,11 @@ public struct PDFViewerView: View {
                     pdfDocumentSource: dependency.pdfDocumentSource,
                     documentURLUseCase: dependency.documentURLUseCase,
                     documentLoadingUseCase: dependency.documentLoadingUseCase,
+                    outlineLoadingUseCase: dependency.outlineLoadingUseCase,
                     lastPageUseCase: dependency.lastPageUseCase,
                     leftOffItemRecordUseCase: dependency.leftOffItemRecordUseCase,
                     node: dependency.node,
+                    nearestOutlineItemUseCase: dependency.nearestOutlineItemUseCase,
                     fileName: dependency.fileName
                 )
             )
@@ -192,9 +208,25 @@ public struct PDFViewerView: View {
             } message: {
                 Text(Strings.Localizable.PdfPreview.Damaged.message)
             }
+            .sheet(isPresented: $viewModel.isShowingOutline) {
+                PDFOutlineSheet(
+                    items: viewModel.outlineItems,
+                    activeItemID: viewModel.activeOutlineItemID,
+                    isLoading: viewModel.isLoadingOutline,
+                    isShowingOutline: $viewModel.isShowingOutline,
+                    onSelectOutlineItem: { item in
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            viewModel.didSelectOutlineItem(item)
+                        }
+                    }
+                )
+            }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
         .task { await viewModel.loadDocumentFromSource() }
+        .task(id: viewModel.outlineDocumentURL) {
+            await viewModel.loadOutlineIfNeeded()
+        }
         .onDisappear {
             retryTask?.cancel()
             retryTask = nil
@@ -230,10 +262,14 @@ public struct PDFViewerView: View {
         if viewModel.state.isReady {
             ToolbarItemGroup(placement: .bottomBar) {
                 HStack(spacing: TokenSpacing._7) {
-                    Button {} label: {
-                        MEGAAssets.Image.listSmallMediumThinSolid
+                    if viewModel.showsOutlineButton {
+                        Button {
+                            viewModel.didOpenOutline()
+                        } label: {
+                            MEGAAssets.Image.listSmallMediumThinSolid
+                        }
+                        .accessibilityLabel(Strings.Localizable.PdfPreview.contents)
                     }
-                    .accessibilityLabel(Strings.Localizable.PdfPreview.contents)
 
                     if viewModel.thumbnailLoader != nil {
                         PDFThumbnailsToggleView(
