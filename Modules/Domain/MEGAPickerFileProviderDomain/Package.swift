@@ -20,18 +20,24 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../MEGADomain"),
-        .package(path: "../../MEGASharedRepo/MEGATest")
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../MEGASharedRepo/MEGATest"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "MEGAPickerFileProviderDomain",
-            dependencies: ["MEGADomain"],
+            dependencies: [
+                "MEGADomain",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+            ],
             swiftSettings: settings
         ),
         .testTarget(
             name: "MEGAPickerFileProviderDomainTests",
             dependencies: [
                 "MEGAPickerFileProviderDomain",
+                "MEGASwift",
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
             ],

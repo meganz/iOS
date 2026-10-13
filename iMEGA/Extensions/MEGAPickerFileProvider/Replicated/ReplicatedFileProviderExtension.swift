@@ -50,6 +50,16 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     }
 
     /// Built on every use for the same reason as `itemUseCase`.
+    private var nodeUpdatesUseCase: some FileProviderNodeUpdatesUseCaseProtocol {
+        FileProviderNodeUpdatesUseCase(
+            nodeRepo: NodeRepository.newRepo,
+            snapshotRepo: FileProviderSnapshotRepository.newRepo,
+            changeQueueRepo: FileProviderChangeQueueRepository.newRepo,
+            workingSetSignalRepo: FileProviderWorkingSetSignalRepository.newRepo
+        )
+    }
+
+    /// Built on every use for the same reason as `itemUseCase`.
     private var workingSetEnumerator: ReplicatedWorkingSetEnumerator {
         ReplicatedWorkingSetEnumerator(
             workingSetItemsUseCase: FileProviderWorkingSetItemsUseCase(
@@ -227,7 +237,9 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
 
         // The system asks for an enumerator of every folder it shows, which is when the folder is compared.
         let folderComparisonUseCase = folderComparisonUseCase
+        let nodeUpdatesUseCase = nodeUpdatesUseCase
         Task {
+            await NodeUpdatesCoordinator.shared.startQueueing(using: nodeUpdatesUseCase)
             await FolderComparisonCoordinator.shared.compareChildren(of: containerItemIdentifier, using: folderComparisonUseCase)
         }
         return ReplicatedFileProviderEnumerator(

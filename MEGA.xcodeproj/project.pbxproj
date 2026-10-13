@@ -1298,6 +1298,7 @@
 		B02BCFB337B55DE1784BD27D /* ReplicatedFileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */; };
 		A1F3C2D4E5B6978812345603 /* ReplicatedWorkingSetEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3C2D4E5B6978812345604 /* ReplicatedWorkingSetEnumerator.swift */; };
 		A1F3C2D4E5B6978812345605 /* FolderComparisonCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3C2D4E5B6978812345606 /* FolderComparisonCoordinator.swift */; };
+		A1F3C2D4E5B6978812345607 /* NodeUpdatesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3C2D4E5B6978812345608 /* NodeUpdatesCoordinator.swift */; };
 		061DA4BF4CEB2DAEF39E8409 /* ReplicatedFileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7818B713E5964C838E4D5CDD /* ReplicatedFileProviderItem.swift */; };
 		A1F3C2D4E5B6978812345601 /* FileProviderMemoryProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3C2D4E5B6978812345602 /* FileProviderMemoryProbe.swift */; };
 		B67012023DA8C6618416957D /* FileProviderDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F92BF44005E5E2786C269C7 /* FileProviderDownloadCoordinator.swift */; };
@@ -4215,6 +4216,7 @@
 		EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderExtension.swift; sourceTree = "<group>"; };
 		A1F3C2D4E5B6978812345604 /* ReplicatedWorkingSetEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedWorkingSetEnumerator.swift; sourceTree = "<group>"; };
 		A1F3C2D4E5B6978812345606 /* FolderComparisonCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderComparisonCoordinator.swift; sourceTree = "<group>"; };
+		A1F3C2D4E5B6978812345608 /* NodeUpdatesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeUpdatesCoordinator.swift; sourceTree = "<group>"; };
 		7818B713E5964C838E4D5CDD /* ReplicatedFileProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicatedFileProviderItem.swift; sourceTree = "<group>"; };
 		A1F3C2D4E5B6978812345602 /* FileProviderMemoryProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderMemoryProbe.swift; sourceTree = "<group>"; };
 		84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEnoughStorageAlertRouter.swift; sourceTree = "<group>"; };
@@ -11354,6 +11356,7 @@
 			children = (
 				A1F3C2D4E5B6978812345602 /* FileProviderMemoryProbe.swift */,
 				A1F3C2D4E5B6978812345606 /* FolderComparisonCoordinator.swift */,
+				A1F3C2D4E5B6978812345608 /* NodeUpdatesCoordinator.swift */,
 				1A29D7132E126CDD93044739 /* ReplicatedFileProviderEnumerator.swift */,
 				EE053BCE99D3112D4877CCA1 /* ReplicatedFileProviderExtension.swift */,
 				7818B713E5964C838E4D5CDD /* ReplicatedFileProviderItem.swift */,
@@ -16973,6 +16976,7 @@
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
+				A1F3C2D4E5B6978812345607 /* NodeUpdatesCoordinator.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
 				3744AB617EB5F611E298E686 /* ReplicatedFileProviderEnumerator.swift in Sources */,
 				B02BCFB337B55DE1784BD27D /* ReplicatedFileProviderExtension.swift in Sources */,
