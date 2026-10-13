@@ -53,6 +53,7 @@ let package = Package(
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
             ],
+            resources: [.copy("Fixtures")],
             swiftSettings: settings
         ),
         // Benchmarks with XCTest metrics. They run only with TEST_RUNNER_MEGA_BENCH=1 (see scripts/benchmark.sh).

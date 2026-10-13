@@ -11,7 +11,6 @@ final class PDFViewerViewModel {
         let pdfDocumentSource: PDFViewerDocumentSource
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
-        let outlineLoadingUseCase: any PDFOutlineLoadingUseCaseProtocol
         let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
         let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
         let node: NodeEntity?
@@ -20,6 +19,16 @@ final class PDFViewerViewModel {
     }
 
     enum ViewState: Equatable {
+        struct DocumentLockedState: Equatable {
+            let document: PDFDocument
+            let localDocumentURL: URL
+            var password = ""
+            var showInvalidPasswordError = false
+            var isSubmissionEnabled = true
+            var isPasswordEntryPresented = true
+            var passwordRejectionCount = 0
+        }
+
         struct ReadyState: Equatable {
             struct PagingState: Equatable {
                 var currentPageIndex: Int
@@ -91,8 +100,11 @@ final class PDFViewerViewModel {
         }
 
         case loading(progress: Float?)
+        case documentLocked(DocumentLockedState)
         case ready(ReadyState)
         case failed(FailedState)
+
+        var isDocumentLocked: Bool { if case .documentLocked = self { true } else { false } }
 
         var isReady: Bool { if case .ready = self { true } else { false } }
 
@@ -113,6 +125,7 @@ final class PDFViewerViewModel {
     @ObservationIgnored private var isScrolledToTop = false
     @ObservationIgnored private var didApplyInitialPageNavigation = false
     @ObservationIgnored private var outlineLoadGeneration = 0
+    @ObservationIgnored private var outlineLoadingOperation: (@Sendable () async -> PDFOutlineItems)?
 
     private let dependency: Dependency
 
@@ -132,7 +145,7 @@ final class PDFViewerViewModel {
 
 extension PDFViewerViewModel {
 
-    /// The instance `MEGAPDFView` draws from; nil until a parse succeeds.
+    /// The instance `MEGAPDFView` draws from; nil until ready.
     /// Thumbnails render from a separate instance, see
     /// `PDFViewerDocumentLoadingUseCase`.
     var pdfDocument: PDFDocument? {
@@ -147,7 +160,7 @@ extension PDFViewerViewModel {
     /// design: SwiftUI restarts `.task` on every appearance, and a document
     /// already parsed is not resolved again.
     func loadDocumentFromSource() async {
-        if pdfDocument != nil { return }
+        guard !state.isReady, !state.isDocumentLocked else { return }
         let events = dependency.documentURLUseCase.localDocumentURL(for: dependency.pdfDocumentSource)
         do {
             for try await event in events {
@@ -167,28 +180,44 @@ extension PDFViewerViewModel {
 
     private func loadDocument(at url: URL) async throws {
         let loadingState = try await dependency.documentLoadingUseCase.loadDocument(at: url)
-        guard !Task.isCancelled else { return }
+        try Task.checkCancellation()
+        transitionToDocumentLoadingState(loadingState)
+    }
+
+    private func transitionToDocumentLoadingState(_ loadingState: PDFViewerDocumentLoadingState) {
         switch loadingState {
+        case .documentLocked(let lockedState):
+            state = .documentLocked(.init(
+                document: lockedState.document,
+                localDocumentURL: lockedState.localDocumentURL
+            ))
         case .failed:
             fail(.documentUnreadable)
         case .ready(let readyState):
-            if let thumbnailDocument = readyState.thumbnailDocument {
-                thumbnailLoader = PDFThumbnailLoader(document: thumbnailDocument)
-            }
-            state = .ready(ViewState.ReadyState(
-                document: readyState.document,
-                pagingState: ViewState.ReadyState.PagingState(
-                    currentPageIndex: 0,
-                    pageCount: readyState.document.pageCount
-                ),
-                documentIdentifierForLastViewedPageIndex:
-                    readyState.documentIdentifierForLastViewedPageIndex,
-                initialPageIndex: readyState.initialPageIndex,
-                outlineState: ViewState.ReadyState.OutlineState(
-                    outlineLoadingState: .init(readyState.outlineLoadingState)
-                )
-            ))
+            transitionToReady(readyState)
         }
+    }
+
+    private func transitionToReady(_ readyState: PDFViewerDocumentLoadingState.ReadyState) {
+        outlineLoadingOperation = readyState.outlineLoadingState.loadOutline
+        if let thumbnailDocument = readyState.thumbnailDocument {
+            thumbnailLoader = PDFThumbnailLoader(document: thumbnailDocument)
+        } else {
+            thumbnailLoader = nil
+        }
+        state = .ready(ViewState.ReadyState(
+            document: readyState.document,
+            pagingState: ViewState.ReadyState.PagingState(
+                currentPageIndex: 0,
+                pageCount: readyState.document.pageCount
+            ),
+            documentIdentifierForLastViewedPageIndex:
+                readyState.documentIdentifierForLastViewedPageIndex,
+            initialPageIndex: readyState.initialPageIndex,
+            outlineState: ViewState.ReadyState.OutlineState(
+                outlineLoadingState: .init(readyState.outlineLoadingState)
+            )
+        ))
     }
 
     private func fail(_ reason: ViewState.FailureReason) {
@@ -229,6 +258,9 @@ extension PDFViewerViewModel {
     }
 
     var pageIndicatorText: String {
+        if let lockedState, lockedState.document.pageCount > 0 {
+            return Strings.Localizable.PdfPreview.pageOfTotal(1, lockedState.document.pageCount)
+        }
         guard let pagingState = readyState?.pagingState else { return "" }
         return Strings.Localizable.PdfPreview.pageOfTotal(
             pagingState.currentPageIndex + 1,
@@ -303,17 +335,16 @@ extension PDFViewerViewModel {
     /// Loads a pending outline after document readiness or a view appearance.
     /// - A new call supersedes any outline load still in progress.
     func loadOutlineIfNeeded() async {
-        guard shouldLoadOutline, let outlineDocumentURL else { return }
+        guard shouldLoadOutline, let outlineLoadingOperation else { return }
         outlineLoadGeneration += 1
         let generation = outlineLoadGeneration
         isLoadingOutline = true
-        let items = await dependency.outlineLoadingUseCase.loadOutline(
-            documentURL: outlineDocumentURL
-        )
+        let items = await outlineLoadingOperation()
         guard generation == outlineLoadGeneration else { return }
         isLoadingOutline = false
         guard !Task.isCancelled else { return }
         updateOutlineState(loadedOutlineItems: items)
+        self.outlineLoadingOperation = nil
     }
 
     private func updateOutlineState(loadedOutlineItems: PDFOutlineItems) {
@@ -407,5 +438,92 @@ extension PDFViewerViewModel {
         //   so an inset change can leave it stale. Scrolling to the top again
         //   corrects it, which is enough for a resume point.
         return isScrolledToTop ? 0 : currentPageIndex
+    }
+}
+
+extension PDFViewerViewModel {
+    private var lockedState: ViewState.DocumentLockedState? {
+        get { if case .documentLocked(let lockedState) = state { lockedState } else { nil } }
+        set { if let newValue, state.isDocumentLocked { state = .documentLocked(newValue) } }
+    }
+
+    var password: String {
+        get { lockedState?.password ?? "" }
+        set { updatePassword(newValue) }
+    }
+
+    var showInvalidPasswordError: Bool { lockedState?.showInvalidPasswordError ?? false }
+
+    var isSubmissionEnabled: Bool { lockedState?.isSubmissionEnabled == true && !password.isEmpty }
+
+    var isDocumentLocked: Bool { state.isDocumentLocked }
+
+    var isPasswordEntryPresented: Bool { lockedState?.isPasswordEntryPresented ?? false }
+
+    var passwordRejectionCount: Int { lockedState?.passwordRejectionCount ?? 0 }
+
+    func submitPassword() async {
+        guard let submittedState = beginPasswordSubmission() else { return }
+        let document = submittedState.document
+        await unlockAndLoadDocument(
+            document,
+            documentUrl: submittedState.localDocumentURL,
+            password: submittedState.password
+        )
+    }
+
+    private func updatePassword(_ password: String) {
+        guard lockedState?.isSubmissionEnabled == true else { return }
+        lockedState?.password = password
+        lockedState?.showInvalidPasswordError = false
+    }
+
+    private func beginPasswordSubmission() -> ViewState.DocumentLockedState? {
+        guard isSubmissionEnabled, !Task.isCancelled, let lockedState else { return nil }
+        self.lockedState?.isSubmissionEnabled = false
+        self.lockedState?.password = ""
+        return lockedState
+    }
+
+    private func rejectPasswordSubmission() {
+        lockedState?.passwordRejectionCount += 1
+        lockedState?.showInvalidPasswordError = true
+        lockedState?.isSubmissionEnabled = true
+    }
+
+    private func unlockAndLoadDocument(
+        _ document: PDFDocument,
+        documentUrl: URL,
+        password: String
+    ) async {
+        do {
+            let loadingState = try await dependency.documentLoadingUseCase.unlockAndLoad(
+                document: document,
+                documentUrl: documentUrl,
+                password: password
+            )
+            try Task.checkCancellation()
+            guard isPasswordEntryPresented, lockedState?.document === document else { return }
+            if case .documentLocked = loadingState {
+                rejectPasswordSubmission()
+            } else {
+                transitionToDocumentLoadingState(loadingState)
+            }
+        } catch {
+            guard isPasswordEntryPresented, lockedState?.document === document else { return }
+            if error is CancellationError || Task.isCancelled {
+                cancelPasswordEntry()
+            } else {
+                fail(.documentUnreadable)
+            }
+        }
+    }
+
+    func cancelPasswordEntry() {
+        guard isDocumentLocked else { return }
+        lockedState?.isPasswordEntryPresented = false
+        lockedState?.isSubmissionEnabled = false
+        lockedState?.password = ""
+        lockedState?.showInvalidPasswordError = false
     }
 }

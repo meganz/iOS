@@ -3,7 +3,7 @@ import PDFKit
 
 protocol PDFOutlineLoadingUseCaseProtocol: Sendable {
     func hasOutline(document: PDFDocument) -> Bool
-    func loadOutline(documentURL: URL) async -> PDFOutlineItems
+    func loadOutline(documentURL: URL, unlockPassword: String?) async -> PDFOutlineItems
 }
 
 struct PDFOutlineLoadingUseCase: PDFOutlineLoadingUseCaseProtocol {
@@ -19,10 +19,11 @@ struct PDFOutlineLoadingUseCase: PDFOutlineLoadingUseCaseProtocol {
         outlineReader.shouldLoadOutline(document: document)
     }
 
-    func loadOutline(documentURL: URL) async -> PDFOutlineItems {
+    func loadOutline(documentURL: URL, unlockPassword: String?) async -> PDFOutlineItems {
         await outlineReader.outlineItems(
             forDocumentAt: documentURL,
-            documentLoader: documentLoader
+            documentLoader: documentLoader,
+            unlockPassword: unlockPassword
         )
     }
 }

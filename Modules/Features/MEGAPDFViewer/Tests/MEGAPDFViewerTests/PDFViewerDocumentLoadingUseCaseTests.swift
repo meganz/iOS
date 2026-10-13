@@ -1,7 +1,7 @@
 import Foundation
+@testable import MEGAPDFViewer
 import PDFKit
 import Testing
-@testable import MEGAPDFViewer
 
 @MainActor
 struct PDFViewerDocumentLoadingUseCaseTests {
@@ -13,7 +13,7 @@ struct PDFViewerDocumentLoadingUseCaseTests {
 
         let isFailed = switch try await sut.loadDocument(at: url) {
         case .failed: true
-        case .ready: false
+        case .documentLocked, .ready: false
         }
 
         #expect(isFailed)
@@ -70,10 +70,14 @@ struct PDFViewerDocumentLoadingUseCaseTests {
         #expect(lastPageUseCase.invocations == [.documentIdentifierForLastViewedPageIndex(url: url)])
     }
 
-    @Test func loadDocument_withOutline_reportsPresence() async throws {
+    @Test func loadDocument_withOutline_defersLoadingUntilOperationRuns() async throws {
+        let item = PDFOutlineItem(id: "0", title: "Chapter", level: 0, pageIndex: 0)
+        let items = PDFOutlineItems(inOutlineOrder: [item], inPageOrder: [item])
+        let outlineReader = MockPDFOutlineReader(items: items)
         let sut = makeSUT(
             document: documentWithOutline(),
-            lastPageUseCase: MockPDFViewerLastPageUseCase()
+            lastPageUseCase: MockPDFViewerLastPageUseCase(),
+            outlineReader: outlineReader
         )
 
         guard case .ready(let readyState) = try await sut.loadDocument(at: url) else {
@@ -83,6 +87,11 @@ struct PDFViewerDocumentLoadingUseCaseTests {
 
         #expect(readyState.outlineLoadingState.shouldLoadOutline)
         #expect(readyState.outlineLoadingState.outlineDocumentURL == url)
+        #expect(await outlineReader.requestedURLs.isEmpty)
+        let loadOutline = try #require(readyState.outlineLoadingState.loadOutline)
+
+        #expect(await loadOutline() == items)
+        #expect(await outlineReader.requestedURLs == [url])
     }
 
     @Test func loadDocument_withoutOutline_reportsAbsence() async throws {
@@ -95,6 +104,7 @@ struct PDFViewerDocumentLoadingUseCaseTests {
 
         #expect(!readyState.outlineLoadingState.shouldLoadOutline)
         #expect(readyState.outlineLoadingState.outlineDocumentURL == nil)
+        #expect(readyState.outlineLoadingState.loadOutline == nil)
     }
 
     private func documentWithOutline() -> PDFDocument {
@@ -107,13 +117,14 @@ struct PDFViewerDocumentLoadingUseCaseTests {
 
     private func makeSUT(
         document: PDFDocument? = MockPDFDocumentLoader.makeDocument(),
-        lastPageUseCase: MockPDFViewerLastPageUseCase
+        lastPageUseCase: MockPDFViewerLastPageUseCase,
+        outlineReader: MockPDFOutlineReader = MockPDFOutlineReader()
     ) -> PDFViewerDocumentLoadingUseCase {
         PDFViewerDocumentLoadingUseCase(
             documentLoader: MockPDFDocumentLoader(document: document),
             outlineLoadingUseCase: PDFOutlineLoadingUseCase(
                 documentLoader: MockPDFDocumentLoader(document: document),
-                outlineReader: MockPDFOutlineReader()
+                outlineReader: outlineReader
             ),
             lastPageUseCase: lastPageUseCase
         )

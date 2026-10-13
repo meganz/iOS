@@ -1,6 +1,6 @@
 import Foundation
-import PDFKit
 @testable import MEGAPDFViewer
+import PDFKit
 
 actor MockPDFOutlineReader: PDFOutlineReading {
     private let items: PDFOutlineItems
@@ -18,7 +18,8 @@ actor MockPDFOutlineReader: PDFOutlineReading {
 
     func outlineItems(
         forDocumentAt url: URL,
-        documentLoader: some PDFDocumentLoading
+        documentLoader: some PDFDocumentLoading,
+        unlockPassword: String?
     ) -> PDFOutlineItems {
         requestedURLs.append(url)
         return items

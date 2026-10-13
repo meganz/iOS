@@ -47,6 +47,14 @@ private actor DelayedPDFViewerDocumentLoadingUseCase: PDFViewerDocumentLoadingUs
         return .failed
     }
 
+    nonisolated(nonsending) func unlockAndLoad(
+        document: PDFDocument,
+        documentUrl: URL,
+        password: String
+    ) async throws -> PDFViewerDocumentLoadingState {
+        .failed
+    }
+
     private func waitForFinish() async {
         await withCheckedContinuation {
             loadContinuation = $0
@@ -85,7 +93,8 @@ private actor DelayedPDFOutlineReader: PDFOutlineReading {
 
     func outlineItems(
         forDocumentAt url: URL,
-        documentLoader: some PDFDocumentLoading
+        documentLoader: some PDFDocumentLoading,
+        unlockPassword: String?
     ) async -> PDFOutlineItems {
         readCount += 1
         guard readCount == 1 else { return items }
@@ -140,7 +149,6 @@ struct PDFViewerViewModelTests {
                     outlineLoadingUseCase: outlineLoadingUseCase,
                     lastPageUseCase: lastPageUseCase
                 ),
-                outlineLoadingUseCase: outlineLoadingUseCase,
                 lastPageUseCase: lastPageUseCase,
                 leftOffItemRecordUseCase: leftOffItemRecordUseCase,
                 node: node,

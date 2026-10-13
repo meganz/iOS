@@ -11,7 +11,6 @@ public struct PDFViewerView: View {
         let pdfDocumentSource: PDFViewerDocumentSource
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
-        let outlineLoadingUseCase: any PDFOutlineLoadingUseCaseProtocol
         let lastPageUseCase: any PDFViewerLastPageUseCaseProtocol
         let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
         /// The node recorded in Continue Where You Left Off; nil for a file
@@ -52,7 +51,6 @@ public struct PDFViewerView: View {
                     outlineLoadingUseCase: outlineLoadingUseCase,
                     lastPageUseCase: lastPageUseCase
                 ),
-                outlineLoadingUseCase: outlineLoadingUseCase,
                 lastPageUseCase: lastPageUseCase,
                 leftOffItemRecordUseCase: leftOffItemRecordUseCase,
                 node: node,
@@ -70,7 +68,6 @@ public struct PDFViewerView: View {
             pdfDocumentSource: PDFViewerDocumentSource,
             documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
             documentLoadingUseCase: some PDFViewerDocumentLoadingUseCaseProtocol,
-            outlineLoadingUseCase: some PDFOutlineLoadingUseCaseProtocol,
             lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
             leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol,
             node: NodeEntity?,
@@ -84,7 +81,6 @@ public struct PDFViewerView: View {
             self.pdfDocumentSource = pdfDocumentSource
             self.documentURLUseCase = documentURLUseCase
             self.documentLoadingUseCase = documentLoadingUseCase
-            self.outlineLoadingUseCase = outlineLoadingUseCase
             self.lastPageUseCase = lastPageUseCase
             self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
             self.node = node
@@ -99,6 +95,7 @@ public struct PDFViewerView: View {
 
     @State private var viewModel: PDFViewerViewModel
     @State private var retryTask: Task<Void, Never>?
+    @State private var attemptUnlockDocumentTask: Task<Void, Never>?
 
     private let onClose: @MainActor () -> Void
 
@@ -119,7 +116,6 @@ public struct PDFViewerView: View {
                     pdfDocumentSource: dependency.pdfDocumentSource,
                     documentURLUseCase: dependency.documentURLUseCase,
                     documentLoadingUseCase: dependency.documentLoadingUseCase,
-                    outlineLoadingUseCase: dependency.outlineLoadingUseCase,
                     lastPageUseCase: dependency.lastPageUseCase,
                     leftOffItemRecordUseCase: dependency.leftOffItemRecordUseCase,
                     node: dependency.node,
@@ -181,10 +177,13 @@ public struct PDFViewerView: View {
                         retryTask?.cancel()
                         retryTask = Task { await viewModel.retryDocumentLoad() }
                     }
+                case .documentLocked:
+                    loadingView(progress: nil, showsProgress: false)
                 case .ready:
                     EmptyView()
                 }
             }
+            .ignoresSafeArea(.keyboard, edges: viewModel.isDocumentLocked ? .bottom : [])
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .toolbar { toolbarContent }
@@ -223,6 +222,26 @@ public struct PDFViewerView: View {
             }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
+        .accessibilityHidden(viewModel.isPasswordEntryPresented)
+        .overlay {
+            if viewModel.isPasswordEntryPresented {
+                PDFViewerPasswordView(
+                    password: $viewModel.password,
+                    showInvalidPasswordError: viewModel.showInvalidPasswordError,
+                    passwordRejectionCount: viewModel.passwordRejectionCount,
+                    isSubmissionEnabled: viewModel.isSubmissionEnabled,
+                    isSubmitting: attemptUnlockDocumentTask != nil,
+                    onOpen: {
+                        guard attemptUnlockDocumentTask == nil else { return }
+                        attemptUnlockDocumentTask = Task {
+                            await viewModel.submitPassword()
+                            attemptUnlockDocumentTask = nil
+                        }
+                    },
+                    onCancel: dismissPasswordEntry
+                )
+            }
+        }
         .task { await viewModel.loadDocumentFromSource() }
         .task(id: viewModel.outlineDocumentURL) {
             await viewModel.loadOutlineIfNeeded()
@@ -241,7 +260,7 @@ public struct PDFViewerView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Button {
-                onClose()
+                closeViewer()
             } label: {
                 Image(uiImage: MEGAAssets.UIImage.backArrow) 
                     .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -293,16 +312,30 @@ public struct PDFViewerView: View {
         }
     }
 
-    private func loadingView(progress: Float?) -> some View {
+    private func closeViewer() {
+        retryTask?.cancel()
+        dismissPasswordEntry()
+        onClose()
+    }
+
+    private func dismissPasswordEntry() {
+        attemptUnlockDocumentTask?.cancel()
+        attemptUnlockDocumentTask = nil
+        viewModel.cancelPasswordEntry()
+    }
+
+    private func loadingView(progress: Float?, showsProgress: Bool = true) -> some View {
         VStack(spacing: TokenSpacing._6) {
             MEGAAssets.Image.filetypePdf
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 96, height: 96)
-            ProgressView(value: progress)
-                .progressViewStyle(.linear)
-                .frame(width: 150)
-                .tint(TokenColors.Icon.accent.swiftUI)
+            if showsProgress {
+                ProgressView(value: progress)
+                    .progressViewStyle(.linear)
+                    .frame(width: 150)
+                    .tint(TokenColors.Icon.accent.swiftUI)
+            }
         }
     }
 }

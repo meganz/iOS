@@ -11,7 +11,8 @@ struct TestOutlineNode {
 extension PDFDocument {
     static func makeTestDocumentURL(
         pageCount: Int,
-        outline: [TestOutlineNode]? = nil
+        outline: [TestOutlineNode]? = nil,
+        password: String? = nil
     ) throws -> URL {
         let document = PDFDocument()
         for index in 0..<pageCount {
@@ -25,7 +26,10 @@ extension PDFDocument {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("pdf")
-        guard document.write(to: url) else {
+        let options: [PDFDocumentWriteOption: Any] = password.map {
+            [.userPasswordOption: $0, .ownerPasswordOption: UUID().uuidString]
+        } ?? [:]
+        guard document.write(to: url, withOptions: options) else {
             throw CocoaError(.fileWriteUnknown)
         }
         return url

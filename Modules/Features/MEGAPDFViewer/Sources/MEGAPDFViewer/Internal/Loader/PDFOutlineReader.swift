@@ -27,11 +27,18 @@ protocol PDFOutlineReading: Sendable {
     ///   children, and returns no items when document loading fails.
     func outlineItems(
         forDocumentAt url: URL,
-        documentLoader: some PDFDocumentLoading
+        documentLoader: some PDFDocumentLoading,
+        unlockPassword: String?
     ) async -> PDFOutlineItems
 }
 
 struct PDFOutlineReader: PDFOutlineReading {
+    private let documentUnlocker: any PDFDocumentUnlocking
+
+    init(documentUnlocker: some PDFDocumentUnlocking = PDFDocumentUnlocker()) {
+        self.documentUnlocker = documentUnlocker
+    }
+
     nonisolated func shouldLoadOutline(document: PDFDocument) -> Bool {
         (document.outlineRoot?.numberOfChildren ?? 0) > 0
     }
@@ -39,12 +46,23 @@ struct PDFOutlineReader: PDFOutlineReading {
     @concurrent
     nonisolated func outlineItems(
         forDocumentAt url: URL,
-        documentLoader: some PDFDocumentLoading
+        documentLoader: some PDFDocumentLoading,
+        unlockPassword: String? = nil
     ) async -> PDFOutlineItems {
         guard !Task.isCancelled,
-              let document = documentLoader.loadDocument(url: url),
-              let outlineRoot = document.outlineRoot
+              let document = documentLoader.loadDocument(url: url)
         else {
+            return PDFOutlineItems(inOutlineOrder: [], inPageOrder: [])
+        }
+
+        if document.isLocked {
+            guard let unlockPassword,
+                  documentUnlocker.unlock(document: document, password: unlockPassword),
+                  !document.isLocked else {
+                return PDFOutlineItems(inOutlineOrder: [], inPageOrder: [])
+            }
+        }
+        guard let outlineRoot = document.outlineRoot else {
             return PDFOutlineItems(inOutlineOrder: [], inPageOrder: [])
         }
 
