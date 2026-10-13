@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGAFoundation
+import MEGAMarkdown
 import SwiftUI
 
 /// Lets a host write the edits that wait for the idle save. Call `flush()` before you read the binding to save.
@@ -50,6 +51,8 @@ public struct MarkdownEditor: View {
     /// nil while the source text is checked off the main thread. Grows when it must be checked again.
     @State private var sourceLimit: SourceTextLimit?
     @State private var sourceCheckRequest = 0
+    /// The user closed the banner. A new check of the text or a switch to rich mode shows it again.
+    @State private var isBannerClosed = false
     @Environment(\.markdownEditorStrings) private var strings
 
     /// - Parameters:
@@ -108,6 +111,7 @@ public struct MarkdownEditor: View {
         .onChange(of: mode) { _, newMode in
             MEGALog.log(level: .info, message: "[MarkdownEditor] Mode switch. rich=\(newMode == .rich) utf8Bytes=\(markdown.utf8.count)")
             if newMode == .rich {
+                isBannerClosed = false
                 // The rich load must see the last keys typed in the source.
                 sourceSync.flushForModeSwitch()
                 requestRichMode()
@@ -181,7 +185,9 @@ public struct MarkdownEditor: View {
     private var sourceEditor: some View {
         VStack(alignment: .leading, spacing: 0) {
             // At most one banner. A long line also refuses rich text, so its warning explains both.
-            if sourceLimit == .lineTooLong {
+            if isBannerClosed {
+                EmptyView()
+            } else if sourceLimit == .lineTooLong {
                 sourceBanner(strings.lineTooLongNotice, identifier: "editor.lineTooLongNotice")
             } else if mode == .rich, let richRefusal {
                 sourceBanner(richRefusal.notice(in: strings), identifier: "editor.richRefusalNotice")
@@ -205,11 +211,12 @@ public struct MarkdownEditor: View {
     }
 
     private func sourceBanner(_ text: String, identifier: String) -> some View {
-        Text(text)
-            .font(.footnote)
-            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-            .padding(TokenSpacing._3)
-            .accessibilityIdentifier(identifier)
+        // Outside the text view, so the banner stays at the top while the text scrolls.
+        MarkdownNoticeBanner(text: text, isInline: false, closeLabel: strings.closeNotice) {
+            isBannerClosed = true
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(identifier)
     }
 
     private func sourceNotice(_ text: String) -> some View {
@@ -225,6 +232,8 @@ public struct MarkdownEditor: View {
     /// Hides the source view until the text is checked again.
     private func requestSourceCheck() {
         sourceLimit = nil
+        // The new text can need a different warning, so a closed banner shows again.
+        isBannerClosed = false
         sourceCheckRequest += 1
     }
 

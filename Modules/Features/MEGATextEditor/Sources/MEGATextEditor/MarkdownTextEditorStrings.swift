@@ -38,6 +38,7 @@ extension MarkdownEditorStrings {
             lineTooLongNotice: Texts.Notice.lineTooLong,
             // The app never shows it. A file over 100 MB stops at the too-large alert before it opens.
             fileTooLargeToEditNotice: MarkdownEditorStrings.english.fileTooLargeToEditNotice,
+            closeNotice: Strings.Localizable.close,
             sourceEditor: Texts.Accessibility.sourceEditor,
             continueAtEnd: Texts.Accessibility.continueAtEnd
         )
@@ -50,7 +51,8 @@ extension MarkdownPreviewStrings {
     public static var mega: MarkdownPreviewStrings {
         MarkdownPreviewStrings(
             tooLarge: MarkdownPreviewStrings.english.tooLarge,
-            shownAsPlainText: Strings.Localizable.MarkdownEditor.Preview.sectionShownAsPlainText
+            shownAsPlainText: Strings.Localizable.MarkdownEditor.Preview.sectionShownAsPlainText,
+            closeNotice: Strings.Localizable.close
         )
     }
 }

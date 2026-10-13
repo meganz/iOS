@@ -7,15 +7,18 @@ import UIKit
 package struct PreviewRowView: View {
     let row: PreviewRow
     let baseURL: URL?
+    /// Closes a notice row. nil shows the notice with no close button.
+    let onCloseNotice: (() -> Void)?
 
-    package init(row: PreviewRow, baseURL: URL?) {
+    package init(row: PreviewRow, baseURL: URL?, onCloseNotice: (() -> Void)? = nil) {
         self.row = row
         self.baseURL = baseURL
+        self.onCloseNotice = onCloseNotice
     }
 
     package var body: some View {
         MarkdownRowChromeView(chrome: row.chrome, checkboxLabel: row.checkboxLabel, contentDirection: row.textDirection) {
-            PreviewRowContent(row: row, baseURL: baseURL)
+            PreviewRowContent(row: row, baseURL: baseURL, onCloseNotice: onCloseNotice)
         }
     }
 }
@@ -23,6 +26,7 @@ package struct PreviewRowView: View {
 private struct PreviewRowContent: View {
     let row: PreviewRow
     let baseURL: URL?
+    let onCloseNotice: (() -> Void)?
 
     @Environment(\.markdownTheme) private var theme
     @Environment(\.markdownInQuote) private var inQuote
@@ -61,9 +65,8 @@ private struct PreviewRowContent: View {
         case .plainText(let text, let isFirst, let isLast, _):
             CodeBlockView(language: nil, code: text, isFirst: isFirst, isLast: isLast)
         case .notice:
-            Text(strings.shownAsPlainText)
-                .font(theme.bodyFont.italic())
-                .foregroundStyle(theme.codeLanguageColor)
+            MarkdownNoticeBanner(text: strings.shownAsPlainText, isInline: true, closeLabel: strings.closeNotice, onClose: onCloseNotice)
+                .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("markdown.preview.notice")
         }
     }

@@ -7,7 +7,7 @@ struct MarkdownEditorStringsTests {
     @Test func englishHasNoEmptyString() {
         let fields = Mirror(reflecting: MarkdownEditorStrings.english).children
         // The count pins the string list: a new string must be added to this check on purpose.
-        #expect(fields.count == 32)
+        #expect(fields.count == 33)
         for field in fields {
             let value = field.value as? String
             #expect(value?.isEmpty == false, "\(field.label ?? "?") is empty")

@@ -37,6 +37,7 @@ let package = Package(
                 .product(name: "cmark-gfm-extensions", package: "swift-cmark"),
                 "MEGAFoundation"
             ],
+            resources: [.process("Resources")],
             swiftSettings: settings),
         // The rich editor: the model (Markdown import and export, editing, undo, clipboard) and its UI.
         .target(

@@ -67,6 +67,8 @@ public struct MarkdownEditorStrings: Equatable, Sendable {
     public var lineTooLongNotice: String
     /// Shown instead of the source when the file is over 100 MB.
     public var fileTooLargeToEditNotice: String
+    /// VoiceOver name of the button that closes a notice.
+    public var closeNotice: String
 
     // MARK: - Accessibility
 
@@ -106,6 +108,7 @@ public struct MarkdownEditorStrings: Equatable, Sendable {
         blockTooLongForRichNotice: String,
         lineTooLongNotice: String,
         fileTooLargeToEditNotice: String,
+        closeNotice: String,
         sourceEditor: String,
         continueAtEnd: String
     ) {
@@ -139,6 +142,7 @@ public struct MarkdownEditorStrings: Equatable, Sendable {
         self.blockTooLongForRichNotice = blockTooLongForRichNotice
         self.lineTooLongNotice = lineTooLongNotice
         self.fileTooLargeToEditNotice = fileTooLargeToEditNotice
+        self.closeNotice = closeNotice
         self.sourceEditor = sourceEditor
         self.continueAtEnd = continueAtEnd
     }
@@ -175,6 +179,7 @@ public struct MarkdownEditorStrings: Equatable, Sendable {
         blockTooLongForRichNotice: "This file has a block that is too long for rich text. Showing the Markdown source.",
         lineTooLongNotice: "This file has a very long line, so editing may be slow.",
         fileTooLargeToEditNotice: "This file is too large to edit.",
+        closeNotice: "Close",
         sourceEditor: "Markdown source",
         continueAtEnd: "Continue at the end"
     )

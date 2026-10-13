@@ -17,6 +17,8 @@ extension PreviewRowList {
     private(set) var showsCurrentText = true
         private(set) var isStopped = false
         private var baseURL: URL?
+        /// Notice rows the user closed. A closed row stays in the store, so row indexes do not change.
+        private var closedNotices: Set<Int> = []
         var onTopLineChange: ((Int) -> Void)?
 
         // MARK: Values the hosted rows read
@@ -97,6 +99,7 @@ extension PreviewRowList {
                 let isNewText = generation != nil
                 generation = parent.generation
                 store = parent.store
+                closedNotices = []
                 selection.clear()
                 pin = nil
                 pendingJump = nil
@@ -157,9 +160,19 @@ extension PreviewRowList {
 
         // MARK: - Hosted rows
 
-        /// The SwiftUI environment does not reach hosted cells, so the values the rows read are passed on here.
+        @ViewBuilder
         private func content(for row: PreviewRow, item: Int) -> some View {
-            PreviewRowView(row: row, baseURL: baseURL)
+            if closedNotices.contains(item) {
+                Color.clear.frame(height: 0)
+            } else {
+                rowView(for: row, item: item)
+            }
+        }
+
+        /// The SwiftUI environment does not reach hosted cells, so the values the rows read are passed on here.
+        private func rowView(for row: PreviewRow, item: Int) -> some View {
+            let closeNotice: () -> Void = { [weak self] in self?.closeNotice(item) }
+            return PreviewRowView(row: row, baseURL: baseURL, onCloseNotice: closeNotice)
                 // Side padding sits in each row, so every cell spans the full width.
                 .padding(.horizontal, TokenSpacing._5)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -169,6 +182,11 @@ extension PreviewRowList {
                 .environment(\.openURL, forwardingOpenURL)
                 // A reused cell would keep the sideways scroll of the old row. Other rows keep one identity, which is cheaper.
                 .id(row.scrollsSideways ? item : -1)
+        }
+
+        func closeNotice(_ item: Int) {
+            closedNotices.insert(item)
+            list.reconfigureItems([item])
         }
     }
 }
@@ -187,7 +205,9 @@ extension PreviewRowList.Coordinator: MarkdownRowListDataSource {
     }
 
     func estimatedHeight(ofItem item: Int, using estimator: MarkdownRowEstimator) -> CGFloat {
-        estimator.height(of: store[item])
+        // A cell measures at least 1 pt, so a closed notice is 1 pt tall.
+        if closedNotices.contains(item) { return 1 }
+        return estimator.height(of: store[item])
     }
 
     /// An image row changes its height when the image loads.
