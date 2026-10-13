@@ -9,10 +9,10 @@ public protocol FileProviderEnumerationSnapshotUseCaseProtocol: Sendable {
     func didEnumerate(_ items: [FileProviderItemEntity], in containerIdentifier: NSFileProviderItemIdentifier) async throws
 }
 
-public struct FileProviderEnumerationSnapshotUseCase<S: FileProviderSnapshotRepositoryProtocol>: FileProviderEnumerationSnapshotUseCaseProtocol {
-    private let snapshotRepo: S
+public struct FileProviderEnumerationSnapshotUseCase: FileProviderEnumerationSnapshotUseCaseProtocol {
+    private let snapshotRepo: any FileProviderSnapshotRepositoryProtocol
 
-    public init(snapshotRepo: S) {
+    public init(snapshotRepo: any FileProviderSnapshotRepositoryProtocol) {
         self.snapshotRepo = snapshotRepo
     }
 
