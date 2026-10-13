@@ -54,10 +54,12 @@ final class EditorWindow {
     let window: UIWindow
     let model: Model
 
-    init(_ text: String, mode: MarkdownEditorMode = .source) {
+    /// `inUIKitParent`: the hosting controller is a child pinned with constraints, like in a UIKit app.
+    init(_ text: String, mode: MarkdownEditorMode = .source, inUIKitParent: Bool = false) {
         model = Model(text: text, mode: mode)
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 700))
-        window.rootViewController = UIHostingController(rootView: Host(model: model))
+        let hosting = UIHostingController(rootView: Host(model: model))
+        window.rootViewController = inUIKitParent ? Self.parent(of: hosting) : hosting
         // Never the key window: a row still takes the focus, but no software keyboard shows.
         // A real keyboard comes up at a different time in each run and makes the list shorter.
         window.isHidden = false
@@ -66,6 +68,21 @@ final class EditorWindow {
     func close() {
         window.isHidden = true
         window.rootViewController = nil
+    }
+
+    private static func parent(of child: UIViewController) -> UIViewController {
+        let parent = UIViewController()
+        parent.addChild(child)
+        child.view.translatesAutoresizingMaskIntoConstraints = false
+        parent.view.addSubview(child.view)
+        NSLayoutConstraint.activate([
+            child.view.topAnchor.constraint(equalTo: parent.view.topAnchor),
+            child.view.leadingAnchor.constraint(equalTo: parent.view.leadingAnchor),
+            child.view.trailingAnchor.constraint(equalTo: parent.view.trailingAnchor),
+            child.view.bottomAnchor.constraint(equalTo: parent.view.bottomAnchor)
+        ])
+        child.didMove(toParent: parent)
+        return parent
     }
 
     /// The source text view, or nil when none is shown.

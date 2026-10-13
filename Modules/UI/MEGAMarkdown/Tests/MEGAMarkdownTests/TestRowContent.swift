@@ -22,6 +22,8 @@ struct TestRowContent: UIContentConfiguration {
     var item: Int
     var height: CGFloat
     var text = ""
+    /// Nil: `height` at any width. Else `height` at this width, and taller at a narrower width, like wrapped text.
+    var wrapWidth: CGFloat?
     let counter: SizingCounter
 
     func makeContentView() -> any UIView & UIContentView {
@@ -33,7 +35,7 @@ struct TestRowContent: UIContentConfiguration {
     }
 }
 
-/// The view of `TestRowContent`. Its size is the configured height at any width.
+/// The view of `TestRowContent`. Its size is the configured height, scaled by the width when the row wraps.
 final class TestRowContentView: UIView, UIContentView {
     let textField = UITextField()
     /// How often a configuration was applied to this view, so a test can tell a reconfigure from a new cell.
@@ -67,7 +69,8 @@ final class TestRowContentView: UIView, UIContentView {
     ) -> CGSize {
         guard let rowContent else { return .zero }
         rowContent.counter.add(item: rowContent.item)
-        return CGSize(width: targetSize.width, height: rowContent.height)
+        let height = rowContent.wrapWidth.map { ceil(rowContent.height * $0 / targetSize.width) } ?? rowContent.height
+        return CGSize(width: targetSize.width, height: height)
     }
 
     private func apply() {

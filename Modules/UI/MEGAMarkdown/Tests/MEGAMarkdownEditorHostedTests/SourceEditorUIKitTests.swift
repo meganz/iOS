@@ -59,6 +59,24 @@ struct SourceEditorUIKitTests {
         #expect(textView.contentOffset.y > bottom - textView.bounds.height, "offset \(textView.contentOffset.y), bottom \(bottom)")
     }
 
+    /// A UIKit parent asks for the baseline on each resize, for example a rotation.
+    /// The text view must not lay out the whole text for it: that blocks the screen for seconds on a large file.
+    @Test func resizeInAUIKitParentLaysOutOnlyTheVisibleText() async throws {
+        let text = String(repeating: "A line of source text.\n", count: 25_000)
+        let host = EditorWindow(text, mode: .rich, inUIKitParent: true)
+        defer { host.close() }
+        let textView = try await host.waitForSourceTextView()
+        try await EditorWindow.settle()
+        let watcher = LayoutEndWatcher()
+        textView.layoutManager.delegate = watcher
+        for size in [CGSize(width: 700, height: 390), CGSize(width: 390, height: 700)] {
+            host.window.frame = CGRect(origin: .zero, size: size)
+            host.window.layoutIfNeeded()
+            try await EditorWindow.settle()
+        }
+        #expect(!watcher.reachedEnd)
+    }
+
     // MARK: - Writes to the binding
 
     @Test func typingDoesNotWriteTheBinding() async throws {
@@ -203,5 +221,14 @@ struct SourceEditorUIKitTests {
         NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
         try await waitUntil("the background flush", timeout: .seconds(20)) { !host.model.writes.isEmpty }
         #expect(host.model.writes.count == 1)
+    }
+}
+
+/// Records whether the layout manager laid out the text to its end.
+private final class LayoutEndWatcher: NSObject, NSLayoutManagerDelegate {
+    var reachedEnd = false
+
+    func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
+        if layoutFinishedFlag { reachedEnd = true }
     }
 }

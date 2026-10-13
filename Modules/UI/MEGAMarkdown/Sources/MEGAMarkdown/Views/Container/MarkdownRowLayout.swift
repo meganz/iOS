@@ -93,7 +93,8 @@ package final class MarkdownRowLayout: UICollectionViewLayout {
         heights.set(index, height: preferredAttributes.size.height)
         context.contentSizeAdjustment = CGSize(width: 0, height: delta)
         // An item above the top edge grew or shrank. Move the offset too, so the content on screen stays still.
-        if let collectionView, originalAttributes.frame.minY < collectionView.contentOffset.y + collectionView.adjustedContentInset.top - 0.5 {
+        // The item's place comes from the heights: the original attributes can be from before a jump of the offset.
+        if let collectionView, heights.offset(of: index) < collectionView.contentOffset.y + collectionView.adjustedContentInset.top - 0.5 {
             context.contentOffsetAdjustment = CGPoint(x: 0, y: delta)
         }
         return context

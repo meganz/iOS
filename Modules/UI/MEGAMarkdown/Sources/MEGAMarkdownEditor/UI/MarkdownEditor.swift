@@ -199,6 +199,9 @@ public struct MarkdownEditor: View {
                 // text 16 from the sides. The text view already pads the line and insets 8 at the top, so add only the rest.
                 SourceTextView(markdown: markdown, sync: sourceSync)
                     .equatable()
+                    // A UIKit host asks for the baseline on each resize. UITextView would lay out the whole text for it.
+                    .alignmentGuide(.firstTextBaseline) { $0[.top] }
+                    .alignmentGuide(.lastTextBaseline) { $0[.bottom] }
                     .padding(.horizontal, TokenSpacing._5 - NSTextContainer().lineFragmentPadding)
             case .fileTooLarge:
                 sourceNotice(strings.fileTooLargeToEditNotice)

@@ -26,4 +26,20 @@ import UIKit
         #expect(text.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int == NSUnderlineStyle.single.rawValue)
         #expect(text.attribute(.underlineStyle, at: 2, effectiveRange: nil) == nil)
     }
+
+    /// SwiftUI can measure the view at the old width after a rotation. The text must still wrap at the view's width.
+    @Test func measuringAtAnotherWidthKeepsTheDrawnLines() throws {
+        let resolved = MarkdownTheme.default.resolved(for: UITraitCollection(userInterfaceStyle: .light))
+        let view = InlineCodeTextView()
+        view.configure(text: try attributed(String(repeating: "Some words and `code` ", count: 8)), baseFont: resolved.bodyFont, resolved: resolved)
+        view.frame = CGRect(x: 0, y: 0, width: 300, height: view.height(forWidth: 300))
+        view.layoutIfNeeded()
+        let before = image(of: view)
+        _ = view.height(forWidth: 800)
+        #expect(image(of: view) == before)
+    }
+
+    private func image(of view: UIView) -> Data? {
+        UIGraphicsImageRenderer(bounds: view.bounds).pngData { _ in view.draw(view.bounds) }
+    }
 }

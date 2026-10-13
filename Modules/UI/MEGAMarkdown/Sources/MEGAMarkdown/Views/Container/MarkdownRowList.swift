@@ -10,8 +10,11 @@ package final class MarkdownRowList: NSObject {
     private let layout = MarkdownRowLayout()
     private weak var dataSource: (any MarkdownRowListDataSource)?
     private var registration: UICollectionView.CellRegistration<MarkdownRowCell, Int>?
-    /// An item to show at the same place after the next layout pass, and its top relative to the top edge.
-    private var pendingAnchor: (item: Int, distance: CGFloat)?
+    /// An item to show at the same place after the next layout passes.
+    private var pendingAnchor: Anchor?
+    /// True when the last layout pass showed the end of the list. A new width takes the anchor with the size
+    /// already changed, so the end is checked here, with the old size.
+    private var showsEnd = false
     private var themeVersion = 0
     /// True in `replaceItems` until its update block runs. The items configured then are in `itemsConfiguredEarly`.
     private var isBeforeUpdate = false
@@ -50,7 +53,7 @@ package final class MarkdownRowList: NSObject {
         // A cell whose content changes its size asks for a new size by itself.
         view.selfSizingInvalidation = .enabled
         view.dataSource = self
-        view.onLayout = { [weak self] in self?.applyAnchor() }
+        view.onLayout = { [weak self] in self?.didLayout() }
         view.onTextSizeChange = { [weak self] in self?.heightInputsChanged() }
         layout.alwaysSizes = { [weak self] item in self?.dataSource?.alwaysSizes(item: item) ?? false }
         layout.onWidthChange = { [weak self] oldWidth, _ in self?.widthChanged(from: oldWidth) }
@@ -287,21 +290,72 @@ package final class MarkdownRowList: NSObject {
 
     // MARK: - Anchor
 
+    /// An item and its top relative to the top edge. The distance is negative when the top edge cuts the item.
+    private struct Anchor {
+        let item: Int
+        let distance: CGFloat
+        /// The item's height when the anchor was taken.
+        let height: CGFloat
+        /// True when the list showed its end and no item was pinned. The list then shows its end again,
+        /// because a shorter text at a new width cannot keep the top item in place.
+        let isAtBottom: Bool
+        /// Layout passes that applied the anchor while the item's height was still a guess.
+        var guessedPasses = 0
+    }
+
+    /// The largest content offset: the last item at the bottom edge.
+    private var maxOffset: CGFloat {
+        let inset = view.adjustedContentInset
+        return max(layout.heights.totalHeight + inset.bottom - view.bounds.height, -inset.top)
+    }
+
     /// The pinned item when there is one, else the top item, and its top relative to the top edge.
-    private func currentAnchor() -> (item: Int, distance: CGFloat) {
-        let item = pinnedItem.flatMap { $0 < layout.heights.count ? $0 : nil } ?? topItem
+    private func currentAnchor() -> Anchor {
+        let pinned = pinnedItem.flatMap { $0 < layout.heights.count ? $0 : nil }
+        let item = pinned ?? topItem
         let top = view.contentOffset.y + view.adjustedContentInset.top
-        return (item, layout.heights.offset(of: item) - top)
+        return Anchor(
+            item: item,
+            distance: layout.heights.offset(of: item) - top,
+            height: layout.heights.height(at: item),
+            isAtBottom: pinned == nil && showsEnd
+        )
+    }
+
+    private func didLayout() {
+        applyAnchor()
+        // A text that fits on screen shows its top, not its end. It keeps the top item.
+        let maxOffset = maxOffset
+        showsEnd = maxOffset > -view.adjustedContentInset.top + 0.5 && view.contentOffset.y >= maxOffset - 0.5
     }
 
     private func applyAnchor() {
-        guard let anchor = pendingAnchor, view.bounds.height > 0 else { return }
-        pendingAnchor = nil
-        guard anchor.item < layout.heights.count else { return }
+        guard var anchor = pendingAnchor, view.bounds.height > 0 else { return }
+        guard anchor.item < layout.heights.count else {
+            pendingAnchor = nil
+            return
+        }
+        // The item moves when its guessed height is measured, so the anchor is applied again until then.
+        // A few passes at most: an anchor that stays would pull the list back when the user scrolls.
+        let isMeasured = layout.heights.isMeasured(anchor.item)
+        anchor.guessedPasses += isMeasured ? 0 : 1
+        pendingAnchor = isMeasured || anchor.guessedPasses > 3 ? nil : anchor
+        let height = layout.heights.height(at: anchor.item)
+        // Text wraps to a new height at a new width. The top edge cuts the item at the same share of its height,
+        // so the same line stays at the top.
+        let distance = anchor.distance < 0 && anchor.height > 0 ? anchor.distance * height / anchor.height : anchor.distance
         let inset = view.adjustedContentInset
-        let maxOffset = max(layout.heights.totalHeight + inset.bottom - view.bounds.height, -inset.top)
-        let target = min(max(layout.heights.offset(of: anchor.item) - anchor.distance - inset.top, -inset.top), maxOffset)
-        if abs(view.contentOffset.y - target) > 0.5 { view.contentOffset.y = target }
+        let target = if anchor.isAtBottom {
+            maxOffset
+        } else {
+            min(max(layout.heights.offset(of: anchor.item) - distance - inset.top, -inset.top), maxOffset)
+        }
+        if abs(view.contentOffset.y - target) > 0.5 {
+            view.contentOffset.y = target
+        } else if pendingAnchor != nil {
+            // No offset change means no new layout pass. One must run to measure the item.
+            view.setNeedsLayout()
+        }
     }
 
     private func indexPath(_ item: Int) -> IndexPath {

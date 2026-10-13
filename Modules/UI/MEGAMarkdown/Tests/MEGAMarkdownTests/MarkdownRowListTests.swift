@@ -9,6 +9,8 @@ final class FakeRowSource: MarkdownRowListDataSource {
     var texts: [String]
     var estimate: CGFloat?
     var alwaysSizedItems: Set<Int> = []
+    /// See `TestRowContent.wrapWidth`.
+    var wrapWidth: CGFloat?
     let counter = SizingCounter()
 
     init(count: Int, estimate: CGFloat? = 50) {
@@ -20,7 +22,7 @@ final class FakeRowSource: MarkdownRowListDataSource {
     var itemCount: Int { heights.count }
 
     func configure(_ cell: MarkdownRowCell, forItem item: Int) {
-        cell.contentConfiguration = TestRowContent(item: item, height: heights[item], text: texts[item], counter: counter)
+        cell.contentConfiguration = TestRowContent(item: item, height: heights[item], text: texts[item], wrapWidth: wrapWidth, counter: counter)
     }
 
     func estimatedHeight(ofItem item: Int, using estimator: MarkdownRowEstimator) -> CGFloat {
@@ -498,5 +500,88 @@ struct MarkdownRowListTests {
         #expect(host.view.bounds.width == 600)
         #expect(host.list.topItem == top)
         #expect(host.list.itemFrame(at: top).minY == host.view.contentOffset.y)
+    }
+
+    /// A rotation must keep the same line of a tall wrapped item at the top edge, there and back.
+    @Test func widthChangeKeepsTheShareOfATallWrappedItem() async throws {
+        let source = FakeRowSource(count: 100)
+        source.heights[20] = 800
+        source.wrapWidth = Self.size.width
+        let host = Host(source: source)
+        defer { host.close() }
+        // The first scroll measures the items above item 20. Then the top edge cuts item 20 at 40 % of its height.
+        try await host.scroll(to: host.list.itemFrame(at: 20).minY)
+        try await host.scroll(to: host.list.itemFrame(at: 20).minY + 320)
+
+        for (width, height) in [(CGFloat(600), CGFloat(520)), (Self.size.width, 800)] {
+            host.window.frame = CGRect(x: 0, y: 0, width: width, height: Self.size.height)
+            host.window.layoutIfNeeded()
+            try await host.settle()
+            let frame = host.list.itemFrame(at: 20)
+            #expect(frame.height == height)
+            #expect(abs(host.view.contentOffset.y - (frame.minY + 0.4 * height)) <= 1, "at width \(width)")
+        }
+    }
+
+    /// Wrapped rows are shorter at a wider width, so the top item cannot stay in place at the end. The end stays instead.
+    @Test func widthChangeAtTheEndKeepsTheEnd() async throws {
+        let source = FakeRowSource(count: 100)
+        source.wrapWidth = Self.size.width
+        let host = Host(source: source)
+        defer { host.close() }
+        // Twice: the first scroll measures the rows at the end, which changes the content height.
+        try await host.scroll(to: host.view.contentSize.height - Self.size.height)
+        try await host.scroll(to: host.view.contentSize.height - Self.size.height)
+
+        for width in [600, Self.size.width] {
+            host.window.frame = CGRect(x: 0, y: 0, width: width, height: Self.size.height)
+            host.window.layoutIfNeeded()
+            try await host.settle()
+            let end = host.view.contentSize.height - Self.size.height
+            #expect(abs(host.view.contentOffset.y - end) <= 0.5, "at width \(width)")
+        }
+    }
+
+    /// After a jump of the offset, a cell can size itself with attributes from before the jump. Only an item that is
+    /// above the top edge now may move the offset, or the content on screen moves by the item's change.
+    @Test func sizingMovesTheOffsetOnlyForAnItemAboveTheTopEdge() async throws {
+        let host = Host(source: FakeRowSource(count: 100, estimate: nil))
+        defer { host.close() }
+        try await host.scroll(to: host.list.itemFrame(at: 20).minY)
+        let layout = try #require(host.view.collectionViewLayout as? MarkdownRowLayout)
+
+        func adjustment(item: Int, staleMinY: CGFloat) throws -> CGFloat {
+            let indexPath = layout.indexPath(ofItem: item)
+            let original = try #require(layout.layoutAttributesForItem(at: indexPath))
+            original.frame.origin.y = staleMinY
+            let preferred = try #require(original.copy() as? UICollectionViewLayoutAttributes)
+            preferred.size.height += 100
+            return layout.invalidationContext(forPreferredLayoutAttributes: preferred, withOriginalAttributes: original)
+                .contentOffsetAdjustment.y
+        }
+
+        // Item 25 is below the top edge, though its old attributes put it at the top of the content.
+        #expect(try adjustment(item: 25, staleMinY: 0) == 0)
+        // Item 5 is above the top edge, though its old attributes put it far below.
+        #expect(try adjustment(item: 5, staleMinY: 100_000) == 100)
+    }
+
+    /// A text that fits on screen shows its top. When a narrower width makes it taller, it must stay at the top.
+    @Test func widthChangeKeepsTheTopOfATextThatFitted() async throws {
+        let source = FakeRowSource(count: 20, estimate: nil)
+        source.heights = Array(repeating: 50, count: 20)
+        source.wrapWidth = Self.size.width
+        let host = Host(source: source)
+        defer { host.close() }
+        host.window.frame = CGRect(x: 0, y: 0, width: 600, height: Self.size.height)
+        host.window.layoutIfNeeded()
+        try await host.settle()
+        #expect(host.view.contentSize.height < Self.size.height)
+
+        host.window.frame = CGRect(origin: .zero, size: Self.size)
+        host.window.layoutIfNeeded()
+        try await host.settle()
+        #expect(host.view.contentSize.height > Self.size.height)
+        #expect(host.view.contentOffset.y == 0)
     }
 }

@@ -59,7 +59,7 @@ Only terms that are specific to Markdown, cmark, or this package are listed. Add
 | Item | One cell of `MarkdownRowList`. In the preview one row is one item. A caller may map one row to several items, for example a large raw table. |
 | Estimate | A height guess from `MarkdownRowEstimator`, made before the item's cell exists. |
 | Measured height | The height a cell gave when it sized itself. It stays until the width, text size or theme changes, or the caller invalidates it. |
-| Anchor item | The item that stays at the same place on screen when every height changes: the pinned item, else the top item. |
+| Anchor item | The item that stays at the same place on screen when every height changes: the pinned item, else the top item. If the top edge cuts it, the same share of its height stays above the edge. A list that showed its end shows its end again. |
 | Pinned item | The item whose cell stays attached while the list scrolls far away, for example a row whose text view has the keyboard focus. |
 
 ## Large-file preview

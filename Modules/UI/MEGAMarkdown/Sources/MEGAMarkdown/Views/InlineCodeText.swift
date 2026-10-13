@@ -192,13 +192,23 @@ final class InlineCodeTextView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        if container.size.width != bounds.width - 2 * Self.inset {
-            container.size = CGSize(width: bounds.width - 2 * Self.inset, height: .greatestFiniteMagnitude)
+        if fitContainerToBounds() {
             setNeedsDisplay()
         }
     }
 
+    /// `height(forWidth:)` can leave the container at another width, for example the old width after a rotation.
+    /// Drawing and taps need the width of the view. Returns true when the width changed.
+    @discardableResult
+    private func fitContainerToBounds() -> Bool {
+        let width = bounds.width - 2 * Self.inset
+        guard container.size.width != width else { return false }
+        container.size = CGSize(width: width, height: .greatestFiniteMagnitude)
+        return true
+    }
+
     override func draw(_ rect: CGRect) {
+        fitContainerToBounds()
         let glyphs = layoutManager.glyphRange(for: container)
         let origin = CGPoint(x: Self.inset, y: 0)
         layoutManager.drawBackground(forGlyphRange: glyphs, at: origin)
@@ -206,6 +216,7 @@ final class InlineCodeTextView: UIView {
     }
 
     @objc private func tapped(_ gesture: UITapGestureRecognizer) {
+        fitContainerToBounds()
         var point = gesture.location(in: self)
         point.x -= Self.inset
         let glyph = layoutManager.glyphIndex(for: point, in: container)
