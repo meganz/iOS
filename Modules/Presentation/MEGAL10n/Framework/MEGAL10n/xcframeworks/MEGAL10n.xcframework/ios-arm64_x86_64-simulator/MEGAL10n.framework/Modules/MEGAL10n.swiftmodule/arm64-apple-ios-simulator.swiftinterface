@@ -3121,6 +3121,13 @@ public enum Strings {
           public static let viewedLinks: Swift.String
         }
       }
+      public enum DoMoreWithMega {
+        public static let scanDoc: Swift.String
+        public enum AlbumCreated {
+          public static func message(_ p1: Any) -> Swift.String
+          public static let seeAlbum: Swift.String
+        }
+      }
       public enum Favourites {
         public static let title: Swift.String
       }
