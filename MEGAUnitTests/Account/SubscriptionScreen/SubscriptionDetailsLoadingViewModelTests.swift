@@ -95,7 +95,7 @@ struct SubscriptionDetailsLoadingViewModelTests {
         }
 
         // Once the requester holds a suspended caller, the view model is provably still waiting.
-        try await waitUntil { pricingRequester.hasSuspendedCaller }
+        await pricingRequester.waitForSuspendedCaller()
         #expect(hasRouted == false)
 
         pricingRequester.finishRequest()
@@ -114,31 +114,29 @@ struct SubscriptionDetailsLoadingViewModelTests {
 
 // MARK: - Helpers
 
-/// Polls `condition` so tests never assume how quickly a task reaches its suspension point.
-private func waitUntil(
-    timeout: Duration = .seconds(5),
-    _ condition: @Sendable () -> Bool
-) async throws {
-    let deadline = ContinuousClock.now + timeout
-    while ContinuousClock.now < deadline {
-        if condition() { return }
-        try await Task.sleep(for: .milliseconds(5))
-    }
-    Issue.record("Timed out waiting for the expected condition")
-}
-
 /// Suspends its caller until the test releases it, so the test can observe the view model mid-wait.
 private final class SuspendingPricingRequester: PricingRequesting, @unchecked Sendable {
     private let lock = NSLock()
     private var continuation: CheckedContinuation<Void, Never>?
+    private let suspendedCallers: AsyncStream<Void>
+    private let suspendedCallersContinuation: AsyncStream<Void>.Continuation
 
-    var hasSuspendedCaller: Bool {
-        lock.withLock { continuation != nil }
+    init() {
+        (suspendedCallers, suspendedCallersContinuation) = AsyncStream.makeStream(of: Void.self)
+    }
+
+    /// Suspends until a caller waits in `requestPricing()`. The stream is buffered, so a caller
+    /// that arrived before this call still counts. A busy main actor only makes the wait longer.
+    func waitForSuspendedCaller() async {
+        for await _ in suspendedCallers {
+            break
+        }
     }
 
     func requestPricing() async throws {
         await withCheckedContinuation { continuation in
             lock.withLock { self.continuation = continuation }
+            suspendedCallersContinuation.yield()
         }
     }
 

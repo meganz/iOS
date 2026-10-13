@@ -2,82 +2,106 @@ import CallKit
 @testable import MEGA
 import MEGADomain
 import Testing
-import TestingExpectation
 
 @MainActor
-@Suite("CallKitProviderDelegate")
+@Suite("CallKitProviderDelegate", .timeLimit(.minutes(1)))
 struct CallKitProviderDelegateTests {
+    enum ActionResult {
+        case fulfilled
+        case failed
+    }
+
+    /// Records whether the delegate fulfilled or failed an action.
+    /// The delegate decides in a new Task, so a test awaits the result and never relies on a deadline.
+    final class ActionResultRecorder: Sendable {
+        private let results: AsyncStream<ActionResult>
+        private let continuation: AsyncStream<ActionResult>.Continuation
+
+        init() {
+            (results, continuation) = AsyncStream.makeStream(of: ActionResult.self)
+        }
+
+        func record(_ result: ActionResult) {
+            continuation.yield(result)
+        }
+
+        /// Returns the first recorded result. The stream is buffered, so an earlier result still counts.
+        func firstResult() async -> ActionResult? {
+            for await result in results {
+                return result
+            }
+            return nil
+        }
+    }
+
     class MockStartAction: CXStartCallAction {
-        
+        let recorder = ActionResultRecorder()
+
         init(callUUID: UUID) {
             super.init(call: callUUID, handle: .init(type: .generic, value: ""))
         }
-        
+
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
-        var fulfillCalled = Expectation()
+
         override func fulfill() {
-            fulfillCalled.fulfill()
+            recorder.record(.fulfilled)
         }
-        
-        var failCalled = Expectation()
+
         override func fail() {
-            failCalled.fulfill()
+            recorder.record(.failed)
         }
     }
-    
+
     final class MockAnswerAction: CXAnswerCallAction {
-        
+        let recorder = ActionResultRecorder()
+
         init(callUUID: UUID) {
             super.init(call: callUUID)
         }
-        
+
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
-        var fulfillCalled = Expectation()
+
         override func fulfill() {
-            fulfillCalled.fulfill()
+            recorder.record(.fulfilled)
         }
-        
-        var failCalled = Expectation()
+
         override func fail() {
-            failCalled.fulfill()
+            recorder.record(.failed)
         }
     }
     class MockEndAction: CXEndCallAction {
-        
+        let recorder = ActionResultRecorder()
+
         init(callUUID: UUID) {
             super.init(call: callUUID)
         }
-        
+
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
-        var fulfillCalled = Expectation()
+
         override func fulfill() {
-            fulfillCalled.fulfill()
+            recorder.record(.fulfilled)
         }
-        
-        var failCalled = Expectation()
+
         override func fail() {
-            failCalled.fulfill()
+            recorder.record(.failed)
         }
     }
     class MockMutedAction: CXSetMutedCallAction {
-        
-        var fulfillCalled: TestingExpectation.Expectation!
+        // The inherited Objective-C init skips Swift property defaults, so a test sets this after init.
+        var recorder: ActionResultRecorder!
+
         override func fulfill() {
-            fulfillCalled.fulfill()
+            recorder.record(.fulfilled)
         }
-        
-        var failCalled: TestingExpectation.Expectation!
+
         override func fail() {
-            failCalled.fulfill()
+            recorder.record(.failed)
         }
     }
     
@@ -124,8 +148,8 @@ struct CallKitProviderDelegateTests {
             harness.callCoordinator.startCallResult_ToReturn = true
             let startAction = MockStartAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: startAction)
-            await harness.callCoordinator.startCallCalled.fulfillment(within: .seconds(5))
-            await startAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(await startAction.recorder.firstResult() == .fulfilled)
+            #expect(harness.callCoordinator.startCall_CalledTimes == 1)
         }
         @Test("Perform Start call action fails")
         func startCall_Fails() async {
@@ -133,8 +157,8 @@ struct CallKitProviderDelegateTests {
             harness.callCoordinator.startCallResult_ToReturn = false
             let startAction = MockStartAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: startAction)
-            await harness.callCoordinator.startCallCalled.fulfillment(within: .seconds(5))
-            await startAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(await startAction.recorder.firstResult() == .failed)
+            #expect(harness.callCoordinator.startCall_CalledTimes == 1)
         }
     }
     
@@ -148,8 +172,8 @@ struct CallKitProviderDelegateTests {
             harness.callCoordinator.answerCallResult_ToReturn = true
             let answerAction = MockAnswerAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: answerAction)
-            await harness.callCoordinator.answerCallCalled.fulfillment(within: .seconds(5))
-            await answerAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(await answerAction.recorder.firstResult() == .fulfilled)
+            #expect(harness.callCoordinator.answerCall_CalledTimes == 1)
         }
         @Test("Performs answer call action, fails")
         func answerAction_fails() async {
@@ -157,8 +181,8 @@ struct CallKitProviderDelegateTests {
             harness.callCoordinator.answerCallResult_ToReturn = false
             let answerAction = MockAnswerAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: answerAction)
-            await harness.callCoordinator.answerCallCalled.fulfillment(within: .seconds(5))
-            await answerAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(await answerAction.recorder.firstResult() == .failed)
+            #expect(harness.callCoordinator.answerCall_CalledTimes == 1)
         }
     }
     
@@ -171,8 +195,8 @@ struct CallKitProviderDelegateTests {
             harness.callCoordinator.endCallResult_ToReturn = true
             let endAction = MockEndAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: endAction)
-            await harness.callCoordinator.endCallCalled.fulfillment(within: .seconds(5))
-            await endAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(await endAction.recorder.firstResult() == .fulfilled)
+            #expect(harness.callCoordinator.endCall_CalledTimes == 1)
         }
         
         @Test("Perform end call action, fails")
@@ -181,8 +205,8 @@ struct CallKitProviderDelegateTests {
             harness.callCoordinator.endCallResult_ToReturn = false
             let endAction = MockEndAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: endAction)
-            await harness.callCoordinator.endCallCalled.fulfillment(within: .seconds(5))
-            await endAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(await endAction.recorder.firstResult() == .failed)
+            #expect(harness.callCoordinator.endCall_CalledTimes == 1)
         }
     }
     
@@ -194,20 +218,20 @@ struct CallKitProviderDelegateTests {
             let harness = Harness()
             harness.callCoordinator.muteCallResult_ToReturn = true
             let muteAction = MockMutedAction(call: .init(), muted: true)
-            muteAction.fulfillCalled = Expectation()
+            muteAction.recorder = ActionResultRecorder()
             harness.sut.provider(harness.cxProvider, perform: muteAction)
-            await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
-            await muteAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(await muteAction.recorder.firstResult() == .fulfilled)
+            #expect(harness.callCoordinator.muteCall_CalledTimes == 1)
         }
         @Test("Perform mute action fails")
         func muteCall_failed() async {
             let harness = Harness()
             harness.callCoordinator.muteCallResult_ToReturn = false
             let muteAction = MockMutedAction(call: .init(), muted: true)
-            muteAction.failCalled = Expectation()
+            muteAction.recorder = ActionResultRecorder()
             harness.sut.provider(harness.cxProvider, perform: muteAction)
-            await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
-            await muteAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(await muteAction.recorder.firstResult() == .failed)
+            #expect(harness.callCoordinator.muteCall_CalledTimes == 1)
         }
     }
     

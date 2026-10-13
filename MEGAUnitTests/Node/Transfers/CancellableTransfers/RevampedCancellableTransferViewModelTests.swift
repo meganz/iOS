@@ -551,15 +551,17 @@ struct RevampedCancellableTransferViewModelTests {
     func transferringFilesRecordsTheOfflineFolders() async {
         // The batch reports no transfer of its own for a folder, so this is the only place the
         // folder is marked as downloaded.
+        let router = MockRevampedCancellableTransferRouter()
         let recordUseCase = MockRecordOfflineFolderUseCase()
         let sut = makeSUT(
+            router: router,
             cancellableTransferUseCase: MockCancellableTransferUseCase(states: [.transferringFiles]),
             recordOfflineFolderUseCase: recordUseCase,
             transfers: [CancellableTransfer(handle: 1, name: "Docs", isFile: false, type: .download)],
             transferType: .download)
 
         sut.dispatch(.onViewReady)
-        await Task.megaYield()
+        await waitForRoute(of: sut, on: router)
 
         #expect(recordUseCase.recordedBatches.map { $0.map(\.name) } == [["Docs"]])
     }

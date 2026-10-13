@@ -37,7 +37,7 @@ struct CameraUploadInProgressRowViewModelTests {
     }
     
     @MainActor
-    @Test("Ensure progress only update with meaningful updates")
+    @Test("Ensure progress only update with meaningful updates", .timeLimit(.minutes(1)))
     func progressUpdates() async throws {
         let (stream, continuation) = AsyncStream.makeStream(of: CameraUploadProgressEntity.self)
         
@@ -58,7 +58,9 @@ struct CameraUploadInProgressRowViewModelTests {
         
         try await confirmation(expectedCount: expectations.count) { confirmation in
             var expectations = expectations
-            
+            let (shownValues, shownValuesContinuation) = AsyncStream.makeStream(of: Void.self)
+            var shownValuesIterator = shownValues.makeAsyncIterator()
+
             let cancellable = Publishers.Zip3(
                 sut.$percentage,
                 sut.$fileProgress,
@@ -70,32 +72,26 @@ struct CameraUploadInProgressRowViewModelTests {
                     #expect(fileProgress == expectedProgressInfo)
                     #expect(uploadSpeed == Strings.Localizable.CameraUploads.Progress.Row.uploadSpeed(String.memoryStyleString(fromByteCount: Int64(expectedProgress.bytesPerSecond))))
                     confirmation()
+                    shownValuesContinuation.yield()
                 }
-            
-            // Sleep to ensure subscription is setup
-            try await Task.sleep(nanoseconds: 100_000_000)
             
             let monitor = Task {
-                try await withTimeout(seconds: 5) { // Cancel task if stream don't finish
-                    await sut.monitorUploadProgress()
-                }
+                await sut.monitorUploadProgress()
             }
-            
-            // Sleep to wait for monitor to setup
-            try await Task.sleep(nanoseconds: 200_000_000)
+
+            // Wait until each value is shown before the next yield.
+            // Otherwise a busy main actor lets the debounce merge two values into one.
             continuation.yield(uploadProgress)
-            // Sleep to get past the debounce
-            try await Task.sleep(nanoseconds: 200_000_000)
+            await shownValuesIterator.next()
             continuation.yield(uploadProgress)
-            try await Task.sleep(nanoseconds: 200_000_000)
+            // Sleep past the debounce, so the duplicate filter sees the duplicate on its own
+            try await Task.sleep(for: .milliseconds(200))
             continuation.yield(updatedProgress)
-            // Final sleep to ensure all async operations complete
-            try await Task.sleep(nanoseconds: 100_000_000)
+            await shownValuesIterator.next()
             continuation.finish()
-            
-            try await monitor.value
+
+            await monitor.value
             cancellable.cancel()
-            monitor.cancel()
         }
     }
     

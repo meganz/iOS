@@ -567,8 +567,10 @@ struct PhotosViewModelTestSuite {
             state: CameraUploadStateEntity,
             expectedSubtitle: String
         ) async {
-            let sut = await makeAndStartSUT(state: state)
+            // A long idle wait keeps "complete" from turning into "up to date" before the check runs.
+            let sut = await makeAndStartSUT(state: state, idleWaitTimeNanoSeconds: 60_000_000_000)
             #expect(sut.navigationSubtitle == expectedSubtitle)
+            sut.delayedUploadUpToDateTask?.cancel()
         }
         
         @Test
@@ -598,7 +600,8 @@ struct PhotosViewModelTestSuite {
         private func makeAndStartSUT(
             state: CameraUploadStateEntity,
             isCameraUploadProgress: Bool = true,
-            isCameraUploadsEnabled: Bool = true
+            isCameraUploadsEnabled: Bool = true,
+            idleWaitTimeNanoSeconds: UInt64 = 100_000_000
         ) async -> PhotosViewModel {
             let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(
                 list: [.iosCameraUploadBreakdown: isCameraUploadProgress]
@@ -615,7 +618,8 @@ struct PhotosViewModelTestSuite {
             let sut = makeSUT(
                 preferenceUseCase: preferenceUseCase,
                 monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
+                idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds
             )
 
             sut.startMonitoringUpdates()
