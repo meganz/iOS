@@ -6,9 +6,9 @@ package enum HomeWidgetType: String, CaseIterable, Identifiable, Codable {
     case accountDetails
     case promotionalBanners
     case recents
-    case viewedLinks
     case continueWhereYouLeft
     case doMoreWithMega
+    case viewedLinks
 
     /// The fixed widget list for Home Revamp Phase 1
     static var phase1Widgets: [HomeWidgetType] {

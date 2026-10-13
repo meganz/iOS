@@ -41,6 +41,18 @@ final class HomeViewRouter: HomeViewRouting {
             showOffline()
         case .transfers:
             showTransfers()
+        case .cameraUploadsOnboarding:
+            break // Handle in IOS-11814
+        case .cameraUploadsSettings:
+            break // Handle in IOS-11814
+        case .overDiskQuota:
+            break // Handle in IOS-11816
+        case .album:
+            break // Handle in IOS-11816
+        case .inviteContacts:
+            break // Handle in IOS-11818
+        case .scheduleMeeting:
+            break // Handle in IOS-11817
         }
     }
 

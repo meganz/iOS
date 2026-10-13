@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 public enum HomeWidgetRouteType {
     case shortcut(ShortcutType)
@@ -8,4 +9,10 @@ public enum HomeWidgetRouteType {
     case promoLandingDialog
     case offline
     case transfers
+    case cameraUploadsOnboarding
+    case cameraUploadsSettings
+    case overDiskQuota
+    case album(AlbumEntity)
+    case inviteContacts
+    case scheduleMeeting
 }

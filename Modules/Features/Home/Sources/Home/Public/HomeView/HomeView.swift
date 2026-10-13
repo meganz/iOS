@@ -453,9 +453,7 @@ public struct HomeView: View {
                     }
                 case .doMoreWithMega:
                     if isHomeRevampPhase2Enabled {
-                        Text("\(widget.rawValue)") // corresponding view will be added later
-                            .frame(height: 30)
-                            .background([Color.red, Color.blue, Color.green].randomElement())
+                        DoMoreWithMegaWidgetView { dependency.router.route(to: $0) }
                     } else {
                         EmptyView()
                     }
