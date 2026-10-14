@@ -1,4 +1,32 @@
 {
+  "PDFDocumentSearcherBenchmarks/testFirstBeginFindStringOfFrequentWord": {
+    "CPU Cycles": 10118918.38,
+    "CPU Instructions Retired": 33570156.64,
+    "CPU Time": 2.39,
+    "Longest Main Thread Stall": 31.12,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFDocumentSearcherBenchmarks/testFirstSearchOfFrequentWord": {
+    "CPU Cycles": 8210613.41,
+    "CPU Instructions Retired": 29759305.41,
+    "CPU Time": 1.94,
+    "Longest Main Thread Stall": 33.09,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFDocumentSearcherBenchmarks/testRefinedBeginFindStringOfFrequentWord": {
+    "CPU Cycles": 1032019.54,
+    "CPU Instructions Retired": 2917053.72,
+    "CPU Time": 0.25,
+    "Longest Main Thread Stall": 17.49,
+    "Main Thread Stalls Over 100 ms": 2
+  },
+  "PDFDocumentSearcherBenchmarks/testRefinedSearchOfFrequentWord": {
+    "CPU Cycles": 4092466.16,
+    "CPU Instructions Retired": 11998644.19,
+    "CPU Time": 0.96,
+    "Longest Main Thread Stall": 16.63,
+    "Main Thread Stalls Over 100 ms": 2
+  },
   "PDFOutlineReaderBenchmarks/testBookLike100": {
     "CPU Cycles": 74933.94,
     "CPU Instructions Retired": 323766.66,

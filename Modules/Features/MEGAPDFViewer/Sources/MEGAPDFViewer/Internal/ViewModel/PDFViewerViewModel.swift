@@ -74,11 +74,16 @@ final class PDFViewerViewModel {
                 }
             }
 
+            struct SearchState: Equatable {
+                var request: PDFSearchRequest?
+            }
+
             let document: PDFDocument
             var pagingState: PagingState
             let documentIdentifierForLastViewedPageIndex: String?
             let initialPageIndex: Int?
             var outlineState: OutlineState
+            var searchState: SearchState
         }
 
         struct FailedState: Equatable {
@@ -120,7 +125,9 @@ final class PDFViewerViewModel {
     }
 
     var isChromeHidden = false
-    var isShowingThumbnails = false
+    var isShowingThumbnails = false {
+        didSet { if isShowingThumbnails { searchRequest = .dismiss } }
+    }
     var isProgrammaticallyScrollingToCurrentPage = false
     @ObservationIgnored private var isScrolledToTop = false
     @ObservationIgnored private var didApplyInitialPageNavigation = false
@@ -216,7 +223,8 @@ extension PDFViewerViewModel {
             initialPageIndex: readyState.initialPageIndex,
             outlineState: ViewState.ReadyState.OutlineState(
                 outlineLoadingState: .init(readyState.outlineLoadingState)
-            )
+            ),
+            searchState: .init(request: nil)
         ))
     }
 
@@ -241,6 +249,22 @@ extension PDFViewerViewModel {
     func retryDocumentLoad() async {
         state = .loading(progress: nil)
         await loadDocumentFromSource()
+    }
+}
+
+// MARK: - Search
+
+extension PDFViewerViewModel {
+    var searchRequest: PDFSearchRequest? {
+        get { readyState?.searchState.request }
+        set { readyState?.searchState.request = newValue }
+    }
+
+    func requestSearch() {
+        guard state.isReady else { return }
+        isShowingThumbnails = false
+        isChromeHidden = false
+        searchRequest = .present
     }
 }
 
@@ -371,6 +395,7 @@ extension PDFViewerViewModel {
             in: pageSortedOutlineItems
         )?.id
         isShowingOutline = true
+        searchRequest = .dismiss
     }
 
     func didSelectOutlineItem(_ item: PDFOutlineItem) {

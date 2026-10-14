@@ -32,6 +32,15 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "MEGAPDFSearchInterceptor",
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "MEGAPDFSearchInterceptorTestSupport",
+            dependencies: ["MEGAPDFSearchInterceptor"],
+            publicHeadersPath: "include"
+        ),
+        .target(
             name: "MEGAPDFViewer",
             dependencies: [
                 "MEGAAssets",
@@ -41,6 +50,7 @@ let package = Package(
                 "MEGASDKRepo",
                 "MEGASwiftUI",
                 "MEGADesignToken",
+                "MEGAPDFSearchInterceptor",
                 "Transfer"
             ],
             swiftSettings: settings
@@ -49,6 +59,8 @@ let package = Package(
             name: "MEGAPDFViewerTests",
             dependencies: [
                 "MEGAPDFViewer",
+                "MEGAPDFSearchInterceptor",
+                "MEGAPDFSearchInterceptorTestSupport",
                 "MEGASwift",
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
@@ -61,9 +73,11 @@ let package = Package(
             name: "MEGAPDFViewerBenchmarks",
             dependencies: [
                 "MEGAPDFViewer",
+                "MEGAPDFSearchInterceptor",
+                "MEGAPDFSearchInterceptorTestSupport",
                 .product(name: "MEGABenchmark", package: "MEGABenchmark")
             ],
-            exclude: ["Limits.json"],
+            exclude: ["Limits.json", "Skipped.json"],
             resources: [.copy("OutlineFixtures")],
             swiftSettings: settings
         )

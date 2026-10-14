@@ -21,6 +21,7 @@ final class MEGAPDFView: PDFView {
     private let initialPageIndexScrollingViewModel = PDFViewerInitialPageIndexScrollingViewModel()
     private let pagingScrollObservationMonitor = PDFViewerPagingScrollObservationMonitor()
     private let singleTapHandler = PDFDocumentSingleTapHandler()
+    private let searchInteractionHandler = PDFViewSearchInteractionHandler()
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -63,6 +64,14 @@ final class MEGAPDFView: PDFView {
             minZoomScale: minScaleFactor,
             zoomScaleForSizeToFit: scaleFactorForSizeToFit
         )
+    }
+
+    func presentSearch() {
+        searchInteractionHandler.presentSearch()
+    }
+
+    func dismissSearch() {
+        searchInteractionHandler.dismissSearch()
     }
 
     func requestPageNavigation(to pageIndex: Int) {
@@ -129,6 +138,8 @@ final class MEGAPDFView: PDFView {
                 isScrolledToTopDidChange: isScrolledToTop
             )
         }
+
+        searchInteractionHandler.attachToPDFView(self)
     }
 
     private func configurePagingObservation() {
@@ -239,6 +250,7 @@ struct PDFDisplayerView: UIViewRepresentable {
     let document: PDFDocument
     @Binding var currentPage: Int
     @Binding var isProgrammaticallyScrollingToCurrentPage: Bool
+    @Binding var searchRequest: PDFSearchRequest?
     let initialPageIndex: Int?
     let onLinkTapped: @MainActor (URL) -> Void
     let onTap: @MainActor () -> Void
@@ -254,6 +266,7 @@ struct PDFDisplayerView: UIViewRepresentable {
         pdfView.initialPageIndex = initialPageIndex
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
+        pdfView.isFindInteractionEnabled = false
         pdfView.delegate = context.coordinator
         pdfView.documentTapDelegate = context.coordinator
         pdfView.pageObservationDelegate = context.coordinator
@@ -263,6 +276,10 @@ struct PDFDisplayerView: UIViewRepresentable {
 
     func updateUIView(_ pdfView: MEGAPDFView, context: Context) {
         context.coordinator.parent = self
+
+        if searchRequest != nil {
+            context.coordinator.sendSearchRequest(to: pdfView)
+        }
 
         guard isProgrammaticallyScrollingToCurrentPage else { return }
         context.coordinator.navigate(pdfView, to: currentPage)
@@ -304,6 +321,22 @@ struct PDFDisplayerView: UIViewRepresentable {
             Task { @MainActor [weak self, weak pdfView] in
                 self?.parent.isProgrammaticallyScrollingToCurrentPage = false
                 pdfView?.requestPageNavigation(to: pageIndex)
+            }
+        }
+
+        func sendSearchRequest(to pdfView: MEGAPDFView) {
+            // - Defers to next @MainActor run loop, to avoid writing to this
+            //   binding during `updateUIView:`
+            // - Reads the request when the task runs and clears it after
+            //   sending, so tasks queued by repeated `updateUIView:` calls send
+            //   only the latest request, once.
+            Task { @MainActor [weak self, weak pdfView] in
+                guard let self, let request = parent.searchRequest else { return }
+                switch request {
+                case .present: pdfView?.presentSearch()
+                case .dismiss: pdfView?.dismissSearch()
+                }
+                parent.searchRequest = nil
             }
         }
 

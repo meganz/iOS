@@ -138,6 +138,7 @@ public struct PDFViewerView: View {
                         currentPage: $viewModel.currentPageIndex,
                         isProgrammaticallyScrollingToCurrentPage:
                             $viewModel.isProgrammaticallyScrollingToCurrentPage,
+                        searchRequest: $viewModel.searchRequest,
                         initialPageIndex: viewModel.initialPageIndex,
                         onLinkTapped: onLinkTapped,
                         onTap: {
@@ -304,7 +305,9 @@ public struct PDFViewerView: View {
 
                 Spacer()
 
-                Button {} label: {
+                Button {
+                    viewModel.requestSearch()
+                } label: {
                     Image(uiImage: MEGAAssets.UIImage.searchSmall)
                 }
                 .accessibilityLabel(Strings.Localizable.search)

@@ -1,0 +1,6 @@
+{
+  "PDFDocumentSearcherBenchmarks/testFirstSearchOfFrequentWord": "Each iteration shows a `PDFView`, whose visible pages PDFKit sends to Vision text recognition in the background. The recognition outlives the test, and the CPU metrics of the classes that run after it in the same process count it, so `PDFOutlineReaderBenchmarks` exceeds its limits. PDFKit has no public way to turn it off or to wait for it.",
+  "PDFDocumentSearcherBenchmarks/testFirstBeginFindStringOfFrequentWord": "See `testFirstSearchOfFrequentWord`.",
+  "PDFDocumentSearcherBenchmarks/testRefinedSearchOfFrequentWord": "See `testFirstSearchOfFrequentWord`.",
+  "PDFDocumentSearcherBenchmarks/testRefinedBeginFindStringOfFrequentWord": "See `testFirstSearchOfFrequentWord`."
+}

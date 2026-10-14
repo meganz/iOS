@@ -444,6 +444,7 @@ struct PDFViewerViewModelTests {
         #expect(readyState?.outlineState.outlineLoadingState?.isLoadingOutline == false)
         #expect(readyState?.outlineState.isShowingOutline == false)
         #expect(readyState?.outlineState.activeOutlineItemID == nil)
+        #expect(readyState?.searchState.request == nil)
         #expect(sut.currentPageIndex == 0)
         #expect(sut.thumbnailLoader != nil)
         #expect(
@@ -469,6 +470,85 @@ struct PDFViewerViewModelTests {
 
         #expect(sut.state.isReady)
         #expect(sut.thumbnailLoader == nil)
+        task.cancel()
+    }
+
+    @Test func requestSearch_whenReady_preservesPagingAndOutlineState() async {
+        let sut = await loadedSUT(
+            items: PDFOutlineItems(
+                inOutlineOrder: [item("0", page: 0)],
+                inPageOrder: [item("0", page: 0)]
+            )
+        )
+        sut.currentPageIndex = 2
+        sut.isShowingOutline = true
+        sut.isShowingThumbnails = true
+        sut.isChromeHidden = true
+
+        sut.requestSearch()
+
+        #expect(sut.searchRequest == .present)
+        #expect(sut.currentPageIndex == 2)
+        #expect(sut.isShowingOutline)
+        #expect(!sut.isShowingThumbnails)
+        #expect(!sut.isChromeHidden)
+    }
+
+    @Test func showingThumbnails_requestsSearchDismissal() async {
+        let sut = await loadedSUT(
+            items: PDFOutlineItems(inOutlineOrder: [], inPageOrder: [])
+        )
+
+        sut.isShowingThumbnails = true
+
+        #expect(sut.searchRequest == .dismiss)
+    }
+
+    @Test func openingOutline_requestsSearchDismissal() async {
+        let sut = await loadedSUT(
+            items: PDFOutlineItems(
+                inOutlineOrder: [item("0", page: 0)],
+                inPageOrder: [item("0", page: 0)]
+            )
+        )
+
+        sut.didOpenOutline()
+
+        #expect(sut.searchRequest == .dismiss)
+    }
+
+    @Test func searchIntent_doesNotEscapeLoadingState() {
+        let (stream, _) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+        sut.isShowingThumbnails = true
+        sut.isChromeHidden = true
+
+        sut.requestSearch()
+        sut.searchRequest = .present
+
+        #expect(sut.searchRequest == nil)
+        #expect(sut.isShowingThumbnails)
+        #expect(sut.isChromeHidden)
+    }
+
+    @Test func searchIntent_doesNotEscapeFailedState() async {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream))
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.finish(throwing: PDFDocumentLoadError.transferFailed)
+        await awaitState(sut, equals: .failed(.init(.downloadFailed)))
+
+        sut.requestSearch()
+        sut.searchRequest = .present
+
+        #expect(sut.searchRequest == nil)
+        #expect(sut.state == .failed(.init(.downloadFailed)))
         task.cancel()
     }
 
