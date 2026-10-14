@@ -77,6 +77,22 @@ Calculate app size and post it to the MR
 
 
 
+### post_l10n_lint_report_to_mr
+
+```sh
+[bundle exec] fastlane post_l10n_lint_report_to_mr
+```
+
+
+
+### post_benchmark_report_to_mr
+
+```sh
+[bundle exec] fastlane post_benchmark_report_to_mr
+```
+
+
+
 ----
 
 
