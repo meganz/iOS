@@ -166,6 +166,27 @@ struct CopyPasteRoundTripTests {
         #expect(target.blocks == Self.blocks)
     }
 
+    /// A Markdown list starts at level 0. Copied rows that start deeper than a later row must not nest under it.
+    @Test func rowsThatStartDeeperDoNotNestUnderTheFirstRow() throws {
+        var source = editor([bullet("a"), bullet("b", indent: 1), bullet("c", indent: 2), bullet("d", indent: 1), bullet("e")])
+        source.select(selection(position(2, 0), position(3, 1)))
+        let content = try #require(source.copy())
+        var target = editor([paragraph("")])
+        target.paste(RichPasteContent(markdown: content.markdown, plainText: content.plainText))
+        #expect(target.blocks == [bullet("c"), bullet("d")])
+        // A copy that also holds a row at level 0 has no indent to remove, but its rows still must not nest.
+        source.select(selection(position(2, 0), position(4, 1)))
+        #expect(try #require(source.copy()).markdown == "- c\n- d\n- e")
+        // Rows that keep a deeper level after the first one keep it.
+        source.select(selection(position(1, 0), position(2, 1)))
+        let nested = try #require(source.copy())
+        #expect(nested.markdown == "- b\n  - c")
+        // Ordered rows that become siblings count up as one list.
+        var numbered = editor([ordered("a"), ordered("b", indent: 1), ordered("c", indent: 2), ordered("d", indent: 1)])
+        numbered.select(selection(position(2, 0), position(3, 1)))
+        #expect(try #require(numbered.copy()).markdown == "1. c\n2. d")
+    }
+
     /// Code has no Markdown syntax. A part of a code block pastes into a text block as the same characters.
     @Test(arguments: ["a*b*c", "<!-- x", "# not a heading", "[l](u)"])
     func aPartOfCodePastesAsTheSameText(part: String) throws {

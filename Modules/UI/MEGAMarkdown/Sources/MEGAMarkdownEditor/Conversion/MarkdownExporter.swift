@@ -6,7 +6,7 @@ import MEGAFoundation
 ///
 /// The output parses back to the same blocks, except for texts whose styles do not parse back (see `lossyTextCount`).
 /// Exporting twice gives the same bytes.
-/// Raw blocks are written byte for byte.
+/// Raw blocks are written byte for byte, except the leading spaces they lose after a list item.
 struct MarkdownExporter {
     let blocks: [RichBlock]
     /// Inline pieces of the last export. A text that did not change is not written or checked again.
@@ -76,7 +76,8 @@ struct MarkdownExporter {
             case .thematicBreak:
                 piece = "---"
             case .rawSource(let source):
-                piece = source
+                // After a list item, an indented block would become part of the item.
+                piece = previousBlock?.listItem != nil ? Self.removingBlockIndent(source) : source
             }
 
             if previousBlock != nil { output += separator }
@@ -118,6 +119,21 @@ struct MarkdownExporter {
 
     private static func quotePrefix(_ depth: Int) -> String {
         String(repeating: "> ", count: max(depth, 1))
+    }
+
+    /// Removes the 1 to 3 spaces before a block's first line, and up to as many from each later line.
+    /// Outside a list they do not change the block: a fence of that indent removes the same spaces from its lines.
+    /// An HTML block keeps its later lines as they are, so only its first line loses the spaces.
+    /// 4 or more spaces start an indented code block, so that source stays as it is.
+    private static func removingBlockIndent(_ source: String) -> String {
+        let indent = source.prefix { $0 == " " }.count
+        guard (1...3).contains(indent) else { return source }
+        if source.dropFirst(indent).first == "<" {
+            return String(source.dropFirst(indent))
+        }
+        return source.split(separator: "\n", omittingEmptySubsequences: false)
+            .map { line in line.dropFirst(min(indent, line.prefix { $0 == " " }.count)) }
+            .joined(separator: "\n")
     }
 
     private static func taskMarker(_ item: RichListItem) -> String {

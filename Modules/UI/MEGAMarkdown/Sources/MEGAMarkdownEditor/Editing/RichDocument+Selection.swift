@@ -18,6 +18,8 @@ extension RichDocument {
             result.append(piece)
             shownNumbers.append(numbers[index])
         }
+        // Lower the indents before the numbering. Rows that become siblings then count up as one run.
+        result = Self.loweringListIndents(result)
         // The fragment counts its runs from 1. The first item of a run that showed another number gets it as its
         // start number. Later items of the run then count up from it, so they need none.
         var runs: [Int: (isOrdered: Bool, number: Int)] = [:]
@@ -37,6 +39,25 @@ extension RichDocument {
                 number = shown
             }
             runs[item.indent] = (item.isOrdered, number)
+        }
+        return result
+    }
+
+    /// A Markdown list starts at level 0, so the first copied item of a run moves to level 0.
+    /// Each later item nests only under an earlier item of a smaller indent. A shallower item never nests under a deeper one.
+    private static func loweringListIndents(_ blocks: [RichBlock]) -> [RichBlock] {
+        var result = blocks
+        // Indents of the open parent items of the current run, smallest first.
+        var parents: [Int] = []
+        for index in result.indices {
+            guard case .listItem(var item, let text) = result[index] else {
+                parents = []
+                continue
+            }
+            while let last = parents.last, last >= item.indent { parents.removeLast() }
+            parents.append(item.indent)
+            item.indent = parents.count - 1
+            result[index] = .listItem(item, text: text)
         }
         return result
     }

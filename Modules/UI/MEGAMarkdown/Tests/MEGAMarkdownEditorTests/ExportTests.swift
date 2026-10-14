@@ -33,6 +33,22 @@ struct ExportTests {
         """)
     }
 
+    /// After a list item, an indented raw block would become part of the item on reopen.
+    @Test func anIndentedRawBlockAfterAListItemStaysOutsideTheList() {
+        let table = RichBlock.rawSource("  | a | b |\n  | - | - |\n  | 1 | 2 |")
+        let markdown = RichMarkdownConverter.markdown(from: RichDocument(blocks: [bullet("p"), table]))
+        #expect(markdown.hasPrefix("- p\n\n| a | b |\n| - | - |\n| 1 | 2 |"))
+        #expect(RichMarkdownConverter.load(markdown).document.blocks == [bullet("p"), .rawSource("| a | b |\n| - | - |\n| 1 | 2 |")])
+        // Not after a list item, and not at 4 spaces (an indented code block), the source stays byte for byte.
+        #expect(exportedBody([paragraph("p"), table]).hasSuffix("\n\n" + "  | a | b |\n  | - | - |\n  | 1 | 2 |"))
+        #expect(exportedBody([bullet("p"), .rawSource("    code")]).hasSuffix("\n\n    code"))
+        // CommonMark keeps the lines of an HTML block as they are, so only its first line loses the spaces.
+        let html = RichBlock.rawSource("  <pre>\n    a\n  </pre>")
+        let htmlMarkdown = RichMarkdownConverter.markdown(from: RichDocument(blocks: [bullet("p"), html]))
+        #expect(htmlMarkdown.hasPrefix("- p\n\n<pre>\n    a\n  </pre>"))
+        #expect(RichMarkdownConverter.load(htmlMarkdown).document.blocks == [bullet("p"), .rawSource("<pre>\n    a\n  </pre>")])
+    }
+
     @Test func plainTextIsEscaped() {
         #expect(exportedBody([paragraph("a*b_c `d` [e] <f> |g| ~h \\ &amp;")]) == "a\\*b\\_c \\`d\\` \\[e\\] \\<f> \\|g\\| \\~h \\\\ \\&amp;")
     }

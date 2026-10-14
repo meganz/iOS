@@ -30,7 +30,8 @@ Rules of the model:
 - Spans are always normalized: sorted, inside the text, not empty, and touching spans of one style joined.
 - `RichText`, code, code languages and raw source compare by bytes. `String ==` would call "é" and "e" + U+0301 equal, and their offsets differ.
 - A character has at most one link. Every other style mix can be saved, also code inside a link.
-- `.rawSource` holds Markdown the model cannot edit (tables, images, HTML, lists with block content). It is read-only and saved byte for byte.
+- `.rawSource` holds Markdown the model cannot edit (tables, images, HTML, lists with block content). It is read-only and saved byte for byte,
+  except the leading spaces it loses after a list item (see Export).
 - A divider or raw block has no text. Its caret positions are 0 (before it) and 1 (after it).
 - A view that renders one raw block alone puts `referenceDefinitionSource` in front of it: the link reference definitions of all raw blocks. So `[text][label]` in a raw table resolves like in the whole file.
 
@@ -74,7 +75,7 @@ viewer rules (R1 and R2 in [DECISIONS.md](DECISIONS.md)), so the editor never lo
 | Quote | `> ` per depth. Rows of one quote are joined by a `>` line. |
 | Code block | A backtick fence longer than any backtick run in the code. A tilde fence when the language has a backtick. |
 | Divider | `---` |
-| Raw source | The source, byte for byte. |
+| Raw source | The source, byte for byte. After a list item, the 1 to 3 spaces before its first line go, and up to as many from each later line. An HTML block keeps its later lines. |
 
 Blocks are separated by a blank line, and items of one list by a line end. Two lists next to each other use other
 markers (`*` after `-`, `)` after `.`), so they do not join. A nested list that would read wrong without a blank line
@@ -148,6 +149,8 @@ A copy gives one pasteboard item with two types, and a third for a part of a cod
   A part of a code block copies as escaped text, so a paste into a text block keeps the same text.
   A paragraph cannot keep indents or empty lines, so a part of several lines pastes as one paragraph with its lines.
 - A whole block or more copies as block Markdown. An ordered item keeps the number it shows.
+  The first item of each copied list run moves to level 0, because a Markdown list starts there.
+  A later item nests only under an earlier item of a smaller indent.
 - A paste reads the Markdown type first. Plain text from another app is read as Markdown too, so `**bold**` renders.
   Its soft breaks split paragraphs, so each line becomes a row.
 - In a text block, a first pasted paragraph joins the text before the caret. Later pasted paragraphs take the kind of

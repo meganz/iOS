@@ -63,7 +63,7 @@ enum RichBlock: Hashable, Sendable {
     case codeBlock(language: String?, code: String)
     case thematicBreak
     /// Markdown the editor does not model (tables, images, HTML, lists with block content).
-    /// Export writes it back byte for byte. It is read-only.
+    /// Export writes it back byte for byte, except the leading spaces it loses after a list item. It is read-only.
     case rawSource(String)
 }
 
