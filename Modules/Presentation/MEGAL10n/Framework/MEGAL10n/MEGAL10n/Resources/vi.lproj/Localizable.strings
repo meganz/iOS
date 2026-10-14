@@ -505,7 +505,7 @@
 /* Alert title shown when adding photos once photo selection limit reached. */
 "cameraUploads.albums.addItems.alert.limitReached.title"="Không thể chọn thêm được";
 /* Albums title within CU tab */
-"cameraUploads.albums.title"="Albums";
+"cameraUploads.albums.title"="Αlbums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Ưa Thích";
 /* Gif album title */
@@ -5091,11 +5091,11 @@
 /* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
 "quotaWarning.recommendedPlan.button.viewAllPlans"="Xem tất cả các gói";
 /* The AirPlay video player option in bottom more menu */
-"videoPlayer.airPlay.bottomSheet.title"="AirPlay";
+"videoPlayer.airPlay.bottomSheet.title"="ΑirPlay";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
 "quotaWarning.storage.title"="Không gian lưu trữ hiện đã đầy %d%%";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
-"quotaWarning.storage.almostFull.subtitle"="Nâng cấp gói của bạn trước khi hết dung lượng.";
+"quotaWarning.storage.almostFull.subtitle"="Nâng cấp gói trước khi hết không gian lưu trữ";
 /* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
 "quotaWarning.storage.full.subtitle"="Nâng cấp gói để có thêm dung lượng lưu trữ và tải lên nhiều tệp hơn";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
@@ -5185,54 +5185,156 @@
 /* Message of the alert shown when the device runs out of storage while a download is in progress. */
 "link.download.stopped.message"="Thiết bị hết dung lượng lưu trữ trong quá trình tải xuống. Xin hãy giải phóng bớt dung lượng và thử lại.";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"albumLink.cannotBeAccessed"="Không thể truy cập album";
+"albumLink.cannotBeAccessed"="Không thể truy cập album được";
 /* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
-"link.download.notEnoughStorage.message"="Bản tải xuống này cần khoảng %1$@ dung lượng trống, trong khi thiết bị của bạn chỉ có %2$@. Giải phóng thêm dung lượng và thử lại.";
+"link.download.notEnoughStorage.message"="Phiên tải xuống này cần khoảng %1$@ dung lượng trống trong khi thiết bị hiện chỉ có %2$@. Hãy giải phóng thêm chỗ và thử lại.";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
-"quotaWarning.transfer.limited.free.subtitle"="Hạn mức truyền tải của bạn có thể sắp hết. Do đó, các lượt tải xuống hoặc phát trực tuyến của bạn có thể bị gián đoạn. Nâng cấp gói để có thêm hạn mức truyền tải. %@";
+"quotaWarning.transfer.limited.free.subtitle"="Băng thông truyền tải sắp gần hết. Do đó, các lượt tải xuống hoặc truyền phát trực tuyến có thể bị gián đoạn. Nâng cấp gói để có thêm mức truyền tải. %@";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
-"quotaWarning.transfer.limited.subtitle"="Nâng cấp gói để có thêm hạn mức truyền tải. %@";
+"quotaWarning.transfer.limited.subtitle"="Nâng cấp gói để có thêm mức băng thông truyền tải. %@";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "albumLink.unavailableReason1"="Album đã bị xóa";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"albumLink.unavailableReason2"="Liên kết album đã bị chủ sở hữu vô hiệu hóa";
+"albumLink.unavailableReason2"="Đường liên kết album đã bị chủ sở hữu vô hiệu hóa";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"albumLink.unavailableReason3"="Liên kết không hợp lệ hoặc không tồn tại";
+"albumLink.unavailableReason3"="Đường liên kết không hợp lệ hoặc không tồn tại";
 /* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
-"cameraUploads.timeline.sort.newestByLastModified"="Sửa đổi lần cuối: mới nhất trước";
+"cameraUploads.timeline.sort.newestByLastModified"="Sửa đổi lần cuối: mới nhất trước";
 /* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
-"cameraUploads.timeline.sort.oldestByLastModified"="Sửa đổi lần cuối: cũ nhất trước";
+"cameraUploads.timeline.sort.oldestByLastModified"="Sửa đổi lần cuối: cũ nhất trước";
 /* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
 "cameraUploads.timeline.sort.newestByDateTaken"="Ngày chụp: mới nhất trước";
 /* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
 "cameraUploads.timeline.sort.oldestByDateTaken"="Ngày chụp: cũ nhất trước";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
-"transfers.snackbar.pausedAwaitingNetwork"="Đã tạm dừng truyền tải. Đang chờ kết nối mạng";
+"transfers.snackbar.pausedAwaitingNetwork"="Đã tạm dừng truyền tải. Đang chờ kết nối mạng";
 /* Button that retries the failed operation */
 "general.button.tryAgain"="Thử lại";
 /* Title of the alert asking for the password of a password-protected PDF */
 "pdfPreview.password.title"="Nhập mật khẩu";
 /* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
-"pdfPreview.pageOfTotal"="Bước %1$d trong tổng %2$d bước";
+"pdfPreview.pageOfTotal"="%1$d trong tổng %2$d";
 /* Validation error shown under the password field when the entered PDF password is wrong */
-"pdfPreview.password.invalid"="Mật khẩu không hợp lệ";
+"pdfPreview.password.invalid"="Mật khẩu không hợp lệ";
 /* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
-"transfer.progress.percentageOfTotal"="[A] trên [B]";
+"transfer.progress.percentageOfTotal"="[A] trong tổng [B]";
 /* Alert title shown when the promotional offer cannot be resolved at checkout. */
-"account.upgrade.offerUnavailable.title"="Ưu đãi không khả dụng";
+"account.upgrade.offerUnavailable.title"="Ưu đãi không khả dụng";
 /* Dialog message shown when the promotional offer cannot be resolved at checkout. */
-"account.upgrade.offerUnavailable.message"="Ưu đãi này hiện không khả dụng. Thử lại sau.";
+"account.upgrade.offerUnavailable.message"="Ưu đãi này hiện không dùng được. Thử lại sau.";
 /* Header of the table of contents panel in the PDF preview */
 "pdfPreview.contents"="Mục lục";
 /* Title of the fullscreen error state shown when a file preview cannot be rendered */
-"general.preview.error.title"="Không thể xem trước tệp này";
+"general.preview.error.title"="Không thể xem trước tệp này";
 /* Message of the fullscreen error state shown when a file preview cannot be rendered */
-"general.preview.error.message"="Đã xảy ra sự cố khi tải bản xem trước này.";
+"general.preview.error.message"="Đã có sự cố xảy ra khi tải bản xem trước này.";
 /* Title of the alert shown when a PDF cannot be opened because the file is damaged */
 "pdfPreview.damaged.title"="Tệp PDF này bị hỏng";
 /* Message of the alert shown when a PDF cannot be opened because the file is damaged */
-"pdfPreview.damaged.message"="Tệp này bị hỏng và không thể mở. Nếu người khác đã gửi tệp này cho bạn, hãy nhờ họ gửi lại một bản sao mới.";
+"pdfPreview.damaged.message"="Tệp này bị hỏng và không thể mở được. Nếu người khác đã gửi tệp này cho bạn, hãy nhờ họ gửi lại một bản mới.";
 /* Message of the alert asking for the password of a password-protected PDF */
-"pdfPreview.password.message"="Tệp PDF này được bảo vệ bằng mật khẩu.";
+"pdfPreview.password.message"="Tệp PDF này được bảo vệ bằng mật khẩu.";
 /* The Audio track video player option in bottom more menu */
-"videoPlayer.audioTrack.bottomSheet.title"="Track âm thanh";
+"videoPlayer.audioTrack.bottomSheet.title"="Rãnh âm thanh";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="Dọn các đường liên kết đã xem?";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="Dọn lịch sử các đường liên kết đã xem?";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="Dọn đường liên kết đã xem?";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="Các đường liên kết bạn mở sẽ được lưu ở đây";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="Tất cả các đường liên kết đã xem sẽ dọn khỏi lịch sử của bạn. Việc này không thể hoàn tác.";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="Lịch sử các liên kết đã xem đã được dọn";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="Ngày";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="Tiếp tục từ nơi bạn đã dừng";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="Dọn lịch sử";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="Bạn có chắc muốn dọn toàn bộ lịch sử không? Việc này không thể hoàn tác.";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="Kiểu văn bản";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="Văn bản đa dạng thức";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="Văn bản thuần túy";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="Văn bản giàu định dạng";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="In đậm";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="Nghiêng";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="Gạch chân";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="Gạch ngang chữ";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="Đoạn mã";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="Danh sách chấm tròn";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="Danh sách số thứ tự";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="Trích dẫn";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="Thân bài";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="Thêm liên kết";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="Văn bản";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="Tạo";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="Đường liên kết";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="Đường liên kết";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="Các mục bạn chưa hoàn thành sẽ xuất hiện ở đây";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="Xóa các tệp khỏi lịch sử?";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="Xóa tệp khỏi lịch sử?";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="Danh sách công việc";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="Tăng thụt lề";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="Giảm thụt lề";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="Tiêu đề 1";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="Tiêu đề 2";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="Tiêu đề 3";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="Tiêu đề 5";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="Tiêu đề 4";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="Tiêu đề 6";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="Mã nguồn Markdown";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="Tiếp tục ở cuối tài liệu";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="Tệp quá lớn để xem trước";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="Tải tệp (%@) xuống để mở bằng ứng dụng khác.";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="Phần này quá lớn để hiển thị định dạng. Nội dung được hiển thị dưới dạng văn bản thuần túy.";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="Tệp này quá lớn để chỉnh sửa với định dạng. Bạn vẫn có thể chỉnh sửa dưới dạng văn bản thuần túy.";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="Một phần của tệp này quá dài để chỉnh sửa với định dạng. Bạn vẫn có thể chỉnh sửa tệp dưới dạng văn bản thuần túy.";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="Một dòng trong tệp này dài bất thường. Việc chỉnh sửa dòng đó có thể bị chậm.";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="Quét tài liệu";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="Đã tạo album “%@”";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="Xem album";

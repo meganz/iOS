@@ -5236,3 +5236,105 @@
 "pdfPreview.password.invalid"="Contraseña no válida";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="Pista de audio";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="Los enlaces que abres se guardan aquí";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="¿Borrar enlaces visualizados?";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="¿Borrar enlace visualizado?";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="¿Borrar historial de enlaces visualizados?";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="Todos los enlaces visualizados se borrarán de tu historial. Esto no se puede deshacer.";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="Historial de enlaces visualizados borrado";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="Fecha";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="Continúa desde donde lo dejaste";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="Los elementos que dejaste sin terminar aparecerán aquí";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="Borrar historial";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="¿Estás seguro de que quieres borrar tu historial? Esta operación no se puede deshacer.";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="¿Borrar archivo del historial?";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="¿Borrar archivos del historial?";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="Formato de texto enriquecido";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="Texto sin formato";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="Texto enriquecido";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="Negrita";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="Cursiva";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="Subrayado";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="Tachado";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="Código";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="Estilo de texto";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="Viñetas";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="Numeración";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="Lista de tareas";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="Aumentar sangría";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="Cita";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="Reducir sangría";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="Cuerpo";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="Encabezado 1";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="Encabezado 2";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="Encabezado 3";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="Encabezado 4";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="Encabezado 6";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="Encabezado 5";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="Añadir enlace";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="Texto";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="Código fuente en Markdown";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="Continuar al final";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="Crear";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="Enlace";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="Enlace";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="Archivo demasiado grande para la vista previa";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="Descarga el archivo (%@) para abrirlo en otra aplicación.";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="Esta sección es demasiado grande para mostrarla con formato. Se muestra como texto sin formato.";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="Este archivo es demasiado grande para editarlo con formato. Puedes seguir editándolo como texto sin formato.";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="Una sección de este archivo es demasiado larga para editarla con formato. Puedes seguir editando el archivo como texto sin formato.";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="Una línea de este archivo es inusualmente larga. Es posible que editarla resulte lento.";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="Se ha creado el álbum “%@”";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="Ver álbum";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="Escanear documento";

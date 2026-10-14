@@ -5236,3 +5236,105 @@
 "pdfPreview.password.invalid"="كلمة السر غير صالحة";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="المسار الصوتي";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="التاريخ";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="الروابط التي تفتحها محفوظة هنا";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="امسح الرابط الذي تم مشاهدته؟";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="سيتم محو جميع الروابط التي تم عرضها من سجل التصفح الخاص بك. لا يمكن التراجع عن ذلك.";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="تم مسح سجل الروابط التي تم عرضها";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="مسح الروابط التي تم فتحها؟";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="مسح سجل الروابط التي تم فتحها؟";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="ستظهر هنا العناصر غير المكتملة";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="المتابعة من حيث توقفت";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="مسح السجل";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="إزالة الملفات من السجل؟";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="هل تريد مسح السجل؟ لا يمكن التراجع عن هذا الإجراء.";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="إزالة الملف من السجل؟";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="تنسيق النص المنسق";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="نص عادي";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="مائل";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="نص منسّق";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="غامق";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="تسطير";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="نمط النص";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="نص يتوسطه خط";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="رمز برمجي";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="قائمة مرقمة";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="اقتباس";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="قائمة مهام";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="قائمة نقطية";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="زيادة المسافة البادئة";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="تقليل المسافة البادئة";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="نص أساسي";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="عنوان 1";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="عنوان 2";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="عنوان 5";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="عنوان 3";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="عنوان 4";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="عنوان 6";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="إضافة رابط";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="مصدر Markdown";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="نص";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="المتابعة من النهاية";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="رابط";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="إنشاء";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="رابط";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="مسح ضوئي للمستند";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="الملف كبير جدًا ولا يمكن معاينته";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="نزّل الملف (%@) لفتحه في تطبيق آخر.";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="هذا القسم كبير جدًا بحيث يتعذّر عرضه مع التنسيق. يُعرض كنص عادي.";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="هذا الملف كبير جدًا ولا يمكن تحريره كنص منسّق. لا يزال بإمكانك تحريره كنص عادي.";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="أحد أقسام هذا الملف طويل جدًا بحيث لا يمكن تحريره كنص منسّق. لا يزال بإمكانك تحرير الملف كنص عادي.";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="أحد الأسطر في هذا الملف طويل بشكل غير معتاد. قد يكون تحرير هذا السطر بطيئًا.";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="تم إنشاء الألبوم “%@”";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="عرض الألبوم";

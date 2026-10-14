@@ -5236,3 +5236,105 @@
 "pdfPreview.password.invalid"="パスワードが正しくありません";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="音声トラック";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="ここには、閲覧したリンクが保存されます";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="閲覧したリンクを消去しますか？";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="閲覧したリンクを消去しますか？";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="閲覧したリンクの履歴を消去しますか？";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="閲覧したリンクがすべて履歴から消去されます。この操作は元に戻せません。";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="閲覧したリンクの履歴を消去しました";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="日付";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="続きから再開する";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="途中までの項目がここに表示されます";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="履歴を消去";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="履歴を消去してもよろしいですか？この操作は元に戻せません。";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="履歴からファイルを削除しますか？";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="履歴からファイルを削除しますか？";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="リッチテキスト書式";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="プレーンテキスト";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="リッチテキスト";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="太字";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="斜体";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="下線";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="取り消し線";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="コード";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="文字スタイル";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="箇条書き";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="番号付きリスト";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="タスクリスト";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="引用";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="インデントを増やす";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="インデントを減らす";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="本文";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="見出し 1";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="見出し 2";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="見出し 3";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="見出し 4";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="見出し 5";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="見出し 6";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="リンクを追加";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="テキスト";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="Markdownソース";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="末尾から入力を続ける";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="作成";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="リンク";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="リンク先";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="ファイルが大きすぎてプレビューできません";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="別のアプリで開くには、ファイル（%@）をダウンロードしてください。";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="このセクションは大きすぎるため、書式付きで表示できません。プレーンテキストで表示しています。";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="このファイルは大きすぎるため、書式付きで編集できません。プレーンテキストとして編集できます。";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="このファイルの一部のセクションが長すぎるため、書式付きで編集できません。ファイルはプレーンテキストとして編集できます。";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="このファイルには非常に長い行があります。その行の編集には時間がかかる場合があります。";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="ドキュメントをスキャン";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="アルバム「%@」が作成されました";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="アルバムを見る";

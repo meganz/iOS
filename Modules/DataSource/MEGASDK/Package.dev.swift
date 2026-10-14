@@ -84,8 +84,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libmegathirdparty",
-            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260921.035709/libmegathirdparty.xcframework.20260921.035709.zip",
-            checksum: "1b4afe10a51f05faf2f02c5a268ccf80688edcf55a414d10caeeeb2fe0a5edc9"
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20261014.120135/libmegathirdparty.xcframework.20261014.120135.zip",
+            checksum: "7366e416bfac4bd9415d5f4be900a8e5502d9e9b4b8b9cd00d083f39534e58fe"
         )
     ],
     cxxLanguageStandard: .cxx17

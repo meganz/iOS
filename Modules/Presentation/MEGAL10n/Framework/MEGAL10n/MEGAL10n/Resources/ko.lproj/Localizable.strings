@@ -5236,3 +5236,105 @@
 "pdfPreview.password.invalid"="잘못된 암호";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="오디오 트랙";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="열어본 링크가 여기에 저장됩니다";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="조회한 링크를 지울까요?";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="조회한 링크를 지울까요?";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="조회한 링크 기록을 지울까요?";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="조회한 모든 링크가 기록에서 제거됩니다. 이것은 되돌릴 수 없습니다.";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="조회한 링크 기록을 지웠습니다";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="날짜";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="중단했던 곳에서 계속 하기";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="완료하지 않은 항목이 여기에 나타납니다";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="기록 삭제";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="정말 기록을 지우시겠습니까? 이것은 되돌릴 수 없습니다.";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="기록에서 파일을 삭제하시겠습니까?";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="기록에서 파일을 삭제할까요?";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="서식 있는 텍스트 형식";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="일반 텍스트";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="서식 있는 텍스트";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="굵게";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="기울임꼴";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="밑줄";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="취소선";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="코드";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="텍스트 스타일";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="글머리 기호 목록";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="번호 매기기 목록";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="작업 목록";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="인용";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="들여쓰기";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="내어쓰기";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="본문";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="제목 1";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="제목 2";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="제목 3";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="제목 4";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="제목 5";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="제목 6";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="링크 추가";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="텍스트";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="마크다운 소스";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="마지막에서 계속 하기";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="생성";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="링크";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="링크";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="다른 앱에서 열려면 파일(%@)을 다운로드하세요.";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="파일이 너무 커서 미리볼 수 없습니다";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="이 섹션은 용량이 너무 커서 서식을 적용해 표시할 수 없습니다. 일반 텍스트로 표시됩니다.";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="이 파일은 용량이 너무 커서 서식이 적용된 상태로 편집할 수 없습니다. 일반 텍스트로는 계속 편집할 수 있습니다.";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="이 파일의 한 섹션이 너무 길어 서식을 적용해 편집할 수 없습니다. 파일을 일반 텍스트로 계속 편집할 수 있습니다.";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="이 파일에 비정상적으로 긴 줄이 있습니다. 해당 줄을 편집할 때 속도가 느려질 수 있습니다.";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="문서 스캔";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="“%@” 앨범이 생성되었습니다";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="앨범 보기";

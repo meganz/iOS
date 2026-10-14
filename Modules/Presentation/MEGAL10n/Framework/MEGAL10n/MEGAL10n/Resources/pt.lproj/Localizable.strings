@@ -1757,7 +1757,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Deletar todas as versões anteriores dos meus arquivos";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete Previous Versions"="Deletar versões anteriores";
+"Delete Previous Versions"="Deletar as versões anteriores";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Todos os arquivos atuais permanecerão. Apenas as versões antigas dos seus arquivos serão deletadas.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -2897,7 +2897,7 @@
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Arquivo comprimido RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
-"general.filetype.rtf"="Rich Text";
+"general.filetype.rtf"="Texto formatado";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Panasonic RAW Image";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
@@ -3059,9 +3059,9 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Superior";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="Arquivo já existe";
+"nameCollision.title.file"="O arquivo já existe";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
-"nameCollision.title.folder"="Pasta já existe";
+"nameCollision.title.folder"="A pasta já existe";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="Já existe uma pasta chamada %@ neste local.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
@@ -3215,7 +3215,7 @@
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ foi compartilhado por um contato que você não validou. Como medida de segurança, recomendamos que você valide as credenciais dos mesmos em Contatos, tocando no ícone ⓘ ao lado do contato que quiser validar.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"verifyCredentials.yourCredentials.title"="Suas credenciais";
+"verifyCredentials.yourCredentials.title"="As suas credenciais";
 /* Title of the header label in contact verification screen. */
 "verifyCredentials.headerMessage"="Protegemos os seus dados com criptografia de conhecimento zero para que todas as informações que você armazene, compartilhe e receba no MEGA estejam seguras. Para garantir segurança extra, pedimos que você verifique os contatos com os quais você compartilha informações ou dos quais recebe dados.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
@@ -5236,3 +5236,105 @@
 "pdfPreview.password.invalid"="Senha incorreta";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="Faixa de áudio";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="Os links que você abrir serão salvos aqui";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="Deletar os links visitados?";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="Deletar link visualizado?";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="Deletar o histórico de links visualizados?";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="Todos os links visualizados serão deletados do seu histórico. Esta ação não pode ser desfeita.";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="O histórico de links visualizados foi deletado";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="Data";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="Continue de onde você parou";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="Os itens que você deixou incompletos vão aparecer aqui";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="Deletar histórico";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="Você tem certeza de que quer deletar o seu histórico? Esta ação não pode ser desfeita.";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="Deletar o arquivo do histórico?";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="Deletar os arquivos do histórico?";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="Formatação de texto enriquecido";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="Texto simples";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="Texto formatado";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="Negrito";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="Itálico";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="Sublinhado";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="Tachado";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="Código";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="Estilo de texto";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="Lista com marcadores";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="Lista numerada";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="Lista de tarefas";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="Citação";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="Aumentar recuo";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="Diminuir recuo";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="Texto";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="Título 1";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="Título 2";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="Título 3";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="Título 4";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="Título 5";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="Título 6";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="Adicionar link";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="Texto";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="Fonte Markdown";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="Criar";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="Link";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="Link";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="Continuar no final";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="Arquivo grande demais para ser visualizado";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="Faça o download do arquivo (%@) para abri-lo em outro aplicativo.";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="Este conteúdo é grande demais para ser mostrado com formatação. Ele será mostrado como texto simples.";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="Este arquivo é grande demais para ser editado com formatação. Você ainda pode editá-lo como texto simples.";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="Uma parte deste arquivo é longa demais para edição formatada. Você ainda pode editar o arquivo como texto simples.";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="Uma linha deste arquivo é excepcionalmente longa. A edição dessa linha pode ser lenta.";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="Escanear documento";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="O álbum “%@” foi criado";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="Ver álbum";

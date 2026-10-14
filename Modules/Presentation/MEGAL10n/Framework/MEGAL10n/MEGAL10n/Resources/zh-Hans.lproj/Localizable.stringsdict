@@ -3009,7 +3009,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] 适用于 %d 个月</string>
+        <string>[A]  %d 个月</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
@@ -3023,7 +3023,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] 适用于 %d 年</string>
+        <string>[A]  %d 年</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyRecurringMonths</key>
@@ -3107,7 +3107,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B]，有效期为 %d 个月</string>
+        <string>%d 个月仅需[A] [B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3121,7 +3121,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B]，有效期为 %d 年</string>
+        <string>%d 年仅需[A] [B]</string>
       </dict>
     </dict>
     <key>link.download.incomplete.title</key>

@@ -2881,7 +2881,7 @@
 /* File extension: .pages. Commercial names should be stay on English */
 "general.filetype.pages"="Pages";
 /* File extension: .pcast. Commercial names should be stay on English */
-"general.filetype.podcast"="播客";
+"general.filetype.podcast"="Podcast";
 /* File extension: .pdf. Commercial names should be stay on English */
 "general.filetype.pdf"="PDF文件";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
@@ -5219,7 +5219,7 @@
 /* Validation error shown under the password field when the entered PDF password is wrong */
 "pdfPreview.password.invalid"="無效的密碼";
 /* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
-"transfer.progress.percentageOfTotal"="[A]（共 [B]）";
+"transfer.progress.percentageOfTotal"="[A]（共[B]）";
 /* Alert title shown when the promotional offer cannot be resolved at checkout. */
 "account.upgrade.offerUnavailable.title"="優惠不可用";
 /* Dialog message shown when the promotional offer cannot be resolved at checkout. */
@@ -5229,10 +5229,112 @@
 /* Message of the fullscreen error state shown when a file preview cannot be rendered */
 "general.preview.error.message"="載入此預覽時發生問題。";
 /* Title of the alert shown when a PDF cannot be opened because the file is damaged */
-"pdfPreview.damaged.title"="此 PDF 已損壞";
+"pdfPreview.damaged.title"="此PDF已損毀";
 /* Message of the alert shown when a PDF cannot be opened because the file is damaged */
-"pdfPreview.damaged.message"="該檔案已損壞，無法開啟。如果是他人傳送給您的，請對方重新傳送一份。";
+"pdfPreview.damaged.message"="檔案已損毀，無法開啟。如果這是其他人傳送給您的，請對方重新傳送一份新的副本。";
 /* Message of the alert asking for the password of a password-protected PDF */
-"pdfPreview.password.message"="此 PDF 受密碼保護。";
+"pdfPreview.password.message"="此PDF受密碼保護。";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="音軌";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="你開啟的連結會儲存在這裡";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="清除已開啟的連結？";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="從紀錄中移除這個連結？";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="清除已開啟連結的紀錄？";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="所有已開啟的連結都會從你的紀錄中清除。此操作無法復原。";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="已清除連結瀏覽紀錄";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="日期";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="從上次中斷處繼續";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="尚未完成的項目會顯示在這裡";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="清除紀錄";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="從紀錄中移除檔案？";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="確定要清除紀錄嗎？此操作無法復原。";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="從紀錄中移除多個檔案？";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="富文字格式";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="純文字";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="富文字";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="粗體";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="斜體";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="底線";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="刪除線";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="程式碼";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="文字樣式";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="項目符號清單";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="編號清單";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="工作清單";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="引用";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="增加縮排";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="減少縮排";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="內文";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="標題1";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="標題3";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="標題2";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="標題4";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="標題5";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="標題6";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="新增連結";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="文字";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="在結尾繼續編輯";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="Markdown原始碼";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="建立";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="連結";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="連結";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="檔案過大，無法預覽";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="下載檔案（%@），以便在其他 App 中開啟。";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="此區段內容過大，無法以格式化方式顯示。將以純文字顯示。";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="此檔案過大，無法使用富文字編輯。你仍可將其作為純文字編輯。";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="此檔案的某個區段過長，無法使用富文字編輯。你仍可將檔案作為純文字編輯。";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="此檔案有一行內容異常長，編輯該行時可能會變慢。";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="掃描文件";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="已建立相簿「%@」";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="檢視相簿";

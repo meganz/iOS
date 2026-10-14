@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="共享时的额外安全性";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="为文件和文件夹链接设置密码和到期日期。";
+"ads.adFree.content.additionalSecurity.message"="使用我们的密码管理器和高速VPN，让您的在线生活更安全、更快速、更轻松";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="查看Pro方案";
 /* Ad-free experience screen button title that will dismiss page */
@@ -5115,19 +5115,19 @@
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
 "videoPlayer.airPlay.indicator.playingOnDevice"="此视频正在外部设备上播放";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="您已用完存储空间。升级您的计划以继续上传。";
+"quotaWarning.storage.full.uploading.subtitle"="您已用完存储空间。升级您的方案以继续上传";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="在云盘中腾出空间，或在 %@ 处管理您的计划以获取更多存储空间。";
+"quotaWarning.storage.manage.subtitle"="在云盘中腾出空间，或在 %@ 管理您的方案以获取更多存储空间";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="因此，媒体播放可能会中断。升级您的计划以获取更多传输配额。 %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="因此，媒体播放可能会中断。升级您的方案以获取更多传输配额。 %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="因此，您的下载可能会中断。请在 %@ 处管理您的计划以获取更多传输配额。";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="因此，您的下载可能会中断。请在 %@ 管理您的方案以获取更多传输配额";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="因此，媒体播放可能会中断。请在 %@ 处管理您的计划以获取更多传输配额。";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="因此，媒体播放可能会中断。请在 %@ 处管理您的方案以获取更多传输配额。";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="要继续下载，请在 %@ 处管理您的计划以获取更多传输配额。";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="要继续下载，请在 %@ 处管理您的方案以获取更多传输配额。";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="要继续媒体播放，请在 %@ 处管理您的计划以获取更多传输配额。";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="要继续媒体播放，请在 %@ 处管理您的方案以获取更多传输配额。";
 /* Title of the button on the offer expiration alert in revamped Upgrade screen. */
 "subscriptionPurchase.revamp.promo.button.viewPlans"="查看方案";
 /* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -5141,25 +5141,25 @@
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="请再试一次";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"link.decryptionKey.alert.message"="请输入打开此链接所需的密钥。没有密钥？联系发送者。";
+"link.decryptionKey.alert.message"="请输入打开此链接所需的密钥。没有密钥？请联系发送者。";
 /* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
-"link.password.alert.message"="请输入打开此链接所需的密码。没有密码？联系发送者。";
+"link.password.alert.message"="请输入打开此链接所需的密码。没有密码？请联系发送者。";
 /* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
 "upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/月";
 /* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
 "upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/年";
 /* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
-"link.button.copyToOffline"="复制到离线";
+"link.button.copyToOffline"="复制到离线文件";
 /* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
-"subscriptionPurchase.revamp.promo.offerEndsOn"="优惠将于 %@ 截止。";
+"subscriptionPurchase.revamp.promo.offerEndsOn"="优惠将于 %@ 截止";
 /* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
-"subscriptionPurchase.revamp.promo.offerEnded.message"="此优惠不再可用。请查看我们的计划。";
+"subscriptionPurchase.revamp.promo.offerEnded.message"="此优惠不再可用。请查看我们的方案。";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
-"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="也可在我们的网站上节省高达 %@。";
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="也可在我们的网站上升级，最多节省 %@";
 /* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
 "subscriptionPurchase.revamp.loadError.title"="无法加载内容";
 /* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
-"subscriptionPurchase.revamp.loadError.message"="在加载您的计划时遇到问题。请重试。";
+"subscriptionPurchase.revamp.loadError.message"="在加载您的方案时遇到问题。请重试。";
 /* Button that dismisses the alert warning that a download would not fit on the device. */
 "link.download.notEnoughStorage.button.dismiss"="好的，明白了";
 /* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
@@ -5177,7 +5177,7 @@
 /* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
 "subscriptionPurchase.revamp.promo.loadError.message"="检查网络连接后重试。";
 /* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
-"home.promotionalBanners.discountBanner.message"="%1$@ · 立减%2$@\n%3$@/月，为期%4$@";
+"home.promotionalBanners.discountBanner.message"="%1$@ · 立减%2$@\n%3$@/月的%4$@方案";
 /* Title of the alert shown before a folder link download that would not fit on the device. */
 "link.download.notEnoughStorage.title"="存储空间不足";
 /* Title of the alert shown when the device runs out of storage while a download is in progress. */
@@ -5187,11 +5187,11 @@
 /* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
 "link.download.notEnoughStorage.message"="此次下载需要约%1$@可用空间，但设备仅有%2$@。腾出一些空间后重试。";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
-"quotaWarning.transfer.limited.free.subtitle"="您的传输配额可能即将用完，导致下载或流媒体播放可能中断。升级套餐以获取更多传输配额。%@";
+"quotaWarning.transfer.limited.free.subtitle"="您的传输配额可能即将用完，导致下载或流媒体播放可能中断。升级方案以获取更多传输配额。%@";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
-"quotaWarning.transfer.limited.subtitle"="升级套餐以获取更多传输配额。%@";
+"quotaWarning.transfer.limited.subtitle"="升级方案以获取更多传输配额。%@";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limited.manage.subtitle"="在%@管理您的套餐以获取更多传输配额";
+"quotaWarning.transfer.limited.manage.subtitle"="在%@管理您的方案以获取更多传输配额";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "albumLink.unavailableReason1"="相册已删除";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
@@ -5209,13 +5209,13 @@
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="传输已暂停。正在等待网络连接";
 /* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
-"pdfPreview.pageOfTotal"="%2$d的%1$d";
+"pdfPreview.pageOfTotal"="%1$d（共%2$d）";
 /* Button that retries the failed operation */
 "general.button.tryAgain"="请再试一次";
 /* Title of the alert asking for the password of a password-protected PDF */
 "pdfPreview.password.title"="输入密码";
 /* Validation error shown under the password field when the entered PDF password is wrong */
-"pdfPreview.password.invalid"="密码无效。";
+"pdfPreview.password.invalid"="密码无效";
 /* A message showing transfer progress: [A] is the completed percentage, [B] is the total file size. Example: "26 % of 4.9 MB". */
 "transfer.progress.percentageOfTotal"="[A]（共 [B]）";
 /* Alert title shown when the promotional offer cannot be resolved at checkout. */
@@ -5223,7 +5223,7 @@
 /* Dialog message shown when the promotional offer cannot be resolved at checkout. */
 "account.upgrade.offerUnavailable.message"="此优惠目前不可用。稍后再试。";
 /* Header of the table of contents panel in the PDF preview */
-"pdfPreview.contents"="目录";
+"pdfPreview.contents"="内容";
 /* Title of the fullscreen error state shown when a file preview cannot be rendered */
 "general.preview.error.title"="无法预览此文件";
 /* Message of the fullscreen error state shown when a file preview cannot be rendered */
@@ -5236,3 +5236,105 @@
 "pdfPreview.password.message"="此 PDF 受密码保护。";
 /* The Audio track video player option in bottom more menu */
 "videoPlayer.audioTrack.bottomSheet.title"="音轨";
+/* Subtitle on the empty Viewed Links view */
+"viewedLinks.empty.message"="您打开的链接会保存在这里";
+/* Title of the dialog that asks the user to confirm clearing the viewed links history */
+"viewedLinks.clearLinks.confirmation.title"="清除已查看的链接？";
+/* Title of the dialog that asks the user to confirm removing a single viewed link */
+"viewedLinks.clearLink.confirmation.title"="清除已查看的链接？";
+/* Title of the button that clears the viewed links history */
+"viewedLinks.clear.action.title"="清除已查看的链接历史记录？";
+/* Message of the dialog warning that clearing the viewed links history cannot be undone */
+"viewedLinks.clear.confirmation.message"="所有已查看的链接将从您的历史记录中清除。此操作无法撤销。";
+/* Confirmation message shown after the viewed links history is cleared */
+"viewedLinks.clear.success.message"="查看的链接历史已清除";
+/* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
+"sorting.lastAccessed.title"="日期";
+/* The title of the Continue Where You Left feature */
+"continueWhereYouLeftOff.title"="从您上次停下的地方继续";
+/* The description shown on the empty state of the Continue Where You Left feature */
+"continueWhereYouLeftOff.empty.message"="您尚未完成的项目将显示在这里";
+/* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
+"continueWhereYouLeftOff.clear.confirmation.title"="清除历史记录";
+/* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
+"continueWhereYouLeftOff.clear.confirmation.message"="您确定要清除历史记录吗？此操作无法撤销。";
+/* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFile.confirmation.title"="从历史记录中清除该文件？";
+/* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="从历史记录中清除文件？";
+/* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
+"markdownEditor.newFile.richTextFormatting"="富文本格式";
+/* Menu option in the text editor that shows the file as plain Markdown text. */
+"markdownEditor.mode.plainText"="纯文本";
+/* Menu option in the text editor that shows the file as formatted text. */
+"markdownEditor.mode.richText"="富文本";
+/* Accessibility label of the text editor toolbar button that makes the selected text bold. */
+"markdownEditor.toolbar.bold"="粗体";
+/* Accessibility label of the text editor toolbar button that makes the selected text italic. */
+"markdownEditor.toolbar.italic"="斜体";
+/* Accessibility label of the text editor toolbar button that underlines the selected text. */
+"markdownEditor.toolbar.underline"="下划线";
+/* Accessibility label of the text editor toolbar button that draws a line through the selected text. */
+"markdownEditor.toolbar.strikethrough"="删除线";
+/* Accessibility label of the text editor toolbar button that formats the selected text as inline code. */
+"markdownEditor.toolbar.code"="代码";
+/* Accessibility label of the text editor toolbar button that opens the menu of text styles (Body, Heading 1, Heading 2, Heading 3). */
+"markdownEditor.toolbar.textStyle"="文本样式";
+/* Accessibility label of the text editor toolbar button that turns the current line into a bulleted list item. */
+"markdownEditor.toolbar.bulletedList"="项目符号列表";
+/* Accessibility label of the text editor toolbar button that turns the current line into a numbered list item. */
+"markdownEditor.toolbar.numberedList"="有序列表";
+/* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
+"markdownEditor.toolbar.taskList"="任务清单";
+/* Accessibility label of the text editor toolbar button that turns the current paragraph into a quote. */
+"markdownEditor.toolbar.quote"="引文";
+/* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.indent"="缩进";
+/* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
+"markdownEditor.keyCommand.outdent"="减少缩进";
+/* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.body"="正文";
+/* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading1"="一级标题";
+/* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading2"="二级标题";
+/* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
+"markdownEditor.textStyle.heading3"="三级标题";
+/* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading4"="四级标题";
+/* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading5"="五级标题";
+/* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
+"markdownEditor.textStyle.heading6"="六级标题";
+/* Title of the text editor dialog where the user adds or edits a link. */
+"markdownEditor.linkDialog.title"="添加链接";
+/* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
+"markdownEditor.linkDialog.textLabel"="文本";
+/* Accessibility label of the text editor when it shows the Markdown source of the file. */
+"markdownEditor.accessibility.sourceEditor"="Markdown 源文件";
+/* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
+"markdownEditor.accessibility.continueAtEnd"="在结尾处继续";
+/* Button in the New text file dialog. It creates the new text file with the name the user typed. */
+"markdownEditor.newFile.create"="创建";
+/* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
+"markdownEditor.toolbar.link"="链接";
+/* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
+"markdownEditor.linkDialog.linkLabel"="链接";
+/* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
+"markdownEditor.fileTooLarge.title"="文件过大，无法预览";
+/* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
+"markdownEditor.fileTooLarge.message"="下载该文件（%@）以在其他应用中打开。";
+/* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
+"markdownEditor.preview.sectionShownAsPlainText"="此部分内容过大，无法显示格式，将以纯文本形式显示。";
+/* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.sectionTooLongForRichText"="该文件的某一部分太长，无法进行格式化编辑。您仍然可以以纯文本形式编辑该文件。";
+/* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
+"markdownEditor.notice.fileTooLargeForRichText"="该文件过大，无法进行格式化编辑。您仍然可以以纯文本方式编辑它。";
+/* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
+"markdownEditor.notice.lineTooLong"="此文件中有一行内容异常长。编辑该行时可能会出现卡顿。";
+/* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
+"home.doMoreWithMega.scanDoc"="扫描文档";
+/* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
+"home.doMoreWithMega.albumCreated.message"="已创建相册“%@”";
+/* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
+"home.doMoreWithMega.albumCreated.seeAlbum"="查看相册";

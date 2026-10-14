@@ -5237,15 +5237,15 @@
 /* Title of the dialog that asks the user to confirm removing a single viewed link */
 "viewedLinks.clearLink.confirmation.title"="Clear viewed link?";
 /* Title of the button that clears the viewed links history */
-"viewedLinks.clear.action.title"="Clear viewed links history";
+"viewedLinks.clear.action.title"="Clear viewed links history?";
 /* Message of the dialog warning that clearing the viewed links history cannot be undone */
-"viewedLinks.clear.confirmation.message"="Are you sure you want to clear all viewed links history? This cannot be undone.";
+"viewedLinks.clear.confirmation.message"="All viewed links will be cleared from your history. This cannot be undone.";
 /* Confirmation message shown after the viewed links history is cleared */
-"viewedLinks.clear.success.message"="Viewed links history has been cleared";
+"viewedLinks.clear.success.message"="Viewed links history cleared";
 /* Sorting option label for sorting items based on the last time they were opened (can be applied in ascending or descending order) */
 "sorting.lastAccessed.title"="Date";
 /* The title of the Continue Where You Left feature */
-"continueWhereYouLeftOff.title"="Continue where your left";
+"continueWhereYouLeftOff.title"="Continue where you left off";
 /* The description shown on the empty state of the Continue Where You Left feature */
 "continueWhereYouLeftOff.empty.message"="Items you left unfinished will appear here";
 /* Title of the dialog that asks the user to confirm clearing the Continue Where You Left history */
@@ -5253,9 +5253,9 @@
 /* Message of the dialog warning that clearing the Continue Where You Left history cannot be undone */
 "continueWhereYouLeftOff.clear.confirmation.message"="Are you sure you want to clear your history? This cannot be undone.";
 /* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
-"continueWhereYouLeftOff.clearFile.confirmation.title"="Clear file?";
+"continueWhereYouLeftOff.clearFile.confirmation.title"="Clear file from history?";
 /* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
-"continueWhereYouLeftOff.clearFiles.confirmation.title"="Clear files?";
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="Clear files from history?";
 /* Label of the checkbox in the New text file dialog. When it is on, the new file opens in the rich text editor, where the user formats text without typing Markdown. */
 "markdownEditor.newFile.richTextFormatting"="Rich text formatting";
 /* Menu option in the text editor that shows the file as plain Markdown text. */
@@ -5327,7 +5327,7 @@
 /* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
 "markdownEditor.notice.lineTooLong"="One line in this file is unusually long. Editing that line may be slow.";
 /* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
-"home.doMoreWithMega.scanDoc"="Scan doc";
+"home.doMoreWithMega.scanDoc"="Scan document";
 /* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
 "home.doMoreWithMega.albumCreated.message"="Album “%@” created";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
