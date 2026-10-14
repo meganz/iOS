@@ -36,6 +36,21 @@ import UIKit
         #expect(textView.text == "one **bold** three")
     }
 
+    /// CommonMark reads no escapes inside a code block, so a code part pasted into a fence must stay the raw code.
+    @Test(arguments: ["a*b*c", "<!-- x", "# not a heading", "[l](u)", "x_y_z"])
+    func codePartPastedIntoASourceFenceKeepsTheCode(part: String) throws {
+        let rich = editor([.codeBlock(language: nil, code: "x " + part + " y")])
+        let range = selection(position(0, 2), position(0, 2 + part.utf16.count))
+        let content = try #require(RichClipboard.content(of: rich.document, in: range))
+        let pasteboard = try pasteboard()
+        RichPasteboard.write(content, to: pasteboard)
+        let textView = textView("```\n\n```", pasteboard: pasteboard)
+        textView.selectedRange = NSRange(location: 4, length: 0)
+        textView.paste(nil)
+        let blocks = RichMarkdownConverter.document(from: textView.text ?? "").blocks
+        #expect(blocks == [.codeBlock(language: nil, code: part)])
+    }
+
     /// A whole rich copy pastes with its syntax: headings, list markers and bold.
     @Test func richCopyPastesWithItsMarkdownSyntax() throws {
         let pasteboard = try pasteboard()

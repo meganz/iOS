@@ -5,11 +5,16 @@ import Foundation
 struct RichClipboardContent: Equatable, Sendable {
     /// The pasteboard type of `markdown`.
     static let markdownType = "net.daringfireball.markdown"
+    /// A private pasteboard type with no data. It marks a part of a code block, see `isCodePart`.
+    static let codePartType = "nz.mega.markdown.code-part"
 
     /// The visible text: no Markdown syntax and no escapes. List items keep a `- `, `1. ` or `- [ ] ` marker.
     var plainText: String
     /// The Markdown of the selection.
     var markdown: String
+    /// A part of a code block. Its Markdown is escaped for a text block, so source mode pastes the plain text:
+    /// CommonMark reads no escapes in a code block, so they would stay in the code there.
+    var isCodePart = false
 }
 
 /// What a paste reads from the pasteboard. Either can be missing.
@@ -37,7 +42,9 @@ enum RichClipboard {
         }
         if let range = selection.rangeInBlock, let code = document.blocks[selection.start.blockIndex].codeText, range.count < code.utf16.count {
             let part = code.substring(utf16: range)
-            return RichClipboardContent(plainText: part, markdown: part)
+            // Code has no Markdown syntax. Escaped, it pastes into a text block as the same text.
+            let markdown = InlineWriter.write(RichText(part), context: .paragraph).markdown
+            return RichClipboardContent(plainText: part, markdown: markdown, isCodePart: true)
         }
         let fragment = document.fragment(in: selection)
         guard !fragment.isEmpty else { return nil }

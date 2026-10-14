@@ -166,6 +166,32 @@ struct CopyPasteRoundTripTests {
         #expect(target.blocks == Self.blocks)
     }
 
+    /// Code has no Markdown syntax. A part of a code block pastes into a text block as the same characters.
+    @Test(arguments: ["a*b*c", "<!-- x", "# not a heading", "[l](u)"])
+    func aPartOfCodePastesAsTheSameText(part: String) throws {
+        let source = editor([.codeBlock(language: nil, code: "x " + part + " y")])
+        let range = selection(position(0, 2), position(0, 2 + part.utf16.count))
+        let content = try #require(RichClipboard.content(of: source.document, in: range))
+        #expect(content.plainText == part)
+        var target = editor([paragraph("")])
+        target.paste(RichPasteContent(markdown: content.markdown, plainText: content.plainText))
+        #expect(target.blocks == [paragraph(part)])
+    }
+
+    /// A paragraph cannot keep indents or empty lines, so a code part of several lines pastes as one paragraph
+    /// with its lines. The pasteboard still holds the raw code for source mode and other apps.
+    @Test func aPartOfCodeOverLinesPastesAsItsTextLines() throws {
+        let part = "    fetch()\n\n    render()"
+        let source = editor([.codeBlock(language: nil, code: "func load() {\n" + part + "\n}")])
+        let range = selection(position(0, 14), position(0, 14 + part.utf16.count))
+        let content = try #require(RichClipboard.content(of: source.document, in: range))
+        #expect(content.plainText == part)
+        #expect(content.isCodePart)
+        var target = editor([paragraph("")])
+        target.paste(RichPasteContent(markdown: content.markdown, plainText: content.plainText))
+        #expect(target.blocks == [paragraph("fetch()\nrender()")])
+    }
+
     @Test func aPartKeepsItsSpacesAtTheEdges() throws {
         let source = editor([paragraph("hello world again")])
         let content = try #require(RichClipboard.content(of: source.document, in: selection(position(0, 6), position(0, 12))))

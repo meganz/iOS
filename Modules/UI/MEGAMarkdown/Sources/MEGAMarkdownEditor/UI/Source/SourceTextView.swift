@@ -135,7 +135,12 @@ final class SourceUITextView: UITextView {
 
     /// A copy from rich mode has a Markdown type next to the plain text.
     /// Source mode shows Markdown, so a paste takes that type first and keeps the syntax.
+    /// A part of a code block pastes as its plain text: inside a code fence, escapes would stay in the code.
     override func paste(_ sender: Any?) {
+        if pasteboard.contains(pasteboardTypes: [RichClipboardContent.codePartType]), let code = pasteboard.string {
+            insertText(code)
+            return
+        }
         guard let data = pasteboard.data(forPasteboardType: RichClipboardContent.markdownType),
               let markdown = String(data: data, encoding: .utf8) else {
             super.paste(sender)

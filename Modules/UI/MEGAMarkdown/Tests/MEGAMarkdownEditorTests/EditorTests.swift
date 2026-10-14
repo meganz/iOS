@@ -151,6 +151,24 @@ struct EditorTypingTests {
         #expect(target.selection == .caret(position(1, 1)))
     }
 
+    /// Front matter counts only on the first line of a file. Typing, Enter or a paste at it go after it.
+    @Test func frontMatterStaysTheFirstBlock() {
+        let frontMatter = RichBlock.rawSource("---\ntitle: x\n---")
+        var typed = editor([frontMatter, paragraph("Body")], caret: position(0, 0))
+        typed.insertText("Hi")
+        #expect(typed.blocks == [frontMatter, paragraph("Hi"), paragraph("Body")])
+        var selected = editor([frontMatter, paragraph("Body")])
+        selected.select(selection(position(0, 0), position(0, 1)))
+        selected.insertText("Hi")
+        #expect(selected.blocks == [frontMatter, paragraph("Hi"), paragraph("Body")])
+        var enter = editor([frontMatter, paragraph("Body")], caret: position(0, 0))
+        enter.insertParagraphBreak()
+        #expect(enter.blocks == [frontMatter, paragraph(""), paragraph("Body")])
+        var pasted = editor([frontMatter, paragraph("Body")], caret: position(0, 0))
+        pasted.paste(RichPasteContent(markdown: "# H"))
+        #expect(pasted.blocks == [frontMatter, heading(1, "H"), paragraph("Body")])
+    }
+
     @Test func tapBelowTheLastBlock() {
         var text = editor([paragraph("ab")])
         text.placeCaretAtEnd()

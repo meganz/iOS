@@ -28,7 +28,8 @@ extension RichEditor {
             newBlock = block.withText(text.replacing(lower..<upper, with: string, typingStyles: styles))
             setTypingStyles(styles)
         case .thematicBreak, .rawSource:
-            insertParagraph(with: string, besideAtomicBlock: blockIndex, after: range.lowerBound > 0)
+            let before = document.insertsBeforeAtomicBlock(at: RichPosition(blockIndex: blockIndex, offset: range.lowerBound))
+            insertParagraph(with: string, besideAtomicBlock: blockIndex, after: !before)
             return
         }
         guard newBlock != block else { return }
@@ -43,6 +44,7 @@ extension RichEditor {
     }
 
     /// Typing at a divider or raw block starts a new paragraph before it (caret offset 0) or after it.
+    /// It always goes after front matter (`RichDocument.insertsBeforeAtomicBlock(at:)`).
     /// The paragraph and the keys typed into it after are one undo step.
     private mutating func insertParagraph(with string: String, besideAtomicBlock blockIndex: Int, after: Bool) {
         guard !string.isEmpty else { return }

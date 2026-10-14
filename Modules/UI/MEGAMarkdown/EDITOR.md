@@ -123,6 +123,7 @@ gets one: an ordered list not starting at 1, or an empty first item, under an it
 - Enter continues a list or quote. On an empty item it removes one level. Backspace at a block start removes structure first, then joins.
 - Enter on an empty last line of a code block leaves the block. A tap below a final code, divider or raw block adds an empty paragraph.
 - Typing at a divider or raw block starts a new paragraph before it (caret 0) or after it (caret 1). A paste there goes before or after it.
+  Front matter is the exception: typing, Enter or a paste at it go after it, so it stays the first line of the file.
 
 ## Undo
 
@@ -135,14 +136,17 @@ gets one: an ordered list not starting at 1, or an empty first item, under an it
 ## Clipboard
 
 [RichClipboard.swift](Sources/MEGAMarkdownEditor/Editing/RichClipboard.swift) holds the rules.
-A copy gives one pasteboard item with two types:
+A copy gives one pasteboard item with two types, and a third for a part of a code block:
 
 | Type | Content |
 |---|---|
 | `public.utf8-plain-text` | The visible text, with no escapes. List items keep a `- `, `1. ` or `- [ ] ` marker. |
 | `net.daringfireball.markdown` (`RichClipboardContent.markdownType`) | The Markdown of the selection. |
+| `nz.mega.markdown.code-part` (`RichClipboardContent.codePartType`) | No data. It marks a part of a code block. |
 
 - A part of one block copies as inline Markdown, without its block syntax.
+  A part of a code block copies as escaped text, so a paste into a text block keeps the same text.
+  A paragraph cannot keep indents or empty lines, so a part of several lines pastes as one paragraph with its lines.
 - A whole block or more copies as block Markdown. An ordered item keeps the number it shows.
 - A paste reads the Markdown type first. Plain text from another app is read as Markdown too, so `**bold**` renders.
   Its soft breaks split paragraphs, so each line becomes a row.
@@ -150,7 +154,8 @@ A copy gives one pasteboard item with two types:
   a list item or quote target. Other pasted blocks keep their kind. The text after the caret joins the last pasted paragraph.
 - In a code block, the plain text goes in as code.
 - Source mode pastes the Markdown type first, as text. So a rich copy keeps its Markdown syntax there.
-  Without that type, source mode pastes the plain text.
+  Without that type, source mode pastes the plain text. A part of a code block also pastes as its plain text,
+  because CommonMark reads no escapes inside a code block.
 
 ## Save check
 

@@ -1,6 +1,16 @@
 import Foundation
 
 extension RichDocument {
+    /// True when new content at a divider or raw block goes before it: the caret is at offset 0.
+    /// Front matter counts only on the first line of a file, so nothing goes before it.
+    func insertsBeforeAtomicBlock(at position: RichPosition) -> Bool {
+        guard position.offset == 0 else { return false }
+        if position.blockIndex == 0, case .rawSource(let source) = blocks.first, SourceLines(source).frontMatterEnd() > 0 {
+            return false
+        }
+        return true
+    }
+
     /// Inserts pasted blocks at a caret.
     ///
     /// In a text block:
@@ -10,7 +20,7 @@ extension RichDocument {
     /// - The text after the caret joins the last pasted paragraph, or becomes its own block.
     ///
     /// In a code block the caller inserts plain text instead (`insertingCode`).
-    /// At a divider or raw block the blocks go before (offset 0) or after it.
+    /// At a divider or raw block the blocks go before (offset 0) or after it. They always go after front matter.
     func inserting(_ pasted: [RichBlock], at position: RichPosition) -> (RichDocument, RichPosition) {
         let position = clamped(position)
         guard !pasted.isEmpty, !blocks.isEmpty else { return (self, position) }
@@ -19,7 +29,7 @@ extension RichDocument {
         var result = self
 
         guard let text = target.richText else {
-            let insertAt = position.offset == 0 ? index : index + 1
+            let insertAt = insertsBeforeAtomicBlock(at: position) ? index : index + 1
             result.blocks.insert(contentsOf: pasted, at: insertAt)
             result.normalizeListIndents(in: insertAt..<(insertAt + pasted.count))
             let lastIndex = insertAt + pasted.count - 1

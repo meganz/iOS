@@ -38,7 +38,7 @@ extension RichDocument {
             return (result, RichPosition(blockIndex: index, offset: offset + 1))
         case .thematicBreak, .rawSource:
             // Before the block (offset 0) or after it: a new empty paragraph there.
-            let insertAt = position.offset == 0 ? index : index + 1
+            let insertAt = insertsBeforeAtomicBlock(at: position) ? index : index + 1
             result.blocks.insert(.paragraph(RichText()), at: insertAt)
             return (result, RichPosition(blockIndex: index + 1, offset: 0))
         case .paragraph, .heading, .listItem, .quote:

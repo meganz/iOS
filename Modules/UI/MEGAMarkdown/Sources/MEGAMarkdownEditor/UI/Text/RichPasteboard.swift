@@ -3,13 +3,16 @@ import UniformTypeIdentifiers
 
 /// Writes and reads the editor's clipboard content on a `UIPasteboard`.
 /// A copy is one pasteboard item with two types: other apps read the plain text, the editors read the Markdown.
+/// A part of a code block adds the empty `RichClipboardContent.codePartType`.
 @MainActor
 enum RichPasteboard {
     static func write(_ content: RichClipboardContent, to pasteboard: UIPasteboard) {
-        pasteboard.setItems([[
+        var item: [String: Any] = [
             UTType.utf8PlainText.identifier: content.plainText,
             RichClipboardContent.markdownType: content.markdown
-        ]])
+        ]
+        if content.isCodePart { item[RichClipboardContent.codePartType] = Data() }
+        pasteboard.setItems([item])
     }
 
     /// Both types when the copy has both, so the model can use plain text for a code block. nil when there is neither.
