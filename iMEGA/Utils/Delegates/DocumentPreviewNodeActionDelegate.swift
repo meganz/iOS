@@ -2,6 +2,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPDFViewer
 
 /// Gives a revamped document viewer the node actions that
 /// `PreviewDocumentViewController` handles itself, and forwards the rest.
@@ -13,6 +14,8 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
     private let wrapped: any NodeActionViewControllerDelegate
     private weak var presenter: UIViewController?
     private let tracker: any AnalyticsTracking
+    private let trackingUseCase: any PDFViewerTrackingUseCaseProtocol
+    private let analyticsSource: PDFViewerAnalyticsSource
     private let navigateToParent: @MainActor (MEGANode) -> Void
     private let moveToRubbishBin: @MainActor (MEGANode, UIViewController) -> Void
     private let restore: @MainActor (MEGANode) -> Void
@@ -26,6 +29,8 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
         linkActions: some DocumentPreviewLinkActionRouting = DocumentPreviewLinkActionRouter(),
         makeNodeInfo: (@MainActor (MEGANode, any NodeInfoViewControllerDelegate) -> UIViewController)? = nil,
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        trackingUseCase: some PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase(),
+        analyticsSource: PDFViewerAnalyticsSource,
         navigateToParent: @escaping @MainActor (MEGANode) -> Void = defaultNavigateToParent,
         moveToRubbishBin: @escaping @MainActor (MEGANode, UIViewController) -> Void = defaultMoveToRubbishBin,
         restore: @escaping @MainActor (MEGANode) -> Void = defaultRestore
@@ -36,6 +41,8 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
         self.wrapped = wrapped
         self.presenter = presenter
         self.tracker = tracker
+        self.trackingUseCase = trackingUseCase
+        self.analyticsSource = analyticsSource
         self.navigateToParent = navigateToParent
         self.moveToRubbishBin = moveToRubbishBin
         self.restore = restore
@@ -59,6 +66,8 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
         presenter: UIViewController,
         context: DocumentPreviewContext,
         linkActions: some DocumentPreviewLinkActionRouting = DocumentPreviewLinkActionRouter(),
+        trackingUseCase: some PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase(),
+        analyticsSource: PDFViewerAnalyticsSource,
         sender: Any?
     ) -> NodeActionViewController {
         // Match checks in `-[PreviewDocumentViewController actionsTapped:]`.
@@ -68,7 +77,9 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
             wrapping: makeGenericDelegate(context: context, presenter: presenter),
             presenter: presenter,
             context: context,
-            linkActions: linkActions
+            linkActions: linkActions,
+            trackingUseCase: trackingUseCase,
+            analyticsSource: analyticsSource
         )
         return NodeActionViewController(
             node: latestNode,
@@ -111,12 +122,17 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
         for node: MEGANode,
         from sender: Any
     ) {
+        if let selected = analyticsMoreAction(for: action) {
+            trackingUseCase.track(.moreActionSelected(selected, analyticsSource))
+        }
+
         switch action {
         case .import:
             if let presenter {
                 linkActions.importNode(node, isFolderLink: false, from: presenter)
             }
         case .download where context.isLink:
+            tracker.trackAnalyticsEvent(with: CloudDriveDownloadMenuItemEvent())
             if let presenter {
                 if let link = context.fileLink {
                     linkActions.downloadFileLink(link, from: presenter)
@@ -130,6 +146,7 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
             }
         case .shareLink, .manageLink:
             if context.isLink, let link = context.fileLink {
+                tracker.trackAnalyticsEvent(with: CloudDriveShareLinkMenuItemEvent())
                 if let presenter {
                     linkActions.shareFileLink(link, from: presenter, sender: sender)
                 }
@@ -137,6 +154,7 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
                 wrapped.nodeAction?(nodeAction, didSelect: action, for: node, from: sender)
             }
         case .moveToRubbishBin:
+            tracker.trackAnalyticsEvent(with: CloudDriveMoveToRubbishBinMenuItemEvent())
             if let presenter {
                 moveToRubbishBin(node, presenter)
             }
@@ -144,6 +162,7 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
             presenter?.dismiss(animated: true)
             restore(node)
         case .info:
+            tracker.trackAnalyticsEvent(with: CloudDriveInfoMenuItemEvent())
             showNodeInfo(node)
         case .hide:
             tracker.trackAnalyticsEvent(with: DocumentPreviewHideNodeMenuItemEvent())
@@ -159,6 +178,26 @@ final class DocumentPreviewNodeActionDelegate: NodeActionViewControllerDelegate,
     ) {
         presenter?.dismiss(animated: true) { [navigateToParent] in
             navigateToParent(node)
+        }
+    }
+
+    private func analyticsMoreAction(for action: MegaNodeActionType) -> PDFViewerAnalyticsMoreAction? {
+        switch action {
+        case .download: .makeAvailableOffline
+        case .import: .addToCloudDrive
+        case .exportFile: .downloadToDevice
+        case .shareLink: .shareLink
+        case .manageLink: .manageLink
+        case .removeLink: .removeLink
+        case .sendToChat: .sendToChat
+        case .hide: .hide
+        case .unhide: .unhide
+        case .moveToRubbishBin: .moveToRubbishBin
+        case .info: .info
+        case .viewVersions: .viewVersions
+        case .remove: .remove
+        case .restore: .restore
+        default: nil
         }
     }
 

@@ -3,6 +3,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomainMock
+import MEGAPDFViewer
 import MEGATest
 import XCTest
 
@@ -67,6 +68,65 @@ final class DocumentPreviewNodeActionDelegateTests: XCTestCase {
         XCTAssertNil(wrapped.selectedAction)
     }
 
+    func testMoreActions_trackPdfAttribution() {
+        let rows: [(MegaNodeActionType, String)] = [
+            (.download, "make_available_offline"), (.import, "add_to_cloud_drive"),
+            (.shareLink, "share_link"), (.manageLink, "manage_link"),
+            (.removeLink, "remove_link"), (.exportFile, "download_to_device"),
+            (.sendToChat, "send_to_chat"), (.hide, "hide"),
+            (.unhide, "unhide"), (.info, "info"),
+            (.moveToRubbishBin, "move_to_rubbish_bin"), (.restore, "restore"),
+            (.viewVersions, "view_versions"), (.remove, "remove")
+        ]
+        for (action, expected) in rows {
+            let pdfTracker = MockTracker()
+            let node = MockNode(handle: 1)
+            let sut = makeSUT(
+                wrapped: ActionSpy(), presenter: PresenterSpy(),
+                trackingUseCase: PDFViewerTrackingUseCase(tracker: pdfTracker),
+                analyticsSource: .fileLink
+            )
+
+            sut.nodeAction(actionController(node: node, delegate: sut), didSelect: action,
+                           for: node, from: "sender")
+
+            XCTAssertEqual(pdfTracker.trackedEventIdentifiers.count, 1, expected)
+            let event = pdfTracker.trackedEventIdentifiers.first as? PdfViewerMoreActionSelectedEvent
+            XCTAssertEqual(event?.info["action"] as? String, expected)
+            XCTAssertEqual(event?.info["source"] as? String, "file_link")
+        }
+    }
+
+    func testMoveToRubbishBin_keepsSharedMenuItemEvent() {
+        let tracker = MockTracker()
+        let node = MockNode(handle: 1)
+        let sut = makeSUT(wrapped: ActionSpy(), presenter: PresenterSpy(), tracker: tracker)
+
+        sut.nodeAction(actionController(node: node, delegate: sut), didSelect: .moveToRubbishBin,
+                       for: node, from: "sender")
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [CloudDriveMoveToRubbishBinMenuItemEvent()]
+        )
+    }
+
+    func testUnsupportedMoreAction_forwardsWithoutPdfAnalytics() {
+        let pdfTracker = MockTracker()
+        let wrapped = ActionSpy()
+        let node = MockNode(handle: 1)
+        let sut = makeSUT(
+            wrapped: wrapped, presenter: PresenterSpy(),
+            trackingUseCase: PDFViewerTrackingUseCase(tracker: pdfTracker)
+        )
+
+        sut.nodeAction(actionController(node: node, delegate: sut), didSelect: .copy,
+                       for: node, from: "sender")
+
+        XCTAssertTrue(pdfTracker.trackedEventIdentifiers.isEmpty)
+        XCTAssertEqual(wrapped.selectedAction, .copy)
+    }
+
     func testOtherAction_forwardsToWrappedDelegate() {
         let presenter = PresenterSpy()
         let wrapped = ActionSpy()
@@ -109,6 +169,7 @@ final class DocumentPreviewNodeActionDelegateTests: XCTestCase {
             for: MockNode(handle: 1),
             presenter: UIViewController(),
             context: DocumentPreviewContext(isLink: false, fileLink: nil, isFromSharedItem: false),
+            analyticsSource: .node,
             sender: nil
         )
 
@@ -129,6 +190,8 @@ final class DocumentPreviewNodeActionDelegateTests: XCTestCase {
         wrapped: ActionSpy,
         presenter: PresenterSpy,
         tracker: MockTracker = MockTracker(),
+        trackingUseCase: PDFViewerTrackingUseCase = PDFViewerTrackingUseCase(tracker: MockTracker()),
+        analyticsSource: PDFViewerAnalyticsSource = .node,
         navigateToParent: @escaping @MainActor (MEGANode) -> Void = { _ in },
         moveToRubbishBin: @escaping @MainActor (MEGANode) -> Void = { _ in },
         restore: @escaping @MainActor (MEGANode) -> Void = { _ in }
@@ -137,6 +200,8 @@ final class DocumentPreviewNodeActionDelegateTests: XCTestCase {
             wrapping: wrapped,
             presenter: presenter,
             tracker: tracker,
+            trackingUseCase: trackingUseCase,
+            analyticsSource: analyticsSource,
             navigateToParent: navigateToParent,
             moveToRubbishBin: { node, _ in moveToRubbishBin(node) },
             restore: restore

@@ -17,6 +17,9 @@ final class PDFViewSearchInteractionHandler: NSObject {
     ) -> MEGAPDFUITextSearchingFindSessionInterceptor?
     private let reportMissingSearchableView: @MainActor () -> Void
     private let notificationCenter: NotificationCenter
+    var onSearchSessionDidBegin: ((UUID) -> Void)?
+    var onSearchSessionDidEnd: ((UUID) -> Void)?
+    var onSearchResultChanged: ((UUID, UUID, Int) -> Void)?
 
     init(
         notificationCenter: NotificationCenter = .default,
@@ -99,8 +102,17 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
             interceptor: interceptor,
             preferences: searchPreferences
         )
+        session.onSearchResultChanged = { [weak self, weak session] generationID, resultID in
+            guard let session else { return }
+            self?.onSearchResultChanged?(session.analyticsID, generationID, resultID)
+        }
         currentSession = session
         return session
+    }
+
+    func findInteraction(_ interaction: UIFindInteraction, didBegin findSession: UIFindSession) {
+        guard let session = findSession as? PDFViewFindSession else { return }
+        onSearchSessionDidBegin?(session.analyticsID)
     }
 
     func findInteraction(_ interaction: UIFindInteraction, didEnd findSession: UIFindSession) {
@@ -110,7 +122,8 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
         // - reporting the end of an earlier session after the next one has
         //   begun.
         // - calling this twice for one close.
-        guard findSession === currentSession else { return }
+        guard let endedSession = currentSession, findSession === endedSession else { return }
+        onSearchSessionDidEnd?(endedSession.analyticsID)
         documentSearcher?.cancelSearch()
         jumpToSearchResultScrollAdjuster?.clearResultPlacement()
         currentSession = nil

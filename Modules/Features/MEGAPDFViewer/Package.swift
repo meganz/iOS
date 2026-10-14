@@ -18,6 +18,8 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(path: "../../DataSource/MEGASDK"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Presentation/MEGAAssets"),
@@ -43,6 +45,8 @@ let package = Package(
         .target(
             name: "MEGAPDFViewer",
             dependencies: [
+                "MEGAAppPresentation",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 "MEGAAssets",
                 "MEGADomain",
                 "MEGAL10n",
@@ -58,6 +62,8 @@ let package = Package(
         .testTarget(
             name: "MEGAPDFViewerTests",
             dependencies: [
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 "MEGAPDFViewer",
                 "MEGAPDFSearchInterceptor",
                 "MEGAPDFSearchInterceptorTestSupport",

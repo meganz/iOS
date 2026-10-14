@@ -19,6 +19,7 @@ final class PDFViewerViewModel {
         var actionContext: PDFViewerActionContext = .init()
         var hasMoreAction = false
         var hasDownloadAction = false
+        var trackingUseCase: any PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase()
     }
 
     struct TrailingActionUseCase {
@@ -154,7 +155,12 @@ final class PDFViewerViewModel {
 
     var isChromeHidden = false
     var isShowingThumbnails = false {
-        didSet { if isShowingThumbnails { searchRequest = .dismiss } }
+        didSet {
+            if isShowingThumbnails {
+                searchRequest = .dismiss
+                if !oldValue, state.isReady { dependency.trackingUseCase.track(.thumbnailsOpened) }
+            }
+        }
     }
     var isProgrammaticallyScrollingToCurrentPage = false
     @ObservationIgnored private var isScrolledToTop = false
@@ -162,7 +168,10 @@ final class PDFViewerViewModel {
     @ObservationIgnored private var outlineLoadGeneration = 0
     @ObservationIgnored private var outlineLoadingOperation: (@Sendable () async -> PDFOutlineItems)?
 
-    private let dependency: Dependency
+    @ObservationIgnored private(set) var activeLoadAttempt: UUID?
+    @ObservationIgnored var analyticsState = ViewState.AnalyticsState()
+
+    let dependency: Dependency
 
     var fileName: String { dependency.fileName }
 
@@ -196,26 +205,30 @@ extension PDFViewerViewModel {
     /// already parsed is not resolved again.
     func loadDocumentFromSource() async {
         guard !state.isReady, !state.isDocumentLocked else { return }
+        let attemptID = UUID()
+        activeLoadAttempt = attemptID
+        analyticsState.didTrackPasswordUnlock = false
         let events = dependency.documentURLUseCase.localDocumentURL(for: dependency.pdfDocumentSource)
         do {
             for try await event in events {
-                guard !Task.isCancelled else { return }
+                guard !Task.isCancelled, activeLoadAttempt == attemptID else { return }
                 switch event {
                 case .progress(let progress):
                     state = .loading(progress: progress)
                 case .ready(let url):
-                    try await loadDocument(at: url)
+                    try await loadDocument(at: url, attemptID: attemptID)
                 }
             }
         } catch {
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, activeLoadAttempt == attemptID else { return }
             fail(.downloadFailed)
         }
     }
 
-    private func loadDocument(at url: URL) async throws {
+    private func loadDocument(at url: URL, attemptID: UUID) async throws {
         let loadingState = try await dependency.documentLoadingUseCase.loadDocument(at: url)
         try Task.checkCancellation()
+        guard activeLoadAttempt == attemptID else { return }
         transitionToDocumentLoadingState(loadingState)
     }
 
@@ -230,6 +243,7 @@ extension PDFViewerViewModel {
             fail(.documentUnreadable)
         case .ready(let readyState):
             transitionToReady(readyState)
+            reportLoadOutcome(.loadSucceeded)
         }
     }
 
@@ -257,6 +271,7 @@ extension PDFViewerViewModel {
     }
 
     private func fail(_ reason: ViewState.FailureReason) {
+        reportLoadFailure(reason)
         isChromeHidden = false
         state = .failed(
             .init(reason,
@@ -293,6 +308,7 @@ extension PDFViewerViewModel {
         isShowingThumbnails = false
         isChromeHidden = false
         searchRequest = .present
+        dependency.trackingUseCase.track(.searchToolbarSelected)
     }
 }
 
@@ -321,6 +337,9 @@ extension PDFViewerViewModel {
     }
 
     func didSelectThumbnail(at pageIndex: Int) {
+        if let pageCount = readyState?.pagingState.pageCount, (0..<pageCount).contains(pageIndex) {
+            dependency.trackingUseCase.track(.thumbnailSelected)
+        }
         scrollToPageIndex(pageIndex)
         isShowingThumbnails = false
     }
@@ -418,6 +437,9 @@ extension PDFViewerViewModel {
     }
 
     func didOpenOutline() {
+        if showsOutlineButton, !isShowingOutline {
+            dependency.trackingUseCase.track(.contentsOpened)
+        }
         activeOutlineItemID = dependency.nearestOutlineItemUseCase.activeItem(
             forPageIndex: currentPageIndex,
             in: pageSortedOutlineItems
@@ -427,6 +449,10 @@ extension PDFViewerViewModel {
     }
 
     func didSelectOutlineItem(_ item: PDFOutlineItem) {
+        if outlineItems.contains(item), let document = pdfDocument,
+           (0..<document.pageCount).contains(item.pageIndex) {
+            dependency.trackingUseCase.track(.contentsItemSelected)
+        }
         scrollToPageIndex(item.pageIndex)
         isShowingThumbnails = false
         isShowingOutline = false
@@ -560,6 +586,7 @@ extension PDFViewerViewModel {
             if case .documentLocked = loadingState {
                 rejectPasswordSubmission()
             } else {
+                trackPasswordUnlockIfNeeded()
                 transitionToDocumentLoadingState(loadingState)
             }
         } catch {

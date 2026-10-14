@@ -1,5 +1,7 @@
 import Foundation
 @testable import MEGA
+import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGASdk
@@ -175,7 +177,8 @@ struct DocumentPreviewNodeActionDelegateRoutingTests {
                 receivedNode = node
                 receivedDelegate = delegate
                 return nodeInfo
-            }
+            },
+            analyticsSource: .node
         )
         let node = MockNode(handle: 1)
 
@@ -187,15 +190,40 @@ struct DocumentPreviewNodeActionDelegateRoutingTests {
         #expect(wrapped.selectedAction == nil)
     }
 
+    @Test
+    func interceptedActions_keepSharedMenuItemEvents() {
+        let fileLink = DocumentPreviewContext(isLink: true, fileLink: link, isFromSharedItem: false)
+        let folderLink = DocumentPreviewContext(isLink: true, fileLink: nil, isFromSharedItem: false)
+        let node = DocumentPreviewContext(isLink: false, fileLink: nil, isFromSharedItem: false)
+        let cases: [(MegaNodeActionType, DocumentPreviewContext, (any EventIdentifier) -> Bool)] = [
+            (.download, fileLink, { $0 is CloudDriveDownloadMenuItemEvent }),
+            (.download, folderLink, { $0 is CloudDriveDownloadMenuItemEvent }),
+            (.shareLink, fileLink, { $0 is CloudDriveShareLinkMenuItemEvent }),
+            (.manageLink, fileLink, { $0 is CloudDriveShareLinkMenuItemEvent }),
+            (.info, node, { $0 is CloudDriveInfoMenuItemEvent })
+        ]
+        for (action, context, isExpectedEvent) in cases {
+            let tracker = MockTracker()
+            let sut = makeSUT(context: context, wrapped: ActionSpy(), routing: RoutingSpy(), tracker: tracker)
+
+            select(action, node: MockNode(handle: 1), delegate: sut)
+
+            #expect(tracker.trackedEventIdentifiers.count == 1, "action \(action.rawValue)")
+            #expect(tracker.trackedEventIdentifiers.first.map(isExpectedEvent) == true, "action \(action.rawValue)")
+        }
+    }
+
     private func makeSUT(
         context: DocumentPreviewContext,
         presenter: PresenterSpy? = nil,
         wrapped: ActionSpy,
-        routing: RoutingSpy
+        routing: RoutingSpy,
+        tracker: MockTracker = MockTracker()
     ) -> DocumentPreviewNodeActionDelegate {
         DocumentPreviewNodeActionDelegate(
             wrapping: wrapped, presenter: presenter ?? self.presenter,
-            context: context, linkActions: routing
+            context: context, linkActions: routing, tracker: tracker,
+            analyticsSource: .node
         )
     }
 

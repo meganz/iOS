@@ -1,3 +1,4 @@
+import Foundation
 import MEGAPDFSearchInterceptor
 import UIKit
 
@@ -7,6 +8,9 @@ import UIKit
 /// options for new queries, so this session uses the viewer's preferences.
 @MainActor
 final class PDFViewFindSession: UITextSearchingFindSession {
+    let analyticsID = UUID()
+    var onSearchResultChanged: ((UUID, Int) -> Void)?
+    private var generationID = UUID()
     private let preferences: PDFViewSearchPreferences
     private let interceptor: MEGAPDFUITextSearchingFindSessionInterceptor
 
@@ -22,11 +26,31 @@ final class PDFViewFindSession: UITextSearchingFindSession {
     }
 
     override func performSearch(query: String, options: UITextSearchOptions?) {
+        generationID = UUID()
         super.performSearch(
             query: query,
             options: PDFViewTextSearchOptions(preferences: preferences)
         )
     }
+    override func highlightNextResult(in direction: UITextStorageDirection) {
+        // Seed the current result before UIKit moves it, so the first
+        // navigation after a query change uses its initial highlight.
+        reportHighlightedResult()
+        super.highlightNextResult(in: direction)
+        reportHighlightedResult()
+    }
+
+    override func invalidateFoundResults() {
+        generationID = UUID()
+        super.invalidateFoundResults()
+    }
+
+    private func reportHighlightedResult() {
+        let index = highlightedResultIndex
+        guard index != NSNotFound else { return }
+        onSearchResultChanged?(generationID, index)
+    }
+
 }
 
 /// Stores Find option selections for one PDF viewer, starting with defaults.

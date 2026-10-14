@@ -19,6 +19,8 @@ public struct PDFViewerView: View {
         let node: NodeEntity?
         let nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol
         let fileName: String
+        let trackingUseCase: any PDFViewerTrackingUseCaseProtocol
+        let onViewerPresented: @MainActor () -> Void
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
         /// `nil` hides the ••• button.
@@ -40,7 +42,9 @@ public struct PDFViewerView: View {
             onClose: @escaping @MainActor () -> Void,
             moreMenuDependencies: PDFViewerTrailingPopoverDependencies? = nil,
             downloadDependencies: PDFViewerTrailingPopoverDependencies? = nil,
-            onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in }
+            onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in },
+            trackingUseCase: some PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase(),
+            onViewerPresented: @escaping @MainActor () -> Void = {}
         ) {
             let documentLoader = PDFDocumentLoader()
             let outlineLoadingUseCase = PDFOutlineLoadingUseCase(
@@ -65,7 +69,9 @@ public struct PDFViewerView: View {
                 onClose: onClose,
                 moreMenuDependencies: moreMenuDependencies,
                 downloadDependencies: downloadDependencies,
-                onLinkTapped: onLinkTapped
+                onLinkTapped: onLinkTapped,
+                trackingUseCase: trackingUseCase,
+                onViewerPresented: onViewerPresented
             )
         }
 
@@ -84,7 +90,9 @@ public struct PDFViewerView: View {
             onClose: @escaping @MainActor () -> Void,
             moreMenuDependencies: PDFViewerTrailingPopoverDependencies? = nil,
             downloadDependencies: PDFViewerTrailingPopoverDependencies? = nil,
-            onLinkTapped: @escaping @MainActor (URL) -> Void
+            onLinkTapped: @escaping @MainActor (URL) -> Void,
+            trackingUseCase: some PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase(),
+            onViewerPresented: @escaping @MainActor () -> Void = {}
         ) {
             self.actionContext = actionContext
             self.pdfDocumentSource = pdfDocumentSource
@@ -95,6 +103,8 @@ public struct PDFViewerView: View {
             self.node = node
             self.nearestOutlineItemUseCase = nearestOutlineItemUseCase
             self.fileName = fileName
+            self.trackingUseCase = trackingUseCase
+            self.onViewerPresented = onViewerPresented
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
             self.moreMenuDependencies = moreMenuDependencies
@@ -128,7 +138,8 @@ public struct PDFViewerView: View {
                 fileName: dependency.fileName,
                 actionContext: dependency.actionContext,
                 hasMoreAction: dependency.moreMenuDependencies != nil,
-                hasDownloadAction: dependency.downloadDependencies != nil
+                hasDownloadAction: dependency.downloadDependencies != nil,
+                trackingUseCase: dependency.trackingUseCase
             )
         )
         _viewModel = State(initialValue: viewModel)
@@ -161,7 +172,10 @@ public struct PDFViewerView: View {
                             }
                         },
                         onIsScrolledToTopChange: { viewModel.isScrolledToTopDidChange($0) },
-                        onInitialPageNavigationApplied: { viewModel.initialPageNavigationDidApply() }
+                        onInitialPageNavigationApplied: { viewModel.initialPageNavigationDidApply() },
+                        onSearchSessionDidBegin: { viewModel.searchSessionDidBegin($0) },
+                        onSearchSessionDidEnd: { viewModel.searchSessionDidEnd($0) },
+                        onSearchResultDidChange: { viewModel.searchResultDidChange(sessionID: $0, generationID: $1, resultID: $2) }
                     )
                     .ignoresSafeArea()
                     // Makes Liquid Glass navbar/toolbar appearance update more

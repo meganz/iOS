@@ -132,6 +132,29 @@ extension FindNavigatorPresentationTests {
             #expect(pdfView.document?.isFinding == true)
         }
 
+        @Test func sessionCallbacks_reportCurrentSessionBeginAndEndOnce() throws {
+            let (window, pdfView, handler, interaction) = try makeAttachedHandler()
+            defer { window.isHidden = true }
+            var begunSessionIDs: [UUID] = []
+            var endedSessionIDs: [UUID] = []
+            handler.onSearchSessionDidBegin = { begunSessionIDs.append($0) }
+            handler.onSearchSessionDidEnd = { endedSessionIDs.append($0) }
+            let earlierSession = try #require(
+                handler.findInteraction(interaction, sessionFor: pdfView) as? PDFViewFindSession
+            )
+            let currentSession = try #require(
+                handler.findInteraction(interaction, sessionFor: pdfView) as? PDFViewFindSession
+            )
+
+            handler.findInteraction(interaction, didBegin: currentSession)
+            handler.findInteraction(interaction, didEnd: earlierSession)
+            handler.findInteraction(interaction, didEnd: currentSession)
+            handler.findInteraction(interaction, didEnd: currentSession)
+
+            #expect(begunSessionIDs == [currentSession.analyticsID])
+            #expect(endedSessionIDs == [currentSession.analyticsID])
+        }
+
         @Test func overlappingSessions_keepOneKeyboardInsetUntilCurrentSessionEnds() async throws {
             let notificationCenter = NotificationCenter()
             let (window, pdfView, handler, interaction) = try makeAttachedHandler(
@@ -393,6 +416,42 @@ extension FindNavigatorPresentationTests {
             let nextProvider = try #require(nextInteraction.optionsMenuProvider)
             let nextMenu = try #require(nextProvider(defaultOptions))
             #expect(nextMenu.children.compactMap { ($0 as? UIAction)?.state } == [.off])
+        }
+
+        @Test func nativeFindNavigation_reportsSessionAndDistinctResultPositions() async throws {
+            let (window, _, handler, interaction) = try makeAttachedHandler()
+            defer { window.isHidden = true }
+            var sessions: [UUID] = []
+            var results: [(UUID, UUID, Int)] = []
+            handler.onSearchSessionDidBegin = { sessions.append($0) }
+            handler.onSearchResultChanged = { results.append(($0, $1, $2)) }
+            handler.presentSearch()
+            for _ in 0..<20 where interaction.activeFindSession == nil {
+                try await Task.sleep(for: .milliseconds(100))
+            }
+            let session = try #require(interaction.activeFindSession)
+            defer { handler.dismissSearch() }
+            session.performSearch(query: "alpha", options: nil)
+            for _ in 0..<20 where session.resultCount != 2 {
+                try await Task.sleep(for: .milliseconds(100))
+            }
+            try #require(session.resultCount == 2)
+            if session.highlightedResultIndex == NSNotFound {
+                session.highlightNextResult(in: .forward)
+            }
+            let initial = session.highlightedResultIndex
+            try #require(initial != NSNotFound)
+            results.removeAll()
+            session.highlightNextResult(in: .forward)
+            let next = session.highlightedResultIndex
+            session.highlightNextResult(in: .backward)
+
+            #expect(next != initial)
+            #expect(session.highlightedResultIndex == initial)
+            #expect(sessions.count == 1)
+            #expect(results.map { $0.2 } == [initial, next, next, initial])
+            #expect(Set(results.map { $0.0 }) == Set(sessions))
+            #expect(Set(results.map { $0.1 }).count == 1)
         }
 
         private func jumpToFirstResult(in session: UIFindSession) async throws {

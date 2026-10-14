@@ -9,6 +9,8 @@ extension PDFViewerRevampRouter {
         barItem: UIBarButtonItem?,
         context: DocumentPreviewContext,
         linkActions: some DocumentPreviewLinkActionRouting = DocumentPreviewLinkActionRouter(),
+        trackingUseCase: some PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase(),
+        analyticsSource: PDFViewerAnalyticsSource,
         onPresented: PDFViewerTrailingPopoverDependencies.OnPresentationCompletion?
     ) {
         // UIKit skips the presentation, and so never calls `onPresented`,
@@ -23,9 +25,14 @@ extension PDFViewerRevampRouter {
             presenter: presenter,
             context: context,
             linkActions: linkActions,
+            trackingUseCase: trackingUseCase,
+            analyticsSource: analyticsSource,
             sender: nodeActionsSender(anchor: anchor, barItem: barItem)
         )
-        presenter.present(actionsViewController, animated: true, completion: onPresented)
+        presenter.present(actionsViewController, animated: true) {
+            trackingUseCase.track(.moreMenuOpened)
+            onPresented?()
+        }
     }
 
     /// Use an "anchor" UI element to help position and animate the node actions

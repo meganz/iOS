@@ -15,6 +15,13 @@ protocol MEGAPDFViewDocumentTapDelegate: AnyObject {
     func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView)
 }
 
+@MainActor
+protocol MEGAPDFViewSearchObservationDelegate: AnyObject {
+    func pdfView(_ pdfView: MEGAPDFView, searchSessionDidBegin sessionID: UUID)
+    func pdfView(_ pdfView: MEGAPDFView, searchSessionDidEnd sessionID: UUID)
+    func pdfView(_ pdfView: MEGAPDFView, searchResultDidChange sessionID: UUID, generationID: UUID, resultID: Int)
+}
+
 final class MEGAPDFView: PDFView {
     private let autoFittingViewModel = AutoFittingPDFViewModel()
     private let programmaticPageScrollViewModel = PDFViewerProgrammaticPageScrollViewModel()
@@ -27,6 +34,7 @@ final class MEGAPDFView: PDFView {
 
     weak var pageObservationDelegate: (any MEGAPDFViewPageObservationDelegate)?
     weak var documentTapDelegate: (any MEGAPDFViewDocumentTapDelegate)?
+    weak var searchObservationDelegate: (any MEGAPDFViewSearchObservationDelegate)?
 
     /// Applied once the initial fit has scrolled to the top, which would
     /// otherwise undo the jump.
@@ -140,6 +148,18 @@ final class MEGAPDFView: PDFView {
         }
 
         searchInteractionHandler.attachToPDFView(self)
+        searchInteractionHandler.onSearchSessionDidBegin = { [weak self] sessionID in
+            guard let self else { return }
+            searchObservationDelegate?.pdfView(self, searchSessionDidBegin: sessionID)
+        }
+        searchInteractionHandler.onSearchSessionDidEnd = { [weak self] sessionID in
+            guard let self else { return }
+            searchObservationDelegate?.pdfView(self, searchSessionDidEnd: sessionID)
+        }
+        searchInteractionHandler.onSearchResultChanged = { [weak self] sessionID, generationID, resultID in
+            guard let self else { return }
+            searchObservationDelegate?.pdfView(self, searchResultDidChange: sessionID, generationID: generationID, resultID: resultID)
+        }
     }
 
     private func configurePagingObservation() {
@@ -258,6 +278,9 @@ struct PDFDisplayerView: UIViewRepresentable {
     let onTap: @MainActor () -> Void
     let onIsScrolledToTopChange: @MainActor (Bool) -> Void
     let onInitialPageNavigationApplied: @MainActor () -> Void
+    var onSearchSessionDidBegin: @MainActor (UUID) -> Void = { _ in }
+    var onSearchSessionDidEnd: @MainActor (UUID) -> Void = { _ in }
+    var onSearchResultDidChange: @MainActor (UUID, UUID, Int) -> Void = { _, _, _ in }
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -272,6 +295,7 @@ struct PDFDisplayerView: UIViewRepresentable {
         pdfView.delegate = context.coordinator
         pdfView.documentTapDelegate = context.coordinator
         pdfView.pageObservationDelegate = context.coordinator
+        pdfView.searchObservationDelegate = context.coordinator
         pdfView.configure(document: document)
         return pdfView
     }
@@ -291,7 +315,8 @@ struct PDFDisplayerView: UIViewRepresentable {
     final class Coordinator: NSObject,
                              PDFViewDelegate,
                              MEGAPDFViewPageObservationDelegate,
-                             MEGAPDFViewDocumentTapDelegate {
+                             MEGAPDFViewDocumentTapDelegate,
+                             MEGAPDFViewSearchObservationDelegate {
         var parent: PDFDisplayerView
 
         init(parent: PDFDisplayerView) {
@@ -340,6 +365,18 @@ struct PDFDisplayerView: UIViewRepresentable {
                 }
                 parent.searchRequest = nil
             }
+        }
+
+        func pdfView(_ pdfView: MEGAPDFView, searchSessionDidBegin sessionID: UUID) {
+            parent.onSearchSessionDidBegin(sessionID)
+        }
+
+        func pdfView(_ pdfView: MEGAPDFView, searchSessionDidEnd sessionID: UUID) {
+            parent.onSearchSessionDidEnd(sessionID)
+        }
+
+        func pdfView(_ pdfView: MEGAPDFView, searchResultDidChange sessionID: UUID, generationID: UUID, resultID: Int) {
+            parent.onSearchResultDidChange(sessionID, generationID, resultID)
         }
 
         nonisolated func pdfViewWillClick(onLink sender: PDFView, with url: URL) {

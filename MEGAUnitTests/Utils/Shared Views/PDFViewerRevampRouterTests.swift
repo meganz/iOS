@@ -5,7 +5,41 @@ import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPDFViewer
 import Testing
+
+struct PDFViewerRevampRouterAnalyticsSourceTests {
+    @Test(arguments: [true, false])
+    func explicitOfflineOrigin_isNotInferredFromNodePresence(hasNode: Bool) {
+        let context = DocumentPreviewContext(isLink: false, fileLink: nil, isFromSharedItem: false)
+        #expect(PDFViewerRevampRouter.analyticsSource(
+            context: context, hasNode: hasNode, explicitSource: .offline
+        ) == .offline)
+    }
+
+    @Test(arguments: [true, false])
+    func missingOrigin_preservesUnknownOrCoarseNode(hasNode: Bool) {
+        let context = DocumentPreviewContext(isLink: false, fileLink: nil, isFromSharedItem: false)
+        #expect(PDFViewerRevampRouter.analyticsSource(
+            context: context, hasNode: hasNode
+        ) == (hasNode ? .node : .unknown))
+    }
+
+    @Test func fileLinkContext_hasFileLinkSource() {
+        let context = DocumentPreviewContext(isLink: true, fileLink: "fixture-link", isFromSharedItem: false)
+        #expect(PDFViewerRevampRouter.analyticsSource(context: context, hasNode: true) == .fileLink)
+    }
+
+    @Test func folderLinkContext_hasFolderLinkSource() {
+        let context = DocumentPreviewContext(isLink: true, fileLink: nil, isFromSharedItem: false)
+        #expect(PDFViewerRevampRouter.analyticsSource(context: context, hasNode: true) == .folderLink)
+    }
+
+    @Test func chatContext_hasChatSource() {
+        let context = DocumentPreviewContext(chatId: 1, messageId: 2)
+        #expect(PDFViewerRevampRouter.analyticsSource(context: context, hasNode: true) == .chat)
+    }
+}
 
 @Suite("PDFViewerRevampRouter.canOpen")
 struct PDFViewerRevampRouterCanOpenTests {

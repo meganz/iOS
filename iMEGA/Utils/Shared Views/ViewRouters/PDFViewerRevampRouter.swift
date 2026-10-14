@@ -33,6 +33,17 @@ import UIKit
         return isFeatureEnabled && fileName.pathExtension == "pdf"
     }
 
+    static func analyticsSource(
+        context: DocumentPreviewContext,
+        hasNode: Bool,
+        explicitSource: PDFViewerAnalyticsSource? = nil
+    ) -> PDFViewerAnalyticsSource {
+        if let explicitSource { return explicitSource }
+        if context.chatId != nil { return .chat }
+        if context.isLink { return context.isFolderLink ? .folderLink : .fileLink }
+        return hasNode ? .node : .unknown
+    }
+
     /// Viewer for a PDF downloaded from `resolvedNode` as it is.
     /// - A folder-link or chat preview room node must already be authorised.
     @objc @MainActor static func viewControllerForResolvedNode(_ resolvedNode: MEGANode, context: DocumentPreviewContext) -> UIViewController {
@@ -54,6 +65,34 @@ import UIKit
         )
     }
 
+    @objc @MainActor static func viewControllerForOfflineFilePath(_ filePath: String) -> UIViewController {
+        makeViewController(
+            fileName: filePath.lastPathComponent,
+            pdfDocumentSource: .local(URL(fileURLWithPath: filePath)),
+            node: nil,
+            context: DocumentPreviewContext(isLink: false, fileLink: nil, isFromSharedItem: false),
+            explicitSource: .offline
+        )
+    }
+
+    @MainActor
+    static func requestDownload(
+        fileURL: URL?,
+        from presenter: UIViewController?,
+        anchor: UIView?,
+        barItem: UIBarButtonItem?,
+        source: PDFViewerAnalyticsSource,
+        trackingUseCase: some PDFViewerTrackingUseCaseProtocol,
+        activityPresenter: some PDFViewerActivityPresenting = PDFViewerActivityPresenter(),
+        onPresented: PDFViewerTrailingPopoverDependencies.OnPresentationCompletion?
+    ) {
+        if fileURL != nil { trackingUseCase.track(.downloadRequested(source)) }
+        activityPresenter.present(
+            fileURL: fileURL, from: presenter, anchor: anchor, barItem: barItem,
+            onPresented: onPresented
+        )
+    }
+
     // MARK: - Private
 
     @MainActor
@@ -62,8 +101,10 @@ import UIKit
         pdfDocumentSource: PDFViewerDocumentSource,
         node: MEGANode?,
         context: DocumentPreviewContext,
+        explicitSource: PDFViewerAnalyticsSource? = nil,
         lastPageUseCase: (any PDFViewerLastPageUseCaseProtocol)? = nil,
         activityPresenter: any PDFViewerActivityPresenting = PDFViewerActivityPresenter(),
+        trackingUseCase: some PDFViewerTrackingUseCaseProtocol = PDFViewerTrackingUseCase(),
         viewerFactory: @MainActor (PDFViewerView.Dependency) -> UIViewController = {
             PDFViewerViewController(dependency: $0)
         }
@@ -83,6 +124,7 @@ import UIKit
             fingerprintRepository: PDFViewerDocumentFingerprintRepository(sdk: MEGASdk.shared)
         )
         let linkActions = DocumentPreviewLinkActionRouter(activityPresenter: activityPresenter)
+        let source = analyticsSource(context: context, hasNode: node != nil, explicitSource: explicitSource)
         let localURL: URL? = if case .local(let url) = pdfDocumentSource {
             url
         } else {
@@ -106,6 +148,7 @@ import UIKit
                     presentNodeActions(
                         for: node, from: presentedViewer, anchor: moreAnchor,
                         barItem: moreBarItem, context: context, linkActions: linkActions,
+                        trackingUseCase: trackingUseCase, analyticsSource: source,
                         onPresented: onPresented
                     )
                 },
@@ -116,9 +159,11 @@ import UIKit
             ),
             downloadDependencies: .init(
                 onTapped: { onPresented in
-                    activityPresenter.present(
+                    requestDownload(
                         fileURL: localURL, from: presentedViewer, anchor: downloadAnchor,
-                        barItem: downloadBarItem, onPresented: onPresented
+                        barItem: downloadBarItem, source: source,
+                        trackingUseCase: trackingUseCase, activityPresenter: activityPresenter,
+                        onPresented: onPresented
                     )
                 },
                 anchorReadyCallbacks: .init(
@@ -129,6 +174,10 @@ import UIKit
             onLinkTapped: { url in
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)
+            },
+            trackingUseCase: trackingUseCase,
+            onViewerPresented: {
+                if source == .offline { trackingUseCase.track(.offlineFileOpened) }
             }
         )
 

@@ -3,9 +3,14 @@ import UIKit
 
 public final class PDFViewerViewController: UIViewController {
     private let viewerViewController: UIHostingController<PDFViewerView>
+    private let lifecycleTracking: PDFViewerLifecycleTracking
 
     public init(dependency: PDFViewerView.Dependency) {
         viewerViewController = UIHostingController(rootView: PDFViewerView(dependency: dependency))
+        lifecycleTracking = PDFViewerLifecycleTracking(
+            trackingUseCase: dependency.trackingUseCase,
+            onViewerPresented: dependency.onViewerPresented
+        )
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,6 +32,18 @@ public final class PDFViewerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         attachViewerView()
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        lifecycleTracking.viewerDidAppear()
+    }
+
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isBeingDismissed || isMovingFromParent || navigationController?.isBeingDismissed == true {
+            lifecycleTracking.viewerDidClose()
+        }
     }
 
     private func attachViewerView() {
