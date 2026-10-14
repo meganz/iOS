@@ -13,6 +13,8 @@ import MEGATextEditor
 final class TextEditorViewRouter: NSObject {
     private weak var navigationController: UINavigationController?
     private weak var baseViewController: UIViewController?
+    /// The folder picker of a new file, while it is on screen.
+    private weak var browserNavigationController: UINavigationController?
     private weak var presenter: UIViewController?
     
     private var textFile: TextFile
@@ -205,15 +207,22 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         browserVC.browserAction = .newFileSave
         let browserNC = MEGANavigationController(rootViewController: browserVC)
         browserNC.setToolbarHidden(false, animated: false)
+        browserNavigationController = browserNC
         baseViewController?.present(browserNC, animated: true, completion: nil)
     }
     
+    /// Closes the editor together with any screen on top of it, such as the folder picker.
     func dismissTextEditorVC() {
-        dismiss()
+        guard let presentingViewController = navigationController?.presentingViewController else {
+            dismiss()
+            return
+        }
+        presentingViewController.dismiss(animated: true, completion: nil)
     }
     
+    /// Closes only the folder picker. Without a picker on screen it does nothing, so the editor stays open.
     func dismissBrowserVC() {
-        dismiss()
+        browserNavigationController?.dismiss(animated: true, completion: nil)
     }
     
     private func dismiss() {

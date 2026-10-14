@@ -263,6 +263,38 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.presentPreviewDocVC_calledTimes, 1)
     }
 
+    @MainActor func testAction_dismissTextEditorVC_whileLoading_downloadEndDoesNothing() async throws {
+        let textFile = TextFile(fileName: "binary")
+        let mockRouter = MockTextEditorViewRouter()
+
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let testPath = directory.appendingPathComponent(textFile.fileName).path
+        // A binary file opens the document preview when its download ends.
+        try Data([0x68, 0x69, 0x00]).write(to: URL(fileURLWithPath: testPath))
+        let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .load,
+            uploadFileUseCase: MockUploadFileUseCase(),
+            downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity)),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            nodeEntity: NodeEntity(handle: 123, isFile: true)
+        )
+
+        viewModel.dispatch(.setUpView)
+        viewModel.dispatch(.dismissTextEditorVC)
+        await Task.megaYield()
+
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.presentPreviewDocVC_calledTimes, 0)
+    }
+
     @MainActor func testAction_setUpView_Load_tempDownload_failed() async {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_failed")
         let mockRouter = MockTextEditorViewRouter()
@@ -408,7 +440,69 @@ final class TextEditorViewModelTests: XCTestCase {
              ]
         )
     }
-    
+
+    @MainActor func testAction_cancelAfterFailedSave_showsDiscardChangeAlert() {
+        let textFile = TextFile(
+            fileName: "testAction_cancelAfterFailedSave_showsDiscardChangeAlert",
+            content: "test content",
+            size: 0,
+            encode: String.Encoding.utf8.rawValue
+        )
+        let mockUploadFileUC = MockUploadFileUseCase(uploadFileResult: .failure(.upload), filename: textFile.fileName)
+        let viewModel = TextEditorViewModel(
+            router: MockTextEditorViewRouter(),
+            textFile: textFile,
+            textEditorMode: .edit,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            parentHandle: 123
+        )
+        let editContent = "edit content"
+
+        test(viewModel: viewModel,
+             actions: [.saveText(content: editContent), .cancelText(content: editContent)],
+             expectedCommands: [.startLoading,
+                                .stopLoading,
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload),
+                                .showDiscardChangeAlert
+             ]
+        )
+        XCTAssertEqual(textFile.content, "test content")
+    }
+
+    @MainActor func testAction_saveText_edit_tempFileWriteFails_stopsLoadingAndShowsError() {
+        let textFile = TextFile(
+            fileName: "testAction_saveText_edit_tempFileWriteFails",
+            content: "test content",
+            size: 0,
+            encode: String.Encoding.utf8.rawValue
+        )
+        // The temp file goes into a folder that does not exist, so the write fails.
+        let missingFolderFileName = UUID().uuidString + "/" + textFile.fileName
+        let viewModel = TextEditorViewModel(
+            router: MockTextEditorViewRouter(),
+            textFile: textFile,
+            textEditorMode: .edit,
+            uploadFileUseCase: MockUploadFileUseCase(uploadFileResult: .success, filename: missingFolderFileName),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            parentHandle: 123
+        )
+
+        test(viewModel: viewModel,
+             action: .saveText(content: "edit content"),
+             expectedCommands: [.startLoading,
+                                .stopLoading,
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)
+             ]
+        )
+    }
+
     @MainActor func testAction_saveText_create_hasParent_duplicateName() {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
@@ -474,7 +568,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
-             expectedCommands: []
+             expectedCommands: [.startLoading, .stopLoading]
         )
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
@@ -507,10 +601,12 @@ final class TextEditorViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
-             expectedCommands: [.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
+             expectedCommands: [.startLoading,
+                                .stopLoading,
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
         )
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
-        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 0)
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
     
@@ -575,7 +671,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
-             expectedCommands: []
+             expectedCommands: [.startLoading, .stopLoading]
         )
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 1)
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
@@ -606,11 +702,91 @@ final class TextEditorViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
-             expectedCommands: [.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
+             expectedCommands: [.startLoading,
+                                .stopLoading,
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
         )
         XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 1)
-        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 0)
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
+    }
+    
+    @MainActor func testAction_cancelAfterFailedCreate_showsDiscardChangeAlert() {
+        let textFile = TextFile(fileName: "testAction_cancelAfterFailedCreate_showsDiscardChangeAlert")
+        let mockRouter = MockTextEditorViewRouter()
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .create,
+            uploadFileUseCase: MockUploadFileUseCase(duplicate: false, uploadFileResult: .failure(.upload), filename: textFile.fileName),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            parentHandle: 123
+        )
+        let createContent = "create content"
+
+        test(viewModel: viewModel,
+             actions: [.saveText(content: createContent), .cancelText(content: createContent)],
+             expectedCommands: [.startLoading,
+                                .stopLoading,
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload),
+                                .showDiscardChangeAlert
+             ]
+        )
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 0)
+    }
+
+    @MainActor func testAction_uploadFile_create_success_closesPickerThenEditorWithoutCloseEvent() {
+        let textFile = TextFile(fileName: "testAction_uploadFile_create_success")
+        let mockRouter = MockTextEditorViewRouter()
+        let tracker = MockTracker()
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .create,
+            uploadFileUseCase: MockUploadFileUseCase(uploadFileResult: .success, filename: textFile.fileName),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            parentHandle: 123,
+            tracker: tracker
+        )
+
+        test(viewModel: viewModel,
+             action: .uploadFile,
+             expectedCommands: [.startLoading, .stopLoading]
+        )
+        XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
+        XCTAssertTrue(tracker.trackedEventIdentifiers.isEmpty)
+    }
+
+    @MainActor func testAction_uploadFile_create_failed_keepsEditorOpen() {
+        let textFile = TextFile(fileName: "testAction_uploadFile_create_failed")
+        let mockRouter = MockTextEditorViewRouter()
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .create,
+            uploadFileUseCase: MockUploadFileUseCase(uploadFileResult: .failure(.upload), filename: textFile.fileName),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            parentHandle: 123
+        )
+
+        test(viewModel: viewModel,
+             action: .uploadFile,
+             expectedCommands: [.startLoading,
+                                .stopLoading,
+                                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
+        )
+        XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 0)
     }
     
     @MainActor func testAction_renameFile_create() {
@@ -650,7 +826,7 @@ final class TextEditorViewModelTests: XCTestCase {
     @MainActor func testAction_renameFileTo_create() {
         let textFile = TextFile(fileName: "testAction_renameFileTo_create")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false)
+        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -673,7 +849,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .renameFileTo(newInputName: newName),
-             expectedCommands: []
+             expectedCommands: [.startLoading]
         )
         
         XCTAssertEqual(mockUploadFileUC.newName, newName)
@@ -794,7 +970,26 @@ final class TextEditorViewModelTests: XCTestCase {
         
         assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuToolbarEvent(), EditTextFileActionEvent()])
     }
-    
+
+    /// A file opened from the cloud gets its text file from `TextFile(fileName:size:)`, so the size must reach the edit check.
+    @MainActor func testAction_editFile_view_ineditableSizeFromNodeSize() {
+        let viewModel = TextEditorViewModel(
+            router: MockTextEditorViewRouter(),
+            textFile: TextFile(fileName: "large.txt", size: TextFile.maxEditableFileSize),
+            textEditorMode: .view,
+            uploadFileUseCase: MockUploadFileUseCase(),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase()
+        )
+
+        test(viewModel: viewModel,
+             action: .editFile,
+             expectedCommands: [.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)]
+        )
+    }
+
     @MainActor func testAction_editAfterOpen_view_editableSize() {
         let textFile = TextFile(
             fileName: "testAction_editAfterOpen_view_editableSize",

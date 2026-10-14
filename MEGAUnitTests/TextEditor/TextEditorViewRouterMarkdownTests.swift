@@ -221,4 +221,49 @@ struct TextEditorViewRouterMarkdownTests {
 
         #expect(alert.actions.map(\.title) == [Strings.Localizable.cancel])
     }
+
+    // MARK: - Dismiss
+
+    /// Shows the editor of `router` in a window, presented the way `start()` presents it.
+    private static func presentEditor(of router: TextEditorViewRouter) -> (window: UIWindow, presenter: UIViewController, editor: UIViewController) {
+        let presenter = UIViewController()
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 700))
+        window.rootViewController = presenter
+        window.makeKeyAndVisible()
+        let editor = router.build()
+        presenter.present(editor, animated: false)
+        return (window, presenter, editor)
+    }
+
+    /// Dismissal is animated, so the test waits until the condition holds.
+    private static func waitUntil(_ condition: () -> Bool, sourceLocation: SourceLocation = #_sourceLocation) async throws {
+        for _ in 0..<300 where !condition() {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        if !condition() { Issue.record("The condition did not hold within 3 seconds", sourceLocation: sourceLocation) }
+    }
+
+    @Test(arguments: ["notes.md", "notes.txt"])
+    func closingTheEditorAlsoClosesTheScreenOnTopOfIt(fileName: String) async throws {
+        let sut = Self.makeCreateRouter(fileName: fileName)
+        let (window, presenter, editor) = Self.presentEditor(of: sut)
+        defer { window.isHidden = true }
+        // Stands for the folder picker, which the editor presents.
+        editor.present(UIViewController(), animated: false)
+
+        sut.dismissTextEditorVC()
+
+        try await Self.waitUntil { presenter.presentedViewController == nil }
+    }
+
+    @Test func closingThePickerWhenNoPickerIsShownKeepsTheEditor() async throws {
+        let sut = Self.makeCreateRouter(fileName: "notes.md")
+        let (window, presenter, editor) = Self.presentEditor(of: sut)
+        defer { window.isHidden = true }
+
+        sut.dismissBrowserVC()
+        try await Task.sleep(for: .milliseconds(500))
+
+        #expect(presenter.presentedViewController === editor)
+    }
 }

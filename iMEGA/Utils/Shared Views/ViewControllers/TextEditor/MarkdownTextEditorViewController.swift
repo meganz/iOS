@@ -187,7 +187,6 @@ extension MarkdownTextEditorViewController: ViewType {
             },
             onReplace: { [weak self] in
                 self?.viewModel.dispatch(.uploadFile)
-                self?.viewModel.dispatch(.dismissTextEditorVC)
             }
         )
         UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)

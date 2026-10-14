@@ -14,7 +14,7 @@
     }
     
     @objc convenience init(fileName: String, size: UInt64) {
-        self.init(fileName: fileName, content: "", size: 0, encode: String.Encoding.utf8.rawValue)
+        self.init(fileName: fileName, content: "", size: size, encode: String.Encoding.utf8.rawValue)
     }
     
     convenience init(fileName: String) {

@@ -152,10 +152,15 @@ final class TextEditorViewModel: ViewModelType {
         case .renameFileTo(let newInputName):
             renameFileTo(newInputName: newInputName)
         case .uploadFile:
+            // Replace in the duplicate name alert. The folder picker, if any, closes. The editor waits for the upload.
+            router.dismissBrowserVC()
             uploadFile()
         case .dismissTextEditorVC:
             tracker.trackAnalyticsEvent(with: TextEditorCloseMenuToolbarEvent())
             saveReadingPosition()
+            // A download that ends after Close must not open the preview or keep this view model alive.
+            downloadTask?.cancel()
+            downloadTask = nil
             router.dismissTextEditorVC()
         case .editFile:
             tracker.trackAnalyticsEvent(with: TextEditorEditMenuToolbarEvent())
@@ -211,11 +216,12 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func saveText(content: String) {
-        textFile.content = content
         if textEditorMode == .edit {
             invokeCommand?(.startLoading)
-            uploadFile()
+            // The saved text changes only when the upload succeeds. After a failure, Cancel still warns about the edits.
+            uploadFile(content: content)
         } else if textEditorMode == .create {
+            textFile.content = content
             if let parentHandle = parentHandle {
                 uploadTo(parentHandle)
             } else {
@@ -242,14 +248,18 @@ final class TextEditorViewModel: ViewModelType {
         uploadTo(parentHandle)
     }
     
-    private func uploadFile() {
+    /// Uploads `content`, or the file's text when nil.
+    private func uploadFile(content: String? = nil) {
         guard let parentHandle = parentHandle else { return }
         let fileName = textFile.fileName
-        let content = textFile.content
+        let content = content ?? textFile.content
         let tempUrl = uploadFileUseCase.tempURL(forFilename: fileName)
         do {
             try content.write(toFile: tempUrl.path, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
             let uploadOptions = UploadOptionsEntity(isSourceTemporary: false, pitagTarget: .cloudDrive)
+            if textEditorMode == .create {
+                invokeCommand?(.startLoading)
+            }
             uploadFileUseCase.uploadFile(
                 tempUrl,
                 toParent: parentHandle,
@@ -257,14 +267,17 @@ final class TextEditorViewModel: ViewModelType {
                 start: nil,
                 progress: nil
             ) { result in
-                if self.textEditorMode == .edit {
-                    self.invokeCommand?(.stopLoading)
-                }
+                self.invokeCommand?(.stopLoading)
                 
                 switch result {
                 case .failure:
+                    // A new file stays open with its text. It has no saved text yet, so Cancel warns about the text.
+                    if self.textEditorMode == .create {
+                        self.textFile.content = ""
+                    }
                     self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload))
                 case .success(let transfer):
+                    self.textFile.content = content
                     // after a successful upload (aka file was edited), the old reading position is
                     // stale therefore we need to delete it.
                     self.deleteReadingPosition()
@@ -282,14 +295,15 @@ final class TextEditorViewModel: ViewModelType {
                     if self.textEditorMode == .edit {
                         self.textEditorMode = .view
                         self.setupView(shallUpdateContent: false)
+                    } else if self.textEditorMode == .create {
+                        self.router.dismissTextEditorVC()
                     }
                 }
             }
-            if self.textEditorMode == .create {
-                router.dismissTextEditorVC()
-            }
         } catch {
             MEGALogDebug("Could not write to file \(tempUrl) with error \(error.localizedDescription)")
+            invokeCommand?(.stopLoading)
+            invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload))
         }
     }
     

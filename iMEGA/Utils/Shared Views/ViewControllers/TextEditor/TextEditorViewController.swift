@@ -286,7 +286,6 @@ extension TextEditorViewController: ViewType {
             },
             onReplace: { [weak self] in
                 self?.viewModel.dispatch(.uploadFile)
-                self?.viewModel.dispatch(.dismissTextEditorVC)
             }
         )
         UIApplication.mnz_presentingViewController().present(duplicateNameAC, animated: true, completion: nil)

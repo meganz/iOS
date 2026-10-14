@@ -283,6 +283,33 @@ struct MarkdownTextEditorViewControllerTests {
         #expect(fixture.router.dismissTextEditorVC_calledTimes == 1)
     }
 
+    /// Replace uploads the new file. The editor closes once, after the upload, and no Close tap is tracked.
+    @Test func replaceInDuplicateNameAlertUploadsWithoutCloseEvent() throws {
+        let fixture = Self.makeFixture(mode: .create, parentHandle: 5, nodeEntity: nil)
+        let window = Self.makeSceneWindow(rootViewController: fixture.sut)
+        defer { window.isHidden = true }
+        fixture.sut.executeCommand(.showDuplicateNameAlert(TextEditorDuplicateNameAlertModel(
+            alertTitle: "Name taken",
+            alertMessage: "A file with this name exists",
+            cancelButtonTitle: Strings.Localizable.cancel,
+            replaceButtonTitle: Strings.Localizable.replace,
+            renameButtonTitle: Strings.Localizable.rename
+        )))
+        let alert = try #require(fixture.sut.presentedViewController as? UIAlertController)
+        let replace = try #require(alert.actions.first { $0.title == Strings.Localizable.replace })
+
+        // Test-only way to run the handler of an alert action.
+        typealias AlertActionHandler = @convention(block) (UIAlertAction) -> Void
+        unsafeBitCast(replace.value(forKey: "handler") as AnyObject, to: AlertActionHandler.self)(replace)
+
+        #expect(fixture.router.dismissBrowserVC_calledTimes == 1)
+        #expect(fixture.router.dismissTextEditorVC_calledTimes == 1)
+        let closeEventName = String(describing: type(of: TextEditorCloseMenuToolbarEvent()))
+        let names = fixture.tracker.trackedEventIdentifiers.map { String(describing: type(of: $0)) }
+        #expect(!names.contains(closeEventName))
+        alert.dismiss(animated: false)
+    }
+
     @Test func exportTapPassesBarButtonItemAsSender() throws {
         let fixture = Self.makeFixture(accessLevel: .owner)
         Self.configure(fixture.sut, mode: .view, accessLevel: .owner)
