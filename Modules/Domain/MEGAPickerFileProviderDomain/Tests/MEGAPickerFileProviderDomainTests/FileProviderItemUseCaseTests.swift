@@ -46,6 +46,28 @@ struct FileProviderItemUseCaseTests {
         #expect(item.parentIdentifier == .trashContainer)
     }
 
+    @Test
+    func item_forNodeInAFolder_hasTheFolderAsParent() throws {
+        let folder = NodeEntity(handle: 20, base64Handle: "20", parentHandle: Self.rootNode.handle, isFolder: true)
+        let node = NodeEntity(handle: 10, base64Handle: "10", parentHandle: folder.handle, isFile: true)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [folder, node]))
+
+        let item = try sut.item(for: NSFileProviderItemIdentifier("10"))
+
+        #expect(item.parentIdentifier == NSFileProviderItemIdentifier("20"))
+    }
+
+    @Test
+    func item_forAnEarlierVersionOfAFile_throwsNoSuchItem() {
+        let file = NodeEntity(handle: 20, base64Handle: "20", parentHandle: Self.rootNode.handle, isFile: true)
+        let version = NodeEntity(handle: 10, base64Handle: "10", parentHandle: file.handle, isFile: true)
+        let sut = makeSUT(nodeRepo: makeNodeRepo(nodes: [file, version]))
+
+        #expect(throws: NSFileProviderError(.noSuchItem)) {
+            try sut.item(for: NSFileProviderItemIdentifier("10"))
+        }
+    }
+
     @Test(arguments: [NSFileProviderItemIdentifier("10"), NSFileProviderItemIdentifier("not a handle"), .rootContainer, .trashContainer])
     func item_whenNodeDoesNotExist_throwsNoSuchItem(identifier: NSFileProviderItemIdentifier) {
         let sut = makeSUT(nodeRepo: MockNodeRepository())

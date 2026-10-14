@@ -12,8 +12,8 @@ import MEGARepo
 /// Files shows in step with remote changes.
 final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
     /// Changes MEGA has nowhere to keep. The system sets the last used date whenever a file is opened, including
-    /// when Files hands it over to another app.
-    private static let unsupportedFields: NSFileProviderItemFields = [.lastUsedDate]
+    /// when Files hands it over to another app, and a folder's modification date whenever a file is added to it.
+    private static let unsupportedFields: NSFileProviderItemFields = [.lastUsedDate, .contentModificationDate]
 
     private let domain: NSFileProviderDomain
     private let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
@@ -200,9 +200,20 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         // Returning every changed field as still pending tells the system the fields are unsupported, so it stops
         // sending them for this item until the item changes. Failing instead shows up in Files as an error on the
         // file, which is what opening a file used to do.
-        // Nothing changes in MEGA, so the item as the system knows it is still current. Returning it spares a
-        // login and fetchNodes when the extension was only launched for this call.
-        completionHandler(item, changedFields, false, nil)
+        // The item passed in has an empty version, which returned as is would make the system drop the local
+        // contents and download them again on the next open, so the item is built from the node.
+        let itemUseCase = itemUseCase
+        let identifier = item.itemIdentifier
+        let completion = UncheckedSendableCompletion(completionHandler)
+        Task {
+            do {
+                try await FileProviderSession.shared.ensureReady()
+                completion.handler(ReplicatedFileProviderItem(entity: try itemUseCase.item(for: identifier)), changedFields, false, nil)
+            } catch {
+                MEGALogError("[Picker] Can't provide the item \(identifier.rawValue) for its changed fields: \(error)")
+                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
+            }
+        }
         return Progress()
     }
 

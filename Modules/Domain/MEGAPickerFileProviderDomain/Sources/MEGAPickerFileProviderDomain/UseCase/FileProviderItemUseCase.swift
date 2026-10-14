@@ -3,7 +3,8 @@ import MEGADomain
 
 public protocol FileProviderItemUseCaseProtocol: Sendable {
     /// The item for `identifier`, which is `.rootContainer`, `.trashContainer` or a node's base64 handle.
-    /// - Throws: `NSFileProviderError(.noSuchItem)` when no node in the cloud drive or the rubbish bin matches.
+    /// - Throws: `NSFileProviderError(.noSuchItem)` when no node in the cloud drive or the rubbish bin matches, or
+    ///   the node is an earlier version of a file.
     func item(for identifier: NSFileProviderItemIdentifier) throws -> FileProviderItemEntity
 
     /// One page of the children of a container, leaving out sensitive nodes.
@@ -165,7 +166,8 @@ public struct FileProviderItemUseCase<
         if let rubbishNode = nodeRepo.rubbishNode(), node.parentHandle == rubbishNode.handle {
             return .trashContainer
         }
-        guard let parent = nodeRepo.nodeForHandle(node.parentHandle) else {
+        // Earlier versions of a file are the file node's children, and no longer an item of their own.
+        guard let parent = nodeRepo.nodeForHandle(node.parentHandle), parent.isFolder else {
             throw NSFileProviderError(.noSuchItem)
         }
         return NSFileProviderItemIdentifier(parent.base64Handle)
