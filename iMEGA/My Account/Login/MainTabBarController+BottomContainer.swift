@@ -2,6 +2,8 @@ import MEGAAppPresentation
 import MEGADesignToken
 
 extension MainTabBarController {
+    private static let overlayItemHeightIdentifier = "BottomOverlayItemHeight"
+
     var bottomConstant: CGFloat {
         tabBar.isHidden ? -view.safeAreaInsets.bottom : -tabBar.frame.size.height
     }
@@ -62,9 +64,13 @@ extension MainTabBarController {
             item.view.translatesAutoresizingMaskIntoConstraints = false
             
             if let height = item.height {
-                NSLayoutConstraint.activate([
-                    item.view.heightAnchor.constraint(equalToConstant: height)
-                ])
+                // The view keeps its own height constraint across rebuilds, so replace it rather than stack a second one.
+                item.view.constraints
+                    .filter { $0.identifier == Self.overlayItemHeightIdentifier }
+                    .forEach { $0.isActive = false }
+                let heightConstraint = item.view.heightAnchor.constraint(equalToConstant: height)
+                heightConstraint.identifier = Self.overlayItemHeightIdentifier
+                heightConstraint.isActive = true
             }
         }
     }

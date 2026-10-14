@@ -5,10 +5,13 @@ import UIKit
 /// Coordinates the mini player's presence above the tab bar.
 @MainActor
 public final class MEGAMiniPlayerOverlayCoordinator {
-    public static let preferredHeight: CGFloat = MiniPlayerView.Sizes.reserved
+    /// The height the overlay should give the mini player at the text size of `traitCollection`.
+    public static func preferredHeight(compatibleWith traitCollection: UITraitCollection) -> CGFloat {
+        MiniPlayerView.Sizes.reserved(compatibleWith: traitCollection)
+    }
 
     /// Invoked when a playback session becomes active
-    public var onAttach: ((UIViewController, CGFloat) -> Void)?
+    public var onAttach: ((UIViewController) -> Void)?
 
     /// Invoked when the playback session ends
     public var onDetach: ((UIViewController) -> Void)?
@@ -46,7 +49,7 @@ public final class MEGAMiniPlayerOverlayCoordinator {
         let host = UIHostingController(rootView: MiniPlayerView(vm: viewModel))
         host.view.backgroundColor = .clear
         self.host = host
-        onAttach?(host, Self.preferredHeight)
+        onAttach?(host)
     }
 
     private func detach() {

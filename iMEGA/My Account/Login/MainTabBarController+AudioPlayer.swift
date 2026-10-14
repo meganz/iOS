@@ -206,13 +206,13 @@ extension MainTabBarController {
 
         let coordinator = MEGAMiniPlayerOverlayCoordinator()
 
-        coordinator.onAttach = { [weak self] hostViewController, height in
+        coordinator.onAttach = { [weak self] hostViewController in
             guard let self, let pill = hostViewController.view else { return }
             addChild(hostViewController)
             let shouldHideInitially = currentBottomOverlayPresenter == nil
             updateOverlayLayout { [weak self] in
                 guard let self else { return }
-                addSubviewToOverlay(pill, type: .audioPlayer, priority: .high, height: height)
+                addSubviewToOverlay(pill, type: .audioPlayer, priority: .high, height: revampedMiniPlayerHeight)
                 if shouldHideInitially {
                     bottomOverlayManager?.setItemVisibility(for: .audioPlayer, hidden: true)
                 }
@@ -239,5 +239,22 @@ extension MainTabBarController {
 
         coordinator.startObserving()
         miniPlayerOverlayCoordinator = coordinator
+
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (tabBarController: MainTabBarController, _: UITraitCollection) in
+            tabBarController.updateRevampedMiniPlayerHeight()
+        }
+    }
+
+    private var revampedMiniPlayerHeight: CGFloat {
+        MEGAMiniPlayerOverlayCoordinator.preferredHeight(compatibleWith: traitCollection)
+    }
+
+    /// The pill grows with the text size, so the overlay has to give it the new height.
+    private func updateRevampedMiniPlayerHeight() {
+        guard let pill = bottomOverlayManager?.view(for: .audioPlayer) else { return }
+        updateOverlayLayout { [weak self] in
+            guard let self else { return }
+            addSubviewToOverlay(pill, type: .audioPlayer, priority: .high, height: revampedMiniPlayerHeight)
+        }
     }
 }

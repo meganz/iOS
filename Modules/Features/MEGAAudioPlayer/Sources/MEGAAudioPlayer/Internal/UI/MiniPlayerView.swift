@@ -8,10 +8,11 @@ struct MiniPlayerView: View {
     @ObservedObject var vm: MiniPlayerViewModel
 
     @State private var displayIndex = 0
+    @ScaledMetric(relativeTo: .callout) private var pillHeight = Sizes.pillHeight
 
     var body: some View {
         pillBody
-            .frame(height: Sizes.pillHeight)
+            .frame(height: pillHeight)
             .contentShape(Capsule())
             .onTapGesture { vm.expand() }
             .padding(.horizontal, Sizes.horizontalMargin)
@@ -159,7 +160,11 @@ struct MiniPlayerView: View {
 
         static let surfaceOpacity: CGFloat = 0.67
 
-        static let reserved: CGFloat = pillHeight + bottomPadding
+        /// Height reserved for the pill and its bottom padding. The pill scales with the
+        /// `callout` text style, the same as its `@ScaledMetric`.
+        static func reserved(compatibleWith traitCollection: UITraitCollection) -> CGFloat {
+            UIFontMetrics(forTextStyle: .callout).scaledValue(for: pillHeight, compatibleWith: traitCollection) + bottomPadding
+        }
     }
 }
 
