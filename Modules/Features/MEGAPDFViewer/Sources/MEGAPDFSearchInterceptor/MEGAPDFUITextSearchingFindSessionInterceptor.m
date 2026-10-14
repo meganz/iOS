@@ -3,19 +3,22 @@
 @interface MEGAPDFUITextSearchingFindSessionInterceptor ()
 @property (nonatomic, weak) id<UITextSearching, UITextInput> pdfKitSearcher;
 @property (nonatomic, strong) id<MEGAPDFDocumentSearching> documentSearcher;
+@property (nonatomic, weak) id<MEGAJumpToSearchResultScrollAdjusting> jumpToSearchResultScrollAdjuster;
 + (nullable id<UITextSearching, UITextInput>)searchableObjectInView:(UIView *)view;
 @end
 
 @implementation MEGAPDFUITextSearchingFindSessionInterceptor
 
 - (nullable instancetype)initWithPDFView:(PDFView *)pdfView
-                        documentSearcher:(id<MEGAPDFDocumentSearching>)documentSearcher {
+                        documentSearcher:(id<MEGAPDFDocumentSearching>)documentSearcher
+      jumpToSearchResultScrollAdjuster:(nullable id<MEGAJumpToSearchResultScrollAdjusting>)jumpToSearchResultScrollAdjuster {
     id<UITextSearching, UITextInput> pdfKitSearcher = [self.class searchableObjectInView:pdfView];
     if (pdfKitSearcher == nil) { return nil; }
     self = [super init];
     if (self) {
         _pdfKitSearcher = pdfKitSearcher;
         _documentSearcher = documentSearcher;
+        _jumpToSearchResultScrollAdjuster = jumpToSearchResultScrollAdjuster;
     }
     return self;
 }
@@ -73,8 +76,16 @@
 }
 
 - (void)scrollRangeToVisible:(UITextRange *)range inDocument:(id)document {
-    if ([self.pdfKitSearcher respondsToSelector:@selector(scrollRangeToVisible:inDocument:)]) {
-        [self.pdfKitSearcher scrollRangeToVisible:range inDocument:document];
+    // `pdfKitSearcher` is weak, and Swift receives the text input as
+    // non-optional.
+    id<UITextSearching, UITextInput> pdfKitSearcher = self.pdfKitSearcher;
+    if (pdfKitSearcher == nil) { return; }
+    if ([self.jumpToSearchResultScrollAdjuster scrollRangeIntoUsableArea:range
+                                                             inTextInput:pdfKitSearcher]) {
+        return;
+    }
+    if ([pdfKitSearcher respondsToSelector:@selector(scrollRangeToVisible:inDocument:)]) {
+        [pdfKitSearcher scrollRangeToVisible:range inDocument:document];
     }
 }
 

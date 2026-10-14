@@ -68,7 +68,8 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let interceptor = try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: fixture.pdfView,
-            documentSearcher: searcher
+            documentSearcher: searcher,
+            jumpToSearchResultScrollAdjuster: nil
         ))
         let aggregator = MEGARecordingSearchAggregator.performingQuery("alpha", on: interceptor)
         try await waitUntilFinished(aggregator)
@@ -105,7 +106,8 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let interceptor = try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: fixture.pdfView,
-            documentSearcher: searcher
+            documentSearcher: searcher,
+            jumpToSearchResultScrollAdjuster: nil
         ))
         _ = MEGARecordingSearchAggregator.performingQuery("alpha", on: interceptor)
         try #require(searchedDocument.isFinding)
@@ -121,7 +123,8 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let interceptor = try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: fixture.pdfView,
-            documentSearcher: searcher
+            documentSearcher: searcher,
+            jumpToSearchResultScrollAdjuster: nil
         ))
         let staleMatch = try #require(
             fixture.pdfView.document?.findString("alpha", withOptions: []).first
@@ -157,6 +160,20 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
 
         #expect(didFinish)
         #expect(matchCount == expectedCount)
+    }
+
+    @Test func jumpToResult_asksAdjusterWithPDFKitsTextInput() async throws {
+        let fixture = try Fixture(pages: [.text("alpha beta")])
+        let adjuster = MockJumpToSearchResultScrollAdjuster()
+        let interceptor = try fixture.interceptor(jumpToSearchResultScrollAdjuster: adjuster)
+        let aggregator = MEGARecordingSearchAggregator.performingQuery("alpha", on: interceptor)
+        try await waitUntilFinished(aggregator)
+
+        aggregator.scrollToRange(at: 0, on: interceptor)
+
+        let textInput = try #require(adjuster.textInputs.first as? UIView)
+        #expect(adjuster.textInputs.count == 1)
+        #expect(textInput.isDescendant(of: fixture.pdfView))
     }
 
     @Test func newQuery_reportsOnlyItsOwnMatchesToItsAggregator() async throws {
@@ -199,6 +216,17 @@ private final class SelectionChangeCounter: @unchecked Sendable {
 }
 
 @MainActor
+private final class MockJumpToSearchResultScrollAdjuster: NSObject,
+                                                         MEGAJumpToSearchResultScrollAdjusting {
+    private(set) var textInputs: [any UITextInput] = []
+
+    func scrollRangeIntoUsableArea(_ range: UITextRange, in textInput: any UITextInput) -> Bool {
+        textInputs.append(textInput)
+        return true
+    }
+}
+
+@MainActor
 private struct Fixture {
     enum Page {
         case text(String)
@@ -230,10 +258,13 @@ private struct Fixture {
         pdfView.layoutIfNeeded()
     }
 
-    func interceptor() throws -> MEGAPDFUITextSearchingFindSessionInterceptor {
+    func interceptor(
+        jumpToSearchResultScrollAdjuster: (any MEGAJumpToSearchResultScrollAdjusting)? = nil
+    ) throws -> MEGAPDFUITextSearchingFindSessionInterceptor {
         try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: pdfView,
-            documentSearcher: PDFDocumentSearcher(pdfView: pdfView)
+            documentSearcher: PDFDocumentSearcher(pdfView: pdfView),
+            jumpToSearchResultScrollAdjuster: jumpToSearchResultScrollAdjuster
         ))
     }
 

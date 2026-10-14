@@ -62,6 +62,11 @@
                                inDocument:nil];
 }
 
+- (void)scrollToRangeAtIndex:(NSUInteger)index
+               onInterceptor:(MEGAPDFUITextSearchingFindSessionInterceptor *)interceptor {
+    [interceptor scrollRangeToVisible:self.recordedRanges[index] inDocument:nil];
+}
+
 - (NSArray<UITextRange *> *)foundRanges {
     return [self.recordedRanges copy];
 }

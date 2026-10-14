@@ -70,7 +70,8 @@ extension FindNavigatorPresentationTests {
             let interaction = UIFindInteraction(sessionDelegate: handler)
             #expect(MEGAPDFUITextSearchingFindSessionInterceptor(
                 pdfView: pdfView,
-                documentSearcher: PDFDocumentSearcher(pdfView: pdfView)
+                documentSearcher: PDFDocumentSearcher(pdfView: pdfView),
+                jumpToSearchResultScrollAdjuster: nil
             ) != nil)
 
             #expect(handler.findInteraction(interaction, sessionFor: pdfView) == nil)
@@ -129,6 +130,52 @@ extension FindNavigatorPresentationTests {
             handler.findInteraction(interaction, didEnd: earlierSession)
 
             #expect(pdfView.document?.isFinding == true)
+        }
+
+        @Test func overlappingSessions_keepOneKeyboardInsetUntilCurrentSessionEnds() async throws {
+            let notificationCenter = NotificationCenter()
+            let (window, pdfView, handler, interaction) = try makeAttachedHandler(
+                notificationCenter: notificationCenter
+            )
+            defer { window.isHidden = true }
+            let scrollView = try #require(pdfView.contentScrollView)
+            let insetWithoutKeyboard = scrollView.contentInset.bottom
+            let earlierSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
+            try await jumpWithKeyboardUp(
+                in: earlierSession, scrollView: scrollView, notificationCenter: notificationCenter
+            )
+            let insetWithKeyboard = scrollView.contentInset.bottom
+            #expect(insetWithKeyboard > insetWithoutKeyboard)
+
+            let currentSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
+            #expect(scrollView.contentInset.bottom == insetWithKeyboard)
+            try await jumpToFirstResult(in: currentSession)
+            #expect(scrollView.contentInset.bottom == insetWithKeyboard)
+            handler.findInteraction(interaction, didEnd: earlierSession)
+            #expect(scrollView.contentInset.bottom == insetWithKeyboard)
+
+            handler.findInteraction(interaction, didEnd: currentSession)
+            #expect(scrollView.contentInset.bottom == insetWithoutKeyboard)
+        }
+
+        @Test func newSessionWithKeyboardStillUp_jumpAddsKeyboardInset() async throws {
+            let notificationCenter = NotificationCenter()
+            let (window, pdfView, handler, interaction) = try makeAttachedHandler(
+                notificationCenter: notificationCenter
+            )
+            defer { window.isHidden = true }
+            let scrollView = try #require(pdfView.contentScrollView)
+            let insetWithoutKeyboard = scrollView.contentInset.bottom
+            let earlierSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
+            try await jumpWithKeyboardUp(
+                in: earlierSession, scrollView: scrollView, notificationCenter: notificationCenter
+            )
+            handler.findInteraction(interaction, didEnd: earlierSession)
+
+            let currentSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
+            try await jumpToFirstResult(in: currentSession)
+
+            #expect(scrollView.contentInset.bottom > insetWithoutKeyboard)
         }
 
         @Test func reopenedSession_reportsOnlyItsOwnQuery() async throws {
@@ -204,7 +251,7 @@ extension FindNavigatorPresentationTests {
             var reportCount = 0
             let (window, pdfView, handler, _) = try makeAttachedHandler(
                 handler: PDFViewSearchInteractionHandler(
-                    makeInterceptor: { _, _ in nil },
+                    makeInterceptor: { _, _, _ in nil },
                     reportMissingSearchableView: { reportCount += 1 }
                 )
             )
@@ -348,9 +395,49 @@ extension FindNavigatorPresentationTests {
             #expect(nextMenu.children.compactMap { ($0 as? UIAction)?.state } == [.off])
         }
 
+        private func jumpToFirstResult(in session: UIFindSession) async throws {
+            let sessionInterceptor = try #require(interceptor(of: session))
+            let aggregator = MEGARecordingSearchAggregator.performingQuery(
+                "alpha",
+                on: sessionInterceptor
+            )
+            for _ in 0..<50 where !aggregator.didFinishSearching {
+                try await Task.sleep(for: .milliseconds(50))
+            }
+            aggregator.scrollToRange(at: 0, on: sessionInterceptor)
+        }
+
+        private func jumpWithKeyboardUp(
+            in session: UIFindSession,
+            scrollView: UIScrollView,
+            notificationCenter: NotificationCenter
+        ) async throws {
+            let insetWithoutKeyboard = scrollView.contentInset.bottom
+            let userInfo = [
+                UIResponder.keyboardFrameEndUserInfoKey: NSValue(
+                    cgRect: CGRect(x: 0, y: 400, width: 400, height: 300)
+                )
+            ]
+            // The adjuster subscribes from a `Task`, so a single post can
+            // arrive before the subscription exists.
+            for _ in 0..<100 where scrollView.contentInset.bottom == insetWithoutKeyboard {
+                notificationCenter.post(
+                    name: UIResponder.keyboardDidShowNotification, object: nil, userInfo: userInfo
+                )
+                notificationCenter.post(
+                    name: UIResponder.keyboardDidChangeFrameNotification,
+                    object: nil,
+                    userInfo: userInfo
+                )
+                await Task.yield()
+                try await jumpToFirstResult(in: session)
+            }
+        }
+
         private func makeAttachedHandler(
             pageCount: Int = 2,
-            handler: PDFViewSearchInteractionHandler = PDFViewSearchInteractionHandler()
+            notificationCenter: NotificationCenter = NotificationCenter(),
+            handler: PDFViewSearchInteractionHandler? = nil
         ) throws -> (
             UIWindow, PDFView, PDFViewSearchInteractionHandler, UIFindInteraction
         ) {
@@ -372,6 +459,8 @@ extension FindNavigatorPresentationTests {
             }
             pdfView.document = PDFDocument(data: data)
             pdfView.layoutIfNeeded()
+            let handler = handler
+                ?? PDFViewSearchInteractionHandler(notificationCenter: notificationCenter)
             handler.attachToPDFView(pdfView)
             let interaction = try #require(
                 pdfView.interactions.compactMap { $0 as? UIFindInteraction }.first

@@ -1,5 +1,6 @@
 #import <PDFKit/PDFKit.h>
 #import <UIKit/UIKit.h>
+#import "MEGAJumpToSearchResultScrollAdjusting.h"
 #import "MEGAPDFDocumentSearching.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -35,11 +36,16 @@ NS_ASSUME_NONNULL_BEGIN
 ///   5. UIKit: to show a result, the session calls the interceptor's
 ///      `-decorateFoundTextRange:inDocument:usingStyle:` and
 ///      `-scrollRangeToVisible:inDocument:`. Ours: the interceptor forwards
-///      both to `pdfKitSearcher`.
+///      decoration to `pdfKitSearcher`, and scrolling to
+///      `jumpToSearchResultScrollAdjuster`, or to `pdfKitSearcher` when the
+///      adjuster declines.
 @interface MEGAPDFUITextSearchingFindSessionInterceptor : NSObject <UITextSearching>
 /// Returns nil when PDFKit has not created a searchable descendant.
+/// - `jumpToSearchResultScrollAdjuster`: Avoids jump-to-result putting the
+///   result behind navbar, bottom bar, or keyboard.
 - (nullable instancetype)initWithPDFView:(PDFView *)pdfView
-                        documentSearcher:(id<MEGAPDFDocumentSearching>)documentSearcher;
+                        documentSearcher:(id<MEGAPDFDocumentSearching>)documentSearcher
+      jumpToSearchResultScrollAdjuster:(nullable id<MEGAJumpToSearchResultScrollAdjusting>)jumpToSearchResultScrollAdjuster;
 @end
 
 NS_ASSUME_NONNULL_END

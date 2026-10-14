@@ -21,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
                            toRangeAtIndex:(NSUInteger)otherIndex
                             onInterceptor:(MEGAPDFUITextSearchingFindSessionInterceptor *)interceptor;
 
+/// Scrolls to a recorded range through `interceptor`'s
+/// `-scrollRangeToVisible:inDocument:`.
+- (void)scrollToRangeAtIndex:(NSUInteger)index
+               onInterceptor:(MEGAPDFUITextSearchingFindSessionInterceptor *)interceptor;
+
 /// Returns YES when both aggregators recorded the same ranges in any order, as
 /// judged by PDFKit's searchable descendant of `pdfView`.
 - (BOOL)hasSameRangesAs:(MEGARecordingSearchAggregator *)other inView:(UIView *)pdfView;

@@ -9,19 +9,33 @@ final class PDFViewSearchInteractionHandler: NSObject {
     private let searchPreferences = PDFViewSearchPreferences()
     private var documentSearcher: PDFDocumentSearcher?
     private var currentSession: PDFViewFindSession?
-    private let makeInterceptor: @MainActor (PDFView, PDFDocumentSearcher)
-        -> MEGAPDFUITextSearchingFindSessionInterceptor?
+    private var jumpToSearchResultScrollAdjuster: PDFJumpToSearchResultScrollAdjuster?
+    private let makeInterceptor: @MainActor (
+        PDFView,
+        PDFDocumentSearcher,
+        PDFJumpToSearchResultScrollAdjuster?
+    ) -> MEGAPDFUITextSearchingFindSessionInterceptor?
     private let reportMissingSearchableView: @MainActor () -> Void
+    private let notificationCenter: NotificationCenter
 
     init(
-        makeInterceptor: @escaping @MainActor (PDFView, PDFDocumentSearcher)
-            -> MEGAPDFUITextSearchingFindSessionInterceptor? = {
-            MEGAPDFUITextSearchingFindSessionInterceptor(pdfView: $0, documentSearcher: $1)
+        notificationCenter: NotificationCenter = .default,
+        makeInterceptor: @escaping @MainActor (
+            PDFView,
+            PDFDocumentSearcher,
+            PDFJumpToSearchResultScrollAdjuster?
+        ) -> MEGAPDFUITextSearchingFindSessionInterceptor? = {
+            MEGAPDFUITextSearchingFindSessionInterceptor(
+                pdfView: $0,
+                documentSearcher: $1,
+                jumpToSearchResultScrollAdjuster: $2
+            )
         },
         reportMissingSearchableView: @escaping @MainActor () -> Void = {
             assertionFailure("PDFKit's searchable view is missing")
         }
     ) {
+        self.notificationCenter = notificationCenter
         self.makeInterceptor = makeInterceptor
         self.reportMissingSearchableView = reportMissingSearchableView
         super.init()
@@ -46,7 +60,7 @@ final class PDFViewSearchInteractionHandler: NSObject {
         // Without PDFKit's searchable view, `findInteraction(_:sessionFor:)`
         // cannot build a session, so PDFKit's own Find takes over.
         if let pdfView, pdfView.window != nil, let documentSearcher,
-           makeInterceptor(pdfView, documentSearcher) == nil {
+           makeInterceptor(pdfView, documentSearcher, nil) == nil {
             reportMissingSearchableView()
             pdfView.isFindInteractionEnabled = true
             pdfView.findInteraction.presentFindNavigator(showingReplace: false)
@@ -69,9 +83,18 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
         sessionFor view: UIView
     ) -> UIFindSession? {
         // UIKit needs an attached window to present the Find navigator.
-        guard let pdfView, pdfView.window != nil, let documentSearcher,
-              let interceptor = makeInterceptor(pdfView, documentSearcher)
+        guard let pdfView, pdfView.window != nil, let documentSearcher else { return nil }
+        // Created by the first session, so no keyboard observers run until
+        // Find opens, then kept so a keyboard inset it added is still its own
+        // to remove. PDFKit may not have created its scroll view yet, so it is
+        // looked up on each use.
+        let adjuster = jumpToSearchResultScrollAdjuster ?? PDFJumpToSearchResultScrollAdjuster(
+            contentScrollView: { [weak pdfView] in pdfView?.contentScrollView },
+            notificationCenter: notificationCenter
+        )
+        guard let interceptor = makeInterceptor(pdfView, documentSearcher, adjuster)
         else { return nil }
+        jumpToSearchResultScrollAdjuster = adjuster
         let session = PDFViewFindSession(
             interceptor: interceptor,
             preferences: searchPreferences
@@ -89,6 +112,7 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
         // - calling this twice for one close.
         guard findSession === currentSession else { return }
         documentSearcher?.cancelSearch()
+        jumpToSearchResultScrollAdjuster?.clearResultPlacement()
         currentSession = nil
     }
 }

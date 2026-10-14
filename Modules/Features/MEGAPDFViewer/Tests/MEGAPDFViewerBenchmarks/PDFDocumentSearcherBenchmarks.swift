@@ -96,7 +96,8 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
     ) throws -> MEGAPDFUITextSearchingFindSessionInterceptor {
         try XCTUnwrap(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: pdfView,
-            documentSearcher: PDFDocumentSearcher(pdfView: pdfView)
+            documentSearcher: PDFDocumentSearcher(pdfView: pdfView),
+            jumpToSearchResultScrollAdjuster: nil
         ))
     }
 

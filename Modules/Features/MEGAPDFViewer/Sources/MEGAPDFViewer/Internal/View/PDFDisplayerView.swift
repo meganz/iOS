@@ -204,8 +204,10 @@ final class MEGAPDFView: PDFView {
             animated: false
         )
     }
+}
 
-    private var contentScrollView: UIScrollView? {
+extension PDFView {
+    var contentScrollView: UIScrollView? {
         subviews.compactMap { $0 as? UIScrollView }.first
     }
 }
