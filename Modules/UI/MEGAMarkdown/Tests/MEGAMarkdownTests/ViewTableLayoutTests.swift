@@ -59,8 +59,9 @@ import UIKit
         window.rootViewController = UIHostingController(rootView: root)
         window.makeKeyAndVisible()
         var lastHeight: CGFloat = 0
-        let deadline = ContinuousClock.now + .seconds(10)
-        while ContinuousClock.now < deadline {
+        // 200 polls, about 10 s. It counts polls, not clock time:
+        // on a busy machine another test can hold the main actor for seconds.
+        for _ in 0..<200 {
             window.layoutIfNeeded()
             if box.height > 0, box.height == lastHeight {
                 return box.height

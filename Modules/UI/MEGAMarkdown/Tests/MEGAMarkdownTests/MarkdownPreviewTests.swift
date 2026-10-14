@@ -202,9 +202,12 @@ struct MarkdownPreviewTests {
     private struct ReusedHost: View {
         let settings: TextAndLine
         let recorder: LineRecorder
+        var parseLimits = PreviewParseLimits()
 
         var body: some View {
-            MarkdownPreview(settings.markdown, restoreLine: settings.restoreLine) { recorder.lines.append($0) }
+            var preview = MarkdownPreview(settings.markdown, restoreLine: settings.restoreLine) { recorder.lines.append($0) }
+            preview.parseLimits = parseLimits
+            return preview
         }
     }
 
@@ -242,12 +245,45 @@ struct MarkdownPreviewTests {
 
     private final class PushedScreen: UIViewController {}
 
+    /// Holds the parse after its first batch until `open()`. A cancelled parse stops waiting, so it can end.
+    private final class ParseGate: @unchecked Sendable {
+        private let lock = NSLock()
+        private var isOpen = false
+        private var cancels = 0
+
+        var cancelCount: Int { lock.withLock { cancels } }
+
+        var limits: PreviewParseLimits {
+            var limits = PreviewParseLimits()
+            limits.afterBatch = { [self] _ in hold() }
+            return limits
+        }
+
+        func open() {
+            lock.withLock { isOpen = true }
+        }
+
+        private func hold() {
+            while !lock.withLock({ isOpen }) {
+                if Task.isCancelled {
+                    lock.withLock { cancels += 1 }
+                    return
+                }
+                usleep(1_000)
+            }
+        }
+    }
+
     /// A host pushes a screen while the text still parses, then pops back. The cancelled load runs again on appear.
     /// The list must keep the place of the reader.
     @Test func popAfterACancelledPartialLoadKeepsThePlace() async throws {
         let recorder = LineRecorder()
-        let settings = TextAndLine(markdown: Self.paragraphs(450_000, word: "Para"))
-        let navigation = UINavigationController(rootViewController: UIHostingController(rootView: ReusedHost(settings: settings, recorder: recorder)))
+        // About 3 MB, so the text has more than one chunk. The gate keeps the parse in its first chunk until the pop.
+        let settings = TextAndLine(markdown: Self.paragraphs(100_000, word: "Para"))
+        let gate = ParseGate()
+        defer { gate.open() }
+        let root = UIHostingController(rootView: ReusedHost(settings: settings, recorder: recorder, parseLimits: gate.limits))
+        let navigation = UINavigationController(rootViewController: root)
         let host = Window(Color.clear)
         defer { host.close() }
         host.window.rootViewController = navigation
@@ -257,14 +293,14 @@ struct MarkdownPreviewTests {
         let line = try #require(try Window.topVisibleLine(list))
         #expect(line > 0)
         try await Window.waitUntil { recorder.lines.last == line }
-        try #require(!coordinator.isComplete, "The parse ended before the push. Use a bigger text.")
 
         navigation.pushViewController(PushedScreen(), animated: false)
-        try await Task.sleep(for: .milliseconds(300))
-        try #require(!coordinator.isComplete, "The parse ended before the pop. Use a bigger text.")
+        try await Window.waitUntil { gate.cancelCount == 1 }
+        #expect(!coordinator.isComplete)
         navigation.popViewController(animated: false)
+        gate.open()
 
-        try await Window.waitUntil(timeout: .seconds(90)) { coordinator.isComplete }
+        try await Window.waitUntil { coordinator.isComplete }
         try await Window.settle(list)
         #expect(try Window.topVisibleLine(list) == line)
         #expect(!recorder.lines.dropFirst().contains(0), "reports: \(recorder.lines.prefix(10))")

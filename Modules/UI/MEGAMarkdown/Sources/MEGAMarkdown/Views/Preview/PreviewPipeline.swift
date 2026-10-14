@@ -10,6 +10,8 @@ struct PreviewParseLimits: Sendable {
     var maxChunkBytes = MarkdownChunker.defaultMaxChunkBytes
     /// Row weight for `PreviewRows.Builder`. 0 splits every block, so each list cell draws one short piece.
     var maxRowWeight = 0
+    /// Runs on the parse thread after each batch, with the number of batches sent. Tests use it to hold the parse.
+    var afterBatch: (@Sendable (Int) -> Void)?
 }
 
 /// New rows at the end of the preview, from one chunk of the text.
@@ -69,6 +71,7 @@ enum PreviewPipeline {
             // The gap below a row is set when the next row is added. So the last row of a batch waits for the next chunk.
             var carried: PreviewRow?
             var lastLine = 0
+            var batchCount = 0
             while !Task.isCancelled {
                 guard let chunk = chunker.next() else { return .complete }
                 var builder = PreviewRows.Builder(maxWeight: limits.maxRowWeight)
@@ -81,6 +84,8 @@ enum PreviewPipeline {
                 }
                 carried = chunker.isFinished ? nil : builder.rows.popLast()
                 send(PreviewBatch(rows: builder.rows))
+                batchCount += 1
+                limits.afterBatch?(batchCount)
             }
             return .cancelled
         }

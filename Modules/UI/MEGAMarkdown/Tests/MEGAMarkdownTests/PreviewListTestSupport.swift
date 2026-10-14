@@ -109,12 +109,15 @@ final class PreviewListWindow {
         window.isHidden = true
     }
 
-    /// Polls `condition` every 10 ms. Throws when it is still false after `timeout`.
+    /// Polls `condition` every 10 ms. Throws when it is still false after `timeout` worth of polls.
+    /// It counts polls, not clock time: on a busy machine another test can hold the main actor for seconds.
     static func waitUntil(timeout: Duration = .seconds(20), _ condition: () throws -> Bool) async throws {
-        let deadline = ContinuousClock.now + timeout
+        let interval = Duration.milliseconds(10)
+        var pollsLeft = Int(timeout / interval)
         while try !condition() {
-            guard ContinuousClock.now < deadline else { throw TimedOut() }
-            try await Task.sleep(for: .milliseconds(10))
+            guard pollsLeft > 0 else { throw TimedOut() }
+            pollsLeft -= 1
+            try await Task.sleep(for: interval)
         }
     }
 

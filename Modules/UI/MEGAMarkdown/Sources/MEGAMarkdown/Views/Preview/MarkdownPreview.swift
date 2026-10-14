@@ -12,6 +12,8 @@ public struct MarkdownPreview: View {
     private let request: MarkdownParseRequest
     private let restoreLine: Int?
     private let onTopLineChange: ((Int) -> Void)?
+    /// Tests set it to hold the parse.
+    var parseLimits = PreviewParseLimits()
 
     @State private var model = PreviewModel()
     @Environment(\.markdownTheme) private var theme
@@ -41,7 +43,7 @@ public struct MarkdownPreview: View {
             // A new text cancels the old load. The old rows stay until the new text sends its first rows,
             // so the spinner shows only on the first load. The id compares the text by bytes.
             .task(id: request) {
-                await model.load(request)
+                await model.load(request, limits: parseLimits)
             }
     }
 
