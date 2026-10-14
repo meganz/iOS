@@ -35,36 +35,38 @@ import UIKit
 
     /// Viewer for a PDF downloaded from `resolvedNode` as it is.
     /// - A folder-link or chat preview room node must already be authorised.
-    @objc @MainActor static func viewControllerForResolvedNode(_ resolvedNode: MEGANode, isLink: Bool, isFromSharedItem: Bool) -> UIViewController {
+    @objc @MainActor static func viewControllerForResolvedNode(_ resolvedNode: MEGANode, context: DocumentPreviewContext) -> UIViewController {
         makeViewController(
             fileName: resolvedNode.name ?? "",
             pdfDocumentSource: .node(resolvedNode.toNodeEntity()),
             node: resolvedNode,
-            isLink: isLink,
-            isFromSharedItem: isFromSharedItem
+            context: context
         )
     }
 
     /// Viewer for a PDF that is already on disk (offline files / already-downloaded nodes).
-    @objc @MainActor static func viewControllerForFilePath(_ filePath: String, node: MEGANode?, isLink: Bool, isFromSharedItem: Bool) -> UIViewController {
+    @objc @MainActor static func viewControllerForFilePath(_ filePath: String, node: MEGANode?, context: DocumentPreviewContext) -> UIViewController {
         makeViewController(
             fileName: node?.name ?? filePath.lastPathComponent,
             pdfDocumentSource: .local(URL(fileURLWithPath: filePath)),
             node: node,
-            isLink: isLink,
-            isFromSharedItem: isFromSharedItem
+            context: context
         )
     }
 
     // MARK: - Private
 
     @MainActor
-    private static func makeViewController(
+    static func makeViewController(
         fileName: String,
         pdfDocumentSource: PDFViewerDocumentSource,
         node: MEGANode?,
-        isLink: Bool,
-        isFromSharedItem: Bool
+        context: DocumentPreviewContext,
+        lastPageUseCase: (any PDFViewerLastPageUseCaseProtocol)? = nil,
+        activityPresenter: any PDFViewerActivityPresenting = PDFViewerActivityPresenter(),
+        viewerFactory: @MainActor (PDFViewerView.Dependency) -> UIViewController = {
+            PDFViewerViewController(dependency: $0)
+        }
     ) -> UIViewController {
         if #available(iOS 26.0, *) {
             AppearanceManager.setTranslucentNavigationBar(for: [PDFViewerViewController.self])
@@ -73,48 +75,64 @@ import UIKit
         weak var presentedViewer: UIViewController?
         weak var moreAnchor: UIView?
         weak var moreBarItem: UIBarButtonItem?
+        weak var downloadAnchor: UIView?
+        weak var downloadBarItem: UIBarButtonItem?
 
-        var moreMenuDependencies: PDFViewerMoreMenuDependencies?
-        if let node {
-            moreMenuDependencies = PDFViewerMoreMenuDependencies(
-                onMoreTapped: { onPresented in
-                    presentNodeActions(
-                        for: node,
-                        from: presentedViewer,
-                        anchor: moreAnchor,
-                        barItem: moreBarItem,
-                        isLink: isLink,
-                        isFromSharedItem: isFromSharedItem,
-                        onPresented: onPresented
-                    )
-                },
-                fullScreenIPadMorePopoverAnchorReadyCallbacks: .init(
-                    onMoreAnchorReadyForMenuPresentation: { moreAnchor = $0 },
-                    onMoreBarItemReadyForMenuPresentation: { moreBarItem = $0 }
-                )
-            )
+        let lastPageUseCase = lastPageUseCase ?? PDFViewerLastPageUseCase(
+            repository: PDFViewerLastPageRepository(store: MEGAStore.shareInstance()),
+            fingerprintRepository: PDFViewerDocumentFingerprintRepository(sdk: MEGASdk.shared)
+        )
+        let linkActions = DocumentPreviewLinkActionRouter(activityPresenter: activityPresenter)
+        let localURL: URL? = if case .local(let url) = pdfDocumentSource {
+            url
+        } else {
+            nil
         }
 
         let dependency = PDFViewerView.Dependency(
+            actionContext: .init(
+                hasNode: node != nil, isLink: context.isLink, isChat: context.chatId != nil
+            ),
             pdfDocumentSource: pdfDocumentSource,
             downloadUseCase: makeDownloadNodeUseCase(node: node),
-            lastPageUseCase: PDFViewerLastPageUseCase(
-                repository: PDFViewerLastPageRepository(store: MEGAStore.shareInstance()),
-                fingerprintRepository: PDFViewerDocumentFingerprintRepository(sdk: MEGASdk.shared)
-            ),
+            lastPageUseCase: lastPageUseCase,
             leftOffItemRecordUseCase: LeftOffItemsRecordUseCase.shared,
             node: node?.toNodeEntity(),
             fileName: fileName,
             transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             onClose: { presentedViewer?.dismiss(animated: true) },
-            moreMenuDependencies: moreMenuDependencies,
+            moreMenuDependencies: .init(
+                onTapped: { onPresented in
+                    presentNodeActions(
+                        for: node, from: presentedViewer, anchor: moreAnchor,
+                        barItem: moreBarItem, context: context, linkActions: linkActions,
+                        onPresented: onPresented
+                    )
+                },
+                anchorReadyCallbacks: .init(
+                    onViewReady: { moreAnchor = $0 },
+                    onBarItemReady: { moreBarItem = $0 }
+                )
+            ),
+            downloadDependencies: .init(
+                onTapped: { onPresented in
+                    activityPresenter.present(
+                        fileURL: localURL, from: presentedViewer, anchor: downloadAnchor,
+                        barItem: downloadBarItem, onPresented: onPresented
+                    )
+                },
+                anchorReadyCallbacks: .init(
+                    onViewReady: { downloadAnchor = $0 },
+                    onBarItemReady: { downloadBarItem = $0 }
+                )
+            ),
             onLinkTapped: { url in
                 MEGALinkManager.linkURL = url
                 MEGALinkManager.processLinkURL(url)
             }
         )
 
-        let viewer = PDFViewerViewController(dependency: dependency)
+        let viewer = viewerFactory(dependency)
         presentedViewer = viewer
         let navigationController = MEGANavigationController(rootViewController: viewer)
         navigationController.modalPresentationStyle = .fullScreen

@@ -1232,6 +1232,65 @@ class NodeActionBuilderTests {
         #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]) == true)
     }
 
+    @Test(arguments: [
+        MEGAShareType.accessUnknown, .accessRead, .accessReadWrite, .accessFull,
+        .accessOwner
+    ], [
+        (isRevampEnabled: false, displayMode: DisplayMode.previewPdfPage, isLink: false),
+        (isRevampEnabled: false, displayMode: DisplayMode.previewPdfPage, isLink: true),
+        (isRevampEnabled: false, displayMode: DisplayMode.previewDocument, isLink: false),
+        (isRevampEnabled: false, displayMode: DisplayMode.previewDocument, isLink: true),
+        (isRevampEnabled: true, displayMode: DisplayMode.previewPdfPage, isLink: false),
+        (isRevampEnabled: true, displayMode: DisplayMode.previewPdfPage, isLink: true)
+    ])
+    func testPDFImportEligibility_matchesLinkFlag(
+        accessLevel: MEGAShareType,
+        entryPoint: (isRevampEnabled: Bool, displayMode: DisplayMode, isLink: Bool)
+    ) {
+        let nodeActions = NodeActionBuilder()
+            .setDisplayMode(entryPoint.displayMode)
+            .setIsPdf(true)
+            .setIsPDFViewerRevampEnabled(entryPoint.isRevampEnabled)
+            .setAccessLevel(accessLevel)
+            .setIsLink(entryPoint.isLink)
+            .build()
+
+        let imports = nodeActions.filter { $0.type == .import }
+        #expect(imports.count == (entryPoint.isLink ? 1 : 0))
+    }
+
+    @Test(arguments: [false, true])
+    func testPDFImportEligibility_readOnlyBackupMatchesLegacyLinkFlag(isLink: Bool) {
+        let nodeActions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setIsPdf(true)
+            .setIsPDFViewerRevampEnabled(true)
+            .setAccessLevel(.accessRead)
+            .setIsBackupNode(true)
+            .setIsLink(isLink)
+            .build()
+
+        #expect(nodeActions.contains { $0.type == .import } == isLink)
+    }
+
+    @Test(arguments: [false, true], [false, true])
+    func testPDFViewerActions_onlyLegacyOffersSearchAndViewModes(
+        isRevampEnabled: Bool,
+        isLink: Bool
+    ) {
+        let nodeActions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setIsPdf(true)
+            .setIsPDFViewerRevampEnabled(isRevampEnabled)
+            .setAccessLevel(.accessRead)
+            .setIsLink(isLink)
+            .build()
+
+        #expect(nodeActions.contains { $0.type == .search } == !isRevampEnabled)
+        #expect(nodeActions.contains { $0.type == .pdfThumbnailView } == !isRevampEnabled)
+        #expect(!nodeActions.contains { $0.type == .pdfPageView })
+    }
+
     @Test(arguments: [DisplayMode.previewPdfPage, .previewDocument])
     func testDocumentPreviewPdf_pdfViewerRevampEnabled(displayMode: DisplayMode) {
         actions = NodeActionBuilder()

@@ -16,6 +16,34 @@ final class PDFViewerViewModel {
         let node: NodeEntity?
         let nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol
         let fileName: String
+        var actionContext: PDFViewerActionContext = .init()
+        var hasMoreAction = false
+        var hasDownloadAction = false
+    }
+
+    struct TrailingActionUseCase {
+        func action(
+            source: PDFViewerDocumentSource,
+            context: PDFViewerActionContext,
+            hasMoreAction: Bool,
+            hasDownloadAction: Bool
+        ) -> PDFViewerTrailingAction {
+            if context.hasNode {
+                return hasMoreAction ? .more : .none
+            }
+            guard !context.isLink, !context.isChat,
+                  case .local = source, hasDownloadAction else { return .none }
+            return .download
+        }
+    }
+
+    var trailingAction: PDFViewerTrailingAction {
+        TrailingActionUseCase().action(
+            source: dependency.pdfDocumentSource,
+            context: dependency.actionContext,
+            hasMoreAction: dependency.hasMoreAction,
+            hasDownloadAction: dependency.hasDownloadAction
+        )
     }
 
     enum ViewState: Equatable {

@@ -4,20 +4,17 @@ import MEGAL10n
 import SwiftUI
 import UIKit
 
-/// Wraps one More `UIBarButtonItem` in a `UIToolbar` for SwiftUI, to allow the
-/// More button to morph into the node actions popover on Liquid Glass iPad.
-///
-/// When presenting the More menu, the wrapped `UIBarButtonItem` will be
-/// provided to `ActionSheetViewController.configurePresentationStyle`.
-/// The latter will use the More button (inside the bar item) as the source UI
-/// element of the Liquid Glass popover animation on iPad.
 @available(iOS 26.0, *)
-struct PDFViewerMoreToolbarItemView: UIViewRepresentable {
+struct PopoverPresentingToolbarItemView: UIViewRepresentable {
+    let icon: UIImage
+    let accessibilityLabel: String
     let onTap: @MainActor (_ isInFullScreenWindow: Bool) -> Void
     let onReadyForPopoverMenuPresentation: @MainActor (UIBarButtonItem) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(
+            icon: icon,
+            accessibilityLabel: accessibilityLabel,
             onTap: onTap,
             onReadyForPopoverMenuPresentation: onReadyForPopoverMenuPresentation
         )
@@ -51,13 +48,15 @@ struct PDFViewerMoreToolbarItemView: UIViewRepresentable {
         let item: UIBarButtonItem
 
         init(
+            icon: UIImage,
+            accessibilityLabel: String,
             onTap: @escaping (Bool) -> Void,
             onReadyForPopoverMenuPresentation: @escaping (UIBarButtonItem) -> Void
         ) {
             self.onTap = onTap
             self.onReadyForPopoverMenuPresentation = onReadyForPopoverMenuPresentation
             item = UIBarButtonItem(
-                image: MEGAAssets.UIImage.monoMoreHorizontalMediumThinOutline,
+                image: icon,
                 style: .plain,
                 target: nil,
                 action: nil
@@ -66,7 +65,7 @@ struct PDFViewerMoreToolbarItemView: UIViewRepresentable {
             super.init()
             item.target = self
             item.action = #selector(tapped)
-            item.accessibilityLabel = Strings.Localizable.more
+            item.accessibilityLabel = accessibilityLabel
         }
 
         func reportReadyForPopoverMenuPresentation() {

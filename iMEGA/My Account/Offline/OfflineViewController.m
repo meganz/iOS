@@ -552,7 +552,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (UIViewController *)pdfViewerViewControllerForIndexPath:(NSIndexPath *)indexPath {
-    UIViewController *viewController = [PDFViewerRevampRouter viewControllerForFilePath:self.previewDocumentPath node:nil isLink:NO isFromSharedItem:NO];
+    UIViewController *viewController = [PDFViewerRevampRouter viewControllerForFilePath:self.previewDocumentPath node:nil context:[[DocumentPreviewContext alloc] initWithIsLink:NO fileLink:nil isFromSharedItem:NO]];
     
     [self deselectItemAtIndexPath:indexPath];
     return viewController;

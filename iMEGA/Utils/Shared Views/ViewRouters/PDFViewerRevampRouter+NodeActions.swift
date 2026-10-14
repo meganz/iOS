@@ -3,40 +3,27 @@ import MEGAPDFViewer
 extension PDFViewerRevampRouter {
     @MainActor
     static func presentNodeActions(
-        for node: MEGANode,
+        for node: MEGANode?,
         from presenter: UIViewController?,
         anchor: UIView?,
         barItem: UIBarButtonItem?,
-        isLink: Bool,
-        isFromSharedItem: Bool,
-        onPresented: PDFViewerMoreMenuDependencies.OnMoreAnimationCompletion?
+        context: DocumentPreviewContext,
+        linkActions: some DocumentPreviewLinkActionRouting = DocumentPreviewLinkActionRouter(),
+        onPresented: PDFViewerTrailingPopoverDependencies.OnPresentationCompletion?
     ) {
         // UIKit skips the presentation, and so never calls `onPresented`,
         // while `presenter` is already presenting.
-        guard let presenter, presenter.presentedViewController == nil else {
+        guard let node, let presenter, presenter.presentedViewController == nil else {
             onPresented?()
             return
         }
 
-        // Match checks in `-[PreviewDocumentViewController actionsTapped:]`.
-        let latestNode = MEGASdk.shared.node(forHandle: node.handle) ?? node
-        let displayMode: DisplayMode = latestNode.mnz_isInRubbishBin() ? .rubbishBin : .previewPdfPage
-        let sender = nodeActionsSender(from: presenter, anchor: anchor, barItem: barItem)
-
-        // To be replaced in upcoming MR
-        let delegate = NodeActionViewControllerGenericDelegate(
-            viewController: presenter,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: presenter)
-        )
-        let actionsViewController = NodeActionViewController(
-            node: latestNode,
-            delegate: delegate,
-            isLink: isLink,
-            displayMode: displayMode,
-            isBackupNode: BackupsOCWrapper().isBackupNode(latestNode),
-            isFromSharedItem: isFromSharedItem,
-            isPDFViewerRevampEnabled: true,
-            sender: sender
+        let actionsViewController = DocumentPreviewNodeActionDelegate.makeNodeActionViewController(
+            for: node,
+            presenter: presenter,
+            context: context,
+            linkActions: linkActions,
+            sender: nodeActionsSender(anchor: anchor, barItem: barItem)
         )
         presenter.present(actionsViewController, animated: true, completion: onPresented)
     }
@@ -52,13 +39,12 @@ extension PDFViewerRevampRouter {
     ///
     /// iOS 18 and below
     /// - `anchor` is used if nonnil + attached to a window + has nonzero bounds
-    /// - If above conditions not satisfied, fall back to `presenter.view`.
+    /// - If above conditions not satisfied, use the normal sheet presentation.
     @MainActor
     static func nodeActionsSender(
-        from presenter: UIViewController,
         anchor: UIView?,
         barItem: UIBarButtonItem?
-    ) -> Any {
+    ) -> Any? {
         // On iPadOS 26, return the More `UIBarButtonItem` ->
         // `ActionSheetViewController.configurePresentationStyle` sets the
         // popover's `barButtonItem` -> the presentation animation morphs the
@@ -72,6 +58,6 @@ extension PDFViewerRevampRouter {
         if let anchor, anchor.window != nil, !anchor.bounds.isEmpty {
             return anchor
         }
-        return presenter.view as Any
+        return nil
     }
 }

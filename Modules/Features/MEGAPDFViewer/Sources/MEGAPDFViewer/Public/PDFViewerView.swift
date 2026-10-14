@@ -8,6 +8,7 @@ import Transfer
 
 public struct PDFViewerView: View {
     public struct Dependency {
+        let actionContext: PDFViewerActionContext
         let pdfDocumentSource: PDFViewerDocumentSource
         let documentURLUseCase: any PDFDocumentURLUseCaseProtocol
         let documentLoadingUseCase: any PDFViewerDocumentLoadingUseCaseProtocol
@@ -21,12 +22,14 @@ public struct PDFViewerView: View {
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
         /// `nil` hides the ••• button.
-        let moreMenuDependencies: PDFViewerMoreMenuDependencies?
+        let moreMenuDependencies: PDFViewerTrailingPopoverDependencies?
+        let downloadDependencies: PDFViewerTrailingPopoverDependencies?
         /// Invoked when the user taps a link inside the document.
         let onLinkTapped: @MainActor (URL) -> Void
 
         @MainActor
         public init(
+            actionContext: PDFViewerActionContext = .init(),
             pdfDocumentSource: PDFViewerDocumentSource,
             downloadUseCase: some DownloadNodeUseCaseProtocol,
             lastPageUseCase: some PDFViewerLastPageUseCaseProtocol,
@@ -35,7 +38,8 @@ public struct PDFViewerView: View {
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
-            moreMenuDependencies: PDFViewerMoreMenuDependencies? = nil,
+            moreMenuDependencies: PDFViewerTrailingPopoverDependencies? = nil,
+            downloadDependencies: PDFViewerTrailingPopoverDependencies? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void = { _ in }
         ) {
             let documentLoader = PDFDocumentLoader()
@@ -44,6 +48,7 @@ public struct PDFViewerView: View {
                 outlineReader: PDFOutlineReader()
             )
             self.init(
+                actionContext: actionContext,
                 pdfDocumentSource: pdfDocumentSource,
                 documentURLUseCase: PDFDocumentURLUseCase(downloadUseCase: downloadUseCase),
                 documentLoadingUseCase: PDFViewerDocumentLoadingUseCase(
@@ -59,12 +64,14 @@ public struct PDFViewerView: View {
                 transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 onClose: onClose,
                 moreMenuDependencies: moreMenuDependencies,
+                downloadDependencies: downloadDependencies,
                 onLinkTapped: onLinkTapped
             )
         }
 
         @MainActor
         init(
+            actionContext: PDFViewerActionContext = .init(),
             pdfDocumentSource: PDFViewerDocumentSource,
             documentURLUseCase: some PDFDocumentURLUseCaseProtocol,
             documentLoadingUseCase: some PDFViewerDocumentLoadingUseCaseProtocol,
@@ -75,9 +82,11 @@ public struct PDFViewerView: View {
             fileName: String,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             onClose: @escaping @MainActor () -> Void,
-            moreMenuDependencies: PDFViewerMoreMenuDependencies? = nil,
+            moreMenuDependencies: PDFViewerTrailingPopoverDependencies? = nil,
+            downloadDependencies: PDFViewerTrailingPopoverDependencies? = nil,
             onLinkTapped: @escaping @MainActor (URL) -> Void
         ) {
+            self.actionContext = actionContext
             self.pdfDocumentSource = pdfDocumentSource
             self.documentURLUseCase = documentURLUseCase
             self.documentLoadingUseCase = documentLoadingUseCase
@@ -89,6 +98,7 @@ public struct PDFViewerView: View {
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.onClose = onClose
             self.moreMenuDependencies = moreMenuDependencies
+            self.downloadDependencies = downloadDependencies
             self.onLinkTapped = onLinkTapped
         }
     }
@@ -101,28 +111,32 @@ public struct PDFViewerView: View {
 
     private let onLinkTapped: @MainActor (URL) -> Void
 
-    private let moreToolbarContent: PDFViewerMoreToolbarContent
+    private let trailingToolbarContent: PDFViewerTrailingToolbarContent
 
     public init(dependency: Dependency) {
         onClose = dependency.onClose
         onLinkTapped = dependency.onLinkTapped
-        moreToolbarContent = PDFViewerMoreToolbarContent(
-            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
-            moreMenuDependencies: dependency.moreMenuDependencies
-        )
-        _viewModel = State(
-            initialValue: PDFViewerViewModel(
-                dependency: PDFViewerViewModel.Dependency(
-                    pdfDocumentSource: dependency.pdfDocumentSource,
-                    documentURLUseCase: dependency.documentURLUseCase,
-                    documentLoadingUseCase: dependency.documentLoadingUseCase,
-                    lastPageUseCase: dependency.lastPageUseCase,
-                    leftOffItemRecordUseCase: dependency.leftOffItemRecordUseCase,
-                    node: dependency.node,
-                    nearestOutlineItemUseCase: dependency.nearestOutlineItemUseCase,
-                    fileName: dependency.fileName
-                )
+        let viewModel = PDFViewerViewModel(
+            dependency: PDFViewerViewModel.Dependency(
+                pdfDocumentSource: dependency.pdfDocumentSource,
+                documentURLUseCase: dependency.documentURLUseCase,
+                documentLoadingUseCase: dependency.documentLoadingUseCase,
+                lastPageUseCase: dependency.lastPageUseCase,
+                leftOffItemRecordUseCase: dependency.leftOffItemRecordUseCase,
+                node: dependency.node,
+                nearestOutlineItemUseCase: dependency.nearestOutlineItemUseCase,
+                fileName: dependency.fileName,
+                actionContext: dependency.actionContext,
+                hasMoreAction: dependency.moreMenuDependencies != nil,
+                hasDownloadAction: dependency.downloadDependencies != nil
             )
+        )
+        _viewModel = State(initialValue: viewModel)
+        trailingToolbarContent = PDFViewerTrailingToolbarContent(
+            action: viewModel.trailingAction,
+            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+            moreMenuDependencies: dependency.moreMenuDependencies,
+            downloadDependencies: dependency.downloadDependencies
         )
     }
 
@@ -277,7 +291,7 @@ public struct PDFViewerView: View {
             )
         }
 
-        moreToolbarContent.documentLoadFailed(viewModel.state.isFailed)
+        trailingToolbarContent
 
         if viewModel.state.isReady {
             ToolbarItemGroup(placement: .bottomBar) {

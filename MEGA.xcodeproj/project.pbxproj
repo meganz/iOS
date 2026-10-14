@@ -1912,6 +1912,8 @@
 		ABCD12754000000000000001 /* MEGATextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD12754000000000000002 /* MEGATextEditor */; };
 		D715B5113074D39E00FB2D31 /* PDFViewerRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */; };
 		D715B5133074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */; };
+		D715B5543075017F00FB2D31 /* DocumentPreviewNodeActionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5533075017F00FB2D31 /* DocumentPreviewNodeActionDelegate.swift */; };
+		D715B558307501A400FB2D31 /* DocumentPreviewNodeActionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B556307501A400FB2D31 /* DocumentPreviewNodeActionDelegateTests.swift */; };
 		D715B5A23075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715B5A13075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift */; };
 		ABCD12560000000000000007 /* PreviewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */; };
 		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
@@ -2739,6 +2741,12 @@
 		D4A1F0C2B83E47519A6C0E22 /* ViewedLinksCrashlyticsErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A1F0C2B83E47519A6C0E21 /* ViewedLinksCrashlyticsErrorReporter.swift */; };
 		D7086A32305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7086A31305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift */; };
 		D7B05EB5303C2F11004C5100 /* TransfersTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */; };
+		D7B2F27D3077F40700C5F857 /* DocumentPreviewLinkActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2F27C3077F40700C5F857 /* DocumentPreviewLinkActionRouter.swift */; };
+		D7B2F27F3077F42000C5F857 /* PDFViewerActivityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2F27E3077F42000C5F857 /* PDFViewerActivityPresenter.swift */; };
+		D7B2F2833077F43800C5F857 /* DocumentPreviewLinkActionRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2F2813077F43800C5F857 /* DocumentPreviewLinkActionRouterTests.swift */; };
+		D7B2F2843077F43800C5F857 /* DocumentPreviewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2F2803077F43800C5F857 /* DocumentPreviewContextTests.swift */; };
+		D7B2F2853077F43800C5F857 /* DocumentPreviewNodeActionDelegateRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2F2823077F43800C5F857 /* DocumentPreviewNodeActionDelegateRoutingTests.swift */; };
+		D7B2F2873077F44C00C5F857 /* PDFViewerRevampRouterTransferActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2F2863077F44C00C5F857 /* PDFViewerRevampRouterTransferActionsTests.swift */; };
 		D7C5174530737F4F005F6FFD /* PDFViewerRevampRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C5174430737F49005F6FFD /* PDFViewerRevampRouterTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */; };
@@ -4851,6 +4859,8 @@
 		ABCD12754000000000000003 /* MEGATextEditor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATextEditor; sourceTree = "<group>"; };
 		D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouter.swift; sourceTree = "<group>"; };
 		D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFViewerRevampRouter+NodeActions.swift"; sourceTree = "<group>"; };
+		D715B5533075017F00FB2D31 /* DocumentPreviewNodeActionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreviewNodeActionDelegate.swift; sourceTree = "<group>"; };
+		D715B556307501A400FB2D31 /* DocumentPreviewNodeActionDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreviewNodeActionDelegateTests.swift; sourceTree = "<group>"; };
 		D715B5A13075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouterNodeActionsTests.swift; sourceTree = "<group>"; };
 		ABCD12560000000000000008 /* PreviewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDocumentViewModel.swift; sourceTree = "<group>"; };
 		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
@@ -5664,6 +5674,12 @@
 		C70D09D7707039EB5A91C3AD /* QuotaEventSimulatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEventSimulatorView.swift; sourceTree = "<group>"; };
 		D7086A31305C3213009C2561 /* MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+PDFViewerLastPageMEGAStoreProtocol.swift"; sourceTree = "<group>"; };
 		D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		D7B2F27C3077F40700C5F857 /* DocumentPreviewLinkActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreviewLinkActionRouter.swift; sourceTree = "<group>"; };
+		D7B2F27E3077F42000C5F857 /* PDFViewerActivityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerActivityPresenter.swift; sourceTree = "<group>"; };
+		D7B2F2803077F43800C5F857 /* DocumentPreviewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreviewContextTests.swift; sourceTree = "<group>"; };
+		D7B2F2813077F43800C5F857 /* DocumentPreviewLinkActionRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreviewLinkActionRouterTests.swift; sourceTree = "<group>"; };
+		D7B2F2823077F43800C5F857 /* DocumentPreviewNodeActionDelegateRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreviewNodeActionDelegateRoutingTests.swift; sourceTree = "<group>"; };
+		D7B2F2863077F44C00C5F857 /* PDFViewerRevampRouterTransferActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouterTransferActionsTests.swift; sourceTree = "<group>"; };
 		D7C5174430737F49005F6FFD /* PDFViewerRevampRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerRevampRouterTests.swift; sourceTree = "<group>"; };
 		DF6C8F6AB8CF06677C15C1F2 /* PromoLandingDialogLaunchPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoLandingDialogLaunchPresenter.swift; sourceTree = "<group>"; };
 		E6AB5898FB2C3FFC3E7875AD /* AppOpenPromoLandingDialogRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppOpenPromoLandingDialogRouter.swift; sourceTree = "<group>"; };
@@ -6797,6 +6813,10 @@
 		2488EBC12A13B4F2005F910E /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				D7B2F2803077F43800C5F857 /* DocumentPreviewContextTests.swift */,
+				D7B2F2813077F43800C5F857 /* DocumentPreviewLinkActionRouterTests.swift */,
+				D7B2F2823077F43800C5F857 /* DocumentPreviewNodeActionDelegateRoutingTests.swift */,
+				D715B556307501A400FB2D31 /* DocumentPreviewNodeActionDelegateTests.swift */,
 				0EC465152D87E10000EDA214 /* NodeActionResponderTests.swift */,
 				2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */,
 				0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */,
@@ -6812,6 +6832,7 @@
 				94A1445D2C9DE47000C34A98 /* PasteImagePreviewViewModelTests.swift */,
 				D715B5A13075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift */,
 				D7C5174430737F49005F6FFD /* PDFViewerRevampRouterTests.swift */,
+				D7B2F2863077F44C00C5F857 /* PDFViewerRevampRouterTransferActionsTests.swift */,
 				770E96755EE94E78BEAA9687 /* PreviewDocumentViewModelTests.swift */,
 			);
 			path = "Shared Views";
@@ -11860,6 +11881,7 @@
 			children = (
 				9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */,
 				0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */,
+				D7B2F27E3077F42000C5F857 /* PDFViewerActivityPresenter.swift */,
 				D715B5123074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift */,
 				D715B5103074D39E00FB2D31 /* PDFViewerRevampRouter.swift */,
 				0E17E6A32DC16F450090CC9F /* PermissionAppLaunchRouter.swift */,
@@ -13428,6 +13450,8 @@
 			isa = PBXGroup;
 			children = (
 				0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */,
+				D7B2F27C3077F40700C5F857 /* DocumentPreviewLinkActionRouter.swift */,
+				D715B5533075017F00FB2D31 /* DocumentPreviewNodeActionDelegate.swift */,
 				C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */,
 				0E9F66CE2D7FD56A001CE27B /* NodeActionResponder.swift */,
 				5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */,
@@ -15442,6 +15466,8 @@
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
 				BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */,
+				D7B2F27D3077F40700C5F857 /* DocumentPreviewLinkActionRouter.swift in Sources */,
+				D715B5543075017F00FB2D31 /* DocumentPreviewNodeActionDelegate.swift in Sources */,
 				C4C0A0082C32B5AE00B9ECCB /* DownloadedNodesListener.swift in Sources */,
 				837B179C2881848400A4D01B /* DownloadLinkRouter.swift in Sources */,
 				837B179E288184A100A4D01B /* DownloadLinkViewModel.swift in Sources */,
@@ -16116,6 +16142,7 @@
 				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,
 				2FD6A26D25745B2C00C1997E /* PasteImagePreviewViewController.swift in Sources */,
 				2F26B3282578396E00486C40 /* PasteImagePreviewViewModel.swift in Sources */,
+				D7B2F27F3077F42000C5F857 /* PDFViewerActivityPresenter.swift in Sources */,
 				D715B5133074D3AF00FB2D31 /* PDFViewerRevampRouter+NodeActions.swift in Sources */,
 				D715B5113074D39E00FB2D31 /* PDFViewerRevampRouter.swift in Sources */,
 				25D8406C2A9EE2860026D288 /* PermissionAlertModel.swift in Sources */,
@@ -17122,6 +17149,10 @@
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */,
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
+				D7B2F2843077F43800C5F857 /* DocumentPreviewContextTests.swift in Sources */,
+				D7B2F2833077F43800C5F857 /* DocumentPreviewLinkActionRouterTests.swift in Sources */,
+				D7B2F2853077F43800C5F857 /* DocumentPreviewNodeActionDelegateRoutingTests.swift in Sources */,
+				D715B558307501A400FB2D31 /* DocumentPreviewNodeActionDelegateTests.swift in Sources */,
 				24CCAC482B1363BD00BE4726 /* DownloadFileRepositoryTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
 				B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */,
@@ -17328,6 +17359,7 @@
 				94A1445E2C9DE47A00C34A98 /* PasteImagePreviewViewModelTests.swift in Sources */,
 				D715B5A23075E1CE00FB2D31 /* PDFViewerRevampRouterNodeActionsTests.swift in Sources */,
 				D7C5174530737F4F005F6FFD /* PDFViewerRevampRouterTests.swift in Sources */,
+				D7B2F2873077F44C00C5F857 /* PDFViewerRevampRouterTransferActionsTests.swift in Sources */,
 				25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */,
 				946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */,
 				C465EA072DC2F0610016A6D3 /* PermissionOnboardingRouterTests.swift in Sources */,

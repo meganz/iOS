@@ -69,6 +69,9 @@
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink isFromSharedItem:(BOOL)isFromSharedItem inViewController:(UIViewController *)viewController textEditorSource:(TextEditorFileSource)textEditorSource chatId:(NSNumber *)chatId messageId:(NSNumber *)messageId {
+    DocumentPreviewContext *context = chatId && messageId
+        ? [[DocumentPreviewContext alloc] initWithChatId:chatId.unsignedLongLongValue messageId:messageId.unsignedLongLongValue]
+        : [[DocumentPreviewContext alloc] initWithIsLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem];
     MEGASdk *api = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared;
     MEGASdk *apiForStreaming;
     if(MEGASdk.shared.isLoggedIn) {
@@ -119,7 +122,7 @@
         }
         if ([PDFViewerRevampRouter canOpenWithFileName:previewDocumentPath]) {
             MEGANode *resolvedNode = isFolderLink ? [api authorizeNode:self] : self;
-            return [PDFViewerRevampRouter viewControllerForFilePath:previewDocumentPath node:resolvedNode isLink:isFolderLink isFromSharedItem:isFromSharedItem];
+            return [PDFViewerRevampRouter viewControllerForFilePath:previewDocumentPath node:resolvedNode context:context];
         }
 
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
@@ -154,7 +157,7 @@
                 // `authorizeNode:` returns nil for a node it cannot
                 // authorise, and the router needs a non-nil node.
                 MEGANode *resolvedNode = isFolderLink ? ([api authorizeNode:self] ?: self) : self;
-                return [PDFViewerRevampRouter viewControllerForResolvedNode:resolvedNode isLink:isFolderLink isFromSharedItem:isFromSharedItem];
+                return [PDFViewerRevampRouter viewControllerForResolvedNode:resolvedNode context:context];
             }
 
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];

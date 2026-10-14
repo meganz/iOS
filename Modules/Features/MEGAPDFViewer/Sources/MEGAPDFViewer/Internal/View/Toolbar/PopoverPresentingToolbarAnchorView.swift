@@ -1,8 +1,7 @@
 import SwiftUI
 import UIKit
 
-/// Popover arrow target for node actions popover menu on iPad.
-struct PDFViewerMorePopoverAnchorView: UIViewRepresentable {
+struct PopoverPresentingToolbarAnchorView: UIViewRepresentable {
     let onReady: @MainActor (UIView) -> Void
 
     func makeUIView(context: Context) -> UIView {

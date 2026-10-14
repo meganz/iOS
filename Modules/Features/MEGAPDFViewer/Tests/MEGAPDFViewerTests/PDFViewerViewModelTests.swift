@@ -134,7 +134,10 @@ struct PDFViewerViewModelTests {
         leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = MockLeftOffItemRecordUseCase(),
         node: NodeEntity? = nil,
         outlineReader: any PDFOutlineReading = MockPDFOutlineReader(),
-        nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol = PDFNearestOutlineItemUseCase()
+        nearestOutlineItemUseCase: any PDFNearestOutlineItemUseCaseProtocol = PDFNearestOutlineItemUseCase(),
+        actionContext: PDFViewerActionContext = .init(),
+        hasMoreAction: Bool = false,
+        hasDownloadAction: Bool = false
     ) -> PDFViewerViewModel {
         let outlineLoadingUseCase = PDFOutlineLoadingUseCase(
             documentLoader: documentLoader,
@@ -153,9 +156,99 @@ struct PDFViewerViewModelTests {
                 leftOffItemRecordUseCase: leftOffItemRecordUseCase,
                 node: node,
                 nearestOutlineItemUseCase: nearestOutlineItemUseCase,
-                fileName: "test.pdf"
+                fileName: "test.pdf",
+                actionContext: actionContext,
+                hasMoreAction: hasMoreAction,
+                hasDownloadAction: hasDownloadAction
             )
         )
+    }
+
+    @Test(arguments: [false, true])
+    func nodeContext_usesMoreEvenForCachedLocalFile(isLink: Bool) {
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init { $0.finish() }),
+            actionContext: .init(hasNode: true, isLink: isLink),
+            hasMoreAction: true, hasDownloadAction: true
+        )
+
+        #expect(sut.trailingAction == .more)
+    }
+
+    @Test
+    func offlineLocalFile_usesDownloadEvenWhenMoreCallbackExists() {
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init { $0.finish() }),
+            hasMoreAction: true, hasDownloadAction: true
+        )
+
+        #expect(sut.trailingAction == .download)
+    }
+
+    @Test(arguments: [false, true])
+    func missingLinkOrChatNode_doesNotBecomeOffline(isChat: Bool) {
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init { $0.finish() }),
+            actionContext: .init(isLink: !isChat, isChat: isChat),
+            hasMoreAction: true, hasDownloadAction: true
+        )
+
+        #expect(sut.trailingAction == .none)
+    }
+
+    @Test
+    func unresolvedNodeSource_doesNotOfferOfflineDownload() {
+        let sut = makeSUT(
+            pdfDocumentSource: .node(NodeEntity(handle: 1)),
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init { $0.finish() }),
+            hasMoreAction: true, hasDownloadAction: true
+        )
+
+        #expect(sut.trailingAction == .none)
+    }
+
+    @Test(arguments: [false, true])
+    func unavailableCallback_hidesCorrespondingAction(hasNode: Bool) {
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init { $0.finish() }),
+            actionContext: .init(hasNode: hasNode)
+        )
+
+        #expect(sut.trailingAction == .none)
+    }
+
+    @Test
+    func failedLoad_keepsNodeMoreAction() async {
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init {
+                $0.finish(throwing: PDFDocumentLoadError.transferFailed)
+            }),
+            actionContext: .init(hasNode: true), hasMoreAction: true
+        )
+
+        await sut.loadDocumentFromSource()
+
+        #expect(sut.state.isFailed)
+        #expect(sut.trailingAction == .more)
+    }
+
+    @Test
+    func failedOfflineParse_keepsDownloadAction() async {
+        let url = URL(fileURLWithPath: "/tmp/offline.pdf")
+        let sut = makeSUT(
+            pdfDocumentSource: .local(url),
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: .init {
+                $0.yield(.ready(url))
+                $0.finish()
+            }),
+            documentLoader: MockPDFDocumentLoader(document: nil),
+            hasDownloadAction: true
+        )
+
+        await sut.loadDocumentFromSource()
+
+        #expect(sut.state.isFailed)
+        #expect(sut.trailingAction == .download)
     }
 
     /// Suspends until `sut.state` equals `expected`, re-registering

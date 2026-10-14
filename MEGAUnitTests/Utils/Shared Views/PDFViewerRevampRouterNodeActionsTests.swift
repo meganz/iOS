@@ -13,7 +13,6 @@ final class PDFViewerRevampRouterNodeActionsTests: XCTestCase {
         let barItem = UIBarButtonItem()
 
         let sender = PDFViewerRevampRouter.nodeActionsSender(
-            from: UIViewController(),
             anchor: makeAttachedAnchor(),
             barItem: barItem
         )
@@ -25,7 +24,6 @@ final class PDFViewerRevampRouterNodeActionsTests: XCTestCase {
         let anchor = makeAttachedAnchor()
 
         let sender = PDFViewerRevampRouter.nodeActionsSender(
-            from: UIViewController(),
             anchor: anchor,
             barItem: nil
         )
@@ -33,41 +31,33 @@ final class PDFViewerRevampRouterNodeActionsTests: XCTestCase {
         XCTAssertIdentical(sender as AnyObject, anchor)
     }
 
-    func testNodeActionsSender_withDetachedAnchor_returnsPresenterView() {
-        let presenter = UIViewController()
-
+    func testNodeActionsSender_withDetachedAnchor_returnsNil() {
         let sender = PDFViewerRevampRouter.nodeActionsSender(
-            from: presenter,
             anchor: UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44)),
             barItem: nil
         )
 
-        XCTAssertIdentical(sender as AnyObject, presenter.view)
+        XCTAssertNil(sender)
     }
 
-    func testNodeActionsSender_withZeroSizeAnchor_returnsPresenterView() {
-        let presenter = UIViewController()
+    func testNodeActionsSender_withZeroSizeAnchor_returnsNil() {
         let anchor = makeAttachedAnchor(size: .zero)
 
         let sender = PDFViewerRevampRouter.nodeActionsSender(
-            from: presenter,
             anchor: anchor,
             barItem: nil
         )
 
-        XCTAssertIdentical(sender as AnyObject, presenter.view)
+        XCTAssertNil(sender)
     }
 
-    func testNodeActionsSender_withoutAnchorOrBarItem_returnsPresenterView() {
-        let presenter = UIViewController()
-
+    func testNodeActionsSender_withoutAnchorOrBarItem_returnsNil() {
         let sender = PDFViewerRevampRouter.nodeActionsSender(
-            from: presenter,
             anchor: nil,
             barItem: nil
         )
 
-        XCTAssertIdentical(sender as AnyObject, presenter.view)
+        XCTAssertNil(sender)
     }
 
     func testPresentNodeActions_withoutPresenter_callsOnPresentedOnce() {
@@ -78,8 +68,9 @@ final class PDFViewerRevampRouterNodeActionsTests: XCTestCase {
             from: nil,
             anchor: nil,
             barItem: nil,
-            isLink: false,
-            isFromSharedItem: false,
+            context: DocumentPreviewContext(
+                isLink: false, fileLink: nil, isFromSharedItem: false
+            ),
             onPresented: { onPresentedCallCount += 1 }
         )
 
@@ -95,8 +86,9 @@ final class PDFViewerRevampRouterNodeActionsTests: XCTestCase {
             from: presenter,
             anchor: nil,
             barItem: nil,
-            isLink: false,
-            isFromSharedItem: false,
+            context: DocumentPreviewContext(
+                isLink: false, fileLink: nil, isFromSharedItem: false
+            ),
             onPresented: { onPresentedCallCount += 1 }
         )
 
