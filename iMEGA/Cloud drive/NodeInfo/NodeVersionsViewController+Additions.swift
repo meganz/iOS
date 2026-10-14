@@ -48,7 +48,7 @@ extension NodeVersionsViewController {
             )
             self.navigationController?.present(photoBrowserVC, animated: true, completion: nil)
         } else {
-            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
+            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil, sourcePage: .unknown, textEditorSource: .versions)
         }
     }
     

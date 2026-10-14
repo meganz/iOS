@@ -32,6 +32,11 @@ final class TextEditorViewRouter: NSObject {
     private var isLink = false
     /// The public link of a file link. It is nil for a file inside a folder link.
     private var fileLink: String?
+    /// The screen that opened the file. It decides the node actions, the download and the preview fallback.
+    private let source: TextEditorFileSource
+    /// The chat of a chat attachment. The chat download and the preview fallback need it.
+    private var chatId: HandleEntity?
+    private var messageId: HandleEntity?
     
     @objc convenience init(
         textFile: TextFile,
@@ -41,17 +46,23 @@ final class TextEditorViewRouter: NSObject {
         presenter: UIViewController? = nil,
         isMarkdownEditorEnabled: Bool,
         isLink: Bool = false,
-        fileLink: String? = nil
+        fileLink: String? = nil,
+        source: TextEditorFileSource = .cloudDrive,
+        chatId: NSNumber? = nil,
+        messageId: NSNumber? = nil
     ) {
         self.init(textFile: textFile,
                   textEditorMode: textEditorMode,
                   isFromSharedItem: isFromSharedItem,
                   nodeEntity: node?.toNodeEntity(),
                   presenter: presenter,
-                  isMarkdownEditorEnabled: isMarkdownEditorEnabled)
+                  isMarkdownEditorEnabled: isMarkdownEditorEnabled,
+                  source: source)
         self.megaNode = node
         self.isLink = isLink
         self.fileLink = fileLink
+        self.chatId = chatId?.uint64Value
+        self.messageId = messageId?.uint64Value
     }
     
     init(
@@ -60,8 +71,10 @@ final class TextEditorViewRouter: NSObject {
         isFromSharedItem: Bool = false,
         nodeEntity: NodeEntity? = nil,
         presenter: UIViewController? = nil,
-        isMarkdownEditorEnabled: Bool
+        isMarkdownEditorEnabled: Bool,
+        source: TextEditorFileSource = .cloudDrive
     ) {
+        self.source = source
         self.textFile = textFile
         self.textEditorMode = textEditorMode
         self.isFromSharedItem = isFromSharedItem
@@ -88,6 +101,41 @@ final class TextEditorViewRouter: NSObject {
             isMarkdownEditorEnabled: isMarkdownEditorEnabled
         )
         self.parentHandle = parentHandle
+    }
+
+    // MARK: - Source rules
+
+    /// Only a file of the Cloud drive uses the text editor actions, which include Edit.
+    /// The other sources keep the preview actions of the document preview.
+    static func nodeActionsDisplayMode(for source: TextEditorFileSource, isInRubbishBin: Bool) -> DisplayMode {
+        if isInRubbishBin { return .rubbishBin }
+        return source == .cloudDrive ? .textEditor : .previewDocument
+    }
+
+    /// Only a file opened from the versions screen shows the version actions.
+    static func isInVersionsView(for source: TextEditorFileSource) -> Bool {
+        source == .versions
+    }
+
+    /// A file of the account is found by handle. The other sources may hold a node outside the account tree,
+    /// such as an old version or a chat attachment, so they use the node they were opened with.
+    static func actionsNode<Node>(accountNode: Node?, openedNode: Node?, source: TextEditorFileSource) -> Node? {
+        accountNode ?? (source == .cloudDrive ? nil : openedNode)
+    }
+
+    /// A chat attachment downloads through its message. Other files download as nodes.
+    static func makeDownloadTransfer(node: NodeEntity, chatId: HandleEntity?, messageId: HandleEntity?) -> CancellableTransfer {
+        if let chatId, let messageId {
+            return CancellableTransfer(
+                handle: node.handle,
+                messageId: messageId,
+                chatId: chatId,
+                name: node.name,
+                isFile: node.isFile,
+                type: .downloadChat
+            )
+        }
+        return CancellableTransfer(handle: node.handle, name: node.name, appData: nil, priority: false, isFile: node.isFile, type: .download)
     }
 
     // MARK: - Markdown
@@ -182,7 +230,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
             isMarkdownScreen: isMarkdownScreen,
-            isLink: isLink
+            isLink: isLink,
+            source: source
         )
         return vm
     }
@@ -230,37 +279,48 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func showActions(nodeHandle: HandleEntity, delegate: some NodeActionViewControllerDelegate, sender button: Any) {
-        guard let node = MEGASdk.shared.node(forHandle: nodeHandle) else {
+        guard let node = Self.actionsNode(accountNode: MEGASdk.shared.node(forHandle: nodeHandle), openedNode: megaNode, source: source) else {
             return
         }
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
-        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
+        let displayMode = Self.nodeActionsDisplayMode(for: source, isInRubbishBin: node.mnz_isInRubbishBin())
         let nodeActionViewController = NodeActionViewController(
             node: node,
             delegate: delegate,
             displayMode: displayMode,
+            isInVersionsView: Self.isInVersionsView(for: source),
             isBackupNode: isBackupNode,
             isFromSharedItem: isFromSharedItem,
-            isSelectionEnabled: false,
             sender: button
         )
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
+    /// Gives the document preview the data its link, chat and node actions need.
+    func configureSourceFields(of previewVC: PreviewDocumentViewController) {
+        if isLink {
+            previewVC.node = megaNode
+            previewVC.isLink = true
+            previewVC.fileLink = fileLink
+        } else if source == .chat {
+            previewVC.node = megaNode
+            previewVC.chatId = chatId ?? .invalid
+            previewVC.messageId = messageId ?? .invalid
+        } else if let nodeHandle = nodeEntity?.handle {
+            previewVC.nodeHandle = nodeHandle
+        }
+    }
+
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
         let nc = UIStoryboard(name: "DocumentPreviewer", bundle: nil).instantiateViewController(withIdentifier: "previewDocumentNavigationID") as? MEGANavigationController
         let previewVC = nc?.viewControllers.first as? PreviewDocumentViewController
         previewVC?.filePath = path
         previewVC?.showUnknownEncodeHud = showUneditableError
-        if isLink {
-            previewVC?.node = megaNode
-            previewVC?.isLink = true
-            previewVC?.fileLink = fileLink
-        } else if let nodeHandle = nodeEntity?.handle {
-            previewVC?.nodeHandle = nodeHandle
+        if let previewVC {
+            configureSourceFields(of: previewVC)
         }
         nc?.modalPresentationStyle = .fullScreen
         guard let navigationController = nc else { return }
@@ -304,9 +364,9 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             return
         }
         
-        let transfer = CancellableTransfer(handle: node.handle, name: node.name, appData: nil, priority: false, isFile: node.isFile, type: .download)
+        let transfer = Self.makeDownloadTransfer(node: node, chatId: chatId, messageId: messageId)
 
-        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download, isFolderLink: false).start()
+        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: transfer.type, isFolderLink: false).start()
     }
     
     func sendToChat(node: MEGANode) {

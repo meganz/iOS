@@ -117,9 +117,10 @@ extension MarkdownTextEditorViewController: ViewType {
             break
         }
 
-        if model.textEditorMode == .view && !isInRubbishBin {
+        // The view model sends no access level when the opening screen shows no bar actions.
+        if model.textEditorMode == .view && !isInRubbishBin, let accessLevel = model.accessLevel {
             toolbarItems = TextEditorBarItems.bottomBarItems(
-                accessLevel: isBackupNode ? .read : model.accessLevel ?? .unknown,
+                accessLevel: isBackupNode ? .read : accessLevel,
                 target: self
             )
             navigationController?.setToolbarHidden(false, animated: true)

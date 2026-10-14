@@ -40,6 +40,10 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes: (NSArray *_Nullable)allNodes sourcePage:(NodeSourcePage)sourcePage {
+    [self mnz_openNodeInNavigationController:navigationController folderLink:isFolderLink fileLink:fileLink messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes:allNodes sourcePage:sourcePage textEditorSource:TextEditorFileSourceCloudDrive];
+}
+
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes: (NSArray *_Nullable)allNodes sourcePage:(NodeSourcePage)sourcePage textEditorSource:(TextEditorFileSource)textEditorSource {
     if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGAChatSdk.shared.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
@@ -47,7 +51,7 @@
             UIViewController *presenterVC = [navigationController.viewControllers lastObject];
             [self presentAudioPlayerWithNode:self fileLink:fileLink isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes:allNodes sourcePage:sourcePage];
         } else {
-            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:navigationController.viewControllers.lastObject];
+            UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:navigationController.viewControllers.lastObject textEditorSource:textEditorSource chatId:chatId messageId:messageId];
             if (viewController) {
                 [self trackFileOpenAnalyticsWithIsFolderLink:isFolderLink fileLink:fileLink isFromChat:(chatId != nil) isFromSharedItem:isFromSharedItem isFromRecent:NO];
                 [navigationController presentViewController:viewController animated:YES completion:nil];
@@ -61,6 +65,10 @@
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink isFromSharedItem:(BOOL)isFromSharedItem inViewController:(UIViewController *)viewController {
+    return [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:viewController textEditorSource:TextEditorFileSourceCloudDrive chatId:nil messageId:nil];
+}
+
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink isFromSharedItem:(BOOL)isFromSharedItem inViewController:(UIViewController *)viewController textEditorSource:(TextEditorFileSource)textEditorSource chatId:(NSNumber *)chatId messageId:(NSNumber *)messageId {
     MEGASdk *api = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared;
     MEGASdk *apiForStreaming;
     if(MEGASdk.shared.isLoggedIn) {
@@ -84,9 +92,11 @@
     
     // A link file is read only, so only the Markdown screen takes it. Other text files keep the document preview.
     BOOL opensLinkTextFile = isFolderLink && [TextEditorOpener opensLinkFileInTextEditorWithFileName:self.name ?: @"" sizeInBytes:self.size.unsignedLongLongValue];
-    BOOL opensTextEditor = [viewController conformsToProtocol:@protocol(TextFileEditable)] || opensLinkTextFile;
+    // Offline, Chat, Transfers and Versions send only Markdown files to the Markdown screen.
+    BOOL opensSourceMarkdownFile = textEditorSource != TextEditorFileSourceCloudDrive && [TextEditorOpener opensFileOnMarkdownScreenWithFileName:self.name ?: @"" sizeInBytes:self.size.unsignedLongLongValue];
+    BOOL opensTextEditor = [viewController conformsToProtocol:@protocol(TextFileEditable)] || opensLinkTextFile || opensSourceMarkdownFile;
     // The file link screen opens a file with no view controller. The text screen still needs a presenter for its fallback.
-    UIViewController *textPresenter = opensLinkTextFile ? (viewController.navigationController ?: UIApplication.mnz_presentingViewController) : viewController.navigationController;
+    UIViewController *textPresenter = (opensLinkTextFile || opensSourceMarkdownFile) ? (viewController.navigationController ?: UIApplication.mnz_presentingViewController) : viewController.navigationController;
     
     if (previewDocumentPath) {
         if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name]) {
@@ -102,7 +112,7 @@
             }
         } else if (opensTextEditor && [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:previewDocumentPath]) {
             MEGANode *textNode = isFolderLink ? ([api authorizeNode:self] ?: self) : self;
-            UIViewController *textController = [TextEditorOpener makeCachedTextViewControllerWithNode:textNode filePath:previewDocumentPath isFromSharedItem:isFromSharedItem isLink:isFolderLink fileLink:fileLink presenter:textPresenter];
+            UIViewController *textController = [TextEditorOpener makeCachedTextViewControllerWithNode:textNode filePath:previewDocumentPath isFromSharedItem:isFromSharedItem isLink:isFolderLink fileLink:fileLink presenter:textPresenter source:textEditorSource chatId:chatId messageId:messageId];
             if (textController != nil) {
                 return textController;
             }
@@ -137,7 +147,7 @@
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
                 // Authorized up front: the download goes through MEGASdk.shared, which has no link node in its tree.
                 MEGANode *nodeToLoad = isFolderLink ? ([api authorizeNode:self] ?: self) : self;
-                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:nodeToLoad presenter:textPresenter isMarkdownEditorEnabled:TextEditorOpener.isMarkdownEditorEnabled isLink:isFolderLink fileLink:fileLink] build];
+                return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad isFromSharedItem:isFromSharedItem node:nodeToLoad presenter:textPresenter isMarkdownEditorEnabled:TextEditorOpener.isMarkdownEditorEnabled isLink:isFolderLink fileLink:fileLink source:textEditorSource chatId:chatId messageId:messageId] build];
             }
             
             if ([PDFViewerRevampRouter canOpenWithFileName:self.name]) {

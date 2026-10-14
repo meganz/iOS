@@ -2,11 +2,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// The screen that opens a file. Offline, Chat, Transfers and Versions show only Markdown files on the Markdown screen,
+/// with the document preview rules.
+typedef NS_ENUM(NSInteger, TextEditorFileSource) {
+    TextEditorFileSourceCloudDrive = 0,
+    TextEditorFileSourceOffline,
+    TextEditorFileSourceChat,
+    TextEditorFileSourceTransfers,
+    TextEditorFileSourceVersions
+};
+
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes:(NSArray *_Nullable)allNodes;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes:(NSArray *_Nullable)allNodes sourcePage:(NodeSourcePage)sourcePage;
+- (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes:(NSArray *_Nullable)allNodes sourcePage:(NodeSourcePage)sourcePage textEditorSource:(TextEditorFileSource)textEditorSource;
 - (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink isFromSharedItem:(BOOL)isFromSharedItem inViewController:(UIViewController *_Nullable)viewController;
+- (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink isFromSharedItem:(BOOL)isFromSharedItem inViewController:(UIViewController *_Nullable)viewController textEditorSource:(TextEditorFileSource)textEditorSource chatId:(nullable NSNumber *)chatId messageId:(nullable NSNumber *)messageId;
 - (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 
 #pragma mark - Actions

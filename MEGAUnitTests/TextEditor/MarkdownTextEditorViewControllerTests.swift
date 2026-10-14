@@ -30,7 +30,8 @@ struct MarkdownTextEditorViewControllerTests {
         content: String = "",
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = NodeEntity(name: "notes.md", handle: 77, isFile: true, size: 10),
-        isLink: Bool = false
+        isLink: Bool = false,
+        source: TextEditorFileSource = .cloudDrive
     ) -> Fixture {
         let router = MockTextEditorViewRouter()
         let tracker = MockTracker()
@@ -47,6 +48,7 @@ struct MarkdownTextEditorViewControllerTests {
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
             isLink: isLink,
+            source: source,
             tracker: tracker
         )
         let sut = MarkdownTextEditorViewController(viewModel: viewModel)
@@ -260,6 +262,48 @@ struct MarkdownTextEditorViewControllerTests {
         #expect(actions == [#selector((any TextEditorBarItemTarget).downloadTapped), #selector((any TextEditorBarItemTarget).importTapped)])
         let right = fixture.sut.navigationItem.rightBarButtonItems ?? []
         #expect(right.contains { $0.image == MEGAAssets.UIImage.moreNavigationBar } == false)
+    }
+
+    @Test(arguments: [TextEditorFileSource.chat, .transfers, .versions])
+    func nodeSourceFile_setUpView_showsMoreWithoutBottomBar(source: TextEditorFileSource) async throws {
+        let fixture = Self.makeFixture(accessLevel: .owner, source: source)
+
+        fixture.viewModel.dispatch(.setUpView)
+        try await Self.waitForSetUp(fixture.sut)
+
+        #expect(fixture.sut.toolbarItems?.isEmpty ?? true)
+        let right = fixture.sut.navigationItem.rightBarButtonItems ?? []
+        #expect(right.contains { $0.image == MEGAAssets.UIImage.moreNavigationBar })
+    }
+
+    @Test func offlineFile_setUpView_showsNoMoreAndNoBottomBar() async throws {
+        let fixture = Self.makeFixture(accessLevel: .owner, source: .offline)
+
+        fixture.viewModel.dispatch(.setUpView)
+        try await Self.waitForSetUp(fixture.sut)
+
+        #expect(fixture.sut.toolbarItems?.isEmpty ?? true)
+        let right = fixture.sut.navigationItem.rightBarButtonItems ?? []
+        #expect(right.contains { $0.image == MEGAAssets.UIImage.moreNavigationBar } == false)
+    }
+
+    @Test func cloudDriveFile_setUpView_showsBottomBarAndMore() async throws {
+        let fixture = Self.makeFixture(accessLevel: .owner)
+
+        fixture.viewModel.dispatch(.setUpView)
+        try await Self.waitForSetUp(fixture.sut)
+
+        #expect(fixture.sut.toolbarItems?.isEmpty == false)
+        let right = fixture.sut.navigationItem.rightBarButtonItems ?? []
+        #expect(right.contains { $0.image == MEGAAssets.UIImage.moreNavigationBar })
+    }
+
+    @Test func configView_viewModeWithoutAccessLevel_hidesBottomBar() {
+        let fixture = Self.makeFixture()
+
+        Self.configure(fixture.sut, mode: .view, accessLevel: nil)
+
+        #expect(fixture.sut.toolbarItems?.isEmpty ?? true)
     }
 
     @Test func moreTapPassesBarButtonItemAsSender() throws {

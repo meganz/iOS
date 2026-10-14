@@ -88,6 +88,8 @@ final class TextEditorViewModel: ViewModelType {
     private let isMarkdownScreen: Bool
     /// A file from a folder link or a file link. The user does not own it, so the screen is read only.
     private let isLink: Bool
+    /// The screen that opened the file. Only a Cloud drive file shows bar actions.
+    private let source: TextEditorFileSource
     private let resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol
     private let leftOffItemRecordUseCase: any LeftOffItemRecordUseCaseProtocol
     /// Character offset of the top visible character. It is a position
@@ -110,6 +112,7 @@ final class TextEditorViewModel: ViewModelType {
         nodeEntity: NodeEntity? = nil,
         isMarkdownScreen: Bool = false,
         isLink: Bool = false,
+        source: TextEditorFileSource = .cloudDrive,
         leftOffItemRecordUseCase: some LeftOffItemRecordUseCaseProtocol = LeftOffItemsRecordUseCase.shared,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
@@ -125,6 +128,7 @@ final class TextEditorViewModel: ViewModelType {
         self.nodeEntity = nodeEntity
         self.isMarkdownScreen = isMarkdownScreen
         self.isLink = isLink
+        self.source = source
         self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
         self.tracker = tracker
     }
@@ -434,7 +438,8 @@ final class TextEditorViewModel: ViewModelType {
             return TextEditorModel(
                 textFile: textFile,
                 textEditorMode: textEditorMode,
-                accessLevel: nodeAccessLevel(),
+                // The document preview shows no bar actions, so the other sources keep that.
+                accessLevel: source == .cloudDrive ? nodeAccessLevel() : nil,
                 resumeReadingOffset: isMarkdown ? nil : readingAnchor ?? storedReadingOffset
             )
         case .load,
@@ -520,7 +525,7 @@ final class TextEditorViewModel: ViewModelType {
             // The node actions need a node of the account, so a link file has no More button.
             return TextEditorNavbarItemsModel(
                 leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-                rightItem: isLink ? nil : NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
+                rightItem: isLink || source == .offline ? nil : NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
                 textEditorMode: textEditorMode
             )
         case .edit,

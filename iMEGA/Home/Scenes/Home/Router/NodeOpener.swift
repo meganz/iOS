@@ -95,13 +95,28 @@ final class NodeOpener {
         // if we do not have an image or video, we will jump deeper to see
         // if we have audio or other type of file
         guard node.name?.fileExtensionGroup.isVisualMedia == true else {
-            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: isFromSharedItem ?? false, allNodes: allNodes, sourcePage: sourcePage)
+            node.mnz_open(
+                in: navigationController,
+                folderLink: false,
+                fileLink: nil,
+                messageId: nil,
+                chatId: nil,
+                isFromSharedItem: isFromSharedItem ?? false,
+                allNodes: allNodes,
+                sourcePage: sourcePage,
+                textEditorSource: Self.textEditorSource(for: displayMode)
+            )
             return
         }
-        
+
         // open MEGAPhotoBrowserViewController on the node and allow scrolling
         // through all visual media in the allNodes array
         openVisualMedia(node: node, allNodes: allNodes, displayMode: displayMode, isFromSharedItem: isFromSharedItem)
+    }
+
+    /// The Transfers screen opens a Markdown file on the Markdown screen with the document preview rules.
+    static func textEditorSource(for displayMode: DisplayMode?) -> TextEditorFileSource {
+        displayMode == .transfers ? .transfers : .cloudDrive
     }
     
     private func openVisualMedia(

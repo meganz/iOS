@@ -120,6 +120,21 @@ struct TextEditorViewModelReadingPositionTests {
         #expect(recordUseCase.remove_Calls.isEmpty)
     }
 
+    // MARK: - Source rules
+
+    @Test func textEditorModel_cloudDriveSource_hasNodeAccessLevel() {
+        let sut = makeSUT(source: .cloudDrive, nodeAccessLevel: .owner)
+
+        #expect(configuredModel(of: sut)?.accessLevel == .owner)
+    }
+
+    @Test(arguments: [TextEditorFileSource.offline, .chat, .transfers, .versions])
+    func textEditorModel_otherSource_hasNoAccessLevel(source: TextEditorFileSource) {
+        let sut = makeSUT(source: source, nodeAccessLevel: .owner)
+
+        #expect(configuredModel(of: sut)?.accessLevel == nil)
+    }
+
     // MARK: - Node identity after an edit
 
     @Test("Uses the node the upload produced, not the one the editor opened")
@@ -161,7 +176,9 @@ struct TextEditorViewModelReadingPositionTests {
         uploadFileUseCase: MockUploadFileUseCase = MockUploadFileUseCase(),
         resumeTextPositionUseCase: MockResumeTextPositionUseCase = MockResumeTextPositionUseCase(),
         leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
-        isLink: Bool = false
+        isLink: Bool = false,
+        source: TextEditorFileSource = .cloudDrive,
+        nodeAccessLevel: NodeAccessTypeEntity = .unknown
     ) -> TextEditorViewModel {
         TextEditorViewModel(
             router: MockTextEditorViewRouter(),
@@ -169,12 +186,13 @@ struct TextEditorViewModelReadingPositionTests {
             textEditorMode: textEditorMode,
             uploadFileUseCase: uploadFileUseCase,
             downloadNodeUseCase: MockDownloadNodeUseCase(),
-            nodeUseCase: MockNodeDataUseCase(),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel),
             backupsUseCase: MockBackupsUseCase(),
             resumeTextPositionUseCase: resumeTextPositionUseCase,
             parentHandle: 1,
             nodeEntity: NodeEntity(name: fileName, fingerprint: "fingerprint", handle: 1, isFile: true),
             isLink: isLink,
+            source: source,
             leftOffItemRecordUseCase: leftOffItemRecordUseCase,
             tracker: MockTracker()
         )

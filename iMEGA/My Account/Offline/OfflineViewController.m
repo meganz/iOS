@@ -718,7 +718,12 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if ([PDFViewerRevampRouter canOpenWithFileName:self.previewDocumentPath]) {
         [self presentViewController:[self pdfViewerViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || [FileExtensionGroupOCWrapper verifyIsEditableTextFileAtPath:self.previewDocumentPath]) {
-        [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
+        UIViewController *markdownController = [TextEditorOpener makeOfflineMarkdownViewControllerWithFilePath:self.previewDocumentPath];
+        if (markdownController != nil) {
+            [self presentViewController:markdownController animated:YES completion:nil];
+        } else {
+            [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
+        }
     } else {
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath isMultimedia: NO];
         if (previewController == nil) {

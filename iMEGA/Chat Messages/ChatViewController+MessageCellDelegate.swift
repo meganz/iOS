@@ -256,9 +256,24 @@ extension ChatViewController: @MainActor MessageCellDelegate, @MainActor Message
             present(viewController: photoBrowserVC)
         } else {
             dismissKeyboardIfRequired()
-            if !PDFViewerRevampRouter.canOpen(fileName: node?.name ?? ""), let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
-                viewController.chatId = chatRoom.chatId
-                viewController.messageId = megaMessage.messageId
+            let chatIdNumber = NSNumber(value: chatRoom.chatId)
+            let messageIdNumber = NSNumber(value: megaMessage.messageId)
+            if !PDFViewerRevampRouter.canOpen(fileName: node?.name ?? ""),
+               let navController = node?.mnz_viewControllerForNode(
+                inFolderLink: false,
+                fileLink: nil,
+                isFromSharedItem: false,
+                in: self,
+                textEditorSource: .chat,
+                chatId: chatIdNumber,
+                messageId: messageIdNumber
+               ) as? MEGANavigationController,
+               navController.topViewController is PreviewDocumentViewController || navController.topViewController is MarkdownTextEditorViewController {
+                // The Markdown screen already has the chat ids from its router.
+                if let previewController = navController.topViewController as? PreviewDocumentViewController {
+                    previewController.chatId = chatRoom.chatId
+                    previewController.messageId = megaMessage.messageId
+                }
                 navigationController?.present(navController, animated: true)
             } else {
                 let messageId = NSNumber(value: megaMessage.messageId)
