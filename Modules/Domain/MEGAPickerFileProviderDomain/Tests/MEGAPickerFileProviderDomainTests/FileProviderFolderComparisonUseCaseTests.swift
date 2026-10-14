@@ -6,6 +6,20 @@ struct FileProviderFolderComparisonUseCaseTests {
     private let folder = NSFileProviderItemIdentifier("folder")
 
     @Test
+    func hasSnapshot_ofAnEnumeratedContainer_isTrue() async throws {
+        let sut = makeSUT(snapshotRepo: MockFileProviderSnapshotRepository(snapshots: [folder: FileProviderSnapshotEntity()]))
+
+        #expect(try await sut.hasSnapshot(of: folder))
+    }
+
+    @Test
+    func hasSnapshot_ofAContainerNeverEnumerated_isFalse() async throws {
+        let sut = makeSUT()
+
+        #expect(try await sut.hasSnapshot(of: folder) == false)
+    }
+
+    @Test
     func compareChildren_ofAContainerWithoutSnapshot_queuesNothing() async throws {
         let changeQueueRepo = MockFileProviderChangeQueueRepository()
         let signalRepo = MockFileProviderWorkingSetSignalRepository()

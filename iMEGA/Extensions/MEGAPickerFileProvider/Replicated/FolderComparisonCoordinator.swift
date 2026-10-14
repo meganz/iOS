@@ -20,6 +20,8 @@ actor FolderComparisonCoordinator {
         defer { comparingContainers.remove(containerIdentifier) }
 
         do {
+            // Checked first, as it needs no login nor the node tree to catch up.
+            guard try await useCase.hasSnapshot(of: containerIdentifier) else { return }
             try await FileProviderSession.shared.ensureReady()
             // Until the node tree has caught up, a child missing from it is not necessarily gone.
             let isNodeTreeCurrent = await FileProviderSession.shared.waitUntilNodeTreeIsCurrent(timeout: Self.nodeTreeTimeout)

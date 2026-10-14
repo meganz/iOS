@@ -31,10 +31,18 @@ final class ReplicatedFileProviderItem: NSObject, NSFileProviderItem {
         return UTType(filenameExtension: entity.node.name.pathExtension) ?? .data
     }
 
-    /// Read-only until the write operations are implemented: advertising more would let Files start changes the
-    /// extension rejects.
+    /// What Files offers to do with the item. Writing a file is left out until uploads are supported; the root and
+    /// the trash can't be renamed, moved or deleted.
     var capabilities: NSFileProviderItemCapabilities {
-        entity.node.isFile ? [.allowsReading] : [.allowsReading, .allowsContentEnumerating]
+        switch entity.identifier {
+        case .rootContainer:
+            return [.allowsReading, .allowsContentEnumerating, .allowsAddingSubItems]
+        case .trashContainer:
+            return [.allowsReading, .allowsContentEnumerating]
+        default:
+            let capabilities: NSFileProviderItemCapabilities = [.allowsReading, .allowsRenaming, .allowsReparenting, .allowsTrashing, .allowsDeleting]
+            return entity.node.isFile ? capabilities : capabilities.union([.allowsContentEnumerating, .allowsAddingSubItems])
+        }
     }
 
     var itemVersion: NSFileProviderItemVersion {

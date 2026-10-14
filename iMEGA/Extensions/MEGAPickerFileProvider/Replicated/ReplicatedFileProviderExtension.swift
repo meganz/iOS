@@ -4,16 +4,18 @@ import MEGADomain
 import MEGAPickerFileProviderDomain
 import MEGAPickerFileProviderRepo
 import MEGARepo
+import UniformTypeIdentifiers
 
 /// Entry point of the File Provider extension on `NSFileProviderReplicatedExtension`.
 ///
 /// Only used when the `MEGA_FILE_PROVIDER_PRINCIPAL_CLASS` build setting points at it; `FileProviderExtension`
-/// stays the shipping implementation until the switch. For now it serves browsing and downloading, and keeps what
-/// Files shows in step with remote changes.
+/// stays the shipping implementation until the switch. For now it serves browsing, downloading, creating folders,
+/// renaming, moving and deleting, and keeps what Files shows in step with remote changes.
 final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
-    /// Changes MEGA has nowhere to keep. The system sets the last used date whenever a file is opened, including
-    /// when Files hands it over to another app, and a folder's modification date whenever a file is added to it.
-    private static let unsupportedFields: NSFileProviderItemFields = [.lastUsedDate, .contentModificationDate]
+    /// The changes `modifyItem` makes to the node. The others have nowhere to be kept in MEGA, such as the last used
+    /// date, which the system sets whenever a file is opened, and a folder's modification date, which it sets whenever
+    /// a file is added to the folder.
+    private static let appliedFields: NSFileProviderItemFields = [.filename, .parentItemIdentifier]
 
     private let domain: NSFileProviderDomain
     private let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
@@ -33,6 +35,16 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     /// Built on every use for the same reason as `itemUseCase`.
     private var contentUseCase: some FileProviderContentUseCaseProtocol {
         FileProviderContentUseCase(downloadRepo: FileProviderDownloadRepository.newRepo)
+    }
+
+    /// Built on every use for the same reason as `itemUseCase`.
+    private var itemActionUseCase: some FileProviderItemActionUseCaseProtocol {
+        FileProviderItemActionUseCase(
+            itemUseCase: itemUseCase,
+            nodeRepo: NodeRepository.newRepo,
+            nodeActionRepo: NodeActionRepository.newRepo,
+            snapshotRepo: FileProviderSnapshotRepository.newRepo
+        )
     }
 
     private var enumerationSnapshotUseCase: some FileProviderEnumerationSnapshotUseCaseProtocol {
@@ -177,8 +189,28 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         request: NSFileProviderRequest,
         completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void
     ) -> Progress {
-        MEGALogError("[Picker] createItem is not supported yet: \(itemTemplate.filename) in \(itemTemplate.parentItemIdentifier.rawValue)")
-        completionHandler(nil, [], false, CocoaError(.featureUnsupported))
+        let parentIdentifier = itemTemplate.parentItemIdentifier
+        guard itemTemplate.contentType == .folder else {
+            MEGALogError("[Picker] Creating a file is not supported yet, in \(parentIdentifier.rawValue)")
+            completionHandler(nil, [], false, CocoaError(.featureUnsupported))
+            return Progress()
+        }
+
+        let itemActionUseCase = itemActionUseCase
+        let name = itemTemplate.filename
+        let reusesExistingFolder = options.contains(.mayAlreadyExist)
+        let completion = UncheckedSendableCompletion(completionHandler)
+        Task {
+            do {
+                try await FileProviderSession.shared.ensureReady()
+                let item = try await itemActionUseCase.createFolder(named: name, in: parentIdentifier, reusesExistingFolder: reusesExistingFolder)
+                // The other fields, such as the dates, are taken from the folder MEGA created.
+                completion.handler(ReplicatedFileProviderItem(entity: item), [], false, nil)
+            } catch {
+                MEGALogError("[Picker] Can't create a folder in \(parentIdentifier.rawValue): \(error)")
+                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
+            }
+        }
         return Progress()
     }
 
@@ -191,26 +223,31 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         request: NSFileProviderRequest,
         completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void
     ) -> Progress {
-        guard changedFields.isSubset(of: Self.unsupportedFields) else {
-            MEGALogError("[Picker] modifyItem is not supported yet: \(item.itemIdentifier.rawValue), fields \(changedFields.rawValue)")
+        let identifier = item.itemIdentifier
+        guard !changedFields.contains(.contents) else {
+            MEGALogError("[Picker] Changing the contents is not supported yet: \(identifier.rawValue), fields \(changedFields.rawValue)")
             completionHandler(nil, [], false, CocoaError(.featureUnsupported))
             return Progress()
         }
 
-        // Returning every changed field as still pending tells the system the fields are unsupported, so it stops
-        // sending them for this item until the item changes. Failing instead shows up in Files as an error on the
-        // file, which is what opening a file used to do.
-        // The item passed in has an empty version, which returned as is would make the system drop the local
-        // contents and download them again on the next open, so the item is built from the node.
-        let itemUseCase = itemUseCase
-        let identifier = item.itemIdentifier
+        // Returning a field as still pending every time tells the system it is unsupported, so it stops sending it
+        // for this item until the item changes. Failing instead shows up in Files as an error on the item.
+        let unappliedFields = changedFields.subtracting(Self.appliedFields)
+        let name = changedFields.contains(.filename) ? item.filename : nil
+        let parentIdentifier = changedFields.contains(.parentItemIdentifier) ? item.parentItemIdentifier : nil
+        let itemActionUseCase = itemActionUseCase
         let completion = UncheckedSendableCompletion(completionHandler)
         Task {
             do {
                 try await FileProviderSession.shared.ensureReady()
-                completion.handler(ReplicatedFileProviderItem(entity: try itemUseCase.item(for: identifier)), changedFields, false, nil)
+                // The item passed in has an empty version, which returned as is would make the system drop the local
+                // contents and download them again on the next open, so the item is built from the node.
+                let modifiedItem = try await itemActionUseCase.modifyItem(identifier, name: name, parentIdentifier: parentIdentifier)
+                // A name that was not applied stays pending too, so the system keeps its own name on disk.
+                let pendingFields = name == nil || modifiedItem.node.name == name ? unappliedFields : unappliedFields.union(.filename)
+                completion.handler(ReplicatedFileProviderItem(entity: modifiedItem), pendingFields, false, nil)
             } catch {
-                MEGALogError("[Picker] Can't provide the item \(identifier.rawValue) for its changed fields: \(error)")
+                MEGALogError("[Picker] Can't modify the item \(identifier.rawValue), fields \(changedFields.rawValue): \(error)")
                 completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
             }
         }
@@ -224,8 +261,19 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         request: NSFileProviderRequest,
         completionHandler: @escaping ((any Error)?) -> Void
     ) -> Progress {
-        MEGALogError("[Picker] deleteItem is not supported yet: \(identifier.rawValue)")
-        completionHandler(CocoaError(.featureUnsupported))
+        let itemActionUseCase = itemActionUseCase
+        let recursive = options.contains(.recursive)
+        let completion = UncheckedSendableCompletion(completionHandler)
+        Task {
+            do {
+                try await FileProviderSession.shared.ensureReady()
+                try await itemActionUseCase.deleteItem(identifier, recursive: recursive)
+                completion.handler(nil)
+            } catch {
+                MEGALogError("[Picker] Can't delete the item \(identifier.rawValue): \(error)")
+                completion.handler(FileProviderExtension.fileProviderError(for: error))
+            }
+        }
         return Progress()
     }
 

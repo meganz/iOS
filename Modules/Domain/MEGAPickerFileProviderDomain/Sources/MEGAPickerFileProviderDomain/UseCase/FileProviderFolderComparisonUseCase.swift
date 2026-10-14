@@ -4,6 +4,10 @@ import MEGADomain
 /// Finds the children of a folder that changed since the system last received them, and queues them for the
 /// working set's change enumeration. Runs when the system asks for an enumerator of the folder.
 public protocol FileProviderFolderComparisonUseCaseProtocol: Sendable {
+    /// Whether the system has enumerated the container, so that there is something to compare. A file never has
+    /// been: the system asks for a file's enumerator when the file is opened, but never enumerates it.
+    func hasSnapshot(of containerIdentifier: NSFileProviderItemIdentifier) async throws -> Bool
+
     /// Queues the children whose version differs from the folder's snapshot, and signals the working set when any
     /// was queued. Does nothing for a folder without a snapshot, which the system has not enumerated yet.
     /// - Parameter reportsRemovals: Whether children missing from the folder are queued. Pass `false` while the node
@@ -31,6 +35,10 @@ public struct FileProviderFolderComparisonUseCase: FileProviderFolderComparisonU
         self.snapshotRepo = snapshotRepo
         self.changeQueueRepo = changeQueueRepo
         self.workingSetSignalRepo = workingSetSignalRepo
+    }
+
+    public func hasSnapshot(of containerIdentifier: NSFileProviderItemIdentifier) async throws -> Bool {
+        try await snapshotRepo.snapshot(of: containerIdentifier) != nil
     }
 
     @discardableResult
