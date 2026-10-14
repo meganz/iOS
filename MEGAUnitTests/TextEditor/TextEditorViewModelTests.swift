@@ -1097,6 +1097,41 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
+    /// Edit from the actions of a file that is too large to edit shows the message, then opens the file to read.
+    @MainActor func testAction_editAfterOpen_load_tooLargeToEdit_opensToRead() async throws {
+        let textFile = TextFile(fileName: "large.txt", size: TextFile.maxEditableFileSize)
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let testPath = directory.appendingPathComponent(textFile.fileName).path
+        try "large file text".write(toFile: testPath, atomically: true, encoding: .utf8)
+        let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
+        let viewModel = TextEditorViewModel(
+            router: MockTextEditorViewRouter(),
+            textFile: textFile,
+            textEditorMode: .load,
+            uploadFileUseCase: MockUploadFileUseCase(),
+            downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity)),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
+            backupsUseCase: MockBackupsUseCase(),
+            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            nodeEntity: NodeEntity(handle: 123, isFile: true)
+        )
+        var commands = [TextEditorViewModel.Command]()
+        viewModel.invokeCommand = { commands.append($0) }
+
+        viewModel.dispatch(.editAfterOpen)
+        viewModel.dispatch(.setUpView)
+        await Task.megaYield()
+
+        XCTAssertTrue(commands.contains(.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)))
+        let viewModeConfigured = commands.contains {
+            guard case .configView(let model, _, _, _) = $0 else { return false }
+            return model.textEditorMode == .view && model.textFile.content == "large file text"
+        }
+        XCTAssertTrue(viewModeConfigured)
+    }
+
     @MainActor func testAction_showActions_view() {
         let textFile = TextFile(fileName: "testAction_showActions_view")
         let mockRouter = MockTextEditorViewRouter()

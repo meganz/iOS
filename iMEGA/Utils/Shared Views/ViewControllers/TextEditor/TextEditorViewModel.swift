@@ -417,7 +417,9 @@ final class TextEditorViewModel: ViewModelType {
             if shouldEditAfterOpen {
                 editFile(shallUpdateContent: true)
                 shouldEditAfterOpen = false
-            } else {
+            }
+            // A file too large to edit stays in load mode after Edit, so it opens to read.
+            if textEditorMode == .load {
                 textEditorMode = .view
                 setupView(shallUpdateContent: true)
             }
