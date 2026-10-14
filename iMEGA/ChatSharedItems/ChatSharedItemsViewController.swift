@@ -433,9 +433,9 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                           let authNode = MEGASdk.shared.authorizeChatNode(selectedNode, cauth: authorizationToken)
                     else { return }
                     
-                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
+                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil, sourcePage: .unknown, textEditorSource: .chat)
                 } else {
-                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
+                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil, sourcePage: .unknown, textEditorSource: .chat)
                 }
             }
         }
