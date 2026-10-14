@@ -1433,6 +1433,169 @@ def varied_sections(target):
     return "".join(parts)
 
 
+def fixed_case_file(name, case, steps, body):
+    """Writes one test file for a fixed bug: what the case is, the steps, what to expect, then the content."""
+    text = "# " + case + "\n\n" + textwrap.dedent(steps).strip("\n") + "\n\n" + textwrap.dedent(body).lstrip("\n")
+    write("fixed-cases/" + name, text, dedent=False)
+
+
+def fixed_cases():
+    fixed_case_file("indented-table-after-list-item.md", "Indented table and HTML block after a list item", """
+        > **Steps** (Edit mode, rich text): put the caret in "Turn this line into a bullet" and tap the Bulleted list button.
+        > Do the same for the second line. Show the source, then go back to rich text.
+        >
+        > **Expected:** the table and the HTML block stay outside the lists. The bullets stay editable.
+        """, """
+        Turn this line into a bullet
+
+          | Name | Size |
+          | --- | --- |
+          | a.txt | 1 KB |
+
+        Turn this line into a bullet too
+
+          <div>
+            An HTML block
+          </div>
+        """)
+    fixed_case_file("copied-bullets-that-start-deeper.md", "Copied bullet rows that start deeper", """
+        > **Steps** (Edit mode, rich text): select from `c` to `d`, copy, then paste after "Paste here:".
+        > Do it again from `c` to `e`. Show the source.
+        >
+        > **Expected:** the pasted rows are siblings. `d` and `e` do not nest under `c`.
+        """, """
+        - a
+          - b
+            - c
+          - d
+        - e
+
+        Paste here:
+        """)
+    fixed_case_file("copied-ordered-rows-that-start-deeper.md", "Copied ordered rows that start deeper", """
+        > **Steps** (Edit mode, rich text): select from `c` to `d`, copy, then paste after "Paste here:". Show the source.
+        >
+        > **Expected:** `1. c` and `2. d` are one list. No `2) d` that starts a second list.
+        """, """
+        1. a
+           1. b
+              1. c
+           2. d
+
+        Paste here:
+        """)
+    fixed_case_file("code-part-pasted-into-text.md", "A part of a code block pasted into text", """
+        > **Steps** (Edit mode, rich text): select `a*b*c` inside the code block, copy, then paste after "Paste here:".
+        > Do the same with `<!-- x`. Leave the editor and open the file again.
+        >
+        > **Expected:** the pasted text shows the same characters. The asterisks stay.
+        > `<!-- x` does not hide the rest of the file.
+        """, """
+        ```text
+        let a = a*b*c
+        let html = "<!-- x"
+        ```
+
+        Paste here:
+
+        The last paragraph must still show after a save.
+        """)
+    fixed_case_file("code-part-pasted-into-source-mode.md", "A part of a code block pasted into source mode", """
+        > **Steps:** in rich text, select `x_y_z` inside the code block and copy. Switch to the source editor.
+        > Paste inside the empty code fence.
+        >
+        > **Expected:** the fence holds `x_y_z` with no backslashes.
+        """, """
+        ```text
+        let name = x_y_z
+        ```
+
+        Paste inside this fence:
+
+        ```text
+
+        ```
+        """)
+    fixed_case_file("front-matter-typing.md", "Typing at the front matter", """
+        > **Steps** (Edit mode, rich text): tap the front matter block so it is selected, type a word and press Enter.
+        > Show the source.
+        >
+        > **Expected:** the front matter stays the first block. The new text goes after it.
+        """, """
+        ---
+        title: Front matter
+        tags: [test]
+        ---
+
+        The first paragraph after the front matter.
+        """)
+    fixed_case_file("link-typing-and-link-button.md", "Typing after a link and the Link button", """
+        > **Steps** (Edit mode, rich text): put the caret right after the link and type a word.
+        > Then tap inside the link text.
+        >
+        > **Expected:** the typed word is plain text, not part of the link.
+        > With the caret inside the link, the Link button in the toolbar is on.
+        """, """
+        Open [the MEGA website](https://mega.io) here
+        """)
+    fixed_case_file("rich-copy-pasted-into-source-mode.md", "A rich copy pasted in source mode", """
+        > **Steps:** in rich text, select from "Bold" to "second item" and copy. Switch to the source editor.
+        > Paste after "Paste here:".
+        >
+        > **Expected:** the paste keeps its Markdown: `**bold**`, `*italic*` and the `-` markers.
+        """, """
+        **Bold** and *italic* text.
+
+        - first item
+        - second item
+
+        Paste here:
+        """)
+    rows = "\n\n".join(f"Row {i}: a paragraph that stays short." if i % 3 == 0 else
+                       f"- Bullet row {i}" if i % 3 == 1 else f"- [ ] Task row {i}" for i in range(30))
+    long_task = "- [ ] " + " ".join(["A long task that wraps over many lines on a phone."] * 8)
+    fixed_case_file("fast-scroll-reused-rows.md", "Fast scroll to the end in rich text", """
+        > **Steps** (Edit mode, rich text): fling to the end of the file, then scroll back up and down.
+        >
+        > **Expected:** each row has the height of its own text. No row draws over the next one.
+        """, rows + "\n\n" + "\n".join([long_task] * 4) + "\n")
+    fixed_case_file("paste-that-adds-rows.md", "A paste that adds rows", """
+        > **Steps** (Edit mode, rich text): select "Row 1" to "Row 5" and copy.
+        > Put the caret at the end of "Row 10" and paste. Scroll down.
+        >
+        > **Expected:** each row below the paste shows its own text, at the right height.
+        """, "\n\n".join(f"Row {i}" + (": " + " ".join(["a longer row that wraps."] * 6) if i % 4 == 0 else "")
+                         for i in range(1, 61)) + "\n")
+    wrapped = "\n\n".join(f"Paragraph {i}. " + " ".join(["This paragraph wraps over several lines on a phone"
+                                                         " and over fewer lines in landscape."] * 6) +
+                          f" It has `inline code number {i}` in it." for i in range(1, 41))
+    fixed_case_file("rotation-wrapped-rows.md", "Rotation with tall wrapped rows", """
+        > **Steps** (Preview and Edit mode): scroll to the middle so a paragraph is cut by the top edge.
+        > Rotate a few times. Then scroll to the end and rotate a few times.
+        >
+        > **Expected:** the same line stays at the top after each rotation. At the end, the end stays on screen.
+        > Rows with inline code draw at the full width, not as one clipped line.
+        >
+        > For source mode, open `large-files/mixed-sections-50mb.md` in the source editor and rotate.
+        > The screen stays responsive.
+        """, wrapped + "\n")
+    fixed_case_file("text-size-change.md", "Row heights after a text size change", """
+        > **Steps** (Preview and Edit mode): open the file, then change the text size in Settings or Control Center.
+        > Turn Bold Text on and off too. Come back to the app.
+        >
+        > **Expected:** each row fits its text at the new size. No text is clipped or overlaps.
+        """, """
+        # A heading
+
+        A paragraph with `inline code` and **bold** text. It wraps over two or three lines on a phone.
+
+        - A bullet with `code`
+        - [ ] A task
+
+        > A quote that wraps over more than one line on a phone screen.
+        """)
+
+
 def readme():
     write("README.md", """
         # MEGAMarkdown test files
@@ -1446,6 +1609,7 @@ def readme():
         - `large-files`: 2, 10, 50 and 95 MB documents with varied sections, and one file over the 100 MiB limit.
         - `editing/selection`: cases for the selection over rows in the editor. Each file lists the steps to try.
         - `preview/selection`: cases for the block selection in the preview. Each file lists the steps to try.
+        - `fixed-cases`: one file per fixed bug. Each file lists the steps and what to expect.
 
         Relative links and images resolve against the folder of each file.
         Images show only their alt text unless the app loads them. The demo app loads local images,
@@ -1481,6 +1645,7 @@ def main():
     edge_cases()
     editing()
     preview_selection()
+    fixed_cases()
     spec_examples("spec.txt", "commonmark-spec")
     spec_examples("extensions.txt", "gfm-spec")
     if "--skip-large" not in sys.argv:
