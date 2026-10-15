@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ScrollableWhenTallerThanContainerModifier: ViewModifier {
+    let defaultScrollAnchor: UnitPoint?
+
     func body(content: Content) -> some View {
         GeometryReader { proxy in
             ScrollView {
@@ -11,13 +13,18 @@ struct ScrollableWhenTallerThanContainerModifier: ViewModifier {
                     )
             }
             .scrollBounceBehavior(.basedOnSize)
+            .defaultScrollAnchor(defaultScrollAnchor)
         }
     }
 }
 
 public extension View {
     /// Allows scrolling when content exceeds container height.
-    func scrollableWhenTallerThanContainer() -> some View {
-        modifier(ScrollableWhenTallerThanContainerModifier())
+    func scrollableWhenTallerThanContainer(
+        defaultScrollAnchor: UnitPoint? = nil
+    ) -> some View {
+        modifier(ScrollableWhenTallerThanContainerModifier(
+            defaultScrollAnchor: defaultScrollAnchor
+        ))
     }
 }
