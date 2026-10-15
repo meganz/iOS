@@ -47,7 +47,7 @@ public struct FileErrorView: View {
             retryButtonMultilineContentHugging
         }
         .padding(.horizontal, TokenSpacing._5)
-        .scrollableWhenTallerThanContainer()
+        .scrollableWhenTallerThanContainer(defaultScrollAnchor: .bottom)
     }
 
     // MARK: Retry button
