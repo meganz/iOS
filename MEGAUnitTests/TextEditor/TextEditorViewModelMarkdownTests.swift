@@ -74,6 +74,7 @@ struct TextEditorViewModelMarkdownTests {
             downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transfer, result: .success(transfer)),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: NodeEntity(handle: 123, isFile: true),
             isMarkdownScreen: isMarkdownScreen,

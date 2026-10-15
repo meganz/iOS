@@ -18,6 +18,7 @@ struct NodeActionsTextFileEditPresenterTests {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: NodeEntity(name: "notes.md", handle: 77, isFile: true, size: 10),
             tracker: tracker

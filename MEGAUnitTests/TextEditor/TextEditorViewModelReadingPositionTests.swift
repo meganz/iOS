@@ -188,6 +188,7 @@ struct TextEditorViewModelReadingPositionTests {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: resumeTextPositionUseCase,
             parentHandle: 1,
             nodeEntity: NodeEntity(name: fileName, fingerprint: "fingerprint", handle: 1, isFile: true),
