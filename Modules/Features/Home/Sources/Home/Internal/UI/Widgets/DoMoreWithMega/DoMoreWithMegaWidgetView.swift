@@ -5,8 +5,8 @@ import SwiftUI
 struct DoMoreWithMegaWidgetView: View {
     @State private var viewModel: DoMoreWithMegaWidgetViewModel
 
-    init(route: @escaping @MainActor (HomeWidgetRouteType) -> Void) {
-        _viewModel = State(initialValue: DoMoreWithMegaWidgetViewModel(route: route))
+    init(dependency: Dependency) {
+        _viewModel = State(initialValue: DoMoreWithMegaWidgetViewModel(actionHandler: dependency.actionHandler))
     }
 
     var body: some View {

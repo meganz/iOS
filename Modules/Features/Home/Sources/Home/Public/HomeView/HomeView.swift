@@ -453,7 +453,11 @@ public struct HomeView: View {
                     }
                 case .doMoreWithMega:
                     if isHomeRevampPhase2Enabled {
-                        DoMoreWithMegaWidgetView { dependency.router.route(to: $0) }
+                        DoMoreWithMegaWidgetView(
+                            dependency: DoMoreWithMegaWidgetView.Dependency(
+                                actionHandler: DoMoreWithMegaActionHandler(addMenuActionHandler: homeAddMenuActionHandler)
+                            )
+                        )
                     } else {
                         EmptyView()
                     }

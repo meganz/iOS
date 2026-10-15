@@ -35,6 +35,16 @@ struct DoMoreWithMegaWidgetViewModelTests {
         #expect(!sut.tiles.contains(.cameraUploads))
     }
 
+    @Test("tapping a tile passes it to the action handler")
+    func tapPassesTileToActionHandler() {
+        let actionHandler = SpyDoMoreWithMegaActionHandler()
+        let sut = DoMoreWithMegaWidgetViewModel(actionHandler: actionHandler, preferenceUseCase: MockPreferenceUseCase())
+
+        sut.didTap(.scanDoc)
+
+        #expect(actionHandler.tiles == [.scanDoc])
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -43,7 +53,16 @@ struct DoMoreWithMegaWidgetViewModelTests {
         let preferenceUseCase = MockPreferenceUseCase(
             dict: isCameraUploadsEnabled.map { [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: $0] } ?? [:]
         )
-        let sut = DoMoreWithMegaWidgetViewModel(route: { _ in }, preferenceUseCase: preferenceUseCase)
+        let sut = DoMoreWithMegaWidgetViewModel(actionHandler: SpyDoMoreWithMegaActionHandler(), preferenceUseCase: preferenceUseCase)
         return (sut, preferenceUseCase)
+    }
+}
+
+@MainActor
+private final class SpyDoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
+    private(set) var tiles: [DoMoreWithMegaTile] = []
+
+    func handleAction(_ tile: DoMoreWithMegaTile) {
+        tiles.append(tile)
     }
 }
