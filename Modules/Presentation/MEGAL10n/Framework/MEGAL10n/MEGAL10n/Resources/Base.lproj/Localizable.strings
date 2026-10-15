@@ -5332,3 +5332,5 @@
 "home.doMoreWithMega.albumCreated.message"="Album “%@” created";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
 "home.doMoreWithMega.albumCreated.seeAlbum"="See album";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="Failed: %@";
