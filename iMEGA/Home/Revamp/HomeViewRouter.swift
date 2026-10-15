@@ -50,7 +50,7 @@ final class HomeViewRouter: HomeViewRouting {
         case .album:
             break // Handle in IOS-11816
         case .inviteContacts:
-            break // Handle in IOS-11818
+            showInviteContacts()
         case .scheduleMeeting:
             break // Handle in IOS-11817
         }
@@ -87,6 +87,14 @@ final class HomeViewRouter: HomeViewRouting {
             .instantiateViewController(withIdentifier: "OfflineViewControllerID")
         offlineVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(offlineVC, animated: true)
+    }
+
+    private func showInviteContacts() {
+        let inviteContactViewController = UIStoryboard(name: "InviteContact", bundle: nil)
+            .instantiateViewController(withIdentifier: "InviteContactViewControllerID")
+        inviteContactViewController.hidesBottomBarWhenPushed = true
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: inviteContactViewController)
+        navigationController?.pushViewController(inviteContactViewController, animated: true)
     }
 
     private func showTransfers() {

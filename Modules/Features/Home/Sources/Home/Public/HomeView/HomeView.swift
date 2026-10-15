@@ -455,7 +455,10 @@ public struct HomeView: View {
                     if isHomeRevampPhase2Enabled {
                         DoMoreWithMegaWidgetView(
                             dependency: DoMoreWithMegaWidgetView.Dependency(
-                                actionHandler: DoMoreWithMegaActionHandler(addMenuActionHandler: homeAddMenuActionHandler)
+                                actionHandler: DoMoreWithMegaActionHandler(
+                                    router: dependency.router,
+                                    addMenuActionHandler: homeAddMenuActionHandler
+                                )
                             )
                         )
                     } else {

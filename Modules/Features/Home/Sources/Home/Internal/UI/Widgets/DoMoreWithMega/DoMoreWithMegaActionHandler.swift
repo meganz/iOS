@@ -4,9 +4,11 @@ protocol DoMoreWithMegaActionHandling {
 }
 
 struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
+    private let router: any HomeViewRouting
     private let addMenuActionHandler: any HomeAddMenuActionHandling
 
-    init(addMenuActionHandler: some HomeAddMenuActionHandling) {
+    init(router: some HomeViewRouting, addMenuActionHandler: some HomeAddMenuActionHandling) {
+        self.router = router
         self.addMenuActionHandler = addMenuActionHandler
     }
 
@@ -35,7 +37,7 @@ struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
     }
 
     private func didTapAddContacts() {
-        // Handle in IOS-11818
+        router.route(to: .inviteContacts)
     }
 
     private func didTapScheduleMeeting() {
