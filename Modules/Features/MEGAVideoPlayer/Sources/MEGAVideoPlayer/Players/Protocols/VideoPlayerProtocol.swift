@@ -35,6 +35,8 @@ public protocol PlaybackStateObservable {
 @MainActor
 public protocol PlaybackControllable {
     var isLoopEnabled: Bool { get }
+    /// The rate playback runs at while playing, kept even while paused.
+    var playbackRate: Float { get }
     
     func play()
     func pause()

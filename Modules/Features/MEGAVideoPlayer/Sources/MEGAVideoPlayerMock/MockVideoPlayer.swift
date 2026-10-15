@@ -85,6 +85,9 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var replayCurrentNodeCallCount: Int = 0
     public var changeRateCallCount: Int = 0
     public var changeRateValue: Float = 1.0
+    public var playbackRate: Float {
+        changeRateValue
+    }
     public var setLoopingCallCount: Int = 0
     public var setLoopingValue: Bool = false
     public var isLoopEnabled: Bool = false

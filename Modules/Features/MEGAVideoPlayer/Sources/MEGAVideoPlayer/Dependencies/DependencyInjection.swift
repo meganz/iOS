@@ -50,6 +50,12 @@ public enum DependencyInjection {
         )
     }
 
+    public static var thumbnailUseCase: some ThumbnailUseCaseProtocol {
+        ThumbnailUseCase(
+            repository: ThumbnailRepository.newRepo
+        )
+    }
+
     public static var videoNodesUseCase: some VideoNodesUseCaseProtocol {
         VideoNodesUseCase(
             repo: VideoNodesRepository.newRepo

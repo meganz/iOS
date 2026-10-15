@@ -54,6 +54,11 @@ public final class MEGAPlayerViewController: UIViewController {
         viewModel.dismissAction = { [weak self] in
             self?.dismiss(animated: true)
         }
+        viewModel.nodeDeletedAction = { [weak self] in
+            // PiP outlives the screen, so it has to be taken down through the session
+            guard let self, isPictureInPictureSessionActive else { return }
+            VideoPlayerPictureInPictureSession.endRunningSession()
+        }
     }
 
     private func setupOverlay() {
