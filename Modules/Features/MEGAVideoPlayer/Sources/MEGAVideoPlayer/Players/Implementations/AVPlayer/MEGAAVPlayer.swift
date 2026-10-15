@@ -201,6 +201,10 @@ extension MEGAAVPlayer: PlaybackControllable {
         return await player.seek(to: newTime)
     }
 
+    public var playbackRate: Float {
+        playerRate
+    }
+
     public func changeRate(to rate: Float) {
         playerRate = rate
         if player.rate > 0 {
