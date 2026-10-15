@@ -1,4 +1,5 @@
 import Accounts
+import ChatRepo
 import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -13,6 +14,7 @@ final class HomeViewRouter: HomeViewRouting {
     private let transfersRouter: TransfersRouter
     private let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
     private let legacyHomeRouter: any HomeRouterProtocol
+    private let shareLinkRouter: ShareLinkDialogRouter
 
     init(
         navigationController: UINavigationController,
@@ -23,6 +25,7 @@ final class HomeViewRouter: HomeViewRouting {
         self.transfersRouter = TransfersRouter(navigationController: navigationController)
         self.offlineFilesUseCase = offlineFilesUseCase
         self.legacyHomeRouter = legacyHomeRouter
+        self.shareLinkRouter = ShareLinkDialogRouter(presenter: navigationController)
     }
 
     func route(to type: HomeWidgetRouteType) {
@@ -52,7 +55,7 @@ final class HomeViewRouter: HomeViewRouting {
         case .inviteContacts:
             showInviteContacts()
         case .scheduleMeeting:
-            break // Handle in IOS-11817
+            showScheduleMeeting()
         }
     }
 
@@ -99,6 +102,20 @@ final class HomeViewRouter: HomeViewRouting {
 
     private func showTransfers() {
         transfersRouter.showTransfers()
+    }
+
+    private func showScheduleMeeting() {
+        guard let navigationController else { return }
+        let viewConfiguration = ScheduleMeetingNewViewConfiguration(
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        )
+        ScheduleMeetingRouter(
+            presenter: navigationController,
+            viewConfiguration: viewConfiguration,
+            shareLinkRouter: shareLinkRouter
+        ).start()
     }
     
     private func showAudios() {

@@ -27,6 +27,20 @@ struct DoMoreWithMegaActionHandlerTests {
 
         #expect(addMenuActionHandler.actions == [.scanDocument])
     }
+
+    @Test("Schedule meeting routes to scheduleMeeting")
+    func scheduleMeetingRoutesToScheduleMeeting() throws {
+        let router = SpyHomeViewRouter()
+        let sut = DoMoreWithMegaActionHandler(router: router, addMenuActionHandler: SpyHomeAddMenuActionHandler())
+
+        sut.handleAction(.scheduleMeeting)
+
+        let route = try #require(router.routes.first)
+        guard case .scheduleMeeting = route else {
+            Issue.record("Expected scheduleMeeting, got \(route)")
+            return
+        }
+    }
 }
 
 private final class SpyHomeAddMenuActionHandler: HomeAddMenuActionHandling {

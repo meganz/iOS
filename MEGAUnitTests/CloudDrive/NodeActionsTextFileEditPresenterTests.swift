@@ -7,7 +7,7 @@ import UIKit
 
 @MainActor
 struct NodeActionsTextFileEditPresenterTests {
-    private static let overLimit = UInt64(100 * 1024 * 1024 + 1)
+    private static let overLimit: UInt64 = 100 * 1024 * 1024 + 1
 
     private static func makeScreen(tracker: MockTracker = MockTracker()) -> MarkdownTextEditorViewController {
         let viewModel = TextEditorViewModel(

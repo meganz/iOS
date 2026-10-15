@@ -41,6 +41,6 @@ struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
     }
 
     private func didTapScheduleMeeting() {
-        // Handle in IOS-11817
+        router.route(to: .scheduleMeeting)
     }
 }
