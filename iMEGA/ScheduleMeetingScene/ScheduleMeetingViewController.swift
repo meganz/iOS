@@ -37,6 +37,7 @@ final class ScheduleMeetingViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem = cancelBarButtonItem
         setMenuCapableBackButtonWith(menuTitle: title)
+        observeDiscardAlert()
         isModalInPresentation = true
         
         createBarButtonItem.setTitleTextAttributes([.foregroundColor: TokenColors.Text.primary], for: .normal)
@@ -65,6 +66,41 @@ final class ScheduleMeetingViewController: UIViewController {
             hostingView.view.widthAnchor.constraint(equalTo: view.widthAnchor),
             hostingView.view.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
+    }
+    
+    /// Presented from UIKit so the sheet can be anchored to the Cancel button. Since iOS 26 an action sheet
+    /// is shown as a popover pointing at its source, and a SwiftUI `.actionSheet` can only use the whole
+    /// hosted view as the source, which squeezes the popover into the navigation bar.
+    private func observeDiscardAlert() {
+        viewModel.$showDiscardAlert
+            .filter { $0 }
+            .sink { [weak self] _ in
+                guard let self, presentedViewController == nil else { return }
+                presentDiscardAlert()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func presentDiscardAlert() {
+        let alertController = UIAlertController(
+            title: Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alertController.addAction(
+            UIAlertAction(title: Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.confirm, style: .default) { [weak self] _ in
+                Task {
+                    await self?.viewModel.discardChangesTap()
+                }
+            }
+        )
+        alertController.addAction(
+            UIAlertAction(title: Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.cancel, style: .cancel) { [weak self] _ in
+                self?.viewModel.keepEditingTap()
+            }
+        )
+        alertController.popoverPresentationController?.sourceItem = cancelBarButtonItem
+        present(alertController, animated: true)
     }
     
     private func updateRightBarButton(_ barButtonItem: UIBarButtonItem, enablePublisher: Published<Bool>.Publisher) {

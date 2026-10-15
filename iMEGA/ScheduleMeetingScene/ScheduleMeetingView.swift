@@ -64,22 +64,6 @@ struct ScheduleMeetingView: View {
         .onAppear {
             viewModel.viewAppeared()
         }
-        .actionSheet(isPresented: $viewModel.showDiscardAlert) {
-            ActionSheet(title: Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.title), buttons: discardChangesButtons())
-        }
-    }
-    
-    private func discardChangesButtons() -> [ActionSheet.Button] {
-        return [
-            ActionSheet.Button.default(Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.confirm)) {
-                Task {
-                    await viewModel.discardChangesTap()
-                }
-            },
-            ActionSheet.Button.cancel(Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.cancel)) {
-                viewModel.keepEditingTap()
-            }
-        ]
     }
     
     private func scrollToBottom(proxy: ScrollViewProxy) {
