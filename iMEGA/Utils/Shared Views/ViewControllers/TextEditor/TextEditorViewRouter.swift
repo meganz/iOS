@@ -226,6 +226,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             downloadNodeUseCase: downloadUC,
             nodeUseCase: nodeDataUC,
             backupsUseCase: backupsUC,
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             resumeTextPositionUseCase: ResumeTextPositionUseCase(preferenceUseCase: PreferenceUseCase.default),
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,

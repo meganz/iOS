@@ -86,6 +86,8 @@ extension MarkdownTextEditorViewController: ViewType {
         case .showRenameAlert(let model):
             showRenameAlert(model)
         case .startLoading:
+            // The HUD mask blocks taps, but the keyboard window still sends key presses to the text view.
+            view.endEditing(true)
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.show()
         case .stopLoading:

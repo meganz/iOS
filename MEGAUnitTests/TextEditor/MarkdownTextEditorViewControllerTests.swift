@@ -44,6 +44,7 @@ struct MarkdownTextEditorViewControllerTests {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: accessLevel),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,

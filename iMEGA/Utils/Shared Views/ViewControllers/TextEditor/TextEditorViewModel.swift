@@ -80,6 +80,7 @@ final class TextEditorViewModel: ViewModelType {
     private var downloadNodeUseCase: any DownloadNodeUseCaseProtocol
     private var nodeUseCase: any NodeUseCaseProtocol
     private var backupsUseCase: any BackupsUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     private var isBackupNode: Bool = false
@@ -107,6 +108,7 @@ final class TextEditorViewModel: ViewModelType {
         downloadNodeUseCase: any DownloadNodeUseCaseProtocol,
         nodeUseCase: any NodeUseCaseProtocol,
         backupsUseCase: any BackupsUseCaseProtocol,
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         resumeTextPositionUseCase: any ResumeTextPositionUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil,
@@ -123,6 +125,7 @@ final class TextEditorViewModel: ViewModelType {
         self.downloadNodeUseCase = downloadNodeUseCase
         self.nodeUseCase = nodeUseCase
         self.backupsUseCase = backupsUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.resumeTextPositionUseCase = resumeTextPositionUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
@@ -220,6 +223,11 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func saveText(content: String) {
+        // Offline, the SDK keeps the upload queued and never ends it, so the spinner would stay forever.
+        guard networkMonitorUseCase.isConnected() else {
+            invokeCommand?(.showError(message: Strings.Localizable.noInternetConnection))
+            return
+        }
         if textEditorMode == .edit {
             invokeCommand?(.startLoading)
             // The saved text changes only when the upload succeeds. After a failure, Cancel still warns about the edits.

@@ -63,6 +63,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
                 backupsUseCase: mockBackupsUC,
+                networkMonitorUseCase: MockNetworkMonitorUseCase(),
                 resumeTextPositionUseCase: MockResumeTextPositionUseCase()
             )
             test(viewModel: viewModel,
@@ -127,6 +128,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode,
             tracker: tracker
@@ -197,6 +199,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
@@ -236,6 +239,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity)),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: NodeEntity(handle: 123, isFile: true)
         )
@@ -283,6 +287,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity)),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: NodeEntity(handle: 123, isFile: true)
         )
@@ -332,6 +337,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
@@ -372,6 +378,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle,
             nodeEntity: mockNode
@@ -426,6 +433,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
@@ -457,6 +465,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: 123
         )
@@ -471,6 +480,43 @@ final class TextEditorViewModelTests: XCTestCase {
              ]
         )
         XCTAssertEqual(textFile.content, "test content")
+    }
+
+    @MainActor func testAction_saveText_edit_offline_showsErrorAndKeepsEdits() {
+        let textFile = TextFile(fileName: "edit.txt", content: "test content", size: 0, encode: String.Encoding.utf8.rawValue)
+        let viewModel = sut(
+            parentHandle: 123,
+            textFile: textFile,
+            textEditorMode: .edit,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false)
+        )
+        let editContent = "edit content"
+
+        test(viewModel: viewModel,
+             actions: [.saveText(content: editContent), .cancelText(content: editContent)],
+             expectedCommands: [.showError(message: Strings.Localizable.noInternetConnection),
+                                .showDiscardChangeAlert]
+        )
+        XCTAssertEqual(textFile.content, "test content")
+    }
+
+    @MainActor func testAction_saveText_create_offline_showsErrorAndKeepsEditorOpen() {
+        let mockRouter = MockTextEditorViewRouter()
+        let viewModel = sut(
+            parentHandle: nil,
+            textFile: TextFile(fileName: "new.txt"),
+            textEditorMode: .create,
+            router: mockRouter,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false)
+        )
+
+        test(viewModel: viewModel,
+             action: .saveText(content: "new text"),
+             expectedCommands: [.showError(message: Strings.Localizable.noInternetConnection)]
+        )
+        XCTAssertEqual(mockRouter.chooseDestination_calledTimes, 0)
+        XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 0)
+        XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 0)
     }
 
     @MainActor func testAction_saveText_edit_tempFileWriteFails_stopsLoadingAndShowsError() {
@@ -490,6 +536,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: 123
         )
@@ -529,6 +576,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
@@ -560,6 +608,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
@@ -593,6 +642,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
@@ -635,6 +685,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -664,6 +715,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -695,6 +747,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -722,6 +775,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: 123
         )
@@ -750,6 +804,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: 123,
             tracker: tracker
@@ -775,6 +830,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: 123
         )
@@ -814,6 +870,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -843,6 +900,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             parentHandle: mockParentHandle
         )
@@ -874,6 +932,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
                 backupsUseCase: mockBackupsUC,
+                networkMonitorUseCase: MockNetworkMonitorUseCase(),
                 resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
                 tracker: tracker
             )
@@ -912,6 +971,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -959,6 +1019,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             tracker: tracker
         )
@@ -981,6 +1042,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
 
@@ -1012,6 +1074,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -1058,6 +1121,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -1088,6 +1152,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -1114,6 +1179,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity)),
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
             backupsUseCase: MockBackupsUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: NodeEntity(handle: 123, isFile: true)
         )
@@ -1149,6 +1215,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
@@ -1180,6 +1247,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
                 backupsUseCase: mockBackupsUC,
+                networkMonitorUseCase: MockNetworkMonitorUseCase(),
                 resumeTextPositionUseCase: MockResumeTextPositionUseCase()
             )
             
@@ -1206,6 +1274,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -1235,6 +1304,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
@@ -1279,6 +1349,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode,
             tracker: tracker
@@ -1309,6 +1380,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase()
         )
         
@@ -1337,6 +1409,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode,
             tracker: tracker
@@ -1469,6 +1542,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
             nodeEntity: mockNode
         )
@@ -1510,6 +1584,7 @@ final class TextEditorViewModelTests: XCTestCase {
         downloadNodeUseCase: MockDownloadNodeUseCase = MockDownloadNodeUseCase(),
         nodeUseCase: MockNodeDataUseCase = MockNodeDataUseCase(),
         backupsUseCase: MockBackupsUseCase = MockBackupsUseCase(),
+        networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
         resumeTextPositionUseCase: MockResumeTextPositionUseCase = MockResumeTextPositionUseCase(),
         leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
         tracker: MockTracker = MockTracker(),
@@ -1524,6 +1599,7 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: downloadNodeUseCase,
             nodeUseCase: nodeUseCase,
             backupsUseCase: backupsUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
             resumeTextPositionUseCase: resumeTextPositionUseCase,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
