@@ -1,14 +1,13 @@
 import Foundation
 import MEGADomain
-import MEGAFoundation
 
 public struct MockAchievementUseCase: AchievementUseCaseProtocol {
-    let result: Measurement<UnitDataStorage>?
+    let result: Measurement<UnitInformationStorage>?
     let achievementDetailsResult: AchievementDetailsEntity?
     let isAchievementsEnabled: Bool
     let baseStorage: Int64
     
-    public init(result: Measurement<UnitDataStorage>? = nil,
+    public init(result: Measurement<UnitInformationStorage>? = nil,
                 achievementDetailsResult: AchievementDetailsEntity? = nil,
                 isAchievementsEnabled: Bool = true,
                 baseStorage: Int64 = 20
@@ -21,7 +20,7 @@ public struct MockAchievementUseCase: AchievementUseCaseProtocol {
     
     public func checkIsAchievementsEnabled() -> Bool { isAchievementsEnabled }
 
-    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage> {
+    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitInformationStorage> {
         guard let result = result else { throw AchievementErrorEntity.generic }
         guard checkIsAchievementsEnabled() else { throw AchievementErrorEntity.achievementsDisabled }
         return result

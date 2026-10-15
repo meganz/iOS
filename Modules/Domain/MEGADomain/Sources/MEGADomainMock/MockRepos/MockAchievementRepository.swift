@@ -1,6 +1,5 @@
 import Foundation
 import MEGADomain
-import MEGAFoundation
 
 public struct MockAchievementRepository: AchievementRepositoryProtocol {
     public static var newRepo: MockAchievementRepository {
@@ -8,12 +7,12 @@ public struct MockAchievementRepository: AchievementRepositoryProtocol {
     }
     
     let isAchievementsEnabled: Bool
-    let storageResult: Measurement<UnitDataStorage>?
+    let storageResult: Measurement<UnitInformationStorage>?
     let achievementDetailsResult: AchievementDetailsEntity?
     let baseStorage: Int64
     
     public init(isAchievementsEnabled: Bool = true,
-                storageResult: Measurement<UnitDataStorage>? = nil,
+                storageResult: Measurement<UnitInformationStorage>? = nil,
                 achievementDetailsResult: AchievementDetailsEntity? = nil,
                 baseStorage: Int64 = 20
     ) {
@@ -27,7 +26,7 @@ public struct MockAchievementRepository: AchievementRepositoryProtocol {
         isAchievementsEnabled
     }
 
-    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage> {
+    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitInformationStorage> {
         guard let storageResult = storageResult else { throw AchievementErrorEntity.generic }
         return storageResult
     }

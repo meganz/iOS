@@ -1,9 +1,8 @@
 import Foundation
-import MEGAFoundation
 
 // MARK: - Use case protocol -
 public protocol AchievementUseCaseProtocol: Sendable {
-    func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage>
+    func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitInformationStorage>
     func baseStorage() async throws -> Int64
     func getAchievementDetails() async throws -> AchievementDetailsEntity
 }
@@ -15,7 +14,7 @@ public struct AchievementUseCase<T: AchievementRepositoryProtocol>: AchievementU
         self.repo = repo
     }
 
-    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage> {
+    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitInformationStorage> {
         guard repo.checkIsAchievementsEnabled() else { throw AchievementErrorEntity.achievementsDisabled }
         return try await repo.getAchievementStorage(by: type)
     }

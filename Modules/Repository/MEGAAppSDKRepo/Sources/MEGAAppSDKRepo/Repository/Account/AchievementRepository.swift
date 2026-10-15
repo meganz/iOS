@@ -19,9 +19,9 @@ public struct AchievementRepository: AchievementRepositoryProtocol {
         sdk.isAchievementsEnabled
     }
     
-    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage> {
+    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitInformationStorage> {
         let achievementDetails = try await getAchievementDetails()
-        return Measurement<UnitDataStorage>.bytes(of: achievementDetails.classStorage(for: type))
+        return Measurement(value: Double(achievementDetails.classStorage(for: type)), unit: UnitInformationStorage.bytes)
     }
     
     public func baseStorage() async throws -> Int64 {

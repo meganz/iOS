@@ -87,8 +87,8 @@ private final class MEGAPlanLoadTask: Sendable {
     private func setupCache(with pricing: MEGAPricing, currencyName: String?) -> [MEGAPlan] {
         return (0..<pricing.products).map { productIndex in
             return MEGAPlan(id: productIndex,
-                            storage: .gigabytes(of: pricing.storageGB(atProductIndex: productIndex)),
-                            transfer: .gigabytes(of: pricing.transferGB(atProductIndex: productIndex)),
+                            storage: Measurement(value: Double(pricing.storageGB(atProductIndex: productIndex)), unit: .gibibytes),
+                            transfer: Measurement(value: Double(pricing.transferGB(atProductIndex: productIndex)), unit: .gibibytes),
                             subscriptionLife: pricing.months(atProductIndex: productIndex),
                             price: pricing.amount(atProductIndex: productIndex),
                             currency: currencyName,

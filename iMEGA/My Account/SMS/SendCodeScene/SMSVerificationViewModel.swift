@@ -119,7 +119,7 @@ final class SMSVerificationViewModel: ViewModelType {
     private func getAchievementStorage() async {
         do {
             let storage = try await achievementUseCase.getAchievementStorage(by: .addPhone)
-            let message = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
+            let message = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: Int64(storage.value)))
             invokeCommand?(.showLoadAchievementResult(.showStorage(message)))
         } catch {
             let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA

@@ -1,9 +1,8 @@
 import Foundation
-import MEGAFoundation
 
 enum MEGAPlanUpgradeAdviser {
     static func suggestMinimumPlan(for currentPlan: MEGAPlan? = nil,
-                                   ofStorage minimumStorage: Measurement<UnitDataStorage>,
+                                   ofStorage minimumStorage: Measurement<UnitInformationStorage>,
                                    from availablePlans: [MEGAPlan]) -> MEGAPlanUpgradeAdvice {
         let filter: QueryConstraint = .minimumPriceForStorageInBytesGreaterThan(minimumStorage)
         let plansMeetCriteria = filter(availablePlans)
@@ -45,7 +44,7 @@ private extension QueryConstraint {
     
     /// Query constraint generator that takes a `Double` type of `minimumStorage` and generates a `QueryConstraint` which only returns
     /// `MEGAPlan`s whose storage space greater than minimum storage provided in the parameter.
-    private static let storagGreaterThan: @Sendable (Measurement<UnitDataStorage>) -> QueryConstraint = { minStorage in
+    private static let storagGreaterThan: @Sendable (Measurement<UnitInformationStorage>) -> QueryConstraint = { minStorage in
         return QueryConstraint { plans in
             plans.filter {  $0.storageSpaceInBytes > minStorage }
         }
@@ -65,7 +64,7 @@ private extension QueryConstraint {
     }
     
     /// A composite query constraint who composite `storagGreaterThan` and `mimumPrice` together.
-    static let minimumPriceForStorageInBytesGreaterThan: @Sendable (Measurement<UnitDataStorage>) -> QueryConstraint = { (storage) -> QueryConstraint in
+    static let minimumPriceForStorageInBytesGreaterThan: @Sendable (Measurement<UnitInformationStorage>) -> QueryConstraint = { (storage) -> QueryConstraint in
         return QueryConstraint { plans in
             QueryConstraint.minimumPrice(
                 QueryConstraint.storagGreaterThan(storage)(plans))

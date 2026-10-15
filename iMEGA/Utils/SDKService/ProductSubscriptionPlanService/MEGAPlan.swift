@@ -1,8 +1,7 @@
 import Foundation
-import MEGAFoundation
 
 struct MEGAPlan: Equatable {
-    typealias DataMeasurementInGB = Measurement<UnitDataStorage>
+    typealias DataMeasurementInGB = Measurement<UnitInformationStorage>
     typealias DateDurationInMonth = Int
     typealias PriceInCents = Int
     typealias Currency = String
@@ -26,7 +25,7 @@ extension MEGAPlan {
         MEGAAccountDetails.string(for: proLevel) ?? ""
     }
 
-    var storageSpaceInBytes: Measurement<UnitDataStorage> {
+    var storageSpaceInBytes: Measurement<UnitInformationStorage> {
         storage.converted(to: .bytes)
     }
 }

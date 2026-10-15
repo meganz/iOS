@@ -18,7 +18,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         
         for flag in hideDontShowAgains {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
-                                              achievementUseCase: MockAchievementUseCase(result: .bytes(of: 1000)),
+                                              achievementUseCase: MockAchievementUseCase(result: Measurement(value: 1000, unit: .bytes)),
                                               hideDontShowAgain: flag)
             
             test(viewModel: sut,
