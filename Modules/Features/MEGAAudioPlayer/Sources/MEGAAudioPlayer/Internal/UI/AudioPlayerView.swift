@@ -215,11 +215,15 @@ struct AudioPlayerView: View {
     private var mainContent: some View {
         ZStack {
             VStack(spacing: 0) {
+                // On short screens the gaps around the artwork give way first; the artwork's higher
+                // layout priority makes it shrink only once both gaps are down to their minimum.
+                Spacer(minLength: TokenSpacing._3)
+                    .frame(maxHeight: TokenSpacing._15)
                 ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, loadingState: vm.loadingState)
                     .frame(maxWidth: .infinity)
                     .overlay { seekGestureLayer }
-                    .padding(.top, TokenSpacing._15)
-                Spacer(minLength: TokenSpacing._9)
+                    .layoutPriority(1)
+                Spacer(minLength: TokenSpacing._3)
                 TrackInfoSection(title: vm.title, artist: vm.artist)
                     .padding(TokenSpacing._5)
                     .frame(height: TokenSpacing._15)
@@ -399,13 +403,21 @@ private struct ArtworkSection: View {
     private let glowHeight = 315.0
     private let glowBlurRadius = 125.0
 
+    /// Laid out at the design size, then scaled down as a whole so the glow shrinks with the cover
+    /// when the screen is too short for the full-size artwork.
     var body: some View {
-        ZStack {
-            glow
-            cover
+        GeometryReader { proxy in
+            let fitScale = min(proxy.size.width, proxy.size.height) / coverMaxSize
+            ZStack {
+                glow
+                cover
+            }
+            .scaleEffect(coverScale * fitScale, anchor: .center)
+            .animation(.spring(response: 0.3, dampingFraction: 0.8), value: loadingState)
+            .frame(width: proxy.size.width, height: proxy.size.height)
         }
-        .scaleEffect(coverScale, anchor: .center)
-        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: loadingState)
+        .aspectRatio(1, contentMode: .fit)
+        .frame(maxWidth: coverMaxSize, maxHeight: coverMaxSize)
     }
 
     private var coverScale: CGFloat {
@@ -770,7 +782,6 @@ private struct MusicModeControlsSection: View {
         }
         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
     }
-
 
     private func iconButton(image: Image, size: CGFloat, isAccented: Bool, isDisabled: Bool = false, showsActiveDot: Bool = false, action: @escaping () -> Void) -> some View {
         image
