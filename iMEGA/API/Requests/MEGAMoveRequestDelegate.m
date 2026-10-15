@@ -36,8 +36,9 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     self.numberOfRequests--;
     
-    if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEBusinessPastDue && error.type != MEGAErrorTypeApiEOverQuota) {
-        if (error.type != MEGAErrorTypeApiEPaywall) {
+    if (error.type != MEGAErrorTypeApiOk) {
+        // AppDelegate already shows an alert for these errors.
+        if (error.type != MEGAErrorTypeApiEOverQuota && error.type != MEGAErrorTypeApiEBusinessPastDue && error.type != MEGAErrorTypeApiEPaywall) {
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
         }
         return;

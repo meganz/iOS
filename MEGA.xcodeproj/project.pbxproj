@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D42FB000010000AA02 /* MEGAMoveRequestDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42FB000010000AA01 /* MEGAMoveRequestDelegateTests.swift */; };
 		E1A754000000000000000015 /* NodeActionsTextFileEditPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000005 /* NodeActionsTextFileEditPresenterTests.swift */; };
 		E1A754000000000000000014 /* CreateTextFileAlertViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000004 /* CreateTextFileAlertViewRouterTests.swift */; };
 		E1A754000000000000000030 /* TextEditorViewModelMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A754000000000000000020 /* TextEditorViewModelMarkdownTests.swift */; };
@@ -2918,6 +2919,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A1B2C3D42FB000010000AA01 /* MEGAMoveRequestDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAMoveRequestDelegateTests.swift; sourceTree = "<group>"; };
 		E1A754000000000000000005 /* NodeActionsTextFileEditPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionsTextFileEditPresenterTests.swift; sourceTree = "<group>"; };
 		E1A754000000000000000004 /* CreateTextFileAlertViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewRouterTests.swift; sourceTree = "<group>"; };
 		E1A754000000000000000020 /* TextEditorViewModelMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModelMarkdownTests.swift; sourceTree = "<group>"; };
@@ -6817,6 +6819,7 @@
 				D7B2F2813077F43800C5F857 /* DocumentPreviewLinkActionRouterTests.swift */,
 				D7B2F2823077F43800C5F857 /* DocumentPreviewNodeActionDelegateRoutingTests.swift */,
 				D715B556307501A400FB2D31 /* DocumentPreviewNodeActionDelegateTests.swift */,
+				A1B2C3D42FB000010000AA01 /* MEGAMoveRequestDelegateTests.swift */,
 				0EC465152D87E10000EDA214 /* NodeActionResponderTests.swift */,
 				2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */,
 				0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */,
@@ -17219,6 +17222,7 @@
 				BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */,
 				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,
 				0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */,
+				A1B2C3D42FB000010000AA02 /* MEGAMoveRequestDelegateTests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				BF25A3742E41894B00583D88 /* MEGAProcessAssetTests.swift in Sources */,
