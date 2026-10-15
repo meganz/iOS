@@ -223,7 +223,10 @@ struct AudioPlayerView: View {
                     .frame(maxWidth: .infinity)
                     .overlay { seekGestureLayer }
                     .layoutPriority(1)
+                // The frame makes the stack share space evenly between both gaps. A bare Spacer only
+                // gets what is left, so the gap above would take its full height first.
                 Spacer(minLength: TokenSpacing._3)
+                    .frame(maxHeight: .infinity)
                 TrackInfoSection(title: vm.title, artist: vm.artist)
                     .padding(TokenSpacing._5)
                     .frame(height: TokenSpacing._15)
