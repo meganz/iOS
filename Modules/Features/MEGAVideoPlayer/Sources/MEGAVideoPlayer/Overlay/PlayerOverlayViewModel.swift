@@ -48,7 +48,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
     private let hapticFeedbackUseCase: any HapticFeedbackUseCaseProtocol
     private let didTapBackAction: () -> Void
-    private let didTapMoreAction: ((any PlayableNode)?) -> Void
+    private let didTapMoreAction: (((any PlayableNode)?) -> Void)?
     private let didTapRotateAction: () -> Void
     private let didTapPictureInPictureAction: () -> Void
     private let didDragToDismissAction: () -> Void
@@ -59,7 +59,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
         hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
-        didTapMoreAction: @escaping ((any PlayableNode)?) -> Void,
+        didTapMoreAction: (((any PlayableNode)?) -> Void)?,
         didDragToDismissAction: @escaping () -> Void,
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
@@ -185,8 +185,14 @@ extension PlayerOverlayViewModel {
         lockOverlayTimer?.invalidate()
     }
 
+    /// Content played from the device has no cloud node to act on, so the caller passes no action and
+    /// the button it drives is left off the toolbar.
+    var canShowMoreAction: Bool {
+        didTapMoreAction != nil
+    }
+
     func didTapMore() {
-        didTapMoreAction(player.currentNode)
+        didTapMoreAction?(player.currentNode)
     }
 }
 

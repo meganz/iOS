@@ -176,7 +176,7 @@ struct VideoNowPlayingControllerTests {
     @Test
     func artwork_showsFileTypeIconWhileThumbnailLoads() async {
         let player = MockVideoPlayer(state: .paused)
-        player.currentNode = MockPlayableNode(handle: 7, name: "Holiday.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 7, name: "Holiday.mp4"))
         let infoCenter = MockNowPlayingInfoCenter()
         let artworkProvider = MockVideoNowPlayingArtworkProvider(placeholderSize: CGSize(width: 24, height: 24))
         let sut = makeSUT(player: player, infoCenter: infoCenter, artworkProvider: artworkProvider)
@@ -191,7 +191,7 @@ struct VideoNowPlayingControllerTests {
     @Test
     func artwork_thumbnailReplacesFileTypeIcon() async {
         let player = MockVideoPlayer(state: .paused)
-        player.currentNode = MockPlayableNode(handle: 7, name: "Holiday.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 7, name: "Holiday.mp4"))
         let infoCenter = MockNowPlayingInfoCenter()
         let artworkProvider = MockVideoNowPlayingArtworkProvider(thumbnails: [7: makeImage(size: CGSize(width: 40, height: 30))])
         let sut = makeSUT(player: player, infoCenter: infoCenter, artworkProvider: artworkProvider)
@@ -206,7 +206,7 @@ struct VideoNowPlayingControllerTests {
     @Test
     func artwork_withoutThumbnail_keepsFileTypeIcon() async {
         let player = MockVideoPlayer(state: .playing)
-        player.currentNode = MockPlayableNode(handle: 7, name: "Holiday.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 7, name: "Holiday.mp4"))
         player.mockSnapshotImage = makeImage(size: CGSize(width: 16, height: 9))
         let infoCenter = MockNowPlayingInfoCenter()
         let artworkProvider = MockVideoNowPlayingArtworkProvider(placeholderSize: CGSize(width: 24, height: 24))
@@ -222,7 +222,7 @@ struct VideoNowPlayingControllerTests {
     @Test
     func artwork_nodeChange_resetsToIconAndLoadsNewThumbnail() async {
         let player = MockVideoPlayer(state: .paused)
-        player.currentNode = MockPlayableNode(handle: 1, name: "First.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 1, name: "First.mp4"))
         let infoCenter = MockNowPlayingInfoCenter()
         let artworkProvider = MockVideoNowPlayingArtworkProvider(thumbnails: [
             1: makeImage(size: CGSize(width: 10, height: 10)),
@@ -232,7 +232,7 @@ struct VideoNowPlayingControllerTests {
         sut.start()
         await sut.artworkTask?.value
 
-        player.currentNode = MockPlayableNode(handle: 2, name: "Second.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 2, name: "Second.mp4"))
         player.nodeName = "Second.mp4"
         await sut.artworkTask?.value
 
@@ -244,7 +244,7 @@ struct VideoNowPlayingControllerTests {
     @Test
     func artwork_renameOfSameNode_doesNotReload() async {
         let player = MockVideoPlayer(state: .paused)
-        player.currentNode = MockPlayableNode(handle: 1, name: "First.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 1, name: "First.mp4"))
         let artworkProvider = MockVideoNowPlayingArtworkProvider(thumbnails: [1: makeImage(size: CGSize(width: 10, height: 10))])
         let sut = makeSUT(player: player, artworkProvider: artworkProvider)
         sut.start()
@@ -259,7 +259,7 @@ struct VideoNowPlayingControllerTests {
     @Test
     func stop_cancelsPendingThumbnailAndClearsInfo() async {
         let player = MockVideoPlayer(state: .paused)
-        player.currentNode = MockPlayableNode(handle: 7, name: "Holiday.mp4")
+        player.currentItem = .node(MockPlayableNode(handle: 7, name: "Holiday.mp4"))
         let infoCenter = MockNowPlayingInfoCenter()
         let artworkProvider = MockVideoNowPlayingArtworkProvider(thumbnails: [7: makeImage(size: CGSize(width: 40, height: 30))])
         let sut = makeSUT(player: player, infoCenter: infoCenter, artworkProvider: artworkProvider)

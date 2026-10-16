@@ -265,6 +265,9 @@ extension PlayerOverlayView {
 
     var moreTopButton: some View {
         controlButton(name: "moreTop", action: viewModel.didTapMore)
+            .opacity(viewModel.canShowMoreAction ? 1 : 0)
+            .disabled(!viewModel.canShowMoreAction)
+            .accessibilityHidden(!viewModel.canShowMoreAction)
     }
 }
 

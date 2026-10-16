@@ -18,7 +18,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var isExternalPlaybackActive: Bool = false
     @Published public var audioTrackSelection: AudioTrackSelection?
 
-    public var currentNode: (any PlayableNode)?
+    public var currentItem: VideoPlaybackItem?
     public var onNodeDeleted: (() -> Void)?
 
     let debugMessage: String
@@ -91,8 +91,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var setLoopingCallCount: Int = 0
     public var setLoopingValue: Bool = false
     public var isLoopEnabled: Bool = false
-    public var loadNodeCallCount: Int = 0
-    public var loadedNode: (any PlayableNode)?
+    public var loadItemCallCount: Int = 0
+    public var loadedItem: VideoPlaybackItem?
     public var setupPlayerCallCount: Int = 0
     public var resizePlayerCallCount: Int = 0
     public var resizedFrame: CGRect = .zero
@@ -203,10 +203,11 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         isLoopEnabled = enabled
     }
 
-    public func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode]) {
-        loadNodeCallCount += 1
-        loadedNode = node
-        nodeName = node.name ?? ""
+    public func loadItemAndMonitorUpdate(for item: VideoPlaybackItem, monitor items: [VideoPlaybackItem]) {
+        loadItemCallCount += 1
+        loadedItem = item
+        currentItem = item
+        nodeName = item.name
     }
 
     public func setupPlayer(in layer: any PlayerViewProtocol) {
@@ -247,8 +248,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         jumpBackwardSeconds = 0
         seekCallCount = 0
         seekTime = 0
-        loadNodeCallCount = 0
-        loadedNode = nil
+        loadItemCallCount = 0
+        loadedItem = nil
         setupPlayerCallCount = 0
         resizePlayerCallCount = 0
         resizedFrame = .zero

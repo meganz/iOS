@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 
+/// Files positions under each item's `playbackID`; resolving the fingerprint is the real use case's job.
 public final class MockResumePlaybackPositionUseCase: ResumePlaybackPositionUseCaseProtocol, @unchecked Sendable {
     public var savedPositions: [String: TimeInterval] = [:]
     public var savePlaybackPositionCallCount = 0
@@ -9,19 +10,18 @@ public final class MockResumePlaybackPositionUseCase: ResumePlaybackPositionUseC
 
     public init() {}
 
-    public func savePlaybackPosition(_ position: TimeInterval, for node: any PlayableNode) {
-        guard let fingerprint = node.fingerprint else { return }
+    public func savePlaybackPosition(_ position: TimeInterval, for item: VideoPlaybackItem) {
         savePlaybackPositionCallCount += 1
-        savedPositions[fingerprint] = position
+        savedPositions[item.playbackID] = position
     }
 
-    public func getPlaybackPosition(for node: any PlayableNode) -> TimeInterval? {
-        guard let fingerprint = node.fingerprint else { return nil }
+    public func playbackPosition(for item: VideoPlaybackItem) -> TimeInterval? {
         getPlaybackPositionCallCount += 1
-        return savedPositions[fingerprint]
+        return savedPositions[item.playbackID]
     }
 
-    public func deletePlaybackPosition(for node: any PlayableNode) {
+    public func deletePlaybackPosition(for item: VideoPlaybackItem) {
         deletePlaybackPositionCallCount += 1
+        savedPositions.removeValue(forKey: item.playbackID)
     }
 }

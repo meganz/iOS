@@ -15,7 +15,7 @@ public class MockVideoNodesUseCase: VideoNodesUseCaseProtocol, @unchecked Sendab
         self.isInRubbishBin = isInRubbishBin
     }
 
-    public func monitorVideoNodesUpdates(for nodes: [some PlayableNode]) -> AnyAsyncSequence<[any PlayableNode]> {
+    public func monitorVideoNodesUpdates(for nodes: [any PlayableNode]) -> AnyAsyncSequence<[any PlayableNode]> {
         monitorNodesUpdatesCallCount += 1
         return AsyncStream<[any PlayableNode]> { continuation in
             continuation.yield(nodesUpdate)

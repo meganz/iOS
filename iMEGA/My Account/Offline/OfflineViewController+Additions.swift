@@ -1,3 +1,4 @@
+import AVKit
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -6,6 +7,9 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGARepo
+import MEGASwift
+import MEGAVideoPlayer
+import UIKit
 
 extension OfflineViewController {
     @objc func makeSelectActionSheet(for indexPath: IndexPath) -> ActionSheetAction {
@@ -131,6 +135,38 @@ extension OfflineViewController {
         )
     }
     
+    /// Plays a downloaded video, queued with the other videos in the same folder
+    @objc func presentVideoPlayer(filePath: String, filePaths: [String]?) {
+        guard isVideoPlayerRevampEnabled else {
+            let controller = AVPlayerManager.shared.makePlayerController(for: URL(fileURLWithPath: filePath))
+            present(controller, animated: true)
+            return
+        }
+
+        let file = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: filePath))
+        let videoFiles = (filePaths ?? [])
+            .filter { $0.fileExtensionGroup.isVideo }
+            .map { VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: $0)) }
+        // A queue without the file being played has nothing to step from.
+        let queue = videoFiles.contains { $0.playbackID == file.playbackID } ? videoFiles : [file]
+
+        let playerViewController = MEGAPlayerViewController(
+            viewModel: MEGAPlayerViewModel(
+                player: MEGAAVPlayer.liveValue(for: file, within: queue)
+            ),
+            pictureInPicturePresenter: { UIApplication.mnz_presentingViewController() }
+        )
+        playerViewController.modalPresentationStyle = .overFullScreen
+        present(playerViewController, animated: true)
+    }
+
+    /// Offline playback has its own remote flag rather than `.iosVideoPlayerRevamp`, so it can be
+    /// rolled out separately from the rest of the revamped player.
+    private var isVideoPlayerRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp)
+            || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevampOffline)
+    }
+
     @objc func updateAudioPlayerVisibility(_ isHidden: Bool) {
         guard AudioPlayerManager.shared.isPlayerAlive() else { return }
         AudioPlayerManager.shared.playerHidden(isHidden)

@@ -81,6 +81,11 @@ public final class MEGAPlayerViewController: UIViewController {
 
     private func makeOverlayView() -> some View {
         let player = viewModel.player
+        // Nothing to act on without a cloud node behind the video — an offline file is played by
+        // itself — so the overlay is told there is no more action rather than given a dead button.
+        let didTapMoreAction: (((any PlayableNode)?) -> Void)? = viewModel.moreAction == nil
+            ? nil
+            : { [weak self] node in self?.viewModel.moreAction?(node) }
         return PlayerOverlayView(
             viewModel: PlayerOverlayViewModel(
                 player: player,
@@ -90,9 +95,7 @@ public final class MEGAPlayerViewController: UIViewController {
                 didTapBackAction: { [weak self] in
                     self?.dismissPlayer()
                 },
-                didTapMoreAction: { [weak self] node in
-                    self?.viewModel.moreAction?(node)
-                },
+                didTapMoreAction: didTapMoreAction,
                 didDragToDismissAction: { [weak self] in
                     self?.dismissPlayer()
                 },

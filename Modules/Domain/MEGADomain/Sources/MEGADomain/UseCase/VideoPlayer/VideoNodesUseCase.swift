@@ -1,7 +1,7 @@
 import MEGASwift
 
 public protocol VideoNodesUseCaseProtocol: Sendable {
-    func monitorVideoNodesUpdates(for nodes: [some PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]>
+    func monitorVideoNodesUpdates(for nodes: [any PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]>
     func isInRubbishBin(node: some PlayableNode) -> Bool
 }
 
@@ -14,7 +14,7 @@ public struct VideoNodesUseCase<T: VideoNodesRepositoryProtocol>: VideoNodesUseC
         self.repo = repo
     }
 
-    public func monitorVideoNodesUpdates(for nodes: [some PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]> {
+    public func monitorVideoNodesUpdates(for nodes: [any PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]> {
         await repo.monitorVideoNodesUpdates(for: nodes)
     }
     
