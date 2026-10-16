@@ -6,7 +6,7 @@ struct LegacyCallsSettingsView: View {
     @State var viewModel: CallsSettingsViewModel
     
     private var backgroundView: some View {
-        TokenColors.Background.page.swiftUI.edgesIgnoringSafeArea([.horizontal, .bottom])
+        TokenColors.Background.page.swiftUI.ignoresSafeArea()
     }
     
     var body: some View {
