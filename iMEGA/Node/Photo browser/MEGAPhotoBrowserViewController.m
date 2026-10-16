@@ -134,6 +134,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeSharedItem:
         case DisplayModePhotosAlbum:
         case DisplayModeRecents:
+        case DisplayModeBackup:
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             break;
         case DisplayModeRubbishBin:
@@ -501,6 +502,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModePhotosTimeline:
         case DisplayModePhotosAlbum:
         case DisplayModeRecents:
+        case DisplayModeBackup:
             return self.centerToolbarItem;
         case DisplayModeAlbumLink:
         case DisplayModeNodeInsideFolderLink:

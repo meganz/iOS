@@ -368,7 +368,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func isSlideShowEnabled() async -> Bool {
         switch displayMode {
-        case .cloudDrive, .sharedItem, .albumLink, .nodeInsideFolderLink, .photosTimeline, .photosAlbum, .recents:
+        case .cloudDrive, .sharedItem, .albumLink, .nodeInsideFolderLink, .photosTimeline, .photosAlbum, .recents, .backup:
             return await dataProvider.currentPhoto()?.name?.fileExtensionGroup.isImage == true
         default:
             return false
@@ -950,7 +950,7 @@ extension MEGAPhotoBrowserViewController {
         switch displayMode {
         case .fileLink:
             saveToPhotos(node: node)
-        case .sharedItem, .cloudDrive, .photosAlbum, .photosTimeline, .recents:
+        case .sharedItem, .cloudDrive, .photosAlbum, .photosTimeline, .recents, .backup:
             openSlideShow()
         default:
             break
