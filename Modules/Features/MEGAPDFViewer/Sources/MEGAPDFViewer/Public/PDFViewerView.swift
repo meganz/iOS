@@ -267,7 +267,7 @@ public struct PDFViewerView: View {
                             attemptUnlockDocumentTask = nil
                         }
                     },
-                    onCancel: dismissPasswordEntry
+                    onCancel: closeViewer
                 )
             }
         }

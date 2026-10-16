@@ -145,7 +145,7 @@ struct PDFViewerDocumentLockedTests {
         #expect(context.sut.passwordRejectionCount == 1)
     }
 
-    @Test func cancelPasswordEntry_keepsViewerLockedAndDoesNotPresentAgain() async {
+    @Test func cancelPasswordEntry_keepsDocumentLockedAndSkipsLastPageSave() async {
         let context = makeContext()
         await context.sut.loadDocumentFromSource()
         #expect(context.sut.isPasswordEntryPresented)
@@ -179,6 +179,17 @@ struct PDFViewerDocumentLockedTests {
         #expect(!context.sut.showInvalidPasswordError)
         #expect(context.sut.password == "next-attempt")
         #expect(context.sut.isSubmissionEnabled)
+    }
+
+    @Test func unchangedPasswordWrite_afterRejection_keepsError() async {
+        let context = makeContext()
+        await context.sut.loadDocumentFromSource()
+        context.sut.password = "wrong"
+        await context.sut.submitPassword()
+
+        context.sut.password = ""
+
+        #expect(context.sut.showInvalidPasswordError)
     }
 
     @Test func submitPassword_afterRejectedAttempt_reusesDocumentAndLocalURL() async throws {

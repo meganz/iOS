@@ -552,7 +552,12 @@ extension PDFViewerViewModel {
     }
 
     private func updatePassword(_ password: String) {
-        guard lockedState?.isSubmissionEnabled == true else { return }
+        // We clear the password in `beginPasswordSubmission()`, but
+        // `SecureField` writes the cleared value back through the binding
+        // after `rejectPasswordSubmission()`. This guard prevents the
+        // write-back after the reject.
+        guard lockedState?.isSubmissionEnabled == true,
+              password != lockedState?.password else { return }
         lockedState?.password = password
         lockedState?.showInvalidPasswordError = false
     }
