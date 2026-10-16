@@ -15,6 +15,34 @@ struct DoMoreWithMegaActionHandlerTests {
         #expect(addMenuActionHandler.actions == [.scanDocument])
     }
 
+    @Test("Camera uploads onboarding routes to cameraUploadsOnboarding")
+    func cameraUploadsOnboardingRoutesToOnboarding() throws {
+        let router = SpyHomeViewRouter()
+        let sut = makeSUT(router: router)
+
+        sut.handle(.cameraUploadsOnboarding)
+
+        let route = try #require(router.routes.first)
+        guard case .cameraUploadsOnboarding = route else {
+            Issue.record("Expected cameraUploadsOnboarding, got \(route)")
+            return
+        }
+    }
+
+    @Test("Camera uploads settings routes to cameraUploadsSettings")
+    func cameraUploadsSettingsRoutesToSettings() throws {
+        let router = SpyHomeViewRouter()
+        let sut = makeSUT(router: router)
+
+        sut.handle(.cameraUploadsSettings)
+
+        let route = try #require(router.routes.first)
+        guard case .cameraUploadsSettings = route else {
+            Issue.record("Expected cameraUploadsSettings, got \(route)")
+            return
+        }
+    }
+
     @Test("Add contacts routes to inviteContacts")
     func addContactsRoutesToInviteContacts() throws {
         let router = SpyHomeViewRouter()

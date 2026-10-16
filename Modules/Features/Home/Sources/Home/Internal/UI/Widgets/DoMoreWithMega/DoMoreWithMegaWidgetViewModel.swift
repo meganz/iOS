@@ -10,9 +10,11 @@ final class DoMoreWithMegaWidgetViewModel {
     var action: DoMoreWithMegaAction?
     var createAlbumRequest: CreateAlbumAlertInput?
 
+    // nil: Camera uploads was never enabled since login, so the tile opens the onboarding.
+    // false: it was enabled before and is off now, so the tile opens Camera uploads Settings.
     @ObservationIgnored
-    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
-    private var isCameraUploadsEnabled: Bool
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: nil)
+    private var isCameraUploadsEnabled: Bool?
 
     @ObservationIgnored private let createAlbumUseCase: any CreateAlbumUseCaseProtocol
 
@@ -25,12 +27,12 @@ final class DoMoreWithMegaWidgetViewModel {
     }
 
     func refreshTiles() {
-        tiles = DoMoreWithMegaTile.allCases.filter { $0 != .cameraUploads || !isCameraUploadsEnabled }
+        tiles = DoMoreWithMegaTile.allCases.filter { $0 != .cameraUploads || isCameraUploadsEnabled != true }
     }
 
     func didTap(_ tile: DoMoreWithMegaTile) async {
         switch tile {
-        case .cameraUploads: action = .cameraUploads
+        case .cameraUploads: action = isCameraUploadsEnabled == nil ? .cameraUploadsOnboarding : .cameraUploadsSettings
         case .scanDoc: action = .scanDoc
         case .createAlbum: await handleCreateAlbumTap()
         case .addContacts: action = .addContacts

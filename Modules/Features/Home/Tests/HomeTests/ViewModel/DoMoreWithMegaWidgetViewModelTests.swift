@@ -38,6 +38,18 @@ struct DoMoreWithMegaWidgetViewModelTests {
         #expect(!sut.tiles.contains(.cameraUploads))
     }
 
+    @Test(
+        "tapping Camera uploads publishes the onboarding action when never enabled, else the settings action",
+        arguments: [(nil, DoMoreWithMegaAction.cameraUploadsOnboarding), (false, .cameraUploadsSettings)]
+    )
+    func tapCameraUploadsPublishesAction(isCameraUploadsEnabled: Bool?, expectedAction: DoMoreWithMegaAction) async {
+        let sut = makeSUT(isCameraUploadsEnabled: isCameraUploadsEnabled).sut
+
+        await sut.didTap(.cameraUploads)
+
+        #expect(sut.action == expectedAction)
+    }
+
     @Test("tapping Scan doc publishes the scan doc action")
     func tapScanDocPublishesAction() async {
         let sut = makeSUT().sut

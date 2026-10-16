@@ -1,7 +1,8 @@
 import MEGADomain
 
 enum DoMoreWithMegaAction: Equatable {
-    case cameraUploads
+    case cameraUploadsOnboarding
+    case cameraUploadsSettings
     case scanDoc
     case addContacts
     case scheduleMeeting
@@ -25,7 +26,8 @@ struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
 
     func handle(_ action: DoMoreWithMegaAction) {
         switch action {
-        case .cameraUploads: didTapCameraUploads()
+        case .cameraUploadsOnboarding: router.route(to: .cameraUploadsOnboarding)
+        case .cameraUploadsSettings: router.route(to: .cameraUploadsSettings)
         case .scanDoc: didTapScanDoc()
         case .addContacts: didTapAddContacts()
         case .scheduleMeeting: didTapScheduleMeeting()
@@ -35,10 +37,6 @@ struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
     }
 
     // MARK: - Tile handlers
-
-    private func didTapCameraUploads() {
-        // Handle in IOS-11814
-    }
 
     private func didTapScanDoc() {
         addMenuActionHandler.handleAction(.scanDocument)

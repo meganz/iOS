@@ -4,6 +4,7 @@ import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPermissions
 import MEGARepo
 import SwiftUI
 import UIKit
@@ -45,9 +46,9 @@ final class HomeViewRouter: HomeViewRouting {
         case .transfers:
             showTransfers()
         case .cameraUploadsOnboarding:
-            break // Handle in IOS-11814
+            showCameraUploadsOnboarding()
         case .cameraUploadsSettings:
-            break // Handle in IOS-11814
+            showCameraUploadsSettings()
         case .overDiskQuota:
             AppDelegateRouter().showOverDiskQuota()
         case .album(let album):
@@ -90,6 +91,31 @@ final class HomeViewRouter: HomeViewRouting {
             .instantiateViewController(withIdentifier: "OfflineViewControllerID")
         offlineVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(offlineVC, animated: true)
+    }
+
+    private func showCameraUploadsOnboarding() {
+        guard let navigationController else { return }
+        let permissionHandler = DevicePermissionsHandler.makeHandler()
+        Task {
+            let isGranted = if permissionHandler.shouldAskForPhotosPermissions {
+                await PermissionOnboardingRouter(permissionsHandler: permissionHandler)
+                    .presentCameraUploadsOnboarding(from: navigationController)
+            } else {
+                await permissionHandler.requestPhotoLibraryAccessPermissions()
+            }
+            if isGranted {
+                showCameraUploadsSettings()
+            } else {
+                PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler).alertPhotosPermission()
+            }
+        }
+    }
+
+    private func showCameraUploadsSettings() {
+        let cameraUploadsSettingsViewController = CameraUploadsSettingsViewRouter(presenter: navigationController) {}.build()
+        cameraUploadsSettingsViewController.hidesBottomBarWhenPushed = true
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: cameraUploadsSettingsViewController)
+        navigationController?.pushViewController(cameraUploadsSettingsViewController, animated: true)
     }
 
     private func showInviteContacts() {

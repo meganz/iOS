@@ -65,6 +65,26 @@ final class PermissionOnboardingRouter {
         return await task?.value
     }
 
+    func presentCameraUploadsOnboarding(from presenter: UIViewController) async -> Bool {
+        let viewModel = buildViewModel(for: .cameraBackups)
+        let viewController = UIHostingController(rootView: PermissionOnboardingView(viewModel: viewModel))
+        viewController.isModalInPresentation = true
+        presenter.present(viewController, animated: true)
+
+        var isGranted = false
+        for await route in viewModel.$route.dropFirst().values {
+            if case .finished(let result) = route {
+                isGranted = result
+            }
+            break
+        }
+
+        await withCheckedContinuation { continuation in
+            viewController.dismiss(animated: true) { continuation.resume() }
+        }
+        return isGranted
+    }
+
     private func buildViewModel(for onboardingType: PermissionOnboardingType) -> PermissionOnboardingViewModel {
         return switch onboardingType {
         case .notifications:
