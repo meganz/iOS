@@ -156,7 +156,13 @@ extension HomeScreenFactory {
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 requestStatesRepository: RequestStatesRepository.newRepo
             ),
-            leftOffThumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            leftOffThumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            albumNameUseCase: AlbumNameUseCase(userAlbumRepository: UserAlbumRepository.newRepo),
+            albumListUseCase: albumListUseCase
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
@@ -342,6 +348,34 @@ extension HomeScreenFactory {
     private var offlineFilesUseCase: some OfflineFilesUseCaseProtocol {
         OfflineFilesUseCase(
             repo: OfflineFileFetcherRepository.newRepo
+        )
+    }
+
+    private var albumListUseCase: some AlbumListUseCaseProtocol {
+        let filesSearchRepo = FilesSearchRepository.newRepo
+        let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
+        let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
+        let userAlbumRepo = UserAlbumRepository.newRepo
+        let photoLibraryUseCase = PhotoLibraryUseCase(
+            photosRepository: PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
+            searchRepository: filesSearchRepo,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
+        )
+        return AlbumListUseCase(
+            photoLibraryUseCase: photoLibraryUseCase,
+            mediaUseCase: mediaUseCase,
+            userAlbumRepository: userAlbumRepo,
+            albumContentsUpdateRepository: albumContentsUpdatesRepo,
+            albumContentsUseCase: AlbumContentsUseCase(
+                albumContentsRepo: albumContentsUpdatesRepo,
+                mediaUseCase: mediaUseCase,
+                fileSearchRepo: filesSearchRepo,
+                userAlbumRepo: userAlbumRepo,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                photoLibraryUseCase: photoLibraryUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase
+            ),
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
     }
 }

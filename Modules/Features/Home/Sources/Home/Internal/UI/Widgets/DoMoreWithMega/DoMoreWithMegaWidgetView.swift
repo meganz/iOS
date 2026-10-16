@@ -1,12 +1,16 @@
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct DoMoreWithMegaWidgetView: View {
     @State private var viewModel: DoMoreWithMegaWidgetViewModel
+    @EnvironmentObject private var navigator: HomeNavigation
+    private let dependency: Dependency
 
     init(dependency: Dependency) {
-        _viewModel = State(initialValue: DoMoreWithMegaWidgetViewModel(actionHandler: dependency.actionHandler))
+        self.dependency = dependency
+        _viewModel = State(initialValue: DoMoreWithMegaWidgetViewModel(createAlbumUseCase: dependency.createAlbumUseCase))
     }
 
     var body: some View {
@@ -18,6 +22,17 @@ struct DoMoreWithMegaWidgetView: View {
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("home.doMoreWithMega.section")
         .onAppear { viewModel.refreshTiles() }
+        .onChange(of: viewModel.action) { _, action in
+            guard let action else { return }
+            viewModel.action = nil
+            dependency.actionHandler.handle(action)
+        }
+        .createAlbumAlert(request: $viewModel.createAlbumRequest) { name in
+            Task {
+                let snackBar = await viewModel.createAlbum(named: name)
+                navigator.showSnackBar(snackBar.withSupplementalAction { navigator.snackBar = nil })
+            }
+        }
     }
 
     private var header: some View {
@@ -44,7 +59,7 @@ struct DoMoreWithMegaWidgetView: View {
 
     private func tileView(_ tile: DoMoreWithMegaTile) -> some View {
         Button {
-            viewModel.didTap(tile)
+            Task { await viewModel.didTap(tile) }
         } label: {
             VStack(spacing: TokenSpacing._2) {
                 tile.icon

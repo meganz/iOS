@@ -60,6 +60,9 @@ extension HomeView {
         // Continue where you left off widget
         let leftOffItemsUseCase: any LeftOffItemsUseCaseProtocol
         let leftOffThumbnailUseCase: any ThumbnailUseCaseProtocol
+        let accountStorageUseCase: any AccountStorageUseCaseProtocol
+        let albumNameUseCase: any AlbumNameUseCaseProtocol
+        let albumListUseCase: any AlbumListUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -93,7 +96,10 @@ extension HomeView {
             promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?,
             viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
             leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
-            leftOffThumbnailUseCase: some ThumbnailUseCaseProtocol
+            leftOffThumbnailUseCase: some ThumbnailUseCaseProtocol,
+            accountStorageUseCase: some AccountStorageUseCaseProtocol,
+            albumNameUseCase: some AlbumNameUseCaseProtocol,
+            albumListUseCase: some AlbumListUseCaseProtocol
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -127,6 +133,9 @@ extension HomeView {
             self.viewedLinksUseCase = viewedLinksUseCase
             self.leftOffItemsUseCase = leftOffItemsUseCase
             self.leftOffThumbnailUseCase = leftOffThumbnailUseCase
+            self.accountStorageUseCase = accountStorageUseCase
+            self.albumNameUseCase = albumNameUseCase
+            self.albumListUseCase = albumListUseCase
         }
     }
 }

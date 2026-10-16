@@ -49,9 +49,9 @@ final class HomeViewRouter: HomeViewRouting {
         case .cameraUploadsSettings:
             break // Handle in IOS-11814
         case .overDiskQuota:
-            break // Handle in IOS-11816
-        case .album:
-            break // Handle in IOS-11816
+            AppDelegateRouter().showOverDiskQuota()
+        case .album(let album):
+            showAlbum(album)
         case .inviteContacts:
             showInviteContacts()
         case .scheduleMeeting:
@@ -98,6 +98,14 @@ final class HomeViewRouter: HomeViewRouting {
         inviteContactViewController.hidesBottomBarWhenPushed = true
         TransferIndicatorBarItemConfigurator.injectIfNeeded(into: inviteContactViewController)
         navigationController?.pushViewController(inviteContactViewController, animated: true)
+    }
+
+    private func showAlbum(_ album: AlbumEntity) {
+        let albumNavigationController = MEGANavigationController()
+        let router = AlbumContentRouter(navigationController: albumNavigationController, album: album, newAlbumPhotos: nil)
+        albumNavigationController.setViewControllers([router.build()], animated: false)
+        albumNavigationController.modalPresentationStyle = .fullScreen
+        navigationController?.present(albumNavigationController, animated: true)
     }
 
     private func showTransfers() {

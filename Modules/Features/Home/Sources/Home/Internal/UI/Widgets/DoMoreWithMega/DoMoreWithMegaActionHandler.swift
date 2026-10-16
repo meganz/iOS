@@ -1,6 +1,17 @@
+import MEGADomain
+
+enum DoMoreWithMegaAction: Equatable {
+    case cameraUploads
+    case scanDoc
+    case addContacts
+    case scheduleMeeting
+    case overDiskQuota
+    case album(AlbumEntity)
+}
+
 @MainActor
 protocol DoMoreWithMegaActionHandling {
-    func handleAction(_ tile: DoMoreWithMegaTile)
+    func handle(_ action: DoMoreWithMegaAction)
 }
 
 struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
@@ -12,13 +23,14 @@ struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
         self.addMenuActionHandler = addMenuActionHandler
     }
 
-    func handleAction(_ tile: DoMoreWithMegaTile) {
-        switch tile {
+    func handle(_ action: DoMoreWithMegaAction) {
+        switch action {
         case .cameraUploads: didTapCameraUploads()
         case .scanDoc: didTapScanDoc()
-        case .createAlbum: didTapCreateAlbum()
         case .addContacts: didTapAddContacts()
         case .scheduleMeeting: didTapScheduleMeeting()
+        case .overDiskQuota: router.route(to: .overDiskQuota)
+        case .album(let album): router.route(to: .album(album))
         }
     }
 
@@ -30,10 +42,6 @@ struct DoMoreWithMegaActionHandler: DoMoreWithMegaActionHandling {
 
     private func didTapScanDoc() {
         addMenuActionHandler.handleAction(.scanDocument)
-    }
-
-    private func didTapCreateAlbum() {
-        // Handle in IOS-11816
     }
 
     private func didTapAddContacts() {
