@@ -36,7 +36,7 @@ enum TextEditorFileNameAlerts {
                 guard let textField = action.sender as? UITextField else { return }
                 selectNameWithoutExtension(in: textField)
             }, for: .editingDidBegin)
-            textField.addAction(UIAction { [weak renameAction] action in
+            textField.addAction(UIAction { [weak renameAction = renameAction] action in
                 guard let textField = action.sender as? UITextField else { return }
                 renameAction?.isEnabled = isNewValidName(textField)
                 textField.textColor = textField.text?.mnz_containsInvalidChars() ?? false ? .systemRed : .label

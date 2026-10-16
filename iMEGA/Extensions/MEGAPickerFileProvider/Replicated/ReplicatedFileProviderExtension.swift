@@ -9,13 +9,17 @@ import UniformTypeIdentifiers
 /// Entry point of the File Provider extension on `NSFileProviderReplicatedExtension`.
 ///
 /// Only used when the `MEGA_FILE_PROVIDER_PRINCIPAL_CLASS` build setting points at it; `FileProviderExtension`
-/// stays the shipping implementation until the switch. For now it serves browsing, downloading, creating folders,
-/// renaming, moving and deleting, and keeps what Files shows in step with remote changes.
+/// stays the shipping implementation until the switch. For now it serves browsing, downloading, uploading, creating
+/// folders, renaming, moving and deleting, and keeps what Files shows in step with remote changes.
 final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
-    /// The changes `modifyItem` makes to the node. The others have nowhere to be kept in MEGA, such as the last used
-    /// date, which the system sets whenever a file is opened, and a folder's modification date, which it sets whenever
-    /// a file is added to the folder.
+    /// The changes `modifyItem` makes to the node without new contents. The others have nowhere to be kept in MEGA,
+    /// such as the last used date, which the system sets whenever a file is opened, and a folder's modification date,
+    /// which it sets whenever a file is added to the folder.
     private static let appliedFields: NSFileProviderItemFields = [.filename, .parentItemIdentifier]
+
+    /// The fields an upload applies, along with the contents: the node takes the file's modification date. The others,
+    /// such as extended attributes, stay pending, or the system would clear them on disk to match the returned item.
+    private static let uploadedFields: NSFileProviderItemFields = appliedFields.union([.contents, .contentModificationDate])
 
     private let domain: NSFileProviderDomain
     private let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
@@ -43,6 +47,18 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
             itemUseCase: itemUseCase,
             nodeRepo: NodeRepository.newRepo,
             nodeActionRepo: NodeActionRepository.newRepo,
+            snapshotRepo: FileProviderSnapshotRepository.newRepo
+        )
+    }
+
+    /// Built on every use for the same reason as `itemUseCase`.
+    private var uploadUseCase: some FileProviderUploadUseCaseProtocol {
+        FileProviderUploadUseCase(
+            itemUseCase: itemUseCase,
+            itemActionUseCase: itemActionUseCase,
+            nodeRepo: NodeRepository.newRepo,
+            uploadRepo: FileProviderUploadRepository.newRepo,
+            nodeCoordinatesRepo: NodeCoordinatesRepository.newRepo,
             snapshotRepo: FileProviderSnapshotRepository.newRepo
         )
     }
@@ -120,6 +136,10 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
             do {
                 try await FileProviderSession.shared.ensureReady()
                 completion.handler(ReplicatedFileProviderItem(entity: try itemUseCase.item(for: identifier)), nil)
+            } catch let error as NSFileProviderError where error.code == .noSuchItem {
+                // Expected after every upload of a new version: the system looks the former version up once.
+                MEGALogDebug("[Picker] No item \(identifier.rawValue)")
+                completion.handler(nil, error)
             } catch {
                 MEGALogError("[Picker] Can't provide the item \(identifier.rawValue): \(error)")
                 completion.handler(nil, FileProviderExtension.fileProviderError(for: error))
@@ -190,28 +210,36 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void
     ) -> Progress {
         let parentIdentifier = itemTemplate.parentItemIdentifier
-        guard itemTemplate.contentType == .folder else {
-            MEGALogError("[Picker] Creating a file is not supported yet, in \(parentIdentifier.rawValue)")
-            completionHandler(nil, [], false, CocoaError(.featureUnsupported))
+        let contentType = itemTemplate.contentType ?? .data
+        // A package is a folder on disk, and a symbolic link has no contents: neither can be a file in MEGA. Excluded,
+        // the item stays on disk without being synced.
+        guard !contentType.conforms(to: .package), !contentType.conforms(to: .symbolicLink) else {
+            MEGALogError("[Picker] Not syncing an item of type \(contentType.identifier) in \(parentIdentifier.rawValue)")
+            completionHandler(nil, [], false, NSFileProviderError(.excludedFromSync))
             return Progress()
         }
-
-        let itemActionUseCase = itemActionUseCase
-        let name = itemTemplate.filename
-        let reusesExistingFolder = options.contains(.mayAlreadyExist)
-        let completion = UncheckedSendableCompletion(completionHandler)
-        Task {
-            do {
-                try await FileProviderSession.shared.ensureReady()
-                let item = try await itemActionUseCase.createFolder(named: name, in: parentIdentifier, reusesExistingFolder: reusesExistingFolder)
-                // The other fields, such as the dates, are taken from the folder MEGA created.
-                completion.handler(ReplicatedFileProviderItem(entity: item), [], false, nil)
-            } catch {
-                MEGALogError("[Picker] Can't create a folder in \(parentIdentifier.rawValue): \(error)")
-                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
-            }
+        // Any other directory, which uploaded as a file would make the SDK upload its whole tree.
+        guard !contentType.conforms(to: .directory) else {
+            return createFolder(basedOn: itemTemplate, options: options, completionHandler: completionHandler)
         }
-        return Progress()
+
+        let uploadUseCase = uploadUseCase
+        let name = itemTemplate.filename
+        // A field the template doesn't list is undefined (see `NSFileProviderReplicatedExtension.h`).
+        let modificationDate = fields.contains(.contentModificationDate) ? (itemTemplate.contentModificationDate ?? nil) : nil
+        let pendingFields = fields.subtracting(Self.uploadedFields)
+        return upload(contentsAt: url, label: "createItem in \(parentIdentifier.rawValue)", completionHandler: completionHandler) { progress in
+            // A file uploaded under another name is returned with that name, and the system renames its copy.
+            let item = try await uploadUseCase.createFile(
+                named: name,
+                in: parentIdentifier,
+                contentsAt: url,
+                modificationDate: modificationDate,
+                progress: progress
+            )
+            // Without an item, the system removes the file it re-imported, which has no contents anyway.
+            return (item, pendingFields)
+        }
     }
 
     func modifyItem(
@@ -224,34 +252,33 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void
     ) -> Progress {
         let identifier = item.itemIdentifier
-        guard !changedFields.contains(.contents) else {
-            MEGALogError("[Picker] Changing the contents is not supported yet: \(identifier.rawValue), fields \(changedFields.rawValue)")
-            completionHandler(nil, [], false, CocoaError(.featureUnsupported))
-            return Progress()
-        }
-
-        // Returning a field as still pending every time tells the system it is unsupported, so it stops sending it
-        // for this item until the item changes. Failing instead shows up in Files as an error on the item.
-        let unappliedFields = changedFields.subtracting(Self.appliedFields)
         let name = changedFields.contains(.filename) ? item.filename : nil
         let parentIdentifier = changedFields.contains(.parentItemIdentifier) ? item.parentItemIdentifier : nil
-        let itemActionUseCase = itemActionUseCase
-        let completion = UncheckedSendableCompletion(completionHandler)
-        Task {
-            do {
-                try await FileProviderSession.shared.ensureReady()
-                // The item passed in has an empty version, which returned as is would make the system drop the local
-                // contents and download them again on the next open, so the item is built from the node.
-                let modifiedItem = try await itemActionUseCase.modifyItem(identifier, name: name, parentIdentifier: parentIdentifier)
-                // A name that was not applied stays pending too, so the system keeps its own name on disk.
-                let pendingFields = name == nil || modifiedItem.node.name == name ? unappliedFields : unappliedFields.union(.filename)
-                completion.handler(ReplicatedFileProviderItem(entity: modifiedItem), pendingFields, false, nil)
-            } catch {
-                MEGALogError("[Picker] Can't modify the item \(identifier.rawValue), fields \(changedFields.rawValue): \(error)")
-                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
-            }
+        guard changedFields.contains(.contents), let newContents else {
+            return modifyMetadata(
+                of: identifier,
+                name: name,
+                parentIdentifier: parentIdentifier,
+                changedFields: changedFields,
+                completionHandler: completionHandler
+            )
         }
-        return Progress()
+
+        let uploadUseCase = uploadUseCase
+        let modificationDate = item.contentModificationDate ?? nil
+        let unappliedFields = changedFields.subtracting(Self.uploadedFields)
+        return upload(contentsAt: newContents, label: "modifyItem \(identifier.rawValue)", completionHandler: completionHandler) { progress in
+            // The new version has a new identifier, which the system takes over the local contents with.
+            let uploadedItem = try await uploadUseCase.uploadContents(
+                of: identifier,
+                at: newContents,
+                name: name,
+                parentIdentifier: parentIdentifier,
+                modificationDate: modificationDate,
+                progress: progress
+            )
+            return (uploadedItem, Self.pendingFields(unappliedFields, requestedName: name, of: uploadedItem))
+        }
     }
 
     func deleteItem(
@@ -309,6 +336,106 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     }
 
     // MARK: - Private
+
+    private func createFolder(
+        basedOn itemTemplate: NSFileProviderItem,
+        options: NSFileProviderCreateItemOptions,
+        completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void
+    ) -> Progress {
+        let parentIdentifier = itemTemplate.parentItemIdentifier
+        let itemActionUseCase = itemActionUseCase
+        let name = itemTemplate.filename
+        let reusesExistingFolder = options.contains(.mayAlreadyExist)
+        let completion = UncheckedSendableCompletion(completionHandler)
+        Task {
+            do {
+                try await FileProviderSession.shared.ensureReady()
+                let item = try await itemActionUseCase.createFolder(named: name, in: parentIdentifier, reusesExistingFolder: reusesExistingFolder)
+                // The other fields, such as the dates, are taken from the folder MEGA created.
+                completion.handler(ReplicatedFileProviderItem(entity: item), [], false, nil)
+            } catch {
+                MEGALogError("[Picker] Can't create a folder in \(parentIdentifier.rawValue): \(error)")
+                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
+            }
+        }
+        return Progress()
+    }
+
+    private func modifyMetadata(
+        of identifier: NSFileProviderItemIdentifier,
+        name: String?,
+        parentIdentifier: NSFileProviderItemIdentifier?,
+        changedFields: NSFileProviderItemFields,
+        completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void
+    ) -> Progress {
+        let unappliedFields = changedFields.subtracting(Self.appliedFields)
+        let itemActionUseCase = itemActionUseCase
+        let completion = UncheckedSendableCompletion(completionHandler)
+        // Sendable, so that its captures are checked by type: the region-based isolation checker of Xcode 26 fails on
+        // them. `Self` would capture `self` here, hence the type name.
+        Task { @Sendable in
+            do {
+                try await FileProviderSession.shared.ensureReady()
+                let modifiedItem = try await itemActionUseCase.modifyItem(identifier, name: name, parentIdentifier: parentIdentifier)
+                let pendingFields = ReplicatedFileProviderExtension.pendingFields(unappliedFields, requestedName: name, of: modifiedItem)
+                completion.handler(ReplicatedFileProviderItem(entity: modifiedItem), pendingFields, false, nil)
+            } catch {
+                MEGALogError("[Picker] Can't modify the item \(identifier.rawValue), fields \(changedFields.rawValue): \(error)")
+                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
+            }
+        }
+        return Progress()
+    }
+
+    /// Runs the upload of `createItem` or `modifyItem`, which returns the item to complete with and its pending fields.
+    private func upload(
+        contentsAt url: URL?,
+        label: String,
+        completionHandler: @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, (any Error)?) -> Void,
+        operation: @escaping @Sendable (
+            _ progress: @escaping @Sendable (Int) -> Void
+        ) async throws -> (FileProviderItemEntity?, NSFileProviderItemFields)
+    ) -> Progress {
+        // Marked as a file upload so that the progress can be described in bytes, e.g. "12 MB of 45 MB".
+        let size = url.flatMap { try? $0.resourceValues(forKeys: [.fileSizeKey]).fileSize } ?? 0
+        let progress = Progress(totalUnitCount: Int64(size))
+        progress.kind = .file
+        progress.fileOperationKind = .uploading
+        let completion = UncheckedSendableCompletion(completionHandler)
+        let task = Task {
+            FileProviderMemoryProbe.mark("\(label) size=\(size) begin")
+            let sampling = FileProviderMemoryProbe.startSampling(label) {
+                "progress=\(progress.completedUnitCount)/\(progress.totalUnitCount)"
+            }
+            defer { sampling.cancel() }
+            do {
+                try await FileProviderSession.shared.ensureReady()
+                let (item, pendingFields) = try await operation { progress.completedUnitCount = Int64($0) }
+                FileProviderMemoryProbe.mark("\(label) finished")
+                completion.handler(item.map { ReplicatedFileProviderItem(entity: $0) }, pendingFields, false, nil)
+            } catch {
+                FileProviderMemoryProbe.mark("\(label) failed")
+                guard !Task.isCancelled else {
+                    MEGALogDebug("[Picker] \(label) was cancelled")
+                    completion.handler(nil, [], false, CocoaError(.userCancelled))
+                    return
+                }
+                MEGALogError("[Picker] \(label) failed: \(error)")
+                completion.handler(nil, [], false, FileProviderExtension.fileProviderError(for: error))
+            }
+        }
+        progress.cancellationHandler = { task.cancel() }
+        return progress
+    }
+
+    /// `unappliedFields`, along with the name when it was not applied, so that the system keeps its own name on disk.
+    private static func pendingFields(
+        _ unappliedFields: NSFileProviderItemFields,
+        requestedName: String?,
+        of item: FileProviderItemEntity
+    ) -> NSFileProviderItemFields {
+        requestedName == nil || item.node.name == requestedName ? unappliedFields : unappliedFields.union(.filename)
+    }
 
     /// Where downloads go: the system only takes contents from the volume of the domain's files.
     private func temporaryDirectoryURL() throws -> URL {
