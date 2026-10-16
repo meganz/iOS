@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGADesignToken
 import MEGADomain
 
 extension MEGANode {
@@ -11,7 +12,12 @@ extension MEGANode {
     }
     
     @MainActor
-    @objc func pushCloudDriveForNode(_ node: MEGANode, displayMode: DisplayMode, navigationController: UINavigationController) {
+    @objc func pushCloudDriveForNode(
+        _ node: MEGANode,
+        displayMode: DisplayMode,
+        hidesBottomBarWhenPushed: Bool = false,
+        navigationController: UINavigationController
+    ) {
         let factory = CloudDriveViewControllerFactory.make(
             nc: navigationController
         )
@@ -23,6 +29,7 @@ extension MEGANode {
         )
         guard let vc else { return }
         vc.navigationItem.backButtonTitle = ""
+        vc.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
         navigationController.pushViewController(vc, animated: false)
     }
     
@@ -41,10 +48,14 @@ extension MEGANode {
         }
 
         let isBackupNode = backupsRootNode != nil
+        let isInRubbishBin = !isBackupNode && (type == .rubbish || MEGASdk.shared.isNode(inRubbish: self))
 
+        // The Rubbish bin is opened from the Menu tab without the tab bar, the same as from Menu > Rubbish bin.
         // Backups are presented in the Cloud Drive tab, and have to be asked for explicitly: the SDK
         // reports every node under the Vault as read-only, so they no longer come in as owner.
-        if isBackupNode || MEGASdk.shared.accessLevel(for: self) == .accessOwner {
+        if isInRubbishBin {
+            mainTBC.selectedIndex = TabManager.menuTabIndex()
+        } else if isBackupNode || MEGASdk.shared.accessLevel(for: self) == .accessOwner {
             mainTBC.selectedIndex = TabManager.driveTabIndex()
         } else {
             navigateToSharedItems(in: mainTBC)
@@ -56,24 +67,29 @@ extension MEGANode {
 
         navigationController.popToRootViewController(animated: false)
 
+        if isInRubbishBin, #available(iOS 26.0, *) {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationController.navigationBar, backgroundColor: TokenColors.Background.surface1)
+        }
+
+        let folderDisplayMode: DisplayMode = isBackupNode ? .backup : isInRubbishBin ? .rubbishBin : .cloudDrive
+
         for node in parentTreeArray where node.handle != backupsRootNode?.parentHandle {
             pushCloudDriveForNode(
                 node,
-                displayMode: isBackupNode ? .backup : .cloudDrive,
+                displayMode: folderDisplayMode,
+                hidesBottomBarWhenPushed: isInRubbishBin,
                 navigationController: navigationController
             )
         }
 
         switch type {
         case .folder, .rubbish:
-            let displayMode: DisplayMode
-            let isInRubbish = MEGASdk.shared.isNode(inRubbish: self)
-            if isBackupNode {
-                displayMode = .backup
-            } else {
-                displayMode = (type == .rubbish || isInRubbish) ? .rubbishBin : .cloudDrive
-            }
-            pushCloudDriveForNode(self, displayMode: displayMode, navigationController: navigationController)
+            pushCloudDriveForNode(
+                self,
+                displayMode: folderDisplayMode,
+                hidesBottomBarWhenPushed: isInRubbishBin,
+                navigationController: navigationController
+            )
             UIApplication.mnz_presentingViewController().dismiss(animated: true)
 
         case .file:
