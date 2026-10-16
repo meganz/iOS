@@ -7,7 +7,7 @@ import UIKit
 
 public typealias VideoPlayerProtocol = PlaybackStateObservable
     & PlaybackControllable
-    & NodeLoadable
+    & PlaybackItemLoadable
     & VideoRenderable
     & PictureInPictureLoadable
     & PlaybackDebugMessageObservable
@@ -67,27 +67,37 @@ public protocol PictureInPictureLoadable {
     func loadPIPController() -> AVPictureInPictureController?
 }
 
-/// Protocol for video players that can load content from playable nodes.
+/// Protocol for video players that can load content from a playback queue.
 ///
-/// This protocol defines the interface for loading video content into a player.
-/// It abstracts the process of preparing a video player to play content from
-/// various sources that conform to the `PlayableNode` protocol.
+/// This protocol defines the interface for loading video content into a player. It abstracts the
+/// process of preparing a video player to play whatever a `VideoPlaybackItem` stands for — a cloud
+/// node or a file already on the device.
 @MainActor
-public protocol NodeLoadable {
-    /// Loads the specified playable node into the video player. Monitors an array of nodes for updates.
+public protocol PlaybackItemLoadable {
+    /// Loads the specified item into the video player, and monitors the queue it belongs to for updates.
     ///
-    /// This method prepares the video player to play content from the specified node.
-    /// The implementation should handle the necessary setup for streaming and playback.
+    /// This method prepares the video player to play the item's content. The implementation should
+    /// handle the necessary setup for streaming and playback.
     ///
-    /// - Parameter node: A playable node containing the video content to be loaded.
-    /// - Parameter nodes: An array of playable nodes to monitor for updates.
-    func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode])
+    /// - Parameter item: The video content to be loaded.
+    /// - Parameter items: The playback queue the item belongs to, monitored for updates.
+    func loadItemAndMonitorUpdate(for item: VideoPlaybackItem, monitor items: [VideoPlaybackItem])
 
-    var currentNode: (any PlayableNode)? { get set }
+    var currentItem: VideoPlaybackItem? { get set }
 
     var nodeNamePublisher: AnyPublisher<String, Never> { get }
 
     var onNodeDeleted: (() -> Void)? { get set }
+}
+
+public extension PlaybackItemLoadable {
+    /// The cloud node being played, `nil` while playing a file that only exists on the device.
+    var currentNode: (any PlayableNode)? { currentItem?.node }
+
+    /// Loads a cloud node, for the callers that only ever deal in nodes.
+    func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode]) {
+        loadItemAndMonitorUpdate(for: .node(node), monitor: nodes.map { .node($0) })
+    }
 }
 
 public protocol PlaybackDebugMessageObservable {

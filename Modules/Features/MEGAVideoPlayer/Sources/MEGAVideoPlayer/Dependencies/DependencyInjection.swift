@@ -40,7 +40,8 @@ public enum DependencyInjection {
 
     public static var resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol {
         ResumePlaybackPositionUseCase(
-            preferenceUseCase: PreferenceUseCase.default
+            preferenceUseCase: PreferenceUseCase.default,
+            fileFingerprintRepository: FileFingerprintRepository.newRepo
         )
     }
 

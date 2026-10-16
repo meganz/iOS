@@ -701,9 +701,8 @@ static NSString *kisDirectory = @"kisDirectory";
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
         if (asset.isPlayable) {
-            if ([asset tracksWithMediaType:AVMediaTypeVideo].count > 0) {
-                AVPlayerViewController *megaAVViewController = [[AVPlayerManager shared] makePlayerControllerFor:[NSURL fileURLWithPath:self.previewDocumentPath]];
-                [self presentViewController:megaAVViewController animated:YES completion:nil];
+            if ([FileExtensionGroupOCWrapper verifyIsVideo:self.previewDocumentPath]) {
+                [self presentVideoPlayerWithFilePath:self.previewDocumentPath filePaths:self.offlineMultimediaFiles];
             } else {
                 [self presentAudioPlayerWithFileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles];
             }

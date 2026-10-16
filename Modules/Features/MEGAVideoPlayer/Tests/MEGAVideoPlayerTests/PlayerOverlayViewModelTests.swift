@@ -23,7 +23,7 @@ struct PlayerOverlayViewModelTests {
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
         hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol = MockHapticFeedbackUseCase(),
         didTapBackAction: @escaping () -> Void = {},
-        didTapMoreAction: @escaping ((any PlayableNode)?) -> Void = { _ in },
+        didTapMoreAction: (((any PlayableNode)?) -> Void)? = { _ in },
         didDragToDismissAction: @escaping () -> Void = {},
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
@@ -39,6 +39,22 @@ struct PlayerOverlayViewModelTests {
             didTapRotateAction: didTapRotateAction,
             didTapPictureInPictureAction: didTapPictureInPictureAction
         )
+    }
+
+    // MARK: - More Action
+
+    @Test
+    func canShowMoreAction_whenThereIsAnActionToRun_shouldBeTrue() {
+        let sut = makeSUT(didTapMoreAction: { _ in })
+
+        #expect(sut.canShowMoreAction == true)
+    }
+
+    @Test
+    func canShowMoreAction_whenThereIsNothingToActOn_shouldBeFalse() {
+        let sut = makeSUT(didTapMoreAction: nil)
+
+        #expect(sut.canShowMoreAction == false)
     }
 
     // MARK: - Initial State Tests

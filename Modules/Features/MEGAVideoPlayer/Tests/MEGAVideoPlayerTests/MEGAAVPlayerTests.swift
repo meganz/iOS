@@ -22,11 +22,11 @@ struct MEGAAVPlayerTests {
         let mockUseCase = MockResumePlaybackPositionUseCase()
         let mockNode = MockPlayableNode(name: "test_video.mp4", fingerprint: "fingerprint123")
         let savedPosition: TimeInterval = 120.5
-        
-        mockUseCase.savePlaybackPosition(savedPosition, for: mockNode)
-        
+
+        mockUseCase.savePlaybackPosition(savedPosition, for: .node(mockNode))
+
         let sut = makeSUT(resumePlaybackPositionUseCase: mockUseCase)
-        
+
         sut.loadNodeAndMonitorUpdate(for: mockNode, monitor: [MockPlayableNode]())
 
         #expect(mockUseCase.getPlaybackPositionCallCount == 1)
@@ -155,6 +155,80 @@ struct MEGAAVPlayerTests {
         #expect(streamingUseCase.streamingLinkCallCount == 0)
     }
 
+    // MARK: - Offline files
+
+    @Test
+    func loadOfflineFile_shouldPlayItFromTheDeviceWithoutStreaming() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let file = URL(fileURLWithPath: "/offline/v1.mp4")
+        let sut = makeSUT(streamingUseCase: streamingUseCase)
+
+        sut.loadItemAndMonitorUpdate(for: .offlineFile(url: file), monitor: [])
+
+        #expect(sut.nodeName == "v1.mp4")
+        #expect(streamingUseCase.startStreamingCallCount == 0)
+        #expect(streamingUseCase.streamingLinkCallCount == 0)
+        #expect(sut.state != .error("Failed to get streaming link for node"))
+    }
+
+    @Test
+    func loadOfflineFile_shouldNotMonitorNodeUpdates_asNoCloudNodeBacksIt() async {
+        let sut = makeSUT()
+
+        sut.loadItemAndMonitorUpdate(for: .offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4")), monitor: [])
+
+        #expect(sut.monitorVideoNodesUpdateTask == nil)
+    }
+
+    @Test
+    func loadOfflineFile_whenHasSavedPosition_shouldResumeFromIt() async {
+        let mockUseCase = MockResumePlaybackPositionUseCase()
+        let file = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4"))
+        mockUseCase.savePlaybackPosition(120.5, for: file)
+        let sut = makeSUT(resumePlaybackPositionUseCase: mockUseCase)
+
+        sut.loadItemAndMonitorUpdate(for: file, monitor: [])
+
+        #expect(mockUseCase.getPlaybackPositionCallCount == 1)
+    }
+
+    @Test
+    func playNext_withAQueueOfOfflineFiles_shouldPlayTheNextFile() async {
+        let file1 = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4"))
+        let file2 = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: "/offline/v2.mp4"))
+        let sut = makeSUT()
+
+        sut.loadItemAndMonitorUpdate(for: file1, monitor: [file1, file2])
+
+        #expect(sut.canPlayNext == true)
+
+        sut.playNext()
+
+        #expect(sut.nodeName == "v2.mp4")
+        #expect(sut.canPlayNext == false)
+    }
+
+    @Test
+    func playPrevious_withAQueueOfOfflineFiles_shouldPlayThePreviousFile() async {
+        let file1 = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4"))
+        let file2 = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: "/offline/v2.mp4"))
+        let sut = makeSUT()
+
+        sut.loadItemAndMonitorUpdate(for: file2, monitor: [file1, file2])
+        sut.playPrevious()
+
+        #expect(sut.nodeName == "v1.mp4")
+    }
+
+    @Test
+    func currentNode_whilePlayingAnOfflineFile_shouldBeNil_asThereIsNoNodeToActOn() async {
+        let sut = makeSUT()
+
+        sut.loadItemAndMonitorUpdate(for: .offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4")), monitor: [])
+
+        #expect(sut.currentNode == nil)
+    }
+
     // MARK: - Helper
 
     @Test
@@ -176,6 +250,47 @@ struct MEGAAVPlayerTests {
         sut.stop()
 
         #expect(streamingUseCase.resetThrottleBitrateCallCount == 2)
+    }
+
+    @Test
+    func stop_afterStreaming_shouldStopTheStreamingServer() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in nil })
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        sut.stop()
+
+        #expect(streamingUseCase.stopStreamingCallCount == 1)
+    }
+
+    @Test
+    func stop_afterStreamingAndThenPlayingALocalCopy_shouldStopTheStreamingServer() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let streamedNode = MockPlayableNode(handle: 1, name: "v1.mp4")
+        let downloadedNode = MockPlayableNode(handle: 2, name: "v2.mp4")
+        let localFile = URL(fileURLWithPath: "/local/v2.mp4")
+        let sut = makeSUT(
+            streamingUseCase: streamingUseCase,
+            localFileURL: { $0.handle == downloadedNode.handle ? localFile : nil }
+        )
+        sut.loadNodeAndMonitorUpdate(for: streamedNode, monitor: [streamedNode, downloadedNode])
+        await _ = sut.monitorVideoNodesUpdateTask?.value
+        sut.playNext()
+
+        sut.stop()
+
+        #expect(streamingUseCase.startStreamingCallCount == 1)
+        #expect(streamingUseCase.stopStreamingCallCount == 1)
+    }
+
+    @Test
+    func playOfflineFile_shouldNotStartTheStreamingServer() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let sut = makeSUT(streamingUseCase: streamingUseCase)
+
+        sut.loadItemAndMonitorUpdate(for: .offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4")), monitor: [])
+
+        #expect(streamingUseCase.startStreamingCallCount == 0)
     }
 
     // MARK: - Loop Tests
@@ -212,9 +327,10 @@ struct MEGAAVPlayerTests {
         let recordUseCase = MockLeftOffItemRecordUseCase()
         let node = MockPlayableNode(handle: 42, name: "resumable.mp4")
         let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
-        sut.currentNode = node
+        sut.currentItem = .node(node)
         sut.currentTime = .seconds(20)
         sut.duration = .seconds(60)
+        sut.state = .playing
 
         sut.stop()
         await sut.leftOffItemTask?.value
@@ -229,9 +345,10 @@ struct MEGAAVPlayerTests {
         let recordUseCase = MockLeftOffItemRecordUseCase()
         let node = MockPlayableNode(handle: 42, name: "too_early.mp4")
         let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
-        sut.currentNode = node
+        sut.currentItem = .node(node)
         sut.currentTime = .seconds(5)
         sut.duration = .seconds(60)
+        sut.state = .playing
 
         sut.stop()
         await sut.leftOffItemTask?.value
@@ -245,9 +362,10 @@ struct MEGAAVPlayerTests {
         let recordUseCase = MockLeftOffItemRecordUseCase()
         let node = MockPlayableNode(handle: 42, name: "almost_done.mp4")
         let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
-        sut.currentNode = node
+        sut.currentItem = .node(node)
         sut.currentTime = .seconds(59)
         sut.duration = .seconds(60)
+        sut.state = .playing
 
         sut.stop()
         await sut.leftOffItemTask?.value
@@ -261,13 +379,43 @@ struct MEGAAVPlayerTests {
         let recordUseCase = MockLeftOffItemRecordUseCase()
         let node = MockPlayableNode(handle: 42, name: "unknown_duration.mp4")
         let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
-        sut.currentNode = node
+        sut.currentItem = .node(node)
 
         sut.stop()
         await sut.leftOffItemTask?.value
 
         #expect(recordUseCase.record_Calls.isEmpty)
         #expect(recordUseCase.remove_Calls.isEmpty)
+    }
+
+    @Test
+    func stop_whenPlayedButTooEarly_shouldDeleteTheSavedPosition() async {
+        let resumeUseCase = MockResumePlaybackPositionUseCase()
+        let item = VideoPlaybackItem.node(MockPlayableNode(handle: 42, name: "too_early.mp4", fingerprint: "fingerprint123"))
+        resumeUseCase.savePlaybackPosition(1200, for: item)
+        let sut = makeSUT(resumePlaybackPositionUseCase: resumeUseCase)
+        sut.currentItem = item
+        sut.currentTime = .seconds(5)
+        sut.duration = .seconds(60)
+        sut.state = .playing
+
+        sut.stop()
+
+        #expect(resumeUseCase.savedPositions[item.playbackID] == nil)
+    }
+
+    @Test
+    func stop_beforePlaybackStarts_shouldKeepTheSavedPosition() async {
+        let resumeUseCase = MockResumePlaybackPositionUseCase()
+        let file = VideoPlaybackItem.offlineFile(url: URL(fileURLWithPath: "/offline/v1.mp4"))
+        resumeUseCase.savePlaybackPosition(1200, for: file)
+        let sut = makeSUT(resumePlaybackPositionUseCase: resumeUseCase)
+        sut.loadItemAndMonitorUpdate(for: file, monitor: [])
+        sut.duration = .seconds(3600)
+
+        sut.stop()
+
+        #expect(resumeUseCase.savedPositions[file.playbackID] == 1200)
     }
 
     @Test
@@ -293,6 +441,7 @@ struct MEGAAVPlayerTests {
         await _ = sut.monitorVideoNodesUpdateTask?.value
         sut.currentTime = .seconds(20)
         sut.duration = .seconds(60)
+        sut.state = .playing
 
         sut.playNext()
         await sut.leftOffItemTask?.value
@@ -312,6 +461,7 @@ struct MEGAAVPlayerTests {
         await _ = sut.monitorVideoNodesUpdateTask?.value
         sut.currentTime = .seconds(20)
         sut.duration = .seconds(60)
+        sut.state = .playing
 
         sut.playPrevious()
         await sut.leftOffItemTask?.value

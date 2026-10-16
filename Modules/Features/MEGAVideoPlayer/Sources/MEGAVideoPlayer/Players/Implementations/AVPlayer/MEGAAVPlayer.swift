@@ -13,8 +13,11 @@ public final class MEGAAVPlayer {
         return player
     }()
     private var playerLayer: AVPlayerLayer?
-    public var currentNode: (any PlayableNode)?
-    private var nodes: [any PlayableNode]?
+    public var currentItem: VideoPlaybackItem?
+    private var items: [VideoPlaybackItem]?
+    /// Whether the current item has played at all. AVPlayer only starts once a pending seek has
+    /// landed, so until then neither the item nor the resume position it was sent to has been seen.
+    private var hasStartedPlaying = false
 
     private var currentURL: URL?
 
@@ -114,7 +117,10 @@ extension MEGAAVPlayer: PlayerOptionIdentifiable {
 extension MEGAAVPlayer: PlaybackStateObservable {
     public var state: PlaybackState {
         get { stateSubject.value }
-        set { stateSubject.send(newValue) }
+        set {
+            if newValue == .playing { hasStartedPlaying = true }
+            stateSubject.send(newValue)
+        }
     }
 
     public var currentTime: Duration {
@@ -164,6 +170,8 @@ extension MEGAAVPlayer: PlaybackControllable {
             player.removeTimeObserver(timeObserverToken)
             self.timeObserverToken = nil
         }
+        // Unconditional: the current item says nothing about whether an earlier one in the queue was
+        // streamed, and stopping a server that is not running is harmless.
         resetThrottleBitrate()
         streamingUseCase.stopStreaming()
         monitorVideoNodesUpdateTask?.cancel()
@@ -218,23 +226,18 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 
     public func playNext() {
-        guard let currentNode,
-              let nodes,
-              let currentIndex = nodes.firstIndex(where: { $0.handle == currentNode.handle }) else { return }
+        guard let currentIndex = currentItemIndex, let items else { return }
 
         let nextIndex = currentIndex + 1
-        guard nextIndex < nodes.count else { return }
+        guard nextIndex < items.count else { return }
 
         saveOrDeleteCurrentPosition()
-        let nextNode = nodes[nextIndex]
-        playNode(nextNode)
+        playItem(items[nextIndex])
         updateCanPlayNext()
     }
 
     public func playPrevious() {
-        guard let currentNode,
-              let nodes,
-              let currentIndex = nodes.firstIndex(where: { $0.handle == currentNode.handle }) else { return }
+        guard let currentIndex = currentItemIndex, let items else { return }
 
         let previousIndex = currentIndex - 1
         guard previousIndex >= 0 else {
@@ -243,8 +246,7 @@ extension MEGAAVPlayer: PlaybackControllable {
         }
 
         saveOrDeleteCurrentPosition()
-        let previousNode = nodes[previousIndex]
-        playNode(previousNode)
+        playItem(items[previousIndex])
         updateCanPlayNext()
     }
 }
@@ -302,15 +304,15 @@ extension MEGAAVPlayer: VideoRenderable {
     }
 }
 
-// MARK: - NodeLoadable
+// MARK: - PlaybackItemLoadable
 
-extension MEGAAVPlayer: NodeLoadable {
-    public func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode]) {
+extension MEGAAVPlayer: PlaybackItemLoadable {
+    public func loadItemAndMonitorUpdate(for item: VideoPlaybackItem, monitor items: [VideoPlaybackItem]) {
         VideoPlayerPictureInPictureSession.endRunningSession()
 
-        self.nodes = nodes
-        monitorVideoNodesUpdate(for: nodes)
-        playNode(node)
+        self.items = items
+        monitorVideoNodesUpdate(for: items)
+        playItem(item)
         updateCanPlayNext()
     }
 
@@ -319,20 +321,21 @@ extension MEGAAVPlayer: NodeLoadable {
         set { nodeNameSubject.send(newValue) }
     }
 
-    private func playNode(_ node: some PlayableNode) {
-        let localURL = localFileURL(node)
+    private func playItem(_ item: VideoPlaybackItem) {
+        let localURL = deviceFileURL(for: item)
 
         if localURL == nil, !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
 
-        guard let url = localURL ?? streamingUseCase.streamingLink(for: node) else {
+        guard let url = localURL ?? item.node.flatMap({ streamingUseCase.streamingLink(for: $0) }) else {
             let errorMessage = "Failed to get streaming link for node"
             state = .error(errorMessage)
             playbackDebugMessage(errorMessage)
             return
         }
         state = .opening
+        hasStartedPlaying = false
         currentTime = .seconds(-1)
         duration = .seconds(-1)
         currentURL = url
@@ -341,32 +344,32 @@ extension MEGAAVPlayer: NodeLoadable {
 
         observe(for: playerItem)
 
-        currentNode = node
-        nodeName = currentNode?.name ?? ""
+        currentItem = item
+        nodeName = item.name
 
         attemptResumeFromSavedPosition()
 
         play()
     }
 
-    /// Retries the current node after a playback failure. A failed `AVPlayerItem` is terminal — `play()`
+    /// Retries the current item after a playback failure. A failed `AVPlayerItem` is terminal — `play()`
     /// on it neither resumes nor issues another request — so the item is rebuilt from a freshly requested
     /// streaming link, and it is that request which raises the over-quota warning again.
     ///
-    /// Mirrors `playNode(_:)`, but resumes where playback died rather than at the saved resume position,
+    /// Mirrors `playItem(_:)`, but resumes where playback died rather than at the saved resume position,
     /// and keeps the node info already on screen.
     public func replayCurrentNode() {
-        guard let node = currentNode else { return }
+        guard let currentItem else { return }
 
         let replayPosition = TimeInterval(currentTime.components.seconds)
 
-        let localURL = localFileURL(node)
+        let localURL = deviceFileURL(for: currentItem)
 
         if localURL == nil, !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
 
-        guard let url = localURL ?? streamingUseCase.streamingLink(for: node) else {
+        guard let url = localURL ?? currentItem.node.flatMap({ streamingUseCase.streamingLink(for: $0) }) else {
             let errorMessage = "Failed to get streaming link for node"
             state = .error(errorMessage)
             playbackDebugMessage(errorMessage)
@@ -386,6 +389,17 @@ extension MEGAAVPlayer: NodeLoadable {
         play()
     }
 
+    /// The file on the device the item is played from, `nil` when it has to be streamed.
+    ///
+    /// An offline file is always on the device. A cloud node is when the user has already downloaded
+    /// it; otherwise it is streamed from the API — the only case that needs the streaming server.
+    private func deviceFileURL(for item: VideoPlaybackItem) -> URL? {
+        if let offlineFileURL = item.offlineFileURL {
+            return offlineFileURL
+        }
+        return item.node.flatMap(localFileURL)
+    }
+
     private var isPlayingLocalFile: Bool {
         currentURL?.isFileURL == true
     }
@@ -395,23 +409,30 @@ extension MEGAAVPlayer: NodeLoadable {
         return url.updatedURLWithCurrentAddress()
     }
 
-    private func monitorVideoNodesUpdate(for nodes: [some PlayableNode]) {
+    /// Files played from the device have nothing to monitor: no cloud node backs them, so they cannot
+    /// be renamed, moved to the rubbish bin or deleted from under the player.
+    private func monitorVideoNodesUpdate(for items: [VideoPlaybackItem]) {
         monitorVideoNodesUpdateTask?.cancel()
+        monitorVideoNodesUpdateTask = nil
+
+        let nodes = items.compactMap(\.node)
+        guard !nodes.isEmpty else { return }
+
         monitorVideoNodesUpdateTask = Task { [weak self, videoNodesUseCase] in
             for await videoNodes in await videoNodesUseCase.monitorVideoNodesUpdates(for: nodes) {
                 guard !Task.isCancelled else { return }
 
                 for videoNode in videoNodes {
-                    guard let index = nodes.firstIndex(where: { $0.handle == videoNode.handle }) else {
+                    guard let index = items.firstIndex(where: { $0.node?.handle == videoNode.handle }) else {
                         continue
                     }
-                    self?.nodes?[index] = videoNode
+                    self?.items?[index] = .node(videoNode)
                     guard let currentNode = self?.currentNode else {
                         self?.onNodeDeleted?()
                         return
                     }
-                    if currentNode.handle == self?.nodes?[index].handle {
-                        self?.currentNode = videoNode
+                    if currentNode.handle == videoNode.handle {
+                        self?.currentItem = .node(videoNode)
                         if videoNodesUseCase.isInRubbishBin(node: currentNode) {
                             self?.onNodeDeleted?()
                             return
@@ -425,16 +446,20 @@ extension MEGAAVPlayer: NodeLoadable {
         }
     }
 
+    /// Where the item being played sits in the queue, `nil` when it is not part of one.
+    private var currentItemIndex: Int? {
+        guard let currentItem, let items else { return nil }
+        return items.firstIndex { $0.playbackID == currentItem.playbackID }
+    }
+
     private func updateCanPlayNext() {
-        guard let currentNode,
-              let nodes,
-              let currentIndex = nodes.firstIndex(where: { $0.handle == currentNode.handle }) else {
+        guard let currentIndex = currentItemIndex, let items else {
             canPlayNext = false
             return
         }
 
         let nextIndex = currentIndex + 1
-        guard nextIndex < nodes.count else {
+        guard nextIndex < items.count else {
             canPlayNext = false
             return
         }
@@ -442,8 +467,8 @@ extension MEGAAVPlayer: NodeLoadable {
     }
 
     private func attemptResumeFromSavedPosition() {
-        guard let node = currentNode,
-              let savedPosition = resumePlaybackPositionUseCase.getPlaybackPosition(for: node),
+        guard let currentItem,
+              let savedPosition = resumePlaybackPositionUseCase.playbackPosition(for: currentItem),
               savedPosition > 0 else {
             return
         }
@@ -452,9 +477,13 @@ extension MEGAAVPlayer: NodeLoadable {
     }
     
     private func saveOrDeleteCurrentPosition() {
-        guard let node = currentNode else {
-            return
-        }
+        // Left before playback started — so before any resume seek landed — the playback time is not
+        // how far the user got, and the saved position is shared by every copy of the video.
+        guard hasStartedPlaying else { return }
+
+        // The left-off item is filed under a cloud node's handle, which an offline file does not have.
+        guard let currentItem else { return }
+        let node = currentItem.node
 
         let minimumVideoResumePosition = 15
         let minimumVideoResumeDuration = 17
@@ -462,11 +491,13 @@ extension MEGAAVPlayer: NodeLoadable {
            duration.components.seconds > minimumVideoResumeDuration,
            currentTime.components.seconds < duration.components.seconds - 2 {
             let currentPosition = TimeInterval(currentTime.components.seconds)
-            resumePlaybackPositionUseCase.savePlaybackPosition(currentPosition, for: node)
-            recordLeftOffItem(for: node)
+            resumePlaybackPositionUseCase.savePlaybackPosition(currentPosition, for: currentItem)
+            if let node {
+                recordLeftOffItem(for: node)
+            }
         } else {
-            resumePlaybackPositionUseCase.deletePlaybackPosition(for: node)
-            if duration.components.seconds > 0 {
+            resumePlaybackPositionUseCase.deletePlaybackPosition(for: currentItem)
+            if let node, duration.components.seconds > 0 {
                 removeLeftOffItem(for: node)
             }
         }
@@ -886,8 +917,15 @@ public extension MEGAAVPlayer {
         for node: some PlayableNode,
         within videoNodes: [some PlayableNode]
     ) -> MEGAAVPlayer {
+        liveValue(for: .node(node), within: videoNodes.map { .node($0) })
+    }
+
+    static func liveValue(
+        for item: VideoPlaybackItem,
+        within items: [VideoPlaybackItem]
+    ) -> MEGAAVPlayer {
         let player = MEGAAVPlayer.liveValue
-        player.loadNodeAndMonitorUpdate(for: node, monitor: videoNodes)
+        player.loadItemAndMonitorUpdate(for: item, monitor: items)
         return player
     }
 

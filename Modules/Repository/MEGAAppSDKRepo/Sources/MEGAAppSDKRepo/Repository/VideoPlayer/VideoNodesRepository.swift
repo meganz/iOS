@@ -22,7 +22,7 @@ public struct VideoNodesRepository: VideoNodesRepositoryProtocol, Sendable {
         self.nodeUpdatesProvider = nodeUpdatesProvider
     }
 
-    public func monitorVideoNodesUpdates(for nodes: [some PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]> {
+    public func monitorVideoNodesUpdates(for nodes: [any PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]> {
         return nodeUpdatesProvider
             .nodeUpdates
             .filter { $0.isNotEmpty }
