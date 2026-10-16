@@ -293,7 +293,7 @@
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
             self.navigationController.toolbarHidden = YES;
-            self.addParticipantBarButtonItem.enabled = !(self.contactsMode == ContactsModeInviteParticipants);
+            self.addParticipantBarButtonItem.enabled = !(self.contactsMode == ContactsModeInviteParticipants || self.contactsMode == ContactsModeChatAddParticipant);
             break;
         }
             
