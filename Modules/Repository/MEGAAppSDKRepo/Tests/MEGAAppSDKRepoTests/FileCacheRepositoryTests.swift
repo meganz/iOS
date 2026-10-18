@@ -68,6 +68,25 @@ struct FileCacheRepositoryTests {
         #expect(sut.existingTempFileURL(for: node) == nil)
     }
 
+    @Test("The offline file URL escapes the name so it stays inside the documents directory", arguments: [traversingName, dotDot, "."])
+    func offlineFileURL_staysInsideDocuments(name: String) throws {
+        let sut = Self.makeSUT()
+        let documents = try #require(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+
+        let url = sut.offlineFileURL(name: name)
+        #expect(Self.isDirectChild(url, of: documents))
+        #expect(!url.lastPathComponent.contains("/"))
+        #expect(url.lastPathComponent != Self.dotDot && url.lastPathComponent != ".")
+    }
+
+    @Test("The offline file URL leaves an ordinary name unchanged")
+    func offlineFileURL_keepsOrdinaryName() throws {
+        let sut = Self.makeSUT()
+        let documents = try #require(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+
+        #expect(sut.offlineFileURL(name: "report.pdf") == documents.appendingPathComponent("report.pdf"))
+    }
+
     @Test("A cached file under the escaped name is found")
     func existingTempFileURL_findsEscapedFile() throws {
         let sut = Self.makeSUT()

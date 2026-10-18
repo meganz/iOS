@@ -107,7 +107,10 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
     
     // MARK: - Offline
     public func offlineFileURL(name: String) -> URL {
-        (fileManager.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: "")).appendingPathComponent(name)
+        let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: "")
+        // Escaped like every other on-disk name: the offline directory keeps the escaped name (`..` as
+        // `%2e%2e`) while the database record keeps the display name, matching the regular offline download.
+        return documents.appendingFileSystemName(for: name, sdk: sdk)
     }
 }
 
