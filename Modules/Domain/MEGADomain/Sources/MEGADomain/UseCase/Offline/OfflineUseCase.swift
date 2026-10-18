@@ -90,11 +90,17 @@ public struct OfflineUseCase: OfflineUseCaseProtocol {
     // MARK: - Private
 
     /// Compared after standardisation: `appendingPathComponent` keeps `..` verbatim and the file system only
-    /// resolves it when the item is removed, so `Documents/..` names the app's data container.
+    /// resolves it when the item is removed, so `Documents/..` names the app's data container. Symlinks are
+    /// resolved on both sides as well, so the two paths still match when only one of them carries a `/private`
+    /// prefix; otherwise every removal would be refused.
     private func isInsideOfflineDirectory(_ url: URL) -> Bool {
         guard let offlineDirectoryURL = fileSystemRepository.offlineDirectoryURL() else { return false }
-        let directoryComponents = offlineDirectoryURL.standardizedFileURL.pathComponents
-        let itemComponents = url.standardizedFileURL.pathComponents
+        let directoryComponents = Self.resolvedPathComponents(of: offlineDirectoryURL)
+        let itemComponents = Self.resolvedPathComponents(of: url)
         return itemComponents.count > directoryComponents.count && itemComponents.starts(with: directoryComponents)
+    }
+
+    private static func resolvedPathComponents(of url: URL) -> [String] {
+        url.standardizedFileURL.resolvingSymlinksInPath().pathComponents
     }
 }
