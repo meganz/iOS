@@ -87,13 +87,16 @@ final class ScheduleMeetingViewController: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-        alertController.addAction(
-            UIAlertAction(title: Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.confirm, style: .default) { [weak self] _ in
-                Task {
-                    await self?.viewModel.discardChangesTap()
-                }
+        let discardAction = UIAlertAction(
+            title: Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.confirm,
+            style: .destructive
+        ) { [weak self] _ in
+            Task {
+                await self?.viewModel.discardChangesTap()
             }
-        )
+        }
+        discardAction.titleTextColor = TokenColors.Text.error
+        alertController.addAction(discardAction)
         alertController.addAction(
             UIAlertAction(title: Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.cancel, style: .cancel) { [weak self] _ in
                 self?.viewModel.keepEditingTap()
