@@ -341,6 +341,11 @@ final class ChatRoomsListViewModel: ObservableObject {
     func selectChatMode(_ mode: ChatViewMode) {
         guard mode != chatViewMode else { return }
         chatViewMode = mode
+        // Setting searchText re-filters the list, so only do it when there is a search to clear
+        if searchText.isNotEmpty {
+            searchText = ""
+        }
+        isSearchActive = false
         switch mode {
         case .chats: tracker.trackAnalyticsEvent(with: ChatsTabEvent())
         case .meetings: tracker.trackAnalyticsEvent(with: MeetingsTabEvent())

@@ -931,6 +931,30 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testSelectChatMode_whileSearching_clearsSearch() {
+        let viewModel = makeChatRoomsListViewModel(chatViewMode: .chats)
+        viewModel.isSearchActive = true
+        viewModel.searchText = "note"
+        
+        viewModel.selectChatMode(.meetings)
+        
+        XCTAssertEqual(viewModel.searchText, "")
+        XCTAssertFalse(viewModel.isSearchActive)
+    }
+    
+    @MainActor
+    func testSelectChatMode_sameMode_keepsSearch() {
+        let viewModel = makeChatRoomsListViewModel(chatViewMode: .chats)
+        viewModel.isSearchActive = true
+        viewModel.searchText = "note"
+        
+        viewModel.selectChatMode(.chats)
+        
+        XCTAssertEqual(viewModel.searchText, "note")
+        XCTAssertTrue(viewModel.isSearchActive)
+    }
+    
+    @MainActor
     func test_ChatStatusMenu_tracked() {
         let mockTracker = MockTracker()
         let viewModel = makeChatRoomsListViewModel(
