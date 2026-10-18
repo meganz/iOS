@@ -300,8 +300,8 @@ class MessageInputBar: UIView {
         clearEditButton.setImage(MEGAAssets.UIImage.image(named: "clearEdit"), for: .normal)
         expandCollapseButton.setImage(MEGAAssets.UIImage.image(named: "expand"), for: .normal)
         micButton.setImage(MEGAAssets.UIImage.image(named: "sendVoiceClipDefault"), for: .normal)
-        sendButton.setImage(MEGAAssets.UIImage.image(named: "sendButton"), for: .normal)
-        sendButton.setImage(MEGAAssets.UIImage.image(named: "sendChatDisabled"), for: .disabled)
+        sendButton.setImage(MEGAAssets.UIImage.sendButton.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+        sendButton.setImage(MEGAAssets.UIImage.sendChatDisabled.imageFlippedForRightToLeftLayoutDirection(), for: .disabled)
         addButton.setImage(MEGAAssets.UIImage.image(named: "navigationbar_add"), for: .normal)
     }
     
@@ -329,7 +329,9 @@ class MessageInputBar: UIView {
     }
     
     private func setSendButtonColor() {
-        let image = MEGAAssets.UIImage.sendButton.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        let image = MEGAAssets.UIImage.sendButton
+            .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+            .imageFlippedForRightToLeftLayoutDirection()
         sendButton.setImage(image, for: .normal)
     }
     

@@ -111,7 +111,7 @@ class AudioRecordingInputBar: UIView {
         locked = true
         let width = voiceView.bounds.width - trashView.bounds.width
         voiceView.finalRatio = width / voiceView.bounds.width
-        voiceView.imageView.image = MEGAAssets.UIImage.sendChatDisabled
+        voiceView.imageView.image = MEGAAssets.UIImage.sendChatDisabled.imageFlippedForRightToLeftLayoutDirection()
         voiceView.selectionView.backgroundColor = TokenColors.Button.primary
         voiceView.imageView.renderImage(withColor: TokenColors.Icon.inverseAccent)
         

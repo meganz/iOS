@@ -27,7 +27,9 @@ class AddToChatImageCell: UICollectionViewCell {
         didSet {
             if cellType == .media {
                 foregoundLabel.text = Strings.Localizable.send
-                let sendImage = MEGAAssets.UIImage.sendChatDisabled.withRenderingMode(.alwaysTemplate)
+                let sendImage = MEGAAssets.UIImage.sendChatDisabled
+                    .withRenderingMode(.alwaysTemplate)
+                    .imageFlippedForRightToLeftLayoutDirection()
                 foregroundImageView.image = sendImage
             } else {
                 foregoundLabel.text = Strings.Localizable.more

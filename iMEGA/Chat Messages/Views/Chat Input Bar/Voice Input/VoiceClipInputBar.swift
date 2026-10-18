@@ -79,7 +79,7 @@ class VoiceClipInputBar: UIView {
     // MARK: - Private methods
     
     private func configureImages() {
-        sendImageView.image = MEGAAssets.UIImage.image(named: "sendChatDisabled")
+        sendImageView.image = MEGAAssets.UIImage.sendChatDisabled.imageFlippedForRightToLeftLayoutDirection()
         cancelVoiceImageView.image = MEGAAssets.UIImage.image(named: "cancelVoice")
         startRecordingImageView.image = MEGAAssets.UIImage.image(named: "sendVoiceClipDefault-1")
     }
