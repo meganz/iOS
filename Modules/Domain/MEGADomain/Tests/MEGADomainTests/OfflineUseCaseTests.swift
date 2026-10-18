@@ -5,7 +5,8 @@ import Testing
 
 @Suite("OfflineUseCase Tests - Validates OfflineUseCase functionality")
 struct OfflineUseCaseTests {
-    private static let testURL = URL(string: "file:///data/Containers/Data/Application/3EAE35E8-ABD4-49DE-90C9-C1070C22A6E1/Documents/photos/readme.md")!
+    private static let documentsURL = URL(string: "file:///data/Containers/Data/Application/3EAE35E8-ABD4-49DE-90C9-C1070C22A6E1/Documents")!
+    private static let testURL = documentsURL.appendingPathComponent("photos/readme.md")
     private static let invalidURL = URL(string: "invalid://path")!
     private static let expectedRelativePath = "photos/readme.md"
 
@@ -51,11 +52,49 @@ struct OfflineUseCaseTests {
 
     @Suite("OfflineUseCase removeItem Tests")
     struct RemoveItemTests {
-        @Test("When file exists, should remove the item")
-        func withExistingFile_shouldRemoveItem() async throws {
-            let (sut, fileSystemRepository, _) = makeSUT()
+        @Test("When the item is inside the offline directory, should remove it")
+        func withItemInsideOfflineDirectory_shouldRemoveItem() async throws {
+            let (sut, fileSystemRepository, _) = makeSUT(offlineDirectoryURL: documentsURL)
             try await sut.removeItem(at: testURL)
             #expect(fileSystemRepository.removeFileURLs == [testURL])
+        }
+
+        @Test("When the item is a top-level offline item kept under its escaped name, should remove it")
+        func withEscapedTopLevelItem_shouldRemoveItem() async throws {
+            let escapedURL = documentsURL.appendingPathComponent("%2e%2e")
+            let (sut, fileSystemRepository, _) = makeSUT(offlineDirectoryURL: documentsURL)
+            try await sut.removeItem(at: escapedURL)
+            #expect(fileSystemRepository.removeFileURLs == [escapedURL])
+        }
+
+        @Test(
+            "When the URL resolves to the offline directory or outside it, should throw and remove nothing",
+            arguments: [
+                "..",
+                "../Library",
+                "photos/../..",
+                ".",
+                ""
+            ]
+        )
+        func withURLOutsideOfflineDirectory_shouldThrowWithoutRemoving(pathComponent: String) async throws {
+            let url = documentsURL.appendingPathComponent(pathComponent)
+            let (sut, fileSystemRepository, _) = makeSUT(offlineDirectoryURL: documentsURL)
+
+            await #expect(throws: OfflineErrorEntity.itemOutsideOfflineDirectory) {
+                try await sut.removeItem(at: url)
+            }
+            #expect(fileSystemRepository.removeFileURLs.isEmpty)
+        }
+
+        @Test("When the offline directory is unknown, should throw and remove nothing")
+        func withUnknownOfflineDirectory_shouldThrowWithoutRemoving() async throws {
+            let (sut, fileSystemRepository, _) = makeSUT(offlineDirectoryURL: nil)
+
+            await #expect(throws: OfflineErrorEntity.itemOutsideOfflineDirectory) {
+                try await sut.removeItem(at: testURL)
+            }
+            #expect(fileSystemRepository.removeFileURLs.isEmpty)
         }
     }
 

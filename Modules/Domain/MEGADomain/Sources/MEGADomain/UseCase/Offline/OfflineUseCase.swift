@@ -12,7 +12,9 @@ public protocol OfflineUseCaseProtocol: Sendable {
     func relativePathToDocumentsDirectory(for url: URL) -> String
     
     /// Removes the item at the specified URL (async version)
-    /// - Parameter url: The URL of the item to remove.
+    /// - Parameter url: The URL of the item to remove. It must point at an item inside the offline directory.
+    /// - Throws: `OfflineErrorEntity.itemOutsideOfflineDirectory`, without removing anything, when the URL
+    ///   with `.` and `..` resolved is the offline directory itself or lies outside it.
     func removeItem(at url: URL) async throws
     
     /// Removes all offline files stored in the offline directory.
@@ -57,6 +59,9 @@ public struct OfflineUseCase: OfflineUseCaseProtocol {
     }
     
     public func removeItem(at url: URL) async throws {
+        guard isInsideOfflineDirectory(url) else {
+            throw OfflineErrorEntity.itemOutsideOfflineDirectory
+        }
         try await fileSystemRepository.removeItem(at: url)
     }
     
@@ -80,5 +85,16 @@ public struct OfflineUseCase: OfflineUseCaseProtocol {
             .filter { $0.type == .download }
             .map { _ in () }
             .eraseToAnyAsyncSequence()
+    }
+
+    // MARK: - Private
+
+    /// Compared after standardisation: `appendingPathComponent` keeps `..` verbatim and the file system only
+    /// resolves it when the item is removed, so `Documents/..` names the app's data container.
+    private func isInsideOfflineDirectory(_ url: URL) -> Bool {
+        guard let offlineDirectoryURL = fileSystemRepository.offlineDirectoryURL() else { return false }
+        let directoryComponents = offlineDirectoryURL.standardizedFileURL.pathComponents
+        let itemComponents = url.standardizedFileURL.pathComponents
+        return itemComponents.count > directoryComponents.count && itemComponents.starts(with: directoryComponents)
     }
 }

@@ -62,10 +62,12 @@ static NSString *kPath = @"kPath";
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    OfflineTableViewCell *cell = (OfflineTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:cell.nameLabel.text];
-    
+
+    // The label shows the unescaped name while the item on disk keeps the escaped one (".." is stored as "%2e%2e"),
+    // so the path is built from the stored name: a label of ".." would otherwise resolve to the parent folder.
+    NSString *nameString = [[self.offline itemAtIndexPath:indexPath] objectForKey:kFileName];
+    NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:nameString];
+
     [self.offline showInfoFilePath:itemPath at:indexPath from:sender];
 }
 
@@ -187,8 +189,8 @@ static NSString *kPath = @"kPath";
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [self.offline itemTapped:cell.nameLabel.text atIndexPath:indexPath];
+    NSString *nameString = [[self.offline itemAtIndexPath:indexPath] objectForKey:kFileName];
+    [self.offline itemTapped:nameString atIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
