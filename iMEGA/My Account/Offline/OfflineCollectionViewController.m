@@ -140,8 +140,8 @@ static NSString *kPath = @"kPath";
         [collectionView clearSelectedItemsWithAnimated:NO];
     }
     
-    NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [self.offline itemTapped:cell.itemName atIndexPath:indexPath];
+    NSString *nameString = [self getItemAtIndexPath:indexPath][kFileName];
+    [self.offline itemTapped:nameString atIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -217,8 +217,9 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.itemName];
+    // Built from the stored (escaped) name rather than the cell's unescaped label; see OfflineTableViewViewController.
+    NSString *nameString = [self getItemAtIndexPath:indexPath][kFileName];
+    NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:nameString];
     
     [self.offline showInfoFilePath:itemPath at:indexPath from:sender];
 }

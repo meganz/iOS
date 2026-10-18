@@ -54,7 +54,6 @@ NS_SWIFT_UI_ACTOR
                                 sdk:(MEGASdk *)sdk
                            delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)setupAppearance;
-- (NSString *)itemName;
 
 @end
 

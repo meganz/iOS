@@ -205,10 +205,6 @@ static NSString *kFileSize = @"kFileSize";
     [self setupAppearance];
 }
 
-- (NSString *)itemName {
-    return self.nameLabel.text;
-}
-
 - (void)setupAppearance {
     [self setSelected:NO];
     [self setupThumbnailBackground];
