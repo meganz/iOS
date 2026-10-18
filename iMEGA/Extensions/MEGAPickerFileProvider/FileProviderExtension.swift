@@ -74,8 +74,7 @@ final class FileProviderExtension: NSFileProviderExtension {
             return nil
         }
         
-        let url: URL? = NSFileProviderManager.default.documentStorageURL.appendingPathComponent(path)
-        return url
+        return FileProviderStorage.contentURL(forNodePath: path, in: NSFileProviderManager.default.documentStorageURL)
     }
     
     override func item(for identifier: NSFileProviderItemIdentifier) throws -> NSFileProviderItem {
@@ -110,6 +109,12 @@ final class FileProviderExtension: NSFileProviderExtension {
             throw NSFileProviderError(.noSuchItem)
         }
         
+        // The URL carries the node path, whose segments are raw cloud names; refuse one that resolves outside
+        // the storage container before creating any directory for it.
+        guard FileProviderStorage.isContained(url, in: NSFileProviderManager.default.documentStorageURL) else {
+            throw NSFileProviderError(.noSuchItem)
+        }
+
         let fileProviderItem = try item(for: identifier)
         let placeholderDirectoryUrl = url.deletingLastPathComponent()
         if !FileManager.default.fileExists(atPath: placeholderDirectoryUrl.path) {
@@ -129,6 +134,12 @@ final class FileProviderExtension: NSFileProviderExtension {
         // download for a folder node recursively downloads everything inside it and collides with the
         // user's own per-file downloads (the SDK rejects a second transfer to the same path).
         guard node.isFile else { return }
+
+        // The download destination comes from the node path; refuse one that resolves outside the container
+        // so the attacker's content cannot be written elsewhere in the app group.
+        guard FileProviderStorage.isContained(url, in: NSFileProviderManager.default.documentStorageURL) else {
+            throw NSFileProviderError(.noSuchItem)
+        }
 
         let fileProviderItem = try item(for: identifier)
         let isDownloaded = fileProviderItem.isDownloaded ?? false

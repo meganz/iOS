@@ -1769,6 +1769,7 @@
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F46296C40070062B6BC /* FileProviderExtension.swift */; };
 		A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F48296C40070062B6BC /* FileProviderItem.swift */; };
+		CE127460000000000000B6BC /* FileProviderStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE127460000000000000B6BD /* FileProviderStorage.swift */; };
 		A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */; };
 		A8399F50296C40070062B6BC /* MEGAPickerFileProvider.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A8399F5C296C43F90062B6BC /* DocumentActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F5B296C43F90062B6BC /* DocumentActionViewController.swift */; };
@@ -4696,6 +4697,7 @@
 		A8399F43296C40060062B6BC /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		A8399F46296C40070062B6BC /* FileProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderExtension.swift; sourceTree = "<group>"; };
 		A8399F48296C40070062B6BC /* FileProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderItem.swift; sourceTree = "<group>"; };
+		CE127460000000000000B6BD /* FileProviderStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderStorage.swift; sourceTree = "<group>"; };
 		A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderEnumerator.swift; sourceTree = "<group>"; };
 		A8399F4C296C40070062B6BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8399F4D296C40070062B6BC /* MEGAPickerFileProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAPickerFileProvider.entitlements; sourceTree = "<group>"; };
@@ -11398,6 +11400,7 @@
 				A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */,
 				A8399F46296C40070062B6BC /* FileProviderExtension.swift */,
 				A8399F48296C40070062B6BC /* FileProviderItem.swift */,
+				CE127460000000000000B6BD /* FileProviderStorage.swift */,
 				84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */,
 				A8399F4C296C40070062B6BC /* Info.plist */,
 				A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */,
@@ -17000,6 +17003,7 @@
 				A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */,
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
 				A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */,
+				CE127460000000000000B6BC /* FileProviderStorage.swift in Sources */,
 				A1F3C2D4E5B6978812345601 /* FileProviderMemoryProbe.swift in Sources */,
 				84DB3FEA2FDFEFBD00DD99EB /* FileProviderSession.swift in Sources */,
 				A1F3C2D4E5B6978812345605 /* FolderComparisonCoordinator.swift in Sources */,

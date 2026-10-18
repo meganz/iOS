@@ -143,7 +143,7 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
         guard node.isFile, let nodePath = nodeAttributeUseCase.pathFor(node: node) else {
             return nil
         }
-        return NSFileProviderManager.default.documentStorageURL.appendingPathComponent(nodePath)
+        return FileProviderStorage.contentURL(forNodePath: nodePath, in: NSFileProviderManager.default.documentStorageURL)
     }
 
     private func isFileInCloud() -> Bool {
