@@ -85,7 +85,10 @@
         [self loadPreview];
     } else {
         NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
-        self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
+        // The node name is escaped the way the SDK names the downloaded file, so a name holding "/" or equal to ".."
+        // stays inside the node's folder instead of pointing at another file in the sandbox.
+        NSString *fileName = [MEGASdk.shared escapeFsIncompatible:self.node.name destinationPath:nodeFolderPath] ?: self.node.name;
+        self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:fileName];
 
         __weak typeof(self) weakSelf = self;
         [self.viewModel startOnProgress:^(float progress) {

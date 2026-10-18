@@ -544,8 +544,18 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
 
     public override func nodePath(for node: MEGANode) -> String? {
         guard let mockNode = node as? MockNode else { return nil }
-        
+
         return mockNode.nodePath
+    }
+
+    /// The SDK's rule for a path that the file system reads as a plain name: `.` and `..` are escaped
+    /// whole, and `/` is the only character escaped on APFS.
+    public override func escapeFsIncompatible(_ name: String, destinationPath: String?) -> String? {
+        switch name {
+        case "..": "%2e%2e"
+        case ".": "%2e"
+        default: name.replacingOccurrences(of: "/", with: "%2f")
+        }
     }
     
     public override func numberChildren(forParent parent: MEGANode?) -> Int {
