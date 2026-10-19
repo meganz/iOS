@@ -9,6 +9,7 @@ public protocol FileProviderUploadRepositoryProtocol: RepositoryProtocol, Sendab
     ///   - modificationDate: The modification date the node gets; `nil` keeps the file's own.
     ///   - progress: Called with how many bytes have been sent so far.
     /// - Returns: The uploaded node.
+    /// - Throws: `NSFileProviderError(.cannotSynchronize)` while the account is an expired business account.
     func upload(
         fileAt url: URL,
         named name: String,

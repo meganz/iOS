@@ -36,8 +36,11 @@ public struct FileProviderDownloadRepository: FileProviderDownloadRepositoryProt
                         case .success:
                             completion(.success)
                         case .failure(let error):
-                            let wasCancelledForQuota = error == .cancelled && isOverQuota.wrappedValue
-                            completion(.failure(wasCancelledForQuota ? TransferErrorEntity.overquota : error))
+                            let failure = error.toFileProviderError(
+                                isOverQuota: isOverQuota.wrappedValue,
+                                isBusinessExpired: sdk.businessStatus == .expired
+                            )
+                            completion(.failure(failure))
                         }
                     },
                     temporaryError: { _, error in

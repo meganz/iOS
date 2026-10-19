@@ -5,6 +5,7 @@ import MEGAPickerFileProviderDomain
 import MEGAPickerFileProviderRepo
 import MEGARepo
 import UniformTypeIdentifiers
+import os
 
 /// Entry point of the File Provider extension on `NSFileProviderReplicatedExtension`.
 ///
@@ -20,6 +21,10 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     /// The fields an upload applies, along with the contents: the node takes the file's modification date. The others,
     /// such as extended attributes, stay pending, or the system would clear them on disk to match the returned item.
     private static let uploadedFields: NSFileProviderItemFields = appliedFields.union([.contents, .contentModificationDate])
+
+    /// The domains whose leftover downloads this process has removed. Only the first instance for a domain removes
+    /// them: a later one could delete a download that an earlier instance has finished but the system hasn't taken.
+    private static let domainsWithoutLeftoverDownloads = OSAllocatedUnfairLock<Set<String>>(initialState: [])
 
     private let domain: NSFileProviderDomain
     private let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
@@ -60,6 +65,14 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
             uploadRepo: FileProviderUploadRepository.newRepo,
             nodeCoordinatesRepo: NodeCoordinatesRepository.newRepo,
             snapshotRepo: FileProviderSnapshotRepository.newRepo
+        )
+    }
+
+    /// Built on every use for the same reason as `itemUseCase`.
+    private var thumbnailUseCase: some FileProviderThumbnailUseCaseProtocol {
+        FileProviderThumbnailUseCase(
+            itemUseCase: itemUseCase,
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         )
     }
 
@@ -116,6 +129,7 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         MEGASdk.setLogToConsole(true)
         MEGALogDebug("[Picker] Replicated extension started for domain \(domain.identifier.rawValue)")
         copyDatabasesFromMainApp()
+        removeLeftoverDownloads()
         FileProviderMemoryProbe.mark("init.end")
     }
 
@@ -445,6 +459,34 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
         return try manager.temporaryDirectoryURL()
     }
 
+    /// Deletes the downloads left in the temporary directory when an earlier process or the system ended before the system
+    /// took them, which the extension is responsible for (see `fetchContents` in `NSFileProviderReplicatedExtension.h`).
+    /// Runs synchronously from `init`, so no download of this process is there yet. Dates can't tell the two apart:
+    /// the SDK sets a finished download's modification date, and with it the creation date, to the node's.
+    private func removeLeftoverDownloads() {
+        let domainIdentifier = domain.identifier.rawValue
+        let directory: URL
+        do {
+            directory = try temporaryDirectoryURL()
+        } catch {
+            MEGALogError("[Picker] Can't find the temporary directory to remove leftover downloads: \(error)")
+            return
+        }
+        Self.domainsWithoutLeftoverDownloads.withLock { domainIdentifiers in
+            guard domainIdentifiers.insert(domainIdentifier).inserted else { return }
+            let fileManager = FileManager.default
+            let files = (try? fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)) ?? []
+            for file in files {
+                do {
+                    try fileManager.removeItem(at: file)
+                    MEGALogDebug("[Picker] Removed the leftover download \(file.lastPathComponent)")
+                } catch {
+                    MEGALogError("[Picker] Can't remove the leftover download \(file.lastPathComponent): \(error)")
+                }
+            }
+        }
+    }
+
     private func copyDatabasesFromMainApp() {
         CopyDataBasesUseCase(repo: CopyDataBasesRepository.nodeDatabaseGatedRepo).copyFromMainApp { result in
             switch result {
@@ -457,8 +499,49 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     }
 }
 
+// MARK: - NSFileProviderThumbnailing
+
+extension ReplicatedFileProviderExtension: NSFileProviderThumbnailing {
+    /// Every item gets the 200px thumbnail MEGA keeps for it, whatever `size` the system asks for.
+    func fetchThumbnails(
+        for itemIdentifiers: [NSFileProviderItemIdentifier],
+        requestedSize size: CGSize,
+        perThumbnailCompletionHandler: @escaping (NSFileProviderItemIdentifier, Data?, (any Error)?) -> Void,
+        completionHandler: @escaping ((any Error)?) -> Void
+    ) -> Progress {
+        let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))
+        let thumbnailUseCase = thumbnailUseCase
+        let perThumbnailCompletion = UncheckedSendableCompletion(perThumbnailCompletionHandler)
+        let completion = UncheckedSendableCompletion(completionHandler)
+        let task = Task {
+            do {
+                try await FileProviderSession.shared.ensureReady()
+            } catch {
+                // Applies to every item. A `nil` thumbnail instead would be kept as the item having none.
+                MEGALogError("[Picker] Can't fetch thumbnails: \(error)")
+                completion.handler(FileProviderExtension.fileProviderError(for: error))
+                return
+            }
+            await thumbnailUseCase.loadThumbnails(for: itemIdentifiers) { identifier, result in
+                switch result {
+                case .success(let data):
+                    perThumbnailCompletion.handler(identifier, data, nil)
+                case .failure(let error):
+                    MEGALogError("[Picker] Can't fetch the thumbnail of \(identifier.rawValue): \(error)")
+                    perThumbnailCompletion.handler(identifier, nil, FileProviderExtension.fileProviderError(for: error))
+                }
+                progress.completedUnitCount += 1
+            }
+            // The error applies to the items not reported once the system cancelled the progress.
+            completion.handler(Task.isCancelled ? CocoaError(.userCancelled) : nil)
+        }
+        progress.cancellationHandler = { task.cancel() }
+        return progress
+    }
+}
+
 /// Carries a completion handler from the system into a `Task`. The system never calls the handler itself and the
-/// task calls it exactly once, so it is never used concurrently even though its type is not `Sendable`.
+/// task calls it from one place at a time, so it is never used concurrently even though its type is not `Sendable`.
 struct UncheckedSendableCompletion<Handler>: @unchecked Sendable {
     let handler: Handler
 

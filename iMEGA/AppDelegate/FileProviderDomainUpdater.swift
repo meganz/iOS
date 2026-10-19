@@ -32,7 +32,11 @@ final class FileProviderDomainUpdater: Sendable {
     }
 
     func registerDomain() {
-        enqueue("register") { try await $0.registerDomain() }
+        enqueue("register") { useCase in
+            for (code, error) in try await useCase.registerDomain() {
+                MEGALogError("[FileProvider] Can't signal File Provider error \(code.rawValue) as resolved: \(error)")
+            }
+        }
     }
 
     func removeDomains() {

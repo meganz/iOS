@@ -26,23 +26,45 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
     }
 
     override func prepare(forAction actionIdentifier: String, itemIdentifiers: [NSFileProviderItemIdentifier]) {
-        guard
-            actionIdentifier == PickerConstant.openAction,
-            let itemIdentifier = itemIdentifiers.first,
-            let url = URL(string: "mega://presentNode/\(itemIdentifier.rawValue)")
-        else {
-            let error = NSError(domain: FPUIErrorDomain, code: Int(FPUIExtensionErrorCode.failed.rawValue), userInfo: nil)
-            extensionContext.cancelRequest(withError: error)
+        guard actionIdentifier == PickerConstant.openAction, let itemIdentifier = itemIdentifiers.first else {
+            failRequest()
             return
         }
-        
-        extensionContext.open(url) { [weak self] _ in
-            Task { @MainActor in
-                self?.extensionContext.completeRequest()
+        Task {
+            let providerIdentifier = await providerIdentifier(of: itemIdentifier) ?? itemIdentifier
+            guard let url = URL(string: "mega://presentNode/\(providerIdentifier.rawValue)") else {
+                failRequest()
+                return
             }
+            _ = await extensionContext.open(url)
+            extensionContext.completeRequest()
         }
     }
-    
+
+    /// The File Provider extension's identifier of an item Files passes. A replicated domain passes the system's
+    /// identifiers instead, such as `__fp/fs/docID(2596)`, mapped back here through the item's location on disk.
+    /// `nil` for the legacy extension, which has no registered domain and passes the extension's identifiers.
+    private func providerIdentifier(of itemIdentifier: NSFileProviderItemIdentifier) async -> NSFileProviderItemIdentifier? {
+        guard let domainIdentifier = extensionContext.domainIdentifier else { return nil }
+        do {
+            let domains = try await NSFileProviderManager.domains()
+            guard let domain = domains.first(where: { $0.identifier == domainIdentifier }),
+                  let manager = NSFileProviderManager(for: domain) else {
+                return nil
+            }
+            let url = try await manager.getUserVisibleURL(for: itemIdentifier)
+            let (identifier, _) = try await NSFileProviderManager.identifierForUserVisibleFile(at: url)
+            return identifier
+        } catch {
+            return nil
+        }
+    }
+
+    private func failRequest() {
+        let error = NSError(domain: FPUIErrorDomain, code: Int(FPUIExtensionErrorCode.failed.rawValue), userInfo: nil)
+        extensionContext.cancelRequest(withError: error)
+    }
+
     @IBAction func cancelButtonTapped(_ sender: Any) {
         extensionContext.cancelRequest(withError: NSError(domain: FPUIErrorDomain, code: Int(FPUIExtensionErrorCode.userCancelled.rawValue), userInfo: nil))
     }

@@ -1,15 +1,39 @@
+import FileProvider
 import MEGAPickerFileProviderDomain
 import Testing
 
 struct FileProviderDomainUseCaseTests {
     @Test
-    func registerDomain_whenReplicatedExtensionIsEnabled_addsDomain() async throws {
+    func registerDomain_whenReplicatedExtensionIsEnabled_addsDomainAndSignalsTheErrorsResolvedInTheApp() async throws {
         let repository = MockFileProviderDomainRepository(isReplicatedExtensionEnabled: true)
         let sut = FileProviderDomainUseCase(repository: repository)
 
-        try await sut.registerDomain()
+        let failures = try await sut.registerDomain()
 
-        #expect(repository.messages == [.addDomain])
+        #expect(repository.messages == [
+            .addDomain,
+            .signalErrorResolved(.notAuthenticated),
+            .signalErrorResolved(.cannotSynchronize),
+            .signalErrorResolved(.insufficientQuota)
+        ])
+        #expect(failures.isEmpty)
+    }
+
+    @Test
+    func registerDomain_whenSignallingOneErrorFails_signalsTheOthersAndReturnsTheFailure() async throws {
+        let repository = MockFileProviderDomainRepository(isReplicatedExtensionEnabled: true, failingErrorCode: .cannotSynchronize)
+        let sut = FileProviderDomainUseCase(repository: repository)
+
+        let failures = try await sut.registerDomain()
+
+        #expect(repository.messages == [
+            .addDomain,
+            .signalErrorResolved(.notAuthenticated),
+            .signalErrorResolved(.cannotSynchronize),
+            .signalErrorResolved(.insufficientQuota)
+        ])
+        #expect(Array(failures.keys) == [.cannotSynchronize])
+        #expect(failures[.cannotSynchronize] as? MockError == .failed)
     }
 
     @Test
@@ -17,9 +41,10 @@ struct FileProviderDomainUseCaseTests {
         let repository = MockFileProviderDomainRepository(isReplicatedExtensionEnabled: false)
         let sut = FileProviderDomainUseCase(repository: repository)
 
-        try await sut.registerDomain()
+        let failures = try await sut.registerDomain()
 
         #expect(repository.messages == [.removeAllDomains, .removeSyncData])
+        #expect(failures.isEmpty)
     }
 
     @Test
@@ -52,6 +77,7 @@ private final class MockFileProviderDomainRepository: FileProviderDomainReposito
         case addDomain
         case removeAllDomains
         case removeSyncData
+        case signalErrorResolved(NSFileProviderError.Code)
     }
 
     static var newRepo: MockFileProviderDomainRepository {
@@ -60,11 +86,16 @@ private final class MockFileProviderDomainRepository: FileProviderDomainReposito
 
     let isReplicatedExtensionEnabled: Bool
     private let error: (any Error)?
+    private let failingErrorCode: NSFileProviderError.Code?
     private(set) var messages: [Message] = []
 
-    init(isReplicatedExtensionEnabled: Bool, error: (any Error)? = nil) {
+    /// - Parameters:
+    ///   - error: What every call throws.
+    ///   - failingErrorCode: The error whose signalling alone throws `MockError.failed`.
+    init(isReplicatedExtensionEnabled: Bool, error: (any Error)? = nil, failingErrorCode: NSFileProviderError.Code? = nil) {
         self.isReplicatedExtensionEnabled = isReplicatedExtensionEnabled
         self.error = error
+        self.failingErrorCode = failingErrorCode
     }
 
     func addDomain() async throws {
@@ -80,5 +111,11 @@ private final class MockFileProviderDomainRepository: FileProviderDomainReposito
     func removeSyncData() async throws {
         messages.append(.removeSyncData)
         if let error { throw error }
+    }
+
+    func signalErrorResolved(_ error: NSFileProviderError) async throws {
+        messages.append(.signalErrorResolved(error.code))
+        if let error = self.error { throw error }
+        if error.code == failingErrorCode { throw MockError.failed }
     }
 }

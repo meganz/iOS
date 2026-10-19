@@ -417,12 +417,14 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
 
     /// fileproviderd only understands NSCocoaErrorDomain and NSFileProviderErrorDomain; any other domain surfaces
-    /// in Files as the generic "couldn't communicate with the helper application" alert.
+    /// in Files as the generic "couldn't communicate with the helper application" alert. Also used by
+    /// `ReplicatedFileProviderExtension`.
     ///
     /// Unknown failures fall back to `serverUnreachable`, the closest "try again later" code available to a
     /// non-replicated extension. `cannotSynchronize` is not an option: it is a replicated-only (V3) code, and
     /// it tells the system the item is definitively broken and must not be retried until the item changes on
-    /// disk or the extension is updated - the wrong contract for a transient login or transfer failure.
+    /// disk or the extension is updated - the wrong contract for a transient login or transfer failure. The
+    /// replicated extension's repositories throw it only where that contract holds, and it passes through as is.
     static func fileProviderError(for error: any Error) -> any Error {
         // Errors that already live in a domain the system understands are passed through untouched. Wrapping
         // them would hide `notAuthenticated`, the one code Files acts on by prompting the user to sign in.

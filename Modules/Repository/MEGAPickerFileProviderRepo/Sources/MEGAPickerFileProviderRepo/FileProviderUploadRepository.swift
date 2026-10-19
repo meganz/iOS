@@ -30,7 +30,7 @@ public struct FileProviderUploadRepository: FileProviderUploadRepositoryProtocol
             isSourceTemporary: false,
             startFirst: true
         )
-        // Cancelled like a download in `FileProviderDownloadRepository`, including over quota.
+        // Cancelled and failed like a download in `FileProviderDownloadRepository`, including over quota.
         let cancelToken = ThreadSafeCancelToken()
         let isOverQuota = Atomic(wrappedValue: false)
         let transfer = try await withTaskCancellationHandler {
@@ -42,8 +42,11 @@ public struct FileProviderUploadRepository: FileProviderUploadRepositoryProtocol
                         case .success(let transfer):
                             completion(.success(transfer))
                         case .failure(let error):
-                            let wasCancelledForQuota = error == .cancelled && isOverQuota.wrappedValue
-                            completion(.failure(wasCancelledForQuota ? TransferErrorEntity.overquota : error))
+                            let failure = error.toFileProviderError(
+                                isOverQuota: isOverQuota.wrappedValue,
+                                isBusinessExpired: sdk.businessStatus == .expired
+                            )
+                            completion(.failure(failure))
                         }
                     },
                     temporaryError: { _, error in

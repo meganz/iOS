@@ -41,6 +41,13 @@ public struct FileProviderDomainRepository: FileProviderDomainRepositoryProtocol
         try await NSFileProviderManager.removeAllDomains()
     }
 
+    public func signalErrorResolved(_ error: NSFileProviderError) async throws {
+        guard let manager = NSFileProviderManager(for: .mega) else {
+            throw NSFileProviderError(.providerNotFound)
+        }
+        try await manager.signalErrorResolved(error)
+    }
+
     public func removeSyncData() throws {
         guard FileManager.default.fileExists(atPath: syncDirectoryURL.path) else {
             return
