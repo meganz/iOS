@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) MEGAError *error;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
-@property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
 
 @property (nonatomic, strong) FileLinkViewModel *viewModel;
 
