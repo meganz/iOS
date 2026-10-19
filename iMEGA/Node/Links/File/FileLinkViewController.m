@@ -127,11 +127,7 @@
         } else {
             switch (self.error.type) {
                 case MEGAErrorTypeApiEArgs: {
-                    if (self.decryptionAlertControllerHasBeenPresented) {
-                        [self showDecryptionKeyNotValidAlert];
-                    } else {
-                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                    }
+                    [self showDecryptionKeyNotValidAlert];
                     break;
                 }
                    
@@ -158,12 +154,10 @@
         return;
     }
     
+    // The file still exists behind a wrong key, whether it came in the link or was typed in,
+    // so the user is asked for the right one instead of being shown an unavailable link.
     if (self.request.flag) {
-        if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
-            [self showDecryptionKeyNotValidAlert];
-        } else { //Link with invalid key
-            [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-        }
+        [self showDecryptionKeyNotValidAlert];
         return;
     }
     
@@ -207,6 +201,7 @@
 
 - (void)setUIItemsHidden:(BOOL)boolValue {
     self.mainView.hidden = boolValue;
+    self.importButton.hidden = boolValue;
     self.openButton.hidden = boolValue;
 }
 
@@ -279,7 +274,7 @@
     decryptAlertAction.enabled = NO;
     [decryptionAlertController addAction:decryptAlertAction];
     
-    [self presentWithDecryption:decryptionAlertController];
+    [self presentDeferred:decryptionAlertController];
 }
 
 - (void)showDecryptionKeyNotValidAlert {
@@ -289,7 +284,7 @@
         [self showDecryptionAlert];
     }]];
     
-    [self presentViewController:decryptionKeyNotValidAlertController animated:YES completion:nil];
+    [self presentDeferred:decryptionKeyNotValidAlertController];
 }
 
 - (void)setNodeInfo {

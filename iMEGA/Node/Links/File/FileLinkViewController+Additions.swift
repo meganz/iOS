@@ -55,11 +55,10 @@ extension FileLinkViewController {
         present(activityVC, animated: true)
     }
     
-    @objc func present(decryption alertController: UIAlertController) {
+    /// Deferred so it also works when the request result is processed from `viewDidLoad`, before the screen is on screen.
+    @objc func presentDeferred(_ alertController: UIAlertController) {
         Task { @MainActor in
-            self.present(alertController, animated: true) {
-                self.decryptionAlertControllerHasBeenPresented = true
-            }
+            self.present(alertController, animated: true)
         }
     }
     
