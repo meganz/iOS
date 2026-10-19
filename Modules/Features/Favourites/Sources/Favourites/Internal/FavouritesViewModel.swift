@@ -13,7 +13,7 @@ import UIKit
 package final class FavouritesViewModel: ObservableObject {
     package struct Dependency {
         let resultsProvider: any SearchResultsProviding
-        let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+        let sortOrderPreferenceUseCase: any FavouritesSortOrderPreferenceUseCaseProtocol
         let tracker: any AnalyticsTracking
         let offlineActionGuard: any OfflineActionGuarding
 
@@ -24,14 +24,14 @@ package final class FavouritesViewModel: ObservableObject {
         ) {
             self.init(
                 resultsProvider: resultsProvider,
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                sortOrderPreferenceUseCase: FavouritesSortOrderPreferenceUseCase(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase),
                 tracker: DIContainer.tracker,
                 offlineActionGuard: offlineActionGuard)
         }
 
         package init(
             resultsProvider: any SearchResultsProviding,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            sortOrderPreferenceUseCase: some FavouritesSortOrderPreferenceUseCaseProtocol,
             tracker: some AnalyticsTracking,
             offlineActionGuard: some OfflineActionGuarding
         ) {
@@ -63,10 +63,10 @@ package final class FavouritesViewModel: ObservableObject {
             },
             chipTapped: { _, _ in },
             sortingOrder: { [dependency] in
-                dependency.sortOrderPreferenceUseCase.sortOrder(for: .homeFavourites).toUIComponentSortOrderEntity()
+                dependency.sortOrderPreferenceUseCase.sortOrder().toUIComponentSortOrderEntity()
             },
             updateSortOrder: { [dependency] in
-                dependency.sortOrderPreferenceUseCase.save(sortOrder: $0.toDomainSortOrderEntity(), for: .homeFavourites)
+                dependency.sortOrderPreferenceUseCase.save(sortOrder: $0.toDomainSortOrderEntity())
             },
             chipPickerShowedHandler: { _ in }
         )
@@ -105,7 +105,6 @@ package final class FavouritesViewModel: ObservableObject {
                 title: Strings.Localizable.sortTitle,
                 options: [
                     MEGAUIComponent.SortOrder.Key.name,
-                    .favourite,
                     .label,
                     .dateAdded,
                     .lastModified,
@@ -168,7 +167,7 @@ package final class FavouritesViewModel: ObservableObject {
 
     private func listenToSortOrderChanges() {
         dependency.sortOrderPreferenceUseCase
-            .monitorSortOrder(for: .homeFavourites)
+            .monitorSortOrder()
             .dropFirst()
             .removeDuplicates()
             .receive(on: DispatchQueue.main)

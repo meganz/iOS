@@ -21,12 +21,12 @@ struct FavouritesViewModelTests {
         let keys = sut.searchResultsContainerViewModel.sortHeaderConfig.options.map(\.id)
 
         #expect(keys.contains(.name))
-        #expect(keys.contains(.favourite))
+        #expect(!keys.contains(.favourite))
         #expect(keys.contains(.label))
         #expect(keys.contains(.dateAdded))
         #expect(keys.contains(.lastModified))
         #expect(keys.contains(.size))
-        #expect(keys.count == 6)
+        #expect(keys.count == 5)
     }
 
     // MARK: - Initial sort order
@@ -439,7 +439,7 @@ struct FavouritesViewModelTests {
         FavouritesViewModel(
             dependency: .init(
                 resultsProvider: MockSearchResultsProviding(),
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                sortOrderPreferenceUseCase: FavouritesSortOrderPreferenceUseCase(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase),
                 tracker: MockTracker(),
                 offlineActionGuard: offlineActionGuard
             )
