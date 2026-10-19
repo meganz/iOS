@@ -302,6 +302,10 @@ public struct TransfersListView: View {
             tab: viewModel.selectedTab,
             dependency: viewModel.dependency,
             selection: viewModel.selection,
+            searchText: viewModel.searchText(for: viewModel.selectedTab),
+            onSearchTextChanged: { [tab = viewModel.selectedTab] text in
+                viewModel.didChangeSearchText(text, on: tab)
+            },
             onTransferCancelled: { viewModel.didCancelTransfer($0) },
             onTransferRetried: { viewModel.didRetryTransfers() },
             onRowSelectRequested: { viewModel.enterSelectMode(preselecting: $0) }

@@ -48,7 +48,12 @@ public final class TransfersListViewModel: ObservableObject {
     @Published private(set) var isTransferOverquota: Bool
 
     @Published private(set) var isOffline: Bool
-    
+
+    /// Each tab's last search query. The tab's list view model owns the query while
+    /// mounted; this keeps it across the re-creation that every tab switch causes.
+    /// Not published: nothing on this screen renders from it.
+    private(set) var searchTexts: [TransfersTab: String] = [:]
+
     var offlineSnackBar: SnackBar {
         SnackBar(message: Strings.Localizable.Transfers.Snackbar.pausedAwaitingNetwork)
     }
@@ -111,6 +116,16 @@ public final class TransfersListViewModel: ObservableObject {
                 exitSelectMode()
             }
         }
+    }
+
+    // MARK: - Search
+
+    func searchText(for tab: TransfersTab) -> String {
+        searchTexts[tab] ?? ""
+    }
+
+    func didChangeSearchText(_ text: String, on tab: TransfersTab) {
+        searchTexts[tab] = text
     }
 
     // MARK: - Connectivity

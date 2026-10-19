@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
@@ -7,6 +8,9 @@ struct TransferTabListView: View {
     @StateObject private var viewModel: TransferTabListViewModel
     /// Bound into `List(selection:)` and read for the selected-row highlight.
     @ObservedObject private var selection: TransferSelection
+    @Environment(\.editMode) private var editMode
+    @State private var isSearchEditing = false
+    private let isSearchable: Bool
     private let emptyStateTitle: String
     private let onTransferCancelled: (TransferEntity) -> Void
     private let onTransferRetried: @MainActor () -> Void
@@ -18,14 +22,23 @@ struct TransferTabListView: View {
         tab: TransfersTab,
         dependency: TransferTabDependency,
         selection: TransferSelection,
+        searchText: String,
+        onSearchTextChanged: @MainActor @escaping (String) -> Void,
         onTransferCancelled: @escaping (TransferEntity) -> Void,
         onTransferRetried: @MainActor @escaping () -> Void,
         onRowSelectRequested: @MainActor @escaping (Int) -> Void
     ) {
         _viewModel = StateObject(
-            wrappedValue: TransferTabListViewModel(tab: tab, dependency: dependency, selection: selection)
+            wrappedValue: TransferTabListViewModel(
+                tab: tab,
+                dependency: dependency,
+                selection: selection,
+                searchText: searchText,
+                onSearchTextChanged: onSearchTextChanged
+            )
         )
         _selection = ObservedObject(wrappedValue: selection)
+        isSearchable = tab.isSearchable
         emptyStateTitle = tab.emptyStateTitle
         self.onTransferCancelled = onTransferCancelled
         self.onTransferRetried = onTransferRetried
@@ -39,7 +52,7 @@ struct TransferTabListView: View {
 
     @ViewBuilder
     private var content: some View {
-        if viewModel.rows.isEmpty {
+        if !viewModel.hasTransfers {
             if viewModel.isLoaded {
                 RevampedContentUnavailableView(
                     viewModel: .transfersEmptyState(title: emptyStateTitle)
@@ -49,8 +62,36 @@ struct TransferTabListView: View {
                 Color.clear
             }
         } else {
-            listContent
+            VStack(spacing: 0) {
+                if showsSearchBar {
+                    searchBar
+                }
+                // An overlay rather than a branch, so a search that briefly
+                // matches nothing doesn't tear down the list.
+                listContent
+                    .overlay {
+                        if viewModel.rows.isEmpty {
+                            RevampedContentUnavailableView(viewModel: .noResults)
+                                .pageBackground()
+                        }
+                    }
+            }
         }
+    }
+
+    private var showsSearchBar: Bool {
+        isSearchable && editMode?.wrappedValue.isEditing != true
+    }
+
+    private var searchBar: some View {
+        SearchBarView(
+            text: $viewModel.searchText,
+            isEditing: $isSearchEditing,
+            placeholder: Strings.Localizable.search,
+            cancelTitle: Strings.Localizable.cancel
+        )
+        .padding(.horizontal, TokenSpacing._5)
+        .padding(.vertical, TokenSpacing._3)
     }
 
     @ViewBuilder
@@ -84,6 +125,7 @@ struct TransferTabListView: View {
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
+        .scrollDismissesKeyboard(.immediately)
         .contentMargins(.top, 0, for: .scrollContent)
         // Fills the native edit-mode checkbox: Accent.900 in light, Accent.500 in
         // dark — the same circle Cloud Drive shows.

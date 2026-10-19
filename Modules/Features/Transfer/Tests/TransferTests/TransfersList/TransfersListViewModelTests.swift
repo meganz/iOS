@@ -733,6 +733,38 @@ struct TransfersListViewModelDerivedStateTests {
     }
 }
 
+@Suite("TransfersListViewModel search")
+@MainActor
+struct TransfersListViewModelSearchTests {
+
+    @Test func searchText_isEmptyForATabWithoutAQuery() {
+        let sut = makeSUT()
+
+        #expect(sut.searchText(for: .completed).isEmpty)
+    }
+
+    @Test func searchText_isKeptPerTab() {
+        let sut = makeSUT()
+
+        sut.didChangeSearchText("audio", on: .failed)
+        sut.didChangeSearchText("book", on: .completed)
+
+        #expect(sut.searchText(for: .failed) == "audio")
+        #expect(sut.searchText(for: .completed) == "book")
+    }
+
+    @Test func searchText_survivesSwitchingTabs() {
+        let sut = makeSUT()
+        sut.selectedTab = .failed
+        sut.didChangeSearchText("audio", on: .failed)
+
+        sut.selectedTab = .completed
+        sut.selectedTab = .failed
+
+        #expect(sut.searchText(for: .failed) == "audio")
+    }
+}
+
 @Suite("TransfersListViewModel over-quota banner")
 @MainActor
 struct TransfersListViewModelOverQuotaTests {

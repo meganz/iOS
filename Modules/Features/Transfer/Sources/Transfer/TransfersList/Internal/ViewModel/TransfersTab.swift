@@ -19,6 +19,11 @@ public enum TransfersTab: CaseIterable, Sendable, Identifiable {
         }
     }
 
+    /// Whether the tab offers a search bar. Active has none, so its list ignores any query.
+    var isSearchable: Bool {
+        self != .active
+    }
+
     var emptyStateTitle: String {
         switch self {
         case .active: Strings.Localizable.Transfers.EmptyState.noActiveTransfers

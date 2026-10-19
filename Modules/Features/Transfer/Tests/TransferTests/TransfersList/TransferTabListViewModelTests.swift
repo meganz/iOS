@@ -239,6 +239,177 @@ struct TransferTabListViewModelTests {
         #expect(selection.selectedTags == [2])
     }
 
+    // MARK: - Search
+
+    @Test(arguments: [TransfersTab.completed, .failed])
+    func searchKeepsRowsWhoseFileNameContainsTheQueryIgnoringCase(tab: TransfersTab) async {
+        let (sut, stop) = await startMonitoring(tab: tab, snapshot: [
+            .init(fileName: "Book.pdf", tag: 1),
+            .init(fileName: "audio.mp3", tag: 2),
+            .init(fileName: "my notebook.txt", tag: 3)
+        ])
+        defer { stop() }
+
+        sut.searchText = "BOOK"
+
+        #expect(sut.rows.map(\.id) == [1, 3])
+    }
+
+    @Test func clearingTheQueryRestoresEveryRow() async {
+        let (sut, stop) = await startMonitoring(snapshot: [
+            .init(fileName: "book.pdf", tag: 1),
+            .init(fileName: "audio.mp3", tag: 2)
+        ])
+        defer { stop() }
+        sut.searchText = "book"
+
+        sut.searchText = ""
+
+        #expect(sut.rows.map(\.id) == [1, 2])
+    }
+
+    @Test func whitespaceOnlyQueryDoesNotFilter() async {
+        let (sut, stop) = await startMonitoring(snapshot: [
+            .init(fileName: "book.pdf", tag: 1),
+            .init(fileName: "audio.mp3", tag: 2)
+        ])
+        defer { stop() }
+
+        sut.searchText = "  "
+
+        #expect(sut.rows.map(\.id) == [1, 2])
+    }
+
+    @Test func queryMatchingNothingEmptiesRowsButKeepsHasTransfers() async {
+        let (sut, stop) = await startMonitoring(snapshot: [.init(fileName: "book.pdf", tag: 1)])
+        defer { stop() }
+
+        sut.searchText = "video"
+
+        #expect(sut.rows.isEmpty)
+        #expect(sut.hasTransfers)
+    }
+
+    @Test func activeTabIgnoresTheQuery() async {
+        let (sut, stop) = await startMonitoring(tab: .active, snapshot: [
+            .init(fileName: "book.pdf", tag: 1, state: .active),
+            .init(fileName: "audio.mp3", tag: 2, state: .active)
+        ])
+        defer { stop() }
+
+        sut.searchText = "book"
+
+        #expect(sut.rows.map(\.id) == [1, 2])
+    }
+
+    @Test func initialQueryFiltersTheSnapshot() async {
+        let sut = makeSUT(
+            tab: .failed,
+            snapshot: [
+                .init(fileName: "audio.mp3", tag: 1),
+                .init(fileName: "book.pdf", tag: 2)
+            ],
+            searchText: "audio"
+        )
+
+        await sut.monitorTransferEvents()
+
+        #expect(sut.searchText == "audio")
+        #expect(sut.rows.map(\.id) == [1])
+    }
+
+    @Test func finishedRowNotMatchingTheQueryStaysHidden() async {
+        let sut = makeSUT(
+            tab: .completed,
+            snapshot: [.init(fileName: "book.pdf", tag: 1, state: .complete)],
+            events: [.finished(.init(fileName: "audio.mp3", tag: 2, state: .complete))],
+            searchText: "book"
+        )
+
+        await sut.monitorTransferEvents()
+
+        #expect(sut.rows.map(\.id) == [1])
+    }
+
+    @Test func queryChangesAreReported() async {
+        let recorder = SearchTextRecorder()
+        let sut = makeSUT(tab: .completed, onSearchTextChanged: { recorder.values.append($0) })
+
+        sut.searchText = "a"
+        sut.searchText = "a"
+        sut.searchText = "ab"
+
+        #expect(recorder.values == ["a", "ab"])
+    }
+
+    @Test func queryIsNotAppliedUntilItSettlesButIsReportedRightAway() async {
+        let recorder = SearchTextRecorder()
+        let (sut, stop) = await startMonitoring(
+            snapshot: [
+                .init(fileName: "book.pdf", tag: 1),
+                .init(fileName: "audio.mp3", tag: 2)
+            ],
+            onSearchTextChanged: { recorder.values.append($0) },
+            searchDebounce: { _ in Empty().eraseToAnyPublisher() }
+        )
+        defer { stop() }
+
+        sut.searchText = "book"
+
+        #expect(sut.rows.map(\.id) == [1, 2])
+        #expect(recorder.values == ["book"])
+    }
+
+    @Test func clearingTheQueryAppliesWithoutWaitingForTheDebounce() async {
+        let (sut, stop) = await startMonitoring(
+            snapshot: [
+                .init(fileName: "book.pdf", tag: 1),
+                .init(fileName: "audio.mp3", tag: 2)
+            ],
+            searchText: "book",
+            searchDebounce: { _ in Empty().eraseToAnyPublisher() }
+        )
+        defer { stop() }
+
+        sut.searchText = ""
+
+        #expect(sut.rows.map(\.id) == [1, 2])
+    }
+
+    @Test func onlyMatchingRowsAreSelectable() async {
+        let selection = TransferSelection()
+        let (sut, stop) = await startMonitoring(
+            snapshot: [
+                .init(fileName: "book.pdf", tag: 1),
+                .init(fileName: "audio.mp3", tag: 2)
+            ],
+            selection: selection
+        )
+        defer { stop() }
+        sut.searchText = "book"
+
+        selection.toggleSelectAll()
+
+        #expect(selection.selectedTags == [1])
+    }
+
+    @Test func narrowingTheQueryDropsHiddenRowsFromTheSelection() async {
+        let selection = TransferSelection()
+        let (sut, stop) = await startMonitoring(
+            snapshot: [
+                .init(fileName: "book.pdf", tag: 1),
+                .init(fileName: "audio.mp3", tag: 2)
+            ],
+            selection: selection
+        )
+        defer { stop() }
+        selection.toggleSelectAll()
+
+        sut.searchText = "audio"
+
+        #expect(selection.selectedTags == [2])
+    }
+
     // MARK: - Teardown
 
     @Test func monitorEndPrunesThisTabsRowsFromTheSharedRegistry() async {
@@ -258,12 +429,45 @@ struct TransferTabListViewModelTests {
 
     // MARK: - Helpers
 
+    /// Monitors over an event stream that stays open until `stop` is called, returning once
+    /// the snapshot has landed. Query changes have to happen while monitoring is live: its end
+    /// prunes the tab's rows from the shared registry, which the search filter re-reads.
+    private func startMonitoring(
+        tab: TransfersTab = .completed,
+        snapshot: [TransferEntity],
+        selection: TransferSelection = TransferSelection(),
+        searchText: String = "",
+        onSearchTextChanged: @escaping @MainActor (String) -> Void = { _ in },
+        searchDebounce: TransferTabListViewModel.SearchPublisherDebounce = { $0 }
+    ) async -> (sut: TransferTabListViewModel, stop: () -> Void) {
+        let (events, continuation) = AsyncStream<TransferTabEvent>.makeStream()
+        let sut = makeSUT(
+            tab: tab,
+            itemsUseCase: MockMonitorTransferTabItemsUseCase(
+                snapshot: snapshot,
+                events: events.eraseToAnyAsyncSequence()
+            ),
+            selection: selection,
+            searchText: searchText,
+            onSearchTextChanged: onSearchTextChanged,
+            searchDebounce: searchDebounce
+        )
+        Task { await sut.monitorTransferEvents() }
+        while !sut.isLoaded {
+            await Task.yield()
+        }
+        return (sut, { continuation.finish() })
+    }
+
     private func makeSUT(
         tab: TransfersTab = .active,
         snapshot: [TransferEntity] = [],
         events: [TransferTabEvent] = [],
         registry: TransferRegistry = TransferRegistry(),
         selection: TransferSelection = TransferSelection(),
+        searchText: String = "",
+        onSearchTextChanged: @escaping @MainActor (String) -> Void = { _ in },
+        searchDebounce: TransferTabListViewModel.SearchPublisherDebounce = { $0 },
         throttle: @escaping TransferTabListViewModel.FlushPublisherThrottle = { $0 }
     ) -> TransferTabListViewModel {
         makeSUT(
@@ -274,6 +478,9 @@ struct TransferTabListViewModelTests {
             ),
             registry: registry,
             selection: selection,
+            searchText: searchText,
+            onSearchTextChanged: onSearchTextChanged,
+            searchDebounce: searchDebounce,
             throttle: throttle
         )
     }
@@ -283,6 +490,9 @@ struct TransferTabListViewModelTests {
         itemsUseCase: some MonitorTransferTabItemsUseCaseProtocol,
         registry: TransferRegistry = TransferRegistry(),
         selection: TransferSelection = TransferSelection(),
+        searchText: String = "",
+        onSearchTextChanged: @escaping @MainActor (String) -> Void = { _ in },
+        searchDebounce: TransferTabListViewModel.SearchPublisherDebounce = { $0 },
         throttle: @escaping TransferTabListViewModel.FlushPublisherThrottle = { $0 }
     ) -> TransferTabListViewModel {
         TransferTabListViewModel(
@@ -296,6 +506,9 @@ struct TransferTabListViewModelTests {
                 clearTransfersUseCase: MockClearTransfersUseCase()
             ),
             selection: selection,
+            searchText: searchText,
+            onSearchTextChanged: onSearchTextChanged,
+            searchDebounce: searchDebounce,
             throttle: throttle
         )
     }
@@ -322,6 +535,11 @@ private final class SequencedItemsUseCase: MonitorTransferTabItemsUseCaseProtoco
     func events(for tab: TransfersTab) -> AnyAsyncSequence<TransferTabEvent> {
         eventList.async.eraseToAnyAsyncSequence()
     }
+}
+
+@MainActor
+private final class SearchTextRecorder {
+    var values: [String] = []
 }
 
 private struct StubTransferLocationResolver: TransferLocationResolving {
