@@ -27,6 +27,8 @@ extension TransferEntity {
             isFinished: transfer.isFinished,
             isForeignOverquota: transfer.isForeignOverquota,
             lastErrorExtended: transfer.lastErrorExtended?.toTransferErrorEntity(),
+            lastErrorType: transfer.lastErrorExtended?.toTransferErrorTypeEntity(),
+            lastErrorString: transfer.lastErrorExtended?.toTransferErrorString(transferType: transfer.type),
             isFolderTransfer: transfer.isFolderTransfer,
             folderTransferTag: transfer.folderTransferTag,
             appData: transfer.appData,

@@ -42,4 +42,16 @@ struct TransferRowStateSubtitleTests {
 
         #expect(sut.subtitle.hasPrefix("↓ 67% · "))
     }
+
+    @Test func subtitle_failedWithReason_showsTheReason() {
+        let sut = TransferRowState(direction: .upload, status: .failed, failureReason: "Access denied")
+
+        #expect(sut.subtitle == "↑ \(Strings.Localizable.Transfers.Row.failedWithReason("Access denied"))")
+    }
+
+    @Test func subtitle_failedWithoutReason_isThePlainFailedLabel() {
+        let sut = TransferRowState(status: .failed)
+
+        #expect(sut.subtitle == "↓ \(Strings.Localizable.Transfers.Tab.failed)")
+    }
 }

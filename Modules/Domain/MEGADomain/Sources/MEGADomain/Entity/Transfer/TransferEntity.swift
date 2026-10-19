@@ -30,6 +30,13 @@ public struct TransferEntity: Sendable {
     public let isFinished: Bool
     public let isForeignOverquota: Bool
     public let lastErrorExtended: TransferErrorEntity?
+    /// The full SDK error type of a failed transfer. `lastErrorExtended` can't say why a
+    /// transfer failed: its SDK mapping yields only `.overquota` or `.generic`.
+    /// `nil` when there is no error, or for SDK-local errors with no `ErrorTypeEntity` case.
+    public let lastErrorType: ErrorTypeEntity?
+    /// The SDK's English description of the last error for this transfer's direction,
+    /// which doubles as its localization key. `nil` when there is no error.
+    public let lastErrorString: String?
     public let isFolderTransfer: Bool
     public let folderTransferTag: Int
     public let appData: String?
@@ -37,7 +44,7 @@ public struct TransferEntity: Sendable {
     public let priority: UInt64
     public let stage: TransferStageEntity
     
-    public init(type: TransferTypeEntity, transferString: String?, startTime: Date?, transferredBytes: Int, totalBytes: Int, path: String?, parentPath: String?, nodeHandle: HandleEntity, parentHandle: HandleEntity, startPos: Int?, endPos: Int?, fileName: String?, numRetry: Int, maxRetries: Int, tag: Int, speed: Int, deltaSize: Int?, updateTime: Date?, publicNode: NodeEntity?, isStreamingTransfer: Bool, isFinished: Bool, isForeignOverquota: Bool, lastErrorExtended: TransferErrorEntity?, isFolderTransfer: Bool, folderTransferTag: Int, appData: String?, state: TransferStateEntity, priority: UInt64, stage: TransferStageEntity) {
+    public init(type: TransferTypeEntity, transferString: String?, startTime: Date?, transferredBytes: Int, totalBytes: Int, path: String?, parentPath: String?, nodeHandle: HandleEntity, parentHandle: HandleEntity, startPos: Int?, endPos: Int?, fileName: String?, numRetry: Int, maxRetries: Int, tag: Int, speed: Int, deltaSize: Int?, updateTime: Date?, publicNode: NodeEntity?, isStreamingTransfer: Bool, isFinished: Bool, isForeignOverquota: Bool, lastErrorExtended: TransferErrorEntity?, lastErrorType: ErrorTypeEntity? = nil, lastErrorString: String? = nil, isFolderTransfer: Bool, folderTransferTag: Int, appData: String?, state: TransferStateEntity, priority: UInt64, stage: TransferStageEntity) {
         self.type = type
         self.transferString = transferString
         self.startTime = startTime
@@ -61,6 +68,8 @@ public struct TransferEntity: Sendable {
         self.isFinished = isFinished
         self.isForeignOverquota = isForeignOverquota
         self.lastErrorExtended = lastErrorExtended
+        self.lastErrorType = lastErrorType
+        self.lastErrorString = lastErrorString
         self.isFolderTransfer = isFolderTransfer
         self.folderTransferTag = folderTransferTag
         self.appData = appData

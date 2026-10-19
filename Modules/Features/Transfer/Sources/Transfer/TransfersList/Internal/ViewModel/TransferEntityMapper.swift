@@ -37,7 +37,14 @@ public enum TransferEntityMapper {
             totalBytes: Int64(entity.totalBytes),
             speed: Int64(entity.speed),
             finishDate: finishDate,
-            errorDescription: entity.lastErrorExtended.map { String(describing: $0) },
+            failureReason: status == .failed
+                ? TransferFailureReason.localizedReason(
+                    errorType: entity.lastErrorType,
+                    errorString: entity.lastErrorString,
+                    direction: direction,
+                    isForeignOverquota: entity.isForeignOverquota
+                )
+                : nil,
             location: location,
             canViewInFolder: canViewInFolder
         )

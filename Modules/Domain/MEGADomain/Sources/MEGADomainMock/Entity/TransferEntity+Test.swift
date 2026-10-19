@@ -25,6 +25,8 @@ public extension TransferEntity {
          isFinished: Bool = false,
          isForeignOverquota: Bool = false,
          lastErrorExtended: TransferErrorEntity? = nil,
+         lastErrorType: ErrorTypeEntity? = nil,
+         lastErrorString: String? = nil,
          isFolderTransfer: Bool = false,
          folderTransferTag: Int = 0,
          appData: String? = nil,
@@ -32,6 +34,6 @@ public extension TransferEntity {
          priority: UInt64 = 0,
          stage: TransferStageEntity = .none,
          isTesting: Bool = true) {
-        self.init(type: type, transferString: transferString, startTime: startTime, transferredBytes: transferredBytes, totalBytes: totalBytes, path: path, parentPath: parentPath, nodeHandle: nodeHandle, parentHandle: parentHandle, startPos: startPos, endPos: endPos, fileName: fileName, numRetry: numRetry, maxRetries: maxRetries, tag: tag, speed: speed, deltaSize: deltaSize, updateTime: updateTime, publicNode: publicNode, isStreamingTransfer: isStreamingTransfer, isFinished: isFinished, isForeignOverquota: isForeignOverquota, lastErrorExtended: lastErrorExtended, isFolderTransfer: isFolderTransfer, folderTransferTag: folderTransferTag, appData: appData, state: state, priority: priority, stage: stage)
+        self.init(type: type, transferString: transferString, startTime: startTime, transferredBytes: transferredBytes, totalBytes: totalBytes, path: path, parentPath: parentPath, nodeHandle: nodeHandle, parentHandle: parentHandle, startPos: startPos, endPos: endPos, fileName: fileName, numRetry: numRetry, maxRetries: maxRetries, tag: tag, speed: speed, deltaSize: deltaSize, updateTime: updateTime, publicNode: publicNode, isStreamingTransfer: isStreamingTransfer, isFinished: isFinished, isForeignOverquota: isForeignOverquota, lastErrorExtended: lastErrorExtended, lastErrorType: lastErrorType, lastErrorString: lastErrorString, isFolderTransfer: isFolderTransfer, folderTransferTag: folderTransferTag, appData: appData, state: state, priority: priority, stage: stage)
     }
 }

@@ -80,6 +80,21 @@ struct TransferRowStateAccessibilityTests {
         #expect(sut.accessibilityValue.isEmpty)
     }
 
+    @Test func failedWithReason_readsTheReason() {
+        let sut = TransferEntityMapper.rowState(
+            for: TransferEntity(
+                type: .download,
+                fileName: "photo.jpg",
+                lastErrorType: .resourceNotExists,
+                lastErrorString: "Not found",
+                state: .failed
+            ),
+            isRetryable: false
+        )
+
+        #expect(sut.accessibilityLabel == "photo.jpg, \(Strings.Localizable.Transfers.Row.failedWithReason(Strings.Localizable.notFound))")
+    }
+
     /// The visible subtitle carries `↑`, `·` separators, byte counts and a speed —
     /// none of which reads back usefully — so the label must not just mirror it.
     @Test func label_isNotTheVisibleSubtitle() {

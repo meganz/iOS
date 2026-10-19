@@ -7,7 +7,8 @@ extension TransferRowState {
         progress: Double = 0,
         transferredBytes: Int64 = 0,
         totalBytes: Int64 = 0,
-        speed: Int64 = 0
+        speed: Int64 = 0,
+        failureReason: String? = nil
     ) {
         self.init(
             id: 0,
@@ -19,7 +20,7 @@ extension TransferRowState {
             totalBytes: totalBytes,
             speed: speed,
             finishDate: nil,
-            errorDescription: nil,
+            failureReason: failureReason,
             location: nil,
             canViewInFolder: true,
             isRetryable: false

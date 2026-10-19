@@ -33,7 +33,9 @@ public struct TransferRowState: Sendable, Equatable {
     public var totalBytes: Int64
     public var speed: Int64
     public var finishDate: Date?
-    public var errorDescription: String?
+    /// Localized reason a failed transfer failed, shown as "Failed: <reason>".
+    /// `nil` when unknown — the row then shows the plain "Failed" label.
+    public var failureReason: String?
 
     /// File system path shown on the Completed row's second line: the destination
     /// folder's cloud path for uploads, or the local destination folder for
@@ -69,7 +71,7 @@ public struct TransferRowState: Sendable, Equatable {
         case .queued:
             return "\(arrow) Queued"
         case .failed:
-            return "\(arrow) \(Strings.Localizable.Transfers.Tab.failed)"
+            return "\(arrow) \(failedText)"
         case .cancelled:
             return "\(arrow) \(Strings.Localizable.cancelled)"
         case .completed:
@@ -77,6 +79,12 @@ public struct TransferRowState: Sendable, Equatable {
             guard let finishDate else { return total }
             return "\(total) · \(DateFormatter.dateMediumTimeShort().localisedString(from: finishDate))"
         }
+    }
+
+    /// "Failed: <reason>" when the reason is known, otherwise "Failed".
+    private var failedText: String {
+        guard let failureReason else { return Strings.Localizable.Transfers.Tab.failed }
+        return Strings.Localizable.Transfers.Row.failedWithReason(failureReason)
     }
 
     static func progressText(
@@ -116,7 +124,7 @@ public struct TransferRowState: Sendable, Equatable {
         case .queued: Strings.Localizable.queued
         case .paused: Strings.Localizable.paused
         case .completed: Strings.Localizable.Transfers.Tab.completed
-        case .failed: Strings.Localizable.Transfers.Tab.failed
+        case .failed: failedText
         case .cancelled: Strings.Localizable.cancelled
         }
     }

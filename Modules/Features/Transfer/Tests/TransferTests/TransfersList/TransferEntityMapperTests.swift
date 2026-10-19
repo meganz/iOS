@@ -129,6 +129,58 @@ struct TransferEntityMapperFailedRowsTests {
         #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
     }
 
+    @Test func failedDownload_withError_showsTheReason() {
+        let entity = TransferEntity(
+            type: .download,
+            fileName: "a.txt",
+            lastErrorType: .resourceAdministrativelyBlocked,
+            state: .failed
+        )
+
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
+
+        let reason = Strings.Localizable.Transfer.Error.termsOfServiceViolation
+        #expect(state.failureReason == reason)
+        #expect(state.subtitle == "↓ \(Strings.Localizable.Transfers.Row.failedWithReason(reason))")
+    }
+
+    @Test func failedLocalHTTPDownload_blocked_showsTheTermsOfServiceReason() {
+        let entity = TransferEntity(
+            type: .localHTTPDownload,
+            fileName: "a.txt",
+            lastErrorType: .resourceAdministrativelyBlocked,
+            state: .failed
+        )
+
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
+
+        let reason = Strings.Localizable.Transfer.Error.termsOfServiceViolation
+        #expect(state.failureReason == reason)
+        #expect(state.subtitle == "↓ \(Strings.Localizable.Transfers.Row.failedWithReason(reason))")
+    }
+
+    @Test func failedUpload_toForeignOverquotaShare_showsTheShareOwnerReason() {
+        let entity = TransferEntity(
+            type: .upload,
+            isForeignOverquota: true,
+            lastErrorType: .quotaExceeded,
+            state: .failed
+        )
+
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
+
+        #expect(state.failureReason == Strings.Localizable.Transfer.Cell.ShareOwnerStorageQuota.infoLabel)
+    }
+
+    @Test func cancelledTransfer_neverShowsAReason() {
+        let entity = TransferEntity(type: .upload, lastErrorType: .accessDenied, state: .cancelled)
+
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
+
+        #expect(state.failureReason == nil)
+        #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
+    }
+
     @Test("isRetryable is passed through verbatim — the decision belongs to TransferRetryPolicy")
     func isRetryableIsPassedThrough() {
         let entity = TransferEntity(type: .upload, state: .failed)
