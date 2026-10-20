@@ -1,3 +1,5 @@
+import MEGADomain
+
 enum RecentActionBucketItemsEditingState {
     case inactive
     case active(selectedCount: Int)
@@ -12,8 +14,8 @@ struct RecentActionBucketItemsNavigationTitle {
     }
     
     enum SubtitleType {
-        /// Editing is inactive, associated values are parent folder name and bucket nodes count
-        case addedBy(String, Int)
+        /// Editing is inactive, associated values are parent folder and bucket nodes count
+        case addedBy(NodeEntity, Int)
         /// While editing, do not show subtitle.
         case none
     }
@@ -43,8 +45,8 @@ struct RecentActionBucketItemsTitleUseCase: RecentActionBucketItemsTitleUseCaseP
             subtitle = .none
         case .inactive:
             title = .all(bucket.nodes.count)
-            subtitle = if let parentFolderName = bucket.parent?.name {
-                .addedBy(parentFolderName, bucket.nodes.count)
+            subtitle = if let parentFolder = bucket.parent {
+                .addedBy(parentFolder, bucket.nodes.count)
             } else {
                 .none
             }

@@ -15,7 +15,7 @@ struct RecentActionBucketModelMapper {
         RecentActionBucketModel(
             thumbnail: thumbnail(bucketType: bucket.type),
             title: title(bucketType: bucket.type),
-            parentFolderName: bucket.parent?.name ?? "",
+            parentFolderName: bucket.parent?.recentParentFolderName ?? "",
             changedBy: changedBy(changesType: bucket.changesType, changesOwnerType: bucket.changesOwnerType),
             isShared: isShared(shareOriginType: bucket.shareOriginType),
             isUpdate: bucket.changesType == .updatedFiles

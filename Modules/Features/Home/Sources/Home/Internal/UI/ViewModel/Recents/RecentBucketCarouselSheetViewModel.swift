@@ -60,7 +60,7 @@ final class RecentBucketCarouselSheetViewModel: ObservableObject {
     private static func makeHeader(for bucket: RecentActionBucketEntity) -> Header {
         Header(
             icon: headerIcon(for: bucket.type),
-            title: bucket.parent?.name ?? "",
+            title: bucket.parent?.recentParentFolderName ?? "",
             subtitle: headerSubtitle(for: bucket.type)
         )
     }

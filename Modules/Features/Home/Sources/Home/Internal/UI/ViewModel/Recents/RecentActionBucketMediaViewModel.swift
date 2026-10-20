@@ -183,9 +183,9 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
 extension RecentActionBucketItemsNavigationTitle {
     var displayableSubtitle: String? {
         switch subtitle {
-        case let .addedBy(parentName, nodesCount):
+        case let .addedBy(parentFolder, nodesCount):
             Strings.Localizable.Recents.BucketDetails.subtitle(nodesCount)
-                .replacingOccurrences(of: "[A]", with: parentName)
+                .replacingOccurrences(of: "[A]", with: parentFolder.recentParentFolderName)
         case .none:
             nil
         }
