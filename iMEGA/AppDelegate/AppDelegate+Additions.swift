@@ -583,9 +583,7 @@ extension AppDelegate {
             
         default:
             CrashlyticsLogger.log("MEGAChatSDK onDBError occurred. Error \(error) with message \(message)")
-            MEGAChatSdk.shared.deleteMegaChatApi()
-            MEGASdk.shared.deleteMegaApi()
-            MEGASdk.sharedFolderLink.deleteMegaApi()
+            AppDelegate.deleteSharedSdksBeforeExit()
             exit(0)
         }
     }
@@ -1044,6 +1042,17 @@ extension AppDelegate {
 
     @objc var shouldSkipSdkTeardownOnTermination: Bool {
         AppDelegate.skipSdkTeardownOnTermination
+    }
+
+    /// Delete the shared SDKs ahead of a manual exit(0), unless teardown is skipped by the remote flag.
+    /// Background threads (e.g. NSURLSession delegates) can still be using the SDKs while the process exits.
+    nonisolated static func deleteSharedSdksBeforeExit() {
+        guard !skipSdkTeardownOnTermination else {
+            MEGALogDebug("[Teardown] Skipped SDK teardown before exit (remote flag on)")
+            return
+        }
+
+        MEGASdkCleanUp.deleteSharedSdks()
     }
 
     /// Perform custom clean up actions upon app termination by exit()
