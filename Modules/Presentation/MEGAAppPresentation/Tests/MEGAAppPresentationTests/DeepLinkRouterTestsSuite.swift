@@ -8,10 +8,11 @@ struct DeepLinkRouterTestSuite {
     // MARK: - Helpers
     @MainActor
     private static func makeSUTForExternalNavigation(
-        openResult: Bool,
+        canOpenURLResult: Bool,
+        openResult: Bool = true,
         app: MEGAApp
     ) -> (router: DeepLinkRouter, mockAppLauncher: MockAppLauncher) {
-        let mockAppLauncher = MockAppLauncher(openResult: openResult)
+        let mockAppLauncher = MockAppLauncher(canOpenURLResult: canOpenURLResult, openResult: openResult)
         let appOpener = AppOpener(
             opener: mockAppLauncher,
             app: app
@@ -35,6 +36,7 @@ struct DeepLinkRouterTestSuite {
     ) {
         router.openApp()
         #expect(appLauncher.openedURLs.map(\.absoluteString) == expectedURLs, "Expected \(expectedURLs) to be opened in order, but got \(appLauncher.openedURLs.map(\.absoluteString)).")
+        #expect(appLauncher.canOpenURL_calledTimes == 1, "Expected canOpenURL to be called once.")
     }
     
     // MARK: - App Link Tests
@@ -48,7 +50,27 @@ struct DeepLinkRouterTestSuite {
         ])
         func vpnLinkShouldOpenVPNAppIfInstalled(app: MEGAApp) {
             let (router, mockAppLauncher) = makeSUTForExternalNavigation(
-                openResult: true,
+                canOpenURLResult: true,
+                app: app
+            )
+            
+            assertOpenedURLs(
+                router: router,
+                expectedURLs: [app.scheme],
+                appLauncher: mockAppLauncher
+            )
+        }
+        
+        @MainActor
+        @Test("Cancelling the system prompt to open an installed app should not open the App Store", arguments: [
+            MEGAApp.vpn,
+            MEGAApp.pwm
+        ])
+        func cancelledOpenOfInstalledAppShouldNotOpenAppStore(app: MEGAApp) {
+            // The open reports `false` when the user cancels the "Open in …?" prompt.
+            let (router, mockAppLauncher) = makeSUTForExternalNavigation(
+                canOpenURLResult: true,
+                openResult: false,
                 app: app
             )
             
@@ -66,20 +88,46 @@ struct DeepLinkRouterTestSuite {
         ])
         func vpnLinkShouldOpenAppStoreIfAppNotInstalled(app: MEGAApp) {
             let (router, mockAppLauncher) = makeSUTForExternalNavigation(
-                openResult: false,
+                canOpenURLResult: false,
                 app: app
             )
             
-            // The app scheme is tried first; the system reports it could not be opened, so the App Store follows.
             assertOpenedURLs(
                 router: router,
-                expectedURLs: [app.scheme, app.appStoreURL],
+                expectedURLs: [app.appStoreURL],
                 appLauncher: mockAppLauncher
             )
         }
     }
     
     // MARK: - In-App Navigation Tests
+    @Suite("Logging Tests - Verifies what is logged when the app is not opened.")
+    struct LoggingTests {
+        @MainActor
+        @Test("Logs only when the app is not installed or not opened", arguments: [
+            (canOpenURLResult: true, openResult: true, expectedLog: nil),
+            (canOpenURLResult: true, openResult: false, expectedLog: "was not opened: cancelled by the user or failed"),
+            (canOpenURLResult: false, openResult: true, expectedLog: "is not installed according to canOpenURL")
+        ])
+        func logsWhenAppIsNotOpened(canOpenURLResult: Bool, openResult: Bool, expectedLog: String?) {
+            var logs: [String] = []
+            let appOpener = AppOpener(
+                opener: MockAppLauncher(canOpenURLResult: canOpenURLResult, openResult: openResult),
+                app: .vpn,
+                logHandler: { logs.append($0) }
+            )
+
+            appOpener.openApp()
+
+            if let expectedLog {
+                #expect(logs.count == 1)
+                #expect(logs.first?.contains(expectedLog) == true)
+            } else {
+                #expect(logs.isEmpty)
+            }
+        }
+    }
+
     @Suite("In-App Navigation Tests - Verifies behavior for internal navigation within the app.")
     struct InAppNavigationTests {
         
