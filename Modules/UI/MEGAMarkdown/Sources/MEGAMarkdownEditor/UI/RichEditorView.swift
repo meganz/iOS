@@ -10,11 +10,14 @@ struct RichEditorView: View {
     var body: some View {
         let model = adapter.model
         RichEditorRowList(adapter: adapter, baseURL: baseURL)
+            // The rows scroll behind the glass toolbar. The adapter adds the toolbar to the bottom inset.
+            .ignoresSafeArea(.container, edges: .bottom)
             // Figma page color in both modes. Without it dark mode shows the system black.
             .background(TokenColors.Background.page.swiftUI.ignoresSafeArea())
             .background { RichIdleSaver(model: model, delay: idleDelay) }
             .safeAreaInset(edge: .bottom) {
                 RichEditorControls(model: model)
+                    .onGeometryChange(for: CGFloat.self) { $0.frame(in: .global).minY } action: { adapter.toolbarTop = $0 }
             }
             .modifier(LinkAlert(model: model) {
                 model.setFocused(true)

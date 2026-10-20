@@ -24,6 +24,12 @@ struct RichKeyboardTests {
         NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
+    /// The rows scroll behind the toolbar, so the inset also clears the part of the list the toolbar covers.
+    private func toolbarCover(_ harness: RichListHarness) throws -> CGFloat {
+        let toolbarTop = try #require(harness.adapter.toolbarTop)
+        return harness.list.view.convert(harness.list.view.bounds, to: nil).maxY - toolbarTop
+    }
+
     @Test func lastRowScrollsAboveTheKeyboard() async throws {
         let harness = try RichListHarness(Self.paragraphs, height: 700)
         defer {
@@ -43,7 +49,8 @@ struct RichKeyboardTests {
         #expect(lastFrame.maxY <= Self.keyboardTop + 1, "last row ends at \(lastFrame.maxY)")
         hideKeyboard()
         try await harness.settle()
-        #expect(view.contentInset.bottom == RichRowAdapter.bottomInset)
+        let toolbar = try toolbarCover(harness)
+        #expect(view.contentInset.bottom == RichRowAdapter.bottomInset + toolbar)
     }
 
     /// The scroll indicator stops above the keyboard, and the inset goes back when the keyboard hides.
@@ -56,15 +63,17 @@ struct RichKeyboardTests {
         let view = harness.list.view
         showKeyboard()
         try await harness.settle()
-        // The list ends a little above the window bottom, so the keyboard covers less than 300 points of it.
+        // The list reaches the window bottom behind the toolbar, so the keyboard covers 300 points of it.
         let covered = view.convert(view.bounds, to: nil).maxY - Self.keyboardTop
-        #expect(covered > 0 && covered < 300)
+        #expect(covered == 300)
         #expect(view.contentInset.bottom == RichRowAdapter.bottomInset + covered)
         #expect(view.verticalScrollIndicatorInsets.bottom == covered)
         hideKeyboard()
         try await harness.settle()
-        #expect(view.contentInset.bottom == RichRowAdapter.bottomInset)
-        #expect(view.verticalScrollIndicatorInsets.bottom == 0)
+        let toolbar = try toolbarCover(harness)
+        #expect(toolbar > 0)
+        #expect(view.contentInset.bottom == RichRowAdapter.bottomInset + toolbar)
+        #expect(view.verticalScrollIndicatorInsets.bottom == toolbar)
     }
 
     /// Select All keeps the place, like a system text view.

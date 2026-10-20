@@ -54,6 +54,10 @@ final class RichRowAdapter: NSObject {
     /// Space below the last row, without the keyboard.
     static let bottomInset = TokenSpacing._5
     private(set) lazy var keyboard = makeKeyboardOverlap()
+    /// Top of the formatting toolbar in window coordinates. nil when the editor shows no toolbar.
+    var toolbarTop: CGFloat? {
+        didSet { if toolbarTop != oldValue { updateKeyboardInset() } }
+    }
 
     init(model: RichEditorModel, load: RichEditorLoad) {
         self.model = model
@@ -101,10 +105,10 @@ final class RichRowAdapter: NSObject {
         return keyboard
     }
 
-    /// The last rows can scroll above the keyboard: the bottom inset grows by the part the keyboard covers.
+    /// The last rows can scroll above the keyboard and the toolbar: the bottom inset grows by the part they cover.
     /// The container never sets insets itself, so the editor does.
     func updateKeyboardInset() {
-        let overlap = keyboard.overlap(with: list.view)
+        let overlap = max(keyboard.overlap(with: list.view), toolbarOverlap())
         let bottom = Self.bottomInset + overlap
         guard list.view.contentInset.bottom != bottom else { return }
         list.view.contentInset.bottom = bottom
@@ -112,6 +116,13 @@ final class RichRowAdapter: NSObject {
         if let item = list.pinnedItem, let textView = textView(forItem: item), textView.isFirstResponder {
             scrollCaretToVisible(in: textView)
         }
+    }
+
+    /// The toolbar sits above the keyboard, so it covers at least as much as the keyboard does.
+    private func toolbarOverlap() -> CGFloat {
+        guard let toolbarTop, let superview = list.view.superview, list.view.window != nil else { return 0 }
+        // The frame, not the bounds: the bounds follow the scroll offset and add rounding noise to the inset.
+        return max(0, superview.convert(list.view.frame, to: nil).maxY - toolbarTop)
     }
 
     private func makeResponder() -> RichSelectionResponder {
