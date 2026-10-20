@@ -2,6 +2,7 @@ import UIKit
 
 @MainActor
 public protocol URLOpening {
+    func canOpenURL(_ url: URL) -> Bool
     func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any], completionHandler completion: (@MainActor @Sendable (Bool) -> Void)?)
 }
 
@@ -36,16 +37,19 @@ public struct AppOpener {
     
     /// Opens the external app, or its App Store page when the app is not installed.
     ///
-    /// The app is opened without checking first: `canOpenURL` is deprecated, and the system reports
-    /// whether the open succeeded, which is the same information.
+    /// Whether the app is installed is checked with `canOpenURL` before opening it. The result of the open
+    /// can't tell that apart: it is also `false` when the user cancels the system's "Open in …?" prompt,
+    /// which must not lead to the App Store.
     public func openApp() {
-        guard let appURL = URL(string: app.scheme) else {
+        guard let appURL = URL(string: app.scheme), opener.canOpenURL(appURL) else {
+            // Also reached when the scheme is missing from `LSApplicationQueriesSchemes`
+            logHandler?("[DeepLink] \(app) is not installed according to canOpenURL, opening the App Store")
             openAppStore()
             return
         }
-        opener.open(appURL, options: [:]) { opened in
+        opener.open(appURL, options: [:]) { [logHandler, app] opened in
             guard !opened else { return }
-            openAppStore()
+            logHandler?("[DeepLink] \(appURL) for \(app) was not opened: cancelled by the user or failed")
         }
     }
 

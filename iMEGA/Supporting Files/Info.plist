@@ -380,5 +380,10 @@
 			<string>3qcr597p9d.skadnetwork</string>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>megavpn</string>
+		<string>megapass</string>
+	</array>
 </dict>
 </plist>
