@@ -193,6 +193,7 @@ struct RevampedSearchResultRowView: View {
                 .font(.body)
                 .fontWeight(.regular)
                 .lineLimit(1)
+                .truncationMode(.middle)
                 .foregroundStyle(viewModel.titleTextColor)
                 .accessibilityLabel(viewModel.accessibilityLabel)
             propertyViewsFor(placement: .prominent(.trailing))
