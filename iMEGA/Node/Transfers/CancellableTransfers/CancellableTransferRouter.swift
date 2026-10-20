@@ -9,7 +9,7 @@ import MEGAPreference
 import MEGARepo
 
 @MainActor
-final class CancellableTransferRouter: NSObject, CancellableTransferRouting, CancellableTransferFlowLifecycleRouting, TransferWidgetRouting {
+final class CancellableTransferRouter: NSObject, CancellableTransferRouting, CancellableTransferFlowLifecycleRouting {
     
     @MainActor
     struct Factory {
@@ -257,11 +257,5 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
         Task { @MainActor [weak self] in
             self?.wrapper = nil
         }
-    }
-    
-    func prepareTransfersWidget() {
-        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
     }
 }

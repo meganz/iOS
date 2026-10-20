@@ -106,28 +106,10 @@ extension SaveToPhotosCoordinator {
             messageDisplay: CustomProgressSVGErrorMessageDisplay(),
             isFolderLink: isFolderLink)
     }
-    
-    static func customProgressSVGErrorMessageDisplay(
-        isFolderLink: Bool = false,
-        configureProgress: @escaping () -> Void
-    ) -> SaveToPhotosCoordinator {
-        SaveToPhotosCoordinator(
-            messageDisplay: CustomProgressSVGErrorMessageDisplay(
-                configureProgress: configureProgress),
-            isFolderLink: isFolderLink)
-    }
 }
 
 struct CustomProgressSVGErrorMessageDisplay: SaveToPhotosMessageDisplay {
-    private let configureProgress: (() -> Void)?
-    
-    init(configureProgress: (() -> Void)? = nil) {
-        self.configureProgress = configureProgress
-    }
-    
-    func showProgress() {
-        configureProgress?()
-    }
+    func showProgress() {}
     
     func showError(_ error: any Error) {
         SVProgressHUD.dismiss()

@@ -28,8 +28,6 @@ private extension ExportFileAction {
 @MainActor
 protocol ExportFileViewRouting {
     func exportedFiles(urls: [URL], completion: (@Sendable () async -> Void)?)
-    func showProgressView()
-    func hideProgressView()
     func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async
 }
 
@@ -65,7 +63,6 @@ final class ExportFileViewModel: ViewModelType {
     func dispatch(_ action: ExportFileAction) {
         guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
         cancelCurrentTask()
-        router.showProgressView()
         
         currentTask = Task {
             await executeExportAction(action)
@@ -152,7 +149,6 @@ final class ExportFileViewModel: ViewModelType {
         } catch {
             MEGALogError("[ExportFile] \(errorMessage): \(error.localizedDescription)")
         }
-        router.hideProgressView()
     }
 
     /// Reported whether or not anything arrived, including when the whole selection failed — a batch that

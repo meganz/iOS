@@ -66,12 +66,6 @@
     [self setupNavigationBarButtons];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     

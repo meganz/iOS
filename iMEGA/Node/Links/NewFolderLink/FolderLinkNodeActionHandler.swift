@@ -221,11 +221,7 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
 
     private func saveToPhotos(_ nodes: [MEGANode]) {
         SaveToPhotosCoordinator
-            .customProgressSVGErrorMessageDisplay(
-                isFolderLink: true,
-                configureProgress: {
-                    TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                })
+            .SVProgressErrorOnly(isFolderLink: true)
             .saveToPhotos(nodes: nodes.toNodeEntities())
     }
     

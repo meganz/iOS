@@ -10,7 +10,6 @@ extension MainTabBarController {
             priority: .normal
         )
         
-        shouldUpdateProgressViewLocation()
         showPSA(shouldAddSafeAreaCoverView: tabBar.isHidden)
     }
     

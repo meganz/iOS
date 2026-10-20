@@ -525,9 +525,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             return
         }
         SaveToPhotosCoordinator
-            .customProgressSVGErrorMessageDisplay(configureProgress: {
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            })
+            .SVProgressErrorOnly()
             .saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId)
     }
 }

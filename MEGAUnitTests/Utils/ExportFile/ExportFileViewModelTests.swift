@@ -18,8 +18,6 @@ struct ExportFileViewModelTestSuite {
         
         await sut.currentTask?.value
         
-        #expect(router.showProgressView_calledTimes == 1, "Expected showProgressView to be called once.")
-        #expect(router.hideProgressView_calledTimes == 1, "Expected hideProgressView to be called once.")
         #expect(router.exportedFiles_calledTimes == 1, "Expected exportedFiles to be called once.")
         #expect(router.exportedUrls == expectedURLs, "Expected exported URLs to be \(expectedURLs) but got \(router.exportedUrls).")
         #expect(analyticsUseCase.type == .download(.exportFile), "Expected analytics event to be sent.")
@@ -111,13 +109,13 @@ struct ExportFileViewModelTestSuite {
         )
         @MainActor
         func overDiskQuota(action: ExportFileAction) async throws {
-            let (sut, router, _, _, _) = makeSUT(isPaywalled: true)
+            let (sut, _, _, _, _) = makeSUT(isPaywalled: true)
             
             sut.dispatch(action)
             
             try await Task.sleep(nanoseconds: 100_000_000)
             
-            #expect(router.showProgressView_calledTimes == 0, "Expected progress view should not be shown for action: \(action).")
+            #expect(sut.currentTask == nil, "Expected no export to start for action: \(action).")
         }
     }
     
@@ -216,7 +214,6 @@ struct ExportFileViewModelTestSuite {
 
             #expect(router.warnDownloadIncompleteInvocations.count == 1, "The warning itself still belongs on screen.")
             #expect(router.exportedFiles_calledTimes == 0)
-            #expect(router.hideProgressView_calledTimes == 1, "The progress view must not be left behind either.")
         }
     }
 
@@ -550,7 +547,6 @@ struct ExportFileViewModelTestSuite {
             sut.dispatch(action)
             sut.cancelCurrentTask()
             
-            #expect(router.showProgressView_calledTimes == 1, "Expected progress view to be shown exactly once after starting export action: \(action).")
             #expect(router.exportedFiles_calledTimes == 0, "No files should be exported after the task was canceled for action: \(action).")
             #expect(exportUseCase.exportNode_calledTimes == 0, "Expected no node exports to be attempted after the export task was canceled for action: \(action).")
             #expect(exportUseCase.exportNodes_calledTimes == 0, "Expected no multiple node exports to be attempted after the export task was canceled for action: \(action).")

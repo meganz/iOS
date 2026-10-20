@@ -25,7 +25,6 @@ final class ImportAlbumViewModel: ObservableObject {
     private let permissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
     private let accountUseCase: any AccountUseCaseProtocol
-    private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private let appDelegateRouter: any AppDelegateRouting
     private let thumbnailLoader: any ThumbnailLoaderProtocol
@@ -207,7 +206,6 @@ final class ImportAlbumViewModel: ObservableObject {
          importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
-         transferWidgetResponder: (some TransferWidgetResponderProtocol)?,
          permissionHandler: some DevicePermissionsHandling,
          tracker: some AnalyticsTracking,
          monitorUseCase: some NetworkMonitorUseCaseProtocol,
@@ -226,7 +224,6 @@ final class ImportAlbumViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.importPublicAlbumUseCase = importPublicAlbumUseCase
         self.saveMediaUseCase = saveMediaUseCase
-        self.transferWidgetResponder = transferWidgetResponder
         self.permissionHandler = permissionHandler
         self.tracker = tracker
         self.accountUseCase = accountUseCase
@@ -402,11 +399,6 @@ final class ImportAlbumViewModel: ObservableObject {
             MEGALogError("[Import Album] PhotoLibraryAccessPermissions not granted")
             return
         }
-        
-        transferWidgetResponder?.setProgressViewInKeyWindow()
-        transferWidgetResponder?.updateProgressView(bottomConstant: -140)
-        transferWidgetResponder?.bringProgressToFrontKeyWindowIfNeeded()
-        transferWidgetResponder?.showWidgetIfNeeded()
         
         showSnackBar(message: Strings.Localizable.General.SaveToPhotos.started(photosToSave.count))
         

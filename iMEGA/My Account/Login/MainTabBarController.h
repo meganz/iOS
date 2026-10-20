@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showAchievements;
 - (void)showAddContact;
 
-- (void)shouldUpdateProgressViewLocation;
 - (void)setBadgeValue:(nullable NSString *)badgeValue tabPosition:(NSInteger)tabPosition;
 @end
 

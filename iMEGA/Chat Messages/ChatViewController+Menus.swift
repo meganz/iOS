@@ -180,11 +180,7 @@ extension ChatViewController {
     
     private func saveToPhotos(node: MEGANode, chatMessage: ChatMessage, chatRoom: ChatRoomEntity) {
         SaveToPhotosCoordinator
-            .customProgressSVGErrorMessageDisplay(configureProgress: {
-                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-                TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            })
+            .SVProgressErrorOnly()
             .saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId)
     }
     

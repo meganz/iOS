@@ -756,7 +756,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testSaveToPhotos_whenSelectionModeIsActive_shouldSaveSelectedItems() async throws {
         // Arrange
-        let transferWidgetResponder = MockTransferWidgetResponder()
         let permissionHandler = MockDevicePermissionHandler(
             photoAuthorization: .authorized,
             audioAuthorized: false,
@@ -767,7 +766,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicCollectionUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
-                                           transferWidgetResponder: transferWidgetResponder,
                                            permissionHandler: permissionHandler)
         await sut.loadPublicAlbum()
 
@@ -779,11 +777,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.saveToPhotos()
         
         // Assert
-        XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 1)
-        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
-        XCTAssertEqual(transferWidgetResponder.updateProgressViewCalled, 1)
-        XCTAssertEqual(transferWidgetResponder.showWidgetIfNeededCalled, 1)
-
         XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
@@ -791,7 +784,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testSaveToPhotos_whenSelectionModeNotActive_shouldSaveAllItemsInAlbum() async throws {
         // Arrange
-        let transferWidgetResponder = MockTransferWidgetResponder()
         let permissionHandler = MockDevicePermissionHandler(
             photoAuthorization: .authorized,
             audioAuthorized: false,
@@ -803,7 +795,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicCollectionUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
-                                           transferWidgetResponder: transferWidgetResponder,
                                            permissionHandler: permissionHandler)
         
         await sut.loadPublicAlbum()
@@ -812,10 +803,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.saveToPhotos()
         
         // Assert
-        XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 1)
-        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
-        XCTAssertEqual(transferWidgetResponder.updateProgressViewCalled, 1)
-        XCTAssertEqual(transferWidgetResponder.showWidgetIfNeededCalled, 1)
         XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
@@ -823,7 +810,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testSaveToPhotos_whenPhotosLibraryPermissionRequired_shouldShowAlert() async throws {
         // Arrange
-        let transferWidgetResponder = MockTransferWidgetResponder()
         let permissionHandler = MockDevicePermissionHandler(
             photoAuthorization: .denied,
             audioAuthorized: false,
@@ -834,7 +820,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicCollectionUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
-                                           transferWidgetResponder: transferWidgetResponder,
                                            permissionHandler: permissionHandler)
         await sut.loadPublicAlbum()
 
@@ -846,8 +831,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.saveToPhotos()
         
         // Assert
-        XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 0)
-        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 0)
         XCTAssertNil(sut.snackBar)
         XCTAssertTrue(sut.showPhotoPermissionAlert)
     }
@@ -1524,7 +1507,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
-        transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
@@ -1546,7 +1528,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
             importPublicAlbumUseCase: importPublicAlbumUseCase,
             accountUseCase: accountUseCase,
             saveMediaUseCase: saveMediaUseCase,
-            transferWidgetResponder: transferWidgetResponder,
             permissionHandler: permissionHandler,
             tracker: tracker,
             monitorUseCase: monitorUseCase,
@@ -1691,7 +1672,6 @@ struct ImportAlbumViewModelTestSuite {
         importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
-        transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
@@ -1710,7 +1690,6 @@ struct ImportAlbumViewModelTestSuite {
             importPublicAlbumUseCase: importPublicAlbumUseCase,
             accountUseCase: accountUseCase,
             saveMediaUseCase: saveMediaUseCase,
-            transferWidgetResponder: transferWidgetResponder,
             permissionHandler: permissionHandler,
             tracker: tracker,
             monitorUseCase: monitorUseCase,

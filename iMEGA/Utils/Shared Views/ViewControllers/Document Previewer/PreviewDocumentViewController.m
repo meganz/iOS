@@ -277,8 +277,6 @@
 }
 
 - (IBAction)doneTapped:(id)sender {
-    [TransfersWidgetViewController.sharedTransferViewController resetToKeyWindow];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

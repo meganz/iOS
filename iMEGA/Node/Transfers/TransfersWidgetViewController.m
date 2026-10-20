@@ -58,7 +58,6 @@ static TransfersWidgetViewController* instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersWidgetViewControllerID"];
-        [instance configProgressIndicator];
     });
     return instance;
 }
@@ -119,7 +118,6 @@ static TransfersWidgetViewController* instance = nil;
         self.transfersPaused = NO;
     }
     
-    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = YES;
     [self reloadView];
     
 }
@@ -138,7 +136,6 @@ static TransfersWidgetViewController* instance = nil;
                                    msg:[NSString stringWithFormat: @"Transfers widget will disappear. Navigation bar info %@.", self.navigationController.navigationBar]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
-    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -565,7 +562,6 @@ static TransfersWidgetViewController* instance = nil;
                 [self.tableView reloadData];
                 [self updateEmptyStateIfNeeded];
                 if (![self hasActiveTransfers]) {
-                    [[TransfersWidgetViewController sharedTransferViewController].progressView configureData];
                     [self applyToolbarHidden:YES];
                 }
             }
@@ -674,10 +670,6 @@ static TransfersWidgetViewController* instance = nil;
                 [self removeAllCompletedTransfers];
             }
             [self switchEdit];
-            
-            if (![self hasActiveTransfers]) {
-                [[TransfersWidgetViewController sharedTransferViewController].progressView dismissWidget];
-            }
             break;
         default:
             break;

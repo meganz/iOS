@@ -17,7 +17,6 @@ final class CancellableTransferViewModelTests: XCTestCase {
             transferType: .download)
         
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
-        XCTAssert(router.prepareTransfersWidget_calledTimes == 1)
     }
     
     @MainActor func testAction_onViewReadyPawalled_overDiskQuotaShouldNotTransfer() {
@@ -32,17 +31,15 @@ final class CancellableTransferViewModelTests: XCTestCase {
             transferType: .download)
         
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
-        XCTAssert(router.prepareTransfersWidget_calledTimes == 0)
         XCTAssertEqual(router.transferFlowDidFinish_calledTimes, 1)
     }
 
-    @MainActor func testAction_onViewReadyWithNoTransfers_finishesFlowWithoutPreparingWidget() {
+    @MainActor func testAction_onViewReadyWithNoTransfers_finishesFlow() {
         let router = MockCancellableTransferRouter()
         let viewModel = makeSUT(router: router, transferType: .download)
 
         viewModel.dispatch(.onViewReady)
 
-        XCTAssertEqual(router.prepareTransfersWidget_calledTimes, 0)
         XCTAssertEqual(router.transferFlowDidFinish_calledTimes, 1)
     }
 
@@ -337,7 +334,7 @@ private final class PendingDownloadNodeUseCase: DownloadNodeUseCaseProtocol, @un
     }
 }
 
-final class MockCancellableTransferRouter: CancellableTransferRouting, CancellableTransferFlowLifecycleRouting, TransferWidgetRouting {
+final class MockCancellableTransferRouter: CancellableTransferRouting, CancellableTransferFlowLifecycleRouting {
     var showTransfersAlertHandler: (() -> Void)?
     var transferFlowDidFinishHandler: (() -> Void)?
     var showTransfersAlert_calledTimes = 0
@@ -346,7 +343,6 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, Cancellab
     var transferFailed_calledTimes = 0
     var transferCompletedWithError_calledTimes = 0
     var transferFlowDidFinish_calledTimes = 0
-    var prepareTransfersWidget_calledTimes = 0
     /// The `dismiss` flag of the last call, per routing method.
     var transferCancelled_dismiss: Bool?
     var transferFailed_dismiss: Bool?
@@ -379,9 +375,5 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, Cancellab
     func transferFlowDidFinish() {
         transferFlowDidFinish_calledTimes += 1
         transferFlowDidFinishHandler?()
-    }
-    
-    func prepareTransfersWidget() {
-        prepareTransfersWidget_calledTimes += 1
     }
 }

@@ -6,7 +6,6 @@
 #import "ContactDetailsViewController.h"
 #import "EmptyStateView.h"
 #import "GroupChatDetailsViewController.h"
-#import "TransfersWidgetViewController.h"
 #import "NSArray+MNZCategory.h"
 
 @import ChatRepo;
@@ -82,8 +81,6 @@
     [super viewDidAppear:animated];
     [self askNotificationPermissionsIfNeeded];
     self.navigationController.toolbarHidden = true;
-    
-    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

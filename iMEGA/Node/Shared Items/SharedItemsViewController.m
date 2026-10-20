@@ -140,11 +140,6 @@
     [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     

@@ -5,7 +5,6 @@
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
-#import "TransfersWidgetViewController.h"
 #import "MEGA-Swift.h"
 
 #import "NSObject+Debounce.h"
@@ -73,8 +72,6 @@
     [self showCameraUploadV2MigrationScreenIfNeeded];
     
     [self shouldShowMiniPlayer];
-    
-    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
 
     if (!self.hasFiredViewFirstAppeared) {
         self.hasFiredViewFirstAppeared = YES;
@@ -112,21 +109,6 @@
     MEGANavigationController *navigation = [MEGANavigationController.alloc initWithRootViewController:inviteContactVC];
     [navigation addLeftDismissButtonWithText:LocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")];
     [self presentViewController:navigation animated:YES completion:nil];
-}
-
-- (void)shouldUpdateProgressViewLocation {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for (UIView *subview in self.view.subviews) {
-            if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
-                CGFloat bottomConstant = [self updateTransferWidgetBottomConstraint];
-                [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:bottomConstant];
-                
-                [UIView animateWithDuration:0.3 animations:^{
-                    [subview layoutIfNeeded];
-                }];
-            }
-        }
-    });
 }
 
 #pragma mark - Private

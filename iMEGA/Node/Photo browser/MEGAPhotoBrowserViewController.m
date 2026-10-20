@@ -180,12 +180,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self onViewWillAppear];
     [self didMoveToIndex:self.dataProvider.currentIndex];
     [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
-    if (self.displayMode != DisplayModeTransfers) {
-        [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
-        [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-        [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:-120];
-        [TransfersWidgetViewController.sharedTransferViewController showWidgetIfNeeded];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -964,9 +958,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     pickerVC.delegate = self;
     pickerVC.api = self.api;
     pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:pickerVC animated:YES completion:^{
-        [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-    }];
+    [self presentViewController:pickerVC animated:YES completion:nil];
 }
 
 - (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {

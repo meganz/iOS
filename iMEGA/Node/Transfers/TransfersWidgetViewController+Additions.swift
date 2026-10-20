@@ -10,11 +10,7 @@ import MEGASwiftUI
 import Transfer
 import UIKit
 
-extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
-    private enum Constants {
-        static let defaultBottomAnchor: CGFloat = -60
-    }
-
+extension TransfersWidgetViewController {
     @objc
     func createTransfersWidgetViewModel() -> TransfersWidgetViewModel {
         TransfersWidgetViewModel(
@@ -33,101 +29,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
             ),
             router: NodeNavigationRouter()
         )
-    }
-    
-    @objc
-    func configProgressIndicator() {
-        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosTransferLiveActivity) {
-            TransferLiveActivityCoordinator.shared.startMonitoring()
-        }
-    }
-    
-    @objc
-    func setProgressViewInKeyWindow() {
-        guard let window = currentKeyWindow else { return }
-        showProgress(view: window, bottomAnchor: Constants.defaultBottomAnchor)
-    }
-
-    @objc
-    func bringProgressToFrontKeyWindowIfNeeded() {
-        guard let progressIndicatorView = TransfersWidgetViewController.sharedTransfer().progressView,
-              let window = currentKeyWindow else {
-            MEGALogWarning("[Transfer Widget] Failed to get progress indicator view or key window")
-            return
-        }
-
-        // Fallback: if the widget is not attached (e.g. first mount happened before the
-        // scene became active, or its previous host window has been dismissed), re-mount
-        // it on the current key window before bringing it to front.
-        if !progressIndicatorView.isDescendant(of: window) {
-            showProgress(view: window, bottomAnchor: Constants.defaultBottomAnchor)
-            return
-        }
-
-        window.bringSubviewToFront(progressIndicatorView)
-    }
-
-    /// Resolves the window the transfer widget should attach to.
-    ///
-    /// Prefers the scene-based lookup over the deprecated `UIApplication.keyWindow`,
-    /// which returns nil while the foreground scene is still `.foregroundInactive`
-    /// (the state during MainTabBar's `viewDidLoad` on first launch).
-    private var currentKeyWindow: UIWindow? {
-        let foregroundScenes = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .filter { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }
-
-        if let keyNormalWindow = foregroundScenes
-            .flatMap({ $0.windows })
-            .first(where: { $0.isKeyWindow && $0.windowLevel == .normal }) {
-            return keyNormalWindow
-        }
-
-        return foregroundScenes
-            .flatMap { $0.windows }
-            .first(where: { $0.windowLevel == .normal })
-    }
-        
-    @objc
-    func showProgress(view: UIView, bottomAnchor: CGFloat) {
-        guard let progressIndicatorView = TransfersWidgetViewController.sharedTransfer().progressView else { return }
-        
-        view.addSubview(progressIndicatorView)
-        
-        NSLayoutConstraint.deactivate([progressViewBottomConstraint, progressViewWidthConstraint, progressViewHeightConstraint, progressViewLeadingConstraint, progressViewTraillingConstraint])
-        
-        progressViewWidthConstraint = progressIndicatorView.widthAnchor.constraint(equalToConstant: 70.0)
-        progressViewHeightConstraint = progressIndicatorView.heightAnchor.constraint(equalToConstant: 70)
-
-        progressViewBottomConstraint = progressIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: bottomAnchor)
-        progressViewLeadingConstraint = progressIndicatorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 4.0)
-        progressViewTraillingConstraint = progressIndicatorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -4.0)
-
-        let transferWidgetLeft = showProgressIndicatorViewFromLeft
-        let transferWidgetSideConstraint: NSLayoutConstraint
-        if transferWidgetLeft {
-            transferWidgetSideConstraint = progressViewLeadingConstraint
-        } else {
-            transferWidgetSideConstraint = progressViewTraillingConstraint
-        }
-        
-        NSLayoutConstraint.activate([progressViewWidthConstraint, progressViewHeightConstraint, progressViewBottomConstraint, transferWidgetSideConstraint])
-    }
-    
-    @objc
-    func showWidgetIfNeeded() {
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-    }
-    
-    @objc
-    func resetToKeyWindow() {
-        setProgressViewInKeyWindow()
-        bringProgressToFrontKeyWindowIfNeeded()
-    }
-    
-    @objc
-    func updateProgressView(bottomConstant: CGFloat) {
-        progressViewBottomConstraint.constant = bottomConstant
     }
     
     @objc
@@ -171,57 +72,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc
     func fetchCompletedTransfers() -> [MEGATransfer] {
         transferInventoryUseCaseHelper.completedTransfers()
-    }
-    
-    // MARK: - Private
-    
-    @objc
-    private func tapProgressView() {
-        let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
-        
-        if transferWidgetVC.presentingViewController != nil || transferWidgetVC.isBeingPresented {
-            return
-        }
-        
-        let navigationController = MEGANavigationController(rootViewController: transferWidgetVC)
-        navigationController.navigationDelegate = self
-        navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
-        CrashlyticsLogger.log(category: .transfersWidget, "Showing transfers widget from progress view")
-        UIApplication.mnz_visibleViewController().present(navigationController, animated: true, completion: nil)
-    }
-    
-    @objc
-    private func dragTransferWidget(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        let panView = panGestureRecognizer.view
-        switch panGestureRecognizer.state {
-        case .began, .changed:
-            let translation = panGestureRecognizer.translation(in: panView)
-            panGestureRecognizer.setTranslation(.zero, in: panView)
-            guard let panViewCenterX = panView?.center.x,
-                  let panViewCenterY = panView?.center.y else { return }
-            panView?.center = CGPoint(x: panViewCenterX + translation.x, y: panViewCenterY + translation.y)
-            
-        case .ended, .cancelled:
-            let location = panView?.center
-            guard let x = location?.x else { return }
-
-            if x > ((view.window ?? currentKeyWindow)?.bounds.width ?? view.bounds.width) / 2 {
-                progressViewLeadingConstraint.isActive = false
-                progressViewTraillingConstraint.isActive = true
-                showProgressIndicatorViewFromLeft = false
-            } else {
-                progressViewLeadingConstraint.isActive = true
-                progressViewTraillingConstraint.isActive = false
-                showProgressIndicatorViewFromLeft = true
-            }
-
-            view.setNeedsLayout()
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-            
-        default: break
-        }
     }
     
     @objc
@@ -311,26 +161,6 @@ extension TransfersWidgetViewController: BottomOverlayPresenterProtocol {
     
     public func hasUpdatedContentView() -> Bool {
         additionalSafeAreaInsets.bottom != 0
-    }
-}
-
-@MainActor
-protocol TransferWidgetResponderProtocol: AnyObject {
-    
-    func setProgressViewInKeyWindow()
-    
-    func bringProgressToFrontKeyWindowIfNeeded()
-    
-    func updateProgressView(bottomConstant: CGFloat)
-    
-    func showWidgetIfNeeded()
-}
-
-extension TransfersWidgetViewController: MEGANavigationControllerDelegate {
-    public func navigationControllerDidDismiss(_ navigationController: UINavigationController!) {
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.showMiniPlayer()
-        }
     }
 }
 

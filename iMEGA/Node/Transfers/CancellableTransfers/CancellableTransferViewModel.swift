@@ -4,13 +4,9 @@ import MEGADomain
 import MEGAL10n
 import MEGASwift
 
-protocol TransferWidgetRouting: Routing {
-    func prepareTransfersWidget()
-}
-
 @MainActor
 final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, Sendable {
-    typealias routingProtocols = CancellableTransferRouting & CancellableTransferFlowLifecycleRouting & TransferWidgetRouting
+    typealias routingProtocols = CancellableTransferRouting & CancellableTransferFlowLifecycleRouting
 
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     private let downloadNodeUseCase: any DownloadNodeUseCaseProtocol
@@ -73,7 +69,6 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                 router.transferFlowDidFinish()
                 return
             }
-            router.prepareTransfersWidget()
             switch transferType {
             case .upload:
                 if fileTransfers.isNotEmpty {

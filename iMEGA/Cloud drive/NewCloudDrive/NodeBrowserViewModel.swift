@@ -114,7 +114,6 @@ final class NodeBrowserViewModel: ObservableObject {
     private let onBack: () -> Void
     private let onCancel: () -> Void
     private let onEditingChanged: (Bool) -> Void
-    private let updateTransferWidgetHandler: () -> Void
     private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
     private let onNodeStructureChanged: () -> Void
     private let onMoreOptionsButtonTapped: (UIButton) -> Void
@@ -193,7 +192,6 @@ final class NodeBrowserViewModel: ObservableObject {
         // triggered in Recents configs by the left nav bar button
         onCancel: @escaping () -> Void,
         onEditingChanged: @escaping (Bool) -> Void,
-        updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         saveMediaDiscoverySortOrder: @escaping (MEGADomain.SortOrderEntity) -> Void,
         onNodeStructureChanged: @escaping () -> Void,
@@ -222,7 +220,6 @@ final class NodeBrowserViewModel: ObservableObject {
         self.onEditingChanged = onEditingChanged
         self.onBack = onBack
         self.onCancel = onCancel
-        self.updateTransferWidgetHandler = updateTransferWidgetHandler
         self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
         self.nodeUpdatesProvider = nodeUpdatesProvider
         self.nodeUseCase = nodeUseCase
@@ -386,7 +383,6 @@ final class NodeBrowserViewModel: ObservableObject {
         trackScreenViewEvent()
         encourageUpgradeIfNeeded()
         configureAdsVisibility(withDelay: true)
-        configureTransferWidgetVisibility()
         updateSortOrderIfNeeded()
         nodeSourceUpdatesListener.startListening()
         listenToNodeSensitivityChanges()
@@ -458,10 +454,6 @@ final class NodeBrowserViewModel: ObservableObject {
         }
     }
     
-    private func configureTransferWidgetVisibility() {
-        updateTransferWidgetHandler()
-    }
-
     private func refresh() {
         refreshViewState()
         refreshTitle()

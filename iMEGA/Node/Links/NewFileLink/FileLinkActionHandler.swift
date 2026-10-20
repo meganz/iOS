@@ -54,10 +54,7 @@ final class FileLinkActionHandler: FileLinkActionHandlerProtocol {
         guard let linkURL = URL(string: link) else { return }
 
         SaveToPhotosCoordinator
-            .customProgressSVGErrorMessageDisplay(
-                configureProgress: {
-                    TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                })
+            .SVProgressErrorOnly()
             .saveToPhotos(fileLink: FileLinkEntity(linkURL: linkURL))
     }
 

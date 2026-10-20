@@ -36,7 +36,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         }
         
         updateOverlayLayout { [weak self] in
-            self?.shouldUpdateProgressViewLocation()
             self?.bottomOverlayManager?.setItemVisibility(
                 for: .audioPlayer,
                 hidden: !shouldShowMiniPlayer
@@ -110,7 +109,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     func closeMiniPlayer() {
         hideMiniPlayer()
         resetMiniPlayerContainer()
-        shouldUpdateProgressViewLocation()
     }
     
     func resetMiniPlayerContainer() {
@@ -121,7 +119,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.showMiniPlayer()
         }
-        shouldUpdateProgressViewLocation()
     }
     
     /// Refreshes the mini player’s visibility by ensuring that both the delegate and content view
@@ -177,10 +174,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
             presenter.updateContentView(0)
         }
         return miniPlayerVisible
-    }
-    
-    @objc func updateTransferWidgetBottomConstraint() -> Float {
-        AudioPlayerManager.shared.isPlayerAlive() ? -120.0 : -60.0
     }
     
     func isTabRoot(_ viewController: UIViewController) -> Bool {

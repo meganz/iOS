@@ -2,8 +2,6 @@
 
 final class MockExportFileViewRouter: ExportFileViewRouting {
     var exportedFiles_calledTimes = 0
-    var showProgressView_calledTimes = 0
-    var hideProgressView_calledTimes = 0
     var exportedUrls: [URL] = []
     /// Kept so a test can run it, standing in for the user being done with what was shared.
     var exportedFilesCompletion: (@Sendable () async -> Void)?
@@ -18,14 +16,6 @@ final class MockExportFileViewRouter: ExportFileViewRouting {
         exportedFiles_calledTimes += 1
         exportedUrls = urls
         exportedFilesCompletion = completion
-    }
-    
-    func showProgressView() {
-        showProgressView_calledTimes += 1
-    }
-    
-    func hideProgressView() {
-        hideProgressView_calledTimes += 1
     }
     
     func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async {

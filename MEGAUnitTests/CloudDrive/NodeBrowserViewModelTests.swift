@@ -47,7 +47,6 @@ class NodeBrowserViewModelTests: XCTestCase {
         
         let sut: NodeBrowserViewModel
         var savedViewModes: [ViewModePreferenceEntity] = []
-        var updateTransferWidgetHandler: () -> Void
 
         let nodeUpdatesStream: AsyncStream<[NodeEntity]>
         let nodeUpdatesContinuation: AsyncStream<[NodeEntity]>.Continuation
@@ -66,7 +65,6 @@ class NodeBrowserViewModelTests: XCTestCase {
             node: NodeEntity,
             config: NodeBrowserConfig? = nil,
             mockAccountStorageUseCase: MockAccountStorageUseCase = MockAccountStorageUseCase(),
-            updateTransferWidgetHandler: @escaping () -> Void = {},
             sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc },
             onNodeStructureChanged: @escaping () -> Void = {},
             monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
@@ -91,7 +89,6 @@ class NodeBrowserViewModelTests: XCTestCase {
             
             var saver: (ViewModePreferenceEntity) -> Void = {_ in }
             
-            self.updateTransferWidgetHandler = updateTransferWidgetHandler
             (nodeUpdatesStream, nodeUpdatesContinuation) = AsyncStream<[NodeEntity]>.makeStream()
             let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: nodeUpdatesStream.eraseToAnyAsyncSequence())
             self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService()
@@ -177,7 +174,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onBack: {},
                 onCancel: {},
                 onEditingChanged: { _ in },
-                updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
                 saveMediaDiscoverySortOrder: { _ in },
                 onNodeStructureChanged: onNodeStructureChanged,
@@ -322,14 +318,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                 "Expected \(sortOrder) but received \(harness.sut.sortOrder)"
             )
         }
-    }
-
-    @MainActor
-    func testUpdateTransferWidget() {
-        var didUpdateTransferWidget = false
-        let harness = Harness(node: .init(), updateTransferWidgetHandler: { didUpdateTransferWidget = true })
-        harness.sut.onViewAppear()
-        XCTAssertTrue(didUpdateTransferWidget)
     }
 
     // MARK: - Offline mode gating (IOS-12226)

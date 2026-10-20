@@ -175,11 +175,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         }
         
         SaveToPhotosCoordinator
-            .customProgressSVGErrorMessageDisplay(configureProgress: {
-                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-                TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            })
+            .SVProgressErrorOnly()
             .saveToPhotos(nodes: selectedNodes.toNodeEntities())
         endEditingMode()
     }

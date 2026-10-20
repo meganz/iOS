@@ -8,6 +8,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAUIKit
+import Transfer
 
 @MainActor let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
 
@@ -29,11 +30,16 @@ extension MainTabBarController {
         addTabDelegate()
         mainTabBarViewModel = createMainTabBarViewModel()
         mainTabBarAdsViewModel = MainTabBarAdsViewModel()
-        configProgressView()
+        startTransferLiveActivityMonitoring()
         showPSAViewIfNeeded()
         updateUI(with: viewControllers)
     }
     
+    private func startTransferLiveActivityMonitoring() {
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosTransferLiveActivity) else { return }
+        TransferLiveActivityCoordinator.shared.startMonitoring()
+    }
+
     func makeCloudDriveViewController() -> UIViewController? {
         let config = NodeBrowserConfig(
             displayMode: .cloudDrive,
@@ -71,10 +77,6 @@ extension MainTabBarController {
         selectedIndex = selectedTabIndex
 
         AppearanceManager.setupTabbar(tabBar)
-    }
-
-    @objc func configProgressView() {
-        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
     }
 
     @objc func configurePhoneImageBadge() {

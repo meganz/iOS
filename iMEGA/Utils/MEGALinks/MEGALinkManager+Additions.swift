@@ -113,7 +113,6 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
                 nodeRepository: nodeRepository,
                 chatNodeRepository: ChatNodeRepository.newRepo,
                 downloadChatRepository: DownloadChatRepository.newRepo),
-            transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             tracker: DIContainer.tracker,
             monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),

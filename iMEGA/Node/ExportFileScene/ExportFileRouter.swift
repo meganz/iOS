@@ -132,20 +132,6 @@ final class ExportFileRouter: ExportFileViewRouting {
         presentingViewController.present(activityViewController, animated: true, completion: nil)
     }
     
-    func showProgressView() {
-        guard let presenter = presenter else {
-            return
-        }
-        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-        TransfersWidgetViewController.sharedTransfer().showProgress(view: presenter.view, bottomAnchor: -100)
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-    }
-    
-    func hideProgressView() {
-        TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget(widgetFobidden: true)
-        TransfersWidgetViewController.sharedTransfer().resetToKeyWindow()
-    }
-
     func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async {
         await incompleteDownloadAlertRouter?.warnDownloadIncomplete(
             downloadedCount: downloadedCount,

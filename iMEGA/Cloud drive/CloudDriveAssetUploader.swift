@@ -153,7 +153,6 @@ final class CloudDriveAssetUploader: AssetUploader {
         preparingViewModel = viewModel
         preparingOverlay = MediaImportOverlay(viewModel: viewModel, presenter: presenter)
         preparingOverlay?.show()
-        TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget(widgetFobidden: true)
     }
 
     private func updatePreparingUI(progress: MediaImportProgressEntity) {
@@ -165,7 +164,6 @@ final class CloudDriveAssetUploader: AssetUploader {
         preparingOverlay?.dismiss()
         preparingOverlay = nil
         preparingViewModel = nil
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }
 
     private func showErrorAlert(failedCount: Int) {

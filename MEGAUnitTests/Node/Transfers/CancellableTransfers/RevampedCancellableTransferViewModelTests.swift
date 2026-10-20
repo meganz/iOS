@@ -13,7 +13,7 @@ struct RevampedCancellableTransferViewModelTests {
 
     /// Putting the alert on screen is the scheduler's to decide, so the view model only starts its
     /// wait and never reaches for the router itself.
-    @Test("On view ready it prepares the widget, schedules the alert and starts the transfers")
+    @Test("On view ready it schedules the alert and starts the transfers")
     func onViewReady() async {
         let router = MockRevampedCancellableTransferRouter()
         let useCase = MockCancellableTransferUseCase()
@@ -27,7 +27,6 @@ struct RevampedCancellableTransferViewModelTests {
         sut.dispatch(.onViewReady)
         await Task.megaYield()
 
-        #expect(router.prepareTransfersWidget_calledTimes == 1)
         #expect(alertScheduler.scheduleForPresent_calledTimes == 1)
         #expect(router.showTransfersAlert_calledTimes == 0)
         #expect(useCase.startedTransfers.count == 1)
@@ -48,7 +47,6 @@ struct RevampedCancellableTransferViewModelTests {
         sut.dispatch(.onViewReady)
         await Task.megaYield()
 
-        #expect(router.prepareTransfersWidget_calledTimes == 0)
         #expect(alertScheduler.scheduleForPresent_calledTimes == 0)
         #expect(router.showTransfersAlert_calledTimes == 0)
         #expect(useCase.startedTransfers.isEmpty)
@@ -69,7 +67,6 @@ struct RevampedCancellableTransferViewModelTests {
         sut.dispatch(.onViewReady)
         await Task.megaYield()
 
-        #expect(router.prepareTransfersWidget_calledTimes == 0)
         #expect(alertScheduler.scheduleForPresent_calledTimes == 0)
         #expect(router.showTransfersAlert_calledTimes == 0)
         #expect(useCase.startedTransfers.isEmpty)
@@ -692,8 +689,7 @@ struct RevampedCancellableTransferViewModelTests {
     }
 }
 
-final class MockRevampedCancellableTransferRouter: CancellableTransferRouting, CancellableTransferFlowLifecycleRouting, TransferWidgetRouting {
-    var prepareTransfersWidget_calledTimes = 0
+final class MockRevampedCancellableTransferRouter: CancellableTransferRouting, CancellableTransferFlowLifecycleRouting {
     var transferFlowDidFinish_calledTimes = 0
     var showTransfersAlert_calledTimes = 0
     var transferCancelled_calledTimes = 0
@@ -720,10 +716,6 @@ final class MockRevampedCancellableTransferRouter: CancellableTransferRouting, C
         for await _ in routes {
             break
         }
-    }
-
-    func prepareTransfersWidget() {
-        prepareTransfersWidget_calledTimes += 1
     }
 
     func transferFlowDidFinish() {

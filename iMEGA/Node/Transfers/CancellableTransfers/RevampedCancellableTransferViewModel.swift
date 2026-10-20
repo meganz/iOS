@@ -5,7 +5,7 @@ import MEGAL10n
 
 @MainActor
 final class RevampedCancellableTransferViewModel: CancellableTransferViewModelProtocol {
-    typealias RoutingProtocols = CancellableTransferRouting & CancellableTransferFlowLifecycleRouting & TransferWidgetRouting
+    typealias RoutingProtocols = CancellableTransferRouting & CancellableTransferFlowLifecycleRouting
 
     private enum CancellableTransferOutcome: Sendable {
         case cancelledByUser
@@ -65,7 +65,6 @@ final class RevampedCancellableTransferViewModel: CancellableTransferViewModelPr
                 router.transferFlowDidFinish()
                 return
             }
-            router.prepareTransfersWidget()
             sendDownloadAnalyticsStats()
             startTransfers()
             alertScheduler.scheduleForPresent()

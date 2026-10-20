@@ -449,7 +449,6 @@
 		25EB2E952B05980200823B3D /* CameraUploadBannerStatusViewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E942B05980200823B3D /* CameraUploadBannerStatusViewStates.swift */; };
 		25EB2E982B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E972B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift */; };
 		25EB2E9A2B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EB2E992B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift */; };
-		25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */; };
 		25EF84152C7818DB00D289CB /* NodeInfoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EF84142C7818DB00D289CB /* NodeInfoLocationViewModel.swift */; };
 		25F4EC772C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */; };
 		25F932842AF476D500A63E73 /* AppearancePreference+Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F932832AF476D500A63E73 /* AppearancePreference+Entities.swift */; };
@@ -487,9 +486,7 @@
 		2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F0881253E387500C5B5D7 /* Transfers.storyboard */; };
 		2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */; };
-		2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */; };
 		2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */; };
-		2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */; };
 		2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
 		2F7E7064251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */; };
@@ -1837,8 +1834,6 @@
 		A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A717032639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift */; };
 		A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */; };
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
-		A8AACC432E81906A00D463D9 /* ProgressIndicatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AACC422E81906A00D463D9 /* ProgressIndicatorViewModel.swift */; };
-		A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AACC482E8191C900D463D9 /* ProgressIndicatorViewModelTests.swift */; };
 		A8ABAD092E21075B00B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
 		A8ABAD0A2E21076600B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
@@ -3330,7 +3325,6 @@
 		25EB2E942B05980200823B3D /* CameraUploadBannerStatusViewStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBannerStatusViewStates.swift; sourceTree = "<group>"; };
 		25EB2E972B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBannerStatusViewPresenterProtocol.swift; sourceTree = "<group>"; };
 		25EB2E992B05989100823B3D /* CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadBannerStatusViewStates+CameraUploadBannerStatusViewPresenterProtocol.swift"; sourceTree = "<group>"; };
-		25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferWidgetResponder.swift; sourceTree = "<group>"; };
 		25EF84142C7818DB00D289CB /* NodeInfoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationViewModel.swift; sourceTree = "<group>"; };
 		25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveContentAcknowledgementStatus.swift; sourceTree = "<group>"; };
 		25F932832AF476D500A63E73 /* AppearancePreference+Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppearancePreference+Entities.swift"; sourceTree = "<group>"; };
@@ -3370,9 +3364,7 @@
 		2F6F0881253E387500C5B5D7 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
 		2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersWidgetViewController.m; sourceTree = "<group>"; };
 		2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
-		2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
 		2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
-		2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressIndicatorView.xib; sourceTree = "<group>"; };
 		2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetViewController.h; sourceTree = "<group>"; };
 		2F6F08CD253E3D1F00C5B5D7 /* TransfersWidgetSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersWidgetSelected.h; sourceTree = "<group>"; };
 		2F6F08D4253E42F900C5B5D7 /* TransferActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferActionViewController.swift; sourceTree = "<group>"; };
@@ -4775,8 +4767,6 @@
 		A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompressingLogFileManager+additions.swift"; sourceTree = "<group>"; };
 		A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGALoginRequestDelegate.h; path = API/Requests/MEGALoginRequestDelegate.h; sourceTree = "<group>"; };
 		A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGALoginRequestDelegate.m; path = API/Requests/MEGALoginRequestDelegate.m; sourceTree = "<group>"; };
-		A8AACC422E81906A00D463D9 /* ProgressIndicatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorViewModel.swift; sourceTree = "<group>"; };
-		A8AACC482E8191C900D463D9 /* ProgressIndicatorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorViewModelTests.swift; sourceTree = "<group>"; };
 		A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALocalNotificationManager+.swift"; sourceTree = "<group>"; };
 		A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerConstant.swift; sourceTree = "<group>"; };
 		A8B0DD3A2D1D7A14009BC7FD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -8609,7 +8599,6 @@
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				834B51912C9D91E5002E46FB /* MockTimerSequenceFactory.swift */,
 				94A7E9902EA74F7800258E5D /* MockTrackEntity.swift */,
-				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -10097,7 +10086,6 @@
 			isa = PBXGroup;
 			children = (
 				83B5E87827F6F8F50073C870 /* CancellableTransferViewModelTests.swift */,
-				A8AACC482E8191C900D463D9 /* ProgressIndicatorViewModelTests.swift */,
 				94B1FC4D2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift */,
 				D7B05EB4303C2F0B004C5100 /* TransfersTableViewCellViewModelTests.swift */,
 				94D5DA9C2D15DC6D0031C2CD /* TransfersWidgetViewModelTests.swift */,
@@ -11400,8 +11388,8 @@
 				A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */,
 				A8399F46296C40070062B6BC /* FileProviderExtension.swift */,
 				A8399F48296C40070062B6BC /* FileProviderItem.swift */,
-				CE127460000000000000B6BD /* FileProviderStorage.swift */,
 				84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */,
+				CE127460000000000000B6BD /* FileProviderStorage.swift */,
 				A8399F4C296C40070062B6BC /* Info.plist */,
 				A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */,
 				A8399F4D296C40070062B6BC /* MEGAPickerFileProvider.entitlements */,
@@ -13972,9 +13960,6 @@
 			children = (
 				83A2894C27F5B7B60063CA8C /* CancellableTransfers */,
 				94FCE0192D15C302000C63A4 /* ViewModel */,
-				2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */,
-				2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */,
-				A8AACC422E81906A00D463D9 /* ProgressIndicatorViewModel.swift */,
 				A86AE2542E9661C5006AEBBF /* TransferBadgeState.swift */,
 				94614C742910554200503174 /* TransferNodeTableViewCell.xib */,
 				A81F2A0B2FE5401500AA84C6 /* TransferRowActionRouter.swift */,
@@ -14694,7 +14679,6 @@
 				A5C710022DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */,
 				6DF356B22BAD36320099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
-				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
 				BFCA9A1D25ABA33900D1F4E0 /* PSAView.xib in Resources */,
 				2F9E1E2C24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib in Resources */,
 				839B9FCF283D2DCA001A49DF /* reconnecting.wav in Resources */,
@@ -16224,8 +16208,6 @@
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */,
 				B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */,
-				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
-				A8AACC432E81906A00D463D9 /* ProgressIndicatorViewModel.swift in Sources */,
 				AB123720000000000000F002 /* PromoDialogBlocking.swift in Sources */,
 				C9DAE54C9E8CCA134D52DF20 /* PromoDialogInterruptibility.swift in Sources */,
 				BBF7AD7E77DC4AED773FAB99 /* PromoDialogQASettingsView.swift in Sources */,
@@ -17003,9 +16985,9 @@
 				A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */,
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
 				A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */,
-				CE127460000000000000B6BC /* FileProviderStorage.swift in Sources */,
 				A1F3C2D4E5B6978812345601 /* FileProviderMemoryProbe.swift in Sources */,
 				84DB3FEA2FDFEFBD00DD99EB /* FileProviderSession.swift in Sources */,
+				CE127460000000000000B6BC /* FileProviderStorage.swift in Sources */,
 				A1F3C2D4E5B6978812345605 /* FolderComparisonCoordinator.swift in Sources */,
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
@@ -17307,7 +17289,6 @@
 				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
 				834B51932C9D91E8002E46FB /* MockTimerSequenceFactory.swift in Sources */,
 				94A7E9912EA74F7800258E5D /* MockTrackEntity.swift in Sources */,
-				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
 				947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */,
 				C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */,
 				0EEB9B302E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift in Sources */,
@@ -17385,7 +17366,6 @@
 				B4A4ADA7222B427E986C38DE /* PreviewDocumentViewModelTests.swift in Sources */,
 				D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
-				A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */,
 				AB123720000000000000F004 /* PromoDialogInterruptibilityTests.swift in Sources */,
 				24A21ADDF842D23446B653A4 /* PromoLandingDialogLaunchPresenterTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,

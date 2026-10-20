@@ -398,9 +398,6 @@ struct CloudDriveViewControllerFactory {
                 let selectedMediaNodes = mediaDiscoveryContentViewModel?.photoLibraryContentViewModel.selection.photos.map(\.value)
                 onSelectionModeChange(enabled, selectedMediaNodes ?? [])
             },
-            updateTransferWidgetHandler: {
-                TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
-            },
             sortOrderProvider: sortOrderProvider,
             saveMediaDiscoverySortOrder: { [sortOrderPreferenceUseCase] sortOrder in
                 guard let handle = nodeSource.parentNode?.handle else { return }
