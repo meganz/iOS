@@ -200,25 +200,21 @@ actor StubAudioMetadataCache: AudioMetadataCacheProtocol {
 
 /// Feeds node changes in on demand, standing in for the SDK's node updates.
 struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
-    let deletedNodeHandles: AnyAsyncSequence<Set<HandleEntity>>
-    let replacedNodes: AnyAsyncSequence<[HandleEntity: NodeEntity]>
+    private let removedNodesStream: AnyAsyncSequence<[HandleEntity: NodeEntity?]>
+    /// The service's way of telling the queued nodes and their folders, once it has subscribed
+    private let queuedFoldersLookup = Atomic<(@Sendable () -> [HandleEntity: HandleEntity])?>(wrappedValue: nil)
     let removedFolderLinkNodes: AnyAsyncSequence<[HandleEntity: (any PlayableNode)?]>
     let renamedNodes: AnyAsyncSequence<[NodeEntity]>
     let renamedFolderLinkNodes: AnyAsyncSequence<[any PlayableNode]>
-    private let continuation: AsyncStream<Set<HandleEntity>>.Continuation
-    private let replacementContinuation: AsyncStream<[HandleEntity: NodeEntity]>.Continuation
+    private let continuation: AsyncStream<[HandleEntity: NodeEntity?]>.Continuation
     private let folderLinkContinuation: AsyncStream<[HandleEntity: (any PlayableNode)?]>.Continuation
     private let renameContinuation: AsyncStream<[NodeEntity]>.Continuation
     private let folderLinkRenameContinuation: AsyncStream<[any PlayableNode]>.Continuation
 
     init() {
-        let (stream, continuation) = AsyncStream<Set<HandleEntity>>.makeStream()
-        deletedNodeHandles = stream.eraseToAnyAsyncSequence()
+        let (stream, continuation) = AsyncStream<[HandleEntity: NodeEntity?]>.makeStream()
+        removedNodesStream = stream.eraseToAnyAsyncSequence()
         self.continuation = continuation
-
-        let (replacementStream, replacementContinuation) = AsyncStream<[HandleEntity: NodeEntity]>.makeStream()
-        replacedNodes = replacementStream.eraseToAnyAsyncSequence()
-        self.replacementContinuation = replacementContinuation
 
         let (folderLinkStream, folderLinkContinuation) = AsyncStream<[HandleEntity: (any PlayableNode)?]>.makeStream()
         removedFolderLinkNodes = folderLinkStream.eraseToAnyAsyncSequence()
@@ -233,13 +229,26 @@ struct MockAudioNodeUpdatesUseCase: AudioNodeUpdatesUseCaseProtocol {
         self.folderLinkRenameContinuation = folderLinkRenameContinuation
     }
 
-    func simulateDeletion(ofNodeHandles handles: Set<HandleEntity>) {
-        continuation.yield(handles)
+    func removedNodes(
+        queuedFolders: @escaping @Sendable () -> [HandleEntity: HandleEntity]
+    ) -> AnyAsyncSequence<[HandleEntity: NodeEntity?]> {
+        queuedFoldersLookup.mutate { $0 = queuedFolders }
+        return removedNodesStream
     }
 
-    /// - Parameter replacements: the replacing node, keyed by the replaced node's handle
-    func simulateReplacement(_ replacements: [HandleEntity: NodeEntity]) {
-        replacementContinuation.yield(replacements)
+    /// The queued nodes and their folders as the service tells them now; `nil` before it has subscribed
+    var queuedFolders: [HandleEntity: HandleEntity]? {
+        queuedFoldersLookup.wrappedValue?()
+    }
+
+    func simulateDeletion(ofNodeHandles handles: Set<HandleEntity>) {
+        continuation.yield(Dictionary(uniqueKeysWithValues: handles.map { ($0, NodeEntity?.none) }))
+    }
+
+    /// - Parameter removals: the replacing node, keyed by the removed node's handle — `nil` for one
+    ///   that is simply gone, so one update can carry replacements and deletions together
+    func simulateRemoval(_ removals: [HandleEntity: NodeEntity?]) {
+        continuation.yield(removals)
     }
 
     func simulateFolderLinkDeletion(ofNodeHandles handles: Set<HandleEntity>) {

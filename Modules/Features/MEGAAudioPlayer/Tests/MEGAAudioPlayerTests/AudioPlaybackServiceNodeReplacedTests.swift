@@ -5,8 +5,8 @@ import MEGADomain
 import MEGADomainMock
 import Testing
 
-/// A file replaced — a new upload under the same name — while its queue is playing
-/// (IOS-11543).
+/// A file replaced while its queue is playing (IOS-11543): by a new version uploaded over it,
+/// or by a file of its name another client put in its folder before deleting it.
 ///
 /// The new file is a new node, so the track is re-pointed at it. The one playing restarts
 /// from the new file; any other just takes the new node, and the queue carries on.
@@ -20,7 +20,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         let sut = makeSUT(engine: engine, updates: updates)
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
 
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(engine.playedURLs == [streamURL(1), streamURL(3)])
@@ -37,7 +37,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.togglePlayPause()
         await wait(until: { sut.status == .paused })
 
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(engine.loadedPausedURLs == [streamURL(3)], "no sound until the listener asks for it")
@@ -55,10 +55,10 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
         sut.togglePlayPause()
         await wait(until: { sut.status == .paused })
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
         await wait(until: { sut.status == .error(.urlUnresolved) })
 
-        updates.simulateReplacement([3: song(4)])
+        updates.simulateRemoval([3: song(4)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(engine.loadedPausedURLs == [streamURL(4)], "no sound until the listener asks for it")
@@ -74,11 +74,11 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
         sut.togglePlayPause()
         await wait(until: { sut.status == .paused })
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
         await wait(until: { sut.status == .error(.urlUnresolved) })
         sut.togglePlayPause()
 
-        updates.simulateReplacement([3: song(4)])
+        updates.simulateRemoval([3: song(4)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(engine.loadedPausedURLs.isEmpty)
@@ -97,7 +97,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         engine.simulateInterruption()
         await wait(until: { sut.status == .paused })
 
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(engine.loadedPausedURLs.isEmpty)
@@ -112,7 +112,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
         await wait(until: { sut.status == .playing })
 
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(engine.loadedPausedURLs.isEmpty)
@@ -130,7 +130,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
         await wait(until: { prompt != nil })
 
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
 
         await wait(until: { engine.playedURLs.count == 2 })
         #expect(prompt == nil)
@@ -144,7 +144,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         let sut = makeSUT(engine: engine, updates: updates)
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
 
-        updates.simulateReplacement([2: song(3)])
+        updates.simulateRemoval([2: song(3)])
 
         await wait(until: { sut.currentQueue.tracks.map(\.id) == ["1", "3"] })
         #expect(sut.currentQueue.current?.id == "1")
@@ -157,7 +157,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         let updates = MockAudioNodeUpdatesUseCase()
         let sut = makeSUT(engine: engine, updates: updates)
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
         await wait(until: { engine.playedURLs.count == 2 })
 
         sut.playNext()
@@ -173,7 +173,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2), song(3)]))
         sut.toggleShuffle()
 
-        updates.simulateReplacement([2: song(4)])
+        updates.simulateRemoval([2: song(4)])
         await wait(until: { sut.currentQueue.tracks.contains { $0.id == "4" } })
         sut.toggleShuffle()
 
@@ -187,12 +187,66 @@ struct AudioPlaybackServiceNodeReplacedTests {
         let sut = makeSUT(engine: engine, updates: updates)
         sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2)]))
 
-        updates.simulateReplacement([9: song(3)])
+        updates.simulateRemoval([9: song(3)])
         // Updates are delivered in order, so once this one is handled the unrelated one was too
-        updates.simulateReplacement([2: song(4)])
+        updates.simulateRemoval([2: song(4)])
 
         await wait(until: { sut.currentQueue.tracks.map(\.id) == ["1", "4"] })
         #expect(engine.playedURLs == [streamURL(1)])
+    }
+
+    // MARK: - Replacement and deletion together
+
+    @Test("One removal can replace one track and delete another")
+    func removalReplacesOneTrackAndDeletesAnother() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2), song(3)]))
+
+        updates.simulateRemoval([1: song(4), 3: nil])
+
+        await wait(until: { sut.currentQueue.tracks.map(\.id) == ["4", "2"] })
+        #expect(sut.currentQueue.current?.id == "4")
+        #expect(engine.playedURLs == [streamURL(1), streamURL(4)])
+    }
+
+    /// Re-pointing would leave two tracks with one id
+    @Test("A replacing file already in the queue leaves the removed track to be dropped")
+    func replacingFileAlreadyQueued_dropsTheRemovedTrack() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .cloudNode(node: song(1), queue: [song(1), song(2), song(3)]))
+
+        updates.simulateRemoval([1: song(2)])
+
+        await wait(until: { sut.currentQueue.current?.id == "2" })
+        #expect(sut.currentQueue.tracks.map(\.id) == ["2", "3"])
+        #expect(engine.playedURLs == [streamURL(1), streamURL(2)])
+    }
+
+    // MARK: - The folder a queued file was in
+
+    @Test("The queued Cloud Drive files are told, each with the folder it was in")
+    func queuedFolders_areTheQueuedTracksFolders() async {
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: MockPlaybackEngine(), updates: updates)
+        sut.play(source: .cloudNode(node: song(1, in: 10), queue: [song(1, in: 10), song(2, in: 20)]))
+
+        await wait(until: { updates.queuedFolders == [1: 10, 2: 20] })
+    }
+
+    @Test("No file counts as queued once playback has stopped")
+    func queuedFolders_areEmptyAfterStop() async {
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: MockPlaybackEngine(), updates: updates)
+        sut.play(source: .cloudNode(node: song(1, in: 10), queue: [song(1, in: 10)]))
+        await wait(until: { updates.queuedFolders == [1: 10] })
+
+        sut.stop()
+
+        #expect(updates.queuedFolders == [:])
     }
 
     // MARK: - Folder link
@@ -219,6 +273,21 @@ struct AudioPlaybackServiceNodeReplacedTests {
         sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1), linkSong(2)]))
 
         updates.simulateFolderLinkRemoval([1: nil])
+
+        await wait(until: { sut.currentQueue.current?.id == "2" })
+        #expect(sut.currentQueue.tracks.map(\.id) == ["2"])
+        #expect(engine.playedURLs == [streamURL(1), streamURL(2)])
+    }
+
+    /// Re-pointing would leave two tracks with one id
+    @Test("A folder-link track whose replacing file is already in the queue is dropped")
+    func folderLink_replacingFileAlreadyQueued_dropsTheRemovedTrack() async {
+        let engine = MockPlaybackEngine()
+        let updates = MockAudioNodeUpdatesUseCase()
+        let sut = makeSUT(engine: engine, updates: updates)
+        sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1), linkSong(2)]))
+
+        updates.simulateFolderLinkRemoval([1: linkSong(2)])
 
         await wait(until: { sut.currentQueue.current?.id == "2" })
         #expect(sut.currentQueue.tracks.map(\.id) == ["2"])
@@ -263,7 +332,7 @@ struct AudioPlaybackServiceNodeReplacedTests {
         let sut = makeSUT(engine: engine, updates: updates)
         sut.play(source: .folderLink(node: linkSong(1), queue: [linkSong(1)]))
 
-        updates.simulateReplacement([1: song(3)])
+        updates.simulateRemoval([1: song(3)])
 
         await settle()
         #expect(sut.currentQueue.tracks.map(\.id) == ["1"])
@@ -288,6 +357,10 @@ struct AudioPlaybackServiceNodeReplacedTests {
 
     private func song(_ handle: UInt64) -> NodeEntity {
         NodeEntity(name: "song.mp3", fingerprint: "fingerprint-\(handle)", handle: handle)
+    }
+
+    private func song(_ handle: UInt64, in folder: HandleEntity) -> NodeEntity {
+        NodeEntity(name: "song.mp3", fingerprint: "fingerprint-\(handle)", handle: handle, parentHandle: folder)
     }
 
     private func linkSong(_ handle: UInt64) -> StubPlayableNode {
