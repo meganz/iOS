@@ -58,6 +58,9 @@ public struct TransferIndicatorToolbarFactory {
 
     private func makeBarButtonItem() -> UIBarButtonItem {
         let hostingController = UIHostingController(rootView: TransferIndicatorView(action: action))
+        // In landscape the item sits inside the window's horizontal safe area inset,
+        // which would otherwise push the SwiftUI content off-center within its glass platter.
+        hostingController.safeAreaRegions = []
         hostingController.view.backgroundColor = .clear
         hostingController.view.sizeToFit()
         return UIBarButtonItem(customView: hostingController.view)

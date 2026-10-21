@@ -77,6 +77,15 @@ final class MediaTabViewController: UIViewController {
         hideToolbar()
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        // The title width cap depends on the bar width and bar item positions, so recompute it
+        // once the bar has been laid out for the new size.
+        coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+            self?.updateTitleView()
+        }
+    }
+
     // MARK: - Content View Setup
 
     private func setupContentView() {
@@ -117,10 +126,24 @@ final class MediaTabViewController: UIViewController {
         // to avoid overlapping with bar button items.
         let maxWidth = maxCenteredTitleWidth()
         if titleView.bounds.width > maxWidth {
-            titleView.frame.size.width = maxWidth
+            shrinkFonts(of: titleView, toFit: maxWidth)
+            titleView.frame.size.width = min(titleView.bounds.width, maxWidth)
         }
 
         return titleView
+    }
+
+    /// Scales the label's fonts down, no further than its `minimumScaleFactor`, until it fits `maxWidth`.
+    /// UILabel's own `adjustsFontSizeToFitWidth` doesn't shrink this two-line label, it only truncates.
+    private func shrinkFonts(of label: UILabel, toFit maxWidth: CGFloat) {
+        guard let originalText = label.attributedText else { return }
+        var scale: CGFloat = 1
+        // Text width doesn't scale exactly linearly with font size (tracking varies by size), so refine a few times.
+        for _ in 0..<3 where label.bounds.width > maxWidth && scale > label.minimumScaleFactor {
+            scale = max(scale * maxWidth / label.bounds.width, label.minimumScaleFactor)
+            label.attributedText = originalText.scalingFonts(by: scale)
+            label.sizeToFit()
+        }
     }
 
     private func updateTitleView() {
@@ -190,6 +213,9 @@ final class MediaTabViewController: UIViewController {
         // For other types, wrap SwiftUI view in UIHostingController
         let swiftUIView = NavigationBarItemViewBuilder.makeView(for: viewModel)
         let hostingController = UIHostingController(rootView: AnyView(swiftUIView))
+        // In landscape the item sits inside the window's horizontal safe area inset,
+        // which would otherwise push the SwiftUI content off-center within its glass platter.
+        hostingController.safeAreaRegions = []
         hostingController.view.backgroundColor = .clear
         hostingController.view.sizeToFit()
         return UIBarButtonItem(customView: hostingController.view)
@@ -362,5 +388,18 @@ extension MediaTabViewController: BottomOverlayPresenterProtocol {
 
     func hasUpdatedContentView() -> Bool {
         additionalSafeAreaInsets.bottom != 0
+    }
+}
+
+// MARK: - NSAttributedString font scaling
+
+private extension NSAttributedString {
+    func scalingFonts(by scale: CGFloat) -> NSAttributedString {
+        let scaled = NSMutableAttributedString(attributedString: self)
+        enumerateAttribute(.font, in: NSRange(location: 0, length: length)) { value, range, _ in
+            guard let font = value as? UIFont else { return }
+            scaled.addAttribute(.font, value: font.withSize(font.pointSize * scale), range: range)
+        }
+        return scaled
     }
 }
