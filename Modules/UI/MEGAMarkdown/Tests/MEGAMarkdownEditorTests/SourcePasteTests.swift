@@ -64,4 +64,10 @@ import UIKit
         #expect(textView.text.contains("## Title"))
         #expect(textView.text.contains("**item**"))
     }
+
+    /// Source mode makes its view with `init(usingTextLayoutManager:)`. A paste there must read the general pasteboard.
+    @Test func viewMadeForSourceModeReadsTheGeneralPasteboard() {
+        let textView = SourceUITextView(usingTextLayoutManager: false)
+        #expect(textView.pasteboard === UIPasteboard.general)
+    }
 }
