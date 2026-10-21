@@ -351,11 +351,13 @@ private struct CollapsibleSectionView: View {
 
             if isExpanded {
                 ForEach(options) { option in
-                    MenuRowView(option: option)
-                        .onTapGesture {
-                            guard case .externalLink(let action) = option.rowType else { return }
-                            action()
+                    if case .externalLink(let action) = option.rowType {
+                        Button(action: action) {
+                            MenuRowView(option: option)
                         }
+                    } else {
+                        MenuRowView(option: option)
+                    }
                 }
             }
         }
