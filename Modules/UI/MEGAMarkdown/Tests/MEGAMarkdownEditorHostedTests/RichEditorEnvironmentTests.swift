@@ -78,6 +78,33 @@ struct RichEditorEnvironmentTests {
         }
     }
 
+    /// At the largest text size this heading wraps to two lines. The row can get a fraction of a point less
+    /// than the two lines need. Every line must still be laid out, so no word goes missing.
+    @Test func headingThatWrapsAtTheLargestTextSizeShowsEveryLine() async throws {
+        let harness = try RichListHarness("# Every feature tour\n", width: 402, height: 874, dynamicType: .accessibility5)
+        defer { harness.close() }
+        try await harness.settle()
+        let textView = try #require(harness.textView(row: 0))
+        let manager = textView.layoutManager
+        manager.ensureLayout(for: textView.textContainer)
+        #expect(manager.glyphRange(for: textView.textContainer).length == manager.numberOfGlyphs)
+    }
+
+    /// A text view that does not scroll sets its container to its bounds on each resize.
+    /// The row keeps the container height unlimited, also after a new width, so no line is left out.
+    @Test func textContainerKeepsAnUnlimitedHeightAfterAWidthChange() async throws {
+        let harness = try RichListHarness("# Every feature tour\n", width: 402, height: 874, dynamicType: .accessibility5)
+        defer { harness.close() }
+        try await harness.settle()
+        harness.resize(width: 320, height: 874)
+        try await harness.settle()
+        let textView = try #require(harness.textView(row: 0))
+        #expect(textView.textContainer.size.height == .greatestFiniteMagnitude)
+        let manager = textView.layoutManager
+        manager.ensureLayout(for: textView.textContainer)
+        #expect(manager.glyphRange(for: textView.textContainer).length == manager.numberOfGlyphs)
+    }
+
     /// A rotation changes the width, so every row wraps again. The row with the caret must stay on screen.
     @Test func widthChangeKeepsTheCaretRowOnScreen() async throws {
         let harness = try RichListHarness(Self.paragraphs, width: 390, height: 700)
