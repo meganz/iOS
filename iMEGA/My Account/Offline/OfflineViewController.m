@@ -142,12 +142,17 @@ static NSString *kisDirectory = @"kisDirectory";
 
     [self dispatchOnViewWillDisappearAction];
     
-    if (self.offlineTableView.tableView.isEditing) {
+    if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
         self.selectedItems = nil;
         [self setEditMode:NO];
     }
     
     [self refreshMiniPlayerIfNeeded];
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    [self updateEditingToolbarBottomConstraint];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

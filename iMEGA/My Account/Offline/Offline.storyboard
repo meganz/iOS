@@ -12,7 +12,7 @@
         <!--Offline View Controller-->
         <scene sceneID="Nzg-hX-4N7">
             <objects>
-                <viewController storyboardIdentifier="OfflineViewControllerID" id="cPA-hf-QcT" customClass="OfflineViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OfflineViewControllerID" extendedLayoutIncludesOpaqueBars="YES" id="cPA-hf-QcT" customClass="OfflineViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FGg-Hd-b4x">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="593"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

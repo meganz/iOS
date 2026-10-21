@@ -19,6 +19,13 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 @interface OfflineViewController : UIViewController
 
 @property (nonatomic, strong, nullable) UIToolbar *editingToolbar;
+/// Bottom constraint of the editing toolbar. Its constant is set when Select mode starts, so the toolbar sits where the tab bar was.
+@property (nonatomic, strong, nullable) NSLayoutConstraint *editingToolbarBottomConstraint;
+/// Whether the tab bar was already hidden when Select mode started, so leaving Select mode restores that state.
+/// Discussion: The Offline screen's hides the tabbar when opened from Menu, but it shows the tabbar when opened from Home screen
+/// Therefore we need `tabBarHiddenBeforeEditing` to properly handle the tabbar after exiting Edit mode.
+/// Using NSNumber as an alternative for `Bool?`: nil while Select mode is off, so a repeated show or a hide without show cannot change the saved state.
+@property (nonatomic, strong, nullable) NSNumber *tabBarHiddenBeforeEditing;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 

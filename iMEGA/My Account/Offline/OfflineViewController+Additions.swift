@@ -283,10 +283,13 @@ extension OfflineViewController {
         
         view.addSubview(toolbar)
         
+        let bottomConstraint = toolbar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        editingToolbarBottomConstraint = bottomConstraint
+
         NSLayoutConstraint.activate([
             toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomConstraint,
             toolbar.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
@@ -316,6 +319,16 @@ extension OfflineViewController {
 
         if visible {
             editingToolbar.isHidden = false
+            updateEditingToolbarBottomConstraint()
+            if tabBarHiddenBeforeEditing == nil {
+                tabBarHiddenBeforeEditing = NSNumber(value: tabBarController?.tabBar.isHidden ?? false)
+            }
+            tabBarController?.tabBar.isHidden = true
+        } else if let tabBarHiddenBeforeEditing {
+            if !tabBarHiddenBeforeEditing.boolValue {
+                tabBarController?.tabBar.isHidden = false
+            }
+            self.tabBarHiddenBeforeEditing = nil
         }
 
         UIView.animate(withDuration: 0.25, animations: {
@@ -325,6 +338,11 @@ extension OfflineViewController {
         })
     }
     
+    @objc func updateEditingToolbarBottomConstraint() {
+        let bottomInset = tabBarController?.view.safeAreaInsets.bottom ?? view.safeAreaInsets.bottom
+        editingToolbarBottomConstraint?.constant = -bottomInset
+    }
+
     @objc func updateBottomInset(_ editing: Bool) {
         let toolbarHeight: CGFloat = editing ? 50 : 0
         
