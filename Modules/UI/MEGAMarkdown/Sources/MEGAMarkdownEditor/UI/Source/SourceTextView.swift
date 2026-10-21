@@ -104,7 +104,12 @@ struct SourceTextView: UIViewRepresentable, Equatable {
 /// each frame of the scroll lays out the text it passes, about 2 s for a jump to the end of 10 MB.
 final class SourceUITextView: UITextView {
     /// Tests use a named pasteboard: reading the general one without a user action waits for permission.
-    var pasteboard = UIPasteboard.general
+    /// Read on each use: a stored default is not the general pasteboard in a view from `init(usingTextLayoutManager:)`.
+    var pasteboard: UIPasteboard {
+        get { namedPasteboard ?? .general }
+        set { namedPasteboard = newValue }
+    }
+    private var namedPasteboard: UIPasteboard?
 
     private lazy var keyboard: KeyboardOverlap = {
         let keyboard = KeyboardOverlap()
