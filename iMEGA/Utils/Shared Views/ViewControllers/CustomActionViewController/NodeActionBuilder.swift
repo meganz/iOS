@@ -337,8 +337,12 @@ final class NodeActionBuilder {
         ]
     }
     
+    /// The photo browser opens this sheet for a file link; with the revamp it takes the file link screen's
+    /// Save to MEGA and Copy to Offline rows.
     private func fileLinkNodeActions() -> [NodeAction] {
-        var nodeActions: [NodeAction] = [.importAction(), .downloadAction(), .shareLinkAction(), .sendToChatAction()]
+        var nodeActions: [NodeAction] = isLinkRevampEnabled
+            ? [.saveToMegaAction(), .copyToOfflineAction(), .shareLinkAction(), .sendToChatAction()]
+            : [.importAction(), .downloadAction(), .shareLinkAction(), .sendToChatAction()]
         
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
@@ -421,10 +425,12 @@ final class NodeActionBuilder {
     private func previewDocumentNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
+        // A document opened from a file or folder link follows the link screens' rows under the revamp.
+        let usesLinkRevampActions = isLink && isLinkRevampEnabled
         if isLink {
-            nodeActions.append(.importAction())
+            nodeActions.append(usesLinkRevampActions ? .saveToMegaAction() : .importAction())
         }
-        nodeActions.append(.downloadAction())
+        nodeActions.append(usesLinkRevampActions ? .copyToOfflineAction() : .downloadAction())
         if effectiveAccessLevel == .accessOwner || isLink {
             nodeActions.append(contentsOf: exportedNodeActions())
         }

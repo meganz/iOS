@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
+import MEGAL10n
 import Testing
 
 @MainActor
@@ -867,7 +868,19 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]) == true)
     }
-    
+
+    @Test
+    func testFileLink_withLinkRevampEnabled_usesSaveToMegaAndCopyToOfflineRows() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.fileLink)
+            .setIsFile(true)
+            .setIsLinkRevampEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]) == true)
+        #expect(actions.prefix(2).map(\.title) == [Strings.Localizable.Link.Button.saveToMega, Strings.Localizable.Link.Button.copyToOffline])
+    }
+
     @Test
     func testFolderLinkList() {
         actions = NodeActionBuilder()
@@ -1134,10 +1147,33 @@ class NodeActionBuilderTests {
         }
         
         actions = builder.build()
-        
+
         #expect(isEqual(nodeActionTypes: expectedActions) == true)
     }
-    
+
+    @Test
+    func testDocumentPreviewFileLink_withLinkRevampEnabled_usesSaveToMegaAndCopyToOfflineRows() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsLink(true)
+            .setIsLinkRevampEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat]) == true)
+        #expect(actions.prefix(2).map(\.title) == [Strings.Localizable.Link.Button.saveToMega, Strings.Localizable.Link.Button.copyToOffline])
+    }
+
+    @Test
+    func testDocumentPreviewOwner_withLinkRevampEnabled_keepsMakeAvailableOfflineRow() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setAccessLevel(.accessOwner)
+            .setIsLinkRevampEnabled(true)
+            .build()
+
+        #expect(actions.first?.title == Strings.Localizable.General.downloadToOffline)
+    }
+
     @Test
     func testDocumentPreviewPdfPageViewLink() {
         actions = NodeActionBuilder()
