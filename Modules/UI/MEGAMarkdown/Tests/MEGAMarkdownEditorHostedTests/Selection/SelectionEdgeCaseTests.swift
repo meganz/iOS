@@ -1,5 +1,6 @@
 import MEGAMarkdown
 @testable import MEGAMarkdownEditor
+import SwiftUI
 import Testing
 import UIKit
 
@@ -206,6 +207,75 @@ struct SelectionEdgeCaseTests {
         let start = try #require(starts.first?.rect)
         #expect(start.minY > lastPage.minY)
         #expect(start.maxY <= lastPage.maxY)
+    }
+
+    /// The selection ends after a table. UIKit draws the end handle at the trailing bottom corner of the
+    /// table's highlight, so a drag from there must move the handle, not scroll the list.
+    @Test func endAfterATableIsGrabbedWhereItsHandleIsDrawn() async throws {
+        let harness = try RichListHarness("Before.\n\n| a | b |\n|---|---|\n| 1 | 2 |\n\nAfter.", height: 500)
+        defer { harness.close() }
+        let controller = try #require(harness.selectionController)
+        let range = RichSelection(start: position(0, 1), end: position(1, 1))
+        harness.model.setFocused(true)
+        harness.model.select(range)
+        try await harness.waitUntil { controller.isDisplayActive }
+        try await harness.settle()
+        let end = try #require(controller.selectionRects(for: range).first(where: \.containsEnd)?.rect)
+        let knob = CGPoint(x: end.maxX - 1, y: end.maxY - 2)
+        let finger = CGPoint(x: knob.x, y: knob.y - 40)
+
+        controller.touchBegan(at: knob, others: [])
+
+        #expect(controller.touchMoved(to: finger, inWindow: harness.list.view.convert(finger, to: nil), others: []))
+        controller.touchEnded(at: finger, listPanBegan: false, cancelled: false)
+    }
+
+    /// The same drag in a right-to-left layout, where UIKit draws the end handle at the table's left bottom corner.
+    @Test func endAfterATableIsGrabbedWhereItsHandleIsDrawnRightToLeft() async throws {
+        let harness = try RichListHarness("Before.\n\n| a | b |\n|---|---|\n| 1 | 2 |\n\nAfter.", height: 500, layoutDirection: .rightToLeft)
+        defer { harness.close() }
+        let controller = try #require(harness.selectionController)
+        let range = RichSelection(start: position(0, 1), end: position(1, 1))
+        harness.model.setFocused(true)
+        harness.model.select(range)
+        try await harness.waitUntil { controller.isDisplayActive }
+        try await harness.settle()
+        let end = try #require(controller.selectionRects(for: range).first(where: \.containsEnd)?.rect)
+        let knob = CGPoint(x: end.minX + 1, y: end.maxY - 2)
+        let finger = CGPoint(x: knob.x, y: knob.y - 40)
+
+        controller.touchBegan(at: knob, others: [])
+
+        #expect(controller.touchMoved(to: finger, inWindow: harness.list.view.convert(finger, to: nil), others: []))
+        controller.touchEnded(at: finger, listPanBegan: false, cancelled: false)
+    }
+
+    /// A caret before a block without text sits at its top leading corner, a caret after it at its bottom
+    /// trailing corner, where UIKit draws the handles of the whole selected block.
+    @Test(arguments: [
+        ("| a | b |\n|---|---|\n| 1 | 2 |", LayoutDirection.leftToRight),
+        ("| a | b |\n|---|---|\n| 1 | 2 |", LayoutDirection.rightToLeft),
+        ("---", LayoutDirection.leftToRight),
+        ("---", LayoutDirection.rightToLeft)
+    ])
+    func caretOfABlockWithoutTextSitsAtTheCornerOfItsHandle(block: String, direction: LayoutDirection) async throws {
+        let harness = try RichListHarness("Before.\n\n" + block + "\n\nAfter.", height: 500, layoutDirection: direction)
+        defer { harness.close() }
+        let controller = try #require(harness.selectionController)
+        let whole = RichSelection(start: position(1, 0), end: position(1, 1))
+        harness.model.setFocused(true)
+        harness.model.select(RichSelection(start: position(0, 1), end: position(2, 1)))
+        try await harness.waitUntil { controller.isDisplayActive }
+        try await harness.settle()
+        let frame = try #require(controller.selectionRects(for: whole).first(where: \.containsEnd)?.rect)
+        let before = try #require(controller.caretRect(for: position(1, 0)))
+        let after = try #require(controller.caretRect(for: position(1, 1)))
+        let isRightToLeft = direction == .rightToLeft
+
+        #expect(before.minY == frame.minY)
+        #expect(isRightToLeft ? before.maxX == frame.maxX : before.minX == frame.minX)
+        #expect(after.maxY == frame.maxY)
+        #expect(isRightToLeft ? after.minX == frame.minX : after.maxX == frame.maxX)
     }
 
     // MARK: - Helpers
