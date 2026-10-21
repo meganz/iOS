@@ -3,6 +3,7 @@ import Combine
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwift
 
 @MainActor
 final class AudioPlaybackService {
@@ -49,7 +50,7 @@ final class AudioPlaybackService {
     private var sleepTimerTask: Task<Void, Never>?
 
     /// Runs for the lifetime of the service: the SDK keeps reporting node changes
-    private var deletedNodesTask: Task<Void, Never>?
+    private var removedNodesTask: Task<Void, Never>?
 
     /// The folder-link SDK's own stream, which only bears on folder-link playback
     private var removedFolderLinkNodesTask: Task<Void, Never>?
@@ -57,8 +58,6 @@ final class AudioPlaybackService {
     private var renamedNodesTask: Task<Void, Never>?
 
     private var renamedFolderLinkNodesTask: Task<Void, Never>?
-
-    private var replacedNodesTask: Task<Void, Never>?
 
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
@@ -71,8 +70,23 @@ final class AudioPlaybackService {
     
     private var playbackQueue: PlaybackQueue {
         get { queueSubject.value }
-        set { queueSubject.send(newValue) }
+        set {
+            // Built here rather than under the lock, which only guards the swap
+            let folders = Dictionary(
+                newValue.tracks.compactMap { track -> (HandleEntity, HandleEntity)? in
+                    guard case .account(let node) = track else { return nil }
+                    return (node.handle, node.parentHandle)
+                },
+                uniquingKeysWith: { first, _ in first }
+            )
+            queuedFolders.mutate { $0 = folders }
+            queueSubject.send(newValue)
+        }
     }
+
+    /// The folder each Cloud Drive track's node was in when it was queued or last refreshed, for
+    /// the node-update task to read without waiting on the main actor
+    private let queuedFolders = Atomic<[HandleEntity: HandleEntity]>(wrappedValue: [:])
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -619,10 +633,11 @@ extension AudioPlaybackService: PlaybackControllable {
     // MARK: - Node updates
 
     private func bindNodeUpdates() {
-        deletedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
-            for await deletedNodeHandles in audioNodeUpdatesUseCase.deletedNodeHandles {
+        removedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase, queuedFolders] in
+            let removedNodes = audioNodeUpdatesUseCase.removedNodes { queuedFolders.wrappedValue }
+            for await removals in removedNodes {
                 guard !Task.isCancelled else { return }
-                await self?.handleDeletedNodes(withHandles: deletedNodeHandles, isFolderLink: false)
+                await self?.handleRemovedNodes(removals)
             }
         }
 
@@ -630,13 +645,6 @@ extension AudioPlaybackService: PlaybackControllable {
             for await removals in audioNodeUpdatesUseCase.removedFolderLinkNodes {
                 guard !Task.isCancelled else { return }
                 await self?.handleRemovedFolderLinkNodes(removals)
-            }
-        }
-
-        replacedNodesTask = Task.detached { [weak self, audioNodeUpdatesUseCase] in
-            for await replacements in audioNodeUpdatesUseCase.replacedNodes {
-                guard !Task.isCancelled else { return }
-                await self?.replaceNodes(isFolderLink: false) { $0.replacingNodes(replacements) }
             }
         }
 
@@ -655,17 +663,24 @@ extension AudioPlaybackService: PlaybackControllable {
         }
     }
 
+    /// Replacements go in first, as for a folder link
+    private func handleRemovedNodes(_ removals: [HandleEntity: NodeEntity?]) {
+        let replacements = removals.compactMapValues { $0 }
+        if replacements.isNotEmpty {
+            replaceNodes(isFolderLink: false) { $0.replacingNodes(replacements) }
+        }
+        handleDeletedNodes(withHandles: Set(removals.keys), isFolderLink: false)
+    }
+
     /// Replacements go in first, so a deletion that skips the playing track lands on a new file
-    /// rather than loading the old one only to restart it
+    /// rather than loading the old one only to restart it. A track whose replacement was turned
+    /// down is then deleted along with the rest
     private func handleRemovedFolderLinkNodes(_ removals: [HandleEntity: (any PlayableNode)?]) {
         let replacements = removals.compactMapValues { $0 }
         if replacements.isNotEmpty {
             replaceNodes(isFolderLink: true) { $0.replacingFolderLinkNodes(replacements) }
         }
-        let deletedHandles = Set(removals.keys).subtracting(replacements.keys)
-        if deletedHandles.isNotEmpty {
-            handleDeletedNodes(withHandles: deletedHandles, isFolderLink: true)
-        }
+        handleDeletedNodes(withHandles: Set(removals.keys), isFolderLink: true)
     }
 
     private func handleDeletedNodes(

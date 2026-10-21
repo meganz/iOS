@@ -30,13 +30,37 @@ extension Array where Element == PlaybackTrack {
         }
     }
 
+    /// A node already backing a track never takes another track's place, as the two would share
+    /// one id: that track is left as it is
     private func replacing(_ replacement: (PlaybackTrack) -> PlaybackTrack?) -> [PlaybackTrack]? {
+        let backingHandles = Set(compactMap(\.nodeHandle))
         var didReplace = false
         let replaced = map { track in
             guard let newTrack = replacement(track) else { return track }
+            if newTrack.nodeHandle != track.nodeHandle,
+               let handle = newTrack.nodeHandle,
+               backingHandles.contains(handle) {
+                return track
+            }
             didReplace = true
             return newTrack
         }
         return didReplace ? replaced : nil
+    }
+}
+
+private extension PlaybackTrack {
+    /// The node backing the track, whichever way it is played
+    var nodeHandle: HandleEntity? {
+        switch self {
+        case .account(let node), .offlineNode(let node, _):
+            return node.handle
+        case .folderLink(let node):
+            return node.handle
+        case .fileLink(_, let node):
+            return node?.handle
+        case .offline:
+            return nil
+        }
     }
 }
