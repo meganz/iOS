@@ -35,13 +35,24 @@ struct RichRowView: View {
             case .rawPiece(let row):
                 atomic(PreviewRowView(row: row, baseURL: baseURL))
             default:
-                MarkdownRowChromeView(chrome: chrome, checkboxLabel: checkboxLabel, onToggle: onToggleCheckbox) {
+                MarkdownRowChromeView(chrome: chrome, checkboxLabel: checkboxLabel, onToggle: onToggleCheckbox, contentDirection: textDirection) {
                     inner
                 }
             }
         }
         // Rows never animate: a change of the checkbox, marker or gap shows at once.
         .transaction { $0.animation = nil }
+    }
+
+    /// The direction of the row's own text, so its list marker and checkbox sit on the side where the text starts.
+    /// The same rule aligns the text in `RichTextStyler`. Nil for code and rows without text: they follow the layout.
+    private var textDirection: LayoutDirection? {
+        guard case .text(let block, _, _) = content, let text = block.richText?.text else { return nil }
+        switch RichTextStyler.writingDirection(of: text) {
+        case .rightToLeft: return .rightToLeft
+        case .leftToRight: return .leftToRight
+        default: return nil
+        }
     }
 
     @ViewBuilder
