@@ -134,6 +134,12 @@ extension MarkdownTextEditorViewController: ViewType {
         styleGlassNavigationBar()
     }
 
+    /// Bold callout at the default text size. Bar items like Cancel keep one size at every text size, so Save does too.
+    static var saveFont: UIFont {
+        let callout = UIFont.preferredFont(forTextStyle: .callout, compatibleWith: UITraitCollection(preferredContentSizeCategory: .large))
+        return UIFont.systemFont(ofSize: callout.pointSize, weight: .bold)
+    }
+
     private func setupNavbarItems(_ model: TextEditorNavbarItemsModel) {
         switch model.textEditorMode {
         case .load:
@@ -154,7 +160,7 @@ extension MarkdownTextEditorViewController: ViewType {
         case .edit, .create:
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: model.leftItem.title, style: .plain, target: self, action: #selector(cancelTapped))
             let saveItem = UIBarButtonItem(title: model.rightItem?.title, style: .plain, target: self, action: #selector(saveTapped))
-            saveItem.setTitleTextAttributes([.font: UIFont.preferredFont(style: .callout, weight: .bold)], for: .normal)
+            saveItem.setTitleTextAttributes([.font: Self.saveFont], for: .normal)
             navigationItem.rightBarButtonItems = [saveItem, makeModeItem()]
         }
 
