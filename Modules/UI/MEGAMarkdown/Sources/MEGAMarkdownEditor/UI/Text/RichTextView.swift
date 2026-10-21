@@ -133,6 +133,15 @@ final class RichTextView: UITextView {
         return size
     }
 
+    /// A text view that does not scroll sizes its container to its bounds. The row can be a fraction of a point
+    /// shorter than its lines, and TextKit 1 then leaves the last line out. An unlimited height keeps every line.
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if textContainer.size.height != .greatestFiniteMagnitude {
+            textContainer.size.height = .greatestFiniteMagnitude
+        }
+    }
+
     // MARK: - Clipboard
 
     override func copy(_ sender: Any?) {
