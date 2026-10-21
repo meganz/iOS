@@ -124,13 +124,15 @@ extension CrossBlockSelectionController: SelectionGeometrySource {
         return frame
     }
 
-    /// A caret at the leading edge of a block without text: at its top (before it) or its bottom (after it).
+    /// A caret of a block without text: at its top leading corner (before it) or its bottom trailing corner (after it).
+    /// UIKit draws a handle on a whole selected block at those corners, so the handle is grabbed where it shows.
     private func atomicCaret(items: Range<Int>, after: Bool) -> CGRect? {
         guard let adapter, !items.isEmpty else { return nil }
         let item = edgeItem(items, offset: after ? 1 : 0)
         let frame = atomicFrame(item: item, row: adapter.row(forItem: item).row)
         let height = min(frame.height, bodyLineHeight)
-        let x = layoutDirection == .rightToLeft ? frame.maxX - 2 : frame.minX
+        let isTrailing = after != (layoutDirection == .rightToLeft)
+        let x = isTrailing ? frame.maxX - 2 : frame.minX
         return CGRect(x: x, y: after ? frame.maxY - height : frame.minY, width: 2, height: height)
     }
 
