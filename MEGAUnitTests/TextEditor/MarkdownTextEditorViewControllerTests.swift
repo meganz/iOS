@@ -418,16 +418,19 @@ struct MarkdownTextEditorViewControllerTests {
         #expect(right.last?.menu != nil)
     }
 
-    @Test func editModeNavItemsAreCancelAndBoldSave() throws {
-        let fixture = Self.makeFixture(mode: .edit)
+    /// Save is bold and keeps the callout size of the default text size (16 pt), also at a larger text size.
+    @Test(arguments: [TextEditorMode.edit, .create])
+    func editingNavItemsAreCancelAndBoldSaveOfOneSize(mode: TextEditorMode) throws {
+        let fixture = Self.makeFixture(mode: mode)
 
-        Self.configure(fixture.sut, mode: .edit, accessLevel: nil)
+        Self.configure(fixture.sut, mode: mode, accessLevel: nil)
 
         #expect(fixture.sut.navigationItem.leftBarButtonItem?.title == Strings.Localizable.cancel)
         let save = try #require(fixture.sut.navigationItem.rightBarButtonItems?.first)
         #expect(save.title == Strings.Localizable.save)
         let font = try #require(save.titleTextAttributes(for: .normal)?[.font] as? UIFont)
-        #expect(font == UIFont.preferredFont(style: .callout, weight: .bold))
+        #expect(font.pointSize == 16)
+        #expect(font.fontDescriptor.symbolicTraits.contains(.traitBold))
     }
 
     @Test func modeItemReadsMoreWithModeValue() throws {
