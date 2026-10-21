@@ -962,7 +962,10 @@ extension MEGAPhotoBrowserViewController {
         
         switch displayMode {
         case .fileLink:
-            self.leftToolbarItem?.image = MEGAAssets.UIImage.folderArrow
+            // Save to MEGA, matching the file link screen it was opened from.
+            self.leftToolbarItem?.image = MEGALinkManager.isLinkRevampEnabled
+                ? MEGAAssets.UIImage.uploadToCloud
+                : MEGAAssets.UIImage.folderArrow
             self.centerToolbarItem?.image = MEGAAssets.UIImage.photosApp
         case .photosTimeline:
             // The picker hands its own index straight back as a browser index, so it cannot work
@@ -974,6 +977,8 @@ extension MEGAPhotoBrowserViewController {
         }
         // Matches `didPressRightToolbarButton`: only these modes do not export the file.
         self.rightToolbarItem?.image = switch displayMode {
+        // Share link, matching the file link screen it was opened from.
+        case .fileLink where MEGALinkManager.isLinkRevampEnabled: MEGAAssets.UIImage.link01
         case .fileLink, .albumLink, .nodeInsideFolderLink: MEGAAssets.UIImage.externalLink
         default: MEGAAssets.UIImage.downloadToDisk
         }

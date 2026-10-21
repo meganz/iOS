@@ -410,6 +410,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsPdf(node.name?.pathExtension == "pdf")
                 .setIsPDFViewerRevampEnabled(isPDFViewerRevampEnabled)
                 .setIsLink(isLink)
+                .setIsLinkRevampEnabled(MEGALinkManager.isLinkRevampEnabled)
                 .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
                 .setIsRestorable(viewModel.isRestorable(node: node.toNodeEntity(), isBackupNode: isBackupNode))
                 .setVersionCount(node.mnz_numberOfVersions() - 1)
