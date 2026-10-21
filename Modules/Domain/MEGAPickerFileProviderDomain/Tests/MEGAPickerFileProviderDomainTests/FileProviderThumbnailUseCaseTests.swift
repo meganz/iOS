@@ -92,7 +92,8 @@ struct FileProviderThumbnailUseCaseTests {
     ) -> FileProviderThumbnailUseCase {
         FileProviderThumbnailUseCase(
             itemUseCase: MockFileProviderItemUseCase(presentableItems: items),
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResults: thumbnailResults)
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResults: thumbnailResults),
+            inFlightLoads: InFlightThumbnailLoads()
         )
     }
 

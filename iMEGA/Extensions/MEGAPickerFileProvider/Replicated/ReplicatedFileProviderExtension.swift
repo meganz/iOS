@@ -27,6 +27,7 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     private static let domainsWithoutLeftoverDownloads = OSAllocatedUnfairLock<Set<String>>(initialState: [])
 
     private let domain: NSFileProviderDomain
+    private let inFlightThumbnailLoads = InFlightThumbnailLoads()
     private let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
 
     /// Built on every use rather than stored: its repositories reach `MEGASdk.shared`, which must not exist before
@@ -72,7 +73,8 @@ final class ReplicatedFileProviderExtension: NSObject, NSFileProviderReplicatedE
     private var thumbnailUseCase: some FileProviderThumbnailUseCaseProtocol {
         FileProviderThumbnailUseCase(
             itemUseCase: itemUseCase,
-            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            inFlightLoads: inFlightThumbnailLoads
         )
     }
 

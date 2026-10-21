@@ -19,10 +19,18 @@ public struct FileProviderThumbnailUseCase: FileProviderThumbnailUseCaseProtocol
 
     private let itemUseCase: any FileProviderItemUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let inFlightLoads: InFlightThumbnailLoads
 
-    public init(itemUseCase: any FileProviderItemUseCaseProtocol, thumbnailUseCase: any ThumbnailUseCaseProtocol) {
+    /// - Parameter inFlightLoads: Shared by the use cases built for one extension instance, so that calls overlapping in
+    ///   time load each thumbnail once.
+    public init(
+        itemUseCase: any FileProviderItemUseCaseProtocol,
+        thumbnailUseCase: any ThumbnailUseCaseProtocol,
+        inFlightLoads: InFlightThumbnailLoads
+    ) {
         self.itemUseCase = itemUseCase
         self.thumbnailUseCase = thumbnailUseCase
+        self.inFlightLoads = inFlightLoads
     }
 
     public func loadThumbnails(
@@ -47,7 +55,9 @@ public struct FileProviderThumbnailUseCase: FileProviderThumbnailUseCaseProtocol
 
     private func loadThumbnail(for identifier: NSFileProviderItemIdentifier) async -> LoadedThumbnail {
         do {
-            let data = try await thumbnailData(for: identifier)
+            let data = try await inFlightLoads.data(for: identifier) {
+                try await thumbnailData(for: identifier)
+            }
             return (identifier, .success(data))
         } catch {
             return (identifier, .failure(error))
@@ -70,5 +80,27 @@ public struct FileProviderThumbnailUseCase: FileProviderThumbnailUseCaseProtocol
         } catch is ThumbnailErrorEntity {
             return nil
         }
+    }
+}
+
+/// The thumbnails being loaded, shared by the calls that ask for one at the same time: the SDK deletes and rewrites the
+/// cached file for every request, so a caller reading it while another request rewrites it finds no file.
+public actor InFlightThumbnailLoads {
+    private var loads: [NSFileProviderItemIdentifier: Task<Data?, any Error>] = [:]
+
+    public init() {}
+
+    /// The result of the load of `identifier` already running, or of `load` when none is.
+    func data(
+        for identifier: NSFileProviderItemIdentifier,
+        load: @escaping @Sendable () async throws -> Data?
+    ) async throws -> Data? {
+        if let running = loads[identifier] {
+            return try await running.value
+        }
+        let task = Task { try await load() }
+        loads[identifier] = task
+        defer { loads[identifier] = nil }
+        return try await task.value
     }
 }
