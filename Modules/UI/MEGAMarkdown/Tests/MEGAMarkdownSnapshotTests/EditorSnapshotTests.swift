@@ -154,6 +154,11 @@ struct EditorSnapshotTests {
         await assertList(editor("# Title\n\nSome text.\n\n- [ ] A task\n- An item\n\n> A quote"), height: 900, dynamicType: .accessibility3)
     }
 
+    /// Each list row puts its marker or checkbox on the side where its own text starts, in both app directions.
+    @Test func editorListRowsInBothTextDirections() async {
+        await assertList(editor("- פריט ראשון\n- [ ] משימה\n1. פריט ממוספר\n\n- An item\n- [x] A task\n1. A number"), height: 400)
+    }
+
     /// A phone in a small size and an iPad in portrait.
     @Test func editorRowKindsNarrow() async {
         await assertList(editor(Self.rowKinds), width: 320, height: 1_500)
