@@ -136,11 +136,64 @@ struct PDFViewerInitialPageIndexScrollingViewModelTests {
         subscription.cancel()
     }
 
-    private func makeSUT(initialPageIndex: Int?) -> (
+    @Test
+    func requestsInitialPageWhenInsetsAreNeverReportedAfterScrollToTop() async throws {
+        let (sut, didTriggerInitialScrollToTop) = makeSUT(
+            initialPageIndex: 15,
+            contentScrollViewInsetsSettleTimeout: .milliseconds(50)
+        )
+
+        didTriggerInitialScrollToTop.send(true)
+        #expect(sut.initialPageNavigationRequest == nil)
+        try await Task.sleep(for: .milliseconds(300))
+
+        #expect(sut.initialPageNavigationRequest == 15)
+        #expect(sut.didSettleInitialScrollPosition)
+    }
+
+    @Test
+    func doesNotSettleOnTimeoutBeforeScrollToTop() async throws {
+        let (sut, _) = makeSUT(
+            initialPageIndex: 15,
+            contentScrollViewInsetsSettleTimeout: .milliseconds(50)
+        )
+
+        sut.contentInsetState = unsettledInsets
+        try await Task.sleep(for: .milliseconds(300))
+
+        #expect(sut.initialPageNavigationRequest == nil)
+        #expect(!sut.didSettleInitialScrollPosition)
+    }
+
+    @Test
+    func requestsAtMostOnceWhenInsetsSettleBeforeTimeout() async throws {
+        let (sut, didTriggerInitialScrollToTop) = makeSUT(
+            initialPageIndex: 15,
+            contentScrollViewInsetsSettleTimeout: .milliseconds(50)
+        )
+        var requests: [Int] = []
+        let subscription = sut.$initialPageNavigationRequest
+            .compactMap { $0 }
+            .sink { requests.append($0) }
+
+        didTriggerInitialScrollToTop.send(true)
+        sut.contentInsetState = settledInsets
+        try await Task.sleep(for: .milliseconds(300))
+
+        #expect(requests == [15])
+        subscription.cancel()
+    }
+
+    private func makeSUT(
+        initialPageIndex: Int?,
+        contentScrollViewInsetsSettleTimeout: Duration = .seconds(3600)
+    ) -> (
         sut: PDFViewerInitialPageIndexScrollingViewModel,
         didTriggerInitialScrollToTop: CurrentValueSubject<Bool, Never>
     ) {
-        let sut = PDFViewerInitialPageIndexScrollingViewModel()
+        let sut = PDFViewerInitialPageIndexScrollingViewModel(
+            contentScrollViewInsetsSettleTimeout: contentScrollViewInsetsSettleTimeout
+        )
         sut.initialPageIndex = initialPageIndex
         let didTriggerInitialScrollToTop = CurrentValueSubject<Bool, Never>(false)
         sut.startObservingScrollToTop(didTriggerInitialScrollToTop: didTriggerInitialScrollToTop)

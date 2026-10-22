@@ -159,6 +159,7 @@ struct PDFViewerAnalyticsTests {
             trackingUseCase: recorder
         ))
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(recorder.events.isEmpty)
         sut.password = "incorrect-fixture-password"
         await sut.submitPassword()
@@ -213,6 +214,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         await sut.loadDocumentFromSource()
         #expect(recorder.events == [.loadSucceeded])
     }
@@ -225,10 +227,13 @@ struct PDFViewerAnalyticsTests {
         while urlUseCase.firstAttemptContinuation == nil { await Task.yield() }
 
         await sut.loadDocumentFromSource()
+
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         urlUseCase.firstAttemptContinuation?.finish(throwing: AnalyticsDocumentURLUseCase.ResolutionError.failed)
         await firstAttempt.value
 
         #expect(recorder.events == [.loadSucceeded])
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
     }
 
@@ -237,6 +242,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder, downloadFails: downloadFails, readable: false)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(recorder.events == [.loadFailed(downloadFails ? .downloadFailed : .documentUnreadable)])
     }
 
@@ -244,6 +250,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder, readable: false)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         await sut.retryDocumentLoad()
         #expect(recorder.events == [.loadFailed(.documentUnreadable), .loadFailed(.documentUnreadable)])
     }
@@ -252,6 +259,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         sut.isShowingThumbnails = true
         sut.isShowingThumbnails = true
         sut.didSelectThumbnail(at: 0)
@@ -263,6 +271,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         sut.didSelectThumbnail(at: 99)
         #expect(!recorder.events.contains(.thumbnailSelected))
     }
@@ -275,6 +284,7 @@ struct PDFViewerAnalyticsTests {
             outlineReader: MockPDFOutlineReader(items: .init(inOutlineOrder: [item], inPageOrder: [item]))
         )
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         await sut.loadOutlineIfNeeded()
         sut.currentPageIndex = 0
         sut.didOpenOutline()
@@ -289,6 +299,7 @@ struct PDFViewerAnalyticsTests {
         let reader = AnalyticsDelayedOutlineReader()
         let sut = makeSUT(recorder: recorder, hasOutline: true, outlineReader: reader)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let load = Task { await sut.loadOutlineIfNeeded() }
         await reader.waitUntilStarted()
         sut.didOpenOutline()
@@ -303,6 +314,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         sut.requestSearch()
         #expect(recorder.events == [.loadSucceeded, .searchToolbarSelected])
     }
@@ -311,6 +323,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let first = UUID(), second = UUID()
         sut.searchSessionDidBegin(first)
         sut.searchSessionDidBegin(first)
@@ -325,6 +338,7 @@ struct PDFViewerAnalyticsTests {
         let recorder = PDFAnalyticsRecorder()
         let sut = makeSUT(recorder: recorder)
         await sut.loadDocumentFromSource()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let session = UUID(), generation = UUID()
         sut.searchSessionDidBegin(session)
         sut.searchResultDidChange(sessionID: session, generationID: generation, resultID: 0)

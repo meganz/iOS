@@ -58,6 +58,17 @@ final class PDFViewerViewModel {
             var passwordRejectionCount = 0
         }
 
+        struct OutlineLoadingState: Equatable {
+            let shouldLoadOutline: Bool
+            let outlineDocumentURL: URL?
+            var isLoadingOutline = false
+
+            init(_ state: PDFViewerDocumentLoadingState.ReadyState.OutlineLoadingState) {
+                shouldLoadOutline = state.shouldLoadOutline
+                outlineDocumentURL = state.outlineDocumentURL
+            }
+        }
+
         struct ReadyState: Equatable {
             struct PagingState: Equatable {
                 var currentPageIndex: Int
@@ -65,17 +76,6 @@ final class PDFViewerViewModel {
             }
 
             struct OutlineState: Equatable {
-                struct OutlineLoadingState: Equatable {
-                    let shouldLoadOutline: Bool
-                    let outlineDocumentURL: URL?
-                    var isLoadingOutline = false
-
-                    init(_ state: PDFViewerDocumentLoadingState.ReadyState.OutlineLoadingState) {
-                        shouldLoadOutline = state.shouldLoadOutline
-                        outlineDocumentURL = state.outlineDocumentURL
-                    }
-                }
-
                 var outlineItems: PDFOutlineItems
                 var outlineLoadingState: OutlineLoadingState?
                 var isShowingOutline: Bool
@@ -115,6 +115,19 @@ final class PDFViewerViewModel {
             var searchState: SearchState
         }
 
+        /// What the displayer needs to prepare `document`, and what `.ready`
+        /// is built from once it has.
+        struct PreparingDisplayState: Equatable {
+            let document: PDFDocument
+            let documentIdentifierForLastViewedPageIndex: String?
+            let initialPageIndex: Int?
+            let outlineLoadingState: OutlineLoadingState
+            /// What the loading view showed before preparation started, so
+            /// the view looks unchanged while the displayer prepares.
+            let loadingProgress: Float?
+            let showsLoadingProgress: Bool
+        }
+
         struct FailedState: Equatable {
             var failureReason: FailureReason
             var isShowingDamagedFileAlert: Bool
@@ -135,10 +148,13 @@ final class PDFViewerViewModel {
 
         case loading(progress: Float?)
         case documentLocked(DocumentLockedState)
+        case preparingDisplay(PreparingDisplayState)
         case ready(ReadyState)
         case failed(FailedState)
 
         var isDocumentLocked: Bool { if case .documentLocked = self { true } else { false } }
+
+        var isPreparingDisplay: Bool { if case .preparingDisplay = self { true } else { false } }
 
         var isReady: Bool { if case .ready = self { true } else { false } }
 
@@ -180,6 +196,10 @@ final class PDFViewerViewModel {
         set { if let newValue, state.isReady { state = .ready(newValue) } }
     }
 
+    private var preparingDisplayState: ViewState.PreparingDisplayState? {
+        if case .preparingDisplay(let preparingDisplayState) = state { preparingDisplayState } else { nil }
+    }
+
     init(dependency: Dependency) {
         self.dependency = dependency
     }
@@ -189,22 +209,22 @@ final class PDFViewerViewModel {
 
 extension PDFViewerViewModel {
 
-    /// The instance `MEGAPDFView` draws from; nil until ready.
-    /// Thumbnails render from a separate instance, see
+    /// The instance `MEGAPDFView` draws from; nil until the display is being
+    /// prepared. Thumbnails render from a separate instance, see
     /// `PDFViewerDocumentLoadingUseCase`.
     var pdfDocument: PDFDocument? {
-        readyState?.document
+        readyState?.document ?? preparingDisplayState?.document
     }
 
     var initialPageIndex: Int? {
-        readyState?.initialPageIndex
+        readyState?.initialPageIndex ?? preparingDisplayState?.initialPageIndex
     }
 
     /// Resolves the source to a file on disk and parses it. Re-entrant by
     /// design: SwiftUI restarts `.task` on every appearance, and a document
     /// already parsed is not resolved again.
     func loadDocumentFromSource() async {
-        guard !state.isReady, !state.isDocumentLocked else { return }
+        guard !state.isReady, !state.isPreparingDisplay, !state.isDocumentLocked else { return }
         let attemptID = UUID()
         activeLoadAttempt = attemptID
         analyticsState.didTrackPasswordUnlock = false
@@ -242,31 +262,32 @@ extension PDFViewerViewModel {
         case .failed:
             fail(.documentUnreadable)
         case .ready(let readyState):
-            transitionToReady(readyState)
+            transitionToPreparingDisplay(readyState)
             reportLoadOutcome(.loadSucceeded)
         }
     }
 
-    private func transitionToReady(_ readyState: PDFViewerDocumentLoadingState.ReadyState) {
+    private func transitionToPreparingDisplay(_ readyState: PDFViewerDocumentLoadingState.ReadyState) {
         outlineLoadingOperation = readyState.outlineLoadingState.loadOutline
         if let thumbnailDocument = readyState.thumbnailDocument {
             thumbnailLoader = PDFThumbnailLoader(document: thumbnailDocument)
         } else {
             thumbnailLoader = nil
         }
-        state = .ready(ViewState.ReadyState(
+        // - From `.loading`: a bar that showed progress is shown full.
+        // - From `.documentLocked`: the loading view had no bar.
+        let (loadingProgress, showsLoadingProgress): (Float?, Bool) = switch state {
+        case .loading(let progress): (progress.map { _ in 1 }, true)
+        default: (nil, false)
+        }
+        state = .preparingDisplay(ViewState.PreparingDisplayState(
             document: readyState.document,
-            pagingState: ViewState.ReadyState.PagingState(
-                currentPageIndex: 0,
-                pageCount: readyState.document.pageCount
-            ),
             documentIdentifierForLastViewedPageIndex:
                 readyState.documentIdentifierForLastViewedPageIndex,
             initialPageIndex: readyState.initialPageIndex,
-            outlineState: ViewState.ReadyState.OutlineState(
-                outlineLoadingState: .init(readyState.outlineLoadingState)
-            ),
-            searchState: .init(request: nil)
+            outlineLoadingState: .init(readyState.outlineLoadingState),
+            loadingProgress: loadingProgress,
+            showsLoadingProgress: showsLoadingProgress
         ))
     }
 
@@ -502,8 +523,23 @@ extension PDFViewerViewModel {
         self.isScrolledToTop = isScrolledToTop
     }
 
-    func initialPageNavigationDidApply() {
+    func displayerDidFinishPreparingForDisplayAndInteraction() {
+        guard let preparingDisplayState else { return }
         didApplyInitialPageNavigation = true
+        state = .ready(ViewState.ReadyState(
+            document: preparingDisplayState.document,
+            pagingState: ViewState.ReadyState.PagingState(
+                currentPageIndex: preparingDisplayState.initialPageIndex ?? 0,
+                pageCount: preparingDisplayState.document.pageCount
+            ),
+            documentIdentifierForLastViewedPageIndex:
+                preparingDisplayState.documentIdentifierForLastViewedPageIndex,
+            initialPageIndex: preparingDisplayState.initialPageIndex,
+            outlineState: ViewState.ReadyState.OutlineState(
+                outlineLoadingState: preparingDisplayState.outlineLoadingState
+            ),
+            searchState: .init(request: nil)
+        ))
     }
 
     private func pageIndexForLastViewedAndLeftOff() -> Int {

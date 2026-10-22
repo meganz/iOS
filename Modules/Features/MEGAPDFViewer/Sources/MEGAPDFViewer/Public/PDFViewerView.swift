@@ -160,27 +160,37 @@ public struct PDFViewerView: View {
                 if let document = viewModel.pdfDocument {
                     PDFDisplayerView(
                         document: document,
-                        currentPage: $viewModel.currentPageIndex,
-                        isProgrammaticallyScrollingToCurrentPage:
-                            $viewModel.isProgrammaticallyScrollingToCurrentPage,
-                        searchRequest: $viewModel.searchRequest,
                         initialPageIndex: viewModel.initialPageIndex,
-                        onLinkTapped: onLinkTapped,
-                        onTap: {
-                            withAnimation(.easeInOut(duration: 0.25)) {
-                                viewModel.isChromeHidden.toggle()
-                            }
-                        },
-                        onIsScrolledToTopChange: { viewModel.isScrolledToTopDidChange($0) },
-                        onInitialPageNavigationApplied: { viewModel.initialPageNavigationDidApply() },
-                        onSearchSessionDidBegin: { viewModel.searchSessionDidBegin($0) },
-                        onSearchSessionDidEnd: { viewModel.searchSessionDidEnd($0) },
-                        onSearchResultDidChange: { viewModel.searchResultDidChange(sessionID: $0, generationID: $1, resultID: $2) }
+                        onDidFinishPreparingForDisplayAndInteraction: { viewModel.displayerDidFinishPreparingForDisplayAndInteraction() },
+                        interaction: .init(
+                            scroll: .init(
+                                currentPage: $viewModel.currentPageIndex,
+                                isProgrammaticallyScrollingToCurrentPage:
+                                    $viewModel.isProgrammaticallyScrollingToCurrentPage,
+                                onIsScrolledToTopChange: { viewModel.isScrolledToTopDidChange($0) }
+                            ),
+                            search: .init(
+                                request: $viewModel.searchRequest,
+                                onSessionDidBegin: { viewModel.searchSessionDidBegin($0) },
+                                onSessionDidEnd: { viewModel.searchSessionDidEnd($0) },
+                                onResultDidChange: { viewModel.searchResultDidChange(sessionID: $0, generationID: $1, resultID: $2) }
+                            ),
+                            tap: .init(
+                                onDocumentTapped: {
+                                    withAnimation(.easeInOut(duration: 0.25)) {
+                                        viewModel.isChromeHidden.toggle()
+                                    }
+                                },
+                                onLinkTapped: onLinkTapped
+                            )
+                        )
                     )
                     .ignoresSafeArea()
-                    // Makes Liquid Glass navbar/toolbar appearance update more
-                    // likely when dismissing thumbnails view.
-                    .opacity(viewModel.isShowingThumbnails ? 0 : 1)
+                    // - Makes Liquid Glass navbar/toolbar appearance update more
+                    //   likely when dismissing thumbnails view.
+                    // - Keeps the displayer laid out but unseen while it prepares
+                    //   the document behind the loading view.
+                    .opacity(viewModel.isShowingThumbnails || viewModel.state.isPreparingDisplay ? 0 : 1)
 
                     if viewModel.isShowingThumbnails,
                        let thumbnailLoader = viewModel.thumbnailLoader {
@@ -201,6 +211,11 @@ public struct PDFViewerView: View {
                 switch viewModel.state {
                 case .loading(let progress):
                     loadingView(progress: progress)
+                case .preparingDisplay(let preparingDisplayState):
+                    loadingView(
+                        progress: preparingDisplayState.loadingProgress,
+                        showsProgress: preparingDisplayState.showsLoadingProgress
+                    )
                 case .failed:
                     FileErrorView {
                         retryTask?.cancel()

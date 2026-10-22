@@ -22,14 +22,17 @@ private struct HostedPDFDisplayerView: View {
     var body: some View {
         PDFDisplayerView(
             document: document,
-            currentPage: .constant(0),
-            isProgrammaticallyScrollingToCurrentPage: .constant(false),
-            searchRequest: $searchRequest.request,
             initialPageIndex: nil,
-            onLinkTapped: { _ in },
-            onTap: {},
-            onIsScrolledToTopChange: { _ in },
-            onInitialPageNavigationApplied: {}
+            onDidFinishPreparingForDisplayAndInteraction: {},
+            interaction: .init(
+                scroll: .init(
+                    currentPage: .constant(0),
+                    isProgrammaticallyScrollingToCurrentPage: .constant(false),
+                    onIsScrolledToTopChange: { _ in }
+                ),
+                search: .init(request: $searchRequest.request),
+                tap: .init(onDocumentTapped: {}, onLinkTapped: { _ in })
+            )
         )
     }
 }
@@ -38,7 +41,7 @@ extension FindNavigatorPresentationTests {
     @MainActor
     struct PDFDisplayerViewCoordinatorTests {
         @Test func presentRequest_showsFindAndClearsRequest() async throws {
-            let (window, pdfView, state, coordinator) = try makeSUT()
+            let (window, pdfView, state, coordinator) = try await makeSUT()
             defer {
                 pdfView.dismissSearch()
                 window.isHidden = true
@@ -56,7 +59,7 @@ extension FindNavigatorPresentationTests {
         }
 
         @Test func requestReplacedBeforeSending_sendsLatestOnly() async throws {
-            let (window, pdfView, state, coordinator) = try makeSUT()
+            let (window, pdfView, state, coordinator) = try await makeSUT()
             defer { window.isHidden = true }
             state.request = .present
 
@@ -70,7 +73,7 @@ extension FindNavigatorPresentationTests {
         }
 
         @Test func dismissRequest_closesFind() async throws {
-            let (window, pdfView, state, coordinator) = try makeSUT()
+            let (window, pdfView, state, coordinator) = try await makeSUT()
             defer { window.isHidden = true }
             let interaction = try #require(findInteraction(of: pdfView))
             pdfView.presentSearch()
@@ -123,7 +126,7 @@ extension FindNavigatorPresentationTests {
             return view.subviews.lazy.compactMap { megaPDFView(in: $0) }.first
         }
 
-        private func makeSUT() throws -> (UIWindow, MEGAPDFView, SearchRequestState, PDFDisplayerView.Coordinator) {
+        private func makeSUT() async throws -> (UIWindow, MEGAPDFView, SearchRequestState, PDFDisplayerView.Coordinator) {
             let frame = CGRect(x: 0, y: 0, width: 400, height: 700)
             let window = UIWindow(frame: frame)
             let root = UIViewController()
@@ -136,19 +139,21 @@ extension FindNavigatorPresentationTests {
                 "test tested".draw(at: CGPoint(x: 48, y: 48))
             }
             let document = try #require(PDFDocument(data: data))
-            pdfView.configure(document: document)
-            pdfView.layoutIfNeeded()
+            try await pdfView.configureAndAwaitDisplayPreparation(document: document)
             let state = SearchRequestState()
             let parent = PDFDisplayerView(
                 document: document,
-                currentPage: .constant(0),
-                isProgrammaticallyScrollingToCurrentPage: .constant(false),
-                searchRequest: Binding(get: { state.request }, set: { state.request = $0 }),
                 initialPageIndex: nil,
-                onLinkTapped: { _ in },
-                onTap: {},
-                onIsScrolledToTopChange: { _ in },
-                onInitialPageNavigationApplied: {}
+                onDidFinishPreparingForDisplayAndInteraction: {},
+                interaction: .init(
+                    scroll: .init(
+                        currentPage: .constant(0),
+                        isProgrammaticallyScrollingToCurrentPage: .constant(false),
+                        onIsScrolledToTopChange: { _ in }
+                    ),
+                    search: .init(request: Binding(get: { state.request }, set: { state.request = $0 })),
+                    tap: .init(onDocumentTapped: {}, onLinkTapped: { _ in })
+                )
             )
             return (window, pdfView, state, PDFDisplayerView.Coordinator(parent: parent))
         }

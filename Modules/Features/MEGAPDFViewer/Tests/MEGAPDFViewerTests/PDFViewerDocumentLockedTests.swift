@@ -209,6 +209,7 @@ struct PDFViewerDocumentLockedTests {
         #expect(invocation.document === context.document)
         #expect(invocation.url == context.urlUseCase.url)
         #expect(invocation.password == "correct")
+        context.sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(context.sut.state.isReady)
         #expect(context.sut.pdfDocument === context.document)
         #expect(context.sut.password.isEmpty)
@@ -241,6 +242,7 @@ struct PDFViewerDocumentLockedTests {
         context.loadingUseCase.resumePreparation()
         await task.value
 
+        context.sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(context.sut.state.isReady)
         #expect(context.sut.pdfDocument === context.document)
         #expect(context.sut.thumbnailLoader != nil)
@@ -374,6 +376,7 @@ struct PDFViewerDocumentLockedTests {
         sut.password = name == "locked-rc4-spaces" ? " secret " : "secret"
         await sut.submitPassword()
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
         let document = try #require(sut.pdfDocument)
         #expect(!document.isLocked)
@@ -421,6 +424,7 @@ struct PDFViewerDocumentLockedTests {
 
         await sut.submitPassword()
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
         #expect(sut.showsOutlineButton)
         #expect(sut.outlineItems.isEmpty)

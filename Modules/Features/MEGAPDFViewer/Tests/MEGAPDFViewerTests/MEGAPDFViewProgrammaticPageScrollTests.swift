@@ -17,8 +17,8 @@ private let pageCount = 40
 @MainActor
 struct MEGAPDFViewProgrammaticPageScrollTests {
     @Test
-    func initialFitScrollsToDocumentTop() throws {
-        let (sut, window) = try makeSUT(viewport: portraitViewport, pageSize: shortPageSize)
+    func initialFitScrollsToDocumentTop() async throws {
+        let (sut, window) = try await makeSUT(viewport: portraitViewport, pageSize: shortPageSize)
 
         #expect(sut.isScrolledToTop)
         #expect(abs(sut.scaleFactor - sut.scaleFactorForSizeToFit) < 0.0001)
@@ -29,8 +29,8 @@ struct MEGAPDFViewProgrammaticPageScrollTests {
         (portraitViewport, shortPageSize, 15),
         (landscapeViewport, tallPageSize, 5)
     ])
-    func initialPageIsCenteredAfterInitialFit(viewport: CGSize, pageSize: CGSize, pageIndex: Int) throws {
-        let (sut, window) = try makeSUT(viewport: viewport, pageSize: pageSize, initialPageIndex: pageIndex)
+    func initialPageIsCenteredAfterInitialFit(viewport: CGSize, pageSize: CGSize, pageIndex: Int) async throws {
+        let (sut, window) = try await makeSUT(viewport: viewport, pageSize: pageSize, initialPageIndex: pageIndex)
 
         try expectCentered(sut, pageIndex: pageIndex)
         withExtendedLifetime(window) {}
@@ -41,8 +41,8 @@ struct MEGAPDFViewProgrammaticPageScrollTests {
         (portraitViewport, shortPageSize, 30),
         (landscapeViewport, tallPageSize, 5)
     ])
-    func navigatedPageIsCentered(viewport: CGSize, pageSize: CGSize, pageIndex: Int) throws {
-        let (sut, window) = try makeSUT(viewport: viewport, pageSize: pageSize)
+    func navigatedPageIsCentered(viewport: CGSize, pageSize: CGSize, pageIndex: Int) async throws {
+        let (sut, window) = try await makeSUT(viewport: viewport, pageSize: pageSize)
 
         sut.requestPageNavigation(to: pageIndex)
         sut.layoutIfNeeded()
@@ -52,8 +52,8 @@ struct MEGAPDFViewProgrammaticPageScrollTests {
     }
 
     @Test
-    func navigatingToLastPageClampsToDocumentBottom() throws {
-        let (sut, window) = try makeSUT(viewport: portraitViewport, pageSize: shortPageSize)
+    func navigatingToLastPageClampsToDocumentBottom() async throws {
+        let (sut, window) = try await makeSUT(viewport: portraitViewport, pageSize: shortPageSize)
 
         sut.requestPageNavigation(to: pageCount - 1)
         sut.layoutIfNeeded()
@@ -67,8 +67,8 @@ struct MEGAPDFViewProgrammaticPageScrollTests {
     }
 
     @Test
-    func navigatingBackToFirstPageReturnsToDocumentTop() throws {
-        let (sut, window) = try makeSUT(viewport: portraitViewport, pageSize: shortPageSize)
+    func navigatingBackToFirstPageReturnsToDocumentTop() async throws {
+        let (sut, window) = try await makeSUT(viewport: portraitViewport, pageSize: shortPageSize)
         sut.requestPageNavigation(to: 15)
         sut.layoutIfNeeded()
 
@@ -97,7 +97,7 @@ struct MEGAPDFViewProgrammaticPageScrollTests {
         viewport: CGSize,
         pageSize: CGSize,
         initialPageIndex: Int? = nil
-    ) throws -> (MEGAPDFView, UIWindow) {
+    ) async throws -> (MEGAPDFView, UIWindow) {
         let frame = CGRect(origin: .zero, size: viewport)
         let window = UIWindow(frame: frame)
         let sut = MEGAPDFView(frame: frame)
@@ -107,10 +107,9 @@ struct MEGAPDFViewProgrammaticPageScrollTests {
         let data = UIGraphicsPDFRenderer(bounds: CGRect(origin: .zero, size: pageSize)).pdfData { context in
             for _ in 0..<pageCount { context.beginPage() }
         }
-        sut.configure(document: try #require(PDFDocument(data: data)))
         window.addSubview(sut)
         window.isHidden = false
-        sut.layoutIfNeeded()
+        try await sut.configureAndAwaitDisplayPreparation(document: try #require(PDFDocument(data: data)))
         return (sut, window)
     }
 }
