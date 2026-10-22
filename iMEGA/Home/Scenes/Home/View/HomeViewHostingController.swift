@@ -37,6 +37,23 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
         )
     }
 
+    // For screens that are opened from Home that hide the tab bar, we should also moves the bottom overlay
+    // (mini player, PSA banner) to the screen bottom by calling `refreshBottomConstraint`
+    // Otherwise there will be a blank gap below the bottom overlay
+    // Edit mode screens use `isTabBarHidden`, so the overlay stays above their bottom toolbar.
+    private var tabBarHiddenWithBottomOverlayRefresh: Binding<Bool> {
+        Binding(
+            get: { [weak self] in
+                self?.isTabBarHidden.wrappedValue ?? false
+            },
+            set: { [weak self] in
+                guard let self else { return }
+                isTabBarHidden.wrappedValue = $0
+                (tabBarController as? MainTabBarController)?.refreshBottomConstraint()
+            }
+        )
+    }
+
     @Published var quickAccessRoute: QuickAccessRoute?
 
     private let popToRootSubject = PassthroughSubject<Void, Never>()
@@ -115,6 +132,7 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
             dependency: dependency,
             homeDeepLink: homeDeepLink,
             tabBarHidden: isTabBarHidden,
+            tabBarHiddenWithBottomOverlayRefresh: tabBarHiddenWithBottomOverlayRefresh,
             quickAccessRoutePublisher: $quickAccessRoute.eraseToAnyPublisher(),
             popToRootPublisher: popToRootSubject.eraseToAnyPublisher()
         )
