@@ -42,6 +42,7 @@ extension AppDelegate {
     /// Ends the revamped playback session on logout
     @objc func stopAudioPlaybackSession() {
         MEGAAudioPlayerSession.stop()
+        MEGAAudioPlayerSession.resetInterruption()
     }
 
     /// Cancels the pricing request on logout, so the next one reloads the products for whoever logs in next

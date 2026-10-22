@@ -27,12 +27,18 @@ final class NowPlayingInfoController {
 
     private var cancellables: Set<AnyCancellable> = []
 
-    private var isActive = false {
+    private var hasSource = false {
         didSet {
-            setCommandsEnabled(isActive)
-            if !isActive { infoCenter.nowPlayingInfo = nil }
+            // While suspended the shared commands and info belong to another player
+            guard !isSuspended else { return }
+            applyActivity()
         }
     }
+
+    /// Set while another player owns the shared remote commands and Now Playing info.
+    private var isSuspended = false
+
+    private var isActive: Bool { hasSource && !isSuspended }
 
     private var lastInfo: NowPlayingInfo?
 
@@ -64,7 +70,7 @@ final class NowPlayingInfoController {
         state.currentSourcePublisher
             .map { $0 != nil }
             .removeDuplicates()
-            .sink { [weak self] hasSource in self?.isActive = hasSource }
+            .sink { [weak self] hasSource in self?.hasSource = hasSource }
             .store(in: &cancellables)
 
         let content = Publishers.CombineLatest3(
@@ -96,22 +102,47 @@ final class NowPlayingInfoController {
                 guard let self else { return }
                 lastInfo = info
                 guard isActive else { return }
-
-                var dict: [String: Any] = [
-                    MPMediaItemPropertyTitle: info.title,
-                    MPMediaItemPropertyArtist: info.artist,
-                    MPNowPlayingInfoPropertyElapsedPlaybackTime: info.elapsed,
-                    MPNowPlayingInfoPropertyPlaybackRate: info.rate
-                ]
-                if let image = info.artworkData.flatMap(UIImage.init(data:)) {
-                    dict[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { @Sendable _ in image }
-                }
-                if info.duration > 0 {
-                    dict[MPMediaItemPropertyPlaybackDuration] = info.duration
-                }
-                infoCenter.nowPlayingInfo = dict
+                publish(info)
             }
             .store(in: &cancellables)
+    }
+
+    /// Hands the remote commands and Now Playing info over to another player.
+    func suspend() {
+        guard !isSuspended else { return }
+        let wasActive = isActive
+        isSuspended = true
+        if wasActive { applyActivity() }
+    }
+
+    /// Takes the remote commands back and restores the last Now Playing info.
+    func resume() {
+        guard isSuspended else { return }
+        isSuspended = false
+        // Also applied without a source: don't rely on the other player having disabled the shared commands
+        applyActivity()
+        if isActive, let lastInfo { publish(lastInfo) }
+    }
+
+    private func applyActivity() {
+        setCommandsEnabled(isActive)
+        if !isActive { infoCenter.nowPlayingInfo = nil }
+    }
+
+    private func publish(_ info: NowPlayingInfo) {
+        var dict: [String: Any] = [
+            MPMediaItemPropertyTitle: info.title,
+            MPMediaItemPropertyArtist: info.artist,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: info.elapsed,
+            MPNowPlayingInfoPropertyPlaybackRate: info.rate
+        ]
+        if let image = info.artworkData.flatMap(UIImage.init(data:)) {
+            dict[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { @Sendable _ in image }
+        }
+        if info.duration > 0 {
+            dict[MPMediaItemPropertyPlaybackDuration] = info.duration
+        }
+        infoCenter.nowPlayingInfo = dict
     }
 
     // MARK: - Remote commands
@@ -147,7 +178,8 @@ final class NowPlayingInfoController {
     ) -> MPRemoteCommandHandlerStatus {
         guard event.command.isEnabled else { return .commandFailed }
         Task { @MainActor [weak self] in
-            guard let self else { return }
+            // The commands are shared: another player that enabled them is not asking this one
+            guard let self, isActive else { return }
             action(self)
         }
         return .success
