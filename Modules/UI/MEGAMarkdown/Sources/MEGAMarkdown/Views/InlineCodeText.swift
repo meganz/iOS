@@ -112,7 +112,8 @@ final class InlineCodeTextView: UIView {
     var openURL: ((URL) -> Void)?
 
     private let storage = NSTextStorage()
-    private let layoutManager = InlineCodeLayoutManager()
+    /// Not private: tests count its glyphs.
+    let layoutManager = InlineCodeLayoutManager()
     private let container = NSTextContainer(size: CGSize(width: 0, height: CGFloat.greatestFiniteMagnitude))
     private var lastFit: (width: CGFloat, height: CGFloat)?
 
@@ -242,5 +243,10 @@ extension InlineCodeTextView: @preconcurrency NSLayoutManagerDelegate {
         forGlyphRange glyphRange: NSRange
     ) -> Bool {
         self.layoutManager.setLineFragmentRect(lineFragmentRect, usedRect: lineFragmentUsedRect, baselineOffset: baselineOffset)
+    }
+
+    /// See `InlineCodeLayoutManager.allowsHyphen(beforeCharacterAt:)`.
+    func layoutManager(_ layoutManager: NSLayoutManager, shouldBreakLineByHyphenatingBeforeCharacterAt charIndex: Int) -> Bool {
+        self.layoutManager.allowsHyphen(beforeCharacterAt: charIndex)
     }
 }

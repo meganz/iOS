@@ -279,4 +279,9 @@ extension RichTextView: @preconcurrency NSLayoutManagerDelegate {
     ) -> Bool {
         inlineCodeLayoutManager?.setLineFragmentRect(lineFragmentRect, usedRect: lineFragmentUsedRect, baselineOffset: baselineOffset) ?? false
     }
+
+    /// See `InlineCodeLayoutManager.allowsHyphen(beforeCharacterAt:)`.
+    func layoutManager(_ layoutManager: NSLayoutManager, shouldBreakLineByHyphenatingBeforeCharacterAt charIndex: Int) -> Bool {
+        inlineCodeLayoutManager?.allowsHyphen(beforeCharacterAt: charIndex) ?? true
+    }
 }

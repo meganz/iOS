@@ -329,6 +329,14 @@ struct EditorSnapshotTests {
         )
     }
 
+    /// A long code span with no spaces wraps inside the code, in a left-to-right and a right-to-left paragraph.
+    /// No line of it ends with an added hyphen.
+    @Test func editorLongInlineCodeSpan() async {
+        let code = String(repeating: "long_code_span_", count: 12) + "end"
+        let markdown = "A very long code span `\(code)` in a paragraph.\n\nקטע קוד ארוך `\(code)` בתוך פסקה."
+        await assertList(editor(markdown), height: 700)
+    }
+
     /// Enter in an empty list item steps the row out of the list. It draws no marker and the rows below move up.
     @Test func editorEnterInAnEmptyListItem() async {
         await assertList(
