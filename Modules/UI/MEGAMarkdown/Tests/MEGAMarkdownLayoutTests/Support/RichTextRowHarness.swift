@@ -85,8 +85,10 @@ final class RichTextRowHarness: RichTextRowHost {
     }
 
     /// Lets SwiftUI draw the row with the newest input. The layout pass runs the SwiftUI update.
+    /// iOS 18 applies a change of `input` one run loop turn later than iOS 26. The run loop turns once in between.
     func flushLayout() {
         window.layoutIfNeeded()
+        RunLoop.main.run(until: Date())
         window.layoutIfNeeded()
     }
 

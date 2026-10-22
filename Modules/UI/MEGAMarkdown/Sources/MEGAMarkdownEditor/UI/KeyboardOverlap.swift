@@ -8,7 +8,8 @@ final class KeyboardOverlap {
     private(set) var frame: CGRect?
     /// Called after the keyboard frame changed.
     var onChange: (() -> Void)?
-    private var observers: [any NSObjectProtocol] = []
+    /// Written in `init` and read in `deinit` only. No two threads use it at once.
+    private nonisolated(unsafe) var observers: [any NSObjectProtocol] = []
 
     init() {
         let center = NotificationCenter.default
@@ -21,7 +22,9 @@ final class KeyboardOverlap {
         })
     }
 
-    isolated deinit {
+    // Not `isolated`: before iOS 26 that runs back-deployed runtime code. On iOS 18 it can abort.
+    // Removing observers works on any thread.
+    deinit {
         observers.forEach(NotificationCenter.default.removeObserver)
     }
 

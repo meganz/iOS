@@ -295,8 +295,11 @@ struct MarkdownPreviewTests {
         try await Window.waitUntil { recorder.lines.last == line }
 
         navigation.pushViewController(PushedScreen(), animated: false)
-        try await Window.waitUntil { gate.cancelCount == 1 }
-        #expect(!coordinator.isComplete)
+        // iOS 26 cancels the task of a view that a push covers. iOS 18 does not cancel it. There the load goes on.
+        if #available(iOS 26, *) {
+            try await Window.waitUntil { gate.cancelCount == 1 }
+            #expect(!coordinator.isComplete)
+        }
         navigation.popViewController(animated: false)
         gate.open()
 
