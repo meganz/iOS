@@ -78,6 +78,16 @@ package final class InlineCodeLayoutManager: NSLayoutManager {
         hasInlineCode ? usedHeight - lineGap : usedHeight
     }
 
+    /// False for a line break inside inline code or at its edge. Code has no words, so a hyphen there reads as code.
+    /// The text view's layout manager delegate returns this, because the typesetter asks it before it adds a hyphen.
+    package func allowsHyphen(beforeCharacterAt index: Int) -> Bool {
+        guard hasInlineCode, let textStorage else { return true }
+        let isCode = { (offset: Int) in
+            offset >= 0 && offset < textStorage.length && textStorage.attribute(.markdownInlineCode, at: offset, effectiveRange: nil) != nil
+        }
+        return !isCode(index) && !isCode(index - 1)
+    }
+
     override package func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         // Super draws the selection and other backgrounds first.
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)

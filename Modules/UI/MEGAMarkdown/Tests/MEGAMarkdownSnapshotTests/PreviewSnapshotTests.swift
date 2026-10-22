@@ -89,6 +89,14 @@ struct PreviewSnapshotTests {
         await assertBothDirections(of: MarkdownPreview(markdown), height: 1_400, dynamicType: .accessibility3)
     }
 
+    /// A long code span with no spaces wraps inside the code, in a left-to-right and a right-to-left paragraph.
+    /// No line of it ends with an added hyphen. One app direction: each paragraph takes the direction of its text.
+    @Test func previewLongInlineCodeSpan() async {
+        let code = String(repeating: "long_code_span_", count: 12) + "end"
+        let markdown = "A very long code span `\(code)` in a paragraph.\n\nקטע קוד ארוך `\(code)` בתוך פסקה."
+        await assertHostedSnapshot(of: MarkdownPreview(markdown), height: 700, isReady: Self.readyCheck())
+    }
+
     /// An open fence with no safe cut in the first 8 MB: the text shows as plain text, after a notice.
     @Test func previewNotices() async {
         let markdown = "# Notices\n\n```\n" + String(repeating: "A line inside a fence that never closes.\n", count: 220_000)
