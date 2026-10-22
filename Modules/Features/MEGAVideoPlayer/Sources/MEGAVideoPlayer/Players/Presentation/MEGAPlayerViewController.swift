@@ -1,4 +1,5 @@
 import AVKit
+import Combine
 import MEGADesignToken
 import MEGADomain
 import MEGAInfrastructure
@@ -16,6 +17,20 @@ public final class MEGAPlayerViewController: UIViewController {
 
     private let pictureInPicturePresenter: @MainActor () -> UIViewController?
 
+    private(set) var overlayViewModel: PlayerOverlayViewModel?
+    private var controlsVisibilityCancellable: AnyCancellable?
+
+    /// The status bar and the Home indicator follow the overlay controls, as in the system player:
+    /// both show with the controls, the status bar goes as soon as they hide, and the Home indicator
+    /// fades a few seconds later.
+    private var isOverlayControlsVisible = true {
+        didSet {
+            guard isOverlayControlsVisible != oldValue else { return }
+            setNeedsStatusBarAppearanceUpdate()
+            setNeedsUpdateOfHomeIndicatorAutoHidden()
+        }
+    }
+
     public init(
         viewModel: MEGAPlayerViewModel,
         pictureInPicturePresenter: @escaping @MainActor () -> UIViewController?
@@ -23,6 +38,8 @@ public final class MEGAPlayerViewController: UIViewController {
         self.viewModel = viewModel
         self.pictureInPicturePresenter = pictureInPicturePresenter
         super.init(nibName: nil, bundle: nil)
+        // Presented in any style other than `.fullScreen`, the status bar would otherwise stay with the presenter.
+        modalPresentationCapturesStatusBarAppearance = true
     }
 
     required init?(coder: NSCoder) {
@@ -72,8 +89,13 @@ public final class MEGAPlayerViewController: UIViewController {
     }
 
     private func setupOverlay() {
-        let overlayView = UIHostingConfiguration { [weak self] in
-            self?.makeOverlayView()
+        let overlayViewModel = makeOverlayViewModel()
+        self.overlayViewModel = overlayViewModel
+        controlsVisibilityCancellable = overlayViewModel.$isControlsVisible
+            .sink { [weak self] in self?.isOverlayControlsVisible = $0 }
+
+        let overlayView = UIHostingConfiguration {
+            PlayerOverlayView(viewModel: overlayViewModel)
         }
         .margins(.all, 0)
         .makeContentView()
@@ -89,33 +111,31 @@ public final class MEGAPlayerViewController: UIViewController {
         ])
     }
 
-    private func makeOverlayView() -> some View {
+    private func makeOverlayViewModel() -> PlayerOverlayViewModel {
         let player = viewModel.player
         // Nothing to act on without a cloud node behind the video — an offline file is played by
         // itself — so the overlay is told there is no more action rather than given a dead button.
         let didTapMoreAction: (((any PlayableNode)?) -> Void)? = viewModel.moreAction == nil
             ? nil
             : { [weak self] node in self?.viewModel.moreAction?(node) }
-        return PlayerOverlayView(
-            viewModel: PlayerOverlayViewModel(
-                player: player,
-                devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
-                saveSnapshotUseCase: SaveSnapshotUseCase(),
-                hapticFeedbackUseCase: HapticFeedbackUseCase(),
-                didTapBackAction: { [weak self] in
-                    self?.dismissPlayer()
-                },
-                didTapMoreAction: didTapMoreAction,
-                didDragToDismissAction: { [weak self] in
-                    self?.dismissPlayer()
-                },
-                didTapRotateAction: { [weak self] in
-                    self?.toggleOrientation()
-                },
-                didTapPictureInPictureAction: { [weak self] in
-                    self?.togglePictureInPicture()
-                }
-            )
+        return PlayerOverlayViewModel(
+            player: player,
+            devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
+            saveSnapshotUseCase: SaveSnapshotUseCase(),
+            hapticFeedbackUseCase: HapticFeedbackUseCase(),
+            didTapBackAction: { [weak self] in
+                self?.dismissPlayer()
+            },
+            didTapMoreAction: didTapMoreAction,
+            didDragToDismissAction: { [weak self] in
+                self?.dismissPlayer()
+            },
+            didTapRotateAction: { [weak self] in
+                self?.toggleOrientation()
+            },
+            didTapPictureInPictureAction: { [weak self] in
+                self?.togglePictureInPicture()
+            }
         )
     }
 
@@ -192,6 +212,16 @@ public final class MEGAPlayerViewController: UIViewController {
         return true
     }
     
+    // MARK: - System overlays
+
+    public override var prefersStatusBarHidden: Bool {
+        !isOverlayControlsVisible
+    }
+
+    public override var prefersHomeIndicatorAutoHidden: Bool {
+        !isOverlayControlsVisible
+    }
+
     // MARK: - Picture in Picture
 
     private func togglePictureInPicture() {
