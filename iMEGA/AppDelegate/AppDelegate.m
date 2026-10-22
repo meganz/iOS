@@ -1688,7 +1688,9 @@
             [MEGAPurchase.sharedInstance removeAllProducts];
             [self.quickAccessWidgetManager stopWidgetManager];
             if (request.flag || sessionInvalidateInOtherClient) {
+                // The audio first: it drops the interruption the video holds, so ending the video doesn't resume it
                 [self stopAudioPlaybackSession];
+                [self stopVideoPlaybackSession];
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];
                 

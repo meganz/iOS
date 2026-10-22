@@ -13,8 +13,8 @@ public enum MEGAAudioPlayerSession {
     }
 
     /// Drops any interruption another player left behind, so the next session starts clean. Only for
-    /// when no other player can still be running, such as on logout: one that is still open would lose
-    /// its lock screen / Control Center commands.
+    /// when no other player can still be running, or is about to be ended too, such as on logout: one that
+    /// stays open would lose its lock screen / Control Center commands.
     public static func resetInterruption() {
         AudioPlaybackService.shared.resetInterruption()
     }

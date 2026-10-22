@@ -39,6 +39,11 @@ extension AppDelegate {
         DIContainer.domainName
     }
 
+    /// Ends the revamped video player's Picture in Picture playback on logout
+    @objc func stopVideoPlaybackSession() {
+        MEGAVideoPlayerSession.stop()
+    }
+
     /// Ends the revamped playback session on logout
     @objc func stopAudioPlaybackSession() {
         MEGAAudioPlayerSession.stop()
