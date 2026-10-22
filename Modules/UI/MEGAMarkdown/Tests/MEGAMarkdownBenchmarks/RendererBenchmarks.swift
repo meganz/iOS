@@ -63,6 +63,8 @@ final class RendererBenchmarks: BenchmarkCase {
             let start = probe.bodyCount
             for _ in 0..<redraws {
                 probe.tick += 1
+                // iOS 18 applies a change of `tick` one run loop turn later than iOS 26. The run loop turns once first.
+                RunLoop.main.run(until: Date())
                 host.view.layoutIfNeeded()
             }
             // Each tick must reach the parent body, or the bench measures nothing.
