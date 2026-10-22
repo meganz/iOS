@@ -10,6 +10,7 @@ struct TransferControlUseCaseTests {
         case resume
         case retry
         case cancel
+        case move
     }
 
     private static func makeSUT(
@@ -126,5 +127,36 @@ struct TransferControlUseCaseTests {
 
         #expect(repo.retryTransfersReceivedTagSets == [[9, 10, 11]])
         #expect(tags == [9, 10])
+    }
+
+    @Test("Moving a transfer before another forwards both to the repository")
+    func moveTransferBeforeAnother() async throws {
+        let (sut, repo) = Self.makeSUT()
+
+        try await sut.moveTransfer(TransferEntity(tag: 12), before: TransferEntity(tag: 13))
+
+        #expect(repo.movedTransfers.map(\.transfer.tag) == [12])
+        #expect(repo.movedTransfers.map(\.nextTransfer?.tag) == [13])
+    }
+
+    @Test("Moving a transfer to the end forwards it to the repository")
+    func moveTransferToEnd() async throws {
+        let (sut, repo) = Self.makeSUT()
+
+        try await sut.moveTransferToEnd(TransferEntity(tag: 14))
+
+        #expect(repo.movedTransfers.map(\.transfer.tag) == [14])
+        #expect(repo.movedTransfers.map(\.nextTransfer?.tag) == [nil])
+    }
+
+    @Test("Move errors are rethrown")
+    func moveTransferRethrowsRepositoryError() async {
+        let repo = MockTransferControlRepository.newRepo
+        repo.moveError = TestError.move
+        let (sut, _) = Self.makeSUT(repo: repo)
+
+        await #expect(throws: TestError.move) {
+            try await sut.moveTransferToEnd(TransferEntity(tag: 15))
+        }
     }
 }

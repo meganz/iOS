@@ -11,6 +11,9 @@ import MEGADomain
 /// - **Membership** (a row appearing or leaving) is buffered and its publish is
 ///   throttled: the first change lands immediately, then bursts publish at most
 ///   once per interval, so N finish events cost one list diff, not N.
+///
+/// Active lists its rows in transfer-queue order (see `TransferQueuePosition`); the
+/// other tabs list in arrival order.
 @MainActor
 final class TransferTabListViewModel: ObservableObject {
     typealias FlushPublisherThrottle = (AnyPublisher<Void, Never>) -> AnyPublisher<Void, Never>
@@ -60,6 +63,8 @@ final class TransferTabListViewModel: ObservableObject {
     private var presentIds: Set<Int> = []
     private var removedIds: Set<Int> = []
     private var finishedIds: Set<Int> = []
+    /// Active only: each listed row's queue position; `orderedIds` is kept sorted by it.
+    private var queuePositions: [Int: TransferQueuePosition] = [:]
     private let flushSignal = PassthroughSubject<Void, Never>()
     private var flushCancellable: AnyCancellable?
 
@@ -153,8 +158,20 @@ final class TransferTabListViewModel: ObservableObject {
 
     private func upsertRow(_ state: TransferRowState, entity: TransferEntity) {
         dependency.registry.upsert(state, transfer: entity)
+        guard tab.isQueueOrdered else {
+            if presentIds.insert(state.id).inserted {
+                orderedIds.append(state.id)
+                scheduleFlush()
+            }
+            return
+        }
         if presentIds.insert(state.id).inserted {
-            orderedIds.append(state.id)
+            let position = TransferQueuePosition(entity)
+            queuePositions[state.id] = position
+            orderedIds.insert(state.id, at: insertionIndex(for: position))
+            scheduleFlush()
+        } else if move(id: state.id, to: TransferQueuePosition(entity)) {
+            // The SDK reprioritised the transfer.
             scheduleFlush()
         }
     }
@@ -176,6 +193,9 @@ final class TransferTabListViewModel: ObservableObject {
     private func flush() {
         if !removedIds.isEmpty {
             orderedIds.removeAll { removedIds.contains($0) }
+            for id in removedIds {
+                queuePositions[id] = nil
+            }
             removedIds.removeAll()
         }
         // Rows inserted since the last flush become selectable here; removals
@@ -207,6 +227,7 @@ final class TransferTabListViewModel: ObservableObject {
             dependency.registry.remove(id: id)
         }
         presentIds.removeAll()
+        queuePositions.removeAll()
     }
 
     // MARK: - Snapshot
@@ -223,6 +244,9 @@ final class TransferTabListViewModel: ObservableObject {
         presentIds = Set(orderedIds)
         removedIds.removeAll()
         finishedIds.removeAll()
+        if tab.isQueueOrdered {
+            orderSnapshot(entities)
+        }
         // Rows this tab rendered that vanished from the snapshot (e.g. after a
         // clear) would leave stale view models in the shared registry.
         for id in previousIds.subtracting(presentIds) {
@@ -232,5 +256,43 @@ final class TransferTabListViewModel: ObservableObject {
         // converges the selection on what is now listed.
         publishRows()
         isLoaded = true
+    }
+
+    /// Sorts a fresh Active snapshot into queue order.
+    private func orderSnapshot(_ entities: [TransferEntity]) {
+        var positions: [Int: TransferQueuePosition] = [:]
+        for entity in entities {
+            positions[entity.tag] = TransferQueuePosition(entity)
+        }
+        queuePositions = positions
+        orderedIds = positions.values.sorted().map(\.tag)
+    }
+
+    // MARK: - Queue order
+
+    /// Moves a listed row to where `position` sorts. `false` when it is already there.
+    private func move(id: Int, to position: TransferQueuePosition) -> Bool {
+        guard queuePositions[id] != position else { return false }
+        queuePositions[id] = position
+        if let index = orderedIds.firstIndex(of: id) {
+            orderedIds.remove(at: index)
+        }
+        orderedIds.insert(id, at: insertionIndex(for: position))
+        return true
+    }
+
+    /// Binary search over `orderedIds`, which Active keeps sorted by queue position.
+    private func insertionIndex(for position: TransferQueuePosition) -> Int {
+        var low = 0
+        var high = orderedIds.count
+        while low < high {
+            let middle = (low + high) / 2
+            if let middlePosition = queuePositions[orderedIds[middle]], position < middlePosition {
+                high = middle
+            } else {
+                low = middle + 1
+            }
+        }
+        return low
     }
 }

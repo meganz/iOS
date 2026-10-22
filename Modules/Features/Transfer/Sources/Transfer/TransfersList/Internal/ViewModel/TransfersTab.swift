@@ -24,6 +24,12 @@ public enum TransfersTab: CaseIterable, Sendable, Identifiable {
         self != .active
     }
 
+    /// Whether the tab lists its rows in transfer-queue order. Only in-flight
+    /// transfers are queued, so only Active.
+    var isQueueOrdered: Bool {
+        self == .active
+    }
+
     var emptyStateTitle: String {
         switch self {
         case .active: Strings.Localizable.Transfers.EmptyState.noActiveTransfers

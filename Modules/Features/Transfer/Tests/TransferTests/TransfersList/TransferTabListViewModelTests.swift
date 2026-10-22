@@ -16,7 +16,7 @@ struct TransferTabListViewModelTests {
     // MARK: - Snapshot
 
     @Test func snapshotPopulatesRowsInOrderAndMarksLoaded() async {
-        let sut = makeSUT(snapshot: [
+        let sut = makeSUT(tab: .completed, snapshot: [
             .init(type: .download, tag: 3, state: .active),
             .init(type: .upload, tag: 1, state: .active),
             .init(type: .download, tag: 2, state: .paused)
@@ -410,6 +410,54 @@ struct TransferTabListViewModelTests {
         #expect(selection.selectedTags == [2])
     }
 
+    // MARK: - Queue order
+
+    @Test func activeSnapshotListsDownloadsThenUploadsEachInPriorityOrder() async {
+        let sut = makeSUT(snapshot: [
+            upload(1, priority: 5),
+            download(2, priority: 30),
+            upload(3, priority: 1),
+            download(4, priority: 20)
+        ])
+
+        await sut.monitorTransferEvents()
+
+        #expect(sut.rows.map(\.id) == [4, 2, 3, 1])
+    }
+
+    @Test func startedTransferIsListedAtItsQueuePosition() async {
+        let sut = makeSUT(
+            snapshot: [download(1, priority: 10), download(2, priority: 30), upload(3, priority: 5)],
+            events: [.started(download(4, priority: 20))]
+        )
+
+        await sut.monitorTransferEvents()
+
+        #expect(sut.rows.map(\.id) == [1, 4, 2, 3])
+    }
+
+    @Test func reprioritisedTransferMovesToItsNewPosition() async {
+        let sut = makeSUT(
+            snapshot: [download(1, priority: 10), download(2, priority: 30), upload(3, priority: 5)],
+            events: [.updated(download(2, priority: 5))]
+        )
+
+        await sut.monitorTransferEvents()
+
+        #expect(sut.rows.map(\.id) == [2, 1, 3])
+    }
+
+    @Test func completedSnapshotKeepsItsOrderRegardlessOfPriority() async {
+        let sut = makeSUT(tab: .completed, snapshot: [
+            .init(type: .download, tag: 1, state: .complete, priority: 30),
+            .init(type: .download, tag: 2, state: .complete, priority: 10)
+        ])
+
+        await sut.monitorTransferEvents()
+
+        #expect(sut.rows.map(\.id) == [1, 2])
+    }
+
     // MARK: - Teardown
 
     @Test func monitorEndPrunesThisTabsRowsFromTheSharedRegistry() async {
@@ -457,6 +505,14 @@ struct TransferTabListViewModelTests {
             await Task.yield()
         }
         return (sut, { continuation.finish() })
+    }
+
+    private func download(_ tag: Int, priority: UInt64) -> TransferEntity {
+        TransferEntity(type: .download, tag: tag, state: .active, priority: priority)
+    }
+
+    private func upload(_ tag: Int, priority: UInt64) -> TransferEntity {
+        TransferEntity(type: .upload, tag: tag, state: .active, priority: priority)
     }
 
     private func makeSUT(

@@ -23,6 +23,11 @@ package protocol TransferControlRepositoryProtocol: RepositoryProtocol, Sendable
     /// the caller snapshotted it.
     /// - Returns: tags of the re-queued transfers, so the caller can clear their entries.
     func retryTransfers(tags: Set<Int>) -> Set<Int>
+    /// Moves an in-flight transfer just before `nextTransfer` in the transfer queue.
+    /// Downloads and uploads are separate queues, so both must go the same direction.
+    func moveTransfer(_ transfer: TransferEntity, before nextTransfer: TransferEntity) async throws
+    /// Moves an in-flight transfer to the end of its direction's transfer queue.
+    func moveTransferToEnd(_ transfer: TransferEntity) async throws
 }
 
 package enum TransferControlRepositoryError: Error {
@@ -73,7 +78,7 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
                 case .success:
                     completion(.success)
                 case .failure(let error):
-                    completion(.failure(error))
+                    completion(.failure(error.toErrorEntity()))
                 }
             })
         }
@@ -89,6 +94,39 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
         }
         retryableTransfers.forEach { sdk.retryTransfer($0) }
         return Set(retryableTransfers.map(\.tag))
+    }
+
+    package func moveTransfer(_ transfer: TransferEntity, before nextTransfer: TransferEntity) async throws {
+        guard let megaTransfer = sdk.transfer(byTag: transfer.tag),
+              let nextMEGATransfer = sdk.transfer(byTag: nextTransfer.tag) else {
+            throw TransferControlRepositoryError.transferNotFound
+        }
+        try await withAsyncThrowingVoidValue { completion in
+            sdk.moveTransfer(before: megaTransfer, prevTransfer: nextMEGATransfer, delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success)
+                case .failure(let error):
+                    completion(.failure(error.toErrorEntity()))
+                }
+            })
+        }
+    }
+
+    package func moveTransferToEnd(_ transfer: TransferEntity) async throws {
+        guard let megaTransfer = sdk.transfer(byTag: transfer.tag) else {
+            throw TransferControlRepositoryError.transferNotFound
+        }
+        try await withAsyncThrowingVoidValue { completion in
+            sdk.moveTransfer(toLast: megaTransfer, delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success)
+                case .failure(let error):
+                    completion(.failure(error.toErrorEntity()))
+                }
+            })
+        }
     }
 
     /// Finished transfers are no longer addressable by tag in the transfer engine
@@ -108,7 +146,7 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
                 case .success:
                     completion(.success)
                 case .failure(let error):
-                    completion(.failure(error))
+                    completion(.failure(error.toErrorEntity()))
                 }
             })
         }

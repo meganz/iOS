@@ -14,6 +14,11 @@ package protocol TransferControlUseCaseProtocol: Sendable {
     /// source is gone are skipped). The caller scopes `tags` to the Failed tab's
     /// rows. Returns the re-queued tags, so the caller can clear their entries.
     func retryTransfers(tags: Set<Int>) -> Set<Int>
+    /// Raises or lowers an in-flight transfer's priority by placing it just before
+    /// `nextTransfer`, which must transfer in the same direction.
+    func moveTransfer(_ transfer: TransferEntity, before nextTransfer: TransferEntity) async throws
+    /// Gives an in-flight transfer the lowest priority among the transfers in its direction.
+    func moveTransferToEnd(_ transfer: TransferEntity) async throws
 }
 
 package struct TransferControlUseCase: TransferControlUseCaseProtocol {
@@ -41,5 +46,13 @@ package struct TransferControlUseCase: TransferControlUseCaseProtocol {
 
     package func retryTransfers(tags: Set<Int>) -> Set<Int> {
         repo.retryTransfers(tags: tags)
+    }
+
+    package func moveTransfer(_ transfer: TransferEntity, before nextTransfer: TransferEntity) async throws {
+        try await repo.moveTransfer(transfer, before: nextTransfer)
+    }
+
+    package func moveTransferToEnd(_ transfer: TransferEntity) async throws {
+        try await repo.moveTransferToEnd(transfer)
     }
 }

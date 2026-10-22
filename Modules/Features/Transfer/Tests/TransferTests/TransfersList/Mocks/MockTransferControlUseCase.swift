@@ -7,6 +7,9 @@ final class MockTransferControlUseCase: TransferControlUseCaseProtocol, @uncheck
     private(set) var retriedTransfers: [TransferEntity] = []
     private(set) var cancelledTransfers: [TransferEntity] = []
     private(set) var retryTransfersReceivedTagSets: [Set<Int>] = []
+    /// Each move, as the moved transfer and the one it was placed before (`nil` for the end).
+    private(set) var movedTransfers: [(transfer: TransferEntity, nextTransfer: TransferEntity?)] = []
+    var moveError: (any Error)?
     var pauseError: (any Error)?
     var resumeError: (any Error)?
     var retryError: (any Error)?
@@ -38,5 +41,15 @@ final class MockTransferControlUseCase: TransferControlUseCaseProtocol, @uncheck
     func retryTransfers(tags: Set<Int>) -> Set<Int> {
         retryTransfersReceivedTagSets.append(tags)
         return retryTransfersResult
+    }
+
+    func moveTransfer(_ transfer: TransferEntity, before nextTransfer: TransferEntity) async throws {
+        movedTransfers.append((transfer, nextTransfer))
+        if let moveError { throw moveError }
+    }
+
+    func moveTransferToEnd(_ transfer: TransferEntity) async throws {
+        movedTransfers.append((transfer, nil))
+        if let moveError { throw moveError }
     }
 }
