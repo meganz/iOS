@@ -16,6 +16,7 @@ extension MEGANodeList {
         guard size > 0 else { return [] }
         return (0..<size).compactMap {
             guard let node = node(at: $0),
+                node.isFile(),
                 let name = node.name else { return nil }
             let group = name.fileExtensionGroup
             guard group.isAudio else {
