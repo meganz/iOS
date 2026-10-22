@@ -185,7 +185,7 @@ a file that was not edited never saves, even when its Markdown would be written 
 | Mixed line endings | An edited file is saved with the line ending of its first line, raw blocks too. |
 | Blank lines at the file end | An edited file keeps one last line end, not more. |
 | A code block with one empty line | It is saved as an empty code block. |
-| Syntax that changes but means the same | A setext heading with one line becomes `#`, indented code becomes fenced, `*` lists become `-`. |
+| Syntax that changes but means the same | An edited file is written again in full, also the blocks the user did not touch. A setext heading with one line becomes `#`. Indented code becomes fenced. `__bold__` and `_italic_` become `**bold**` and `*italic*`. A `*` or `+` list becomes `-`. A list right after another list gets `*`, so the two stay separate. Raw blocks keep their bytes. |
 | A raw HTML block that is not closed | Content written after it in rich mode can become part of it. |
 | Quotes or lists deeper than 60 levels | They stay raw. |
 

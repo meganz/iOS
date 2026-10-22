@@ -1044,7 +1044,7 @@ def edge_cases():
                                                                "# Task marker and image cases"), dedent=False)
     write_bytes(p + "mixed-blocks-100kb.md", fixture("parity/c-mixed-100k.md"))
     write(p + "long-line-no-spaces-100k-chars.md",
-          "Known limit: a seam remains without newlines.\n\n" + "x" * 100_000 + "\n", dedent=False)
+          "Known limit: a seam remains without newlines.\n\n" + "x" * 100_001 + "\n", dedent=False)
     write(p + "long-word-in-paragraph.md",
           "Before " + "Supercalifragilistic" * 200 + " after.\n", dedent=False)
     write(p + "deeply-nested-quotes-100.md", "> " * 100 + "one hundred levels\n", dedent=False)
