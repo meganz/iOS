@@ -36,6 +36,7 @@ public struct HomeView: View {
     @StateObject private var promotionalDialogViewModel = HomePromotionalDialogViewModel()
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var searchText = ""
+    @Binding private var tabBarHiddenWithBottomOverlayRefresh: Bool
     private let quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
     private let popToRootPublisher: AnyPublisher<Void, Never>
     private let dependency: Dependency
@@ -92,6 +93,7 @@ public struct HomeView: View {
         dependency: Dependency,
         homeDeepLink: HomeDeepLink,
         tabBarHidden: Binding<Bool>,
+        tabBarHiddenWithBottomOverlayRefresh: Binding<Bool>,
         quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>,
         popToRootPublisher: AnyPublisher<Void, Never>
     ) {
@@ -102,6 +104,7 @@ public struct HomeView: View {
             nodeUseCase: dependency.nodeUseCase
         ))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
+        _tabBarHiddenWithBottomOverlayRefresh = tabBarHiddenWithBottomOverlayRefresh
         self.quickAccessRoutePublisher = quickAccessRoutePublisher
         self.popToRootPublisher = popToRootPublisher
     }
@@ -285,7 +288,7 @@ public struct HomeView: View {
                     showSnackBar: { navigator.showSnackBar(SnackBar(message: $0)) },
                     transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 ),
-                tabBarHidden: $navigator.tabBarHidden
+                tabBarHidden: $tabBarHiddenWithBottomOverlayRefresh
             )
         case .continueWhereYouLeftOff:
             ContinueWhereYouLeftOffView(
@@ -296,7 +299,7 @@ public struct HomeView: View {
                     makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
                     transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 ),
-                tabBarHidden: $navigator.tabBarHidden
+                tabBarHidden: $tabBarHiddenWithBottomOverlayRefresh
             )
         case .widgetsCustomization:
             HomeWidgetsCustomizationView(dependency:
