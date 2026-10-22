@@ -68,6 +68,19 @@ final class AudioPlaybackService {
 
     private var resumeEvaluationCancellable: AnyCancellable?
     
+    /// How many other players currently own playback — see `beginInterruption()`. Counted rather than flagged,
+    /// as their lifetimes can overlap (a video in Picture in Picture while another one opens).
+    private var interruptionCount = 0
+
+    private var isInterrupted: Bool { interruptionCount > 0 }
+
+    /// Whether playback was wanted as the interruption began, so it can pick up again when it ends.
+    private var resumesAfterInterruption = false
+
+    /// Set while an interruption keeps automatic starts (a track finishing loading) waiting for it to end;
+    /// cleared once the user takes playback over.
+    private var holdsAutoplay = false
+
     private var playbackQueue: PlaybackQueue {
         get { queueSubject.value }
         set {
@@ -129,6 +142,49 @@ final class AudioPlaybackService {
     
     func appWillTerminate() {
         saveCurrentPlaybackPositionIfNeeded()
+    }
+
+    // MARK: - Interruption
+
+    func beginInterruption() {
+        interruptionCount += 1
+        guard interruptionCount == 1 else { return }
+        holdsAutoplay = true
+        resumesAfterInterruption = engine.isPlaybackIntended
+        if resumesAfterInterruption {
+            engine.pause()
+        }
+        nowPlayingController?.suspend()
+    }
+
+    func endInterruption(shouldResume: Bool) {
+        guard isInterrupted else { return }
+        interruptionCount -= 1
+        // Only the last player to step out hands playback back
+        guard !isInterrupted else { return }
+        holdsAutoplay = false
+        nowPlayingController?.resume()
+        if shouldResume, resumesAfterInterruption, currentSource != nil, status != .playing {
+            engine.togglePlayPause()
+        }
+        resumesAfterInterruption = false
+    }
+
+    /// Drops any interruption left behind, e.g. by a player taken away without ending its playback
+    func resetInterruption() {
+        guard isInterrupted else { return }
+        interruptionCount = 0
+        holdsAutoplay = false
+        resumesAfterInterruption = false
+        nowPlayingController?.resume()
+    }
+
+    /// The user starts or stops playback themselves while another player owns it: from here on it is left
+    /// as they set it, neither held back nor resumed once the other player is done.
+    private func takeOverInterruptedPlayback() {
+        guard isInterrupted else { return }
+        holdsAutoplay = false
+        resumesAfterInterruption = false
     }
 
     // MARK: - Private
@@ -480,6 +536,7 @@ extension AudioPlaybackService: PlaybackControllable {
             return
         }
 
+        takeOverInterruptedPlayback()
         saveCurrentPlaybackPositionIfNeeded()
         currentSource = source
         unshuffledTracks = nil
@@ -551,7 +608,11 @@ extension AudioPlaybackService: PlaybackControllable {
                 }
                 self.markArtworkResolved(generation: generation)
             }
-            engine.play(url: url, autoplay: autoplay)
+            // A track that finishes loading while another player owns playback waits for it to end
+            if holdsAutoplay, autoplay {
+                resumesAfterInterruption = true
+            }
+            engine.play(url: url, autoplay: autoplay && !holdsAutoplay)
 
         case .takenDown:
             playbackBlockedSubject.send(.takenDown)
@@ -564,6 +625,7 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func togglePlayPause() {
+        takeOverInterruptedPlayback()
         if status == .paused, isAtEndOfQueue {
             advanceToNextTrack(wrapAround: true)
         } else {
@@ -580,6 +642,7 @@ extension AudioPlaybackService: PlaybackControllable {
             engine.seek(toSeconds: 0)
             return
         }
+        takeOverInterruptedPlayback()
         saveCurrentPlaybackPositionIfNeeded()
         playbackQueue = PlaybackQueue(
             tracks: playbackQueue.tracks,
@@ -589,6 +652,7 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func playNext() {
+        takeOverInterruptedPlayback()
         saveCurrentPlaybackPositionIfNeeded()
         advanceToNextTrack(wrapAround: true)
     }
@@ -596,6 +660,7 @@ extension AudioPlaybackService: PlaybackControllable {
     func play(atIndex index: Int) {
         guard playbackQueue.tracks.indices.contains(index),
               index != playbackQueue.currentIndex else { return }
+        takeOverInterruptedPlayback()
         saveCurrentPlaybackPositionIfNeeded()
         playbackQueue = PlaybackQueue(
             tracks: playbackQueue.tracks,
@@ -899,6 +964,7 @@ extension AudioPlaybackService: PlaybackControllable {
         artworkResolvedSubject.send(false)
         hasStartedPlaybackSubject.send(false)
         repeatModeSubject.send(.off)
+        resumesAfterInterruption = false
         status = .idle
         cancelSleepTimer()
         engine.stop()

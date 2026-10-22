@@ -12,6 +12,26 @@ public enum MEGAAudioPlayerSession {
         AudioPlaybackService.shared.stop()
     }
 
+    /// Drops any interruption another player left behind, so the next session starts clean. Only for
+    /// when no other player can still be running, such as on logout: one that is still open would lose
+    /// its lock screen / Control Center commands.
+    public static func resetInterruption() {
+        AudioPlaybackService.shared.resetInterruption()
+    }
+
+    /// Steps the session back while another player, such as a video, takes over: pauses playback
+    /// and hands the lock screen / Control Center commands over to that player. Each call must be
+    /// balanced by one `endInterruption(shouldResume:)`, so players whose lifetimes overlap can each make their own.
+    public static func beginInterruption() {
+        AudioPlaybackService.shared.beginInterruption()
+    }
+
+    /// Takes the lock screen / Control Center back once the last other player is done, resuming playback
+    /// when `shouldResume` is set and the session was playing as the interruption began.
+    public static func endInterruption(shouldResume: Bool) {
+        AudioPlaybackService.shared.endInterruption(shouldResume: shouldResume)
+    }
+
     /// Notifies the playback session that the app is about to terminate.
     public static func appWillTerminate() {
         AudioPlaybackService.shared.appWillTerminate()

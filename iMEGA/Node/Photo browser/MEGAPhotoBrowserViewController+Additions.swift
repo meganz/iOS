@@ -5,6 +5,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGAAudioPlayer
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -174,6 +175,8 @@ extension MEGAPhotoBrowserViewController {
                     playerVC.present(controller, animated: true)
 
                 }
+                playerViewModel.onPlaybackStarted = { MEGAAudioPlayerSession.beginInterruption() }
+                playerViewModel.onPlaybackEnded = { MEGAAudioPlayerSession.endInterruption(shouldResume: true) }
                 playerVC.modalPresentationStyle = .overFullScreen
                 present(playerVC, animated: true)
             } else {

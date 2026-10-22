@@ -50,6 +50,16 @@ public final class MEGAPlayerViewController: UIViewController {
         viewModel.viewDidLayoutSubviews(playerView: videoView)
     }
 
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // Taken away by something other than its own dismissal, such as the screen it was presented from
+        // going away: playback ends here too. A Picture in Picture session keeps it going on its own.
+        // Relies on the player being presented modally: pushed or embedded, it has no presenter, so anything
+        // covering it would end its playback.
+        guard !isPictureInPictureSessionActive else { return }
+        endPlaybackUnlessPresented()
+    }
+
     private func setupDismissAction() {
         viewModel.dismissAction = { [weak self] in
             self?.dismiss(animated: true)

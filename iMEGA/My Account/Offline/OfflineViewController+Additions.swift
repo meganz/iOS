@@ -150,12 +150,15 @@ extension OfflineViewController {
         // A queue without the file being played has nothing to step from.
         let queue = videoFiles.contains { $0.playbackID == file.playbackID } ? videoFiles : [file]
 
+        let playerViewModel = MEGAPlayerViewModel(
+            player: MEGAAVPlayer.liveValue(for: file, within: queue)
+        )
         let playerViewController = MEGAPlayerViewController(
-            viewModel: MEGAPlayerViewModel(
-                player: MEGAAVPlayer.liveValue(for: file, within: queue)
-            ),
+            viewModel: playerViewModel,
             pictureInPicturePresenter: { UIApplication.mnz_presentingViewController() }
         )
+        playerViewModel.onPlaybackStarted = { MEGAAudioPlayerSession.beginInterruption() }
+        playerViewModel.onPlaybackEnded = { MEGAAudioPlayerSession.endInterruption(shouldResume: true) }
         playerViewController.modalPresentationStyle = .overFullScreen
         present(playerViewController, animated: true)
     }

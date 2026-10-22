@@ -7,6 +7,10 @@ public final class MEGAPlayerViewModel {
     /// Runs first when the current node is deleted, before playback ends and the screen is dismissed
     var nodeDeletedAction: (() -> Void)?
     public var moreAction: (((any PlayableNode)?) -> Void)?
+    /// Runs once as playback starts, before the player takes the lock screen / Control Center commands.
+    public var onPlaybackStarted: (() -> Void)?
+    /// Runs once playback has ended for good — the screen is dismissed and any Picture in Picture session is over.
+    public var onPlaybackEnded: (() -> Void)?
     let reportingManager: MEGAPlaybackReportingManager
     private let nowPlayingController: VideoNowPlayingController
     private(set) var hasEndedPlayback = false
@@ -38,6 +42,8 @@ public final class MEGAPlayerViewModel {
         reportingManager.observePlayback()
         player.setupPlayer(in: playerView)
         reportingManager.recordOpenTimeStamp()
+        // Before taking the shared commands: whoever steps back for this player disables them as it goes
+        onPlaybackStarted?()
         nowPlayingController.start()
         setupNodeDeletionHandling()
     }
@@ -60,5 +66,6 @@ public final class MEGAPlayerViewModel {
         reportingManager.trackVideoPlaybackFinalEvents()
         nowPlayingController.stop()
         player.stop()
+        onPlaybackEnded?()
     }
 }
