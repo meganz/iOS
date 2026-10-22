@@ -1335,6 +1335,7 @@
 		9412FF322D14B5630059DB1E /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA7289A5E9200B503FD /* FileManager+Additions.swift */; };
 		9412FF332D14B8D10059DB1E /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA6289A5E9200B503FD /* FolderContentStat.swift */; };
 		941622362D6E311200A14516 /* AudioQueueLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941622352D6E311200A14516 /* AudioQueueLoaderTests.swift */; };
+		2E185A0183073E5593210D45 /* RevampedAudioPlaybackSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5B3401C1430B4E106399B /* RevampedAudioPlaybackSourceTests.swift */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418AA172E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418AA162E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift */; };
 		9418AA212E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418AA202E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift */; };
@@ -4245,6 +4246,7 @@
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		941255512BED03C700058C0D /* CallKitCallControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitCallControllerTests.swift; sourceTree = "<group>"; };
 		941622352D6E311200A14516 /* AudioQueueLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueueLoaderTests.swift; sourceTree = "<group>"; };
+		B8E5B3401C1430B4E106399B /* RevampedAudioPlaybackSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevampedAudioPlaybackSourceTests.swift; sourceTree = "<group>"; };
 		9418AA162E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerMoveDirectionTests.swift; sourceTree = "<group>"; };
 		9418AA202E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerShuffleTests.swift; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
@@ -13373,6 +13375,7 @@
 				9418AA202E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift */,
 				941622352D6E311200A14516 /* AudioQueueLoaderTests.swift */,
 				24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */,
+				B8E5B3401C1430B4E106399B /* RevampedAudioPlaybackSourceTests.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -17395,6 +17398,7 @@
 				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
 				94227F6D2B6D481B009D586F /* ResourceInfoViewModelTests.swift in Sources */,
+				2E185A0183073E5593210D45 /* RevampedAudioPlaybackSourceTests.swift in Sources */,
 				BE1A0A062F60000100AA0401 /* RevampedCancellableTransferViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				947CA1FB2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift in Sources */,

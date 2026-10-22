@@ -12,6 +12,7 @@ extension MEGANode {
         // this is the same check we do on a single node, when deciding if we can pass it to
         // audio player
         let allAudioNodes: [MEGANode]? = allNodes?.filter { node in
+            node.isFile() &&
             node.name?.fileExtensionGroup.isMultiMedia == true &&
             node.name?.fileExtensionGroup.isVideo == false &&
             node.mnz_isPlayable()
@@ -97,14 +98,14 @@ extension MEGANode {
     }
     
     @MainActor
-    private func makeRevampedPlaybackSource(node: MEGANode?,
-                                            fileLink: String?,
-                                            isFolderLink: Bool,
-                                            chatId: NSNumber?,
-                                            messageId: NSNumber?,
-                                            allNodes: [MEGANode]?,
-                                            sourcePage: NodeSourcePage) -> PlaybackSource? {
-        let allNodes = allNodes?.filter { $0.name?.fileExtensionGroup.isAudio == true && $0.mnz_isPlayable() }
+    func makeRevampedPlaybackSource(node: MEGANode?,
+                                    fileLink: String?,
+                                    isFolderLink: Bool,
+                                    chatId: NSNumber?,
+                                    messageId: NSNumber?,
+                                    allNodes: [MEGANode]?,
+                                    sourcePage: NodeSourcePage) -> PlaybackSource? {
+        let allNodes = allNodes?.filter { $0.isFile() && $0.name?.fileExtensionGroup.isAudio == true && $0.mnz_isPlayable() }
 
         if isFolderLink, let node {
             // Folder link nodes belong to the folder link SDK instance, so the account SDK cannot resolve
