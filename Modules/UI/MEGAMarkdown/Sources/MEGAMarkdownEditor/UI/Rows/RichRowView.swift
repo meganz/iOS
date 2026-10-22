@@ -77,7 +77,7 @@ struct RichRowView: View {
     @ViewBuilder
     private func textRow(_ block: RichBlock, id: RichRowID, version: Int) -> some View {
         // The text view has room on each side for the inline code chip. The text stays at the row's edges.
-        let row = RichTextRow(block: block, version: version, id: id, theme: theme, strings: strings, host: host)
+        let row = RichTextRow(block: block, version: version, id: id, theme: theme, strings: strings, host: host, dynamicTypeSize: dynamicTypeSize)
             .padding(.horizontal, -InlineCodeLayoutManager.chipPadding)
         let firstBaseline = baseline(block)
         switch block {

@@ -39,6 +39,9 @@ struct RichTextRow: UIViewRepresentable {
     let theme: MarkdownTheme
     let strings: MarkdownEditorStrings
     weak var host: (any RichTextRowHost)?
+    /// Only tells SwiftUI that the text size changed, so it updates the row and measures it again.
+    /// The text view takes its fonts from its own traits.
+    var dynamicTypeSize = DynamicTypeSize.large
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
