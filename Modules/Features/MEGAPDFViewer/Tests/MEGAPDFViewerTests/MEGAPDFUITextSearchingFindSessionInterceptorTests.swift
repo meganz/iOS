@@ -9,7 +9,7 @@ import UIKit
 @MainActor
 struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     @Test func shortQuery_finishesWithoutMatches() async throws {
-        let fixture = try Fixture(pages: [.text("test tested")])
+        let fixture = try await Fixture(pages: [.text("test tested")])
         let interceptor = try fixture.interceptor()
 
         let aggregator = MEGARecordingSearchAggregator.performingQuery("tes", on: interceptor)
@@ -18,8 +18,8 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
         #expect(aggregator.foundRangeCount == 0)
     }
 
-    @Test func queryOfThreeCharactersInFourUTF16Units_finishesWithoutSearching() throws {
-        let fixture = try Fixture(pages: [.text("test tested")])
+    @Test func queryOfThreeCharactersInFourUTF16Units_finishesWithoutSearching() async throws {
+        let fixture = try await Fixture(pages: [.text("test tested")])
         let interceptor = try fixture.interceptor()
 
         let aggregator = MEGARecordingSearchAggregator.performingQuery("ab👍", on: interceptor)
@@ -29,7 +29,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     }
 
     @Test func matchesOnLaterPages_reportPDFKitsOwnRanges() async throws {
-        let fixture = try Fixture(pages: [
+        let fixture = try await Fixture(pages: [
             .text("first page words here"),
             .text("second page alpha one"),
             .text("alpha starts third page")
@@ -49,7 +49,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     }
 
     @Test func compareFoundRange_ordersMatchesByDocumentPosition() async throws {
-        let fixture = try Fixture(pages: [
+        let fixture = try await Fixture(pages: [
             .text("alpha on the first page"),
             .text("alpha on the second page")
         ])
@@ -64,7 +64,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     }
 
     @Test func matchAfterSearchEnded_leavesSelectionUntouched() async throws {
-        let fixture = try Fixture(pages: [.text("alpha on a page")])
+        let fixture = try await Fixture(pages: [.text("alpha on a page")])
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let interceptor = try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: fixture.pdfView,
@@ -89,8 +89,8 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
         #expect(selectionChanges.count == 0)
     }
 
-    @Test func releasedSearcher_cancelsItsSearch() throws {
-        let fixture = try Fixture(pages: [.text("alpha on a page")])
+    @Test func releasedSearcher_cancelsItsSearch() async throws {
+        let fixture = try await Fixture(pages: [.text("alpha on a page")])
         do {
             let interceptor = try fixture.interceptor()
             _ = MEGARecordingSearchAggregator.performingQuery("alpha", on: interceptor)
@@ -100,8 +100,8 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
         #expect(fixture.pdfView.document?.isFinding == false)
     }
 
-    @Test func cancelSearch_afterDocumentReplaced_cancelsSearchedDocument() throws {
-        let fixture = try Fixture(pages: [.text("alpha on a page")])
+    @Test func cancelSearch_afterDocumentReplaced_cancelsSearchedDocument() async throws {
+        let fixture = try await Fixture(pages: [.text("alpha on a page")])
         let searchedDocument = try #require(fixture.pdfView.document)
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let interceptor = try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
@@ -119,7 +119,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     }
 
     @Test func staleMatchOfEarlierQuery_isNotReported() async throws {
-        let fixture = try Fixture(pages: [.text("alpha beta")])
+        let fixture = try await Fixture(pages: [.text("alpha beta")])
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let interceptor = try #require(MEGAPDFUITextSearchingFindSessionInterceptor(
             pdfView: fixture.pdfView,
@@ -139,7 +139,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
 
     @Test(arguments: ["ALPHA", "alpha beta"])
     func ownQueryMatches_areAllReported(query: String) async throws {
-        let fixture = try Fixture(pages: [.text("alpha\nbeta alpha beta")])
+        let fixture = try await Fixture(pages: [.text("alpha\nbeta alpha beta")])
         let searcher = PDFDocumentSearcher(pdfView: fixture.pdfView)
         let expectedCount = try #require(
             fixture.pdfView.document?.findString(query, withOptions: .caseInsensitive).count
@@ -163,7 +163,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     }
 
     @Test func jumpToResult_asksAdjusterWithPDFKitsTextInput() async throws {
-        let fixture = try Fixture(pages: [.text("alpha beta")])
+        let fixture = try await Fixture(pages: [.text("alpha beta")])
         let adjuster = MockJumpToSearchResultScrollAdjuster()
         let interceptor = try fixture.interceptor(jumpToSearchResultScrollAdjuster: adjuster)
         let aggregator = MEGARecordingSearchAggregator.performingQuery("alpha", on: interceptor)
@@ -177,7 +177,7 @@ struct MEGAPDFUITextSearchingFindSessionInterceptorTests {
     }
 
     @Test func newQuery_reportsOnlyItsOwnMatchesToItsAggregator() async throws {
-        let fixture = try Fixture(pages: [
+        let fixture = try await Fixture(pages: [
             .text("alpha beta"),
             .text("beta alpha beta")
         ])
@@ -235,7 +235,7 @@ private struct Fixture {
     let window: UIWindow
     let pdfView: MEGAPDFView
 
-    init(pages: [Page]) throws {
+    init(pages: [Page]) async throws {
         let frame = CGRect(x: 0, y: 0, width: 400, height: 700)
         window = UIWindow(frame: frame)
         let root = UIViewController()
@@ -254,8 +254,7 @@ private struct Fixture {
                 }
             }
         }
-        pdfView.configure(document: try #require(PDFDocument(data: data)))
-        pdfView.layoutIfNeeded()
+        try await pdfView.configureAndAwaitDisplayPreparation(document: try #require(PDFDocument(data: data)))
     }
 
     func interceptor(

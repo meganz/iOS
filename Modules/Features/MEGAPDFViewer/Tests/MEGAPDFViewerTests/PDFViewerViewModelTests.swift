@@ -291,6 +291,61 @@ struct PDFViewerViewModelTests {
         task.cancel()
     }
 
+    private func preparingSUT(
+        lastPageUseCase: MockPDFViewerLastPageUseCase = MockPDFViewerLastPageUseCase()
+    ) async -> (PDFViewerViewModel, Task<Void, Never>) {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(
+            of: PDFDocumentLoadEvent.self,
+            throwing: (any Error).self
+        )
+        let sut = makeSUT(
+            documentURLUseCase: MockPDFDocumentURLUseCase(stream: stream),
+            documentLoader: MockPDFDocumentLoader(
+                document: MockPDFDocumentLoader.makeDocument(pageCount: 20)
+            ),
+            lastPageUseCase: lastPageUseCase
+        )
+        let task = Task { await sut.loadDocumentFromSource() }
+        continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
+        await awaitDocumentParsed(sut)
+        return (sut, task)
+    }
+
+    @Test func loadedDocument_preparesDisplayBeforeReady() async {
+        let (sut, task) = await preparingSUT(
+            lastPageUseCase: MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 11)
+        )
+        defer { task.cancel() }
+
+        #expect(sut.state.isPreparingDisplay)
+        #expect(!sut.state.isReady)
+        #expect(sut.pdfDocument?.pageCount == 20)
+        #expect(sut.initialPageIndex == 11)
+    }
+
+    @Test func finishingDisplayPreparation_makesViewerReadyWithSameDocument() async {
+        let (sut, task) = await preparingSUT()
+        defer { task.cancel() }
+        #expect(sut.state.isPreparingDisplay)
+        let document = sut.pdfDocument
+
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
+
+        #expect(sut.state.isReady)
+        #expect(sut.pdfDocument === document)
+    }
+
+    @Test func restartedLoadDuringPreparation_keepsPreparingTheSameDocument() async {
+        let (sut, task) = await preparingSUT()
+        defer { task.cancel() }
+        let document = sut.pdfDocument
+
+        await sut.loadDocumentFromSource()
+
+        #expect(sut.state.isPreparingDisplay)
+        #expect(sut.pdfDocument === document)
+    }
+
     @Test func loadDocumentURL_readyEvent_parsesDocumentAndSetsReadyState() async {
         let url = URL(fileURLWithPath: "/tmp/downloaded.pdf")
         let (stream, continuation) = AsyncThrowingStream.makeStream(
@@ -304,6 +359,7 @@ struct PDFViewerViewModelTests {
 
         await awaitDocumentParsed(sut)
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let isReady = switch sut.state {
         case .ready: true
         default: false
@@ -398,6 +454,7 @@ struct PDFViewerViewModelTests {
 
         await sut.retryDocumentLoad()
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
         #expect(useCase.localDocumentURLCallCount == 2)
     }
@@ -459,6 +516,7 @@ struct PDFViewerViewModelTests {
         currentContinuation.finish()
         await currentTask.value
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
     }
 
@@ -526,6 +584,7 @@ struct PDFViewerViewModelTests {
 
         await awaitDocumentParsed(sut)
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let readyState: PDFViewerViewModel.ViewState.ReadyState? = switch sut.state {
         case .ready(let readyState): readyState
         default: nil
@@ -561,6 +620,7 @@ struct PDFViewerViewModelTests {
         continuation.yield(.ready(url))
         await awaitDocumentParsed(sut)
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
         #expect(sut.thumbnailLoader == nil)
         task.cancel()
@@ -661,6 +721,7 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(url))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
 
         sut.currentPageIndex = 2
         #expect(sut.currentPageIndex == 2)
@@ -700,7 +761,8 @@ struct PDFViewerViewModelTests {
         pageCount: Int,
         lastPageUseCase: MockPDFViewerLastPageUseCase = MockPDFViewerLastPageUseCase(),
         leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
-        node: NodeEntity? = nil
+        node: NodeEntity? = nil,
+        finishesDisplayPreparation: Bool = true
     ) async -> (PDFViewerViewModel, Task<Void, Never>) {
         let (stream, continuation) = AsyncThrowingStream.makeStream(
             of: PDFDocumentLoadEvent.self,
@@ -718,6 +780,9 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        if finishesDisplayPreparation {
+            sut.displayerDidFinishPreparingForDisplayAndInteraction()
+        }
         return (sut, task)
     }
 
@@ -756,9 +821,9 @@ struct PDFViewerViewModelTests {
         task.cancel()
     }
 
-    @Test func saveLastReadPage_beforeInitialPageNavigationApplies_savesNothing() async {
+    @Test func saveLastReadPage_duringDisplayPreparation_savesNothing() async {
         let lastPageUseCase = MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 11)
-        let (sut, task) = await loadedSUT(pageCount: 20, lastPageUseCase: lastPageUseCase)
+        let (sut, task) = await loadedSUT(pageCount: 20, lastPageUseCase: lastPageUseCase, finishesDisplayPreparation: false)
         task.cancel()
 
         sut.isScrolledToTopDidChange(true)
@@ -767,12 +832,12 @@ struct PDFViewerViewModelTests {
         #expect(saveInvocations(lastPageUseCase).isEmpty)
     }
 
-    @Test func saveLastReadPage_afterInitialPageNavigationApplies_savesCurrentPage() async {
+    @Test func saveLastReadPage_afterDisplayPreparation_savesCurrentPage() async {
         let lastPageUseCase = MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 11)
         let (sut, task) = await loadedSUT(pageCount: 20, lastPageUseCase: lastPageUseCase)
         task.cancel()
 
-        sut.initialPageNavigationDidApply()
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         sut.currentPageIndex = 11
         await sut.saveLastReadPage()
 
@@ -798,13 +863,14 @@ struct PDFViewerViewModelTests {
         #expect(leftOffItemRecordUseCase.remove_Calls == (shouldRecord ? [] : [7]))
     }
 
-    @Test func recordLeftOffItem_beforeInitialPageNavigationApplies_usesStoredPage() async {
+    @Test func recordLeftOffItem_duringDisplayPreparation_recordsNothing() async {
         let leftOffItemRecordUseCase = MockLeftOffItemRecordUseCase()
         let (sut, task) = await loadedSUT(
             pageCount: 10,
             lastPageUseCase: MockPDFViewerLastPageUseCase(loadLastPageIndexResult: 9),
             leftOffItemRecordUseCase: leftOffItemRecordUseCase,
-            node: NodeEntity(name: "report.pdf", handle: 7)
+            node: NodeEntity(name: "report.pdf", handle: 7),
+            finishesDisplayPreparation: false
         )
         task.cancel()
 
@@ -812,7 +878,7 @@ struct PDFViewerViewModelTests {
         await sut.recordLeftOffItem()
 
         #expect(leftOffItemRecordUseCase.record_Calls.isEmpty)
-        #expect(leftOffItemRecordUseCase.remove_Calls == [7])
+        #expect(leftOffItemRecordUseCase.remove_Calls.isEmpty)
     }
 
     @Test func recordLeftOffItem_withoutNode_recordsNothing() async {
@@ -922,6 +988,7 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         await sut.loadOutlineIfNeeded()
 
         #expect(sut.outlineItems == outline.inOutlineOrder)
@@ -949,9 +1016,11 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let outlineTask = Task { await sut.loadOutlineIfNeeded() }
         await reader.waitUntilReadingStarts()
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
         #expect(sut.isLoadingOutline)
         #expect(sut.showsOutlineButton)
@@ -988,12 +1057,14 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let outlineTask = Task { await sut.loadOutlineIfNeeded() }
         await reader.waitUntilReadingStarts()
         outlineTask.cancel()
         await reader.finishReading()
         await outlineTask.value
 
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         #expect(sut.state.isReady)
         #expect(!sut.isLoadingOutline)
         #expect(sut.outlineItems.isEmpty)
@@ -1020,6 +1091,7 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let outlineTask = Task { await sut.loadOutlineIfNeeded() }
         await reader.waitUntilReadingStarts()
         outlineTask.cancel()
@@ -1058,6 +1130,7 @@ struct PDFViewerViewModelTests {
         let documentTask = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         let firstOutlineTask = Task { await sut.loadOutlineIfNeeded() }
         await reader.waitUntilReadingStarts()
         firstOutlineTask.cancel()
@@ -1086,6 +1159,7 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
 
         #expect(!sut.showsOutlineButton)
         task.cancel()
@@ -1199,6 +1273,7 @@ struct PDFViewerViewModelTests {
         let task = Task { await sut.loadDocumentFromSource() }
         continuation.yield(.ready(URL(fileURLWithPath: "/tmp/downloaded.pdf")))
         await awaitDocumentParsed(sut)
+        sut.displayerDidFinishPreparingForDisplayAndInteraction()
         await sut.loadOutlineIfNeeded()
         task.cancel()
         return sut

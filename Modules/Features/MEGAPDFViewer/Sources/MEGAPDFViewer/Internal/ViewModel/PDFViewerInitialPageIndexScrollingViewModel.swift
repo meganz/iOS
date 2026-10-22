@@ -11,6 +11,9 @@ final class PDFViewerInitialPageIndexScrollingViewModel {
     /// Published at most once, after the initial scroll to top and once the
     /// content scroll view's insets have settled.
     @Published private(set) var initialPageNavigationRequest: Int?
+    /// Set once, after the initial scroll to top and, when there is one, the
+    /// `initialPageNavigationRequest`.
+    @Published private(set) var didSettleInitialScrollPosition = false
 
     var initialPageIndex: Int?
 
@@ -24,6 +27,12 @@ final class PDFViewerInitialPageIndexScrollingViewModel {
     private var hasObservedInitialScrollToTop = false
     private var lastScrollViewAdjustedContentInsetTop: CGFloat?
     private var subscriptions = Set<AnyCancellable>()
+    private let contentScrollViewInsetsSettleTimeout: Duration
+    private var contentScrollViewInsetsSettleTimeoutTask: Task<Void, Never>?
+
+    init(contentScrollViewInsetsSettleTimeout: Duration = .seconds(1)) {
+        self.contentScrollViewInsetsSettleTimeout = contentScrollViewInsetsSettleTimeout
+    }
 
     func startObservingScrollToTop(
         didTriggerInitialScrollToTop: some Publisher<Bool, Never>
@@ -34,12 +43,21 @@ final class PDFViewerInitialPageIndexScrollingViewModel {
             .store(in: &subscriptions)
 
         didTriggerInitialScrollToTop
+            .filter { $0 }
+            .prefix(1)
+            .sink { [weak self] _ in self?.startContentScrollViewInsetsSettleTimeout() }
+            .store(in: &subscriptions)
+
+        didTriggerInitialScrollToTop
             .combineLatest($contentScrollViewInsetsDidSettle)
             .filter { $0 && $1 }
             .prefix(1)
             .sink { [weak self] _ in
-                guard let self, let initialPageIndex else { return }
-                initialPageNavigationRequest = initialPageIndex
+                guard let self else { return }
+                if let initialPageIndex {
+                    initialPageNavigationRequest = initialPageIndex
+                }
+                didSettleInitialScrollPosition = true
             }
             .store(in: &subscriptions)
     }
@@ -61,5 +79,22 @@ final class PDFViewerInitialPageIndexScrollingViewModel {
             && lastScrollViewAdjustedContentInsetTop.map { abs($0 - insetTop) < 0.5 } == true
         lastScrollViewAdjustedContentInsetTop = insetTop
         contentScrollViewInsetsDidSettle = matchesSafeArea || isUnchangedSinceLastPass
+        if contentScrollViewInsetsDidSettle {
+            contentScrollViewInsetsSettleTimeoutTask?.cancel()
+            contentScrollViewInsetsSettleTimeoutTask = nil
+        }
+    }
+
+    private func startContentScrollViewInsetsSettleTimeout() {
+        guard !contentScrollViewInsetsDidSettle else { return }
+        // Counts the insets as settled when no layout pass reported them, for
+        // example when `contentInsetState` is never set because the content
+        // scroll view is not found, so the viewer cannot stay loading.
+        contentScrollViewInsetsSettleTimeoutTask = Task { [weak self, contentScrollViewInsetsSettleTimeout] in
+            try? await Task.sleep(for: contentScrollViewInsetsSettleTimeout)
+            guard let self, !Task.isCancelled else { return }
+            contentScrollViewInsetsDidSettle = true
+            contentScrollViewInsetsSettleTimeoutTask = nil
+        }
     }
 }

@@ -7,7 +7,7 @@ import UIKit
 protocol MEGAPDFViewPageObservationDelegate: AnyObject {
     func pdfView(_ pdfView: MEGAPDFView, currentPageDidChange index: Int)
     func pdfView(_ pdfView: MEGAPDFView, isScrolledToTopDidChange isScrolledToTop: Bool)
-    func pdfViewDidApplyInitialPageNavigation(_ pdfView: MEGAPDFView)
+    func pdfViewDidFinishPreparingForDisplayAndInteraction(_ pdfView: MEGAPDFView)
 }
 
 @MainActor
@@ -29,8 +29,12 @@ final class MEGAPDFView: PDFView {
     private let pagingScrollObservationMonitor = PDFViewerPagingScrollObservationMonitor()
     private let singleTapHandler = PDFDocumentSingleTapHandler()
     private let searchInteractionHandler = PDFViewSearchInteractionHandler()
+    private let widestPageWidthReader = PDFWidestPageWidthReader()
 
     private var subscriptions = Set<AnyCancellable>()
+    private var prepareThenDisplayTask: Task<Void, Never>?
+    private var widestPageWidth: CGFloat = 0
+    private var defaultPageBreakMargins = UIEdgeInsets.zero
 
     weak var pageObservationDelegate: (any MEGAPDFViewPageObservationDelegate)?
     weak var documentTapDelegate: (any MEGAPDFViewDocumentTapDelegate)?
@@ -45,6 +49,7 @@ final class MEGAPDFView: PDFView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        defaultPageBreakMargins = pageBreakMargins
         bindEvents()
     }
 
@@ -52,11 +57,8 @@ final class MEGAPDFView: PDFView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(document: PDFDocument) {
-        guard self.document == nil else { return }
-        self.document = document
-        autoFittingViewModel.documentDidChange()
-        configurePagingObservation()
+    deinit {
+        prepareThenDisplayTask?.cancel()
     }
 
     override func layoutSubviews() {
@@ -70,7 +72,9 @@ final class MEGAPDFView: PDFView {
         autoFittingViewModel.zoomState = .init(
             zoomScale: scaleFactor,
             minZoomScale: minScaleFactor,
-            zoomScaleForSizeToFit: scaleFactorForSizeToFit
+            zoomScaleForSizeToFit: scaleFactorForSizeToFit,
+            widestPageWidth: widestPageWidth,
+            pageBreakMargin: pageBreakMargins.left
         )
     }
 
@@ -125,9 +129,15 @@ final class MEGAPDFView: PDFView {
         initialPageIndexScrollingViewModel.$initialPageNavigationRequest
             .compactMap { $0 }
             .sink { [weak self] pageIndex in
+                self?.requestPageNavigation(to: pageIndex)
+            }
+            .store(in: &subscriptions)
+
+        initialPageIndexScrollingViewModel.$didSettleInitialScrollPosition
+            .filter { $0 }
+            .sink { [weak self] _ in
                 guard let self else { return }
-                requestPageNavigation(to: pageIndex)
-                pageObservationDelegate?.pdfViewDidApplyInitialPageNavigation(self)
+                pageObservationDelegate?.pdfViewDidFinishPreparingForDisplayAndInteraction(self)
             }
             .store(in: &subscriptions)
 
@@ -179,12 +189,28 @@ final class MEGAPDFView: PDFView {
     }
 
     private func apply(_ zoomStateUpdate: AutoFittingPDFViewModel.ZoomStateUpdate) {
-        minScaleFactor = zoomStateUpdate.minZoomScale
-        if let zoomScale = zoomStateUpdate.zoomScale {
-            scaleFactor = zoomScale
+        if abs(zoomStateUpdate.pageBreakMargin - pageBreakMargins.left) >= 0.0001 {
+            let margin = zoomStateUpdate.pageBreakMargin
+            pageBreakMargins = margin == defaultPageBreakMargins.left
+                ? defaultPageBreakMargins
+                : UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+            // `scaleFactorForSizeToFit` reflects new margins only once the
+            // document view is laid out again; a layout of this view is not
+            // enough.
+            layoutDocumentView()
         }
 
-        if zoomStateUpdate.shouldScrollToTop, let contentScrollView {
+        if let zoomThenScroll = zoomStateUpdate.zoomThenScroll {
+            // Before the minimum, so the range stays valid when the fit is
+            // above the current maximum.
+            maxScaleFactor = zoomThenScroll.maxZoomScale
+            minScaleFactor = zoomThenScroll.minZoomScale
+            if let zoomScale = zoomThenScroll.zoomScale {
+                scaleFactor = zoomScale
+            }
+        }
+
+        if zoomStateUpdate.zoomThenScroll?.shouldScrollToTop == true, let contentScrollView {
             let topOffset = CGPoint(x: 0, y: -contentScrollView.adjustedContentInset.top)
             contentScrollView.setContentOffset(topOffset, animated: false)
         }
@@ -223,6 +249,50 @@ final class MEGAPDFView: PDFView {
             CGPoint(x: contentScrollView.contentOffset.x, y: contentOffsetY),
             animated: false
         )
+    }
+}
+
+// MARK: - Pre-display preparation
+
+extension MEGAPDFView {
+    /// Sets `document` once its widest page is known, then reports
+    /// `pdfViewDidFinishPreparingForDisplayAndInteraction` after the initial
+    /// fit and the jump to `initialPageIndex`.
+    func configure(document: PDFDocument) {
+        guard self.document == nil, prepareThenDisplayTask == nil else { return }
+        prepareThenDisplayTask = Task { [weak self] in
+            try? await self?.prepareThenDisplay(document)
+        }
+    }
+
+    private func prepareThenDisplay(_ document: PDFDocument) async throws {
+        try await prepareForDisplay(document)
+        display(document)
+    }
+
+    private func prepareForDisplay(_ document: PDFDocument) async throws {
+        // - Reads `documentRef` off the main actor, since a scan of every page
+        //   can take seconds on a malformed page count.
+        // - Nothing else reads `document` meanwhile: no `PDFView` has it
+        //   until `display(_:)` sets it.
+        nonisolated(unsafe) let documentRef = document.documentRef
+        let widestPageWidth = await widestPageWidthReader.widestPageWidth(of: documentRef, in: displayBox)
+        try Task.checkCancellation()
+        self.widestPageWidth = widestPageWidth
+    }
+
+    private func display(_ document: PDFDocument) {
+        self.document = document
+        autoFittingViewModel.documentDidChange()
+        configurePagingObservation()
+        // Trigger initial fit as `document` setter doesn't queue up another
+        // layout pass.
+        setNeedsLayout()
+    }
+
+    func cancelDisplayPreparation() {
+        prepareThenDisplayTask?.cancel()
+        prepareThenDisplayTask = nil
     }
 }
 
@@ -269,18 +339,37 @@ extension MEGAPDFView: PDFViewerPagingScrollObservationMonitorDataSource {
 }
 
 struct PDFDisplayerView: UIViewRepresentable {
+    /// The bindings and callbacks of a displayed document.
+    struct Interaction {
+        struct Scroll {
+            let currentPage: Binding<Int>
+            let isProgrammaticallyScrollingToCurrentPage: Binding<Bool>
+            let onIsScrolledToTopChange: @MainActor (Bool) -> Void
+        }
+
+        struct Search {
+            let request: Binding<PDFSearchRequest?>
+            var onSessionDidBegin: @MainActor (UUID) -> Void = { _ in }
+            var onSessionDidEnd: @MainActor (UUID) -> Void = { _ in }
+            var onResultDidChange: @MainActor (UUID, UUID, Int) -> Void = { _, _, _ in }
+        }
+
+        struct Tap {
+            let onDocumentTapped: @MainActor () -> Void
+            let onLinkTapped: @MainActor (URL) -> Void
+        }
+
+        let scroll: Scroll
+        let search: Search
+        let tap: Tap
+    }
+
     let document: PDFDocument
-    @Binding var currentPage: Int
-    @Binding var isProgrammaticallyScrollingToCurrentPage: Bool
-    @Binding var searchRequest: PDFSearchRequest?
     let initialPageIndex: Int?
-    let onLinkTapped: @MainActor (URL) -> Void
-    let onTap: @MainActor () -> Void
-    let onIsScrolledToTopChange: @MainActor (Bool) -> Void
-    let onInitialPageNavigationApplied: @MainActor () -> Void
-    var onSearchSessionDidBegin: @MainActor (UUID) -> Void = { _ in }
-    var onSearchSessionDidEnd: @MainActor (UUID) -> Void = { _ in }
-    var onSearchResultDidChange: @MainActor (UUID, UUID, Int) -> Void = { _, _, _ in }
+    let onDidFinishPreparingForDisplayAndInteraction: @MainActor () -> Void
+    /// Takes effect once the displayer finishes preparing `document`; changes
+    /// before then are ignored.
+    let interaction: Interaction
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -302,13 +391,12 @@ struct PDFDisplayerView: UIViewRepresentable {
 
     func updateUIView(_ pdfView: MEGAPDFView, context: Context) {
         context.coordinator.parent = self
+        guard context.coordinator.isPreparedForDisplayAndInteraction else { return }
+        context.coordinator.applyInteraction(to: pdfView)
+    }
 
-        if searchRequest != nil {
-            context.coordinator.sendSearchRequest(to: pdfView)
-        }
-
-        guard isProgrammaticallyScrollingToCurrentPage else { return }
-        context.coordinator.navigate(pdfView, to: currentPage)
+    static func dismantleUIView(_ pdfView: MEGAPDFView, coordinator: Coordinator) {
+        pdfView.cancelDisplayPreparation()
     }
 
     @MainActor
@@ -318,25 +406,44 @@ struct PDFDisplayerView: UIViewRepresentable {
                              MEGAPDFViewDocumentTapDelegate,
                              MEGAPDFViewSearchObservationDelegate {
         var parent: PDFDisplayerView
+        private(set) var isPreparedForDisplayAndInteraction = false
 
         init(parent: PDFDisplayerView) {
             self.parent = parent
         }
 
+        func applyInteraction(to pdfView: MEGAPDFView) {
+            if parent.interaction.search.request.wrappedValue != nil {
+                sendSearchRequest(to: pdfView)
+            }
+
+            guard parent.interaction.scroll.isProgrammaticallyScrollingToCurrentPage.wrappedValue else { return }
+            navigate(pdfView, to: parent.interaction.scroll.currentPage.wrappedValue)
+        }
+
         func pdfView(_ pdfView: MEGAPDFView, currentPageDidChange index: Int) {
-            parent.currentPage = index
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.scroll.currentPage.wrappedValue = index
         }
 
         func pdfView(_ pdfView: MEGAPDFView, isScrolledToTopDidChange isScrolledToTop: Bool) {
-            parent.onIsScrolledToTopChange(isScrolledToTop)
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.scroll.onIsScrolledToTopChange(isScrolledToTop)
         }
 
-        func pdfViewDidApplyInitialPageNavigation(_ pdfView: MEGAPDFView) {
-            parent.onInitialPageNavigationApplied()
+        func pdfViewDidFinishPreparingForDisplayAndInteraction(_ pdfView: MEGAPDFView) {
+            isPreparedForDisplayAndInteraction = true
+            parent.onDidFinishPreparingForDisplayAndInteraction()
+            // The page and top changes from the initial fit and jump were not
+            // reported, and `interaction` may have changed meanwhile.
+            parent.interaction.scroll.currentPage.wrappedValue = pdfView.currentPageIndexAtViewportCenter ?? 0
+            parent.interaction.scroll.onIsScrolledToTopChange(pdfView.isScrolledToTop)
+            applyInteraction(to: pdfView)
         }
 
         func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView) {
-            parent.onTap()
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.tap.onDocumentTapped()
         }
 
         func navigate(_ pdfView: MEGAPDFView, to pageIndex: Int) {
@@ -346,7 +453,7 @@ struct PDFDisplayerView: UIViewRepresentable {
             //   `pdfView.pagingScrollObservationMonitor` reports after this
             //   navigation's scroll is not taken as another navigation.
             Task { @MainActor [weak self, weak pdfView] in
-                self?.parent.isProgrammaticallyScrollingToCurrentPage = false
+                self?.parent.interaction.scroll.isProgrammaticallyScrollingToCurrentPage.wrappedValue = false
                 pdfView?.requestPageNavigation(to: pageIndex)
             }
         }
@@ -358,30 +465,34 @@ struct PDFDisplayerView: UIViewRepresentable {
             //   sending, so tasks queued by repeated `updateUIView:` calls send
             //   only the latest request, once.
             Task { @MainActor [weak self, weak pdfView] in
-                guard let self, let request = parent.searchRequest else { return }
+                guard let self, let request = parent.interaction.search.request.wrappedValue else { return }
                 switch request {
                 case .present: pdfView?.presentSearch()
                 case .dismiss: pdfView?.dismissSearch()
                 }
-                parent.searchRequest = nil
+                parent.interaction.search.request.wrappedValue = nil
             }
         }
 
         func pdfView(_ pdfView: MEGAPDFView, searchSessionDidBegin sessionID: UUID) {
-            parent.onSearchSessionDidBegin(sessionID)
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.search.onSessionDidBegin(sessionID)
         }
 
         func pdfView(_ pdfView: MEGAPDFView, searchSessionDidEnd sessionID: UUID) {
-            parent.onSearchSessionDidEnd(sessionID)
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.search.onSessionDidEnd(sessionID)
         }
 
         func pdfView(_ pdfView: MEGAPDFView, searchResultDidChange sessionID: UUID, generationID: UUID, resultID: Int) {
-            parent.onSearchResultDidChange(sessionID, generationID, resultID)
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.search.onResultDidChange(sessionID, generationID, resultID)
         }
 
         nonisolated func pdfViewWillClick(onLink sender: PDFView, with url: URL) {
             Task { @MainActor [weak self] in
-                self?.parent.onLinkTapped(url)
+                guard let self, isPreparedForDisplayAndInteraction else { return }
+                parent.interaction.tap.onLinkTapped(url)
             }
         }
     }
