@@ -30,6 +30,10 @@ enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationStatesChangedNotification(_:)), name: Notification.Name.NSProcessInfoPowerStateDidChange, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationStatesChangedNotification(_:)), name: ProcessInfo.thermalStateDidChangeNotification, object: nil)
+        
+        // The queues may have been configured before the observers were added, e.g. during app launch while the
+        // application state is still background, so sync with the current state instead of waiting for the next change.
+        recalculateQueueStates()
     }
     
     @objc func stopCalculatingConcurrentCount() {
@@ -38,6 +42,10 @@ enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
     
     @objc private func applicationStatesChangedNotification(_ notification: Notification) {
         MEGALogDebug("[Camera Upload] concurrent calculator received \(notification.name)")
+        recalculateQueueStates()
+    }
+    
+    private func recalculateQueueStates() {
         Task { @MainActor in
             let uploadQueueState = calculateCameraUploadQueueStates(
                 applicationState: UIApplication.shared.applicationState,
