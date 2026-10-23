@@ -136,8 +136,10 @@ extension PreviewDocumentViewController {
 
     @objc func configureBarButtonImages() {
         self.exportFileBarButtonItem?.image = MEGAAssets.UIImage.downloadToDisk
-        self.importBarButtonItem.image = MEGAAssets.UIImage.folderArrow
-        self.downloadBarButtonItem.image = MEGAAssets.UIImage.arrowDownCircle
+        // Save to MEGA and Copy to Offline, matching the link screen a link file was opened from.
+        let usesLinkRevampIcons = isLink && MEGALinkManager.isLinkRevampEnabled
+        self.importBarButtonItem.image = usesLinkRevampIcons ? MEGAAssets.UIImage.uploadToCloud : MEGAAssets.UIImage.folderArrow
+        self.downloadBarButtonItem.image = usesLinkRevampIcons ? MEGAAssets.UIImage.cloudDownload : MEGAAssets.UIImage.arrowDownCircle
         self.moreBarButtonItem.image = MEGAAssets.UIImage.moreHorizontal
         self.searchBarButtonItem.image = MEGAAssets.UIImage.searchSmall
         self.thumbnailBarButtonItem.image = MEGAAssets.UIImage.squares4

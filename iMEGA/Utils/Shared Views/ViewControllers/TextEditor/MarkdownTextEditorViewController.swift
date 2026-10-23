@@ -123,6 +123,7 @@ extension MarkdownTextEditorViewController: ViewType {
         if model.textEditorMode == .view && !isInRubbishBin, let accessLevel = model.accessLevel {
             toolbarItems = TextEditorBarItems.bottomBarItems(
                 accessLevel: isBackupNode ? .read : accessLevel,
+                usesLinkRevampIcons: model.usesLinkRevampIcons,
                 target: self
             )
             navigationController?.setToolbarHidden(false, animated: true)

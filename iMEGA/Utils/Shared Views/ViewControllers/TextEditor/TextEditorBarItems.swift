@@ -32,17 +32,32 @@ enum TextEditorBarItems {
 
     /// Download, then Edit unless the access is read only, then Export for the owner or else Import.
     /// A flexible space sits between the items.
-    static func bottomBarItems(accessLevel: NodeAccessTypeEntity, target: some TextEditorBarItemTarget) -> [UIBarButtonItem] {
-        let items = MarkdownTextEditorBottomBarItem.items(for: accessLevel).map { makeItem($0, target: target) }
+    static func bottomBarItems(
+        accessLevel: NodeAccessTypeEntity,
+        usesLinkRevampIcons: Bool,
+        target: some TextEditorBarItemTarget
+    ) -> [UIBarButtonItem] {
+        let items = MarkdownTextEditorBottomBarItem.items(for: accessLevel).map {
+            makeItem($0, usesLinkRevampIcons: usesLinkRevampIcons, target: target)
+        }
         return items.enumerated().flatMap { index, item in
             index == 0 ? [item] : [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), item]
         }
     }
 
-    private static func makeItem(_ item: MarkdownTextEditorBottomBarItem, target: some TextEditorBarItemTarget) -> UIBarButtonItem {
+    private static func makeItem(
+        _ item: MarkdownTextEditorBottomBarItem,
+        usesLinkRevampIcons: Bool,
+        target: some TextEditorBarItemTarget
+    ) -> UIBarButtonItem {
         switch item {
         case .download:
-            UIBarButtonItem(image: MEGAAssets.UIImage.offline, style: .plain, target: target, action: #selector((any TextEditorBarItemTarget).downloadTapped))
+            UIBarButtonItem(
+                image: usesLinkRevampIcons ? MEGAAssets.UIImage.cloudDownload : MEGAAssets.UIImage.offline,
+                style: .plain,
+                target: target,
+                action: #selector((any TextEditorBarItemTarget).downloadTapped)
+            )
         case .edit:
             UIBarButtonItem(image: MEGAAssets.UIImage.edittext, style: .plain, target: target, action: #selector((any TextEditorBarItemTarget).editTapped))
         case .export:
@@ -53,7 +68,12 @@ enum TextEditorBarItems {
                 action: #selector((any TextEditorBarItemTarget).exportFileTapped(button:))
             )
         case .import:
-            UIBarButtonItem(image: MEGAAssets.UIImage.import, style: .plain, target: target, action: #selector((any TextEditorBarItemTarget).importTapped))
+            UIBarButtonItem(
+                image: usesLinkRevampIcons ? MEGAAssets.UIImage.uploadToCloud : MEGAAssets.UIImage.import,
+                style: .plain,
+                target: target,
+                action: #selector((any TextEditorBarItemTarget).importTapped)
+            )
         }
     }
 }

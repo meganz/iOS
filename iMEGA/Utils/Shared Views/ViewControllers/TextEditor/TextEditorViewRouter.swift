@@ -232,6 +232,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             nodeEntity: nodeEntity,
             isMarkdownScreen: isMarkdownScreen,
             isLink: isLink,
+            isLinkRevampEnabled: MEGALinkManager.isLinkRevampEnabled,
             source: source
         )
         return vm
