@@ -20,13 +20,13 @@ struct TextEditorBarItemsTests {
 
     /// The items without the flexible spaces between them.
     private static func actionItems(_ accessLevel: NodeAccessTypeEntity, target: Target) -> [UIBarButtonItem] {
-        TextEditorBarItems.bottomBarItems(accessLevel: accessLevel, target: target).filter { $0.action != nil }
+        TextEditorBarItems.bottomBarItems(accessLevel: accessLevel, usesLinkRevampIcons: false, target: target).filter { $0.action != nil }
     }
 
     @Test func ownerSeesDownloadEditExport() {
         let target = Target()
 
-        let items = TextEditorBarItems.bottomBarItems(accessLevel: .owner, target: target)
+        let items = TextEditorBarItems.bottomBarItems(accessLevel: .owner, usesLinkRevampIcons: false, target: target)
 
         // Download, space, Edit, space, Export.
         #expect(items.count == 5)
@@ -53,6 +53,14 @@ struct TextEditorBarItemsTests {
         #expect(items.contains { $0.action == Self.editAction } == false)
     }
 
+    @Test func linkRevampIcons_readAccess_seesCopyToOfflineAndSaveToMegaIcons() {
+        let items = TextEditorBarItems.bottomBarItems(accessLevel: .read, usesLinkRevampIcons: true, target: Target())
+            .filter { $0.action != nil }
+
+        #expect(items.map(\.action) == [Self.downloadAction, Self.importAction])
+        #expect(items.compactMap(\.image) == [MEGAAssets.UIImage.cloudDownload, MEGAAssets.UIImage.uploadToCloud])
+    }
+
     @Test func unknownAccessSeesDownloadImportWithoutEdit() {
         let target = Target()
 
@@ -70,7 +78,7 @@ struct TextEditorBarItemsTests {
     }
 
     @Test func spacesAreBetweenItemsOnly() {
-        let items = TextEditorBarItems.bottomBarItems(accessLevel: .read, target: Target())
+        let items = TextEditorBarItems.bottomBarItems(accessLevel: .read, usesLinkRevampIcons: false, target: Target())
 
         // Download, space, Import.
         #expect(items.count == 3)

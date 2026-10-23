@@ -512,11 +512,13 @@ final class NodeActionBuilder {
     }
     
     private func unknownAccessLevelNodeActions() -> [NodeAction] {
-        var nodeActions: [NodeAction] = [.importAction()]
+        // The audio player opened from a file link follows the file link screen's rows under the revamp.
+        let usesLinkRevampActions = isAudioFileLink && isLinkRevampEnabled
+        var nodeActions: [NodeAction] = [usesLinkRevampActions ? .saveToMegaAction() : .importAction()]
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
         }
-        nodeActions.append(.downloadAction())
+        nodeActions.append(usesLinkRevampActions ? .copyToOfflineAction() : .downloadAction())
         
         if isAudioFileLink {
             nodeActions.append(contentsOf: [.sendToChatAction(), .shareLinkAction()])

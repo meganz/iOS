@@ -881,6 +881,23 @@ class NodeActionBuilderTests {
         #expect(actions.prefix(2).map(\.title) == [Strings.Localizable.Link.Button.saveToMega, Strings.Localizable.Link.Button.copyToOffline])
     }
 
+    @Test(arguments: [true, false])
+    func testAudioFileLink_usesSaveToMegaAndCopyToOfflineRowsOnlyWithLinkRevampEnabled(isLinkRevampEnabled: Bool) {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessUnknown)
+            .setIsFile(true)
+            .setIsAudioFileLink(true)
+            .setIsLinkRevampEnabled(isLinkRevampEnabled)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .shareLink]) == true)
+        let expectedTitles = isLinkRevampEnabled
+            ? [Strings.Localizable.Link.Button.saveToMega, Strings.Localizable.Link.Button.copyToOffline]
+            : [Strings.Localizable.importToCloudDrive, Strings.Localizable.General.downloadToOffline]
+        #expect(actions.prefix(2).map(\.title) == expectedTitles)
+    }
+
     @Test
     func testFolderLinkList() {
         actions = NodeActionBuilder()

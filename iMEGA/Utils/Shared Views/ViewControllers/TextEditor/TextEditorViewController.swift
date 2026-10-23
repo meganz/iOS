@@ -173,6 +173,7 @@ extension TextEditorViewController: ViewType {
         if textEditorModel.textEditorMode == .view && !isInRubbishBin {
             toolbarItems = TextEditorBarItems.bottomBarItems(
                 accessLevel: isBackupNode ? .read : textEditorModel.accessLevel ?? .unknown,
+                usesLinkRevampIcons: textEditorModel.usesLinkRevampIcons,
                 target: self
             )
             navigationController?.setToolbarHidden(false, animated: true)

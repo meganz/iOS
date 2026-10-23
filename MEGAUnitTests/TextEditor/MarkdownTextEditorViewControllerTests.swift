@@ -31,6 +31,7 @@ struct MarkdownTextEditorViewControllerTests {
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = NodeEntity(name: "notes.md", handle: 77, isFile: true, size: 10),
         isLink: Bool = false,
+        isLinkRevampEnabled: Bool = false,
         source: TextEditorFileSource = .cloudDrive
     ) -> Fixture {
         let router = MockTextEditorViewRouter()
@@ -49,6 +50,7 @@ struct MarkdownTextEditorViewControllerTests {
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
             isLink: isLink,
+            isLinkRevampEnabled: isLinkRevampEnabled,
             source: source,
             tracker: tracker
         )
@@ -263,6 +265,27 @@ struct MarkdownTextEditorViewControllerTests {
         #expect(actions == [#selector((any TextEditorBarItemTarget).downloadTapped), #selector((any TextEditorBarItemTarget).importTapped)])
         let right = fixture.sut.navigationItem.rightBarButtonItems ?? []
         #expect(right.contains { $0.image == MEGAAssets.UIImage.moreNavigationBar } == false)
+    }
+
+    @Test(arguments: [
+        (isLink: true, isLinkRevampEnabled: true, expectsLinkRevampIcons: true),
+        (isLink: true, isLinkRevampEnabled: false, expectsLinkRevampIcons: false),
+        (isLink: false, isLinkRevampEnabled: true, expectsLinkRevampIcons: false)
+    ])
+    func readOnlyFile_setUpView_showsLinkRevampIconsOnlyForLinkUnderRevamp(
+        isLink: Bool,
+        isLinkRevampEnabled: Bool,
+        expectsLinkRevampIcons: Bool
+    ) async throws {
+        let fixture = Self.makeFixture(accessLevel: .read, isLink: isLink, isLinkRevampEnabled: isLinkRevampEnabled)
+
+        fixture.viewModel.dispatch(.setUpView)
+        try await Self.waitForSetUp(fixture.sut)
+
+        let expectedImages = expectsLinkRevampIcons
+            ? [MEGAAssets.UIImage.cloudDownload, MEGAAssets.UIImage.uploadToCloud]
+            : [MEGAAssets.UIImage.offline, MEGAAssets.UIImage.import]
+        #expect(fixture.sut.toolbarItems?.compactMap(\.image) == expectedImages)
     }
 
     @Test(arguments: [TextEditorFileSource.chat, .transfers, .versions])
