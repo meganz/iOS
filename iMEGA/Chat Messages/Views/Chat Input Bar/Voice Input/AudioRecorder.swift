@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAFoundation
 
 @MainActor
 class AudioRecorder: NSObject {
@@ -110,11 +111,16 @@ class AudioRecorder: NSObject {
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
         } else {
-            do {
-                try AVAudioSession.sharedInstance().setMode(.voiceChat)
-                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-            } catch {
-                MEGALogError("[AudioRecorder] AVAudioSession cleanup error: \(error.localizedDescription)")
+            // Switch the mode once the session is inactive, changing it on an active session blocks the caller.
+            AVAudioSession.sharedInstance().deactivateWithoutBlocking(options: .notifyOthersOnDeactivation) { error in
+                if let error {
+                    MEGALogError("[AudioRecorder] AVAudioSession cleanup error: \(error.localizedDescription)")
+                }
+                do {
+                    try AVAudioSession.sharedInstance().setMode(.voiceChat)
+                } catch {
+                    MEGALogError("[AudioRecorder] AVAudioSession cleanup error: \(error.localizedDescription)")
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ import AVFoundation
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAFoundation
 
 // MARK: - Protocol
 
@@ -237,7 +238,7 @@ extension PlaybackEngine {
         setPlaybackSpeed(1)
         isPlaybackIntended = false
         isInterrupted = false
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        AVAudioSession.sharedInstance().deactivateWithoutBlocking(options: .notifyOthersOnDeactivation)
         resetSeekGate()
         currentTimeSubject.send(0)
         durationSubject.send(nil)
