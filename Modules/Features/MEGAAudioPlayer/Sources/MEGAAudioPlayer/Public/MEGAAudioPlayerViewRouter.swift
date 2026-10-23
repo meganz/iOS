@@ -94,10 +94,11 @@ public final class MEGAAudioPlayerViewRouter {
 
         let service = service
         let accountUseCase = accountUseCase
+        // Dismiss while logged out there is no mini player: only the folder link docks one that takes playback over.
         let stopPlaybackIfLoggedOut = {
-            if !accountUseCase.isLoggedIn() {
-                service.stop()
-            }
+            guard !accountUseCase.isLoggedIn() else { return }
+            if case .folderLink = service.currentSource { return }
+            service.stop()
         }
 
         vm.onDismiss = { [weak host] in

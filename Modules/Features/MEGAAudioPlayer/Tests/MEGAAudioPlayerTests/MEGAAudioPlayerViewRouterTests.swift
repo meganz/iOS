@@ -58,9 +58,40 @@ struct MEGAAudioPlayerViewRouterTests {
         #expect(engine.playedURLs == [track(1)], "expanding must not touch playback")
     }
 
+    // MARK: - Dismissing while logged out
+
+    /// CC-8883: the folder link's docked mini player takes playback over once the full screen player closes.
+    @Test func dismissWhileLoggedOut_playingFromFolderLink_keepsPlaying() {
+        let (sut, presenter, _, service) = makeSUT(isLoggedIn: false)
+        let node = StubPlayableNode(handle: 1, name: "song1.mp3", fingerprint: "fingerprint-1")
+        sut.start(source: .folderLink(node: node, queue: [node]))
+
+        presenter.presentedHost?.onDismiss?()
+
+        #expect(service.currentSource != nil)
+    }
+
+    @Test func dismissWhileLoggedOut_playingFromElsewhere_stopsPlayback() {
+        let (sut, presenter, _, service) = makeSUT(isLoggedIn: false)
+        sut.start(source: source(1))
+
+        presenter.presentedHost?.onDismiss?()
+
+        #expect(service.currentSource == nil, "nothing would be left to control it")
+    }
+
+    @Test func dismissWhileLoggedIn_keepsPlaying() {
+        let (sut, presenter, _, service) = makeSUT(isLoggedIn: true)
+        sut.start(source: source(1))
+
+        presenter.presentedHost?.onDismiss?()
+
+        #expect(service.currentSource != nil)
+    }
+
     // MARK: - Helpers
 
-    private func makeSUT() -> (
+    private func makeSUT(isLoggedIn: Bool = true) -> (
         sut: MEGAAudioPlayerViewRouter,
         presenter: SpyPresenterViewController,
         engine: MockPlaybackEngine,
@@ -79,7 +110,7 @@ struct MEGAAudioPlayerViewRouterTests {
         let sut = MEGAAudioPlayerViewRouter(
             presenter: presenter,
             service: service,
-            accountUseCase: MockAccountUseCase()
+            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn)
         )
         return (sut, presenter, engine, service)
     }
@@ -96,8 +127,10 @@ struct MEGAAudioPlayerViewRouterTests {
 @MainActor
 private final class SpyPresenterViewController: UIViewController {
     private(set) var presentedCount = 0
+    private(set) var presentedHost: AudioPlayerHostingController?
 
     override func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?) {
         presentedCount += 1
+        presentedHost = viewControllerToPresent as? AudioPlayerHostingController
     }
 }
