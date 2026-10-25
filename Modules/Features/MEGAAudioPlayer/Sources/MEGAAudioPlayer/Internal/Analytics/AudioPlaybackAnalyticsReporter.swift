@@ -51,6 +51,7 @@ final class AudioPlaybackAnalyticsReporter {
     func trackPlaybackFailed(
         track: PlaybackTrack?,
         reason: AudioPlaybackFailureReason,
+        context: AudioPlaybackFailureContext,
         generation: Int
     ) {
         guard failedGeneration != generation else { return }
@@ -59,7 +60,7 @@ final class AudioPlaybackAnalyticsReporter {
         tracker.trackAnalyticsEvent(
             with: AudioPlaybackFailedEvent(
                 sourceType: track?.analyticsSourceType ?? "none",
-                reason: reason.eventReason,
+                reason: reason.eventReason(in: context),
                 authStatus: accountUseCase.isLoggedIn() ? .loggedin : .loggedout
             )
         )
