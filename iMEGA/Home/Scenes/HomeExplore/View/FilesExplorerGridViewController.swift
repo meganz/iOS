@@ -97,9 +97,17 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         if editing {
             configureToolbarButtons()
             showToolbar()
+            // As in the list view: on iOS 26 the toolbar's buttons float as glass over the content, in place of the tab bar
+            if #available(iOS 26.0, *) {
+                tabBarController?.tabBar.alpha = 0
+                toolbar.backgroundColor = .clear
+            }
         } else {
             hideToolbar()
             collectionView.clearSelectedItems()
+            if #available(iOS 26.0, *) {
+                tabBarController?.tabBar.alpha = 1
+            }
         }
         
         super.setEditing(editing, animated: animated)
