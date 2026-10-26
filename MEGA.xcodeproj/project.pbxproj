@@ -1470,6 +1470,7 @@
 		949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */; };
 		949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */; };
 		949BFF122D5F52C40013F047 /* BottomOverlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949BFF112D5F52C40013F047 /* BottomOverlayManager.swift */; };
+		949BFF142D5F52C40013F047 /* BottomOverlayLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949BFF132D5F52C40013F047 /* BottomOverlayLayout.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94A1445E2C9DE47A00C34A98 /* PasteImagePreviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A1445D2C9DE47000C34A98 /* PasteImagePreviewViewModelTests.swift */; };
 		94A144602C9DE50800C34A98 /* MockPasteImagePreviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A1445F2C9DE50500C34A98 /* MockPasteImagePreviewRouter.swift */; };
@@ -1938,6 +1939,7 @@
 		B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */; };
 		B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */; };
 		B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */; };
+		B54081192AD91471004392E8 /* BottomOverlayLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081182AD91471004392E8 /* BottomOverlayLayoutTests.swift */; };
 		B5430FCE2AB97629003F8C34 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
 		B54387B12CCF6F81002E6B3B /* PasswordReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54387B02CCF6F81002E6B3B /* PasswordReminderViewModel.swift */; };
 		B54387B42CCF81A7002E6B3B /* PasswordReminderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54387B32CCF81A7002E6B3B /* PasswordReminderViewModelTests.swift */; };
@@ -4385,6 +4387,7 @@
 		949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModel.swift; sourceTree = "<group>"; };
 		949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameAlertController.swift; sourceTree = "<group>"; };
 		949BFF112D5F52C40013F047 /* BottomOverlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomOverlayManager.swift; sourceTree = "<group>"; };
+		949BFF132D5F52C40013F047 /* BottomOverlayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomOverlayLayout.swift; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94A1445D2C9DE47000C34A98 /* PasteImagePreviewViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewViewModelTests.swift; sourceTree = "<group>"; };
@@ -4879,6 +4882,7 @@
 		B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+PromotedPlan.swift"; sourceTree = "<group>"; };
 		B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModel.swift; sourceTree = "<group>"; };
 		B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModelTests.swift; sourceTree = "<group>"; };
+		B54081182AD91471004392E8 /* BottomOverlayLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomOverlayLayoutTests.swift; sourceTree = "<group>"; };
 		B54387B02CCF6F81002E6B3B /* PasswordReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordReminderViewModel.swift; sourceTree = "<group>"; };
 		B54387B32CCF81A7002E6B3B /* PasswordReminderViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordReminderViewModelTests.swift; sourceTree = "<group>"; };
 		B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Ads.swift"; sourceTree = "<group>"; };
@@ -9598,6 +9602,7 @@
 		835CE84C2AA88E7E00861544 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				B54081182AD91471004392E8 /* BottomOverlayLayoutTests.swift */,
 				B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */,
 				835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */,
 			);
@@ -10875,6 +10880,7 @@
 		949BFF102D5F52A10013F047 /* BottomOverlayContainer */ = {
 			isa = PBXGroup;
 			children = (
+				949BFF132D5F52C40013F047 /* BottomOverlayLayout.swift */,
 				949BFF112D5F52C40013F047 /* BottomOverlayManager.swift */,
 			);
 			path = BottomOverlayContainer;
@@ -15118,6 +15124,7 @@
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
 				5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */,
+				949BFF142D5F52C40013F047 /* BottomOverlayLayout.swift in Sources */,
 				949BFF122D5F52C40013F047 /* BottomOverlayManager.swift in Sources */,
 				83BEB18B2BAC84EF003AA310 /* BottomSheetRouter.swift in Sources */,
 				0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */,
@@ -17065,6 +17072,7 @@
 				2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */,
 				0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
+				B54081192AD91471004392E8 /* BottomOverlayLayoutTests.swift in Sources */,
 				0EB584852C3CC5B900EEBD99 /* BrowserViewModelTests.swift in Sources */,
 				830294AF2C11BB1F0002DF63 /* CallControlsViewModelTests.swift in Sources */,
 				941255522BED03C700058C0D /* CallKitCallControllerTests.swift in Sources */,

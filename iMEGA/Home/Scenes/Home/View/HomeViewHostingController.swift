@@ -2,6 +2,7 @@ import Combine
 import Home
 import MEGAAppPresentation
 import MEGASwiftUI
+import MEGAUIKit
 import SwiftUI
 
 @MainActor
@@ -99,8 +100,9 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
         // safe area is correct, > 0 when stale).
         // Only iOS 26 exhibits the stale safe area; on earlier versions it stays correct, so any
         // compensation would double-pad and push the location button up — keep it at 0 there.
+        // A vertical tab bar (iPhone Duo) takes no bottom space, so its height must not become padding.
         if #available(iOS 26.0, *), let tabBar = tabBarController?.tabBar {
-            let newValue = max(0, tabBar.frame.height - view.safeAreaInsets.bottom)
+            let newValue = tabBar.isHorizontal ? max(0, tabBar.frame.height - view.safeAreaInsets.bottom) : 0
             if tabBarSafeAreaInsetCompensation.value != newValue {
                 tabBarSafeAreaInsetCompensation.value = newValue
             }

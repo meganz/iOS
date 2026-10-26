@@ -201,7 +201,9 @@ extension MainTabBarController {
 
         coordinator.onAttach = { [weak self] hostViewController in
             guard let self, let pill = hostViewController.view else { return }
-            addChild(hostViewController)
+            // We shouldn't add the hosting controller as a child of the tab bar controller. On the iPhone Duo simulator (Xcode 27.2)
+            // a child of it showed as an empty tab in the vertical side bar.
+            // The overlay coordinator keeps the hosting controller alive.
             let shouldHideInitially = currentBottomOverlayPresenter == nil
             updateOverlayLayout { [weak self] in
                 guard let self else { return }
@@ -210,16 +212,13 @@ extension MainTabBarController {
                     bottomOverlayManager?.setItemVisibility(for: .audioPlayer, hidden: true)
                 }
             }
-            hostViewController.didMove(toParent: self)
         }
 
-        coordinator.onDetach = { [weak self] hostViewController in
+        coordinator.onDetach = { [weak self] _ in
             guard let self else { return }
-            hostViewController.willMove(toParent: nil)
             updateOverlayLayout { [weak self] in
                 self?.removeSubviewFromOverlay(.audioPlayer)
             }
-            hostViewController.removeFromParent()
         }
 
         coordinator.onExpand = { [weak self] in

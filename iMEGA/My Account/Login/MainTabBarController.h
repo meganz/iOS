@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) UIStackView *bottomOverlayStack;
 @property (nonatomic, strong, nullable) NSLayoutConstraint *bottomContainerBottomConstraint;
+@property (nonatomic, strong, nullable) NSLayoutConstraint *bottomContainerLeadingConstraint;
+@property (nonatomic, strong, nullable) NSLayoutConstraint *bottomContainerTrailingConstraint;
 @property (nonatomic, strong, nullable) BottomOverlayManager *bottomOverlayManager;
 @property (nonatomic, strong, nullable) UIView *safeAreaCoverView;
 

@@ -1,11 +1,26 @@
 import MEGAAppPresentation
 import MEGADesignToken
+import MEGAUIKit
 
 extension MainTabBarController {
     private static let overlayItemHeightIdentifier = "BottomOverlayItemHeight"
 
     var bottomConstant: CGFloat {
-        tabBar.isHidden ? -view.safeAreaInsets.bottom : -tabBar.frame.size.height
+        BottomOverlayLayout.bottomConstant(
+            isTabBarHidden: tabBar.isHidden,
+            isTabBarHorizontal: tabBar.isHorizontal,
+            tabBarHeight: tabBar.frame.size.height,
+            safeAreaBottom: view.safeAreaInsets.bottom
+        )
+    }
+
+    private var sideInsets: NSDirectionalEdgeInsets {
+        BottomOverlayLayout.sideInsets(
+            isTabBarHidden: tabBar.isHidden,
+            isTabBarHorizontal: tabBar.isHorizontal,
+            isRightToLeft: view.effectiveUserInterfaceLayoutDirection == .rightToLeft,
+            safeArea: view.safeAreaInsets
+        )
     }
     
     // MARK: - Overlay Management
@@ -103,6 +118,9 @@ extension MainTabBarController {
     @objc func refreshBottomConstraint() {
         guard let container = bottomOverlayContainer else { return }
         bottomContainerBottomConstraint?.constant = bottomConstant
+        let insets = sideInsets
+        bottomContainerLeadingConstraint?.constant = insets.leading
+        bottomContainerTrailingConstraint?.constant = -insets.trailing
         container.layoutIfNeeded()
     }
     
@@ -149,10 +167,12 @@ extension MainTabBarController {
         bottomConstraint.isActive = true
         bottomContainerBottomConstraint = bottomConstraint
         
-        NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        let insets = sideInsets
+        let leadingConstraint = container.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.leading)
+        let trailingConstraint = container.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.trailing)
+        NSLayoutConstraint.activate([leadingConstraint, trailingConstraint])
+        bottomContainerLeadingConstraint = leadingConstraint
+        bottomContainerTrailingConstraint = trailingConstraint
         
         bottomOverlayContainer = container
     }
