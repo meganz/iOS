@@ -18,17 +18,24 @@ extension NodeListEntity {
     public func containsVisualMedia() -> Bool {
         guard nodesCount > 0 else { return false }
         return (0..<nodesCount).contains {
-            nodeAt($0)?.name.fileExtensionGroup.isVisualMedia ?? false
+            nodeAt($0)?.isVisualMediaFile ?? false
         }
     }
     
     public func containsOnlyVisualMedia() -> Bool {
         guard nodesCount > 0 else { return false }
         return (0..<nodesCount).notContains {
-            guard let nodeName = nodeAt($0)?.name else {
+            guard let node = nodeAt($0) else {
                 return false
             }
-            return !nodeName.fileExtensionGroup.isVisualMedia
+            return !node.isVisualMediaFile
         }
+    }
+}
+
+private extension NodeEntity {
+    /// A folder can carry an image or video extension in its name, so the name alone doesn't make it media
+    var isVisualMediaFile: Bool {
+        isFile && name.fileExtensionGroup.isVisualMedia
     }
 }

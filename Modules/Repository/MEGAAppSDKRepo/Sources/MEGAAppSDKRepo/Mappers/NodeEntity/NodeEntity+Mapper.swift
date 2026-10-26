@@ -81,7 +81,7 @@ fileprivate extension NodeEntity {
             shortFormat                        : node.shortFormat,
             codecId                            : node.videoCodecId,
             duration                           : node.duration,
-            mediaType                          : node.name?.toMediaTypeEntity(),
+            mediaType                          : node.isFile() ? node.name?.toMediaTypeEntity() : nil,
             mediaCaptureTime                   : node.mediaCaptureTime,
 
             // MARK: - Photo

@@ -606,7 +606,7 @@
     NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : self.publicLinksArray);
     NSMutableArray<MEGANode *> *mediaNodesArray = NSMutableArray.alloc.init;
     for (MEGANode *node in nodesArray) {
-        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
+        if (node.isFile && [FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             [mediaNodesArray addObject:node];
         }
     }

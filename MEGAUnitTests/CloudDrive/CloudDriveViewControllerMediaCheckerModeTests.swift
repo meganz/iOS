@@ -39,7 +39,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
 
     func testMakeVisualMediaChecker_whenContainsExclusivelyMedia_shouldReturnTrue() async {
         let mode = CloudDriveViewControllerMediaCheckerMode.containsExclusivelyMedia
-        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg") })
+        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg", isFile: true) })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
             nodeSource: .node { NodeEntity() }, nodeUseCase: nodeUseCase
@@ -49,7 +49,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
 
     func testMakeVisualMediaChecker_whenDoesNotContainsExclusivelyMedia_shouldReturnFalse() async {
         let mode = CloudDriveViewControllerMediaCheckerMode.containsExclusivelyMedia
-        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.txt") })
+        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.txt", isFile: true) })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
             nodeSource: .node { NodeEntity() }, nodeUseCase: nodeUseCase
@@ -63,7 +63,8 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
             nodesCount: 3,
             nodeAt: { index in
                 NodeEntity(
-                    name: index == 1 ? "test.jpg" : "test.txt"
+                    name: index == 1 ? "test.jpg" : "test.txt",
+                    isFile: true
                 )
             }
         )
@@ -76,7 +77,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
 
     func testMakeVisualMediaChecker_whenDoesNotContainsSomeMedia_shouldReturnFalse() async {
         let mode = CloudDriveViewControllerMediaCheckerMode.containsSomeMedia
-        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.txt") })
+        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.txt", isFile: true) })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
             nodeSource: .node { NodeEntity() }, nodeUseCase: nodeUseCase
@@ -86,7 +87,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
 
     func testMakeVisualMediaChecker_whenContainsSomeMediaInRecentActionBucket_shouldReturnFalse() async {
         let mode = CloudDriveViewControllerMediaCheckerMode.containsSomeMedia
-        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg") })
+        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg", isFile: true) })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
             nodeSource: .mockRecentActionBucketEmpty, nodeUseCase: nodeUseCase
@@ -96,7 +97,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
 
     func testMakeVisualMediaChecker_whenContainsExclusivelyMediaInRecentActionBucket_shouldReturnFalse() async {
         let mode = CloudDriveViewControllerMediaCheckerMode.containsExclusivelyMedia
-        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg") })
+        let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg", isFile: true) })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
             nodeSource: .mockRecentActionBucketEmpty, nodeUseCase: nodeUseCase

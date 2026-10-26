@@ -106,7 +106,7 @@ extension MEGAPhotoBrowserViewController {
     /// Asked for only once the full list is out of the running: on a paginated browser the provider
     /// holds entities, so every read of `allPhotos` maps the whole window back to SDK nodes.
     private func loadedVideoQueue() -> [MEGANode] {
-        dataProvider.allPhotos.filter { ($0.name ?? "").fileExtensionGroup.isVideo }
+        dataProvider.allPhotos.filter { $0.isFile() && ($0.name ?? "").fileExtensionGroup.isVideo }
     }
 
     private func fullVideoQueue(containing node: MEGANode) async -> [MEGANode]? {

@@ -82,6 +82,21 @@ final class NodeInfoViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testNodeInfoLocationViewModel_whenFolderIsNamedLikeVisualMedia_shouldReturnNil() async {
+        let node = MockNode(handle: 1, name: "Trip.jpg", nodeType: .folder)
+        let sut = makeSUT(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(
+                nodeAccessLevelVariable: .owner
+            )
+        )
+
+        await sut.loadNodeInfoLocationViewModel()
+
+        XCTAssertNil(sut.nodeInfoLocationViewModel)
+    }
+
+    @MainActor
     func testNodeInfoLocationViewModel_whenNodeIsVisualMediaAndAccessLevelisSet_shouldReturnExpected() async throws {
         
         let scenarios: [NodeAccessTypeEntity: Bool] = [
