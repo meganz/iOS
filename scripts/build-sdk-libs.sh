@@ -9,7 +9,7 @@ set -euo pipefail
 
 # --- Configuration ---
 
-VCPKG_BASELINE="ef7dbf94b9198bc58f45951adcf1f041fcbc5ea0"
+VCPKG_BASELINE="9e593bb18ea69cc5095e012465dcd675a822ed0d"
 CORES=$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
