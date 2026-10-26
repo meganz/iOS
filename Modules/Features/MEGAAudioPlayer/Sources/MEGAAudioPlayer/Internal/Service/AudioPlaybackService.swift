@@ -224,13 +224,14 @@ final class AudioPlaybackService {
         artworkData = metadata.artworkData
     }
 
-    private func startStreamingServerIfNeeded(for source: PlaybackSource) {
-        switch source {
-        case .offlineFiles, .offlineNodes: return
-        default: break
+    /// Holds the server before each track's address is resolved, as the SDK hands out no address while the
+    /// server is down. Holding it again is a no-op and never restarts a running server. Goes by the kind of
+    /// track, as whether the device holds a copy of it is only decided when the address is resolved.
+    private func holdStreamingServer(for track: PlaybackTrack) {
+        switch track {
+        case .account, .folderLink, .fileLink: streamingRepository.startServer()
+        case .offline, .offlineNode: break
         }
-        guard !streamingRepository.isServerRunning else { return }
-        streamingRepository.startServer()
     }
 
     private func bindEngineToState() {
@@ -569,7 +570,6 @@ extension AudioPlaybackService: PlaybackControllable {
         trackResolver.reset()
         playbackQueue = PlaybackQueueBuilder.build(from: source)
 
-        startStreamingServerIfNeeded(for: source)
         playCurrent()
         evaluateResumeWhenReady()
     }
@@ -593,6 +593,7 @@ extension AudioPlaybackService: PlaybackControllable {
         reportStarted(track: track, generation: generation)
         wasInterruptedDuringTrack = isInterrupted
         currentTrackURL = nil
+        holdStreamingServer(for: track)
 
         metadataTitleSubject.send(nil)
         artist = nil

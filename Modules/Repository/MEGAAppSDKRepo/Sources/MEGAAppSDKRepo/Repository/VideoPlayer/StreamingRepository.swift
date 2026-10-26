@@ -1,3 +1,4 @@
+import Foundation
 import MEGADomain
 import MEGASdk
 
@@ -17,9 +18,19 @@ public struct StreamingRepository: StreamingRepositoryProtocol {
     }
 
     private let sdk: MEGASdk
+    private let serverCoordinator: StreamingServerCoordinator
+    /// One per player, so one player stopping cannot take the server from another — two videos can
+    /// stream at once, with one in Picture in Picture
+    private let serverOwner: String
 
-    public init(sdk: MEGASdk) {
+    public init(
+        sdk: MEGASdk,
+        serverCoordinator: StreamingServerCoordinator = .shared,
+        serverOwner: String = "VideoPlayer-\(UUID().uuidString)"
+    ) {
         self.sdk = sdk
+        self.serverCoordinator = serverCoordinator
+        self.serverOwner = serverOwner
     }
 
     public func httpServerGetLocalLink(_ node: any PlayableNode) -> URL? {
@@ -30,12 +41,12 @@ public struct StreamingRepository: StreamingRepositoryProtocol {
         return sdk.httpServerGetLocalLink(megaNode)
     }
 
-    public func httpServerStart(_ localOnly: Bool, port: Int) {
-        sdk.httpServerStart(localOnly, port: port)
+    public func httpServerStart() {
+        serverCoordinator.acquire(serverOwner, on: sdk)
     }
 
     public func httpServerStop() {
-        sdk.httpServerStop()
+        serverCoordinator.release(serverOwner)
     }
 
     public func httpServerSetThrottleBitrate(_ bitrateBps: UInt64) {

@@ -171,7 +171,7 @@ extension MEGAAVPlayer: PlaybackControllable {
             self.timeObserverToken = nil
         }
         // Unconditional: the current item says nothing about whether an earlier one in the queue was
-        // streamed, and stopping a server that is not running is harmless.
+        // streamed. Lets go of this player's hold only; the server stops once no other player holds it.
         resetThrottleBitrate()
         streamingUseCase.stopStreaming()
         monitorVideoNodesUpdateTask?.cancel()
@@ -324,7 +324,9 @@ extension MEGAAVPlayer: PlaybackItemLoadable {
     private func playItem(_ item: VideoPlaybackItem) {
         let localURL = deviceFileURL(for: item)
 
-        if localURL == nil, !streamingUseCase.isStreaming {
+        // Even when the server is already running: another player may have started it, and only a
+        // player holding it keeps it from stopping when that one closes
+        if localURL == nil {
             streamingUseCase.startStreaming()
         }
 
@@ -365,7 +367,9 @@ extension MEGAAVPlayer: PlaybackItemLoadable {
 
         let localURL = deviceFileURL(for: currentItem)
 
-        if localURL == nil, !streamingUseCase.isStreaming {
+        // Even when the server is already running: another player may have started it, and only a
+        // player holding it keeps it from stopping when that one closes
+        if localURL == nil {
             streamingUseCase.startStreaming()
         }
 

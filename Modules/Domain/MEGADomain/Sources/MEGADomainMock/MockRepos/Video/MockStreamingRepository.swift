@@ -28,7 +28,7 @@ public final class MockStreamingRepository: StreamingRepositoryProtocol, @unchec
         localLink
     }
 
-    public func httpServerStart(_ localOnly: Bool, port: Int) {
+    public func httpServerStart() {
         httpServerStartCallCount += 1
     }
 
