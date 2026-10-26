@@ -136,8 +136,8 @@ struct PDFViewerInitialPageIndexScrollingViewModelTests {
         subscription.cancel()
     }
 
-    @Test
-    func requestsInitialPageWhenInsetsAreNeverReportedAfterScrollToTop() async throws {
+    @Test(.timeLimit(.minutes(1)))
+    func requestsInitialPageWhenInsetsAreNeverReportedAfterScrollToTop() async {
         let (sut, didTriggerInitialScrollToTop) = makeSUT(
             initialPageIndex: 15,
             contentScrollViewInsetsSettleTimeout: .milliseconds(50)
@@ -145,7 +145,9 @@ struct PDFViewerInitialPageIndexScrollingViewModelTests {
 
         didTriggerInitialScrollToTop.send(true)
         #expect(sut.initialPageNavigationRequest == nil)
-        try await Task.sleep(for: .milliseconds(300))
+        for await didSettle in sut.$didSettleInitialScrollPosition.values where didSettle {
+            break
+        }
 
         #expect(sut.initialPageNavigationRequest == 15)
         #expect(sut.didSettleInitialScrollPosition)
