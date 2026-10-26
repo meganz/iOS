@@ -167,7 +167,6 @@ final class TextEditorViewModel: ViewModelType {
             uploadFile()
         case .dismissTextEditorVC:
             tracker.trackAnalyticsEvent(with: TextEditorCloseMenuToolbarEvent())
-            saveReadingPosition()
             // A download that ends after Close must not open the preview or keep this view model alive.
             downloadTask?.cancel()
             downloadTask = nil
@@ -442,18 +441,14 @@ final class TextEditorViewModel: ViewModelType {
     private func makeTextEditorModel() -> TextEditorModel {
         switch textEditorMode {
         case .view:
-            // We don't support reading position for markdown preview
-            // therefore `resumeReadingOffset` should be nil for markdown.
-            // currently `resumeReadingOffset` doesn't have any effect on markdown preview
-            // but we still add the gate to strengthen the logic anyways
-
+            // The plain text screen does not resume a Markdown file.
             let isMarkdown = textFile.fileName.fileExtensionGroup.isMarkdownText
             return TextEditorModel(
                 textFile: textFile,
                 textEditorMode: textEditorMode,
                 // The document preview shows no bar actions, so the other sources keep that.
                 accessLevel: source == .cloudDrive ? nodeAccessLevel() : nil,
-                resumeReadingOffset: isMarkdown ? nil : readingAnchor ?? storedReadingOffset,
+                resumeReadingOffset: isMarkdown && !isMarkdownScreen ? nil : readingAnchor ?? storedReadingOffset,
                 usesLinkRevampIcons: isLink && isLinkRevampEnabled
             )
         case .load,
@@ -472,7 +467,9 @@ final class TextEditorViewModel: ViewModelType {
 
     private var storedReadingOffset: Int? {
         guard let nodeEntity else { return nil }
-        return resumeTextPositionUseCase.readingOffset(for: nodeEntity)
+        return isMarkdownScreen
+            ? resumeTextPositionUseCase.readingLine(for: nodeEntity)
+            : resumeTextPositionUseCase.readingOffset(for: nodeEntity)
     }
 
     /// The anchor says where to resume. The progress says how much of the laid out content has been
@@ -487,18 +484,28 @@ final class TextEditorViewModel: ViewModelType {
               progress < Constants.endOfFilePosition else {
             // Outside the thresholds there is nothing worth resuming: the reader is back at the start
             // or has finished. Any earlier position is stale, so it has to go.
-            resumeTextPositionUseCase.deleteReadingOffset(for: nodeEntity)
+            if isMarkdownScreen {
+                resumeTextPositionUseCase.deleteReadingLine(for: nodeEntity)
+            } else {
+                resumeTextPositionUseCase.deleteReadingOffset(for: nodeEntity)
+            }
             return
         }
 
-        resumeTextPositionUseCase.saveReadingOffset(anchor, for: nodeEntity)
+        if isMarkdownScreen {
+            resumeTextPositionUseCase.saveReadingLine(anchor, for: nodeEntity)
+        } else {
+            resumeTextPositionUseCase.saveReadingOffset(anchor, for: nodeEntity)
+        }
     }
 
+    /// An edit changes the text, so both the offset and the line are stale.
     private func deleteReadingPosition() {
         guard let nodeEntity else { return }
         readingAnchor = nil
         lastProgress = nil
         resumeTextPositionUseCase.deleteReadingOffset(for: nodeEntity)
+        resumeTextPositionUseCase.deleteReadingLine(for: nodeEntity)
     }
 
     // MARK: - Left off item
@@ -509,7 +516,9 @@ final class TextEditorViewModel: ViewModelType {
 
         let nearCompletionFraction = 0.9
         // Where the reader stopped, which is the same point the resume position returns to.
-        let shouldRecordLeftOffItem = (lastProgress ?? 0) < nearCompletionFraction
+        // A Markdown file with no visible text shows no rows, so the preview never reports a progress.
+        let progress = lastProgress ?? (textFile.content.allSatisfy(\.isWhitespace) ? 1 : 0)
+        let shouldRecordLeftOffItem = progress < nearCompletionFraction
         let handle = nodeEntity.handle
         let name = nodeEntity.name
 

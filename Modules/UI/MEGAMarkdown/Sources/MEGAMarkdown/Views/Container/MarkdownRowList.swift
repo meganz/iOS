@@ -66,6 +66,11 @@ package final class MarkdownRowList: NSObject {
         layout.heights.index(at: view.contentOffset.y + view.adjustedContentInset.top + 1)
     }
 
+    /// The item at the bottom edge of the visible area.
+    package var bottomItem: Int {
+        layout.heights.index(at: view.contentOffset.y + view.bounds.height - view.adjustedContentInset.bottom - 1)
+    }
+
     // MARK: - Changes
 
     /// Reads every item again. Use it for a new document.

@@ -17,6 +17,8 @@ final class PreviewModel {
     /// Grows when the rows of a new text replace the old ones, so the list goes back to the top.
     private(set) var generation = 0
     private(set) var rowCount = 0
+    /// Lines in the current text.
+    private(set) var lineCount = 0
     /// True when every chunk of the current text arrived.
     private(set) var isComplete = false
     /// The base URL of the text the rows come from.
@@ -42,19 +44,27 @@ final class PreviewModel {
         // A cancelled load of the same text left its first rows. The parse makes them again, so they are skipped.
         var rowsToSkip = request == shownRequest ? store.count : 0
         var isFirstBatch = rowsToSkip == 0
+        var textLineCount = 0
         do {
-            for try await batch in PreviewPipeline.run(request, limits: limits) {
+            for try await event in PreviewPipeline.run(request, limits: limits) {
                 // The stream still holds batches the parser sent before the cancel. A cancelled load adds none of them.
                 guard token == loadToken, !Task.isCancelled else { return }
-                if isFirstBatch {
-                    isFirstBatch = false
-                    start(baseURL: request.baseURL, phase: .rows)
-                    shownRequest = request
+                switch event {
+                case .lineCount(let count):
+                    // The old text stays on screen until the first batch, so the count is set with the rows.
+                    textLineCount = count
+                case .batch(let batch):
+                    if isFirstBatch {
+                        isFirstBatch = false
+                        start(baseURL: request.baseURL, phase: .rows)
+                        shownRequest = request
+                    }
+                    let skipped = min(rowsToSkip, batch.rows.count)
+                    rowsToSkip -= skipped
+                    store.append(Array(batch.rows.dropFirst(skipped)))
+                    lineCount = textLineCount
+                    rowCount = store.count
                 }
-                let skipped = min(rowsToSkip, batch.rows.count)
-                rowsToSkip -= skipped
-                store.append(Array(batch.rows.dropFirst(skipped)))
-                rowCount = store.count
             }
             // A cancelled consumer sees the stream end normally, so check again.
             guard token == loadToken, !Task.isCancelled else { return }
@@ -74,6 +84,7 @@ final class PreviewModel {
         completeRequest = nil
         store = PreviewRowStore()
         rowCount = 0
+        lineCount = 0
         isComplete = false
         generation += 1
         self.baseURL = baseURL

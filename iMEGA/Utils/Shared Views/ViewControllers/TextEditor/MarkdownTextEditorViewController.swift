@@ -11,7 +11,14 @@ import UIKit
 final class MarkdownTextEditorViewController: UIViewController {
     private let viewModel: TextEditorViewModel
     let contentState = MarkdownTextEditorContentState()
-    private lazy var hostingController = UIHostingController(rootView: MarkdownTextEditorContentView(state: contentState))
+    private lazy var hostingController = UIHostingController(
+        rootView: MarkdownTextEditorContentView(
+            state: contentState,
+            onReadingPositionChange: { [weak self] position in
+                self?.viewModel.dispatch(.updateReadingPosition(anchor: position.topLine, progress: position.progress))
+            }
+        )
+    )
 
     init(viewModel: TextEditorViewModel) {
         self.viewModel = viewModel
@@ -36,6 +43,23 @@ final class MarkdownTextEditorViewController: UIViewController {
 
         viewModel.dispatch(.setUpView)
         registerForTraitChangesAffectingNavigationBar()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.dispatch(.saveReadingPosition)
+    }
+
+    @objc private func didEnterBackground() {
+        Task { @MainActor in
+            viewModel.dispatch(.saveReadingPosition)
+        }
     }
 
     private func addContent() {
@@ -110,6 +134,7 @@ extension MarkdownTextEditorViewController: ViewType {
         if shallUpdateContent {
             contentState.text = model.textFile.content
         }
+        contentState.restoreLine = model.resumeReadingOffset
         switch model.textEditorMode {
         case .view:
             contentState.screen = .preview

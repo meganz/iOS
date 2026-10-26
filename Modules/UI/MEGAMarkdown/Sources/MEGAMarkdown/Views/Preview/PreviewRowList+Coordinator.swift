@@ -14,12 +14,13 @@ extension PreviewRowList {
         private(set) var store = PreviewRowStore()
         private var generation: Int?
         private(set) var isComplete = false
-    private(set) var showsCurrentText = true
+        private(set) var lineCount = 0
+        private(set) var showsCurrentText = true
         private(set) var isStopped = false
         private var baseURL: URL?
         /// Notice rows the user closed. A closed row stays in the store, so row indexes do not change.
         private var closedNotices: Set<Int> = []
-        var onTopLineChange: ((Int) -> Void)?
+        var onReadingPositionChange: ((MarkdownReadingPosition) -> Void)?
 
         // MARK: Values the hosted rows read
 
@@ -41,8 +42,7 @@ extension PreviewRowList {
         var pendingJump: Int?
         /// After a jump, rows near the target size themselves over a few layout passes. The target stays at the top until `until`.
         var pin: (row: Int, until: CFTimeInterval)?
-        var reportedLine: Int?
-        var needsReport = false
+        var reportedPosition: MarkdownReadingPosition?
         /// The SwiftUI safe area of the preview, host bars included.
         private var safeArea = EdgeInsets()
 
@@ -80,7 +80,7 @@ extension PreviewRowList {
             safeArea = parent.safeArea
             updateInsets()
             baseURL = parent.baseURL
-            onTopLineChange = parent.onTopLineChange
+            onReadingPositionChange = parent.onReadingPositionChange
             openURL = environment.openURL
             updateTheme(environment.markdownTheme)
             let stringsChanged = strings != environment.markdownPreviewStrings
@@ -94,6 +94,7 @@ extension PreviewRowList {
                 pendingRestoreLine = parent.restoreLine
             }
             isComplete = parent.isComplete
+            lineCount = parent.lineCount
             showsCurrentText = parent.showsCurrentText
             if generation != parent.generation {
                 let isNewText = generation != nil
@@ -103,7 +104,7 @@ extension PreviewRowList {
                 selection.clear()
                 pin = nil
                 pendingJump = nil
-                reportedLine = nil
+                reportedPosition = nil
                 list.reloadAll()
                 // A new text starts at the top.
                 if isNewText { list.view.contentOffset.y = -list.view.adjustedContentInset.top }
@@ -119,7 +120,6 @@ extension PreviewRowList {
                 list.reconfigureItems(changed)
             }
             resolveRestore()
-            needsReport = true
             list.view.setNeedsLayout()
         }
 
@@ -240,11 +240,6 @@ extension PreviewRowList.Coordinator: UICollectionViewDelegate {
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         endRestore()
         return true
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // The report runs in the layout pass that follows every scroll.
-        needsReport = true
     }
 }
 

@@ -5,10 +5,18 @@ import SwiftUI
 import Testing
 import UIKit
 
-/// Saves every top line the list reports.
+/// Saves every reading position the list reports.
 @MainActor
 final class LineRecorder {
+    var positions: [MarkdownReadingPosition] = []
+    /// One entry each time the top line changes.
     var lines: [Int] = []
+    var progresses: [Double] { positions.map(\.progress) }
+
+    func record(_ position: MarkdownReadingPosition) {
+        if position.topLine != positions.last?.topLine { lines.append(position.topLine) }
+        positions.append(position)
+    }
 }
 
 /// The values a host passes to `PreviewRowList`. Tests change them, and batches arrive when a test says so.
@@ -19,6 +27,7 @@ final class PreviewFeed {
     var generation = 0
     var rowCount = 0
     var isComplete = false
+    var lineCount = 0
     var restoreLine: Int?
     var isShown = true
     var theme = MarkdownTheme.default
@@ -30,11 +39,14 @@ final class PreviewFeed {
     var openURL = OpenURLAction { _ in .systemAction }
     /// Batches of the current text that the list has not got yet.
     @ObservationIgnored private(set) var waiting: [PreviewBatch] = []
+    @ObservationIgnored private var textLineCount = 0
 
     /// Parses `markdown` and sends the first `batches` batches (all when nil).
     func load(_ markdown: String, limits: PreviewParseLimits = PreviewParseLimits(), batches: Int? = nil) {
         var parsed: [PreviewBatch] = []
-        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: limits) { parsed.append($0) }
+        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: limits, sendLineCount: { textLineCount = $0 }, send: {
+            parsed.append($0)
+        })
         store = PreviewRowStore()
         rowCount = 0
         isComplete = false
@@ -47,6 +59,7 @@ final class PreviewFeed {
     func send(_ count: Int) {
         for batch in waiting.prefix(count) {
             store.append(batch.rows)
+            lineCount = textLineCount
         }
         waiting.removeFirst(min(count, waiting.count))
         rowCount = store.count
@@ -70,9 +83,11 @@ struct PreviewFeedHost: View {
                 generation: feed.generation,
                 rowCount: feed.rowCount,
                 isComplete: feed.isComplete,
+                lineCount: feed.lineCount,
                 baseURL: nil,
-                restoreLine: feed.restoreLine
-            ) { recorder.lines.append($0) }
+                restoreLine: feed.restoreLine,
+                onReadingPositionChange: { recorder.record($0) }
+            )
             .markdownTheme(feed.theme)
             .markdownPreviewStrings(feed.strings)
             .markdownImageLoading(feed.imageLoading)

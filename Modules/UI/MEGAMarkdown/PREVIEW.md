@@ -7,9 +7,16 @@ The terms are defined in [TERMINOLOGY.md](TERMINOLOGY.md).
 ## Public API
 
 ```swift
-MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: savedLine) { topLine in
-    savedLine = topLine
-}
+MarkdownPreview(
+    markdown,
+    baseURL: url,
+    softBreak: .lineBreak,
+    restoreLine: savedLine,
+    onReadingPositionChange: { position in
+        savedLine = position.topLine
+        progress = position.progress
+    }
+)
 .markdownTheme(theme)
 .markdownImageLoading(.altTextOnly)
 .markdownPreviewStrings(strings)
@@ -18,8 +25,11 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
 - `MarkdownPreview.sizeLimitInBytes` is 100 MiB of UTF-8. Bigger text shows `strings.tooLarge`.
   A host checks the file size before it reads the file into a `String`.
 - `restoreLine` is a 0-based source line. The preview opens with the row that contains it at the top.
-- `onTopLineChange` gets the source line of the top row when it changes. It is a callback, not a binding,
-  so a scroll does not redraw the parent view.
+- `onReadingPositionChange` gets a `MarkdownReadingPosition` when its top line or its read progress changes.
+  It is a callback, not a binding, so a scroll does not redraw the parent view.
+  - `topLine` is the source line of the top row.
+  - `progress` is from 0 to 1. The top line never reaches the end of the text,
+    so a host uses the progress to know that the user read to the end.
 
 ## From text to screen
 
@@ -27,8 +37,8 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
 |---|---|---|
 | 1. `.task(id:)` starts a load for the request (text, base URL, soft break). | `MarkdownPreview` | main |
 | 2. The load runs the pipeline and reads its batches from the `AsyncThrowingStream` that `PreviewPipeline.run` returns. | `PreviewModel` | main |
-| 3. The pipeline cuts the text into chunks, parses each chunk with the definitions known so far, and turns the blocks into rows. It sends one batch per chunk. | `PreviewPipeline` | background |
-| 4. Each batch is appended to the store, and `rowCount` grows. | `PreviewModel`, `PreviewRowStore` | main |
+| 3. The pipeline cuts the text into chunks, parses each chunk with the definitions known so far, and turns the blocks into rows. It sends the line count of the whole text once, then one batch per chunk. | `PreviewPipeline` | background |
+| 4. Each batch is appended to the store, and `rowCount` grows. The model keeps the line count. | `PreviewModel`, `PreviewRowStore` | main |
 | 5. The view passes the store, `generation` and `rowCount` to the list. New rows are appended with a height guess each. | `PreviewRowList` | main |
 | 6. Each cell on screen hosts a `PreviewRowView` and sizes itself. | `MarkdownRowList`, `MarkdownRowCell` | main |
 
@@ -77,7 +87,7 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
   until the width, the text size, Bold Text or the theme changes. Image rows size themselves every time.
 - Layout passes never animate (`MarkdownRowListView`).
 
-## Restore and top-line reports
+## Restore and reports
 
 - A restore line waits until its row is known: a later row exists, or the text is complete.
   It also waits while the rows on screen belong to an older text.
@@ -85,8 +95,13 @@ MarkdownPreview(markdown, baseURL: url, softBreak: .lineBreak, restoreLine: save
 - The list then jumps there and keeps that row at the top for 1 s (`pinDuration`), while the rows around it size themselves.
   This is the restore pin. A drag or a status bar tap ends it.
 - While a restore waits, nothing is reported. So a host that saves every report never saves line 0 by mistake.
-- Reports run in layout passes, never inside a SwiftUI update, and only when the line changed.
+- Reports run in layout passes, never inside a SwiftUI update, and only when the position changed.
   After the view is gone, nothing is reported.
+- The read progress is the source line of the first row below the screen divided by the line count of the text.
+  It is 1 when the last row of the complete text is on screen. While more batches are on the way, the last row
+  on screen gives its own line, so the progress stays below 1.
+- The chunker counts the lines off the main actor, with the same line ends as cmark (`\n`, `\r\n` and `\r`).
+  So the line count and the source lines of the rows always match.
 
 ## Environment and traits
 
@@ -138,10 +153,10 @@ preview has no model. It draws with the same parts as the editor's selection ove
 
 | Test | Covers |
 |---|---|
-| `PreviewPipelineTests` | Batch order, rows equal to one builder over the same chunks, late definitions, limits, notices, cancellation, the stream. |
+| `PreviewPipelineTests` | Batch order, rows equal to one builder over the same chunks, late definitions, limits, notices, cancellation, the stream, the line count for each line ending. |
 | `PreviewRowStoreTests` | Reads across parts and the line lookup. |
 | `PreviewModelTests` | Load, new text, too large, dropped batches of an older load, cancellation, a second load of the same text. |
-| `PreviewRowListRestoreTests` | Restore in both directions and into a later batch, full code rows after a restore, width change, pins, reports, new text, appends. |
+| `PreviewRowListRestoreTests` | Restore in both directions and into a later batch, full code rows after a restore, width change, pins, top-line and read progress reports, new text, appends. |
 | `MarkdownRowLayoutTests` | Layout attributes, self-sizing, and the row index to section and item math, also with an empty section. |
 | `MarkdownRowListTests` | One section per append (`eachAppendAddsExactlyOneSection`), an append on an empty list, items in a later section, replace across a section edge. |
 | `PreviewRowListTests` | Text size, color scheme, direction, status bar tap, full width, theme, strings and `openURL` changes, an image loading change in the same update as a batch. |

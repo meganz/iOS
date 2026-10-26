@@ -94,10 +94,10 @@ final class PreviewListHarness {
     static func batchedStore(for markdown: String) -> (store: PreviewRowStore, batchEnds: [Int]) {
         let store = PreviewRowStore()
         var ends: [Int] = []
-        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: PreviewParseLimits()) {
+        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: PreviewParseLimits(), sendLineCount: { _ in }, send: {
             store.append($0.rows)
             ends.append(store.count)
-        }
+        })
         return (store, ends)
     }
 
@@ -116,7 +116,7 @@ final class PreviewListHarness {
                 isComplete: isComplete,
                 baseURL: nil,
                 restoreLine: nil,
-                onTopLineChange: nil
+                onReadingPositionChange: { _ in }
             )
             .environment(\.dynamicTypeSize, textSize)
             .environment(\.markdownTheme, theme)

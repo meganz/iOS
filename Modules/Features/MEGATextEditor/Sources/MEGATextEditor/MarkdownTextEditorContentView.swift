@@ -7,9 +7,16 @@ import SwiftUI
 /// Shows the content of a Markdown file. The host owns the navigation bar and the toolbar.
 public struct MarkdownTextEditorContentView: View {
     @Bindable private var state: MarkdownTextEditorContentState
+    private let onReadingPositionChange: ((MarkdownReadingPosition) -> Void)?
 
-    public init(state: MarkdownTextEditorContentState) {
+    /// - Parameters:
+    ///   - onReadingPositionChange: Called when the top line or the read progress of the preview changes.
+    public init(
+        state: MarkdownTextEditorContentState,
+        onReadingPositionChange: ((MarkdownReadingPosition) -> Void)? = nil
+    ) {
         self.state = state
+        self.onReadingPositionChange = onReadingPositionChange
     }
 
     public var body: some View {
@@ -26,7 +33,11 @@ public struct MarkdownTextEditorContentView: View {
         case .loading:
             loading
         case .preview:
-            MarkdownPreview(state.text)
+            MarkdownPreview(
+                state.text,
+                restoreLine: state.restoreLine,
+                onReadingPositionChange: onReadingPositionChange
+            )
         case .editor:
             MarkdownEditor(markdown: $state.text, mode: $state.mode, flusher: state.flusher)
         }

@@ -11,11 +11,13 @@ struct PreviewRowList: UIViewRepresentable {
     /// Rows in `store` when SwiftUI made this value. More rows than the list has are appended.
     let rowCount: Int
     let isComplete: Bool
+    /// Lines in the whole text. The read progress is a source line divided by it.
+    var lineCount = 0
     /// False while the rows on screen belong to an older text. A restore line then waits for the new rows.
     var showsCurrentText = true
     let baseURL: URL?
     let restoreLine: Int?
-    let onTopLineChange: ((Int) -> Void)?
+    let onReadingPositionChange: ((MarkdownReadingPosition) -> Void)?
     /// The SwiftUI safe area of the preview, host bars included. The list fills it and keeps its rows clear of it.
     var safeArea = EdgeInsets()
 

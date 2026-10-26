@@ -18,6 +18,8 @@ public final class MarkdownTextEditorContentState {
     public var loadingProgress: Double?
     /// The Markdown text. The editor writes the user's edits here.
     public var text = ""
+    /// 0-based source line the preview opens at. nil opens at the top.
+    public var restoreLine: Int?
     var mode: MarkdownEditorMode = .rich
     @ObservationIgnored let flusher = MarkdownEditorFlusher()
 

@@ -13,7 +13,8 @@ struct SwitchTextScreen: View {
     @State private var reports: [Int] = []
 
     var body: some View {
-        MarkdownPreview(markdown, restoreLine: restoreLine) { line in
+        MarkdownPreview(markdown, restoreLine: restoreLine) { position in
+            let line = position.topLine
             topLine = line
             reports.append(line)
         }

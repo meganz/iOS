@@ -31,6 +31,13 @@ enum PreviewPipeline {
         case cancelled
     }
 
+    /// What `PreviewPipeline.run(_:limits:)` sends.
+    enum Event: Equatable, Sendable {
+        /// Lines in the whole text. Sent once, before the first batch.
+        case lineCount(Int)
+        case batch(PreviewBatch)
+    }
+
     enum Failure: Error, Equatable {
         /// The text is over `PreviewParseLimits.sizeLimitBytes`. No batch was sent.
         case tooLarge
@@ -38,13 +45,19 @@ enum PreviewPipeline {
         case cancelled
     }
 
-    /// One batch per chunk, parsed off the main actor. The stream ends normally when every chunk was sent.
+    /// The line count, then one batch per chunk, parsed off the main actor. The stream ends normally when every chunk was sent.
     /// It throws `Failure`. Stopping the iteration cancels the parse.
-    static func run(_ request: MarkdownParseRequest, limits: PreviewParseLimits) -> AsyncThrowingStream<PreviewBatch, any Error> {
+    static func run(_ request: MarkdownParseRequest, limits: PreviewParseLimits) -> AsyncThrowingStream<Event, any Error> {
         AsyncThrowingStream { continuation in
             // A plain `Task` in a nonisolated function runs off the main actor.
             let task = Task {
-                switch parse(request, limits: limits, send: { continuation.yield($0) }) {
+                let outcome = parse(
+                    request,
+                    limits: limits,
+                    sendLineCount: { continuation.yield(.lineCount($0)) },
+                    send: { continuation.yield(.batch($0)) }
+                )
+                switch outcome {
                 case .complete: continuation.finish()
                 case .tooLarge: continuation.finish(throwing: Failure.tooLarge)
                 case .cancelled: continuation.finish(throwing: Failure.cancelled)
@@ -55,8 +68,13 @@ enum PreviewPipeline {
     }
 
     /// The chunk loop. It checks for cancellation before each chunk.
-    /// Sends at least one batch unless the text is too large or the task is cancelled first.
-    static func parse(_ request: MarkdownParseRequest, limits: PreviewParseLimits, send: (PreviewBatch) -> Void) -> Outcome {
+    /// Sends the line count once, then at least one batch, unless the text is too large or the task is cancelled first.
+    static func parse(
+        _ request: MarkdownParseRequest,
+        limits: PreviewParseLimits,
+        sendLineCount: (Int) -> Void,
+        send: (PreviewBatch) -> Void
+    ) -> Outcome {
         let byteCount = request.markdown.utf8.count
         guard byteCount <= limits.sizeLimitBytes else {
             MEGALog.log(
@@ -68,6 +86,7 @@ enum PreviewPipeline {
         var source = request.markdown
         return source.withUTF8 { buffer in
             var chunker = MarkdownChunker(source: buffer, targetBytes: limits.targetChunkBytes, maxChunkBytes: limits.maxChunkBytes)
+            sendLineCount(chunker.lineCount)
             // The gap below a row is set when the next row is added. So the last row of a batch waits for the next chunk.
             var carried: PreviewRow?
             var lastLine = 0

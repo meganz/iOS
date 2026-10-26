@@ -12,7 +12,7 @@ Each implemented layer has a reference page with the full detail. Keep this guid
 | [Parser](#parsing-pipeline) | Implemented | Markdown syntax recognition, conversion, and behavior rules. | [PARSER.md](PARSER.md) |
 | [Large-input support](#large-input-support) | Internal helpers implemented | Safe chunk ranges and reference-definition collection. | [CHUNKING.md](CHUNKING.md) |
 | [Rendering and styling](#rendering-and-styling) | Implemented | SwiftUI block views, rows for big blocks, and the theme. | |
-| [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore and top-line reports, block selection. | [PREVIEW.md](PREVIEW.md) |
+| [Large-file preview](#large-file-preview) | Implemented | Background parsing in chunks, a row list that shows only visible rows, restore, top-line and read progress reports, block selection. | [PREVIEW.md](PREVIEW.md) |
 | [Editor model and mutations](#editor-model-and-mutations) | Implemented | Editable state, selection, document changes, undo, and the clipboard. | [EDITOR.md](EDITOR.md) |
 | [Markdown import and export](#markdown-import-and-export) | Implemented | Conversion between editable content and Markdown source. | [EDITOR.md](EDITOR.md) |
 | [Editor UI](#editor-ui) | Implemented | Rich/source editing modes, controls, selection over rows, and accessibility. | [EDITOR-UI.md](EDITOR-UI.md) |
@@ -90,7 +90,8 @@ The views are SwiftUI. They are `package` API: other targets of this package use
   The view starts the load with `.task(id:)`, so SwiftUI cancels an old load.
 - `PreviewRowList` shows the rows in a `MarkdownRowList`, one hosted `PreviewRowView` per row.
   New rows are appended with a height guess each. Cells size themselves when they show.
-- The list restores a source line and reports the top line to the host. Rows keep their source line for this.
+- The list restores a source line and reports the top line and the read progress to the host. Rows keep their source line for this.
+  The pipeline counts the lines of the text off the main actor, and the progress uses that count.
 
 [PREVIEW.md](PREVIEW.md) has the data flow, the threads, the row heights, the restore rules, the block selection, the notices and the tests.
 

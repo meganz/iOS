@@ -5,14 +5,17 @@ import Testing
 @Suite struct PreviewPipelineTests {
     private struct Result {
         var batches: [PreviewBatch]
+        var lineCounts: [Int] = []
         var outcome: PreviewPipeline.Outcome
         var rows: [PreviewRow] { batches.flatMap(\.rows) }
     }
 
     private static func parse(_ markdown: String, limits: PreviewParseLimits = PreviewParseLimits()) -> Result {
         var batches: [PreviewBatch] = []
-        let outcome = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: limits) { batches.append($0) }
-        return Result(batches: batches, outcome: outcome)
+        var lineCounts: [Int] = []
+        let request = MarkdownParseRequest(markdown: markdown)
+        let outcome = PreviewPipeline.parse(request, limits: limits, sendLineCount: { lineCounts.append($0) }, send: { batches.append($0) })
+        return Result(batches: batches, lineCounts: lineCounts, outcome: outcome)
     }
 
     private static func limits(target: Int, maxChunkBytes: Int = MarkdownChunker.defaultMaxChunkBytes, weight: Int = 0) -> PreviewParseLimits {
@@ -123,6 +126,14 @@ import Testing
         let result = Self.parse("")
         #expect(result.outcome == .complete)
         #expect(result.batches == [PreviewBatch(rows: [])])
+        #expect(result.lineCounts == [1])
+    }
+
+    @Test(arguments: ["a\nb\nc", "a\r\nb\r\nc", "a\rb\rc", "a\nb\nc\n", "\u{FEFF}a\rb\r\nc"])
+    func sendsTheLineCountOfTheWholeTextOnce(markdown: String) {
+        let result = Self.parse(markdown)
+        #expect(!result.batches.isEmpty)
+        #expect(result.lineCounts == [3])
     }
 
     @Test func textOverTheSizeLimitIsTooLarge() {
@@ -131,6 +142,7 @@ import Testing
         let over = Self.parse("12345678901", limits: limits)
         #expect(over.outcome == .tooLarge)
         #expect(over.batches.isEmpty)
+        #expect(over.lineCounts.isEmpty)
         let atLimit = Self.parse("1234567890", limits: limits)
         #expect(atLimit.outcome == .complete)
         #expect(atLimit.rows.count == 1)
@@ -163,10 +175,10 @@ import Testing
         let result = await Task {
             var batches: [PreviewBatch] = []
             let request = MarkdownParseRequest(markdown: Self.paragraphs)
-            let outcome = PreviewPipeline.parse(request, limits: Self.limits(target: 500)) { batch in
+            let outcome = PreviewPipeline.parse(request, limits: Self.limits(target: 500), sendLineCount: { _ in }, send: { batch in
                 batches.append(batch)
                 withUnsafeCurrentTask { $0?.cancel() }
-            }
+            })
             return Result(batches: batches, outcome: outcome)
         }.value
         #expect(result.outcome == .cancelled)
@@ -175,29 +187,30 @@ import Testing
 
     @Test func runSendsTheBatchesAndFinishesTheStream() async {
         let limits = Self.limits(target: 500)
-        var batches: [PreviewBatch] = []
+        var events: [PreviewPipeline.Event] = []
         do {
-            for try await batch in PreviewPipeline.run(MarkdownParseRequest(markdown: Self.paragraphs), limits: limits) {
-                batches.append(batch)
+            for try await event in PreviewPipeline.run(MarkdownParseRequest(markdown: Self.paragraphs), limits: limits) {
+                events.append(event)
             }
         } catch {
             Issue.record("The stream threw \(error)")
         }
-        #expect(batches == Self.parse(Self.paragraphs, limits: limits).batches)
+        let parsed = Self.parse(Self.paragraphs, limits: limits)
+        #expect(events == parsed.lineCounts.map { .lineCount($0) } + parsed.batches.map { .batch($0) })
     }
 
     @Test func runThrowsTooLargeForATextOverTheLimit() async {
         var limits = Self.limits(target: 500)
         limits.sizeLimitBytes = 10
-        var batchCount = 0
+        var eventCount = 0
         do {
             for try await _ in PreviewPipeline.run(MarkdownParseRequest(markdown: Self.paragraphs), limits: limits) {
-                batchCount += 1
+                eventCount += 1
             }
             Issue.record("The stream ended without an error")
         } catch {
             #expect(error as? PreviewPipeline.Failure == .tooLarge)
         }
-        #expect(batchCount == 0)
+        #expect(eventCount == 0)
     }
 }

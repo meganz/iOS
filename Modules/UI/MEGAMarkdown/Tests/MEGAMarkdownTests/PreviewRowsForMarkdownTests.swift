@@ -38,7 +38,9 @@ struct PreviewRowsForMarkdownTests {
             ---
             """
         var preview: [PreviewRow] = []
-        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: PreviewParseLimits()) { preview += $0.rows }
+        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: PreviewParseLimits(), sendLineCount: { _ in }, send: {
+            preview += $0.rows
+        })
         let rows = PreviewRows.rows(forMarkdown: markdown, softBreak: MarkdownParseRequest(markdown: markdown).softBreak)
         #expect(rows.count > 8)
         #expect(rows == preview)

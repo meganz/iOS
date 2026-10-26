@@ -68,6 +68,7 @@ Only terms that are specific to Markdown, cmark, or this package are listed. Add
 |---|---|
 | Batch | The rows of one chunk, sent by `PreviewPipeline`. Rows are only appended, so a batch never changes an earlier row. |
 | Generation | A number that grows when the rows of a new text replace the old ones. The list then reads every row again and goes to the top. |
+| Read progress | How far the user has read, from 0 to 1: the source line of the first row below the screen divided by the line count of the text, or 1 when the last row of the complete text is on screen. The preview reports it to the host when it changes. |
 | Restore line | The 0-based source line the host passes to open the preview at a saved place. |
 | Restore pin | After a restore jump, the row stays at the top for 1 s while the rows around it size themselves. A drag or a status bar tap ends it. Not the same as a pinned item. |
 | Top line | The source line of the top row. The preview reports it to the host when it changes. |

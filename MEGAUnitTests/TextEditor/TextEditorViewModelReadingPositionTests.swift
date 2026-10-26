@@ -67,12 +67,61 @@ struct TextEditorViewModelReadingPositionTests {
         #expect(configuredModel(of: sut)?.resumeReadingOffset == 777)
     }
 
-    @Test("Resumes a markdown file at nil, because the preview cannot measure the position")
+    @Test("Does not resume a markdown file on the plain text screen")
     func doesNotResumeMarkdownFile() {
-        let resumeUseCase = MockResumeTextPositionUseCase(savedOffsets: ["fingerprint": 777])
+        let resumeUseCase = MockResumeTextPositionUseCase(savedOffsets: ["fingerprint": 777], savedLines: ["fingerprint": 12])
         let sut = makeSUT(fileName: "note.md", resumeTextPositionUseCase: resumeUseCase)
 
         #expect(configuredModel(of: sut)?.resumeReadingOffset == nil)
+    }
+
+    @Test("Resumes a markdown file at the stored line on the Markdown screen, not at the stored offset")
+    func resumesMarkdownScreenAtStoredLine() {
+        let resumeUseCase = MockResumeTextPositionUseCase(savedOffsets: ["fingerprint": 777], savedLines: ["fingerprint": 12])
+        let sut = makeSUT(fileName: "note.md", resumeTextPositionUseCase: resumeUseCase, isMarkdownScreen: true)
+
+        #expect(configuredModel(of: sut)?.resumeReadingOffset == 12)
+    }
+
+    @Test(
+        "Saves the top line of the Markdown preview only when the progress sits between the thresholds",
+        arguments: [(0, 0.05, nil), (10, 0.1, nil), (50, 0.7, 50), (95, 0.95, nil), (90, 1, nil)] as [(Int, Double, Int?)]
+    )
+    func savesMarkdownTopLine(line: Int, progress: Double, savedLine: Int?) {
+        let resumeUseCase = MockResumeTextPositionUseCase(savedOffsets: ["fingerprint": 500], savedLines: ["fingerprint": 40])
+        let sut = makeSUT(fileName: "note.md", resumeTextPositionUseCase: resumeUseCase, isMarkdownScreen: true)
+
+        sut.dispatch(.updateReadingPosition(anchor: line, progress: progress))
+        sut.dispatch(.saveReadingPosition)
+
+        #expect(resumeUseCase.savedLines["fingerprint"] == savedLine)
+        #expect(resumeUseCase.savedOffsets == ["fingerprint": 500])
+    }
+
+    @Test("Close does not save the reading position, the screen saves it once when it disappears")
+    func closeDoesNotSaveTheReadingPosition() {
+        let resumeUseCase = MockResumeTextPositionUseCase()
+        let sut = makeSUT(fileName: "note.md", resumeTextPositionUseCase: resumeUseCase, isMarkdownScreen: true)
+
+        sut.dispatch(.updateReadingPosition(anchor: 50, progress: 0.7))
+        sut.dispatch(.dismissTextEditorVC)
+
+        #expect(resumeUseCase.saveReadingLineCallCount == 0)
+        #expect(resumeUseCase.savedLines.isEmpty)
+    }
+
+    @Test("Removes the left off item once the last row of the Markdown preview is on screen")
+    func removesLeftOffItemAtTheEndOfTheMarkdownPreview() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(fileName: "note.md", leftOffItemRecordUseCase: recordUseCase, isMarkdownScreen: true)
+
+        await waitForLeftOffCall(on: recordUseCase) {
+            sut.dispatch(.updateReadingPosition(anchor: 90, progress: 1))
+            sut.dispatch(.saveReadingPosition)
+        }
+
+        #expect(recordUseCase.remove_Calls == [1])
+        #expect(recordUseCase.record_Calls.isEmpty)
     }
 
     // MARK: - Left off item
@@ -92,18 +141,44 @@ struct TextEditorViewModelReadingPositionTests {
         #expect(recordUseCase.remove_Calls.isEmpty)
     }
 
-    @Test("Removes the left off item once the reader is near the end")
-    func removesLeftOffItemNearTheEnd() async {
+    @Test("Removes the left off item once the reader is near the end", arguments: [0.9, 0.92])
+    func removesLeftOffItemNearTheEnd(progress: Double) async {
         let recordUseCase = MockLeftOffItemRecordUseCase()
         let sut = makeSUT(leftOffItemRecordUseCase: recordUseCase)
 
         await waitForLeftOffCall(on: recordUseCase) {
-            sut.dispatch(.updateReadingPosition(anchor: 900, progress: 0.92))
+            sut.dispatch(.updateReadingPosition(anchor: 900, progress: progress))
             sut.dispatch(.saveReadingPosition)
         }
 
         #expect(recordUseCase.remove_Calls == [1])
         #expect(recordUseCase.record_Calls.isEmpty)
+    }
+
+    @Test("Removes the left off item when a file with no visible text closes without a position report", arguments: ["", " \n\n\t\n"])
+    func removesLeftOffItemForBlankFileWithoutProgress(content: String) async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(content: content, leftOffItemRecordUseCase: recordUseCase)
+
+        await waitForLeftOffCall(on: recordUseCase) {
+            sut.dispatch(.saveReadingPosition)
+        }
+
+        #expect(recordUseCase.remove_Calls == [1])
+        #expect(recordUseCase.record_Calls.isEmpty)
+    }
+
+    @Test("Records the left off item when a file with text closes without a position report")
+    func recordsLeftOffItemForFileWithTextWithoutProgress() async {
+        let recordUseCase = MockLeftOffItemRecordUseCase()
+        let sut = makeSUT(content: "Some text", leftOffItemRecordUseCase: recordUseCase)
+
+        await waitForLeftOffCall(on: recordUseCase) {
+            sut.dispatch(.saveReadingPosition)
+        }
+
+        #expect(recordUseCase.record_Calls.map(\.handle) == [1])
+        #expect(recordUseCase.remove_Calls.isEmpty)
     }
 
     @Test("Does not record a file from a link, because Home can only reopen files of the account")
@@ -168,21 +243,47 @@ struct TextEditorViewModelReadingPositionTests {
         #expect(resumeUseCase.savedOffsets == ["new": 10])
     }
 
+    @Test("Deletes both the stored offset and the stored line after an edit is uploaded")
+    func deletesOffsetAndLineAfterSuccessfulUpload() {
+        let uploadUseCase = MockUploadFileUseCase(
+            duplicate: false,
+            uploadFileResult: .success(()),
+            filename: "\(UUID().uuidString).md"
+        )
+        let resumeUseCase = MockResumeTextPositionUseCase(savedOffsets: ["fingerprint": 500], savedLines: ["fingerprint": 40])
+        let sut = makeSUT(
+            fileName: "note.md",
+            textEditorMode: .edit,
+            uploadFileUseCase: uploadUseCase,
+            resumeTextPositionUseCase: resumeUseCase,
+            isMarkdownScreen: true
+        )
+
+        sut.dispatch(.uploadFile)
+
+        #expect(resumeUseCase.deleteReadingOffsetCallCount == 1)
+        #expect(resumeUseCase.deleteReadingLineCallCount == 1)
+        #expect(resumeUseCase.savedOffsets.isEmpty)
+        #expect(resumeUseCase.savedLines.isEmpty)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
         fileName: String = "note.txt",
+        content: String = "",
         textEditorMode: TextEditorMode = .view,
         uploadFileUseCase: MockUploadFileUseCase = MockUploadFileUseCase(),
         resumeTextPositionUseCase: MockResumeTextPositionUseCase = MockResumeTextPositionUseCase(),
         leftOffItemRecordUseCase: MockLeftOffItemRecordUseCase = MockLeftOffItemRecordUseCase(),
         isLink: Bool = false,
         source: TextEditorFileSource = .cloudDrive,
-        nodeAccessLevel: NodeAccessTypeEntity = .unknown
+        nodeAccessLevel: NodeAccessTypeEntity = .unknown,
+        isMarkdownScreen: Bool = false
     ) -> TextEditorViewModel {
         TextEditorViewModel(
             router: MockTextEditorViewRouter(),
-            textFile: TextFile(fileName: fileName),
+            textFile: TextFile(fileName: fileName, content: content, size: 0, encode: String.Encoding.utf8.rawValue),
             textEditorMode: textEditorMode,
             uploadFileUseCase: uploadFileUseCase,
             downloadNodeUseCase: MockDownloadNodeUseCase(),
@@ -192,6 +293,7 @@ struct TextEditorViewModelReadingPositionTests {
             resumeTextPositionUseCase: resumeTextPositionUseCase,
             parentHandle: 1,
             nodeEntity: NodeEntity(name: fileName, fingerprint: "fingerprint", handle: 1, isFile: true),
+            isMarkdownScreen: isMarkdownScreen,
             isLink: isLink,
             source: source,
             leftOffItemRecordUseCase: leftOffItemRecordUseCase,

@@ -20,6 +20,8 @@ struct MarkdownTextEditorViewControllerTests {
         let router: MockTextEditorViewRouter
         let tracker: MockTracker
         let upload: MockUploadFileUseCase
+        let leftOff: MockLeftOffItemRecordUseCase
+        let resume: MockResumeTextPositionUseCase
         let viewModel: TextEditorViewModel
     }
 
@@ -32,11 +34,14 @@ struct MarkdownTextEditorViewControllerTests {
         nodeEntity: NodeEntity? = NodeEntity(name: "notes.md", handle: 77, isFile: true, size: 10),
         isLink: Bool = false,
         isLinkRevampEnabled: Bool = false,
-        source: TextEditorFileSource = .cloudDrive
+        source: TextEditorFileSource = .cloudDrive,
+        isMarkdownScreen: Bool = false
     ) -> Fixture {
         let router = MockTextEditorViewRouter()
         let tracker = MockTracker()
         let upload = MockUploadFileUseCase(duplicate: false, uploadFileResult: .success(()), filename: fileName)
+        let leftOff = MockLeftOffItemRecordUseCase()
+        let resume = MockResumeTextPositionUseCase()
         let viewModel = TextEditorViewModel(
             router: router,
             textFile: TextFile(fileName: fileName, content: content, size: 0, encode: String.Encoding.utf8.rawValue),
@@ -46,17 +51,19 @@ struct MarkdownTextEditorViewControllerTests {
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: accessLevel),
             backupsUseCase: MockBackupsUseCase(),
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
-            resumeTextPositionUseCase: MockResumeTextPositionUseCase(),
+            resumeTextPositionUseCase: resume,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity,
+            isMarkdownScreen: isMarkdownScreen,
             isLink: isLink,
             isLinkRevampEnabled: isLinkRevampEnabled,
             source: source,
+            leftOffItemRecordUseCase: leftOff,
             tracker: tracker
         )
         let sut = MarkdownTextEditorViewController(viewModel: viewModel)
         sut.loadViewIfNeeded()
-        return Fixture(sut: sut, router: router, tracker: tracker, upload: upload, viewModel: viewModel)
+        return Fixture(sut: sut, router: router, tracker: tracker, upload: upload, leftOff: leftOff, resume: resume, viewModel: viewModel)
     }
 
     private static func configure(
@@ -66,13 +73,14 @@ struct MarkdownTextEditorViewControllerTests {
         fileName: String = "notes.md",
         content: String = "",
         isInRubbishBin: Bool = false,
-        isBackupNode: Bool = false
+        isBackupNode: Bool = false,
+        resumeReadingOffset: Int? = nil
     ) {
         let model = TextEditorModel(
             textFile: TextFile(fileName: fileName, content: content, size: 0, encode: String.Encoding.utf8.rawValue),
             textEditorMode: mode,
             accessLevel: accessLevel,
-            resumeReadingOffset: nil
+            resumeReadingOffset: resumeReadingOffset
         )
         sut.executeCommand(.configView(model, shallUpdateContent: true, isInRubbishBin: isInRubbishBin, isBackupNode: isBackupNode))
         let isEditing = mode == .edit || mode == .create
@@ -145,6 +153,14 @@ struct MarkdownTextEditorViewControllerTests {
 
         #expect(fixture.sut.contentState.screen == .preview)
         #expect(fixture.sut.contentState.text == "# Title")
+    }
+
+    @Test func viewModeCommandPassesTheResumeLineToThePreview() {
+        let fixture = Self.makeFixture()
+
+        Self.configure(fixture.sut, mode: .view, content: "# Title", resumeReadingOffset: 12)
+
+        #expect(fixture.sut.contentState.restoreLine == 12)
     }
 
     @Test func loadModeShowsLoadingThenPreviewAfterDownload() {
@@ -349,6 +365,31 @@ struct MarkdownTextEditorViewControllerTests {
         Self.fire(closeItem)
 
         #expect(fixture.router.dismissTextEditorVC_calledTimes == 1)
+    }
+
+    @Test func viewWillDisappearRecordsLeftOffItem() async throws {
+        let fixture = Self.makeFixture(content: "# Notes")
+        Self.configure(fixture.sut, mode: .view)
+
+        fixture.sut.viewWillDisappear(false)
+
+        try await Self.waitUntil { !fixture.leftOff.record_Calls.isEmpty }
+        #expect(fixture.leftOff.record_Calls.map(\.handle) == [77])
+        #expect(fixture.leftOff.record_Calls.map(\.name) == ["notes.md"])
+    }
+
+    @Test func viewWillDisappearSavesReadingLine() {
+        let fixture = Self.makeFixture(
+            content: "# Notes",
+            nodeEntity: NodeEntity(name: "notes.md", fingerprint: "fingerprint", handle: 77, isFile: true, size: 10),
+            isMarkdownScreen: true
+        )
+        Self.configure(fixture.sut, mode: .view)
+        fixture.viewModel.dispatch(.updateReadingPosition(anchor: 12, progress: 0.5))
+
+        fixture.sut.viewWillDisappear(false)
+
+        #expect(fixture.resume.savedLines["fingerprint"] == 12)
     }
 
     /// Replace uploads the new file. The editor closes once, after the upload, and no Close tap is tracked.

@@ -15,13 +15,15 @@ struct PreviewModelTests {
     /// The rows one parse gives, for comparing with the model's store.
     private static func rows(_ markdown: String, limits: PreviewParseLimits = smallChunks) -> [PreviewRow] {
         var rows: [PreviewRow] = []
-        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: limits) { rows += $0.rows }
+        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: limits, sendLineCount: { _ in }, send: { rows += $0.rows })
         return rows
     }
 
     private static func firstBatchRowCount(_ markdown: String) -> Int {
         var counts: [Int] = []
-        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: smallChunks) { counts.append($0.rows.count) }
+        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: smallChunks, sendLineCount: { _ in }, send: {
+            counts.append($0.rows.count)
+        })
         return counts.first ?? 0
     }
 
@@ -52,6 +54,7 @@ struct PreviewModelTests {
         #expect(model.store.count == 1_000)
         #expect(Self.storeRows(model) == Self.rows(markdown))
         #expect(model.baseURL == baseURL)
+        #expect(model.lineCount == 1_999)
     }
 
     @Test func newTextIsANewGeneration() async {
@@ -110,6 +113,7 @@ struct PreviewModelTests {
         #expect(model.generation == 2)
         #expect(model.rowCount == 0)
         #expect(model.store.isEmpty)
+        #expect(model.lineCount == 0)
     }
 
     /// A slow load of a big text goes on while a new text loads. Its later batches must not reach the new rows.
@@ -142,6 +146,7 @@ struct PreviewModelTests {
         #expect(kept.count == firstBatch)
         #expect(firstBatch > 0 && firstBatch < 100_000)
         #expect(kept == Array(Self.rows(big).prefix(kept.count)))
+        #expect(model.lineCount == 199_999)
     }
 
     /// A load that continues a cancelled load of the same text keeps the generation and ends with the full rows.

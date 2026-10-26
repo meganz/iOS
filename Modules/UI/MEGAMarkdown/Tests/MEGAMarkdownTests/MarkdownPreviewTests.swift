@@ -29,7 +29,7 @@ struct MarkdownPreviewTests {
         let recorder: LineRecorder
 
         var body: some View {
-            MarkdownPreview(settings.markdown) { recorder.lines.append($0) }
+            MarkdownPreview(settings.markdown) { recorder.record($0) }
         }
     }
 
@@ -41,7 +41,7 @@ struct MarkdownPreviewTests {
         @State private var line: Int?
 
         var body: some View {
-            MarkdownPreview(markdown, restoreLine: restoreLine) { line = $0 }
+            MarkdownPreview(markdown, restoreLine: restoreLine) { line = $0.topLine }
                 .onChange(of: line) { _, new in
                     if let new { recorder.lines.append(new) }
                 }
@@ -205,7 +205,7 @@ struct MarkdownPreviewTests {
         var parseLimits = PreviewParseLimits()
 
         var body: some View {
-            var preview = MarkdownPreview(settings.markdown, restoreLine: settings.restoreLine) { recorder.lines.append($0) }
+            var preview = MarkdownPreview(settings.markdown, restoreLine: settings.restoreLine) { recorder.record($0) }
             preview.parseLimits = parseLimits
             return preview
         }

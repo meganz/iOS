@@ -50,7 +50,13 @@ struct FileScreen: View {
             case .text(let text):
                 switch mode {
                 case .preview:
-                    MarkdownPreview(text, baseURL: entry.url.deletingLastPathComponent(), softBreak: softBreak.value, restoreLine: startLine) { line in
+                    MarkdownPreview(
+                        text,
+                        baseURL: entry.url.deletingLastPathComponent(),
+                        softBreak: softBreak.value,
+                        restoreLine: startLine
+                    ) { position in
+                        let line = position.topLine
                         topLine = line
                         if usesSavedLine {
                             SavedLines.save(line, for: entry.url)

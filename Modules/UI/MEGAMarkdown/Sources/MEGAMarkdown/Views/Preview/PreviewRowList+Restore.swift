@@ -2,7 +2,7 @@ import MEGAFoundation
 import QuartzCore
 import UIKit
 
-// MARK: - Restore and top-line report
+// MARK: - Restore and reading position report
 
 /// The restore line waits until its row is parsed, then the list jumps there and keeps that row at the top for 1 s.
 /// A drag or a status bar tap ends the restore. A jump never starts while the user drags or the list decelerates.
@@ -34,7 +34,6 @@ extension PreviewRowList.Coordinator {
         pendingRestoreLine = nil
         pendingJump = nil
         pin = nil
-        needsReport = true
     }
 
     /// Runs after each layout pass of the list.
@@ -51,7 +50,6 @@ extension PreviewRowList.Coordinator {
                 setOffset(jumpOffset(to: row).offset)
                 pin = (row, CACurrentMediaTime() + Self.pinDuration)
             }
-            needsReport = true
         } else if let pin {
             if CACurrentMediaTime() > pin.until || view.isDragging || view.isDecelerating || pin.row >= list.itemCount {
                 self.pin = nil
@@ -59,23 +57,26 @@ extension PreviewRowList.Coordinator {
                 setOffset(jumpOffset(to: pin.row).offset)
             }
         }
-        if needsReport {
-            needsReport = false
-            reportTopLine()
-        }
+        reportReadingPosition()
     }
 
-    /// Reports the source line of the top row when it changed.
-    private func reportTopLine() {
-        guard pendingRestoreLine == nil, pendingJump == nil, list.itemCount > 0, let onTopLineChange else { return }
+    /// Reports the source line of the top row and the read progress when one of them changed.
+    /// The progress is the source line of the first row below the visible area divided by the line count,
+    /// or 1 once the last row of the complete text is visible.
+    private func reportReadingPosition() {
+        guard pendingRestoreLine == nil, pendingJump == nil, list.itemCount > 0, let onReadingPositionChange else { return }
         // A pinned target is the top row, even while rows around it still size themselves.
         // A target the list cannot scroll to (near the end) is not at the top, so the real top row is reported.
         let pinned = pin.flatMap { jumpOffset(to: $0.row).isReachable ? $0.row : nil }
-        let row = min(pinned ?? list.topItem, store.count - 1)
-        let line = store[row].sourceLine
-        guard line != reportedLine else { return }
-        reportedLine = line
-        onTopLineChange(line)
+        let topRow = min(pinned ?? list.topItem, store.count - 1)
+        let bottomRow = min(list.bottomItem, store.count - 1)
+        let below = min(bottomRow + 1, store.count - 1)
+        let isLastRowVisible = isComplete && below == bottomRow
+        let progress = isLastRowVisible ? 1 : min(Double(store[below].sourceLine) / Double(max(lineCount, 1)), 1)
+        let position = MarkdownReadingPosition(topLine: store[topRow].sourceLine, progress: progress)
+        guard position != reportedPosition else { return }
+        reportedPosition = position
+        onReadingPositionChange(position)
     }
 
     /// The offset that puts `row` at the top, kept inside the content. Not reachable when the rows below it are too short.

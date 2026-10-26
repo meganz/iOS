@@ -37,10 +37,10 @@ final class PreviewPipelineBenchmarks: BenchmarkCase {
     @concurrent
     private static func firstBatchRowCount(_ request: MarkdownParseRequest) async -> Int {
         var rows = 0
-        _ = PreviewPipeline.parse(request, limits: PreviewParseLimits()) { batch in
+        _ = PreviewPipeline.parse(request, limits: PreviewParseLimits(), sendLineCount: { _ in }, send: { batch in
             rows = batch.rows.count
             withUnsafeCurrentTask { $0?.cancel() }
-        }
+        })
         return rows
     }
 
@@ -50,10 +50,10 @@ final class PreviewPipelineBenchmarks: BenchmarkCase {
         measure(metrics: [XCTClockMetric(), PeakFootprintMetric()], options: heavyOptions) {
             var rows = 0
             var batches = 0
-            let outcome = PreviewPipeline.parse(request, limits: PreviewParseLimits()) { batch in
+            let outcome = PreviewPipeline.parse(request, limits: PreviewParseLimits(), sendLineCount: { _ in }, send: { batch in
                 rows += batch.rows.count
                 batches += 1
-            }
+            })
             XCTAssertEqual(outcome, .complete)
             XCTAssertGreaterThan(batches, 5)
             XCTAssertGreaterThan(rows, 100_000)

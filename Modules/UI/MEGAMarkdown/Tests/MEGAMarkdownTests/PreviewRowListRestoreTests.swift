@@ -76,6 +76,7 @@ struct PreviewRowListRestoreTests {
         try await Window.settle(opened.list)
         #expect(coordinator.pendingRestoreLine == Self.targetLine)
         #expect(opened.recorder.lines.isEmpty)
+        #expect(opened.recorder.progresses.isEmpty)
 
         opened.feed.send(opened.feed.waiting.count)
         try await Window.waitUntil { opened.recorder.lines.last == Self.targetLine }
@@ -190,6 +191,73 @@ struct PreviewRowListRestoreTests {
         #expect(opened.recorder.lines.last == shown)
     }
 
+    /// Item `n` is on line `n`, so the progress is the row below the screen over the line count.
+    @Test func progressIsTheLineBelowTheScreenOverTheLineCount() async throws {
+        let opened = try await open(Self.listText, restoreLine: nil)
+        defer { opened.host.close() }
+        let list = opened.list
+        try await Window.scroll(list, toRow: 3_000)
+        let top = try #require(try Window.topVisibleLine(list))
+        let progress = try #require(opened.recorder.progresses.last)
+        let below = Int((progress * 100_000).rounded())
+        #expect(Double(below) / 100_000 == progress)
+        #expect(below > top + 1 && below < top + 200)
+    }
+
+    /// A taller window shows more rows without a scroll, so the progress grows.
+    @Test func heightChangeReportsTheNewProgress() async throws {
+        let opened = try await open(Self.listText, restoreLine: nil)
+        defer { opened.host.close() }
+        let list = opened.list
+        try await Window.settle(list)
+        let progress = try #require(opened.recorder.progresses.last)
+
+        let size = CGSize(width: Window.phoneSize.width, height: Window.phoneSize.height * 2)
+        opened.host.window.frame = CGRect(origin: .zero, size: size)
+        opened.host.window.layoutIfNeeded()
+        try await Window.waitUntil { list.bounds.height > Window.phoneSize.height }
+        try await Window.settle(list)
+
+        #expect(try #require(opened.recorder.progresses.last) > progress)
+    }
+
+    @Test func progressIsOneWhenTheLastRowOfACompleteTextIsShown() async throws {
+        let opened = try await open(Self.listText, restoreLine: nil)
+        defer { opened.host.close() }
+        let list = opened.list
+        try await Window.scroll(list, toRow: 99_999)
+        #expect(opened.recorder.progresses.last == 1)
+    }
+
+    /// More rows are on the way, so the last row on screen is not the end of the text.
+    @Test func progressStaysBelowOneWhileTheTextIsIncomplete() async throws {
+        let opened = try await open(Self.bugText, restoreLine: nil, batches: 1)
+        defer { opened.host.close() }
+        let list = opened.list
+        let lastRow = opened.feed.store.count - 1
+        try #require(!opened.feed.isComplete)
+        try await Window.scroll(list, toRow: lastRow)
+        let progress = try #require(opened.recorder.progresses.last)
+        #expect(progress == Double(opened.feed.store[lastRow].sourceLine) / Double(opened.feed.lineCount))
+        #expect(progress < 1)
+    }
+
+    /// Both texts fit on the screen, so both are at line 0 with progress 1. The new text is still reported.
+    @Test func newTextReportsItsProgressEvenWhenItIsTheSame() async throws {
+        let opened = try await open("- a\n- b", restoreLine: nil)
+        defer { opened.host.close() }
+        let list = opened.list
+        try await Window.settle(list)
+        try #require(opened.recorder.positions.last == MarkdownReadingPosition(topLine: 0, progress: 1))
+        let count = opened.recorder.positions.count
+
+        opened.feed.load("- one\n- two\n- three")
+        try await Window.waitUntil { try Window.coordinator(of: list).store.count == 3 }
+        try await Window.settle(list)
+        #expect(opened.recorder.positions.count == count + 1)
+        #expect(opened.recorder.positions.last == MarkdownReadingPosition(topLine: 0, progress: 1))
+    }
+
     @Test func noReportAfterTheViewIsGone() async throws {
         let opened = try await open(Self.listText, restoreLine: nil)
         defer { opened.host.close() }
@@ -198,15 +266,14 @@ struct PreviewRowListRestoreTests {
         try await Window.settle(list)
         opened.feed.isShown = false
         try await Window.waitUntil { opened.host.list == nil }
-        let count = opened.recorder.lines.count
+        let count = opened.recorder.positions.count
 
         // The list view lives on here. Its layout passes and scrolls must not report.
         list.contentOffset.y += 10 * list.bounds.height
-        coordinator.scrollViewDidScroll(list)
         list.setNeedsLayout()
         list.layoutIfNeeded()
         #expect(coordinator.isStopped)
-        #expect(opened.recorder.lines.count == count)
+        #expect(opened.recorder.positions.count == count)
     }
 
     // MARK: - New text and appended rows

@@ -98,9 +98,9 @@ final class MarkdownRowListBenchmarks: BenchmarkCase {
     private static func rowsInOneMegabyteParse() -> Int {
         let markdown = BenchmarkDocuments.makeLargeDocument(targetBytes: MarkdownChunker.defaultTargetBytes)
         var rows = 0
-        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: PreviewParseLimits()) { batch in
+        _ = PreviewPipeline.parse(MarkdownParseRequest(markdown: markdown), limits: PreviewParseLimits(), sendLineCount: { _ in }, send: { batch in
             rows += batch.rows.count
-        }
+        })
         return rows
     }
 

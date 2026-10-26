@@ -48,6 +48,9 @@ struct MarkdownChunker {
 
     var isFinished: Bool { nextLine >= lineStarts.count }
 
+    /// Lines in the source, counted like cmark: `\n`, `\r\n` and `\r` end a line.
+    var lineCount: Int { lineStarts.count }
+
     /// The text to feed before `chunk`. A chunk after the first always gets at least one empty line:
     /// cmark drops a byte order mark on its first line, and only the file start may lose one.
     func definitionPrefix(for chunk: Chunk) -> [UInt8] {
