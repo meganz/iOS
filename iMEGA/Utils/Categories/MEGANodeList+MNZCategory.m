@@ -40,7 +40,7 @@
     NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
-        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
+        if (node.isFile && [FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             [mediaNodesMutableArray addObject:node];
         }
     }

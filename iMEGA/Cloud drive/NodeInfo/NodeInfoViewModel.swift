@@ -80,6 +80,7 @@ enum NodeInfoAction: ActionType {
         
         guard
             nodeInfoLocationViewModel == nil,
+            node.isFile(),
             node.name?.fileExtensionGroup.isVisualMedia ?? false,
             await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node.handle) == .owner || isBackupNode
         else {

@@ -40,7 +40,8 @@ final class FolderLinkFileNodeOpener: FolderLinkFileNodeOpenerProtocol {
 
 extension MEGANode {
     var isVisualMedia: Bool {
-        if let name {
+        // A folder can carry an image or video extension in its name, so the name alone doesn't make it media
+        if isFile(), let name {
             name.fileExtensionGroup.isVisualMedia
         } else {
             false

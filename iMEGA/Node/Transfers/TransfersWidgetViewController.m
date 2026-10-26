@@ -347,7 +347,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (transfer.state == MEGATransferStateComplete) {
             MEGANode *node = transfer.node;
-            if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
+            if (node.isFile && [FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                 [self showNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil isFromSharedItem:NO allNodes:nil sourcePage:NodeSourcePageUnknown textEditorSource:TextEditorFileSourceTransfers];

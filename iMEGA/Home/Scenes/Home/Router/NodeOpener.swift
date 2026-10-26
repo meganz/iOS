@@ -125,9 +125,10 @@ final class NodeOpener {
         displayMode: DisplayMode?,
         isFromSharedItem: Bool?
     ) {
-        // filter the visual media from allNodes so that photo browser displays only images and videos
+        // filter the visual media from allNodes so that photo browser displays only images and videos,
+        // leaving out folders named like one
         let allVisualMediaNodes: [MEGANode] = allNodes?.filter { node in
-            node.name?.fileExtensionGroup.isVisualMedia == true
+            node.isFile() && node.name?.fileExtensionGroup.isVisualMedia == true
         } ?? []
         // `nodes` array cannot be empty (but can, and is often nil)
         // as photo browser assumes node is inside this array.
