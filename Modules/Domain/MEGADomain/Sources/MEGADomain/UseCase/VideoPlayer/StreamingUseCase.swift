@@ -44,7 +44,7 @@ public struct StreamingUseCase: StreamingUseCaseProtocol {
     }
 
     public func startStreaming() {
-        repository.httpServerStart(false, port: 4443)
+        repository.httpServerStart()
     }
 
     public func stopStreaming() {

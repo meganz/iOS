@@ -120,14 +120,14 @@ struct MEGAAVPlayerTests {
     }
 
     @Test
-    func loadNode_whenNodeHasNoLocalCopyAndServerAlreadyRunning_shouldNotStartItAgain() async {
+    func loadNode_whenNodeHasNoLocalCopyAndServerAlreadyRunning_shouldStillHoldIt() async {
         let streamingUseCase = MockStreamingUseCase()
         streamingUseCase.isStreaming = true
         let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in nil })
 
         sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
 
-        #expect(streamingUseCase.startStreamingCallCount == 0)
+        #expect(streamingUseCase.startStreamingCallCount == 1)
         #expect(streamingUseCase.streamingLinkCallCount == 1)
     }
 

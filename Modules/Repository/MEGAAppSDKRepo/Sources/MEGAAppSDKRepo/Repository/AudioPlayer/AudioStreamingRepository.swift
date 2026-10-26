@@ -6,23 +6,27 @@ public struct AudioStreamingRepository: AudioStreamingRepositoryProtocol {
         AudioStreamingRepository(sdk: .sharedSdk, folderSDK: .sharedFolderLinkSdk)
     }
 
+    /// Streams every track, logged in or not, so audio shares one server with the video player. A
+    /// folder-link node is authorized against `folderSDK` first, and its link carries the key and
+    /// authorization this SDK's server needs to stream a node outside its own tree.
     private let sdk: MEGASdk
     private let folderSDK: MEGASdk
+    private let serverCoordinator: StreamingServerCoordinator
 
-    public init(sdk: MEGASdk, folderSDK: MEGASdk) {
+    /// The audio player is a single session, so one owner id covers it
+    private static let serverOwner = "AudioPlayer"
+
+    public init(sdk: MEGASdk, folderSDK: MEGASdk, serverCoordinator: StreamingServerCoordinator = .shared) {
         self.sdk = sdk
         self.folderSDK = folderSDK
+        self.serverCoordinator = serverCoordinator
     }
 
-    private var streamingSDK: MEGASdk {
-        MEGASdk.isLoggedIn ? sdk : folderSDK
-    }
+    public var isServerRunning: Bool { sdk.httpServerIsRunning() != 0 }
 
-    public var isServerRunning: Bool { streamingSDK.httpServerIsRunning() != 0 }
+    public func startServer() { serverCoordinator.acquire(Self.serverOwner, on: sdk) }
 
-    public func startServer() { streamingSDK.httpServerStart(false, port: 4443) }
-
-    public func stopServer() { streamingSDK.httpServerStop() }
+    public func stopServer() { serverCoordinator.release(Self.serverOwner) }
 
     public func streamingURL(for node: StreamingNode) -> URL? {
         switch node {
@@ -32,7 +36,7 @@ public struct AudioStreamingRepository: AudioStreamingRepositoryProtocol {
             return localLink(for: megaNode)
 
         case .folderLink(let node):
-            // Authorized against the folder-link tree, then streamed via the login-state server.
+            // Authorized against the folder-link tree, then streamed through the account SDK's server.
             guard let megaNode = resolve(node, in: folderSDK),
                   let authorized = folderSDK.authorizeNode(megaNode) else { return nil }
             return localLink(for: authorized)
@@ -54,6 +58,6 @@ public struct AudioStreamingRepository: AudioStreamingRepositoryProtocol {
 
     /// The loopback link the SDK hands back, used as-is
     private func localLink(for node: MEGANode) -> URL? {
-        streamingSDK.httpServerGetLocalLink(node)
+        sdk.httpServerGetLocalLink(node)
     }
 }
