@@ -89,6 +89,43 @@ struct MEGAAudioPlayerViewRouterTests {
         #expect(service.currentSource != nil)
     }
 
+    // MARK: - Presenting over another controller
+
+    /// A search controller presented by the screen must not stop the player from opening.
+    @Test func startWhilePresenterShowsAnotherController_presentsOnTopOfIt() {
+        let (sut, presenter, _, _) = makeSUT()
+        let searchController = SpyPresenterViewController()
+        presenter.shownController = searchController
+
+        sut.start(source: source(1))
+
+        #expect(presenter.presentedCount == 0)
+        #expect(searchController.presentedCount == 1)
+    }
+
+    /// A controller that is closing goes away, so the player opens on the screen below it.
+    @Test func startWhileShownControllerIsBeingDismissed_presentsOnPresenter() {
+        let (sut, presenter, _, _) = makeSUT()
+        let searchController = SpyPresenterViewController()
+        searchController.isDismissing = true
+        presenter.shownController = searchController
+
+        sut.start(source: source(1))
+
+        #expect(presenter.presentedCount == 1)
+        #expect(searchController.presentedCount == 0)
+    }
+
+    @Test func showCurrentWhilePlayerIsShown_doesNotPresentAgain() {
+        let (sut, presenter, _, service) = makeSUT()
+        service.play(source: source(1))
+        presenter.shownController = AudioPlayerHostingController(rootView: AudioPlayerView(vm: AudioPlayerViewModel(service: service)))
+
+        sut.showCurrent()
+
+        #expect(presenter.presentedCount == 0)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(isLoggedIn: Bool = true) -> (
@@ -128,6 +165,11 @@ struct MEGAAudioPlayerViewRouterTests {
 private final class SpyPresenterViewController: UIViewController {
     private(set) var presentedCount = 0
     private(set) var presentedHost: AudioPlayerHostingController?
+    var shownController: UIViewController?
+    var isDismissing = false
+
+    override var presentedViewController: UIViewController? { shownController }
+    override var isBeingDismissed: Bool { isDismissing }
 
     override func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?) {
         presentedCount += 1

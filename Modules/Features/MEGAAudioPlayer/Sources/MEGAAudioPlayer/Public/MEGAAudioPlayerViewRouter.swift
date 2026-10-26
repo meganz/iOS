@@ -77,13 +77,18 @@ public final class MEGAAudioPlayerViewRouter {
     }
 
     private func present() {
-        // `presentedViewController == nil` guards against double-presenting —
-        // e.g. a fast double-tap on the mini player pill firing `showCurrent()`
-        // twice before the first presentation lands.
-        guard let presenter, presenter.presentedViewController == nil else { return }
+        guard let presenter else { return }
+        // Present on top of what the presenter already shows, for example an active search controller.
+        var top = presenter
+        while let next = top.presentedViewController, !next.isBeingDismissed {
+            top = next
+        }
+        // Guards against double-presenting, e.g. a fast double-tap on the mini player pill
+        // firing `showCurrent()` twice before the first presentation lands.
+        guard !(top is AudioPlayerHostingController) else { return }
         let host = build()
         host.modalPresentationStyle = .overFullScreen
-        presenter.present(host, animated: true)
+        top.present(host, animated: true)
     }
 
     private func build() -> UIViewController {
