@@ -1067,7 +1067,8 @@ private func makeDependency(
         locationResolver: StubTransferLocationResolver(),
         finishDateProvider: StubTransferFinishDateProvider(),
         rowRouter: rowRouter,
-        clearTransfersUseCase: clearTransfersUseCase
+        clearTransfersUseCase: clearTransfersUseCase,
+        controlUseCase: MockTransferControlUseCase()
     )
 }
 

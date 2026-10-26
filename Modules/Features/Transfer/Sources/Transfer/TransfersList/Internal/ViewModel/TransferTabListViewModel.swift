@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 
 /// Owns the list for a single Transfers tab.
@@ -12,8 +13,8 @@ import MEGADomain
 ///   throttled: the first change lands immediately, then bursts publish at most
 ///   once per interval, so N finish events cost one list diff, not N.
 ///
-/// Active lists its rows in transfer-queue order (see `TransferQueuePosition`); the
-/// other tabs list in arrival order.
+/// Active lists its rows in transfer-queue order (see `TransferQueuePosition`) and
+/// lets the user drag them to reprioritise; the other tabs list in arrival order.
 @MainActor
 final class TransferTabListViewModel: ObservableObject {
     typealias FlushPublisherThrottle = (AnyPublisher<Void, Never>) -> AnyPublisher<Void, Never>
@@ -65,6 +66,10 @@ final class TransferTabListViewModel: ObservableObject {
     private var finishedIds: Set<Int> = []
     /// Active only: each listed row's queue position; `orderedIds` is kept sorted by it.
     private var queuePositions: [Int: TransferQueuePosition] = [:]
+    /// Active only: the priority a dragged row had before the drag, until the SDK
+    /// reports another. An update still carrying it predates the move, so it must not
+    /// put the row back where it was.
+    private var prereorderPriorities: [Int: UInt64] = [:]
     private let flushSignal = PassthroughSubject<Void, Never>()
     private var flushCancellable: AnyCancellable?
 
@@ -170,8 +175,9 @@ final class TransferTabListViewModel: ObservableObject {
             queuePositions[state.id] = position
             orderedIds.insert(state.id, at: insertionIndex(for: position))
             scheduleFlush()
-        } else if move(id: state.id, to: TransferQueuePosition(entity)) {
-            // The SDK reprioritised the transfer.
+        } else if let position = reconcileQueuePosition(of: entity), move(id: state.id, to: position) {
+            // The SDK reprioritised the transfer: a drag-reorder landing, or the
+            // neighbours it renumbers when there is no room left between two rows.
             scheduleFlush()
         }
     }
@@ -195,6 +201,7 @@ final class TransferTabListViewModel: ObservableObject {
             orderedIds.removeAll { removedIds.contains($0) }
             for id in removedIds {
                 queuePositions[id] = nil
+                prereorderPriorities[id] = nil
             }
             removedIds.removeAll()
         }
@@ -228,6 +235,7 @@ final class TransferTabListViewModel: ObservableObject {
         }
         presentIds.removeAll()
         queuePositions.removeAll()
+        prereorderPriorities.removeAll()
     }
 
     // MARK: - Snapshot
@@ -258,19 +266,125 @@ final class TransferTabListViewModel: ObservableObject {
         isLoaded = true
     }
 
-    /// Sorts a fresh Active snapshot into queue order.
+    /// Sorts a fresh Active snapshot into queue order. A dragged row the SDK has not
+    /// moved yet keeps the place it was dropped in.
     private func orderSnapshot(_ entities: [TransferEntity]) {
         var positions: [Int: TransferQueuePosition] = [:]
         for entity in entities {
-            positions[entity.tag] = TransferQueuePosition(entity)
+            positions[entity.tag] = reconcileQueuePosition(of: entity)
+                ?? queuePositions[entity.tag]
+                ?? TransferQueuePosition(entity)
         }
         queuePositions = positions
+        prereorderPriorities = prereorderPriorities.filter { positions[$0.key] != nil }
         orderedIds = positions.values.sorted().map(\.tag)
+    }
+
+    // MARK: - Reorder
+
+    /// Applies a drag on the Active tab to the list right away and returns the move for
+    /// `commitReorder(_:)` to send to the SDK, or `nil` when the queue order is unchanged.
+    ///
+    /// Downloads and uploads are separate queues, so a row dropped among the other
+    /// direction's rows lands at the nearest end of its own queue.
+    func reorder(fromOffsets source: IndexSet, toOffset destination: Int) -> TransferReorder? {
+        guard tab.isQueueOrdered,
+              source.count == 1,
+              let sourceIndex = source.first,
+              rows.indices.contains(sourceIndex) else { return nil }
+        let movedRow = rows[sourceIndex]
+        guard let previousPosition = queuePositions[movedRow.id] else { return nil }
+
+        let currentIds = rows.map(\.id)
+        var droppedIds = currentIds
+        droppedIds.remove(at: sourceIndex)
+        // `destination` counts the row itself while it is still in place.
+        let droppedIndex = destination > sourceIndex ? destination - 1 : destination
+        droppedIds.insert(movedRow.id, at: min(max(droppedIndex, 0), droppedIds.count))
+        let queue = sameQueueIds(droppedIds, as: previousPosition)
+        guard queue != sameQueueIds(currentIds, as: previousPosition),
+              let index = queue.firstIndex(of: movedRow.id) else {
+            // The list already moved the row on screen; publishing puts it back.
+            flush()
+            return nil
+        }
+
+        let previousId = index > 0 ? queue[index - 1] : nil
+        let nextId = index + 1 < queue.count ? queue[index + 1] : nil
+        let provisionalPosition = TransferQueuePosition(
+            isUpload: previousPosition.isUpload,
+            priority: provisionalPriority(
+                after: previousId.flatMap { queuePositions[$0]?.priority },
+                before: nextId.flatMap { queuePositions[$0]?.priority }
+            ),
+            tag: movedRow.id
+        )
+        // Kept from an earlier drag the SDK hasn't applied yet: that one is still the
+        // priority stale updates carry.
+        prereorderPriorities[movedRow.id] = prereorderPriorities[movedRow.id] ?? previousPosition.priority
+        move(id: movedRow.id, to: provisionalPosition)
+        flush()
+
+        return TransferReorder(
+            transfer: movedRow.transfer,
+            nextTransfer: nextId.flatMap { dependency.registry.rowViewModel(for: $0)?.transfer },
+            previousPosition: previousPosition,
+            provisionalPosition: provisionalPosition
+        )
+    }
+
+    /// Sends a drag-reorder to the SDK, and puts the row back if the SDK rejects it.
+    /// On success the SDK reports the priority it assigned as a transfer update.
+    func commitReorder(_ reorder: TransferReorder) async {
+        do {
+            if let nextTransfer = reorder.nextTransfer {
+                try await dependency.controlUseCase.moveTransfer(reorder.transfer, before: nextTransfer)
+            } else {
+                try await dependency.controlUseCase.moveTransferToEnd(reorder.transfer)
+            }
+        } catch {
+            MEGALogError("[Transfer] reorder failed for tag \(reorder.transfer.tag): \(error)")
+            let id = reorder.transfer.tag
+            prereorderPriorities[id] = nil
+            // Left alone if it finished meanwhile or a later drag has moved it again.
+            guard presentIds.contains(id), queuePositions[id] == reorder.provisionalPosition else { return }
+            move(id: id, to: reorder.previousPosition)
+            flush()
+        }
     }
 
     // MARK: - Queue order
 
+    /// The ids in `position`'s queue, leaving out rows that finished but stay on screen
+    /// until the next flush: the SDK can no longer move them or move anything before them.
+    private func sameQueueIds(_ ids: [Int], as position: TransferQueuePosition) -> [Int] {
+        ids.filter { presentIds.contains($0) && queuePositions[$0]?.isInSameQueue(as: position) == true }
+    }
+
+    /// A priority between the new neighbours', so the row sorts where it was dropped
+    /// until the SDK reports the one it assigned.
+    private func provisionalPriority(after previous: UInt64?, before next: UInt64?) -> UInt64 {
+        switch (previous, next) {
+        case let (previous?, next?): previous + (next - previous) / 2
+        case let (nil, next?): next > 0 ? next - 1 : 0
+        case let (previous?, nil): previous + 1
+        case (nil, nil): 0
+        }
+    }
+
+    /// The entity's queue position, or `nil` while it still reports the priority it
+    /// had before the user dragged it. Once a new priority arrives, the drag is settled
+    /// and its pre-drag priority is forgotten.
+    private func reconcileQueuePosition(of entity: TransferEntity) -> TransferQueuePosition? {
+        if let prereorderPriority = prereorderPriorities[entity.tag] {
+            guard entity.priority != prereorderPriority else { return nil }
+            prereorderPriorities[entity.tag] = nil
+        }
+        return TransferQueuePosition(entity)
+    }
+
     /// Moves a listed row to where `position` sorts. `false` when it is already there.
+    @discardableResult
     private func move(id: Int, to position: TransferQueuePosition) -> Bool {
         guard queuePositions[id] != position else { return false }
         queuePositions[id] = position

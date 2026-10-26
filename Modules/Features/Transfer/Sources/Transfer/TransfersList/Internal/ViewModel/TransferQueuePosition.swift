@@ -17,7 +17,23 @@ struct TransferQueuePosition: Comparable, Sendable {
         self.init(isUpload: transfer.type == .upload, priority: transfer.priority, tag: transfer.tag)
     }
 
+    func isInSameQueue(as other: TransferQueuePosition) -> Bool {
+        isUpload == other.isUpload
+    }
+
     static func < (lhs: TransferQueuePosition, rhs: TransferQueuePosition) -> Bool {
         (lhs.isUpload ? 1 : 0, lhs.priority, lhs.tag) < (rhs.isUpload ? 1 : 0, rhs.priority, rhs.tag)
     }
+}
+
+/// A drag-reorder already applied to the Active tab, waiting to be sent to the SDK.
+struct TransferReorder: Sendable {
+    let transfer: TransferEntity
+    /// The transfer it now runs just before, from the same queue; `nil` when it moved
+    /// to the end of its queue.
+    let nextTransfer: TransferEntity?
+    /// Restored if the SDK rejects the move.
+    let previousPosition: TransferQueuePosition
+    /// Where the drag put it until the SDK reports the priority it actually assigned.
+    let provisionalPosition: TransferQueuePosition
 }

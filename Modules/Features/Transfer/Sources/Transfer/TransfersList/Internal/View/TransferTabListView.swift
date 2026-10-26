@@ -11,6 +11,7 @@ struct TransferTabListView: View {
     @Environment(\.editMode) private var editMode
     @State private var isSearchEditing = false
     private let isSearchable: Bool
+    private let isReorderable: Bool
     private let emptyStateTitle: String
     private let onTransferCancelled: (TransferEntity) -> Void
     private let onTransferRetried: @MainActor () -> Void
@@ -39,6 +40,7 @@ struct TransferTabListView: View {
         )
         _selection = ObservedObject(wrappedValue: selection)
         isSearchable = tab.isSearchable
+        isReorderable = tab.isQueueOrdered
         emptyStateTitle = tab.emptyStateTitle
         self.onTransferCancelled = onTransferCancelled
         self.onTransferRetried = onTransferRetried
@@ -103,6 +105,7 @@ struct TransferTabListView: View {
             ForEach(viewModel.rows) { row in
                 TransferResultRowView(
                     viewModel: row,
+                    isReorderable: isReorderable,
                     onCancelled: onTransferCancelled,
                     onRetried: onTransferRetried,
                     onSelectRequested: { onRowSelectRequested(row.id) }
@@ -122,6 +125,8 @@ struct TransferTabListView: View {
                             : TokenColors.Background.page.swiftUI
                     )
             }
+            // The list drives the drag and the lifted row; rows opt out with `moveDisabled`.
+            .onMove(perform: isReorderable ? { moveRow(from: $0, to: $1) } : nil)
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
@@ -130,5 +135,12 @@ struct TransferTabListView: View {
         // Fills the native edit-mode checkbox: Accent.900 in light, Accent.500 in
         // dark — the same circle Cloud Drive shows.
         .tint(TokenColors.Components.selectionControlAlt.swiftUI)
+    }
+
+    /// Reorders the list in the same pass as the drop, so the row doesn't spring back,
+    /// then hands the move to the SDK.
+    private func moveRow(from source: IndexSet, to destination: Int) {
+        guard let reorder = viewModel.reorder(fromOffsets: source, toOffset: destination) else { return }
+        Task { await viewModel.commitReorder(reorder) }
     }
 }

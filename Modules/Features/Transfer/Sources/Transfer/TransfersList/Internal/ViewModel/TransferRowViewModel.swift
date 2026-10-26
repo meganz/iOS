@@ -16,7 +16,7 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
     @Published public private(set) var thumbnail: UIImage?
     @Published private(set) var thumbnailRetryTrigger = 0
 
-    private var transfer: TransferEntity
+    private(set) var transfer: TransferEntity
     private let controlUseCase: any TransferControlUseCaseProtocol
     private let rowRouter: any TransferRowRouting
     private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol

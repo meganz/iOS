@@ -20,6 +20,8 @@ import SwiftUI
 /// row.
 struct TransferResultRowView: View {
     @ObservedObject var viewModel: TransferRowViewModel
+    /// Whether the row sits in a list that can be dragged to reorder (Active);
+    let isReorderable: Bool
     /// Invoked after a swipe-cancel lands in the engine, with the cancelled entity;
     /// the screen shows the undo snackbar.
     let onCancelled: (TransferEntity) -> Void
@@ -55,6 +57,11 @@ struct TransferResultRowView: View {
 
     private var isMoreInert: Bool {
         isOffline && !isCompleted
+    }
+
+    /// Like the row's other controls, dragging is off while selecting and offline.
+    private var isDragEnabled: Bool {
+        isReorderable && !isSelecting && !isOffline
     }
 
     /// What the row renders, which is the engine's state except while offline: nothing
@@ -98,8 +105,10 @@ struct TransferResultRowView: View {
             },
             including: isSelecting ? .none : .all
         )
+        // Tap-and-hold starts the drag on reorderable rows, so they offer no menu;
+        // Select stays reachable from the More menu.
         .contextMenu {
-            if !isSelecting {
+            if !isSelecting, !isReorderable {
                 selectMenuItem
             }
         }
@@ -113,6 +122,9 @@ struct TransferResultRowView: View {
                 retrySwipeAction
             }
         }
+        // Also hides the list's own reorder control in select mode, where the row is
+        // in edit mode.
+        .moveDisabled(!isDragEnabled)
         .task(id: viewModel.thumbnailRetryTrigger) {
             await viewModel.loadThumbnail()
         }
@@ -123,6 +135,10 @@ struct TransferResultRowView: View {
     private var rowContent: some View {
         VStack(spacing: 0) {
             HStack(spacing: TokenSpacing._4) {
+                if isReorderable, !isSelecting {
+                    dragHandle
+                }
+
                 summary
 
                 if !isSelecting {
@@ -265,6 +281,17 @@ struct TransferResultRowView: View {
         } else {
             MEGAAssets.Image.rubbishBinInMenu
         }
+    }
+
+    /// The leading grip that says the row can be dragged. Decorative only: the list
+    /// drives the drag itself.
+    private var dragHandle: some View {
+        MEGAAssets.Image.monoQueueLineMediumThinOutline
+            .foregroundStyle(isDragEnabled
+                ? TokenColors.Icon.secondary.swiftUI
+                : TokenColors.Icon.disabled.swiftUI)
+            .frame(width: 24, height: 24)
+            .accessibilityHidden(true)
     }
 
     /// Real thumbnail when the loader produced one (cached SDK thumbnail for

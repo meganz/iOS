@@ -458,6 +458,215 @@ struct TransferTabListViewModelTests {
         #expect(sut.rows.map(\.id) == [1, 2])
     }
 
+    // MARK: - Reorder
+
+    @Test func draggingARowReordersTheListRightAway() async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)]
+        )
+        defer { events.finish() }
+
+        let reorder = sut.reorder(fromOffsets: [2], toOffset: 0)
+
+        #expect(sut.rows.map(\.id) == [3, 1, 2])
+        #expect(reorder?.transfer.tag == 3)
+        #expect(reorder?.nextTransfer?.tag == 1)
+    }
+
+    @Test func movingARowUpPlacesItBeforeItsNewNextRow() async {
+        let controlUseCase = MockTransferControlUseCase()
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)],
+            controlUseCase: controlUseCase
+        )
+        defer { events.finish() }
+
+        if let reorder = sut.reorder(fromOffsets: [2], toOffset: 1) {
+            await sut.commitReorder(reorder)
+        }
+
+        #expect(sut.rows.map(\.id) == [1, 3, 2])
+        #expect(controlUseCase.movedTransfers.map(\.transfer.tag) == [3])
+        #expect(controlUseCase.movedTransfers.map(\.nextTransfer?.tag) == [2])
+    }
+
+    @Test func movingARowDownPlacesItBeforeTheRowAfterTheDrop() async {
+        let controlUseCase = MockTransferControlUseCase()
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)],
+            controlUseCase: controlUseCase
+        )
+        defer { events.finish() }
+
+        if let reorder = sut.reorder(fromOffsets: [0], toOffset: 2) {
+            await sut.commitReorder(reorder)
+        }
+
+        #expect(sut.rows.map(\.id) == [2, 1, 3])
+        #expect(controlUseCase.movedTransfers.map(\.transfer.tag) == [1])
+        #expect(controlUseCase.movedTransfers.map(\.nextTransfer?.tag) == [3])
+    }
+
+    @Test func movingARowToTheEndOfItsQueueMovesItToTheEnd() async {
+        let controlUseCase = MockTransferControlUseCase()
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)],
+            controlUseCase: controlUseCase
+        )
+        defer { events.finish() }
+
+        if let reorder = sut.reorder(fromOffsets: [0], toOffset: 3) {
+            await sut.commitReorder(reorder)
+        }
+
+        #expect(sut.rows.map(\.id) == [2, 3, 1])
+        #expect(controlUseCase.movedTransfers.map(\.transfer.tag) == [1])
+        #expect(controlUseCase.movedTransfers.map(\.nextTransfer?.tag) == [nil])
+    }
+
+    @Test func downloadDroppedAmongUploadsLandsAtTheEndOfTheDownloads() async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), upload(3, priority: 5), upload(4, priority: 15)]
+        )
+        defer { events.finish() }
+
+        let reorder = sut.reorder(fromOffsets: [0], toOffset: 4)
+
+        #expect(sut.rows.map(\.id) == [2, 1, 3, 4])
+        #expect(reorder?.nextTransfer == nil)
+    }
+
+    @Test func uploadDroppedAmongDownloadsLandsFirstAmongTheUploads() async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), upload(3, priority: 5), upload(4, priority: 15)]
+        )
+        defer { events.finish() }
+
+        let reorder = sut.reorder(fromOffsets: [3], toOffset: 0)
+
+        #expect(sut.rows.map(\.id) == [1, 2, 4, 3])
+        #expect(reorder?.nextTransfer?.tag == 3)
+    }
+
+    @Test(arguments: [1, 2])
+    func droppingARowBackInPlaceSendsNothing(destination: Int) async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)]
+        )
+        defer { events.finish() }
+
+        let reorder = sut.reorder(fromOffsets: [1], toOffset: destination)
+
+        #expect(reorder == nil)
+        #expect(sut.rows.map(\.id) == [1, 2, 3])
+    }
+
+    @Test func lastDownloadDroppedAmongUploadsSendsNothing() async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), upload(3, priority: 5)]
+        )
+        defer { events.finish() }
+
+        let reorder = sut.reorder(fromOffsets: [1], toOffset: 3)
+
+        #expect(reorder == nil)
+        #expect(sut.rows.map(\.id) == [1, 2, 3])
+    }
+
+    @Test func rejectedMovePutsTheRowBack() async {
+        let controlUseCase = MockTransferControlUseCase()
+        controlUseCase.moveError = ReorderTestError.rejected
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)],
+            controlUseCase: controlUseCase
+        )
+        defer { events.finish() }
+
+        if let reorder = sut.reorder(fromOffsets: [2], toOffset: 0) {
+            await sut.commitReorder(reorder)
+        }
+
+        #expect(sut.rows.map(\.id) == [1, 2, 3])
+    }
+
+    @Test func updateReportedBeforeTheMoveLandsDoesNotPutTheRowBack() async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)]
+        )
+        defer { events.finish() }
+        _ = sut.reorder(fromOffsets: [2], toOffset: 0)
+
+        events.yield(.updated(download(3, priority: 30)))
+        // Events apply in order, so once this row lists the stale update has been applied.
+        events.yield(.started(download(4, priority: 40)))
+        await settle { sut.rows.map(\.id).contains(4) }
+
+        #expect(sut.rows.map(\.id) == [3, 1, 2, 4])
+    }
+
+    @Test func prioritiesReportedAfterTheMoveLandsAreApplied() async {
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)]
+        )
+        defer { events.finish() }
+        _ = sut.reorder(fromOffsets: [2], toOffset: 0)
+
+        events.yield(.updated(download(3, priority: 5)))
+        events.yield(.updated(download(1, priority: 50)))
+        await settle { sut.rows.map(\.id) == [3, 2, 1] }
+
+        #expect(sut.rows.map(\.id) == [3, 2, 1])
+    }
+
+    @Test func rowDroppedAboveAFinishedRowStillOnScreenIsPlacedBeforeTheNextListedRow() async {
+        // A throttle that never fires: the finished row stays in `rows` until the drop flushes.
+        let registry = TransferRegistry()
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30), download(4, priority: 40)],
+            registry: registry,
+            throttle: { _ in Empty().eraseToAnyPublisher() }
+        )
+        defer { events.finish() }
+        events.yield(.finished(download(3, priority: 30)))
+        await settle { !registry.ids.contains(3) }
+
+        let reorder = sut.reorder(fromOffsets: [0], toOffset: 2)
+
+        #expect(reorder?.nextTransfer?.tag == 4)
+        #expect(sut.rows.map(\.id) == [2, 1, 4])
+    }
+
+    @Test func draggingARowThatFinishedMeanwhileSendsNothing() async {
+        let registry = TransferRegistry()
+        let (sut, events) = await startMonitoringActiveTab(
+            snapshot: [download(1, priority: 10), download(2, priority: 20), download(3, priority: 30)],
+            registry: registry,
+            throttle: { _ in Empty().eraseToAnyPublisher() }
+        )
+        defer { events.finish() }
+        events.yield(.finished(download(1, priority: 10)))
+        await settle { !registry.ids.contains(1) }
+
+        let reorder = sut.reorder(fromOffsets: [0], toOffset: 3)
+
+        #expect(reorder == nil)
+        #expect(sut.rows.map(\.id) == [2, 3])
+    }
+
+    @Test(arguments: [TransfersTab.completed, .failed])
+    func resultTabsAreNotReorderable(tab: TransfersTab) async {
+        let (sut, stop) = await startMonitoring(tab: tab, snapshot: [
+            .init(fileName: "a", tag: 1),
+            .init(fileName: "b", tag: 2)
+        ])
+        defer { stop() }
+
+        let reorder = sut.reorder(fromOffsets: [1], toOffset: 0)
+
+        #expect(reorder == nil)
+        #expect(sut.rows.map(\.id) == [1, 2])
+    }
+
     // MARK: - Teardown
 
     @Test func monitorEndPrunesThisTabsRowsFromTheSharedRegistry() async {
@@ -507,6 +716,41 @@ struct TransferTabListViewModelTests {
         return (sut, { continuation.finish() })
     }
 
+    /// Monitors the Active tab and hands back the open event stream, so a test can feed
+    /// events after the snapshot. Finish the stream when done.
+    private func startMonitoringActiveTab(
+        snapshot: [TransferEntity],
+        registry: TransferRegistry = TransferRegistry(),
+        controlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
+        throttle: @escaping TransferTabListViewModel.FlushPublisherThrottle = { $0 }
+    ) async -> (sut: TransferTabListViewModel, events: AsyncStream<TransferTabEvent>.Continuation) {
+        let (events, continuation) = AsyncStream<TransferTabEvent>.makeStream()
+        let sut = makeSUT(
+            tab: .active,
+            itemsUseCase: MockMonitorTransferTabItemsUseCase(
+                snapshot: snapshot,
+                events: events.eraseToAnyAsyncSequence()
+            ),
+            registry: registry,
+            controlUseCase: controlUseCase,
+            throttle: throttle
+        )
+        Task { await sut.monitorTransferEvents() }
+        while !sut.isLoaded {
+            await Task.yield()
+        }
+        return (sut, continuation)
+    }
+
+    /// Yields to the monitoring task until `condition` holds, or long enough that it won't.
+    private func settle(until condition: () -> Bool) async {
+        var turns = 0
+        while !condition(), turns < 100 {
+            await Task.yield()
+            turns += 1
+        }
+    }
+
     private func download(_ tag: Int, priority: UInt64) -> TransferEntity {
         TransferEntity(type: .download, tag: tag, state: .active, priority: priority)
     }
@@ -549,6 +793,7 @@ struct TransferTabListViewModelTests {
         searchText: String = "",
         onSearchTextChanged: @escaping @MainActor (String) -> Void = { _ in },
         searchDebounce: TransferTabListViewModel.SearchPublisherDebounce = { $0 },
+        controlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
         throttle: @escaping TransferTabListViewModel.FlushPublisherThrottle = { $0 }
     ) -> TransferTabListViewModel {
         TransferTabListViewModel(
@@ -559,7 +804,8 @@ struct TransferTabListViewModelTests {
                 locationResolver: StubTransferLocationResolver(),
                 finishDateProvider: StubTransferFinishDateProvider(),
                 rowRouter: MockTransferRowRouting(),
-                clearTransfersUseCase: MockClearTransfersUseCase()
+                clearTransfersUseCase: MockClearTransfersUseCase(),
+                controlUseCase: controlUseCase
             ),
             selection: selection,
             searchText: searchText,
@@ -591,6 +837,10 @@ private final class SequencedItemsUseCase: MonitorTransferTabItemsUseCaseProtoco
     func events(for tab: TransfersTab) -> AnyAsyncSequence<TransferTabEvent> {
         eventList.async.eraseToAnyAsyncSequence()
     }
+}
+
+private enum ReorderTestError: Error {
+    case rejected
 }
 
 @MainActor

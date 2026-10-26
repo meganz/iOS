@@ -74,7 +74,8 @@ public enum TransfersListViewControllerFactory {
             ),
             finishDateProvider: completionRecorder,
             rowRouter: rowRouter,
-            clearTransfersUseCase: clearTransfersUseCase
+            clearTransfersUseCase: clearTransfersUseCase,
+            controlUseCase: DependencyInjection.transferControlUseCase
         )
 
         let viewModel = TransfersListViewModel(

@@ -8,4 +8,6 @@ struct TransferTabDependency: Sendable {
     /// list view model observes its `clearedSignals` to re-query, since clearing emits
     /// no SDK transfer event of its own. Shared so both see the same emitter.
     let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
+    /// Applies the Active tab's drag-reorders to the transfer queue.
+    let controlUseCase: any TransferControlUseCaseProtocol
 }
