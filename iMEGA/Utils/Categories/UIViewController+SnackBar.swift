@@ -128,7 +128,23 @@ extension UIViewController {
             0
         }
 
-        controller.layoutConstraints(bottomInset: bottomInset, constrained: snackBarHostViewController.view)
+        let host = snackBarHostViewController
+        controller.layoutConstraints(
+            bottomInset: bottomInset,
+            constrained: host.view,
+            bottomOverlay: bottomOverlayContainer(over: host)
+        )
+    }
+
+    /// The tab bar's bottom overlay (mini player, PSA banner, progress bar) when it is drawn over `host`.
+    /// A modal screen is not inside the tab bar's view, so it gets no overlay.
+    private func bottomOverlayContainer(over host: UIViewController) -> UIView? {
+        guard let tabBarController = host.tabBarController as? MainTabBarController,
+              let container = tabBarController.bottomOverlayContainer,
+              host.view.isDescendant(of: tabBarController.view) else {
+            return nil
+        }
+        return container
     }
     
     private func animateShowingSnackBarView(_ snackBarView: UIView) {
@@ -213,17 +229,27 @@ private final class SnackBarHostingController: UIHostingController<SnackBarHosti
         view.backgroundColor = .clear
     }
         
-    func layoutConstraints(bottomInset: CGFloat, constrained toView: UIView) {
+    func layoutConstraints(bottomInset: CGFloat, constrained toView: UIView, bottomOverlay: UIView?) {
         guard view.window != nil else { return }
         
         view.translatesAutoresizingMaskIntoConstraints = false
     
         let bottomConstraint = view.bottomAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.bottomAnchor, constant: -bottomInset)
 
-        [view.leadingAnchor.constraint(equalTo: snackBarViewLeadingAnchor(toView: toView)),
-         view.trailingAnchor.constraint(equalTo: snackBarViewTrailingAnchor(toView: toView)),
-         bottomConstraint
-        ].activate()
+        var constraints = [
+            view.leadingAnchor.constraint(equalTo: snackBarViewLeadingAnchor(toView: toView)),
+            view.trailingAnchor.constraint(equalTo: snackBarViewTrailingAnchor(toView: toView)),
+            bottomConstraint
+        ]
+
+        if let bottomOverlay {
+            // The host's safe area ignores the overlay, so the snack bar must stay above it.
+            // Low priority moves the snack bar instead of shrinking an overlay item sized by its content.
+            bottomConstraint.priority = .defaultLow
+            constraints.append(view.bottomAnchor.constraint(lessThanOrEqualTo: bottomOverlay.topAnchor))
+        }
+
+        constraints.activate()
         
         self.bottomConstraint = bottomConstraint
     }

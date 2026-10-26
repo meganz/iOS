@@ -2279,6 +2279,7 @@
 		BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1589252436A296007AF9EC /* MessageInputBar.xib */; };
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
 		BF1A70D22F0000010000AA01 /* UIViewController+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D12F0000010000AA01 /* UIViewController+AdditionsTests.swift */; };
+		BF1A70D42F0000010000AA01 /* UIViewController+SnackBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D32F0000010000AA01 /* UIViewController+SnackBarTests.swift */; };
 		BF1A70D42F0000010000AA02 /* AudioTearDownHandlerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D32F0000010000AA02 /* AudioTearDownHandlerFactory.swift */; };
 		BF1A70D62F0000010000AA03 /* RevampedAudioTearDownHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D52F0000010000AA03 /* RevampedAudioTearDownHandler.swift */; };
 		BF20BB552E49814C0013CAE6 /* UnavailableLinkView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */; };
@@ -5260,6 +5261,7 @@
 		BF1589252436A296007AF9EC /* MessageInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputBar.xib; sourceTree = "<group>"; };
 		BF15894B2436EB8D007AF9EC /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
 		BF1A70D12F0000010000AA01 /* UIViewController+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AdditionsTests.swift"; sourceTree = "<group>"; };
+		BF1A70D32F0000010000AA01 /* UIViewController+SnackBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBarTests.swift"; sourceTree = "<group>"; };
 		BF1A70D32F0000010000AA02 /* AudioTearDownHandlerFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioTearDownHandlerFactory.swift; sourceTree = "<group>"; };
 		BF1A70D52F0000010000AA03 /* RevampedAudioTearDownHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RevampedAudioTearDownHandler.swift; sourceTree = "<group>"; };
 		BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnavailableLinkView+Additions.swift"; sourceTree = "<group>"; };
@@ -12068,6 +12070,7 @@
 				C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */,
 				947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */,
 				BF1A70D12F0000010000AA01 /* UIViewController+AdditionsTests.swift */,
+				BF1A70D32F0000010000AA01 /* UIViewController+SnackBarTests.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
 			);
 			path = Utils;
@@ -17457,6 +17460,7 @@
 				94D5DA9D2D15DC760031C2CD /* TransfersWidgetViewModelTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				BF1A70D22F0000010000AA01 /* UIViewController+AdditionsTests.swift in Sources */,
+				BF1A70D42F0000010000AA01 /* UIViewController+SnackBarTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
 				C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */,
