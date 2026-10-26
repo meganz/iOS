@@ -74,6 +74,13 @@ final class AudioPlaybackService {
 
     private var isInterrupted: Bool { interruptionCount > 0 }
 
+    /// Whether another player took playback over since the current track started
+    private var wasInterruptedDuringTrack = false
+
+    /// The address the current track was handed to the engine with, before any AirPlay rewrite — which
+    /// only ever changes the host of a streamed address, never whether it is a file
+    private var currentTrackURL: URL?
+
     /// Whether playback was wanted as the interruption began, so it can pick up again when it ends.
     private var resumesAfterInterruption = false
 
@@ -148,6 +155,7 @@ final class AudioPlaybackService {
 
     func beginInterruption() {
         interruptionCount += 1
+        wasInterruptedDuringTrack = true
         guard interruptionCount == 1 else { return }
         holdsAutoplay = true
         resumesAfterInterruption = engine.isPlaybackIntended
@@ -284,8 +292,25 @@ final class AudioPlaybackService {
         analyticsReporter.trackPlaybackFailed(
             track: track,
             reason: reason,
+            context: AudioPlaybackFailureContext(
+                needsStreamingServer: needsStreamingServer(track),
+                isStreamingServerRunning: streamingRepository.isServerRunning,
+                wasInterrupted: wasInterruptedDuringTrack
+            ),
             generation: generation
         )
+    }
+
+    /// Whether the track is read through the streaming server: by its address once it has one, otherwise by
+    /// its kind — an account node that got no address had no copy on the device to fall back on.
+    /// `nil` when there was no track.
+    private func needsStreamingServer(_ track: PlaybackTrack?) -> Bool? {
+        guard let track else { return nil }
+        if let currentTrackURL { return !currentTrackURL.isFileURL }
+        return switch track {
+        case .account, .folderLink, .fileLink: true
+        case .offline, .offlineNode: false
+        }
     }
 
     private func saveCurrentPlaybackPositionIfNeeded() {
@@ -566,6 +591,8 @@ extension AudioPlaybackService: PlaybackControllable {
         }
 
         reportStarted(track: track, generation: generation)
+        wasInterruptedDuringTrack = isInterrupted
+        currentTrackURL = nil
 
         metadataTitleSubject.send(nil)
         artist = nil
@@ -612,6 +639,7 @@ extension AudioPlaybackService: PlaybackControllable {
             if holdsAutoplay, autoplay {
                 resumesAfterInterruption = true
             }
+            currentTrackURL = url
             engine.play(url: url, autoplay: autoplay && !holdsAutoplay)
 
         case .takenDown:

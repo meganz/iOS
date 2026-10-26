@@ -451,7 +451,17 @@ extension PlaybackEngine {
             .filter { $0 == .failed }
             .receive(on: DispatchQueue.main)
             .sink { [weak self, weak item] _ in
-                self?.reportFailure(.itemFailed(reason: item?.error?.localizedDescription))
+                guard let self else { return }
+                reportFailure(
+                    .itemFailed(
+                        PlaybackItemFailure(
+                            error: item?.error,
+                            isAirPlayActive: player.isExternalPlaybackActive,
+                            position: currentTimeSubject.value,
+                            duration: durationSubject.value
+                        )
+                    )
+                )
             }
             .store(in: &itemObservations)
     }
