@@ -280,7 +280,7 @@
                         duplicateErrorMessage = LocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.");
                     }
                     [SVProgressHUD showErrorWithStatus:duplicateErrorMessage];
-                } else if (![alertViewTextFieldText.pathExtension isEqualToString:self.name.pathExtension]) {
+                } else if (self.isFile && ![alertViewTextFieldText.pathExtension isEqualToString:self.name.pathExtension]) {
                     [self showRenameNodeConfirmationAlertFrom:viewController completion:^{
                         [self mnz_renameNode:alertViewTextFieldText.mnz_removeWhitespacesAndNewlinesFromBothEnds completion:completion];
                     }];
