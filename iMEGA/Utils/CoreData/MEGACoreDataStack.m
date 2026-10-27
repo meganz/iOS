@@ -25,7 +25,8 @@
 #pragma mark - persistent container
 
 - (nullable NSPersistentContainer *)persistentContainer {
-    if (_persistentContainer == nil) {
+    // Without a store URL Core Data would open an empty store at its default location, apart from the real one
+    if (_persistentContainer == nil && self.storeURL != nil) {
         _persistentContainer = [self newPersistentContainerByConfigFileProtection:NO];
     }
     
@@ -66,7 +67,12 @@
             } else {
                 if ([error.userInfo[NSSQLiteErrorDomain] integerValue] == SQLITE_AUTH) {
                     container = [self newPersistentContainerByConfigFileProtection:YES];
-                } else if ([CoreDataErrorHandler isSQLiteFullError:error]) {
+                } else if ([CoreDataErrorHandler isSQLiteFullError:error] || [CoreDataErrorHandler isDiskFull]) {
+                    // A full disk rarely shows up as SQLITE_FULL when the store is opened: SQLite reports SQLITE_IOERR_SHMOPEN when
+                    // it can't create its -shm file, and Core Data NSCocoaErrorDomain 512 when it can't create a new store file.
+                    // Either used to end in exit(0) before the disk full screen showed, e.g. the Camera Uploads store right after
+                    // MEGAStore found the disk full creating GroupSupport (MEGACD itself isn't loaded then, it has no store URL),
+                    // or MEGACD recreated in GroupSupport after a logout
                     container = nil;
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
                 } else {
