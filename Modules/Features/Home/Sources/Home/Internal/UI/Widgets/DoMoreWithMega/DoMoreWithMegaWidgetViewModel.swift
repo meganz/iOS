@@ -1,3 +1,5 @@
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
@@ -17,12 +19,15 @@ final class DoMoreWithMegaWidgetViewModel {
     private var isCameraUploadsEnabled: Bool?
 
     @ObservationIgnored private let createAlbumUseCase: any CreateAlbumUseCaseProtocol
+    @ObservationIgnored private let tracker: any AnalyticsTracking
 
     init(
         createAlbumUseCase: some CreateAlbumUseCaseProtocol,
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase(repository: PreferenceRepository.newRepo)
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase(repository: PreferenceRepository.newRepo),
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.createAlbumUseCase = createAlbumUseCase
+        self.tracker = tracker
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
 
@@ -31,6 +36,7 @@ final class DoMoreWithMegaWidgetViewModel {
     }
 
     func didTap(_ tile: DoMoreWithMegaTile) async {
+        tracker.trackAnalyticsEvent(with: tile.analyticsEvent)
         switch tile {
         case .cameraUploads: action = isCameraUploadsEnabled == nil ? .cameraUploadsOnboarding : .cameraUploadsSettings
         case .scanDoc: action = .scanDoc
@@ -64,5 +70,17 @@ final class DoMoreWithMegaWidgetViewModel {
         createAlbumRequest = CreateAlbumAlertInput(
             albumNames: await createAlbumUseCase.existingAlbumNames()
         )
+    }
+}
+
+private extension DoMoreWithMegaTile {
+    var analyticsEvent: any EventIdentifier {
+        switch self {
+        case .cameraUploads: DoMoreWithMegaCameraUploadsButtonPressedEvent()
+        case .scanDoc: DoMoreWithMegaScanDocumentButtonPressedEvent()
+        case .createAlbum: DoMoreWithMegaCreateAlbumButtonPressedEvent()
+        case .addContacts: DoMoreWithMegaAddContactButtonPressedEvent()
+        case .scheduleMeeting: DoMoreWithMegaScheduleMeetingButtonPressedEvent()
+        }
     }
 }

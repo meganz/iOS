@@ -1,4 +1,6 @@
 @testable import Home
+import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -29,7 +31,7 @@ struct DoMoreWithMegaWidgetViewModelTests {
 
     @Test("refreshing reads the Camera uploads setting again")
     func refreshReadsSettingAgain() {
-        let (sut, preferenceUseCase) = makeSUT(isCameraUploadsEnabled: false)
+        let (sut, preferenceUseCase, _) = makeSUT(isCameraUploadsEnabled: false)
         sut.refreshTiles()
 
         preferenceUseCase.dict[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = true
@@ -57,6 +59,24 @@ struct DoMoreWithMegaWidgetViewModelTests {
         await sut.didTap(.scanDoc)
 
         #expect(sut.action == .scanDoc)
+    }
+
+    @Test(
+        "tapping a tile sends its tap event once",
+        arguments: [
+            (DoMoreWithMegaTile.cameraUploads, ObjectIdentifier(DoMoreWithMegaCameraUploadsButtonPressedEvent.self)),
+            (.scanDoc, ObjectIdentifier(DoMoreWithMegaScanDocumentButtonPressedEvent.self)),
+            (.createAlbum, ObjectIdentifier(DoMoreWithMegaCreateAlbumButtonPressedEvent.self)),
+            (.addContacts, ObjectIdentifier(DoMoreWithMegaAddContactButtonPressedEvent.self)),
+            (.scheduleMeeting, ObjectIdentifier(DoMoreWithMegaScheduleMeetingButtonPressedEvent.self))
+        ]
+    )
+    func tapTileTracksEvent(tile: DoMoreWithMegaTile, expectedEventType: ObjectIdentifier) async {
+        let (sut, _, tracker) = makeSUT()
+
+        await sut.didTap(tile)
+
+        #expect(tracker.trackedEventIdentifiers.map { ObjectIdentifier(type(of: $0)) } == [expectedEventType])
     }
 
     // MARK: - Create album
@@ -121,7 +141,8 @@ struct DoMoreWithMegaWidgetViewModelTests {
         isOverDiskQuota: Bool = false,
         albumNames: [String] = [],
         createFails: Bool = false
-    ) -> (sut: DoMoreWithMegaWidgetViewModel, preferenceUseCase: MockPreferenceUseCase) {
+    ) -> (sut: DoMoreWithMegaWidgetViewModel, preferenceUseCase: MockPreferenceUseCase, tracker: MockTracker) {
+        let tracker = MockTracker()
         let preferenceUseCase = MockPreferenceUseCase(
             dict: isCameraUploadsEnabled.map { [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: $0] } ?? [:]
         )
@@ -131,9 +152,10 @@ struct DoMoreWithMegaWidgetViewModelTests {
                 albumNames: albumNames,
                 createFails: createFails
             ),
-            preferenceUseCase: preferenceUseCase
+            preferenceUseCase: preferenceUseCase,
+            tracker: tracker
         )
-        return (sut, preferenceUseCase)
+        return (sut, preferenceUseCase, tracker)
     }
 }
 
