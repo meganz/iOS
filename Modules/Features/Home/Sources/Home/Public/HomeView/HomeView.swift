@@ -235,7 +235,9 @@ public struct HomeView: View {
                     }
                 }
             }
-            .tabBarAndMiniPlayerAware()
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                BottomOverlayInsetSpacer()
+            }
             .navigationDestination(for: NavigationRoute.self) { route in
                 navigationDestinationBuilder(with: route)
             }
@@ -517,5 +519,14 @@ private final class HomeBackButtonConfiguratorController: UIViewController {
         super.didMove(toParent: parent)
         guard #unavailable(iOS 26) else { return }
         parent?.navigationItem.backButtonDisplayMode = .minimal
+    }
+}
+
+private struct BottomOverlayInsetSpacer: View {
+    @EnvironmentObject private var miniPlayerVisibility: MiniPlayerVisibility
+    @EnvironmentObject private var tabBarSafeAreaInsetCompensation: TabBarSafeAreaInsetCompensation
+
+    var body: some View {
+        Color.clear.frame(height: miniPlayerVisibility.height + tabBarSafeAreaInsetCompensation.value)
     }
 }
