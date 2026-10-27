@@ -56,6 +56,9 @@ final class PlaybackEngine {
 
     private let player = AVPlayer()
     private let notificationCenter: NotificationCenter
+    private let audioSessionCoordinator: AudioSessionCoordinator
+    /// The audio player is a single session, so one owner id covers it
+    private static let audioSessionOwner = "AudioPlayer"
     private var timeObserverToken: Any?
     private var rateObservation: NSKeyValueObservation?
     /// Subscriptions bound to the loaded `AVPlayerItem`
@@ -74,8 +77,12 @@ final class PlaybackEngine {
     /// Identifies the latest seek, so a superseded one cannot open the gate early.
     private var seekGeneration = 0
 
-    init(notificationCenter: NotificationCenter = .default) {
+    init(
+        notificationCenter: NotificationCenter = .default,
+        audioSessionCoordinator: AudioSessionCoordinator = .shared
+    ) {
         self.notificationCenter = notificationCenter
+        self.audioSessionCoordinator = audioSessionCoordinator
         observeTimeControlStatus()
         startPeriodicTimeObserver()
         observeAudioInterruption()
@@ -238,7 +245,9 @@ extension PlaybackEngine {
         setPlaybackSpeed(1)
         isPlaybackIntended = false
         isInterrupted = false
-        AVAudioSession.sharedInstance().deactivateWithoutBlocking(options: .notifyOthersOnDeactivation)
+        if audioSessionCoordinator.release(Self.audioSessionOwner) {
+            AVAudioSession.sharedInstance().deactivateWithoutBlocking(options: .notifyOthersOnDeactivation)
+        }
         resetSeekGate()
         currentTimeSubject.send(0)
         durationSubject.send(nil)
@@ -312,6 +321,7 @@ extension PlaybackEngine {
     /// other apps. Full session lifecycle (interruptions, route changes,
     /// background activation) lands in the audio-session task.
     private func configureAudioSession() {
+        audioSessionCoordinator.acquire(Self.audioSessionOwner)
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
     }
 }
