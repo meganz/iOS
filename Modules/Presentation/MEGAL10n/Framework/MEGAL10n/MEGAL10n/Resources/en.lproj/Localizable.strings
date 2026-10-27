@@ -5334,3 +5334,59 @@
 "home.doMoreWithMega.albumCreated.seeAlbum"="See album";
 /* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
 "transfers.row.failedWithReason"="Failed: %@";
+/* Title of the banner at the top of the Share link screen. The banner explains who can open the link, or that the link has expired. */
+"shareLink.accessInfo.title"="Link access";
+/* Text of the banner on the Share link screen when the link and its decryption key are shared separately. Anyone who has both can open the shared file or folder. */
+"shareLink.accessInfo.anyoneWithLinkAndKey"="Anyone with this link and key can view and download the data";
+/* Text of the warning banner on the Share link screen when the expiry date the user set for the link has passed. */
+"shareLink.accessInfo.expired"="This link has expired, so no one can open it";
+/* Label above the password of a password-protected link on the Share link screen. The password is shown hidden under this label, with a button to copy it. */
+"shareLink.details.passwordLabel"="Password";
+/* Note with a padlock icon under the link on the Share link screen. It tells the user that the link needs a password to open. */
+"shareLink.details.passwordProtected"="Password protected";
+/* Error note under the link on the Share link screen when the expiry date of the link has passed. */
+"shareLink.details.expired"="Link expired";
+/* Snack bar message on the Share link screen after the user saves new Link settings, such as a password or an expiry date. The updated link is copied to the clipboard. */
+"shareLink.snackbar.linkUpdated"="Link updated and copied to your clipboard";
+/* Snack bar message on the Share link screen after the user taps the copy button next to the decryption key of the link. */
+"shareLink.snackbar.keyCopied"="Key copied to your clipboard";
+/* Snack bar message on the Share link screen after the user taps the copy button next to the password of the link. */
+"shareLink.snackbar.passwordCopied"="Password copied to your clipboard";
+/* Message of the error shown on the Share link screen when the link, or the links for several items, could not be created. Shown under "Couldn’t create link" with a Try again button. */
+"shareLink.creationFailed.message"="Check your internet connection and try again.";
+/* Title of the dialog shown after the user shares a password-protected link. It asks whether to share the password of the link too. */
+"shareLink.sharePassword.title"="Share password?";
+/* Message of the dialog shown after the user shares a password-protected link. "it" is the password of the link. The buttons are Not now and Share. */
+"shareLink.sharePassword.message"="For extra security, send it in a different app from the link";
+/* Title of the view on the Share link screen that shows the link as a QR code, with buttons to share the QR code image or save it to Photos. It is a sheet on iPhone and a popover on iPad. */
+"shareLink.qrCode.title"="Share via QR code";
+/* Accessibility label of the button next to the password of a password-protected link on the Share link screen. The button copies the password to the clipboard. */
+"shareLink.accessibility.copyPassword"="Copy password";
+/* Accessibility label of the QR button next to the Share link button on the Share link screen. It opens the "Share via QR code" sheet. */
+"shareLink.accessibility.showQRCode"="Show QR code";
+/* Title of the Link settings screen, where the user sets an expiry date or a password for a link, or sends the decryption key separately. Also the accessibility label of the gear button that opens it from the Share link screen. */
+"shareLink.settings.title"="Link settings";
+/* Label of the switch on the Link settings screen. When it is on, the link is shared without its decryption key, and the key is shown and copied on its own. */
+"shareLink.settings.separateKey.title"="Separate link and key";
+/* Description under the "Separate link and key" switch on the Link settings screen. It is followed by a "Learn more" link that opens a help page. */
+"shareLink.settings.separateKey.description"="The link will not include the decryption key. Share the key through a different channel for extra security.";
+/* Description under the "Set expiry date" switch on the Link settings screen. When it is on, the user picks the date after which the link no longer opens. */
+"shareLink.settings.expiryDate.description"="The link expires on the date you choose";
+/* Description under the "Set password" switch on the Link settings screen. When it is on, people need the password to open the link. */
+"shareLink.settings.password.description"="Limit access with a password";
+/* Placeholder of the password field on the Link settings screen, shown while the field is empty. */
+"shareLink.settings.password.placeholder"="Enter password";
+/* Password strength shown under the password field on the Link settings screen while the user types an easily guessed password. */
+"shareLink.settings.password.weak"="Weak password";
+/* Password strength shown under the password field on the Link settings screen while the user types a password of medium strength. */
+"shareLink.settings.password.moderate"="Moderate password";
+/* Password strength shown under the password field on the Link settings screen while the user types a strong password. */
+"shareLink.settings.password.strong"="Strong password";
+/* Message under the password field on the Link settings screen when the password is too weak to save. The Save button stays disabled until the password is stronger. */
+"shareLink.settings.password.tooWeak"="Please use a stronger password.";
+/* Badge next to "Set expiry date" and "Set password" on the Link settings screen for users on the free plan. These settings need a Pro plan, and tapping them opens the upgrade screen. */
+"shareLink.settings.proBadge"="Pro";
+/* Accessibility label of the eye button in the password field on the Link settings screen. Tapping it shows the password as plain text. */
+"shareLink.settings.accessibility.showPassword"="Show password";
+/* Accessibility label of the eye button in the password field on the Link settings screen while the password is shown. Tapping it hides the password again. */
+"shareLink.settings.accessibility.hidePassword"="Hide password";

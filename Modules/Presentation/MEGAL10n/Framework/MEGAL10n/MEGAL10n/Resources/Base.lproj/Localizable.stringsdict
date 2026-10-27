@@ -3602,5 +3602,53 @@
         <string>%d files downloaded. Check Transfers to see which files are missing, then download them individually.</string>
       </dict>
     </dict>
+    <key>shareLink.accessInfo.anyoneWithLink</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Anyone with this link can view and download the data</string>
+        <key>other</key>
+        <string>Anyone with these links can view and download the data</string>
+      </dict>
+    </dict>
+    <key>shareLink.snackbar.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link copied to your clipboard</string>
+        <key>other</key>
+        <string>Links copied to your clipboard</string>
+      </dict>
+    </dict>
+    <key>shareLink.creationFailed.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Couldn’t create link</string>
+        <key>other</key>
+        <string>Couldn’t create links</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

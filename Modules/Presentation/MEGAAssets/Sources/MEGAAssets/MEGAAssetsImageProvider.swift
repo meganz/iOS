@@ -381,6 +381,12 @@ extension MEGAAssets {
         public static var monoWaveformMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoWaveformMediumThinOutline }
         public static var viewedLinks: SwiftUI.Image { MEGAImageBundle.viewedLinks }
         public static var continueWhereYouLeftIcon: SwiftUI.Image { MEGAImageBundle.continueWhereYouLeftIcon }
+        public static var monoQrMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoQrMediumThinOutline }
+        public static var monoShareMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoShareMediumThinOutline }
+        public static var monoAlertCircleMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoAlertCircleMediumThinOutline }
+        public static var monoLockSmallThinOutline: SwiftUI.Image { MEGAImageBundle.monoLockSmallThinOutline }
+        public static var copyright: SwiftUI.Image { MEGAImageBundle.copyright }
+        public static var glassAlertTriangle: SwiftUI.Image { MEGAImageBundle.glassAlertTriangle }
     }
 }
 
@@ -899,5 +905,11 @@ extension MEGAAssets {
         public static var monoWaveformMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoWaveformMediumThinOutline }
         public static var viewedLinks: UIKit.UIImage { MEGAUIImageBundle.viewedLinks }
         public static var continueWhereYouLeftIcon: UIKit.UIImage { MEGAUIImageBundle.continueWhereYouLeftIcon }
+        public static var monoQrMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoQrMediumThinOutline }
+        public static var monoShareMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoShareMediumThinOutline }
+        public static var monoAlertCircleMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoAlertCircleMediumThinOutline }
+        public static var monoLockSmallThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoLockSmallThinOutline }
+        public static var copyright: UIKit.UIImage { MEGAUIImageBundle.copyright }
+        public static var glassAlertTriangle: UIKit.UIImage { MEGAUIImageBundle.glassAlertTriangle }
     }
 }

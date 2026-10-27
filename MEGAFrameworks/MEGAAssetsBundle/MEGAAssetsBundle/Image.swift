@@ -363,4 +363,10 @@ public struct MEGAImageBundle {
     public static var monoWaveformMediumThinOutline: Image { Image(.monoWaveformMediumThinOutline) }
     public static var viewedLinks: Image { Image(.viewedLinks) }
     public static var continueWhereYouLeftIcon: Image { Image(.continueWhereYouLeftIcon) }
+    public static var monoQrMediumThinOutline: Image { Image(.monoQrMediumThinOutline) }
+    public static var monoShareMediumThinOutline: Image { Image(.monoShareMediumThinOutline) }
+    public static var monoAlertCircleMediumThinOutline: Image { Image(.monoAlertCircleMediumThinOutline) }
+    public static var monoLockSmallThinOutline: Image { Image(.monoLockSmallThinOutline) }
+    public static var copyright: Image { Image(.copyright) }
+    public static var glassAlertTriangle: Image { Image(.glassAlertTriangle) }
 }

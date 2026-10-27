@@ -519,4 +519,10 @@ public struct MEGAUIImageBundle {
     public static var monoWaveformMediumThinOutline: UIImage { UIImage.monoWaveformMediumThinOutline }
     public static var viewedLinks: UIImage { UIImage.viewedLinks }
     public static var continueWhereYouLeftIcon: UIImage { UIImage.continueWhereYouLeftIcon }
+    public static var monoQrMediumThinOutline: UIImage { UIImage.monoQrMediumThinOutline }
+    public static var monoShareMediumThinOutline: UIImage { UIImage.monoShareMediumThinOutline }
+    public static var monoAlertCircleMediumThinOutline: UIImage { UIImage.monoAlertCircleMediumThinOutline }
+    public static var monoLockSmallThinOutline: UIImage { UIImage.monoLockSmallThinOutline }
+    public static var copyright: UIImage { UIImage.copyright }
+    public static var glassAlertTriangle: UIImage { UIImage.glassAlertTriangle }
 }
