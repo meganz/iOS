@@ -1,6 +1,4 @@
 import MEGABenchmark
-import MEGAPDFSearchInterceptor
-import MEGAPDFSearchInterceptorTestSupport
 @testable import MEGAPDFViewer
 import PDFKit
 import XCTest
@@ -10,9 +8,8 @@ import XCTest
 /// Run: `scripts/benchmark.sh Modules/Features/MEGAPDFViewer`.
 @MainActor
 final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
-    /// The first search on a newly opened document, through the Find
-    /// interceptor, ranges included. A word on every line of the text
-    /// document.
+    /// The first search on a newly opened document, through
+    /// `PDFDocumentSearcher`. A word on every line of the text document.
     func testFirstSearchOfFrequentWord() throws {
         let url = try BenchmarkDocuments.makeTextDocument()
         let expected = try XCTUnwrap(PDFDocument(url: url)).findString("quick", withOptions: []).count
@@ -20,15 +17,16 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
             let count = try? runOnMainLoop {
                 let (window, pdfView) = try Self.makeHostedView(url: url)
                 defer { window.isHidden = true }
-                let interceptor = try Self.makeInterceptor(pdfView: pdfView)
-                return try await Self.search("quick", on: interceptor, in: pdfView)
+                try await Self.waitUntilDisplayed(pdfView)
+                let searcher = PDFDocumentSearcher(pdfView: pdfView)
+                return try await Self.search("quick", with: searcher, in: pdfView)
             }
             XCTAssertEqual(count, expected)
         }
     }
 
     /// `testFirstSearchOfFrequentWord` with `beginFindString` alone. The gap
-    /// between the two is the cost of the ranges on a first search.
+    /// between the two is the searcher's own cost on a first search.
     func testFirstBeginFindStringOfFrequentWord() throws {
         let url = try BenchmarkDocuments.makeTextDocument()
         let expected = try XCTUnwrap(PDFDocument(url: url)).findString("quick", withOptions: []).count
@@ -36,6 +34,7 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
             let count = try? runOnMainLoop {
                 let (window, pdfView) = try Self.makeHostedView(url: url)
                 defer { window.isHidden = true }
+                try await Self.waitUntilDisplayed(pdfView)
                 return try await Self.beginFindString("quick", in: try XCTUnwrap(pdfView.document))
             }
             XCTAssertEqual(count, expected)
@@ -48,23 +47,25 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
         let url = try BenchmarkDocuments.makeTextDocument()
         let (window, pdfView) = try Self.makeHostedView(url: url)
         defer { window.isHidden = true }
+        try runOnMainLoop { try await Self.waitUntilDisplayed(pdfView) }
         let expected = try XCTUnwrap(pdfView.document).findString("quick", withOptions: []).count
-        let interceptor = try Self.makeInterceptor(pdfView: pdfView)
-        _ = try runOnMainLoop { try await Self.search("quic", on: interceptor, in: pdfView) }
+        let searcher = PDFDocumentSearcher(pdfView: pdfView)
+        _ = try runOnMainLoop { try await Self.search("quic", with: searcher, in: pdfView) }
         measure(metrics: [XCTCPUMetric(), MainThreadStallMetric()]) {
             let count = try? runOnMainLoop {
-                try await Self.search("quick", on: interceptor, in: pdfView)
+                try await Self.search("quick", with: searcher, in: pdfView)
             }
             XCTAssertEqual(count, expected)
         }
     }
 
     /// `testRefinedSearchOfFrequentWord` with `beginFindString` alone. The gap
-    /// between the two is the cost of the ranges on a later search.
+    /// between the two is the searcher's own cost on a later search.
     func testRefinedBeginFindStringOfFrequentWord() throws {
         let url = try BenchmarkDocuments.makeTextDocument()
         let (window, pdfView) = try Self.makeHostedView(url: url)
         defer { window.isHidden = true }
+        try runOnMainLoop { try await Self.waitUntilDisplayed(pdfView) }
         let document = try XCTUnwrap(pdfView.document)
         let expected = document.findString("quick", withOptions: []).count
         _ = try runOnMainLoop { try await Self.beginFindString("quic", in: document) }
@@ -78,7 +79,9 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
 
     // MARK: - Helpers
 
-    private static func makeHostedView(url: URL) throws -> (UIWindow, MEGAPDFView) {
+    private static func makeHostedView(
+        url: URL
+    ) throws -> (UIWindow, MEGAPDFView) {
         let frame = CGRect(x: 0, y: 0, width: 402, height: 874)
         let window = UIWindow(frame: frame)
         let root = UIViewController()
@@ -91,29 +94,31 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
         return (window, pdfView)
     }
 
-    private static func makeInterceptor(
-        pdfView: PDFView
-    ) throws -> MEGAPDFUITextSearchingFindSessionInterceptor {
-        try XCTUnwrap(MEGAPDFUITextSearchingFindSessionInterceptor(
-            pdfView: pdfView,
-            documentSearcher: PDFDocumentSearcher(pdfView: pdfView),
-            jumpToSearchResultScrollAdjuster: nil
-        ))
+    /// Returns once `configure(document:)` has set `document`, which it does
+    /// only after reading the widest page off the main actor.
+    private static func waitUntilDisplayed(_ pdfView: MEGAPDFView) async throws {
+        let deadline = ContinuousClock.now + .seconds(5)
+        while pdfView.document == nil {
+            guard ContinuousClock.now < deadline else { throw DisplayTimeout() }
+            try await Task.sleep(for: .milliseconds(2))
+        }
+        pdfView.layoutIfNeeded()
     }
 
     /// The match count, once PDFKit has also stopped reporting matches, so no
     /// leftover work is billed to the next iteration.
     private static func search(
         _ query: String,
-        on interceptor: MEGAPDFUITextSearchingFindSessionInterceptor,
+        with searcher: PDFDocumentSearcher,
         in pdfView: PDFView
     ) async throws -> Int {
-        let aggregator = MEGARecordingSearchAggregator.performingQuery(query, on: interceptor)
-        while !aggregator.didFinishSearching {
-            try await Task.sleep(for: .milliseconds(2))
+        var matchCount = 0
+        // Matches the case-sensitive `findString` each benchmark expects.
+        for await _ in searcher.matches(for: query, compareOptions: []) {
+            matchCount += 1
         }
         try await waitUntilPDFKitStopsFinding(in: pdfView.document)
-        return aggregator.foundRangeCount
+        return matchCount
     }
 
     /// The matches reported before the first end, once PDFKit has also
@@ -143,6 +148,8 @@ private func waitUntilPDFKitStopsFinding(in document: PDFDocument?) async throws
     }
 }
 
+private struct DisplayTimeout: Error {}
+
 @MainActor
 private final class MatchCounter: NSObject {
     var matchCountBeforeEnd = 0
@@ -158,3 +165,4 @@ extension MatchCounter: @preconcurrency PDFDocumentDelegate {
         didEnd = true
     }
 }
+

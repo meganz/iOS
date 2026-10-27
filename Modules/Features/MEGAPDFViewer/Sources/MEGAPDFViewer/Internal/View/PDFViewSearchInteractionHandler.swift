@@ -1,4 +1,3 @@
-import MEGAPDFSearchInterceptor
 import PDFKit
 import UIKit
 
@@ -10,43 +9,20 @@ final class PDFViewSearchInteractionHandler: NSObject {
     private var documentSearcher: PDFDocumentSearcher?
     private var currentSession: PDFViewFindSession?
     private var jumpToSearchResultScrollAdjuster: PDFJumpToSearchResultScrollAdjuster?
-    private let makeInterceptor: @MainActor (
-        PDFView,
-        PDFDocumentSearcher,
-        PDFJumpToSearchResultScrollAdjuster?
-    ) -> MEGAPDFUITextSearchingFindSessionInterceptor?
-    private let reportMissingSearchableView: @MainActor () -> Void
     private let notificationCenter: NotificationCenter
     var onSearchSessionDidBegin: ((UUID) -> Void)?
     var onSearchSessionDidEnd: ((UUID) -> Void)?
     var onSearchResultChanged: ((UUID, UUID, Int) -> Void)?
 
-    init(
-        notificationCenter: NotificationCenter = .default,
-        makeInterceptor: @escaping @MainActor (
-            PDFView,
-            PDFDocumentSearcher,
-            PDFJumpToSearchResultScrollAdjuster?
-        ) -> MEGAPDFUITextSearchingFindSessionInterceptor? = {
-            MEGAPDFUITextSearchingFindSessionInterceptor(
-                pdfView: $0,
-                documentSearcher: $1,
-                jumpToSearchResultScrollAdjuster: $2
-            )
-        },
-        reportMissingSearchableView: @escaping @MainActor () -> Void = {
-            assertionFailure("PDFKit's searchable view is missing")
-        }
-    ) {
+    init(notificationCenter: NotificationCenter = .default) {
         self.notificationCenter = notificationCenter
-        self.makeInterceptor = makeInterceptor
-        self.reportMissingSearchableView = reportMissingSearchableView
         super.init()
     }
 
     func attachToPDFView(_ pdfView: PDFView) {
         guard findInteraction == nil else { return }
         self.pdfView = pdfView
+        // Attach search highlight overlays here (actual code in next MR)
         // One searcher for the view's lifetime, so a search left running by an
         // ended session is still its own to cancel.
         documentSearcher = PDFDocumentSearcher(pdfView: pdfView)
@@ -60,23 +36,11 @@ final class PDFViewSearchInteractionHandler: NSObject {
     }
 
     func presentSearch() {
-        // Without PDFKit's searchable view, `findInteraction(_:sessionFor:)`
-        // cannot build a session, so PDFKit's own Find takes over.
-        if let pdfView, pdfView.window != nil, let documentSearcher,
-           makeInterceptor(pdfView, documentSearcher, nil) == nil {
-            reportMissingSearchableView()
-            pdfView.isFindInteractionEnabled = true
-            pdfView.findInteraction.presentFindNavigator(showingReplace: false)
-            return
-        }
         findInteraction?.presentFindNavigator(showingReplace: false)
     }
 
     func dismissSearch() {
         findInteraction?.dismissFindNavigator()
-        if let pdfView, pdfView.isFindInteractionEnabled {
-            pdfView.findInteraction.dismissFindNavigator()
-        }
     }
 }
 
@@ -95,12 +59,13 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
             contentScrollView: { [weak pdfView] in pdfView?.contentScrollView },
             notificationCenter: notificationCenter
         )
-        guard let interceptor = makeInterceptor(pdfView, documentSearcher, adjuster)
-        else { return nil }
         jumpToSearchResultScrollAdjuster = adjuster
         let session = PDFViewFindSession(
-            interceptor: interceptor,
-            preferences: searchPreferences
+            pdfView: pdfView,
+            findInteraction: interaction,
+            documentSearcher: documentSearcher,
+            preferences: searchPreferences,
+            scrollAdjuster: adjuster
         )
         session.onSearchResultChanged = { [weak self, weak session] generationID, resultID in
             guard let session else { return }
@@ -124,7 +89,7 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
         // - calling this twice for one close.
         guard let endedSession = currentSession, findSession === endedSession else { return }
         onSearchSessionDidEnd?(endedSession.analyticsID)
-        documentSearcher?.cancelSearch()
+        endedSession.endSearch()
         jumpToSearchResultScrollAdjuster?.clearResultPlacement()
         currentSession = nil
     }

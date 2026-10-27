@@ -1,5 +1,3 @@
-import MEGAPDFSearchInterceptor
-import MEGAPDFSearchInterceptorTestSupport
 @testable import MEGAPDFViewer
 import PDFKit
 import Testing
@@ -14,7 +12,7 @@ struct FindNavigatorPresentationTests {}
 extension FindNavigatorPresentationTests {
     @MainActor
     struct PDFViewSearchInteractionHandlerTests {
-        @Test func presentSearch_opensSessionSearchingTheInterceptor() async throws {
+        @Test func presentSearch_opensPDFViewFindSession() async throws {
             let (window, _, handler, interaction) = try makeAttachedHandler()
             defer { window.isHidden = true }
 
@@ -23,8 +21,7 @@ extension FindNavigatorPresentationTests {
             for _ in 0..<20 where interaction.activeFindSession == nil {
                 try await Task.sleep(for: .milliseconds(100))
             }
-            let session = try #require(interaction.activeFindSession as? UITextSearchingFindSession)
-            #expect(session.searchableObject is MEGAPDFUITextSearchingFindSessionInterceptor)
+            let session = try #require(interaction.activeFindSession as? PDFViewFindSession)
             session.performSearch(query: "alpha", options: nil)
             for _ in 0..<20 where session.resultCount != 2 {
                 try await Task.sleep(for: .milliseconds(100))
@@ -45,7 +42,7 @@ extension FindNavigatorPresentationTests {
             handler.dismissSearch()
         }
 
-        @Test func sessionFor_buildsNewSessionAndInterceptorEachTime() throws {
+        @Test func sessionFor_buildsNewSessionEachTime() throws {
             let (window, pdfView, handler, interaction) = try makeAttachedHandler()
             defer { window.isHidden = true }
 
@@ -53,7 +50,6 @@ extension FindNavigatorPresentationTests {
             let second = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
 
             #expect(first !== second)
-            #expect(interceptor(of: first) !== interceptor(of: second))
         }
 
         @Test func detachedPDFView_sessionFor_returnsNil() {
@@ -68,51 +64,37 @@ extension FindNavigatorPresentationTests {
             let handler = PDFViewSearchInteractionHandler()
             handler.attachToPDFView(pdfView)
             let interaction = UIFindInteraction(sessionDelegate: handler)
-            #expect(MEGAPDFUITextSearchingFindSessionInterceptor(
-                pdfView: pdfView,
-                documentSearcher: PDFDocumentSearcher(pdfView: pdfView),
-                jumpToSearchResultScrollAdjuster: nil
-            ) != nil)
-
             #expect(handler.findInteraction(interaction, sessionFor: pdfView) == nil)
         }
 
-        @Test func session_keepsItsInterceptorAlive() throws {
+        @Test func sessionEnd_cancelsRunningSearch() async throws {
             let (window, pdfView, handler, interaction) = try makeAttachedHandler()
             defer { window.isHidden = true }
             let session = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
-
-            handler.findInteraction(interaction, didEnd: session)
-
-            #expect(interceptor(of: session) != nil)
-        }
-
-        @Test func sessionEnd_cancelsRunningSearch() throws {
-            let (window, pdfView, handler, interaction) = try makeAttachedHandler()
-            defer { window.isHidden = true }
-            let session = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
-            _ = MEGARecordingSearchAggregator.performingQuery("alpha", on: try #require(interceptor(of: session)))
+            session.performSearch(query: "alpha", options: nil)
             #expect(pdfView.document?.isFinding == true)
 
             handler.findInteraction(interaction, didEnd: session)
+            await settle()
 
             #expect(pdfView.document?.isFinding == false)
         }
 
-        @Test func lateEndOfEarlierSession_leavesCurrentSearchRunning() throws {
+        @Test func lateEndOfEarlierSession_leavesCurrentSearchRunning() async throws {
             let (window, pdfView, handler, interaction) = try makeAttachedHandler()
             defer { window.isHidden = true }
             let earlierSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
             let currentSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
-            _ = MEGARecordingSearchAggregator.performingQuery(
-                "alpha",
-                on: try #require(interceptor(of: currentSession))
-            )
+            currentSession.performSearch(query: "alpha", options: nil)
 
             handler.findInteraction(interaction, didEnd: earlierSession)
-            #expect(pdfView.document?.isFinding == true)
+            for _ in 0..<50 where currentSession.resultCount == 0 {
+                try await Task.sleep(for: .milliseconds(20))
+            }
+            #expect(currentSession.resultCount > 0)
 
             handler.findInteraction(interaction, didEnd: currentSession)
+            await settle()
             #expect(pdfView.document?.isFinding == false)
         }
 
@@ -122,10 +104,7 @@ extension FindNavigatorPresentationTests {
             let earlierSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
             handler.findInteraction(interaction, didEnd: earlierSession)
             let currentSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
-            _ = MEGARecordingSearchAggregator.performingQuery(
-                "alpha",
-                on: try #require(interceptor(of: currentSession))
-            )
+            currentSession.performSearch(query: "alpha", options: nil)
 
             handler.findInteraction(interaction, didEnd: earlierSession)
 
@@ -206,25 +185,19 @@ extension FindNavigatorPresentationTests {
             defer { window.isHidden = true }
             do {
                 let firstSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
-                _ = MEGARecordingSearchAggregator.performingQuery(
-                    "ipsum",
-                    on: try #require(interceptor(of: firstSession))
-                )
+                firstSession.performSearch(query: "ipsum", options: nil)
                 try await Task.sleep(for: .milliseconds(20))
                 handler.findInteraction(interaction, didEnd: firstSession)
             }
 
             let secondSession = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
-            let aggregator = MEGARecordingSearchAggregator.performingQuery(
-                "beta",
-                on: try #require(interceptor(of: secondSession))
-            )
-            for _ in 0..<50 where !aggregator.didFinishSearching {
+            secondSession.performSearch(query: "beta", options: nil)
+            for _ in 0..<50 where pdfView.document?.isFinding == true || secondSession.resultCount < 300 {
                 try await Task.sleep(for: .milliseconds(100))
             }
 
-            #expect(aggregator.didFinishSearching)
-            #expect(aggregator.foundRangeCount == 300)
+            #expect(pdfView.document?.isFinding == false)
+            #expect(secondSession.resultCount == 300)
         }
 
         @Test func newDocument_doesNotRestorePreviousDocumentQuery() async throws {
@@ -268,50 +241,6 @@ extension FindNavigatorPresentationTests {
             defer { secondInteraction.dismissFindNavigator() }
             #expect(secondInteraction.searchText == "")
             #expect(secondInteraction.activeFindSession?.resultCount == 0)
-        }
-
-        @Test func missingSearchableView_presentsPDFKitsOwnFind() async throws {
-            var reportCount = 0
-            let (window, pdfView, handler, _) = try makeAttachedHandler(
-                handler: PDFViewSearchInteractionHandler(
-                    makeInterceptor: { _, _, _ in nil },
-                    reportMissingSearchableView: { reportCount += 1 }
-                )
-            )
-            defer { window.isHidden = true }
-
-            handler.presentSearch()
-            for _ in 0..<20 where !pdfView.findInteraction.isFindNavigatorVisible {
-                try await Task.sleep(for: .milliseconds(100))
-            }
-
-            #expect(reportCount == 1)
-            #expect(pdfView.findInteraction.isFindNavigatorVisible)
-
-            handler.dismissSearch()
-            for _ in 0..<20 where pdfView.findInteraction.isFindNavigatorVisible {
-                try await Task.sleep(for: .milliseconds(100))
-            }
-
-            #expect(!pdfView.findInteraction.isFindNavigatorVisible)
-        }
-
-        @Test func searchableViewFound_keepsPDFKitsOwnFindDisabled() throws {
-            var reportCount = 0
-            let (window, pdfView, handler, _) = try makeAttachedHandler(
-                handler: PDFViewSearchInteractionHandler(
-                    reportMissingSearchableView: { reportCount += 1 }
-                )
-            )
-            defer {
-                handler.dismissSearch()
-                window.isHidden = true
-            }
-
-            handler.presentSearch()
-
-            #expect(reportCount == 0)
-            #expect(!pdfView.isFindInteractionEnabled)
         }
 
         @Test func findNavigatorOptionsMenu_offersMatchCaseOnly() async throws {
@@ -454,16 +383,12 @@ extension FindNavigatorPresentationTests {
             #expect(Set(results.map { $0.1 }).count == 1)
         }
 
+        /// Searches "alpha", whose first highlight jumps to the first result.
         private func jumpToFirstResult(in session: UIFindSession) async throws {
-            let sessionInterceptor = try #require(interceptor(of: session))
-            let aggregator = MEGARecordingSearchAggregator.performingQuery(
-                "alpha",
-                on: sessionInterceptor
-            )
-            for _ in 0..<50 where !aggregator.didFinishSearching {
+            session.performSearch(query: "alpha", options: nil)
+            for _ in 0..<50 where session.highlightedResultIndex == NSNotFound {
                 try await Task.sleep(for: .milliseconds(50))
             }
-            aggregator.scrollToRange(at: 0, on: sessionInterceptor)
         }
 
         private func jumpWithKeyboardUp(
@@ -516,11 +441,12 @@ extension FindNavigatorPresentationTests {
                     ("alpha beta " + filler).draw(in: frame.insetBy(dx: 24, dy: 24))
                 }
             }
-            pdfView.document = PDFDocument(data: data)
-            pdfView.layoutIfNeeded()
+            // Attached before the document, as `MEGAPDFView` does.
             let handler = handler
                 ?? PDFViewSearchInteractionHandler(notificationCenter: notificationCenter)
             handler.attachToPDFView(pdfView)
+            pdfView.document = PDFDocument(data: data)
+            pdfView.layoutIfNeeded()
             let interaction = try #require(
                 pdfView.interactions.compactMap { $0 as? UIFindInteraction }.first
             )
@@ -569,13 +495,6 @@ extension FindNavigatorPresentationTests {
                 if let menu = element as? UIMenu { return actionIdentifiers(in: menu.children) }
                 return (element as? UIAction).map { [$0.identifier.rawValue] } ?? []
             }
-        }
-
-        private func interceptor(
-            of session: UIFindSession
-        ) -> MEGAPDFUITextSearchingFindSessionInterceptor? {
-            (session as? UITextSearchingFindSession)?.searchableObject
-                as? MEGAPDFUITextSearchingFindSessionInterceptor
         }
     }
 }

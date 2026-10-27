@@ -1,62 +1,98 @@
-import Foundation
-import MEGAPDFSearchInterceptor
+import Combine
+import PDFKit
 import UIKit
 
-/// Keeps Find option checkmarks and search behavior consistent for one PDF.
-///
-/// UIKit can retain checked options across documents while submitting default
-/// options for new queries, so this session uses the viewer's preferences.
+/// Searches one PDF with the viewer's own option preferences, and shows its
+/// matches until the search changes or ends.
 @MainActor
-final class PDFViewFindSession: UITextSearchingFindSession {
+final class PDFViewFindSession: UIFindSession {
     let analyticsID = UUID()
-    var onSearchResultChanged: ((UUID, Int) -> Void)?
-    private var generationID = UUID()
-    private let preferences: PDFViewSearchPreferences
-    private let interceptor: MEGAPDFUITextSearchingFindSessionInterceptor
-
-    init(
-        interceptor: MEGAPDFUITextSearchingFindSessionInterceptor,
-        preferences: PDFViewSearchPreferences
-    ) {
-        self.preferences = preferences
-        // `searchableObject` is weak, so the session keeps its interceptor
-        // alive for as long as the session itself.
-        self.interceptor = interceptor
-        super.init(searchableObject: interceptor)
+    var onSearchResultChanged: ((UUID, Int) -> Void)? {
+        get { viewModel.onSearchResultChanged }
+        set { viewModel.onSearchResultChanged = newValue }
     }
+
+    private let viewModel: PDFViewFindSessionSearchResultsViewModel
+    private weak var pdfView: PDFView?
+    private weak var findInteraction: UIFindInteraction?
+    private let scrollAdjuster: PDFJumpToSearchResultScrollAdjuster
+    private let preferences: PDFViewSearchPreferences
+    private var subscriptions = Set<AnyCancellable>()
+
+    /// UIKit can retain checked options across documents while submitting
+    /// default options for new queries, so searches use `preferences` and
+    /// ignore the options UIKit passes.
+    init(
+        pdfView: PDFView,
+        findInteraction: UIFindInteraction,
+        documentSearcher: any PDFDocumentSearching,
+        preferences: PDFViewSearchPreferences,
+        scrollAdjuster: PDFJumpToSearchResultScrollAdjuster
+    ) {
+        self.pdfView = pdfView
+        self.findInteraction = findInteraction
+        self.scrollAdjuster = scrollAdjuster
+        self.preferences = preferences
+        viewModel = PDFViewFindSessionSearchResultsViewModel(
+            searchUseCase: PDFDocumentSearchUseCase(documentSearcher: documentSearcher)
+        )
+        super.init()
+        viewModel.$resultsUpdate
+            .compactMap { $0 }
+            .sink { [weak self] in self?.apply($0) }
+            .store(in: &subscriptions)
+    }
+
+    override var resultCount: Int { viewModel.matches.count }
+
+    override var highlightedResultIndex: Int { viewModel.highlightedIndex ?? NSNotFound }
 
     override func performSearch(query: String, options: UITextSearchOptions?) {
-        generationID = UUID()
-        super.performSearch(
+        viewModel.performSearch(
             query: query,
-            options: PDFViewTextSearchOptions(preferences: preferences)
+            compareOptions: preferences.compareOptions
         )
     }
+
     override func highlightNextResult(in direction: UITextStorageDirection) {
-        // Seed the current result before UIKit moves it, so the first
-        // navigation after a query change uses its initial highlight.
-        reportHighlightedResult()
-        super.highlightNextResult(in: direction)
-        reportHighlightedResult()
+        viewModel.highlightNextResult(forward: direction == .forward)
     }
 
     override func invalidateFoundResults() {
-        generationID = UUID()
-        super.invalidateFoundResults()
+        viewModel.invalidateResults()
     }
 
-    private func reportHighlightedResult() {
-        let index = highlightedResultIndex
-        guard index != NSNotFound else { return }
-        onSearchResultChanged?(generationID, index)
+    /// Cancels the search and clears its results.
+    func endSearch() {
+        viewModel.endSearch()
     }
 
+    private func apply(_ update: PDFViewFindSessionSearchResultsViewModel.ResultsUpdate) {
+        findInteraction?.updateResultCount()
+        // Highlight search result here (actual code in next MR)
+        guard let scrollTarget = update.scrollTarget, let pdfView else { return }
+        scroll(to: scrollTarget.selection, in: pdfView)
+    }
+
+    private func scroll(to selection: PDFSelection, in pdfView: PDFView) {
+        guard let page = selection.pages.first else { return }
+        let rect = pdfView.convert(selection.bounds(for: page), from: page)
+        let adjusterDidSuccessfullyScroll = scrollAdjuster.scrollRectIntoUsableArea(rect, in: pdfView)
+        if !adjusterDidSuccessfullyScroll {
+            pdfView.go(to: selection)
+        }
+    }
 }
 
 /// Stores Find option selections for one PDF viewer, starting with defaults.
 @MainActor
 final class PDFViewSearchPreferences {
     var matchesCase = false
+
+    /// The options a search uses for the current Find option selections.
+    var compareOptions: String.CompareOptions {
+        matchesCase ? [] : [.caseInsensitive]
+    }
 
     func makeMenu(defaultOptions: [UIMenuElement]) -> UIMenu {
         func option(_ element: UIMenuElement) -> UIMenuElement? {
@@ -82,20 +118,5 @@ final class PDFViewSearchPreferences {
             }
         }
         return UIMenu(children: defaultOptions.compactMap(option))
-    }
-}
-
-/// Captures viewer preferences so each search receives stable option values.
-@MainActor
-private final class PDFViewTextSearchOptions: UITextSearchOptions {
-    private let matchesCase: Bool
-
-    init(preferences: PDFViewSearchPreferences) {
-        matchesCase = preferences.matchesCase
-        super.init()
-    }
-
-    override var stringCompareOptions: String.CompareOptions {
-        matchesCase ? [] : [.caseInsensitive]
     }
 }

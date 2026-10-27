@@ -52,6 +52,7 @@ let package = Package(
                 "MEGAL10n",
                 .product(name: "MEGASdk", package: "MEGASDK"),
                 "MEGASDKRepo",
+                "MEGASwift",
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGAPDFSearchInterceptor",
