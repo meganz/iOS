@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAFoundation
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     static let newRepo = AudioSessionRepository(audioSession: .sharedInstance())
@@ -35,11 +36,18 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
     }
     
+    private func logError(functionName: StaticString = #function) -> @Sendable ((any Error)?) -> Void {
+        { error in
+            guard let error else { return }
+            MEGALogError("[AudioSession] \(functionName) error: \(error.localizedDescription)")
+        }
+    }
+    
     func configureDefaultAudioSession() {
         executeAction {
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
-            try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
         }
+        audioSession.deactivateWithoutBlocking(options: .notifyOthersOnDeactivation, completion: logError())
     }
     
     func configureCallAudioSession() {
@@ -49,8 +57,8 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             if isSpeakerEnabled {
                 try audioSession.overrideOutputAudioPort(.speaker)
             }
-            try audioSession.setActive(true)
         }
+        audioSession.activateWithoutBlocking(completion: logError())
     }
     
     func configureAudioPlayerAudioSession() {
@@ -77,8 +85,8 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     func configureVideoAudioSession() {
         executeAction {
             try audioSession.setCategory(.playback)
-            try audioSession.setActive(true)
         }
+        audioSession.activateWithoutBlocking(completion: logError())
     }
     
     func enableLoudSpeaker() {

@@ -2,6 +2,7 @@ import AVKit
 import Combine
 import MEGADesignToken
 import MEGADomain
+import MEGAFoundation
 import MEGAInfrastructure
 import MEGAPermissions
 import UIKit
@@ -157,8 +158,11 @@ public final class MEGAPlayerViewController: UIViewController {
                  mode: .moviePlayback,
                  options: [.allowAirPlay, .allowBluetoothHFP]
              )
-             try AVAudioSession.sharedInstance().setActive(true)
          } catch {
+             print("Audio session setup failed: \(error)")
+         }
+         AVAudioSession.sharedInstance().activateWithoutBlocking { error in
+             guard let error else { return }
              print("Audio session setup failed: \(error)")
          }
     }
