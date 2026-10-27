@@ -1,6 +1,7 @@
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "CoreDataErrorHandler.h"
+@import Firebase;
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
@@ -15,8 +16,13 @@
 @interface MEGAStore ()
 
 @property (strong, nonatomic) MEGACoreDataStack *stack;
+@property (nonatomic) BOOL shouldAbortAfterReport;
+@property (nonatomic, getter=isAbortingAfterReport) BOOL abortingAfterReport;
 
 @end
+
+static NSString * const MEGAStoreGroupSupportErrorDomain = @"mega.ios.groupSupport";
+static const NSInteger MEGAStoreGroupSupportCreationFailedErrorCode = 1;
 
 @implementation MEGAStore
 
@@ -28,6 +34,12 @@
     dispatch_once(&onceToken, ^{
         _megaStore = [[self alloc] init];
     });
+    // Aborting here rather than in storeURL: while the main run loop spins so the report gets written, anything calling
+    // shareInstance again gets the instance back instead of re-entering dispatch_once, which would crash
+    if (_megaStore.shouldAbortAfterReport && !_megaStore.isAbortingAfterReport) {
+        _megaStore.abortingAfterReport = YES;
+        [_megaStore abortAfterReportIsWritten];
+    }
     return _megaStore;
 }
 
@@ -54,7 +66,9 @@
 }
 
 
-- (NSURL *)storeURL {
+/// Returns nil when the disk is too full to create the GroupSupport directory: the app then shows the disk full
+/// blocking screen and runs without the store, as it does when SQLite is full
+- (nullable NSURL *)storeURL {
     NSString *dbName = @"MEGACD.sqlite";
     NSError *error;
     NSFileManager *fileManager = NSFileManager.defaultManager;
@@ -62,7 +76,23 @@
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
         if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:YES attributes:nil error:&error]) {
             MEGALogError(@"Error creating GroupSupport directory in the shared sandbox: %@", error);
-            abort();
+            // Crashlytics needs a configured Firebase app, which the Share extension never sets up
+            BOOL canReport = [FIRApp defaultApp] != nil;
+            if (canReport) {
+                [self reportGroupSupportDirectoryCreationError:error groupSupportURL:groupSupportURL];
+            }
+            if ([CoreDataErrorHandler isFileSystemFullError:error]) {
+                // The SQLite store can't be created without GroupSupport, the same as when SQLite itself runs out of space
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
+                return nil;
+            }
+            if (!canReport) {
+                abort();
+            }
+            // storeURL only runs from init, inside the dispatch_once in +shareInstance, so +shareInstance can abort
+            // once that's done, after the report is written
+            self.shouldAbortAfterReport = YES;
+            return nil;
         }
     }
     
@@ -77,6 +107,57 @@
     }
     
     return newStoreURL;
+}
+
+- (void)reportGroupSupportDirectoryCreationError:(NSError *)error groupSupportURL:(NSURL *)groupSupportURL {
+    NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
+    NSNumber *availableCapacity = [[NSURL fileURLWithPath:NSHomeDirectory()] resourceValuesForKeys:@[NSURLVolumeAvailableCapacityKey] error:nil][NSURLVolumeAvailableCapacityKey];
+    NSMutableDictionary<NSString *, id> *userInfo = [NSMutableDictionary dictionary];
+    userInfo[@"error_domain"] = error.domain;
+    userInfo[@"error_code"] = @(error.code);
+    userInfo[@"underlying_error_code"] = @(underlyingError.code);
+    userInfo[@"available_capacity"] = availableCapacity ?: @(-1);
+    // Tells an app group container that is missing or can't be reached from one where only GroupSupport is missing:
+    // listing fails with ENOENT for a missing container and EPERM when the sandbox doesn't let the app in
+    NSFileManager *fileManager = NSFileManager.defaultManager;
+    NSError *containerListError;
+    [fileManager contentsOfDirectoryAtURL:groupSupportURL.URLByDeletingLastPathComponent includingPropertiesForKeys:nil options:0 error:&containerListError];
+    userInfo[@"container_list_error"] = [self codeOfError:containerListError];
+    NSError *groupSupportError;
+    [fileManager attributesOfItemAtPath:groupSupportURL.path error:&groupSupportError];
+    userInfo[@"group_support_error"] = [self codeOfError:groupSupportError];
+    // Our own domain and a single code put every failure in one Crashlytics issue instead of under whatever system error came up;
+    // the original error goes along as the underlying error, with its own domain, code and user info
+    NSError *reportedError = [NSError errorWithDomain:MEGAStoreGroupSupportErrorDomain
+                                                 code:MEGAStoreGroupSupportCreationFailedErrorCode
+                                             userInfo:error != nil ? @{NSUnderlyingErrorKey: error} : nil];
+    [[FIRCrashlytics crashlytics] recordError:reportedError userInfo:userInfo];
+}
+
+/// recordError: writes the report from the main queue once Crashlytics has started, so the main thread keeps running
+/// its run loop for a moment instead of blocking, which would stop the report from ever being written
+- (void)abortAfterReportIsWritten __attribute__((noreturn)) {
+    NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:2];
+    if (NSThread.isMainThread) {
+        while (deadline.timeIntervalSinceNow > 0) {
+            [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:deadline];
+        }
+    } else {
+        [NSThread sleepUntilDate:deadline];
+    }
+    abort();
+}
+
+/// "0" when the call succeeded, otherwise its domain and code with the underlying POSIX one, e.g. "NSCocoaErrorDomain 257 (POSIX 1)"
+- (NSString *)codeOfError:(nullable NSError *)error {
+    if (error == nil) {
+        return @"0";
+    }
+    NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
+    if ([underlyingError.domain isEqualToString:NSPOSIXErrorDomain]) {
+        return [NSString stringWithFormat:@"%@ %ld (POSIX %ld)", error.domain, (long)error.code, (long)underlyingError.code];
+    }
+    return [NSString stringWithFormat:@"%@ %ld", error.domain, (long)error.code];
 }
 
 - (void)saveContext:(NSManagedObjectContext *)context {
