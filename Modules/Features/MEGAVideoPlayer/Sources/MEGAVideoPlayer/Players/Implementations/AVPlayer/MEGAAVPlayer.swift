@@ -2,6 +2,7 @@ import AVFoundation
 import AVKit
 @preconcurrency import Combine
 import MEGADomain
+import MEGAFoundation
 import UIKit
 
 @MainActor
@@ -67,6 +68,9 @@ public final class MEGAAVPlayer {
     private let videoNodesUseCase: any VideoNodesUseCaseProtocol
     private let videoPlaybackLoopUseCase: any VideoPlaybackLoopUseCaseProtocol
     private let leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)?
+    private let audioSessionCoordinator: AudioSessionCoordinator
+    /// One per player, as two videos can play at once, with one in Picture in Picture
+    private let audioSessionOwner = "VideoPlayer-\(UUID().uuidString)"
 
     public init(
         streamingUseCase: some StreamingUseCaseProtocol,
@@ -75,7 +79,8 @@ public final class MEGAAVPlayer {
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol,
         videoNodesUseCase: some VideoNodesUseCaseProtocol,
         videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol,
-        leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)? = DependencyInjection.leftOffItemRecordUseCase
+        leftOffItemRecordUseCase: (any LeftOffItemRecordUseCaseProtocol)? = DependencyInjection.leftOffItemRecordUseCase,
+        audioSessionCoordinator: AudioSessionCoordinator = .shared
     ) {
         self.streamingUseCase = streamingUseCase
         self.localFileURL = localFileURL
@@ -84,6 +89,7 @@ public final class MEGAAVPlayer {
         self.videoNodesUseCase = videoNodesUseCase
         self.videoPlaybackLoopUseCase = videoPlaybackLoopUseCase
         self.leftOffItemRecordUseCase = leftOffItemRecordUseCase
+        self.audioSessionCoordinator = audioSessionCoordinator
         self.isLoopEnabled = videoPlaybackLoopUseCase.isLoopEnabled
         self.statePublisher = stateSubject.eraseToAnyPublisher()
         self.currentTimePublisher = currentTimeSubject.eraseToAnyPublisher()
@@ -174,6 +180,7 @@ extension MEGAAVPlayer: PlaybackControllable {
         // streamed. Lets go of this player's hold only; the server stops once no other player holds it.
         resetThrottleBitrate()
         streamingUseCase.stopStreaming()
+        audioSessionCoordinator.release(audioSessionOwner)
         monitorVideoNodesUpdateTask?.cancel()
         monitorVideoNodesUpdateTask = nil
     }
@@ -309,6 +316,7 @@ extension MEGAAVPlayer: VideoRenderable {
 extension MEGAAVPlayer: PlaybackItemLoadable {
     public func loadItemAndMonitorUpdate(for item: VideoPlaybackItem, monitor items: [VideoPlaybackItem]) {
         VideoPlayerPictureInPictureSession.endRunningSession()
+        audioSessionCoordinator.acquire(audioSessionOwner)
 
         self.items = items
         monitorVideoNodesUpdate(for: items)
