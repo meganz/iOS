@@ -14,7 +14,10 @@ import Transfer
 /// `adsContent` is the ad the caller wants shown to free accounts, which this module knows nothing
 /// about: it only reserves the place the design gives it, below the file's details. Pass `EmptyView`
 /// for a screen that shows no ads.
-public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnavailable: View {
+///
+/// `miniPlayerContent` is the audio mini player, docked at the bottom edge below the anchored buttons. It
+/// should collapse to nothing while no audio is playing.
+public struct FileLinkView<Ads, LinkUnavailable, MiniPlayer>: View where Ads: View, LinkUnavailable: View, MiniPlayer: View {
     public struct Dependency {
         let link: String
         /// Set when the link the user opened was an encrypted one, of which `link` is the decrypted form.
@@ -62,20 +65,26 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
     /// `EnvironmentValues.fileLinkBottomSafeAreaInset`.
     @State private var bottomSafeAreaInset: CGFloat = 0
 
+    /// How tall the docked mini player is right now
+    @State private var miniPlayerHeight: CGFloat = 0
+
     private let dependency: Dependency
     /// Built once, next to the view model, so that resolving the body does not rebuild it.
     private let previewLoader: any ThumbnailLoaderProtocol
     @ViewBuilder let adsContent: () -> Ads
     @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
+    @ViewBuilder let miniPlayerContent: () -> MiniPlayer
 
     public init(
         dependency: Dependency,
         @ViewBuilder adsContent: @escaping () -> Ads,
-        @ViewBuilder linkUnavailableContent: @escaping (LinkUnavailableReason) -> LinkUnavailable
+        @ViewBuilder linkUnavailableContent: @escaping (LinkUnavailableReason) -> LinkUnavailable,
+        @ViewBuilder miniPlayerContent: @escaping () -> MiniPlayer
     ) {
         self.dependency = dependency
         self.adsContent = adsContent
         self.linkUnavailableContent = linkUnavailableContent
+        self.miniPlayerContent = miniPlayerContent
         previewLoader = FileLinkPreviewLoaderFactory.makePreviewLoader(nodeProvider: dependency.nodeProvider)
         _viewModel = StateObject(
             wrappedValue: FileLinkViewModel(
@@ -95,6 +104,9 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
             content
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    miniPlayerView
+                }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
         .background {
@@ -107,6 +119,7 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
             }
         }
         .environment(\.fileLinkBottomSafeAreaInset, bottomSafeAreaInset)
+        .environment(\.fileLinkMiniPlayerDocked, miniPlayerHeight > 0)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
         .onAppear {
             viewModel.trackScreenView()
@@ -168,6 +181,21 @@ public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnav
             fullScreenLinkUnavailableContent(reason)
                 .toolbar { toolbarContent }
         }
+    }
+
+    /// Sized by the content itself — a mini player that is not showing collapses
+    /// to nothing, so the inset costs nothing when no audio is playing.
+    private var miniPlayerView: some View {
+        miniPlayerContent()
+            .background {
+                GeometryReader { proxy in
+                    Color.clear
+                        .onAppear { miniPlayerHeight = proxy.size.height }
+                        .onChange(of: proxy.size.height) { _, height in
+                            miniPlayerHeight = height
+                        }
+                }
+            }
     }
 
     /// Centres the unavailable state on the whole screen rather than on the area below the

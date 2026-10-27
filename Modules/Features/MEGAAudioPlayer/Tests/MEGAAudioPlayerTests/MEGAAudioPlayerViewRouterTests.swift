@@ -1,6 +1,5 @@
 import Foundation
 @testable import MEGAAudioPlayer
-import MEGADomainMock
 import Testing
 import UIKit
 
@@ -58,33 +57,15 @@ struct MEGAAudioPlayerViewRouterTests {
         #expect(engine.playedURLs == [track(1)], "expanding must not touch playback")
     }
 
-    // MARK: - Dismissing while logged out
+    // MARK: - Dismissing
 
-    /// CC-8883: the folder link's docked mini player takes playback over once the full screen player closes.
-    @Test func dismissWhileLoggedOut_playingFromFolderLink_keepsPlaying() {
-        let (sut, presenter, _, service) = makeSUT(isLoggedIn: false)
-        let node = StubPlayableNode(handle: 1, name: "song1.mp3", fingerprint: "fingerprint-1")
-        sut.start(source: .folderLink(node: node, queue: [node]))
-
-        presenter.presentedHost?.onDismiss?()
-
-        #expect(service.currentSource != nil)
-    }
-
-    @Test func dismissWhileLoggedOut_playingFromElsewhere_stopsPlayback() {
-        let (sut, presenter, _, service) = makeSUT(isLoggedIn: false)
+    /// IOS-12893: closing the full screen player hands playback to whatever mini player or Control Center
+    /// is left, logged in or not, so it must never end the session.
+    @Test func dismiss_keepsPlaying() {
+        let (sut, presenter, _, service) = makeSUT()
         sut.start(source: source(1))
 
-        presenter.presentedHost?.onDismiss?()
-
-        #expect(service.currentSource == nil, "nothing would be left to control it")
-    }
-
-    @Test func dismissWhileLoggedIn_keepsPlaying() {
-        let (sut, presenter, _, service) = makeSUT(isLoggedIn: true)
-        sut.start(source: source(1))
-
-        presenter.presentedHost?.onDismiss?()
+        presenter.presentedHost?.rootView.vm.dismiss()
 
         #expect(service.currentSource != nil)
     }
@@ -128,7 +109,7 @@ struct MEGAAudioPlayerViewRouterTests {
 
     // MARK: - Helpers
 
-    private func makeSUT(isLoggedIn: Bool = true) -> (
+    private func makeSUT() -> (
         sut: MEGAAudioPlayerViewRouter,
         presenter: SpyPresenterViewController,
         engine: MockPlaybackEngine,
@@ -146,8 +127,7 @@ struct MEGAAudioPlayerViewRouterTests {
         let presenter = SpyPresenterViewController()
         let sut = MEGAAudioPlayerViewRouter(
             presenter: presenter,
-            service: service,
-            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn)
+            service: service
         )
         return (sut, presenter, engine, service)
     }

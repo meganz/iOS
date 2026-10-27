@@ -1,4 +1,3 @@
-import MEGADomain
 import SwiftUI
 import UIKit
 
@@ -29,7 +28,6 @@ public final class MEGAAudioPlayerViewRouter {
     private weak var presenter: UIViewController?
     private let service: any AudioPlaybackServiceProtocol
     private let actionsHandler: ActionsHandler?
-    private let accountUseCase: any AccountUseCaseProtocol
 
     /// Public entry point. Constructs the router with the shared
     /// `AudioPlaybackService` (singleton). Callers from outside the module use
@@ -51,13 +49,11 @@ public final class MEGAAudioPlayerViewRouter {
     init(
         presenter: UIViewController?,
         service: any AudioPlaybackServiceProtocol,
-        actionsHandler: ActionsHandler? = nil,
-        accountUseCase: any AccountUseCaseProtocol = DependencyInjection.accountUseCase
+        actionsHandler: ActionsHandler? = nil
     ) {
         self.presenter = presenter
         self.service = service
         self.actionsHandler = actionsHandler
-        self.accountUseCase = accountUseCase
     }
 
     /// Start (or replace) playback with the given source. Use this from any
@@ -97,21 +93,9 @@ public final class MEGAAudioPlayerViewRouter {
         host.isPlaylistVisible = { [weak vm] in vm?.isPlaylistVisible == true }
         host.playlistListTopY = { [weak vm] in vm?.playlistListTopY ?? 0 }
 
-        let service = service
-        let accountUseCase = accountUseCase
-        // Dismiss while logged out there is no mini player: only the folder link docks one that takes playback over.
-        let stopPlaybackIfLoggedOut = {
-            guard !accountUseCase.isLoggedIn() else { return }
-            if case .folderLink = service.currentSource { return }
-            service.stop()
-        }
-
         vm.onDismiss = { [weak host] in
             host?.dismiss(animated: true)
-            stopPlaybackIfLoggedOut()
         }
-
-        host.onDismiss = stopPlaybackIfLoggedOut
 
         let actionsHandler = self.actionsHandler
         vm.onMoreTap = { [weak host] track in

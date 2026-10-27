@@ -7,8 +7,6 @@ final class AudioPlayerHostingController: UIHostingController<AudioPlayerView> {
 
     var isPlaylistVisible: () -> Bool = { false }
 
-    var onDismiss: (() -> Void)?
-
     private let dismissDistanceThreshold: CGFloat = 120
     private let dismissVelocityThreshold: CGFloat = 900
 
@@ -52,7 +50,6 @@ final class AudioPlayerHostingController: UIHostingController<AudioPlayerView> {
                     self.view.layer.transform = CATransform3DMakeTranslation(0, self.view.bounds.height, 0)
                 } completion: { _ in
                     self.dismiss(animated: false)
-                    self.onDismiss?()
                 }
             } else {
                 UIView.animate(

@@ -1,5 +1,7 @@
 import Accounts
 import FileLink
+import MEGAAppPresentation
+import MEGAAudioPlayer
 import SwiftUI
 import UIKit
 
@@ -26,12 +28,18 @@ final class NewFileLinkViewController: UIViewController {
 
     private func attachFileLinkView() {
         navigationController?.navigationBar.isHidden = true
+        let isAudioPlayerRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp)
         let fileLinkViewController = UIHostingController(
             rootView: FileLinkView(
                 dependency: buildDependency(),
                 adsContent: { [adsBanner] in adsBanner },
                 linkUnavailableContent: { reason in
                     FileLinkUnavailableView(reason: reason)
+                },
+                miniPlayerContent: { [weak self] in
+                    if isAudioPlayerRevampEnabled {
+                        MEGAMiniPlayerDock { self?.expandToFullScreenPlayer() }
+                    }
                 }
             )
         )
@@ -48,7 +56,15 @@ final class NewFileLinkViewController: UIViewController {
         fileLinkViewController.didMove(toParent: self)
     }
 
-    private func buildDependency() -> FileLinkView<AdsBannerView, FileLinkUnavailableView>.Dependency {
+    private func expandToFullScreenPlayer() {
+        MEGAAudioPlayerViewRouter(
+            presenter: self,
+            actionsHandler: MEGAAudioPlayerActionsHandler.make()
+        )
+        .showCurrent()
+    }
+
+    private func buildDependency<MiniPlayer>() -> FileLinkView<AdsBannerView, FileLinkUnavailableView, MiniPlayer>.Dependency {
         let nodeProvider = FileLinkNodeProvider()
         // Read now rather than when the file is opened or shared: the photo browser clears it as it closes.
         let encryptedLink = MEGALinkManager.secondaryLinkURL?.absoluteString

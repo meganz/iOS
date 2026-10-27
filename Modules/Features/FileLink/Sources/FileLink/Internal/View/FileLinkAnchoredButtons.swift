@@ -9,6 +9,9 @@ extension EnvironmentValues {
     /// see it. The anchored buttons cannot read it themselves: `safeAreaInset` hands its content a region
     /// that already sits above the safe area, so the value there is zero.
     @Entry var fileLinkBottomSafeAreaInset: CGFloat = 0
+
+    /// Whether a mini player is docked below the anchored buttons — likewise invisible from inside the inset.
+    @Entry var fileLinkMiniPlayerDocked: Bool = false
 }
 
 /// The two fixed buttons anchored above the bottom safe area, offering the file's two main actions
@@ -19,6 +22,7 @@ struct FileLinkAnchoredButtons: View {
     let onSaveToMEGA: () -> Void
 
     @Environment(\.fileLinkBottomSafeAreaInset) private var bottomSafeAreaInset
+    @Environment(\.fileLinkMiniPlayerDocked) private var isMiniPlayerDocked
 
     var body: some View {
         MEGABottomAnchoredButtons(
@@ -45,7 +49,11 @@ struct FileLinkAnchoredButtons: View {
         // The design anchors the row to the bottom edge of the screen, with the component's own padding
         // as the only gap, while `safeAreaInset` places it above the home indicator strip and stacks that
         // padding on top. Cancelling the inset drops the row back down by exactly that strip.
-        .padding(.bottom, -bottomSafeAreaInset)
+        .padding(.bottom, bottomPadding)
+    }
+
+    private var bottomPadding: CGFloat {
+        isMiniPlayerDocked ? 0 : -bottomSafeAreaInset
     }
 
     private var buttonState: MEGAButtonState {

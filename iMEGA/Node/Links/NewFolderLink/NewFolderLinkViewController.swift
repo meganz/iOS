@@ -2,7 +2,6 @@ import Combine
 import FolderLink
 import MEGAAppPresentation
 import MEGAAppSDKRepo
-import MEGAAudioPlayer
 import MEGADomain
 import MEGAPreference
 import MEGASdk
@@ -19,8 +18,6 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
     /// this is the form the user was given, and the only form safe to store.
     private let receivedLink: String
     
-    private var hasStoppedAudioOnLeavingFolderLink = false
-
     init(link: String, receivedLink: String) {
         self.link = link
         self.receivedLink = receivedLink
@@ -42,32 +39,8 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
         AudioPlayerManager.shared.updateMiniPlayerPresenter(self)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // Closed by the user or replaced by another link opening, not just covered
-        guard !hasStoppedAudioOnLeavingFolderLink, isBeingRemoved else { return }
-        stopAudioPlaybackIfLoggedOut()
-    }
-
-    /// Whether this screen is going away for good: it is presented inside a navigation controller and an
-    /// ads container, so it is the container being dismissed, from its close button or by another link.
-    private var isBeingRemoved: Bool {
-        sequence(first: self as UIViewController, next: \.parent).contains { $0.isBeingDismissed }
-    }
-
     private var isAudioPlayerRevampEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp)
-    }
-
-    /// Logged out, this screen's mini player is the only one there is: playback started here can't
-    /// outlive it, or nothing would be left to control it. Runs from both the close button and
-    /// `viewDidDisappear`, so it stops the audio only once.
-    private func stopAudioPlaybackIfLoggedOut() {
-        guard !hasStoppedAudioOnLeavingFolderLink,
-              isAudioPlayerRevampEnabled,
-              !AccountUseCase(repository: AccountRepository.newRepo).isLoggedIn() else { return }
-        hasStoppedAudioOnLeavingFolderLink = true
-        MEGAAudioPlayerSession.stop()
     }
 
     private func attachFolderLinkView() {
@@ -131,7 +104,6 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
                 FolderLinkMediaDiscoveryContentView(viewModel: $0)
             },
             onClose: { [weak self] in
-                self?.stopAudioPlaybackIfLoggedOut()
                 self?.dismiss(animated: true)
             }
         )
