@@ -282,6 +282,9 @@
 
 - (IBAction)thumbnailTapped:(id)sender {
     if (self.collectionView.hidden) {
+        if (self.pdfView.document.isLocked) {
+            return;
+        }
         if (!self.thumbnailsPopulated) {
             [self.collectionView reloadData];
             self.thumbnailsPopulated = YES;
@@ -609,7 +612,9 @@
     CGRect pageRect = CGPDFPageGetBoxRect([self.pdfView.document pageAtIndex:indexPath.item].pageRef, kCGPDFMediaBox);
     float thumbnailWidth = (self.collectionView.frame.size.width - self.collectionView.layoutMargins.right - self.collectionView.layoutMargins.left - 50) / 3;
     float ratio = pageRect.size.width / thumbnailWidth;
-    return CGSizeMake(thumbnailWidth, pageRect.size.height / ratio);
+    CGFloat thumbnailHeight = pageRect.size.height / ratio;
+    return CGSizeMake(isfinite(thumbnailWidth) ? thumbnailWidth : 0,
+                      isfinite(thumbnailHeight) ? thumbnailHeight : 0);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
