@@ -92,8 +92,8 @@ private struct PromotionalBannerCardFrame: ViewModifier {
     }
 
     private var bannerSize: CGSize {
-        let cappedWidth = min(bannerWidth, PromotionalBannerMetrics.defaultWidth * 1.5)
-        let cappedHeight = min(bannerHeight, PromotionalBannerMetrics.defaultHeight * 1.5)
+        let cappedWidth = min(max(bannerWidth, PromotionalBannerMetrics.defaultWidth), PromotionalBannerMetrics.defaultWidth * 1.5)
+        let cappedHeight = min(max(bannerHeight, PromotionalBannerMetrics.defaultHeight), PromotionalBannerMetrics.defaultHeight * 1.5)
         return .init(width: cappedWidth, height: cappedHeight)
     }
 }
