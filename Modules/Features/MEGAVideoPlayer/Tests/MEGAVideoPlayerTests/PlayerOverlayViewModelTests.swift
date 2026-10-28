@@ -1046,28 +1046,75 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isScrubbing == false)
     }
 
-    /// Per-frame seeks are fire and forget, so a slow player neither stalls the drag nor lets the
-    /// timeline slip out of the gesture's hands while the finger is still down.
+    /// A slow player neither stalls the thumb nor has its seek cancelled by every drag update: drag
+    /// positions arriving while a seek is in flight are held, and only the latest is sought to once
+    /// that seek lands.
     @Test
-    func updateSeekBarDrag_whenThePlayerIsSlow_shouldKeepSeekingAndKeepHoldingTheTimeline() async {
+    func updateSeekBarDrag_whenThePlayerIsSlow_shouldFollowTheFingerAndSeekOnlyToTheLatestPosition() async {
         let mockPlayer = MockVideoPlayer()
-        mockPlayer.seekDelay = .milliseconds(500)
+        mockPlayer.seekDelay = .milliseconds(300)
         let sut = makeSUT(player: mockPlayer)
         sut.duration = .seconds(100)
         let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
 
-        // Issued the way the View issues them — each drag update in its own task — so the seeks
-        // overlap instead of queueing behind one another. The gap only fixes the order they are
-        // issued in; every seek is still in flight when the expectations below run.
+        // Issued the way the View issues them — each drag update in its own task. The gap only fixes
+        // the order they are issued in; the first seek is still in flight when the expectations run.
         for x in [CGFloat(10), 20, 30] {
             Task { await sut.updateSeekBarDrag(at: CGPoint(x: x, y: 10), in: frame) }
             try? await Task.sleep(for: .milliseconds(20))
         }
 
-        #expect(mockPlayer.seekTimes == [10, 20, 30])
+        #expect(mockPlayer.seekTimes == [10])
+        #expect(sut.currentTime == .seconds(30))
         #expect(sut.isSeeking == true)
         #expect(sut.isScrubbing == true)
         #expect(mockPlayer.pauseCallCount == 0)
+
+        try? await Task.sleep(for: .milliseconds(700))
+
+        #expect(mockPlayer.seekTimes == [10, 30])
+        #expect(sut.isSeeking == false)
+    }
+
+    /// Releasing the finger seeks to the released position at once, cancelling the drag seek still in
+    /// flight, and the drag position waiting behind that seek is never sought to.
+    @Test
+    func endSeekBarDrag_whileADragSeekIsInFlight_shouldSeekToTheReleasedPositionAtOnce() async {
+        let mockPlayer = MockVideoPlayer()
+        mockPlayer.seekDelay = .milliseconds(300)
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        for x in [CGFloat(10), 20] {
+            Task { await sut.updateSeekBarDrag(at: CGPoint(x: x, y: 10), in: frame) }
+            try? await Task.sleep(for: .milliseconds(20))
+        }
+        let release = Task { await sut.endSeekBarDrag(at: CGPoint(x: 40, y: 10), in: frame) }
+        try? await Task.sleep(for: .milliseconds(50))
+
+        #expect(mockPlayer.seekTimes == [10, 40], "the release seek is issued while the drag seek is still in flight")
+        #expect(sut.isSeeking == true)
+
+        await release.value
+
+        #expect(mockPlayer.seekTimes == [10, 40])
+        #expect(sut.currentTime == .seconds(40))
+        #expect(sut.isSeeking == false)
+    }
+
+    /// Whole seconds would leave a short video's bar only a handful of positions to snap between.
+    @Test
+    func updateSeekBarDrag_onAShortVideo_shouldMoveTheBarSmoothly() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(4)
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 30, y: 10), in: frame)
+
+        #expect(abs((mockPlayer.seekTimes.last ?? 0) - 1.2) < 0.001)
+        #expect(abs(sut.progress - 0.3) < 0.001)
     }
 
     /// A new item makes a seek still in flight moot: keeping the timeline guarded would leave the bar
