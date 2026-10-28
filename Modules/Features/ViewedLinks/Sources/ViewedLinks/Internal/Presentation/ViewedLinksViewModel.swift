@@ -1,5 +1,7 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAFoundation
 import MEGAL10n
 import MEGASwift
@@ -66,6 +68,7 @@ final class ViewedLinksViewModel: ObservableObject {
     private let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
     private let openLink: @MainActor (URL) -> Void
     private let resultsProvider: any ViewedLinksResultsProviding
+    private let tracker: any AnalyticsTracking
 
     private var sortOrder = defaultSortOrder
     private var viewMode: SearchResultsViewMode = .list
@@ -89,26 +92,37 @@ final class ViewedLinksViewModel: ObservableObject {
     init(
         viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
         resultsProvider: some ViewedLinksResultsProviding,
-        openLink: @escaping @MainActor (URL) -> Void
+        openLink: @escaping @MainActor (URL) -> Void,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.viewedLinksUseCase = viewedLinksUseCase
         self.resultsProvider = resultsProvider
         self.openLink = openLink
+        self.tracker = tracker
         listenToEditingChanges()
+    }
+
+    func onAppear() {
+        tracker.trackAnalyticsEvent(with: ViewedLinksScreenEvent())
     }
 
     func requestClearSelectedLinks() {
         guard selectedIds.isNotEmpty else { return }
+        tracker.trackAnalyticsEvent(with: ViewedLinksRemoveSelectedMenuToolbarEvent())
         isPresentingClearSelectedConfirmation = true
     }
 
     func requestClearAllLinks() {
+        // This aligns with Android, Android also sends both events for this action
+        tracker.trackAnalyticsEvent(with: ViewedLinksClearHistoryMenuItemEvent())
+        tracker.trackAnalyticsEvent(with: ViewedLinksClearHistoryDialogEvent())
         isPresentingClearAllConfirmation = true
     }
 
     /// Removes the selected links once the store has accepted the change.
     /// - Returns: `true` when all links are deleted
     func clearSelectedLinks() async -> Bool {
+        tracker.trackAnalyticsEvent(with: ViewedLinksRemoveSelectedConfirmButtonPressedEvent())
         let links = resultsProvider.links(for: selectedIds)
         guard links.isNotEmpty else { return false }
 
@@ -133,6 +147,7 @@ final class ViewedLinksViewModel: ObservableObject {
     /// Clears the whole history once the store has accepted the change.
     /// - Returns: `true` when the history is successfully cleared
     func clearAllLinks() async -> Bool {
+        tracker.trackAnalyticsEvent(with: ViewedLinksClearHistoryConfirmButtonPressedEvent())
         do {
             try await viewedLinksUseCase.clearHistory()
         } catch {
@@ -154,6 +169,11 @@ final class ViewedLinksViewModel: ObservableObject {
         guard let link = resultsProvider.link(for: selection.result.id) else {
             MEGALog.log(level: .error, message: "Could not resolve link with handle \(selection.result.id)")
             return
+        }
+        if link.isFolder {
+            tracker.trackAnalyticsEvent(with: ViewedLinksFolderLinkItemSelectedEvent())
+        } else {
+            tracker.trackAnalyticsEvent(with: ViewedLinksFileLinkItemSelectedEvent())
         }
         openLink(link.linkURL)
     }

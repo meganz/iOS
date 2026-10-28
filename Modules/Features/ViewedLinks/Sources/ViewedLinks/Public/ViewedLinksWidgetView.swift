@@ -61,7 +61,10 @@ public struct ViewedLinksWidgetView: View {
     }
 
     private var chevronButton: some View {
-        Button(action: dependency.onOpenFullScreen) {
+        Button {
+            viewModel.didTapViewAll()
+            dependency.onOpenFullScreen()
+        } label: {
             MEGAAssets.Image.chevronRight
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -82,6 +85,7 @@ public struct ViewedLinksWidgetView: View {
             VStack(spacing: 0) {
                 ForEach(rows) { row in
                     ViewedLinkWidgetRowView(link: row) {
+                        viewModel.didTapLink(row)
                         dependency.openLink(row.linkURL)
                     }
                 }

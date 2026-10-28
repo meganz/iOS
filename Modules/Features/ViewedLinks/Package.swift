@@ -45,6 +45,9 @@ let package = Package(
         // DataSource
         .package(path: "../../DataSource/MEGASDK"),
 
+        // Analytics
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
+
         // Test
         .package(path: "../../MEGASharedRepo/MEGATest")
     ],
@@ -64,7 +67,8 @@ let package = Package(
                 "MEGADomain",
                 "MEGAAppSDKRepo",
                 .product(name: "MEGASdk", package: "MEGASDK"),
-                "MEGASwift"
+                "MEGASwift",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ]
         ),
         .target(

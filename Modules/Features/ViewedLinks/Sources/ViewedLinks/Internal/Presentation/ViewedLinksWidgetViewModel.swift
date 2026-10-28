@@ -1,5 +1,7 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
 
@@ -15,13 +17,28 @@ final class ViewedLinksWidgetViewModel: ObservableObject {
 
     private let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
     private let limit: Int
+    private let tracker: any AnalyticsTracking
 
     init(
         viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
-        limit: Int = 4
+        limit: Int = 4,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.viewedLinksUseCase = viewedLinksUseCase
         self.limit = limit
+        self.tracker = tracker
+    }
+
+    func didTapLink(_ row: ViewedLinkWidgetRowModel) {
+        if row.isFolder {
+            tracker.trackAnalyticsEvent(with: ViewedLinksWidgetFolderLinkItemSelectedEvent())
+        } else {
+            tracker.trackAnalyticsEvent(with: ViewedLinksWidgetFileLinkItemSelectedEvent())
+        }
+    }
+
+    func didTapViewAll() {
+        tracker.trackAnalyticsEvent(with: ViewedLinksViewAllButtonPressedEvent())
     }
 
     func onTask() async {

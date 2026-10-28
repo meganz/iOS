@@ -94,6 +94,7 @@ public struct ViewedLinksView: View {
             .environment(\.editMode, $viewModel.editMode)
             .onAppear {
                 tabBarHidden = true
+                viewModel.onAppear()
             }
             .onDisappear {
                 tabBarHidden = false
