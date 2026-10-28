@@ -18,6 +18,7 @@ struct AudioMetadataLoaderTests {
         #expect(metadata.artist == "Flac Artist")
         #expect(metadata.album == "Flac Album")
         #expect(metadata.artworkData != nil)
+        #expect(try #require(metadata.duration) > 0)
     }
 
     @Test("Reads ID3 tags and embedded artwork from MP3")
@@ -28,5 +29,6 @@ struct AudioMetadataLoaderTests {
         #expect(metadata.artist == "Mp3 Artist")
         #expect(metadata.album == "Mp3 Album")
         #expect(metadata.artworkData != nil)
+        #expect(abs(try #require(metadata.duration) - 0.288) < 0.01)
     }
 }

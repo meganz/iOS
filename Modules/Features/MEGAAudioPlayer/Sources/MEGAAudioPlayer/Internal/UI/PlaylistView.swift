@@ -1,5 +1,7 @@
+import Combine
 import MEGAAssets
 import MEGADesignToken
+import MEGAFoundation
 import MEGAL10n
 import SwiftUI
 
@@ -9,6 +11,11 @@ struct PlaylistView: View {
     let sourceName: String?
     let items: [AudioPlaylistItem]
     let currentTrackID: String?
+    /// Playback position and duration of the current track, shown on its row only. The
+    /// position comes as a publisher that only that row subscribes to, so the queue is not
+    /// re-rendered every time it ticks.
+    let currentTimePublisher: Published<TimeInterval>.Publisher
+    let currentDuration: TimeInterval?
     let isVisible: Bool
     let onSelect: (Int) -> Void
     let onMove: (IndexSet, Int) -> Void
@@ -22,7 +29,11 @@ struct PlaylistView: View {
                 List {
                     ForEach(Array(items.enumerated()), id: \.element.id) { index, row in
                         let isCurrent = row.id == currentTrackID
-                        PlaylistRow(item: row, isCurrent: isCurrent, loadMetadata: loadMetadata)
+                        PlaylistRow(
+                            item: row,
+                            playback: isCurrent ? .init(currentTimePublisher: currentTimePublisher, duration: currentDuration) : nil,
+                            loadMetadata: loadMetadata
+                        )
                             .padding(.horizontal, TokenSpacing._5)
                             .contentShape(Rectangle())
                             .contentShape(.dragPreview, RoundedRectangle(cornerRadius: TokenRadius.small))
@@ -109,20 +120,32 @@ struct PlaylistView: View {
 // MARK: - Row
 
 private struct PlaylistRow: View {
+    struct Playback {
+        let currentTimePublisher: Published<TimeInterval>.Publisher
+        let duration: TimeInterval?
+    }
+
     let item: AudioPlaylistItem
-    let isCurrent: Bool
+    /// Set only on the row of the track that is playing.
+    let playback: Playback?
     let loadMetadata: (String) async -> AudioMetadata?
 
     @State private var metadata: AudioMetadata?
 
     private let thumbnailSize: CGFloat = TokenSpacing._11
 
+    private var isCurrent: Bool { playback != nil }
+
     private var displayTitle: String {
         if let title = metadata?.title, !title.isEmpty { return title }
         return item.title
     }
 
-    private var artist: String? { metadata?.artist }
+    /// The player's duration once its item is ready, so the row matches the scrubber; until
+    /// then, the one read from the file
+    private var duration: TimeInterval? {
+        playback?.duration ?? metadata?.duration
+    }
 
     private var artwork: UIImage? {
         metadata?.artworkData.flatMap(UIImage.init(data:))
@@ -146,11 +169,11 @@ private struct PlaylistRow: View {
                         .lineLimit(1)
                 }
 
-                Text(artist ?? "")
-                    .font(.footnote)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                    .lineLimit(1)
-                    .opacity(artist == nil ? 0 : 1)
+                if let playback, let duration {
+                    PlayingRowSubtitle(artist: metadata?.artist, duration: duration, currentTimePublisher: playback.currentTimePublisher)
+                } else {
+                    PlaylistSubtitle(artist: metadata?.artist, time: duration?.compactTimeString)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -183,12 +206,74 @@ private struct PlaylistRow: View {
     }
 }
 
+// MARK: - Subtitle
+
+/// The playing row's `00:20 / 4:55`. A view of its own, so only it re-renders as the
+/// position ticks.
+private struct PlayingRowSubtitle: View {
+    let artist: String?
+    let duration: TimeInterval
+    let currentTimePublisher: Published<TimeInterval>.Publisher
+
+    @State private var currentTime: TimeInterval = 0
+
+    var body: some View {
+        PlaylistSubtitle(artist: artist, time: timeText)
+            .onReceive(currentTimePublisher) { currentTime = $0 }
+    }
+
+    /// `00:20 / 4:55` (`00:05:00 / 1:02:03` from an hour up). Rounded like the scrubber, so
+    /// the two agree.
+    private var timeText: String {
+        let total = duration.compactTimeString
+        guard currentTime.isFinite else { return total }
+        let position: Duration = .seconds(min(max(currentTime, 0), duration).rounded())
+        let pattern: Duration.TimeFormatStyle.Pattern = duration.rounded() >= 3600
+            ? .hourMinuteSecond(padHourToLength: 2)
+            : .minuteSecond(padMinuteToLength: 2)
+        return "\(position.formatted(.time(pattern: pattern))) / \(total)"
+    }
+}
+
+/// `Artist • 4:55`, dropping whichever part is missing. Only the time uses monospaced
+/// digits, so it does not jitter as it ticks while digits in the artist name keep their
+/// normal spacing. A long artist name truncates before the time does.
+private struct PlaylistSubtitle: View {
+    let artist: String?
+    let time: String?
+
+    var body: some View {
+        let artist = self.artist.flatMap { $0.isEmpty ? nil : $0 }
+        HStack(spacing: 0) {
+            if artist == nil, time == nil {
+                Text("")
+            }
+            if let artist {
+                Text(artist)
+                    .lineLimit(1)
+                if time != nil {
+                    Text(" • ")
+                        .fixedSize()
+                }
+            }
+            if let time {
+                Text(time)
+                    .monospacedDigit()
+                    .fixedSize()
+            }
+        }
+        .font(.footnote)
+        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+    }
+}
+
 // MARK: - Compact Now Playing Header
 
 struct NowPlayingCompactHeader: View {
     let coverImage: UIImage?
     let title: String?
     let artist: String?
+    let duration: TimeInterval?
 
     private let coverSize: CGFloat = TokenSpacing._15
 
@@ -201,10 +286,8 @@ struct NowPlayingCompactHeader: View {
                     .font(.title3.bold())
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .lineLimit(1)
-                Text(artist ?? "")
-                    .font(.footnote)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                    .lineLimit(1)
+                // The total duration only; the playing row carries the position.
+                PlaylistSubtitle(artist: artist, time: duration?.compactTimeString)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -244,7 +327,7 @@ struct NowPlayingCompactHeader: View {
         .ignoresSafeArea()
 
         VStack(spacing: 0) {
-            NowPlayingCompactHeader(coverImage: nil, title: "Orange (Live)", artist: "Arcy Drive")
+            NowPlayingCompactHeader(coverImage: nil, title: "Orange (Live)", artist: "Arcy Drive", duration: 295)
                 .padding(TokenSpacing._4)
 
             let previewItems = ["Orange (Live)", "Superbloomer (Live)", "Liquor Lips (Live)", "Dessert song (Live)"]
@@ -256,12 +339,21 @@ struct NowPlayingCompactHeader: View {
                 sourceName: "Arcy Drive",
                 items: previewItems,
                 currentTrackID: previewItems.first?.id,
+                currentTimePublisher: .preview(20),
+                currentDuration: 295,
                 isVisible: true,
                 onSelect: { _ in },
                 onMove: { _, _ in },
-                loadMetadata: { _ in AudioMetadata(title: nil, artist: "Arcy Drive", album: nil, artworkData: nil) }
+                loadMetadata: { _ in AudioMetadata(title: nil, artist: "Arcy Drive", album: nil, artworkData: nil, duration: 295) }
             )
         }
     }
     .preferredColorScheme(.dark)
+}
+
+private extension Published<TimeInterval>.Publisher {
+    static func preview(_ value: TimeInterval) -> Self {
+        var published = Published(initialValue: value)
+        return published.projectedValue
+    }
 }

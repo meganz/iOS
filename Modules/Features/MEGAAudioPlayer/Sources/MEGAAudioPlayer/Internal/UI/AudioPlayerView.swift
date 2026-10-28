@@ -235,7 +235,7 @@ struct AudioPlayerView: View {
             .allowsHitTesting(!vm.isPlaylistVisible)
 
             VStack(spacing: 0) {
-                NowPlayingCompactHeader(coverImage: vm.artworkImage, title: vm.title, artist: vm.artist)
+                NowPlayingCompactHeader(coverImage: vm.artworkImage, title: vm.title, artist: vm.artist, duration: vm.displayDuration)
                     .padding(.horizontal, TokenSpacing._5)
                     .padding(.vertical, TokenSpacing._3)
                     .frame(height: TokenSpacing._17)
@@ -243,10 +243,14 @@ struct AudioPlayerView: View {
                     sourceName: vm.artist,
                     items: vm.playlistItems,
                     currentTrackID: vm.currentTrackID,
+                    currentTimePublisher: vm.$currentTime,
+                    currentDuration: vm.duration,
                     isVisible: vm.isPlaylistVisible,
                     onSelect: vm.selectPlaylistItem,
                     onMove: vm.movePlaylistItem,
-                    loadMetadata: { await vm.metadata(forID: $0) }
+                    // A method reference rather than a closure literal: SwiftUI treats a new
+                    // literal as a changed input, which would re-render the queue on every tick.
+                    loadMetadata: vm.metadata(forID:)
                 )
                 .frame(maxHeight: .infinity)
                 .overlay(alignment: .top) {

@@ -27,6 +27,8 @@ protocol PlaybackStateObservable {
     var artistPublisher: AnyPublisher<String?, Never> { get }
     var artworkDataPublisher: AnyPublisher<Data?, Never> { get }
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
+    /// The current track's duration read from the file, known before the player item is ready.
+    var metadataDurationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var statusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
     var hasStartedPlaybackPublisher: AnyPublisher<Bool, Never> { get }

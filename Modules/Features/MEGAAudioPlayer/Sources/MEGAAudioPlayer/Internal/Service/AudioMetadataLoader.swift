@@ -11,10 +11,7 @@ struct AudioMetadata: Sendable, Equatable {
     var artist: String?
     var album: String?
     var artworkData: Data?
-
-    var isEmpty: Bool {
-        title == nil && artist == nil && album == nil && artworkData == nil
-    }
+    var duration: TimeInterval?
 }
 
 // MARK: - Protocol
@@ -29,6 +26,10 @@ struct AudioMetadataLoader: AudioMetadataLoading {
         let asset = AVURLAsset(url: url)
 
         try Task.checkCancellation()
+        // Read from the asset rather than the tags, so it is set even for untagged files.
+        // Independent of the tags, so it loads alongside them.
+        async let duration = Self.duration(of: asset)
+
         var items = try await asset.load(.commonMetadata)
         if items.isEmpty {
             // FLAC's Vorbis comments are not a public metadata format, so they never reach
@@ -39,15 +40,24 @@ struct AudioMetadataLoader: AudioMetadataLoading {
         }
         try Task.checkCancellation()
 
+        // `AVMetadataItem` is not `Sendable`, so these stay sequential; the values are
+        // already in memory once `load(.commonMetadata)` returns.
         return AudioMetadata(
             title: try await Self.string(in: items, for: .commonKeyTitle),
             artist: try await Self.string(in: items, for: .commonKeyArtist),
             album: try await Self.string(in: items, for: .commonKeyAlbumName),
-            artworkData: try await Self.data(in: items, for: .commonKeyArtwork)
+            artworkData: try await Self.data(in: items, for: .commonKeyArtwork),
+            duration: await duration
         )
     }
 
     // MARK: - Private
+
+    private static func duration(of asset: AVURLAsset) async -> TimeInterval? {
+        guard let time = try? await asset.load(.duration), time.isNumeric else { return nil }
+        let seconds = time.seconds
+        return seconds.isFinite && seconds > 0 ? seconds : nil
+    }
 
     private static func string(in items: [AVMetadataItem], for key: AVMetadataKey) async throws -> String? {
         try await items.first { $0.commonKey == key }?.load(.value) as? String

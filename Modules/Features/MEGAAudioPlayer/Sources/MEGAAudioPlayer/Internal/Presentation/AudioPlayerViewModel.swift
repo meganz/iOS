@@ -43,6 +43,11 @@ final class AudioPlayerViewModel: ObservableObject {
     /// Track total duration. 
     @Published private(set) var duration: TimeInterval?
 
+    /// `duration`, falling back to the one read from the file while the player item loads.
+    /// For display only: the loading gate and the scrubber stay on `duration`, which is
+    /// set once the item is ready to seek.
+    @Published private(set) var displayDuration: TimeInterval?
+
     @Published private(set) var playbackMode: PlaybackMode = .music
 
     @Published private(set) var loadingState: PlayerLoadingState = .loading
@@ -209,6 +214,13 @@ final class AudioPlayerViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$duration)
 
+        Publishers.CombineLatest($duration, service.metadataDurationPublisher)
+            .map { duration, metadataDuration in duration ?? metadataDuration }
+            .removeDuplicates()
+            .assign(to: &$displayDuration)
+
+        // Waits for the player's own duration rather than `metadataDurationPublisher`, so the
+        // screen leaves loading only once the item can seek.
         let isReadyPublisher = Publishers.CombineLatest(
             service.artworkResolvedPublisher,
             service.durationPublisher.map { $0 != nil }
@@ -343,6 +355,7 @@ final class AudioPlayerViewModel: ObservableObject {
         self.artist = artist
         self.currentTime = currentTime
         self.duration = duration.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
+        self.displayDuration = self.duration
         self.loadingState = loadingState
         self.isShuffleOn = isShuffleOn
         self.repeatMode = repeatMode

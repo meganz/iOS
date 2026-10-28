@@ -14,6 +14,7 @@ final class AudioPlaybackService {
     private let metadataTitleSubject = CurrentValueSubject<String?, Never>(nil)
     private let artistSubject = CurrentValueSubject<String?, Never>(nil)
     private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
+    private let metadataDurationSubject = CurrentValueSubject<TimeInterval?, Never>(nil)
     private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.idle)
     private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
     private let repeatModeSubject = CurrentValueSubject<RepeatMode, Never>(.off)
@@ -222,6 +223,7 @@ final class AudioPlaybackService {
         }
         artist = metadata.artist
         artworkData = metadata.artworkData
+        metadataDurationSubject.send(metadata.duration)
     }
 
     /// Holds the server before each track's address is resolved, as the SDK hands out no address while the
@@ -504,6 +506,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
         engine.durationPublisher
     }
 
+    var metadataDurationPublisher: AnyPublisher<TimeInterval?, Never> {
+        metadataDurationSubject.eraseToAnyPublisher()
+    }
+
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> {
         engine.currentTimePublisher
     }
@@ -598,6 +604,7 @@ extension AudioPlaybackService: PlaybackControllable {
         metadataTitleSubject.send(nil)
         artist = nil
         artworkData = nil
+        metadataDurationSubject.send(nil)
         artworkResolvedSubject.send(false)
         hasStartedPlaybackSubject.send(false)
         // The queue has already moved on, so the outgoing track must go quiet now
@@ -631,7 +638,8 @@ extension AudioPlaybackService: PlaybackControllable {
             metadataTask = Task { [metadataCache, weak self] in
                 let metadata = await metadataCache.metadata(for: track, throttled: false)
                 guard let self, !Task.isCancelled else { return }
-                if let metadata, !metadata.isEmpty {
+                // Fields were cleared when the track started, so missing tags leave them as they are.
+                if let metadata {
                     self.applyMetadata(metadata, generation: generation)
                 }
                 self.markArtworkResolved(generation: generation)
@@ -990,6 +998,7 @@ extension AudioPlaybackService: PlaybackControllable {
         metadataTitleSubject.send(nil)
         artist = nil
         artworkData = nil
+        metadataDurationSubject.send(nil)
         artworkResolvedSubject.send(false)
         hasStartedPlaybackSubject.send(false)
         repeatModeSubject.send(.off)

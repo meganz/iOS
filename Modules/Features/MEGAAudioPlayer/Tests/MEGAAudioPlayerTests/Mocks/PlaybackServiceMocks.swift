@@ -35,6 +35,10 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
     /// `simulateFirstFrame()` — the real engine's route into a track.
     var stallsBeforeFirstFrame = false
 
+    /// When `true`, an item handed to `play(url:)` reports no duration until
+    /// `simulateDurationReady()` — an item still reading its header.
+    var withholdsDuration = false
+
     var currentTime: TimeInterval { currentTimeSubject.value }
     var duration: TimeInterval? { durationSubject.value }
 
@@ -69,7 +73,7 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
         if !isPlaybackIntended { loadedPausedURLs.append(url) }
         isItemLoaded = true
         currentTimeSubject.send(0)
-        durationSubject.send(itemDuration)
+        durationSubject.send(withholdsDuration ? nil : itemDuration)
         if isPlaybackIntended {
             playbackStatusSubject.send(stallsBeforeFirstFrame ? .buffering : .playing)
         } else {
@@ -138,6 +142,11 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
         playbackStatusSubject.send(.playing)
     }
 
+    /// The item that was withholding its duration reports it.
+    func simulateDurationReady() {
+        durationSubject.send(itemDuration)
+    }
+
     /// The running item stalls part-way through.
     func simulateStall() {
         playbackStatusSubject.send(.buffering)
@@ -192,6 +201,24 @@ actor NeverResolvingAudioMetadataCache: AudioMetadataCacheProtocol {
 
 actor StubAudioMetadataCache: AudioMetadataCacheProtocol {
     func metadata(for track: PlaybackTrack, throttled: Bool) async -> AudioMetadata? { nil }
+
+    func cachedMetadata(for track: PlaybackTrack) -> AudioMetadata? { nil }
+
+    func removeAll() {}
+}
+
+/// Each offline track's metadata from a fixed table; `nil` for a track not in it.
+actor FixedAudioMetadataCache: AudioMetadataCacheProtocol {
+    private let metadataByURL: [URL: AudioMetadata]
+
+    init(_ metadataByURL: [URL: AudioMetadata]) {
+        self.metadataByURL = metadataByURL
+    }
+
+    func metadata(for track: PlaybackTrack, throttled: Bool) async -> AudioMetadata? {
+        guard case .offline(let url) = track else { return nil }
+        return metadataByURL[url]
+    }
 
     func cachedMetadata(for track: PlaybackTrack) -> AudioMetadata? { nil }
 
