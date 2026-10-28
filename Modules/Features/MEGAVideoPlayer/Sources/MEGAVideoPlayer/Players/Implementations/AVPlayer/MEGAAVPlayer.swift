@@ -213,7 +213,9 @@ extension MEGAAVPlayer: PlaybackControllable {
         // and has been the long-standing convention in Apple’s media frameworks.
         let newTime = CMTime(seconds: time, preferredTimescale: 600)
         guard newTime.isValid else { return false }
-        return await player.seek(to: newTime)
+        // Zero tolerance lands on the requested frame; the default lets AVPlayer snap to the nearest
+        // keyframe, which makes scrubbing jump between keyframes.
+        return await player.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
 
     public var playbackRate: Float {

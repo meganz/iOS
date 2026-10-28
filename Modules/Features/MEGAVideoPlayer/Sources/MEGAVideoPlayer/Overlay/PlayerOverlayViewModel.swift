@@ -38,6 +38,9 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private var shouldShowAudioTrackMenu = false
     private var isHoldToSpeed = false
     private var shouldResumeAfterScrub = false
+    /// The latest drag position not sought to yet, while a scrub seek is in flight
+    private var pendingScrubTarget: Duration?
+    private var isScrubSeekInFlight = false
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
     private var lockOverlayTimer: Timer?
@@ -260,32 +263,21 @@ extension PlayerOverlayViewModel {
         return "\(currentTimeString) / \(durationString)"
     }
 
+    // Ratios are taken on the full durations: whole seconds would leave a short video's bar only a
+    // handful of positions to snap between.
     var progress: CGFloat {
-        let durationSeconds = duration.components.seconds
-        guard durationSeconds > 0 else { return 0 }
-
-        let currentSeconds = currentTime.components.seconds
-        let result = CGFloat(currentSeconds) / CGFloat(durationSeconds)
-        let finalResult = min(result, 1.0)
-        return finalResult
+        guard duration > .zero else { return 0 }
+        return min(currentTime / duration, 1.0)
     }
     
     var bufferStartProgress: CGFloat {
-        let durationSeconds = duration.components.seconds
-        guard durationSeconds > 0, let bufferRange else { return 0 }
-        
-        let bufferStartSeconds = bufferRange.start.components.seconds
-        let result = CGFloat(bufferStartSeconds) / CGFloat(durationSeconds)
-        return max(0, min(result, bufferEndProgress))
+        guard duration > .zero, let bufferRange else { return 0 }
+        return max(0, min(bufferRange.start / duration, bufferEndProgress))
     }
 
     var bufferEndProgress: CGFloat {
-        let durationSeconds = duration.components.seconds
-        guard durationSeconds > 0, let bufferRange else { return 0 }
-
-        let bufferEndSeconds = bufferRange.end.components.seconds
-        let result = CGFloat(bufferEndSeconds) / CGFloat(durationSeconds)
-        return min(result, 1.0)
+        guard duration > .zero, let bufferRange else { return 0 }
+        return min(bufferRange.end / duration, 1.0)
     }
 
     func updateSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
@@ -295,8 +287,8 @@ extension PlayerOverlayViewModel {
         if !isScrubbing {
             beginScrubbing()
         }
-        // Seeking on every drag update is what makes the timeline show the frames it scrolls over.
-        await performSeek(to: calculateTargetTime(from: location.x, in: frame.width))
+        // Seeking along the drag is what makes the timeline show the frames it scrolls over.
+        await scrubSeek(to: calculateTargetTime(from: location.x, in: frame.width))
     }
 
     func endSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
@@ -306,7 +298,26 @@ extension PlayerOverlayViewModel {
         // for the same NaN reason as above — is not left paused by the scrub.
         resumeAfterScrub()
         guard frame.width > 0 else { return }
+        // The released position goes straight to the player, cancelling any drag seek still in flight
+        // so playback does not start from it; the pending drag position is dropped so it cannot in
+        // turn cancel this seek.
+        pendingScrubTarget = nil
         await performSeek(to: calculateTargetTime(from: location.x, in: frame.width))
+    }
+
+    /// Seeks to one drag position at a time. Positions arriving while a seek is in flight only replace
+    /// the pending target, so each frame-exact seek lands and shows its frame instead of being
+    /// cancelled by the next drag update; the thumb follows the finger meanwhile.
+    private func scrubSeek(to target: Duration) async {
+        currentTime = target
+        pendingScrubTarget = target
+        guard !isScrubSeekInFlight else { return }
+        isScrubSeekInFlight = true
+        while let target = pendingScrubTarget {
+            pendingScrubTarget = nil
+            await performSeek(to: target)
+        }
+        isScrubSeekInFlight = false
     }
 
     /// Pauses playback for the duration of the drag
@@ -323,7 +334,7 @@ extension PlayerOverlayViewModel {
         guard shouldResumeAfterScrub else { return }
         shouldResumeAfterScrub = false
         // Handing playback back before the drag's last seek is issued costs nothing visually: the
-        // per-frame seeks already left the playhead under the finger.
+        // drag's seeks already left the playhead under the finger.
         player.play()
     }
 
@@ -331,13 +342,9 @@ extension PlayerOverlayViewModel {
         from xPosition: CGFloat,
         in width: CGFloat
     ) -> Duration {
-        let durationInSeconds = duration.components.seconds
-        guard durationInSeconds > 0 else { return .seconds(0) }
-        let clampedX = max(0, min(xPosition, width))
-        let progress = clampedX / width
-        let finalProgress = max(0, min(progress, 1.0))
-        let targetTime = finalProgress * Double(durationInSeconds)
-        return Duration.milliseconds(targetTime * 1000)
+        guard duration > .zero else { return .seconds(0) }
+        let progress = max(0, min(xPosition, width)) / width
+        return .seconds(progress * duration.timeInterval)
     }
 
     private func string(from duration: Duration) -> String {
