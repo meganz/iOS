@@ -108,6 +108,7 @@ final class LeftOffItemsViewModel: ObservableObject {
 
     func requestClearSelectedItems() {
         guard selectedIds.isNotEmpty else { return }
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffRemoveSelectedMenuToolbarEvent())
         isPresentingClearSelectedConfirmation = true
     }
 
@@ -117,6 +118,7 @@ final class LeftOffItemsViewModel: ObservableObject {
     }
 
     func clearSelectedItems() async {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffRemoveSelectedConfirmButtonPressedEvent())
         let items = resultsProvider.items(for: selectedIds)
         guard items.isNotEmpty else { return }
 

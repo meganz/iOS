@@ -1,3 +1,4 @@
+@testable import ContinueWhereYouLeftOff
 import ContinueWhereYouLeftOffMock
 import Foundation
 import MEGAAnalyticsiOS
@@ -8,7 +9,6 @@ import MEGASwift
 import MEGAUIComponent
 import Search
 import Testing
-@testable import ContinueWhereYouLeftOff
 
 @Suite("LeftOffItemsViewModel", .timeLimit(.minutes(1)))
 @MainActor
@@ -55,6 +55,37 @@ struct LeftOffItemsViewModelTests {
         #expect(trackedEventTypes(tracker) == [ObjectIdentifier(ContinueWhereLeftOffClearHistoryDialogConfirmedEvent.self)])
         #expect(isCleared)
         #expect(useCase.clearHistoryCallCount == 1)
+    }
+
+    @Test("asking to clear the selected items sends the toolbar event")
+    func requestClearSelectedItemsTracksEvent() {
+        let (sut, tracker) = makeSUT()
+        sut.selectionDidChange([7])
+
+        sut.requestClearSelectedItems()
+
+        #expect(trackedEventTypes(tracker) == [ObjectIdentifier(ContinueWhereLeftOffRemoveSelectedMenuToolbarEvent.self)])
+        #expect(sut.isPresentingClearSelectedConfirmation)
+    }
+
+    @Test("asking to clear with no selection sends nothing")
+    func requestClearSelectedItemsWithoutSelectionTracksNothing() {
+        let (sut, tracker) = makeSUT()
+
+        sut.requestClearSelectedItems()
+
+        #expect(tracker.trackedEventIdentifiers.isEmpty)
+        #expect(!sut.isPresentingClearSelectedConfirmation)
+    }
+
+    @Test("confirming the clear of the selected items sends the confirm event")
+    func clearSelectedItemsTracksEvent() async {
+        let (sut, tracker) = makeSUT()
+        sut.selectionDidChange([7])
+
+        await sut.clearSelectedItems()
+
+        #expect(trackedEventTypes(tracker) == [ObjectIdentifier(ContinueWhereLeftOffRemoveSelectedConfirmButtonPressedEvent.self)])
     }
 
     @Test("each sort choice sends its own event")
