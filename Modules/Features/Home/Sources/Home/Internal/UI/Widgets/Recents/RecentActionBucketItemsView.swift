@@ -98,7 +98,7 @@ struct RecentActionBucketItemsView: View {
                 navigator.removeLast()
             }
             .task {
-                await viewModel.observeEmptyItemsEvent()
+                await viewModel.monitorBucketUpdates()
             }
             .onDisappear {
                 if let snackBar = viewModel.fileNoLongerAvailableSnackBar {

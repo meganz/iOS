@@ -28,10 +28,12 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
     @Published private(set) var selectedNodes: Set<HandleEntity> = []
     @Published private(set) var isBucketEmpty: Bool = false
     @Published private(set) var fileNoLongerAvailableSnackBar: SnackBar?
+    @Published private var bucket: RecentActionBucketEntity
 
     private let dependency: Dependency
     private var cancellables: Set<AnyCancellable> = []
 
+    private let bucketItemsUseCase: any RecentActionBucketItemsUseCaseProtocol
     private let bucketItemsUpdateUseCase: any RecentActionBucketItemsUpdateUseCaseProtocol
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
@@ -81,10 +83,13 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
 
     init(
         dependency: Dependency,
+        bucketItemsUseCase: some RecentActionBucketItemsUseCaseProtocol = RecentActionBucketItemsUseCase(),
         bucketItemsUpdateUseCase: some RecentActionBucketItemsUpdateUseCaseProtocol = RecentActionBucketItemsUpdateUseCase()
     ) {
         self.dependency = dependency
+        self.bucketItemsUseCase = bucketItemsUseCase
         self.bucketItemsUpdateUseCase = bucketItemsUpdateUseCase
+        self.bucket = dependency.bucket
 
         $editMode
             .dropFirst()
@@ -119,10 +124,10 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
             .store(in: &cancellables)
 
         $selectedNodes
-            .combineLatest($editMode)
-            .map { [dependency] nodes, mode in
+            .combineLatest($editMode, $bucket)
+            .map { [dependency] nodes, mode, bucket in
                 dependency.titleUseCase.title(
-                    for: dependency.bucket,
+                    for: bucket,
                     editingState: mode.isEditing ? .active(selectedCount: nodes.count) : .inactive
                 )
             }
@@ -144,16 +149,27 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         searchResultsContainerViewModel.toggleSelectAll()
     }
     
-    func observeEmptyItemsEvent() async {
-        let unavailableUpdate = await bucketItemsUpdateUseCase
-            .bucketUpdates(forId: dependency.bucket.id)
-            .first { @Sendable in $0 == RecentActionBucketUpdatesEntity.unavailable }
-        // `first(where:)` returns nil both when `.unavailable` fires AND when the
-        // stream just ends — including when our task is cancelled (e.g. "Show in
-        // location" pushes Cloud Drive over this screen). Guarding here stops us
-        // from treating that cancellation as an empty bucket and wrongly bouncing
-        // the user out with a "files no longer available" snackbar.
-        guard unavailableUpdate != nil else { return }
+    func monitorBucketUpdates() async {
+        let fetchedBucket = await bucketItemsUseCase.fetchBucketContent(forId: dependency.bucket.id)
+        // A cancelled fetch also returns nil (for example a tab switch while the fetch runs).
+        // Do not treat it as an empty bucket.
+        guard !Task.isCancelled else { return }
+        guard let currentBucket = fetchedBucket else {
+            return setBucketUnavailable()
+        }
+        bucket = currentBucket
+        for await update in bucketItemsUpdateUseCase.bucketUpdates(forId: dependency.bucket.id) {
+            guard !Task.isCancelled else { break }
+            switch update {
+            case .available(let updatedBucket):
+                bucket = updatedBucket
+            case .unavailable:
+                return setBucketUnavailable()
+            }
+        }
+    }
+
+    private func setBucketUnavailable() {
         isBucketEmpty = true
         fileNoLongerAvailableSnackBar = SnackBar(message: Strings.Localizable.Home.Recent.MixedFileBucket.Snackbar.filesNotAvailable)
     }
