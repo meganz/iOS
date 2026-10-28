@@ -1,11 +1,13 @@
+@testable import ContinueWhereYouLeftOff
 import ContinueWhereYouLeftOffMock
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
 import Observation
 import Testing
-@testable import ContinueWhereYouLeftOff
 
 @Suite("LeftOffItemsCarouselViewModel", .timeLimit(.minutes(1)))
 @MainActor
@@ -40,9 +42,14 @@ struct LeftOffItemsCarouselViewModelTests {
     }
 
     private func makeSUT(
-        useCase: MockLeftOffItemsUseCase
+        useCase: MockLeftOffItemsUseCase,
+        tracker: MockTracker = MockTracker()
     ) -> LeftOffItemsCarouselViewModel {
-        LeftOffItemsCarouselViewModel(leftOffItemsUseCase: useCase, debounceInterval: .zero)
+        LeftOffItemsCarouselViewModel(leftOffItemsUseCase: useCase, debounceInterval: .zero, tracker: tracker)
+    }
+
+    private func trackedEventTypes(_ tracker: MockTracker) -> [ObjectIdentifier] {
+        tracker.trackedEventIdentifiers.map { ObjectIdentifier(type(of: $0)) }
     }
 
     private func makeSignals(for useCase: MockLeftOffItemsUseCase) -> AsyncStream<Void>.Continuation {
@@ -409,5 +416,59 @@ struct LeftOffItemsCarouselViewModelTests {
 
         #expect(loadedParts(sut.state)?.items.count == 2)
         await stop(task)
+    }
+
+    // MARK: - Analytics
+
+    @Test("the widget displayed event is sent at most once per app process")
+    func didShowCarouselTracksOnce() {
+        let firstTracker = MockTracker()
+        let secondTracker = MockTracker()
+        let first = makeSUT(useCase: MockLeftOffItemsUseCase(), tracker: firstTracker)
+        let second = makeSUT(useCase: MockLeftOffItemsUseCase(), tracker: secondTracker)
+
+        first.didShowCarousel()
+        first.didShowCarousel()
+        second.didShowCarousel()
+
+        let displayedEvent = ObjectIdentifier(ContinueWhereLeftOffWidgetDisplayedEvent.self)
+        #expect(trackedEventTypes(firstTracker).allSatisfy { $0 == displayedEvent })
+        #expect(firstTracker.trackedEventIdentifiers.count <= 1)
+        #expect(secondTracker.trackedEventIdentifiers.isEmpty)
+    }
+
+    @Test("tapping a card sends the item pressed event")
+    func didTapItemTracksEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(useCase: MockLeftOffItemsUseCase(), tracker: tracker)
+
+        sut.didTapItem()
+
+        #expect(trackedEventTypes(tracker) == [ObjectIdentifier(ContinueWhereLeftOffWidgetItemPressedEvent.self)])
+    }
+
+    @Test("tapping the more card sends its event and loads the next page")
+    func didTapMoreCardTracksEventAndLoadsMore() async {
+        let tracker = MockTracker()
+        let useCase = MockLeftOffItemsUseCase(topItemsResult: makeResolvedItems(count: 30))
+        let sut = makeSUT(useCase: useCase, tracker: tracker)
+        let task = start(sut)
+        await waitForState(of: sut) { $0 != .loading }
+
+        await sut.didTapMoreCard()
+
+        #expect(trackedEventTypes(tracker) == [ObjectIdentifier(ContinueWhereLeftOffWidgetMoreCardPressedEvent.self)])
+        #expect(loadedParts(sut.state)?.items.count == 16)
+        await stop(task)
+    }
+
+    @Test("tapping the chevron sends the view all event")
+    func didTapChevronTracksEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(useCase: MockLeftOffItemsUseCase(), tracker: tracker)
+
+        sut.didTapChevron()
+
+        #expect(trackedEventTypes(tracker) == [ObjectIdentifier(ContinueWhereLeftOffViewAllButtonPressedEvent.self)])
     }
 }

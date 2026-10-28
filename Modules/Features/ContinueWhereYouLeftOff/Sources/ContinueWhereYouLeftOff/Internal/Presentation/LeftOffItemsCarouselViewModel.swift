@@ -1,5 +1,7 @@
 import AsyncAlgorithms
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
 
@@ -14,18 +16,23 @@ final class LeftOffItemsCarouselViewModel {
 
     static let initialPageSize = 8
 
+    private static var hasTrackedCarouselDisplayed = false
+
     private(set) var state: State = .loading
 
     private let leftOffItemsUseCase: any LeftOffItemsUseCaseProtocol
     private let debounceInterval: Duration
+    @ObservationIgnored private let tracker: any AnalyticsTracking
     private var pageSize = LeftOffItemsCarouselViewModel.initialPageSize
 
     init(
         leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
-        debounceInterval: Duration = .milliseconds(300)
+        debounceInterval: Duration = .milliseconds(300),
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.leftOffItemsUseCase = leftOffItemsUseCase
         self.debounceInterval = debounceInterval
+        self.tracker = tracker
     }
 
     func onTask() async {
@@ -36,6 +43,25 @@ final class LeftOffItemsCarouselViewModel {
             .prepend(()) {
             await reload()
         }
+    }
+
+    func didShowCarousel() {
+        guard !Self.hasTrackedCarouselDisplayed else { return }
+        Self.hasTrackedCarouselDisplayed = true
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffWidgetDisplayedEvent())
+    }
+
+    func didTapItem() {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffWidgetItemPressedEvent())
+    }
+
+    func didTapMoreCard() async {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffWidgetMoreCardPressedEvent())
+        await loadMore()
+    }
+
+    func didTapChevron() {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffViewAllButtonPressedEvent())
     }
 
     func loadMore() async {

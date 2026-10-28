@@ -1,5 +1,7 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -64,6 +66,7 @@ final class LeftOffItemsViewModel: ObservableObject {
     private let leftOffItemsUseCase: any LeftOffItemsUseCaseProtocol
     private let resultsProvider: any LeftOffItemsResultsProviding
     private let openNode: @MainActor (HandleEntity) -> Void
+    private let tracker: any AnalyticsTracking
 
     private var sortOrder = defaultSortOrder
     private var viewMode: SearchResultsViewMode = .list
@@ -72,7 +75,8 @@ final class LeftOffItemsViewModel: ObservableObject {
     convenience init(
         leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        openNode: @escaping @MainActor (HandleEntity) -> Void
+        openNode: @escaping @MainActor (HandleEntity) -> Void,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.init(
             leftOffItemsUseCase: leftOffItemsUseCase,
@@ -80,19 +84,26 @@ final class LeftOffItemsViewModel: ObservableObject {
                 leftOffItemsUseCase: leftOffItemsUseCase,
                 mapper: LeftOffItemSearchResultMapper(thumbnailUseCase: thumbnailUseCase)
             ),
-            openNode: openNode
+            openNode: openNode,
+            tracker: tracker
         )
     }
 
     init(
         leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
         resultsProvider: some LeftOffItemsResultsProviding,
-        openNode: @escaping @MainActor (HandleEntity) -> Void
+        openNode: @escaping @MainActor (HandleEntity) -> Void,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.leftOffItemsUseCase = leftOffItemsUseCase
         self.resultsProvider = resultsProvider
         self.openNode = openNode
+        self.tracker = tracker
         listenToEditingChanges()
+    }
+
+    func onAppear() {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffScreenEvent())
     }
 
     func requestClearSelectedItems() {
@@ -101,6 +112,7 @@ final class LeftOffItemsViewModel: ObservableObject {
     }
 
     func requestClearAllItems() {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffClearHistoryMenuItemEvent())
         isPresentingClearAllConfirmation = true
     }
 
@@ -119,6 +131,7 @@ final class LeftOffItemsViewModel: ObservableObject {
     }
 
     func clearAllItems() async -> Bool {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffClearHistoryDialogConfirmedEvent())
         do {
             try await leftOffItemsUseCase.clearHistory()
         } catch {
@@ -136,6 +149,7 @@ final class LeftOffItemsViewModel: ObservableObject {
     }
 
     func didSelect(_ selection: SearchResultSelection) {
+        tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffListItemPressedEvent())
         openNode(selection.result.id)
     }
 
@@ -150,12 +164,20 @@ final class LeftOffItemsViewModel: ObservableObject {
         self.viewMode = viewMode
         switch viewMode {
         case .grid:
+            tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffGridViewSelectedEvent())
             searchResultsContainerViewModel.update(pageLayout: .thumbnail)
         case .list:
+            tracker.trackAnalyticsEvent(with: ContinueWhereLeftOffListViewSelectedEvent())
             searchResultsContainerViewModel.update(pageLayout: .list)
         case .mediaDiscovery:
             break
         }
+    }
+
+    private func sortOrderDidChange(_ sortOrder: MEGAUIComponent.SortOrder) {
+        self.sortOrder = sortOrder
+        guard let event = sortOrder.analyticsEvent else { return }
+        tracker.trackAnalyticsEvent(with: event)
     }
 
     private func makeSearchBridge() -> SearchBridge {
@@ -169,7 +191,7 @@ final class LeftOffItemsViewModel: ObservableObject {
                 self?.sortOrder ?? Self.defaultSortOrder
             },
             updateSortOrder: { [weak self] sortOrder in
-                self?.sortOrder = sortOrder
+                self?.sortOrderDidChange(sortOrder)
             },
             chipPickerShowedHandler: { _ in }
         )
@@ -203,5 +225,17 @@ final class LeftOffItemsViewModel: ObservableObject {
                 }
             }
             .store(in: &subscriptions)
+    }
+}
+
+private extension MEGAUIComponent.SortOrder {
+    var analyticsEvent: (any EventIdentifier)? {
+        switch (key, direction) {
+        case (.name, .ascending): ContinueWhereLeftOffSortByNameAscendingSelectedEvent()
+        case (.name, .descending): ContinueWhereLeftOffSortByNameDescendingSelectedEvent()
+        case (.dateAdded, .descending): ContinueWhereLeftOffSortByDateNewestSelectedEvent()
+        case (.dateAdded, .ascending): ContinueWhereLeftOffSortByDateOldestSelectedEvent()
+        default: nil
+        }
     }
 }

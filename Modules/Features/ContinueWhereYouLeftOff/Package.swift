@@ -44,7 +44,8 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGATest"),
 
         // External
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -62,7 +63,8 @@ let package = Package(
                 "MEGADomain",
                 "MEGAFoundation",
                 "MEGASwift",
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ]
         ),
         .target(
@@ -78,10 +80,14 @@ let package = Package(
                 "ContinueWhereYouLeftOff",
                 "ContinueWhereYouLeftOffMock",
                 "MEGAAppPresentation",
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                 "MEGADomain",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGASwift",
-                "MEGATest"
+                "MEGATest",
+                "MEGAUIComponent",
+                "Search",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ]
         )
     ]

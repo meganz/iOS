@@ -107,6 +107,7 @@ public struct ContinueWhereYouLeftOffView: View {
             .environment(\.editMode, $viewModel.editMode)
             .onAppear {
                 tabBarHidden = true
+                viewModel.onAppear()
             }
             .onDisappear {
                 tabBarHidden = false

@@ -67,7 +67,10 @@ public struct ContinueWhereYouLeftOffWidgetView: View {
     }
 
     private var chevronButton: some View {
-        Button(action: dependency.onOpenFullScreen) {
+        Button {
+            viewModel.didTapChevron()
+            dependency.onOpenFullScreen()
+        } label: {
             MEGAAssets.Image.chevronRight
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -91,10 +94,12 @@ public struct ContinueWhereYouLeftOffWidgetView: View {
                 isLoadingMore: isLoadingMore,
                 thumbnailLoader: dependency.thumbnailLoader,
                 onOpenItem: { card in
+                    viewModel.didTapItem()
                     dependency.selectionHandler.handle(selection: NodeSelection(handle: card.node.handle, siblings: []))
                 },
-                onLoadMore: { Task { await viewModel.loadMore() } }
+                onLoadMore: { Task { await viewModel.didTapMoreCard() } }
             )
+            .onAppear { viewModel.didShowCarousel() }
         case .empty:
             LeftOffItemsWidgetEmptyView()
         }
