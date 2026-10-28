@@ -189,6 +189,14 @@
     {
       "parallelizable" : true,
       "target" : {
+        "containerPath" : "container:Modules\/Features\/MEGAShareLink",
+        "identifier" : "MEGAShareLinkTests",
+        "name" : "MEGAShareLinkTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGAIntentDomain",
         "identifier" : "MEGAIntentDomainTests",
         "name" : "MEGAIntentDomainTests"

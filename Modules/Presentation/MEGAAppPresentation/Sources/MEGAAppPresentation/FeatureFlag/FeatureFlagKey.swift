@@ -17,6 +17,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case newTransfers = "New Transfers"
     case offlineMode = "Offline Mode"
     case pdfPreviewRevamp = "PDF Preview Revamp"
+    case shareLinkRevamp = "Share Link Revamp"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:

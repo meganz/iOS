@@ -385,6 +385,7 @@
 		250B11A62CBC844100E2743E /* NodeActionBuilderTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B11A52CBC844100E2743E /* NodeActionBuilderTestSuite.swift */; };
 		2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */; };
 		2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */; };
+		03DF7AF94BE6ED6C516C5ACA /* GetLinkRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A865E05675B3FAC3A40F6 /* GetLinkRouterTests.swift */; };
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
 		25356CE22CE5B05B00FF15E5 /* PhotosViewController+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25356CE12CE5B05B00FF15E5 /* PhotosViewController+Toolbar.swift */; };
 		25455BE82CCB8E1D008DE44E /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 25455BE72CCB8E1D008DE44E /* MEGAAssets */; };
@@ -1666,6 +1667,7 @@
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A5472CBF2F04EE2000A49688 /* NewFolderLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */; };
 		8CC111C641C89AB41A73B3F5 /* ViewedLinks in Frameworks */ = {isa = PBXBuildFile; productRef = CE6DA084558DA2E906E4BDDA /* ViewedLinks */; };
+		820D0DC48D5E8450457B8BAA /* MEGAShareLink in Frameworks */ = {isa = PBXBuildFile; productRef = 314A78F92A8B696AFE4FEE6C /* MEGAShareLink */; };
 		3A28ADED5367725A30DD8324 /* ContinueWhereYouLeftOff in Frameworks */ = {isa = PBXBuildFile; productRef = 8C569CE8D6E901C8A4F81A33 /* ContinueWhereYouLeftOff */; };
 		A5472CC72F04EF0900A49688 /* FolderLink in Frameworks */ = {isa = PBXBuildFile; productRef = A5472CC62F04EF0900A49688 /* FolderLink */; };
 		A5472CCE2F05010E00A49688 /* NewFolderLinkViewController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */; };
@@ -3272,6 +3274,7 @@
 		250B11A52CBC844100E2743E /* NodeActionBuilderTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionBuilderTestSuite.swift; sourceTree = "<group>"; };
 		2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModel.swift; sourceTree = "<group>"; };
 		2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModelTests.swift; sourceTree = "<group>"; };
+		9A9A865E05675B3FAC3A40F6 /* GetLinkRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkRouterTests.swift; sourceTree = "<group>"; };
 		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
 		25356CE12CE5B05B00FF15E5 /* PhotosViewController+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Toolbar.swift"; sourceTree = "<group>"; };
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
@@ -4584,6 +4587,7 @@
 		A52F1E332EBCE55800D3A2E9 /* Chat */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Chat; sourceTree = "<group>"; };
 		A52F1E342EBCE55800D3A2E9 /* CloudDrive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CloudDrive; sourceTree = "<group>"; };
 		CE6DA084000000000000AA01 /* ViewedLinks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewedLinks; sourceTree = "<group>"; };
+		1C5B204F5E641AD5C6B5497A /* MEGAShareLink */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAShareLink; sourceTree = "<group>"; };
 		A2F08963F515C8671318ADC8 /* ContinueWhereYouLeftOff */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ContinueWhereYouLeftOff; sourceTree = "<group>"; };
 		D4A1F0C2B83E47519A6C0E11 /* ViewedLinksDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewedLinksDebugView.swift; sourceTree = "<group>"; };
 		C4F1A0010001000000000006 /* LeftOffItemsDebugView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LeftOffItemsDebugView.swift; sourceTree = "<group>"; };
@@ -5836,6 +5840,7 @@
 				2FAE6CC58699FA24F8301047 /* MEGAPickerFileProviderRepo in Frameworks */,
 				6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */,
 				A5E136862EB4FF9A004BDD4F /* MEGASdk in Frameworks */,
+				820D0DC48D5E8450457B8BAA /* MEGAShareLink in Frameworks */,
 				1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
@@ -6116,6 +6121,7 @@
 				0E3B1A372A1D918300EC5859 /* Cells */,
 				0E3E07A22A1EA6C600A2A71B /* GetCollectionLinkViewModelTests.swift */,
 				0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */,
+				9A9A865E05675B3FAC3A40F6 /* GetLinkRouterTests.swift */,
 				25E319F42C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift */,
 				2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */,
 			);
@@ -11198,6 +11204,7 @@
 				14C12FCD2FA343D30021D501 /* MEGAAudioPlayer */,
 				ABCD12550000000000000003 /* MEGAPDFViewer */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
+				1C5B204F5E641AD5C6B5497A /* MEGAShareLink */,
 				ABCD12754000000000000003 /* MEGATextEditor */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
 				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
@@ -14146,6 +14153,7 @@
 				994890EA2E4D70B100CBDC33 /* MEGAVideoPlayer */,
 				ABCD12550000000000000002 /* MEGAPDFViewer */,
 				ABCD12754000000000000002 /* MEGATextEditor */,
+				314A78F92A8B696AFE4FEE6C /* MEGAShareLink */,
 				A5DF52D82EB1BAB9003E890F /* MEGAUIComponent */,
 				A5E136852EB4FF9A004BDD4F /* MEGASdk */,
 				A5E136882EB4FFB3004BDD4F /* MEGAChatSdk */,
@@ -14559,6 +14567,7 @@
 				A5EA941A2EB5EDF6009778D3 /* XCLocalSwiftPackageReference "Modules/Features/MEGAVideoPlayer" */,
 				ABCD12550000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGAPDFViewer" */,
 				ABCD12754000000000000004 /* XCLocalSwiftPackageReference "Modules/Features/MEGATextEditor" */,
+				9E61D04254590330D4C35DCC /* XCLocalSwiftPackageReference "Modules/Features/MEGAShareLink" */,
 				A5EA941B2EB5EE27009778D3 /* XCLocalSwiftPackageReference "Modules/MEGASharedRepo/MEGAStoreKit" */,
 				A5EA941C2EB5EE55009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Notifications" */,
 				5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */,
@@ -17181,6 +17190,7 @@
 				0E3E07A32A1EA6C700A2A71B /* GetCollectionLinkViewModelTests.swift in Sources */,
 				0E2FD9DD2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift in Sources */,
 				0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */,
+				03DF7AF94BE6ED6C516C5ACA /* GetLinkRouterTests.swift in Sources */,
 				0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */,
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
 				25E319F52C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift in Sources */,
@@ -19375,6 +19385,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/Notifications;
 		};
+		9E61D04254590330D4C35DCC /* XCLocalSwiftPackageReference "Modules/Features/MEGAShareLink" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/MEGAShareLink;
+		};
 		5D1696C940C582E32DCD8FD9 /* XCLocalSwiftPackageReference "Modules/Features/ViewedLinks" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/ViewedLinks;
@@ -19744,6 +19758,10 @@
 		99DB1D592AC64B34004A9CC3 /* ChatRepoMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ChatRepoMock;
+		};
+		314A78F92A8B696AFE4FEE6C /* MEGAShareLink */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAShareLink;
 		};
 		CE6DA084558DA2E906E4BDDA /* ViewedLinks */ = {
 			isa = XCSwiftPackageProductDependency;
