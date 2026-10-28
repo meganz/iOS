@@ -11,7 +11,10 @@ public struct AdsSlotView<T: View>: View {
 
     public var body: some View {
         VStack(spacing: 0) {
+            // A vertical tab bar (iPhone Duo) takes a side safe area. The content must cover it, or its
+            // tab bar controller sees no room for the vertical bar and stays horizontal.
             contentView
+                .ignoresSafeArea(edges: .horizontal)
 
             AdsBannerView(viewModel: viewModel)
         }
