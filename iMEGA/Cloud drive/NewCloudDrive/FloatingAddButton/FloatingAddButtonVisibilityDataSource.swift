@@ -7,14 +7,16 @@ import MEGASwift
 import Search
 
 struct FloatingAddButtonVisibilityDataSource {
-    private let parentNode: NodeEntity?
+    private let nodeSource: NodeSource
     private let nodeBrowserConfig: NodeBrowserConfig
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let searchResultsViewStateProvider: any SearchResultsViewStateProviding
+    /// Cached on the first successful lookup so frequent node updates don't keep hitting the SDK
+    private let cachedParentNodeHandle = Atomic<HandleEntity?>(wrappedValue: nil)
 
     init(
-        parentNode: NodeEntity?,
+        nodeSource: NodeSource,
         nodeBrowserConfig: NodeBrowserConfig,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
@@ -22,13 +24,23 @@ struct FloatingAddButtonVisibilityDataSource {
     ) {
         self.nodeUpdatesProvider = nodeUpdatesProvider
         self.nodeBrowserConfig = nodeBrowserConfig
-        self.parentNode = parentNode
+        self.nodeSource = nodeSource
         self.nodeUseCase = nodeUseCase
         self.searchResultsViewStateProvider = searchResultsViewStateProvider
     }
 
-    private func visibilityValue(for node: NodeEntity) -> Bool {
-        let nodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
+    private func parentNodeHandle() -> HandleEntity? {
+        if let handle = cachedParentNodeHandle.wrappedValue {
+            return handle
+        }
+        guard let handle = nodeSource.parentNode?.handle else { return nil }
+        cachedParentNodeHandle.mutate { $0 = handle }
+        return handle
+    }
+
+    private func visibilityValue() -> Bool {
+        guard let parentNodeHandle = parentNodeHandle() else { return false }
+        let nodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: parentNodeHandle)
         return nodeBrowserConfig.isFromViewInFolder != true
         && nodeBrowserConfig.displayMode != .rubbishBin
         && nodeBrowserConfig.displayMode != .backup
@@ -36,33 +48,24 @@ struct FloatingAddButtonVisibilityDataSource {
         && nodeAccessLevel != .read
     }
 
-    private func processNodeUpdates(_ updatedNodes: [NodeEntity]) async -> Bool? {
-        guard let updatedParentNode = updatedNodes.first(where: { $0.handle == parentNode?.handle }) else {
-            return nil
-        }
-        return visibilityValue(for: updatedParentNode)
+    private func containsParentNode(_ updatedNodes: [NodeEntity]) -> Bool {
+        guard let parentNodeHandle = parentNodeHandle() else { return false }
+        return updatedNodes.contains { $0.handle == parentNodeHandle }
     }
 }
 
 extension FloatingAddButtonVisibilityDataSource: FloatingAddButtonVisibilityDataSourceProtocol {
     public var floatingButtonVisibility: AnyAsyncSequence<Bool> {
-        guard let parentNode else {
-            return [false].async.eraseToAnyAsyncSequence()
-        }
-
-        let processedNodeUpdatesSequence = nodeUpdatesProvider
+        let parentNodeUpdatesSequence = nodeUpdatesProvider
             .nodeUpdates
-            .map { await self.processNodeUpdates($0) }
-            .compacted()
-            .prepend(visibilityValue(for: parentNode))
+            .filter { containsParentNode($0) }
+            .map { _ in }
+            .prepend(())
             .eraseToAnyAsyncSequence()
 
-        let emptyResultsSequence = searchResultsViewStateProvider.isEditingOrEmpty
-            .map { !$0 }
-            .eraseToAnyAsyncSequence()
-
-        return combineLatest(processedNodeUpdatesSequence, emptyResultsSequence)
-            .map { $0 && $1 }
+        // The parent node is resolved on every emission, as the root node is nil when Cloud Drive is built offline
+        return combineLatest(parentNodeUpdatesSequence, searchResultsViewStateProvider.isEditingOrEmpty)
+            .map { _, isEditingOrEmpty in !isEditingOrEmpty && visibilityValue() }
             .removeDuplicates()
             .eraseToAnyAsyncSequence()
     }

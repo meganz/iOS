@@ -55,10 +55,24 @@ struct FloatingAddButtonVisibilityDataSourceTests {
         searchResultsViewStateProvider: MockSearchResultsViewStateProvider = MockSearchResultsViewStateProvider()
     ) async -> FloatingAddButtonVisibilityDataSource {
         FloatingAddButtonVisibilityDataSource(
-            parentNode: parentNode,
+            nodeSource: .node { parentNode },
             nodeBrowserConfig: makeBrowserConfig(displayMode: displayMode, isFromViewInFolder: isFromViewInFolder),
-            nodeUpdatesProvider: MockNodeUpdatesProvider(),
+            nodeUpdatesProvider: nodeUpdatesProvider,
             nodeUseCase: MockNodeUseCase(nodeAccessLevel: { nodeAccessLevel }),
+            searchResultsViewStateProvider: searchResultsViewStateProvider
+        )
+    }
+
+    private static func makeSUT(
+        parentNodeProvider: MockParentNodeProvider,
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider(),
+        searchResultsViewStateProvider: MockSearchResultsViewStateProvider
+    ) async -> FloatingAddButtonVisibilityDataSource {
+        FloatingAddButtonVisibilityDataSource(
+            nodeSource: .node { parentNodeProvider.lookUpNode() },
+            nodeBrowserConfig: makeBrowserConfig(displayMode: .cloudDrive, isFromViewInFolder: false),
+            nodeUpdatesProvider: nodeUpdatesProvider,
+            nodeUseCase: MockNodeUseCase(nodeAccessLevel: { .owner }),
             searchResultsViewStateProvider: searchResultsViewStateProvider
         )
     }
@@ -71,17 +85,25 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                   arguments: TestInput.allNodeAccessLevels, TestInput.allDisplayModes)
             func nilParentNode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
                 for isFromViewInFolder in TestInput.allIsFromViewInFolder {
+                    let searchResultsViewStateProvider = MockSearchResultsViewStateProvider()
                     let sut = await Test.makeSUT(
                         parentNode: nil,
                         displayMode: displayMode,
                         isFromViewInFolder: isFromViewInFolder,
-                        nodeAccessLevel: nodeAccessLevel
+                        nodeAccessLevel: nodeAccessLevel,
+                        searchResultsViewStateProvider: searchResultsViewStateProvider
                     )
 
                     let collector = ResultCollector()
-                    for await val in sut.floatingButtonVisibility {
-                       await collector.collecValue(val)
+                    let task = Task {
+                        for await val in sut.floatingButtonVisibility.prefix(1) {
+                           await collector.collecValue(val)
+                        }
                     }
+
+                    searchResultsViewStateProvider.simulateEvent(false)
+                    await task.value
+
                     #expect(await collector.results == [false])
                 }
             }
@@ -219,7 +241,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                     return nodeAccessLevelCalls % 2 == 0 ? .read : .full
                 })
                 let sut = FloatingAddButtonVisibilityDataSource(
-                    parentNode: TestInput.parentNode,
+                    nodeSource: .node { TestInput.parentNode },
                     nodeBrowserConfig: browserConfig,
                     nodeUpdatesProvider: nodeUpdatesProvider,
                     nodeUseCase: nodeUseCase,
@@ -245,6 +267,70 @@ struct FloatingAddButtonVisibilityDataSourceTests {
 
                 #expect(await collector.results == [false, true, false, true, false, true])
             }
+        }
+    }
+
+    @Suite("Parent node unavailable when the data source is created", .serialized)
+    struct LateParentNodeTests {
+        @Test("Yields `true` once the list is populated after the parent node becomes available")
+        func parentNodeAvailableOnListUpdate() async {
+            let parentNodeProvider = MockParentNodeProvider()
+            let searchResultsViewStateProvider = MockSearchResultsViewStateProvider()
+            let sut = await Test.makeSUT(
+                parentNodeProvider: parentNodeProvider,
+                searchResultsViewStateProvider: searchResultsViewStateProvider
+            )
+            var iterator = sut.floatingButtonVisibility.makeAsyncIterator()
+
+            searchResultsViewStateProvider.simulateEvent(true)
+            #expect(await iterator.next() == false)
+
+            parentNodeProvider.node = TestInput.parentNode
+            searchResultsViewStateProvider.simulateEvent(false)
+            #expect(await iterator.next() == true)
+        }
+
+        @Test("Yields `true` once the parent node becomes available and is updated")
+        func parentNodeAvailableOnNodeUpdate() async {
+            let parentNodeProvider = MockParentNodeProvider()
+            let nodeUpdatesProvider = ControllableMockNodeUpdatesProvider()
+            let searchResultsViewStateProvider = MockSearchResultsViewStateProvider()
+            let sut = await Test.makeSUT(
+                parentNodeProvider: parentNodeProvider,
+                nodeUpdatesProvider: nodeUpdatesProvider,
+                searchResultsViewStateProvider: searchResultsViewStateProvider
+            )
+            var iterator = sut.floatingButtonVisibility.makeAsyncIterator()
+
+            searchResultsViewStateProvider.simulateEvent(false)
+            #expect(await iterator.next() == false)
+
+            parentNodeProvider.node = TestInput.parentNode
+            nodeUpdatesProvider.simulateEvent([TestInput.parentNode])
+            #expect(await iterator.next() == true)
+        }
+
+        @Test("Looks up the parent node only until the first successful lookup")
+        func parentNodeLookupIsCached() async {
+            let parentNodeProvider = MockParentNodeProvider()
+            let searchResultsViewStateProvider = MockSearchResultsViewStateProvider()
+            let sut = await Test.makeSUT(
+                parentNodeProvider: parentNodeProvider,
+                searchResultsViewStateProvider: searchResultsViewStateProvider
+            )
+            var iterator = sut.floatingButtonVisibility.makeAsyncIterator()
+
+            parentNodeProvider.node = TestInput.parentNode
+            searchResultsViewStateProvider.simulateEvent(false)
+            #expect(await iterator.next() == true)
+
+            searchResultsViewStateProvider.simulateEvent(true)
+            #expect(await iterator.next() == false)
+
+            searchResultsViewStateProvider.simulateEvent(false)
+            #expect(await iterator.next() == true)
+
+            #expect(parentNodeProvider.lookupCount == 1)
         }
     }
 
@@ -300,6 +386,16 @@ private class MockSearchResultsViewStateProvider: @unchecked Sendable, SearchRes
 
     func simulateEvent(_ event: Bool) {
         continuation.yield(event)
+    }
+}
+
+private final class MockParentNodeProvider: @unchecked Sendable {
+    var node: NodeEntity?
+    private(set) var lookupCount = 0
+
+    func lookUpNode() -> NodeEntity? {
+        lookupCount += 1
+        return node
     }
 }
 

@@ -1281,7 +1281,7 @@ struct CloudDriveViewControllerFactory {
         let viewStateProvider = SearchResultsViewStateProvider(viewModel: searchResultsViewModel)
 
         let floatingButtonVisibilityDataSource = FloatingAddButtonVisibilityDataSource(
-            parentNode: nodeSource.parentNode,
+            nodeSource: nodeSource,
             nodeBrowserConfig: config,
             nodeUpdatesProvider: nodeUpdatesProvider,
             nodeUseCase: nodeUseCase,
