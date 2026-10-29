@@ -7,6 +7,7 @@
 #import "MEGACoreDataStack.h"
 #import "CoreDataErrorHandler.h"
 #import "NSError+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 7;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
@@ -109,29 +110,98 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)queueUpUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSUInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSArray<MOAssetUploadRecord *> *records = @[];
+- (nullable MOAssetUploadRecord *)queueUpNextUploadRecordByStatuses:(NSArray<NSNumber *> *)statuses mediaType:(PHAssetMediaType)mediaType retryScheduler:(CameraUploadRetryScheduler *)retryScheduler concurrentCount:(NSInteger)concurrentCount error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block MOAssetUploadRecord *record = nil;
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.returnsObjectsAsFaults = NO;
-        request.fetchLimit = fetchLimit;
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
-        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateByFilterAssetUploadRecordError]]];
-        [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
-        records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+        NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
+        NSPredicate *queueablePredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[statusPredicate, [self predicateByFilterAssetUploadRecordError]]];
+        NSSortDescriptor *newestFirst = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO];
         
-        for (MOAssetUploadRecord *record in records) {
-            record.status = @(CameraAssetUploadStatusQueuedUp);
+        MOAssetUploadRecord *neverFailedRecord = [self firstQueueableRecordWithPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[queueablePredicate, CameraUploadRecordManager.neverFailedRecordsPredicate]] sortDescriptors:@[newestFirst] error:&coreDataError];
+        if (coreDataError) {
+            return;
         }
+        
+        record = [retryScheduler nextRecordWithNeverFailedRecord:neverFailedRecord concurrentCount:concurrentCount failedRecord:^id _Nullable{
+            return [self firstFailedRecordWithQueueablePredicate:queueablePredicate newestFirst:newestFirst error:&coreDataError];
+        } failureCount:^NSInteger(MOAssetUploadRecord *failedRecord) {
+            return failedRecord.errorPerLaunch.errorCount.integerValue;
+        } runningRetryCount:^NSInteger{
+            return [self runningFailedRecordsCountByMediaType:mediaType error:&coreDataError];
+        }];
+        if (coreDataError) {
+            record = nil;
+            return;
+        }
+        
+        if (record != nil && record != neverFailedRecord) {
+            MEGALogDebug(@"[Camera Upload] queue up previously failed record %@, error per launch count: %@, error per login count: %@", record.localIdentifier, record.errorPerLaunch.errorCount, record.errorPerLogin.errorCount);
+        }
+        
+        record.status = @(CameraAssetUploadStatusQueuedUp);
     }];
     
     if (error != NULL) {
         *error = coreDataError;
     }
     
-    return records;
+    return record;
+}
+
+/// Previously failed records, least failed in this launch first, then newest first.
+/// Records without a failure in this launch are fetched separately so sorting never has to join a missing errorPerLaunch.
+- (nullable MOAssetUploadRecord *)firstFailedRecordWithQueueablePredicate:(NSPredicate *)queueablePredicate newestFirst:(NSSortDescriptor *)newestFirst error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    // Usually nothing has failed. An unsorted lookup stops at the first match, so it settles that without the sorted scans below.
+    NSFetchRequest *anyFailedRequest = MOAssetUploadRecord.fetchRequest;
+    anyFailedRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[queueablePredicate, [NSCompoundPredicate notPredicateWithSubpredicate:CameraUploadRecordManager.neverFailedRecordsPredicate]]];
+    anyFailedRequest.fetchLimit = 1;
+    anyFailedRequest.resultType = NSManagedObjectIDResultType;
+    if ([self.backgroundContext executeFetchRequest:anyFailedRequest error:error].count == 0) {
+        return nil;
+    }
+
+    MOAssetUploadRecord *failedBeforeRecord = [self firstQueueableRecordWithPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[queueablePredicate, CameraUploadRecordManager.failedBeforeThisLaunchRecordsPredicate]] sortDescriptors:@[newestFirst] error:error];
+    if (failedBeforeRecord || (error != NULL && *error != nil)) {
+        return failedBeforeRecord;
+    }
+    
+    return [self firstQueueableRecordWithPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[queueablePredicate, CameraUploadRecordManager.failedInThisLaunchRecordsPredicate]] sortDescriptors:CameraUploadRecordManager.failedInThisLaunchRecordsSortDescriptors error:error];
+}
+
++ (NSPredicate *)neverFailedRecordsPredicate {
+    return [NSPredicate predicateWithFormat:@"(errorPerLogin == nil) AND (errorPerLaunch == nil)"];
+}
+
++ (NSPredicate *)failedBeforeThisLaunchRecordsPredicate {
+    return [NSPredicate predicateWithFormat:@"(errorPerLogin != nil) AND (errorPerLaunch == nil)"];
+}
+
++ (NSPredicate *)failedInThisLaunchRecordsPredicate {
+    return [NSPredicate predicateWithFormat:@"errorPerLaunch != nil"];
+}
+
++ (NSArray<NSSortDescriptor *> *)failedInThisLaunchRecordsSortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"errorPerLaunch.errorCount" ascending:YES],
+             [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+}
+
+/// Previously failed records that hold an upload slot: queued up or processing, not yet handed to the upload session.
+- (NSInteger)runningFailedRecordsCountByMediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@) AND ((errorPerLogin != nil) OR (errorPerLaunch != nil))", @[@(CameraAssetUploadStatusQueuedUp), @(CameraAssetUploadStatusProcessing)], @(mediaType)];
+    NSUInteger count = [self.backgroundContext countForFetchRequest:request error:error];
+    return count == NSNotFound ? 0 : (NSInteger)count;
+}
+
+- (nullable MOAssetUploadRecord *)firstQueueableRecordWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray<NSSortDescriptor *> *)sortDescriptors error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
+    request.fetchLimit = 1;
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
+    return [[self.backgroundContext executeFetchRequest:request error:error] firstObject];
 }
 
 #if DEBUG

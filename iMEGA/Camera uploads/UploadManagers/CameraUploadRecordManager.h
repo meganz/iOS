@@ -6,7 +6,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class PHAsset, PHFetchResult;
+@class PHAsset, PHFetchResult, CameraUploadRetryScheduler;
 
 @interface CameraUploadRecordManager : NSObject
 
@@ -29,7 +29,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error;
 
-- (NSArray<MOAssetUploadRecord *> *)queueUpUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSUInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+/// Marks the next record to upload as queued up, choosing between records that never failed since login and records that did.
+/// @param retryScheduler Decides when a previously failed record is served instead of one that never failed.
+/// @param concurrentCount The upload queue's maximum concurrent operation count.
+- (nullable MOAssetUploadRecord *)queueUpNextUploadRecordByStatuses:(NSArray<NSNumber *> *)statuses mediaType:(PHAssetMediaType)mediaType retryScheduler:(CameraUploadRetryScheduler *)retryScheduler concurrentCount:(NSInteger)concurrentCount error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
+/// Lane of records that never failed since login. Exposed for unit testing.
+@property (class, nonatomic, readonly) NSPredicate *neverFailedRecordsPredicate;
+/// Lane of records that failed in an earlier launch but not in this one. Exposed for unit testing.
+@property (class, nonatomic, readonly) NSPredicate *failedBeforeThisLaunchRecordsPredicate;
+/// Lane of records that failed in this launch. Exposed for unit testing.
+@property (class, nonatomic, readonly) NSPredicate *failedInThisLaunchRecordsPredicate;
+/// Order of the failed-in-this-launch lane: least failed first, then newest first. Exposed for unit testing.
+@property (class, nonatomic, readonly) NSArray<NSSortDescriptor *> *failedInThisLaunchRecordsSortDescriptors;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses error:(NSError *__autoreleasing  _Nullable *)error;
 

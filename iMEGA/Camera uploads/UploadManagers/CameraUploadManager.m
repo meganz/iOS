@@ -40,6 +40,8 @@ static const NSUInteger PhotoUploadConcurrentCountInMemoryWarning = 1;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
+@property (strong, nonatomic) CameraUploadRetryScheduler *photoRetryScheduler;
+@property (strong, nonatomic) CameraUploadRetryScheduler *videoRetryScheduler;
 
 @property (strong, nonatomic) dispatch_queue_t propertySerialQueue;
 
@@ -70,6 +72,8 @@ static BOOL gIsSharedInitialized = NO;
     self = [super init];
     if (self) {
         _propertySerialQueue = dispatch_queue_create("nz.mega.cameraUpload.managerPropertyCreationSerialQueue", DISPATCH_QUEUE_SERIAL);
+        _photoRetryScheduler = [[CameraUploadRetryScheduler alloc] init];
+        _videoRetryScheduler = [[CameraUploadRetryScheduler alloc] init];
         
         [self registerGlobalNotifications];
         
@@ -496,7 +500,17 @@ static BOOL gIsSharedInitialized = NO;
         statuses = AssetUploadStatus.statusesReadyToQueueUp;
     }
     
-    NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:count mediaType:mediaType error:nil];
+    CameraUploadRetryScheduler *retryScheduler = mediaType == PHAssetMediaTypeVideo ? self.videoRetryScheduler : self.photoRetryScheduler;
+    NSOperationQueue *uploadQueue = mediaType == PHAssetMediaTypeVideo ? self.videoUploadOperationQueue : self.photoUploadOperationQueue;
+    NSMutableArray<MOAssetUploadRecord *> *records = [NSMutableArray arrayWithCapacity:count];
+    for (NSUInteger index = 0; index < count; index++) {
+        MOAssetUploadRecord *record = [CameraUploadRecordManager.shared queueUpNextUploadRecordByStatuses:statuses mediaType:mediaType retryScheduler:retryScheduler concurrentCount:uploadQueue.maxConcurrentOperationCount error:nil];
+        if (record == nil) {
+            break;
+        }
+        [records addObject:record];
+    }
+    
     if (records.count == 0) {
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         
