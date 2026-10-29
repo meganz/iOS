@@ -331,6 +331,13 @@ extension PDFViewerViewModel {
         searchRequest = .present
         dependency.trackingUseCase.track(.searchToolbarSelected)
     }
+
+    func didTouchDownOutsideDocument() {
+        // May run together with a set on `isShowingOutline` or
+        // `isShowingThumbnails`, depending on how the thumbnails and contents
+        // buttons are composed relative to the document.
+        searchRequest = .dismiss
+    }
 }
 
 // MARK: - Paging state management

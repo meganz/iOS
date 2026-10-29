@@ -181,7 +181,8 @@ public struct PDFViewerView: View {
                                         viewModel.isChromeHidden.toggle()
                                     }
                                 },
-                                onLinkTapped: onLinkTapped
+                                onLinkTapped: onLinkTapped,
+                                onTouchDownOutsideDocument: { viewModel.didTouchDownOutsideDocument() }
                             )
                         )
                     )

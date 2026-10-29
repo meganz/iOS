@@ -670,6 +670,16 @@ struct PDFViewerViewModelTests {
         #expect(sut.searchRequest == .dismiss)
     }
 
+    @Test func touchDownOutsideDocument_requestsSearchDismissal() async {
+        let sut = await loadedSUT(
+            items: PDFOutlineItems(inOutlineOrder: [], inPageOrder: [])
+        )
+
+        sut.didTouchDownOutsideDocument()
+
+        #expect(sut.searchRequest == .dismiss)
+    }
+
     @Test func searchIntent_doesNotEscapeLoadingState() {
         let (stream, _) = AsyncThrowingStream.makeStream(
             of: PDFDocumentLoadEvent.self,

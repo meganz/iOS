@@ -13,6 +13,12 @@ protocol MEGAPDFViewPageObservationDelegate: AnyObject {
 @MainActor
 protocol MEGAPDFViewDocumentTapDelegate: AnyObject {
     func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView)
+    /// Triggers while the Find navigator is visible, for elements outside the
+    /// document view hierarchy, including those within the document display
+    /// area.
+    /// - Touches in other windows, such as the Find navigator's, are not
+    ///   reported.
+    func pdfViewDidReceiveTouchDownOutsideDocument(_ pdfView: MEGAPDFView)
 }
 
 @MainActor
@@ -30,6 +36,7 @@ final class MEGAPDFView: PDFView {
     private let singleTapHandler = PDFDocumentSingleTapHandler()
     private let searchInteractionHandler = PDFViewSearchInteractionHandler()
     private let widestPageWidthReader = PDFWidestPageWidthReader()
+    private let windowTouchDownObserver = TouchDownObservingGestureRecognizer()
 
     private var subscriptions = Set<AnyCancellable>()
     private var prepareThenDisplayTask: Task<Void, Never>?
@@ -76,6 +83,12 @@ final class MEGAPDFView: PDFView {
             widestPageWidth: widestPageWidth,
             pageBreakMargin: pageBreakMargins.left
         )
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        windowTouchDownObserver.view?.removeGestureRecognizer(windowTouchDownObserver)
+        window?.addGestureRecognizer(windowTouchDownObserver)
     }
 
     func presentSearch() {
@@ -158,6 +171,12 @@ final class MEGAPDFView: PDFView {
         }
 
         searchInteractionHandler.attachToPDFView(self)
+        windowTouchDownObserver.onTouchDown = { [weak self] touch in
+            guard let self else { return }
+            let isInPDFView = touch.view?.isDescendant(of: self) ?? false
+            guard !isInPDFView, searchInteractionHandler.isFindNavigatorVisible else { return }
+            documentTapDelegate?.pdfViewDidReceiveTouchDownOutsideDocument(self)
+        }
         searchInteractionHandler.onSearchSessionDidBegin = { [weak self] sessionID in
             guard let self else { return }
             searchObservationDelegate?.pdfView(self, searchSessionDidBegin: sessionID)
@@ -357,6 +376,7 @@ struct PDFDisplayerView: UIViewRepresentable {
         struct Tap {
             let onDocumentTapped: @MainActor () -> Void
             let onLinkTapped: @MainActor (URL) -> Void
+            var onTouchDownOutsideDocument: @MainActor () -> Void = {}
         }
 
         let scroll: Scroll
@@ -444,6 +464,11 @@ struct PDFDisplayerView: UIViewRepresentable {
         func pdfViewDidReceiveDocumentTap(_ pdfView: MEGAPDFView) {
             guard isPreparedForDisplayAndInteraction else { return }
             parent.interaction.tap.onDocumentTapped()
+        }
+
+        func pdfViewDidReceiveTouchDownOutsideDocument(_ pdfView: MEGAPDFView) {
+            guard isPreparedForDisplayAndInteraction else { return }
+            parent.interaction.tap.onTouchDownOutsideDocument()
         }
 
         func navigate(_ pdfView: MEGAPDFView, to pageIndex: Int) {
