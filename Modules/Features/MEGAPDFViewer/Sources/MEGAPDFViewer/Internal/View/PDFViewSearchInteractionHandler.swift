@@ -39,6 +39,10 @@ final class PDFViewSearchInteractionHandler: NSObject {
         findInteraction?.presentFindNavigator(showingReplace: false)
     }
 
+    var isFindNavigatorVisible: Bool {
+        findInteraction?.isFindNavigatorVisible ?? false
+    }
+
     func dismissSearch() {
         findInteraction?.dismissFindNavigator()
     }

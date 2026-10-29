@@ -121,12 +121,29 @@ extension FindNavigatorPresentationTests {
             #expect(searchRequest.request == nil)
         }
 
+        @Test func touchDownOutsideDocument_isForwardedOnlyOncePrepared() async throws {
+            var forwardedCount = 0
+            let (window, pdfView, _, coordinator) = try await makeSUT(
+                onTouchDownOutsideDocument: { forwardedCount += 1 }
+            )
+            defer { window.isHidden = true }
+
+            coordinator.pdfViewDidReceiveTouchDownOutsideDocument(pdfView)
+            #expect(forwardedCount == 0)
+
+            coordinator.pdfViewDidFinishPreparingForDisplayAndInteraction(pdfView)
+            coordinator.pdfViewDidReceiveTouchDownOutsideDocument(pdfView)
+            #expect(forwardedCount == 1)
+        }
+
         private func megaPDFView(in view: UIView) -> MEGAPDFView? {
             if let pdfView = view as? MEGAPDFView { return pdfView }
             return view.subviews.lazy.compactMap { megaPDFView(in: $0) }.first
         }
 
-        private func makeSUT() async throws -> (UIWindow, MEGAPDFView, SearchRequestState, PDFDisplayerView.Coordinator) {
+        private func makeSUT(
+            onTouchDownOutsideDocument: @escaping @MainActor () -> Void = {}
+        ) async throws -> (UIWindow, MEGAPDFView, SearchRequestState, PDFDisplayerView.Coordinator) {
             let frame = CGRect(x: 0, y: 0, width: 400, height: 700)
             let window = UIWindow(frame: frame)
             let root = UIViewController()
@@ -152,7 +169,11 @@ extension FindNavigatorPresentationTests {
                         onIsScrolledToTopChange: { _ in }
                     ),
                     search: .init(request: Binding(get: { state.request }, set: { state.request = $0 })),
-                    tap: .init(onDocumentTapped: {}, onLinkTapped: { _ in })
+                    tap: .init(
+                        onDocumentTapped: {},
+                        onLinkTapped: { _ in },
+                        onTouchDownOutsideDocument: onTouchDownOutsideDocument
+                    )
                 )
             )
             return (window, pdfView, state, PDFDisplayerView.Coordinator(parent: parent))
