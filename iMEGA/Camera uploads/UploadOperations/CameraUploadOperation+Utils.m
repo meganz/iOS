@@ -8,6 +8,7 @@
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
 
@@ -42,32 +43,44 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 }
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint {
-    MEGANode *matchingNode = [MEGASdk.shared nodeForFingerprint:fingerprint parent:self.uploadInfo.parentNode];
-    if (matchingNode == nil) {
-        MEGANodeList *nodeList = [MEGASdk.shared nodesForOriginalFingerprint:fingerprint];
-        if (nodeList.size > 0) {
-            matchingNode = [self firstNodeInNodeList:nodeList hasParentNode:self.uploadInfo.parentNode];
-            if (matchingNode == nil) {
-                matchingNode = [nodeList nodeAtIndex:0];
-            }
-        }
+    MEGANode *parentNode = self.uploadInfo.parentNode;
+    MEGANode *matchingNode = [MEGASdk.shared nodeForFingerprint:fingerprint parent:parentNode];
+    if (matchingNode != nil && matchingNode.parentHandle == parentNode.handle) {
+        return matchingNode;
     }
-    
-    return matchingNode;
-}
 
-- (MEGANode *)firstNodeInNodeList:(MEGANodeList *)nodeList hasParentNode:(MEGANode *)parent {
+    NSMutableArray<MEGANode *> *candidates = [NSMutableArray array];
+    if (matchingNode != nil) {
+        [candidates addObject:matchingNode];
+    }
+    MEGANodeList *nodeList = [MEGASdk.shared nodesForOriginalFingerprint:fingerprint];
     for (NSInteger i = 0; i < nodeList.size; i++) {
-        MEGANode *node = [nodeList nodeAtIndex:i];
-        if (node.parentHandle == parent.handle) {
+        [candidates addObject:[nodeList nodeAtIndex:i]];
+    }
+
+    for (MEGANode *node in candidates) {
+        if (node.parentHandle == parentNode.handle) {
             return node;
         }
     }
-    
-    return nil;
+
+    // A node the user deleted from the parent wins over copies elsewhere, so it is not brought back.
+    for (MEGANode *node in candidates) {
+        if ([node mnz_isDeletedFromParentNode:parentNode]) {
+            return node;
+        }
+    }
+
+    return candidates.firstObject;
 }
 
 - (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node {
+    if ([node mnz_isDeletedFromParentNode:self.uploadInfo.parentNode]) {
+        MEGALogInfo(@"[Camera Upload] %@ skips the upload as matching node %@ was deleted from the camera uploads folder", self, node.base64Handle);
+        [self finishOperationWithStatus:CameraAssetUploadStatusDone];
+        return;
+    }
+
     NSError *error;
     NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension error:&error];
     if (error) {

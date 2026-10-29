@@ -8,6 +8,7 @@
 #import "NSString+MNZCategory.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGA-Swift.h"
 
 @interface CameraUploadCompletionManager ()
@@ -107,6 +108,11 @@
     MEGANode *existingNode = [MEGASdk.shared nodeForFingerprint:uploadInfo.fingerprint parent:uploadInfo.parentNode];
     if (existingNode) {
         MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
+        if ([existingNode mnz_isDeletedFromParentNode:uploadInfo.parentNode]) {
+            MEGALogInfo(@"[Camera Upload] skip put node for %@ as matching node %@ was deleted from the camera uploads folder", uploadInfo.savedLocalIdentifier, existingNode.base64Handle);
+            [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
+            return;
+        }
         [self copyToParentNodeIfNeededForMatchingNode:existingNode uploadInfo:uploadInfo];
         return;
     }

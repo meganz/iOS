@@ -712,6 +712,10 @@
     return [MEGASdk.shared isNodeInRubbish:self];
 }
 
+- (BOOL)mnz_isDeletedFromParentNode:(MEGANode *)parentNode {
+    return self.restoreHandle == parentNode.handle && self.mnz_isInRubbishBin;
+}
+
 - (BOOL)mnz_isPlayable {
     BOOL supportedShortFormat = NO;
     BOOL supportedVideoCodecId = NO;

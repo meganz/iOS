@@ -46,6 +46,8 @@ typedef NS_ENUM(NSInteger, TextEditorFileSource) {
 - (BOOL)mnz_isPlayable;
 - (BOOL)mnz_isPlaying;
 - (BOOL)mnz_isInRubbishBin;
+/// Whether the node is in the Rubbish Bin and was moved there from `parentNode`.
+- (BOOL)mnz_isDeletedFromParentNode:(MEGANode *)parentNode;
 - (NSString *)mnz_voiceCachePath;
 
 #pragma mark - Shares
