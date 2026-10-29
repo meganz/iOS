@@ -1,7 +1,9 @@
 import ChatRepo
 import Foundation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
+import MEGAL10n
 import MEGAPreference
 import MEGARepo
 import UIKit
@@ -109,10 +111,12 @@ final class ExportFileRouter: ExportFileViewRouting {
     func exportedFiles(urls: [URL], completion: (@Sendable () async -> Void)?) {
         let activityViewController = UIActivityViewController.init(activityItems: urls, applicationActivities: nil)
 
-        if let completion {
-            activityViewController.completionWithItemsHandler = { _, _, _, _ in
-                Task { await completion() }
+        activityViewController.completionWithItemsHandler = { activityType, completed, _, _ in
+            if activityType == .saveToCameraRoll, completed {
+                SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
             }
+            guard let completion else { return }
+            Task { await completion() }
         }
         
         let presentingViewController = UIApplication.mnz_presentingViewController()
