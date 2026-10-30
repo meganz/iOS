@@ -671,17 +671,16 @@ private struct ScrubberSection: View {
         return currentTime
     }
 
+    /// `00:20`, or `1:05:00` from an hour up, matching the queue's playing row
     private func formatElapsed(_ seconds: TimeInterval, duration: TimeInterval?) -> String {
-        guard duration != nil, seconds.isFinite, !seconds.isNaN else { return "" }
-        let total = max(0, Int(seconds.rounded()))
-        return String(format: "%d:%02d", total / 60, total % 60)
+        guard duration != nil, seconds.isFinite else { return "" }
+        return seconds.playbackPositionString
     }
 
+    /// `-04:35`, or `-1:57:03` from an hour up, formatted like the elapsed time
     private func formatRemaining(currentTime: TimeInterval, duration: TimeInterval?) -> String {
-        guard let duration, duration.isFinite, !duration.isNaN else { return "" }
-        let remaining = max(0, duration - currentTime)
-        let total = Int(remaining.rounded())
-        return String(format: "-%d:%02d", total / 60, total % 60)
+        guard let duration, duration.isFinite, currentTime.isFinite else { return "" }
+        return "-" + (duration - currentTime).playbackPositionString
     }
 }
 

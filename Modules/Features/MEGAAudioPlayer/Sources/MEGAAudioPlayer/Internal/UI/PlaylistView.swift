@@ -222,16 +222,12 @@ private struct PlayingRowSubtitle: View {
             .onReceive(currentTimePublisher) { currentTime = $0 }
     }
 
-    /// `00:20 / 4:55` (`00:05:00 / 1:02:03` from an hour up). Rounded like the scrubber, so
-    /// the two agree.
+    /// `00:20 / 4:55` (`1:05:00 / 1:12:03` from an hour up), the position formatted like the
+    /// scrubber's so the two agree.
     private var timeText: String {
         let total = duration.compactTimeString
         guard currentTime.isFinite else { return total }
-        let position: Duration = .seconds(min(max(currentTime, 0), duration).rounded())
-        let pattern: Duration.TimeFormatStyle.Pattern = duration.rounded() >= 3600
-            ? .hourMinuteSecond(padHourToLength: 2)
-            : .minuteSecond(padMinuteToLength: 2)
-        return "\(position.formatted(.time(pattern: pattern))) / \(total)"
+        return "\(min(max(currentTime, 0), duration).playbackPositionString) / \(total)"
     }
 }
 
