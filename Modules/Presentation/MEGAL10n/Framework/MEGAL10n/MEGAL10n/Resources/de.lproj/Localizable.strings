@@ -5325,16 +5325,18 @@
 /* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
 "markdownEditor.fileTooLarge.title"="Datei zu groß für die Vorschau";
 /* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
-"markdownEditor.fileTooLarge.message"="Lade die Datei (%@) herunter, um sie in einer anderen App zu öffnen.";
+"markdownEditor.fileTooLarge.message"="Laden Sie die Datei (%@) herunter, um sie in einer anderen App zu öffnen.";
 /* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
-"markdownEditor.preview.sectionShownAsPlainText"="Dieser Abschnitt ist zu groß, um ihn formatiert anzuzeigen. Er wird als unformatierter Text angezeigt.";
+"markdownEditor.preview.sectionShownAsPlainText"="Dieser Abschnitt ist für eine formatierte Darstellung zu groß. Er wird daher als reiner Text dargestellt.";
 /* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.fileTooLargeForRichText"="Diese Datei ist zu groß, um sie mit Formatierung zu bearbeiten. Du kannst sie weiterhin als unformatierten Text bearbeiten.";
+"markdownEditor.notice.fileTooLargeForRichText"="Diese Datei ist für eine formatierte Bearbeitung zu groß. Sie können sie im reinen Textformat bearbeiten.";
 /* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.sectionTooLongForRichText"="Ein Abschnitt dieser Datei ist zu lang, um ihn mit Formatierung zu bearbeiten. Du kannst die Datei weiterhin als unformatierten Text bearbeiten.";
+"markdownEditor.notice.sectionTooLongForRichText"="Ein Abschnitt dieser Datei ist für eine formatierte Bearbeitung zu lang. Sie können die Datei im reinen Textformat bearbeiten.";
 /* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
-"markdownEditor.notice.lineTooLong"="Eine Zeile in dieser Datei ist ungewöhnlich lang. Die Bearbeitung dieser Zeile kann langsam sein.";
+"markdownEditor.notice.lineTooLong"="Diese Datei enthält eine außergewöhnlich lange Zeile. Beim Bearbeiten dieser Zeile kann es zu Verzögerungen kommen.";
 /* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
 "home.doMoreWithMega.albumCreated.message"="Album „%@“ erstellt";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
-"home.doMoreWithMega.albumCreated.seeAlbum"="Album ansehen";
+"home.doMoreWithMega.albumCreated.seeAlbum"="Zum Album";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="Fehlgeschlagen: %@";

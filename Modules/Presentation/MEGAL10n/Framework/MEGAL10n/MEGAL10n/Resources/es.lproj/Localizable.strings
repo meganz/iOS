@@ -5338,3 +5338,5 @@
 "home.doMoreWithMega.albumCreated.seeAlbum"="Ver álbum";
 /* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
 "home.doMoreWithMega.scanDoc"="Escanear documento";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="Fallida: %@";

@@ -5338,3 +5338,5 @@
 "home.doMoreWithMega.albumCreated.message"="已创建相册“%@”";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
 "home.doMoreWithMega.albumCreated.seeAlbum"="查看相册";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="失败: %@";

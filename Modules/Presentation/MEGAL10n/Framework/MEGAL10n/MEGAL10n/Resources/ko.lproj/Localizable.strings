@@ -1439,7 +1439,7 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="새 메시지";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 탭하여 페이지 하단에서 애플 ID로 로그인하세요(만약 하지 않았다면)그리고 ID 보기를 탭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
+"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 탭하여 페이지 하단에서 Apple ID로 로그인하세요(만약 하지 않았다면)그리고 ID 보기를 탭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1697,7 +1697,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="죄송하지만, 당신의 기기에서 2단계 인증을 활성화할 수 없습니다. App Store를 열고 인증기 앱을 설치하세요.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대 전화 또는 태블릿용 Google 인증기, Duo Mobile, Authy 또는 Microsoft 인증기 앱을 다운로드하고 설치할 수 있습니다.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대 전화 또는 태블릿용 Google Authenticator, Duo Mobile, Authy 또는 Microsoft Authenticator 앱을 다운로드하고 설치할 수 있습니다.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="2단계 인증 활성화됨";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -5325,16 +5325,18 @@
 /* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
 "markdownEditor.fileTooLarge.title"="파일이 너무 커서 미리볼 수 없습니다";
 /* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
-"markdownEditor.preview.sectionShownAsPlainText"="이 섹션은 용량이 너무 커서 서식을 적용해 표시할 수 없습니다. 일반 텍스트로 표시됩니다.";
+"markdownEditor.preview.sectionShownAsPlainText"="이 섹션은 너무 커서 서식을 적용하여 표시할 수 없습니다. 일반 텍스트로 표시됩니다.";
 /* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.fileTooLargeForRichText"="이 파일은 용량이 너무 커서 서식이 적용된 상태로 편집할 수 없습니다. 일반 텍스트로는 계속 편집할 수 있습니다.";
+"markdownEditor.notice.fileTooLargeForRichText"="이 파일은 용량이 너무 커서 서식이 적용된 상태로 편집할 수 없습니다. 그래도 일반 텍스트로 편집할 수 있습니다.";
 /* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.sectionTooLongForRichText"="이 파일의 한 섹션이 너무 길어 서식을 적용해 편집할 수 없습니다. 파일을 일반 텍스트로 계속 편집할 수 있습니다.";
+"markdownEditor.notice.sectionTooLongForRichText"="이 파일의 한 섹션이 너무 길어서 서식을 적용해 편집할 수 없습니다. 그래도 파일을 일반 텍스트로 편집할 수 있습니다.";
 /* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
-"markdownEditor.notice.lineTooLong"="이 파일에 비정상적으로 긴 줄이 있습니다. 해당 줄을 편집할 때 속도가 느려질 수 있습니다.";
+"markdownEditor.notice.lineTooLong"="이 파일의 한 줄이 비정상적으로 깁니다. 해당 줄을 편집하는 것이 느려질 수 있습니다.";
 /* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
 "home.doMoreWithMega.scanDoc"="문서 스캔";
 /* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
-"home.doMoreWithMega.albumCreated.message"="“%@” 앨범이 생성되었습니다";
+"home.doMoreWithMega.albumCreated.message"="“%@” 사진첩 생성됨";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
-"home.doMoreWithMega.albumCreated.seeAlbum"="앨범 보기";
+"home.doMoreWithMega.albumCreated.seeAlbum"="사진첩 보기";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="실패: %@";

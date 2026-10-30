@@ -1685,7 +1685,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="開始設定";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="輸入您的身份驗證器應用程式生成的6位數字代碼。";
+"pleaseEnterTheSixDigitCode"="輸入您的身份驗證器應用程式生成的6位數代碼。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="為什麼需要雙重驗證？";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1701,7 +1701,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="已啟用雙重驗證";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="下次登入您的帳戶時，系統會要求您輸入身份驗證程式提供的6位數字代碼。";
+"twoFactorAuthenticationEnabledDescription"="下次登入您的帳戶時，系統會要求您輸入身份驗證程式提供的6位數代碼。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="請將您的還原金鑰儲存在安全的位置";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -2219,7 +2219,7 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="媒體檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="以視覺化格狀佈局開啟僅包含圖片或影片的資料夾。透過縮圖瀏覽媒體，並依日期進行篩選。";
+"settings.userInterface.mediaDiscovery.footer.body"="在視覺網格中開啟僅包含圖片或影片的資料夾。透過縮圖瀏覽媒體，並依日期進行篩選。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
 "settings.userInterface.mediaDiscovery.footer.link"="瞭解有關媒體檢視的更多資訊";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
@@ -4771,7 +4771,7 @@
 /* Special Offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOffer"="特價優惠：%@折扣";
 /* View mode title for grid view in the cloud drive. */
-"cloudDrive.viewMode.grid.title"="格狀檢視";
+"cloudDrive.viewMode.grid.title"="格網檢視";
 /* Camera Uploads Progress In Queue section title */
 "cameraUploads.progress.section.inQueue.title"="已入佇列";
 /* Camera Uploads row file progress */
@@ -5147,7 +5147,7 @@
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="再試一次";
 /* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
-"link.button.copyToOffline"="複製到離線";
+"link.button.copyToOffline"="複製到離線存取";
 /* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
 "subscriptionPurchase.revamp.promo.offerEnded"="此優惠已結束";
 /* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */

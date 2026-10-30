@@ -5311,7 +5311,7 @@
 /* Label of the field in the link dialog of the text editor. The user types the text that shows the link. */
 "markdownEditor.linkDialog.textLabel"="Testo";
 /* Accessibility label of the text editor when it shows the Markdown source of the file. */
-"markdownEditor.accessibility.sourceEditor"="Codice sorgente Markdown";
+"markdownEditor.accessibility.sourceEditor"="Codice Markdown";
 /* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
 "markdownEditor.accessibility.continueAtEnd"="Continua alla fine";
 /* Button in the New text file dialog. It creates the new text file with the name the user typed. */
@@ -5338,3 +5338,5 @@
 "markdownEditor.notice.lineTooLong"="Una riga di questo file è insolitamente lunga. La modifica di questa riga potrebbe essere lenta.";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
 "home.doMoreWithMega.albumCreated.seeAlbum"="Visualizza album";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="Fallito: %@";

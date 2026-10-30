@@ -5293,7 +5293,7 @@
 /* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
 "markdownEditor.keyCommand.indent"="Girintiyi artır";
 /* Text style name for normal paragraph text. Shown on the text editor toolbar and in the text style menu. */
-"markdownEditor.textStyle.body"="Gövde metni";
+"markdownEditor.textStyle.body"="Gövde";
 /* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
 "markdownEditor.textStyle.heading1"="Başlık 1";
 /* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
@@ -5313,7 +5313,7 @@
 /* Accessibility label of the text editor when it shows the Markdown source of the file. */
 "markdownEditor.accessibility.sourceEditor"="Markdown kaynağı";
 /* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
-"markdownEditor.accessibility.continueAtEnd"="Belgenin sonunda devam et";
+"markdownEditor.accessibility.continueAtEnd"="Sona devam et";
 /* Button in the New text file dialog. It creates the new text file with the name the user typed. */
 "markdownEditor.newFile.create"="Oluştur";
 /* Accessibility label of the text editor toolbar button that adds, edits or removes a web link on the selected text. */
@@ -5321,20 +5321,22 @@
 /* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
 "markdownEditor.linkDialog.linkLabel"="Bağlantı";
 /* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
-"markdownEditor.fileTooLarge.title"="Dosya önizleme için çok büyük";
+"markdownEditor.fileTooLarge.title"="Dosya boyutu ön izleme için çok büyük";
 /* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
-"markdownEditor.preview.sectionShownAsPlainText"="Bu bölüm biçimlendirilmiş olarak görüntülenemeyecek kadar büyük. Düz metin olarak gösteriliyor.";
+"markdownEditor.preview.sectionShownAsPlainText"="Bu bölüm biçimlendirmeyle görüntülenemeyecek kadar büyük. Düz metin olarak gösteriliyor.";
 /* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
-"markdownEditor.fileTooLarge.message"="Dosyayı (%@) başka bir uygulamada açmak için indir.";
+"markdownEditor.fileTooLarge.message"="Başka bir uygulamada açmak için dosyayı (%@) indirin.";
 /* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.fileTooLargeForRichText"="Bu dosya biçimlendirilmiş olarak düzenlenemeyecek kadar büyük. Yine de düz metin olarak düzenleyebilirsin.";
+"markdownEditor.notice.fileTooLargeForRichText"="Bu dosya biçimli düzenleme için çok büyük. Dosyayı düz metin olarak düzenlemeye devam edebilirsiniz.";
 /* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.sectionTooLongForRichText"="Bu dosyanın bir bölümü biçimlendirilmiş olarak düzenlenemeyecek kadar uzun. Dosyayı yine de düz metin olarak düzenleyebilirsin.";
+"markdownEditor.notice.sectionTooLongForRichText"="Bu dosyanın bir bölümü biçimli düzenleme için çok uzun. Dosyayı düz metin olarak düzenlemeye devam edebilirsiniz.";
 /* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
-"markdownEditor.notice.lineTooLong"="Bu dosyadaki bir satır alışılmadık derecede uzun. Bu satırı düzenlemek yavaş olabilir.";
+"markdownEditor.notice.lineTooLong"="Bu dosyadaki bir satır olağandışı derecede uzun. Bu satırı düzenlemek yavaş olabilir.";
 /* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
-"home.doMoreWithMega.scanDoc"="Belge tara";
+"home.doMoreWithMega.scanDoc"="Belge tarat";
 /* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
 "home.doMoreWithMega.albumCreated.message"="“%@” albümü oluşturuldu";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
 "home.doMoreWithMega.albumCreated.seeAlbum"="Albümü görüntüle";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="Başarısız: %@";

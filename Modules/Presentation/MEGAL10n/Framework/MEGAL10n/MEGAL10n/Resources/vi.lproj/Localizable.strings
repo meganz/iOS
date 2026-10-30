@@ -1161,7 +1161,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Chọn một gói cước ở dưới đây:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Chọn dạng tài khoản:";
+"selectOneAccountType"="Chọn hạng tài khoản:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Gói đăng ký dịch vụ thường niên rẻ hơn 16% so với chi trả 12 tháng riêng rẽ";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
@@ -5293,11 +5293,11 @@
 /* Label of the field in the link dialog of the text editor. The user types the web address of the link. */
 "markdownEditor.linkDialog.linkLabel"="Đường liên kết";
 /* The description shown on the empty state of the Continue Where You Left feature */
-"continueWhereYouLeftOff.empty.message"="Các mục bạn chưa hoàn thành sẽ xuất hiện ở đây";
+"continueWhereYouLeftOff.empty.message"="Các mục chưa có làm xong sẽ xuất hiện ở đây";
 /* Title of the dialog that asks the user to confirm removing multiple files from the Continue Where You Left list */
-"continueWhereYouLeftOff.clearFiles.confirmation.title"="Xóa các tệp khỏi lịch sử?";
+"continueWhereYouLeftOff.clearFiles.confirmation.title"="Dọn các tệp tin khỏi lịch sử?";
 /* Title of the dialog that asks the user to confirm removing a single file from the Continue Where You Left list */
-"continueWhereYouLeftOff.clearFile.confirmation.title"="Xóa tệp khỏi lịch sử?";
+"continueWhereYouLeftOff.clearFile.confirmation.title"="Dọn tệp khỏi lịch sử?";
 /* Accessibility label of the text editor toolbar button that turns the current line into a list item with a checkbox. */
 "markdownEditor.toolbar.taskList"="Danh sách công việc";
 /* Name of the keyboard shortcut (Tab key) that moves a list item one level to the right. Shown in the iPad keyboard shortcut list. */
@@ -5305,36 +5305,38 @@
 /* Name of the keyboard shortcut (Shift and Tab keys) that moves a list item one level to the left. Shown in the iPad keyboard shortcut list. */
 "markdownEditor.keyCommand.outdent"="Giảm thụt lề";
 /* Text style name for the largest heading. Shown on the text editor toolbar and in the text style menu. */
-"markdownEditor.textStyle.heading1"="Tiêu đề 1";
+"markdownEditor.textStyle.heading1"="Tiêu đề 1";
 /* Text style name for the second largest heading. Shown on the text editor toolbar and in the text style menu. */
-"markdownEditor.textStyle.heading2"="Tiêu đề 2";
+"markdownEditor.textStyle.heading2"="Tiêu đề 2";
 /* Text style name for the third largest heading. Shown on the text editor toolbar and in the text style menu. */
-"markdownEditor.textStyle.heading3"="Tiêu đề 3";
+"markdownEditor.textStyle.heading3"="Tiêu đề 3";
 /* Text style name for a level 5 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
-"markdownEditor.textStyle.heading5"="Tiêu đề 5";
+"markdownEditor.textStyle.heading5"="Tiêu đề 5";
 /* Text style name for a level 4 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
-"markdownEditor.textStyle.heading4"="Tiêu đề 4";
+"markdownEditor.textStyle.heading4"="Tiêu đề 4";
 /* Text style name for a level 6 heading. Shown on the text editor toolbar when the cursor is in such a heading. */
-"markdownEditor.textStyle.heading6"="Tiêu đề 6";
+"markdownEditor.textStyle.heading6"="Tiêu đề 6";
 /* Accessibility label of the text editor when it shows the Markdown source of the file. */
 "markdownEditor.accessibility.sourceEditor"="Mã nguồn Markdown";
 /* Accessibility label of the empty area below the last paragraph of the text editor. Tapping it moves the cursor to the end of the file. */
-"markdownEditor.accessibility.continueAtEnd"="Tiếp tục ở cuối tài liệu";
+"markdownEditor.accessibility.continueAtEnd"="Tiếp tục ở cuối trang";
 /* Title of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. The pop-up offers to download the file. */
-"markdownEditor.fileTooLarge.title"="Tệp quá lớn để xem trước";
+"markdownEditor.fileTooLarge.title"="Tệp tin quá lớn để xem trước";
 /* Message of the pop-up shown when the user opens a Markdown file that is too large to preview in the app. %@ is the file size, for example "101 MB". */
 "markdownEditor.fileTooLarge.message"="Tải tệp (%@) xuống để mở bằng ứng dụng khác.";
 /* Shown in the Markdown file preview above one section of the file. That section is too large to format, so the app shows it as plain text below this note. */
-"markdownEditor.preview.sectionShownAsPlainText"="Phần này quá lớn để hiển thị định dạng. Nội dung được hiển thị dưới dạng văn bản thuần túy.";
+"markdownEditor.preview.sectionShownAsPlainText"="Phần này quá lớn để hiển thị văn bản giàu định dạng. Chuyển sang hiển thị dưới dạng văn bản đơn thuần.";
 /* Shown at the top of the text editor when the user edits a Markdown file that is too large for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.fileTooLargeForRichText"="Tệp này quá lớn để chỉnh sửa với định dạng. Bạn vẫn có thể chỉnh sửa dưới dạng văn bản thuần túy.";
+"markdownEditor.notice.fileTooLargeForRichText"="Tệp tin này quá lớn để soạn thảo giàu định dạng. Bạn vẫn có thể chỉnh sửa dưới dạng văn bản đơn thuần.";
 /* Shown at the top of the text editor when one section of a Markdown file, such as a long table, is too long for the rich text editor. The editor shows the file as plain text instead. */
-"markdownEditor.notice.sectionTooLongForRichText"="Một phần của tệp này quá dài để chỉnh sửa với định dạng. Bạn vẫn có thể chỉnh sửa tệp dưới dạng văn bản thuần túy.";
+"markdownEditor.notice.sectionTooLongForRichText"="Một phần của tệp tin này quá dài để chỉnh sửa giàu định dạng. Bạn vẫn có thể chỉnh sửa tệp tin dưới dạng văn bản đơn thuần.";
 /* Shown at the top of the text editor when one line of the file is extremely long, often data made by a program. The user can still edit the file, but typing in that line can be slow. */
-"markdownEditor.notice.lineTooLong"="Một dòng trong tệp này dài bất thường. Việc chỉnh sửa dòng đó có thể bị chậm.";
+"markdownEditor.notice.lineTooLong"="Một dòng trong tệp tin này dài bất thường. Việc chỉnh sửa dòng đó có thể bị chậm.";
 /* Label of the Scan doc tile in the "Do more with MEGA" section on the Home screen. Tapping it opens the document scanner. Keep it short: the tile shows at most two short lines. */
-"home.doMoreWithMega.scanDoc"="Quét tài liệu";
+"home.doMoreWithMega.scanDoc"="Quét tài liệu";
 /* Snack bar message on the Home screen after the user creates an album from the "Do more with MEGA" section. The placeholder is the album name, e.g. "Holidays". */
-"home.doMoreWithMega.albumCreated.message"="Đã tạo album “%@”";
+"home.doMoreWithMega.albumCreated.message"="Album “%@” đã được tạo";
 /* Button on the snack bar shown after the user creates an album from the "Do more with MEGA" section on the Home screen. Tapping it opens the new album. */
 "home.doMoreWithMega.albumCreated.seeAlbum"="Xem album";
+/* Status of a row in the Failed tab of the Transfers screen. %@ is why the transfer failed. Example: "Failed: Violated Terms of Service". */
+"transfers.row.failedWithReason"="Thất bại: %@";
