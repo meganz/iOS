@@ -114,7 +114,7 @@ final class AudioPlayerViewModel: ObservableObject {
 
     var isQueueButtonEnabled: Bool {
         switch currentSource {
-        case .fileLink, .searchResult, .chatMessage, .none:
+        case .fileLink, .searchResult, .chatMessage, .continueWhereYouLeftOff, .none:
             false
         case .allAudios, .cloudNode, .folderLink, .offlineFiles, .offlineNodes, .recents:
             true

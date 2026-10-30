@@ -14,7 +14,8 @@ enum PlaybackQueueBuilder {
             return nodeQueue(initial: node, queue: queue, name: { $0.name }, wrap: PlaybackTrack.folderLink)
 
         case .searchResult(let node),
-             .chatMessage(let node):
+             .chatMessage(let node),
+             .continueWhereYouLeftOff(let node):
             return PlaybackQueue(tracks: [.account(node)], currentIndex: 0)
 
         case .offlineFiles(let file, let queue):

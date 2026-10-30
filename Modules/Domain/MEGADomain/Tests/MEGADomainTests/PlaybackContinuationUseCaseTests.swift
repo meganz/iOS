@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import Testing
 import XCTest
 
 final class PlaybackContinuationUseCaseTests: XCTestCase {
@@ -170,6 +171,45 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
     }
     
     private var testFingerprint = "test-fingerprint"
+}
+
+@Suite("PlaybackContinuationUseCase - savedPlaybackTime")
+struct PlaybackContinuationUseCaseSavedPlaybackTimeTests {
+    private let fingerprint = "test-fingerprint"
+
+    @Test("Returns nil when nothing is saved or the saved time is under the minimum", arguments: [nil, lessThanRevampMinimumTime])
+    func underMinimum(savedTime: TimeInterval?) {
+        let (sut, repo) = makeSUT()
+        repo.mockTimeIntervals[fingerprint] = savedTime
+
+        #expect(sut.savedPlaybackTime(for: fingerprint) == nil)
+    }
+
+    @Test("Returns the saved time when it is at least the minimum", arguments: [revampMinimumTime, moreThanRevampMinimumTime])
+    func atLeastMinimum(savedTime: TimeInterval) {
+        let (sut, repo) = makeSUT()
+        repo.mockTimeIntervals[fingerprint] = savedTime
+
+        #expect(sut.savedPlaybackTime(for: fingerprint) == savedTime)
+    }
+
+    @Test("Returns the saved time whatever the remembered preference", arguments: [
+        PlaybackContinuationPreferenceStatusEntity.restartFromBeginning,
+        .resumePreviousSession
+    ])
+    func ignoresPreference(preference: PlaybackContinuationPreferenceStatusEntity) {
+        let (sut, repo) = makeSUT()
+        repo.mockTimeIntervals[fingerprint] = moreThanRevampMinimumTime
+        sut.setPreference(to: preference)
+
+        #expect(sut.savedPlaybackTime(for: fingerprint) == moreThanRevampMinimumTime)
+    }
+
+    private func makeSUT() -> (some PlaybackContinuationUseCaseProtocol, MockPreviousPlaybackSessionRepository) {
+        let repo = MockPreviousPlaybackSessionRepository()
+        let sut = PlaybackContinuationUseCase(previousSessionRepo: repo, minimumPlaybackTime: revampMinimumTime)
+        return (sut, repo)
+    }
 }
 
 private typealias Constants = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants

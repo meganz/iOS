@@ -80,6 +80,13 @@ public struct HomeView: View {
         )
     }
 
+    private var leftOffItemsWidgetSelectionHandler: some NodeSelectionHandling {
+        OfflineAwareNodeSelectionHandler(
+            wrapping: dependency.leftOffItemSelectionHandler,
+            tapDispatcher: viewModel.offlineNodeTapDispatcher
+        )
+    }
+
     /// The add menu behind the floating + button and behind the Recents empty state's Upload
     /// button, wrapped so that every action prompts instead of failing while offline
     private var homeAddMenuActionHandler: some HomeAddMenuActionHandling {
@@ -297,7 +304,7 @@ public struct HomeView: View {
                 dependency: ContinueWhereYouLeftOffView.Dependency(
                     leftOffItemsUseCase: dependency.leftOffItemsUseCase,
                     thumbnailUseCase: dependency.leftOffThumbnailUseCase,
-                    selectionHandler: dependency.searchResultsSelectionHandler,
+                    selectionHandler: dependency.leftOffItemSelectionHandler,
                     makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
                     transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 ),
@@ -447,7 +454,7 @@ public struct HomeView: View {
                             dependency: ContinueWhereYouLeftOffWidgetView.Dependency(
                                 leftOffItemsUseCase: dependency.leftOffItemsUseCase,
                                 thumbnailUseCase: dependency.leftOffThumbnailUseCase,
-                                selectionHandler: searchResultsSelectionHandler,
+                                selectionHandler: leftOffItemsWidgetSelectionHandler,
                                 onOpenFullScreen: {
                                     navigator.append(NavigationRoute.continueWhereYouLeftOff)
                                 }

@@ -88,7 +88,6 @@ struct AudioPlaybackServiceLeftOffItemTests {
     /// Longer than the service's own minimum, so a position is eligible to be kept.
     private let resumableDuration: TimeInterval = 10 * 60
 
-
     private func song(_ handle: UInt64) -> NodeEntity {
         NodeEntity(name: "song\(handle).mp3", fingerprint: "fingerprint-\(handle)", handle: handle)
     }
@@ -116,6 +115,8 @@ private struct FixedOutcomeContinuationUseCase: PlaybackContinuationUseCaseProto
     func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity {
         .startFromBeginning
     }
+
+    func savedPlaybackTime(for fingerprint: FingerprintEntity) -> TimeInterval? { nil }
 
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
 

@@ -9,6 +9,7 @@ public enum PlaybackContinuationOutcomeEntity: Sendable, Equatable {
 
 public protocol PlaybackContinuationUseCaseProtocol: Sendable {
     func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity
+    func savedPlaybackTime(for fingerprint: FingerprintEntity) -> TimeInterval?
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity)
     @discardableResult
     func playbackStopped(
@@ -49,8 +50,7 @@ public final class PlaybackContinuationUseCase<
     }
     
     public func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity {
-        guard let previousTimeInterval = previousSessionRepo.timeInterval(for: fingerprint),
-              previousTimeInterval >= minimumPlaybackTime else {
+        guard let previousTimeInterval = savedPlaybackTime(for: fingerprint) else {
             return .startFromBeginning
         }
         
@@ -60,6 +60,14 @@ public final class PlaybackContinuationUseCase<
         case .restartFromBeginning: return .startFromBeginning
         case .resumePreviousSession: return .resumeSession(playbackTime: previousTimeInterval)
         }
+    }
+    
+    public func savedPlaybackTime(for fingerprint: FingerprintEntity) -> TimeInterval? {
+        guard let previousTimeInterval = previousSessionRepo.timeInterval(for: fingerprint),
+              previousTimeInterval >= minimumPlaybackTime else {
+            return nil
+        }
+        return previousTimeInterval
     }
     
     public func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {

@@ -3,5 +3,6 @@ typedef NS_ENUM (NSInteger, NodeSourcePage) {
     NodeSourcePageAllAudios,
     NodeSourcePageCloudDrive,
     NodeSourcePageRecents,
-    NodeSourcePageSearch
+    NodeSourcePageSearch,
+    NodeSourcePageContinueWhereYouLeftOff
 };

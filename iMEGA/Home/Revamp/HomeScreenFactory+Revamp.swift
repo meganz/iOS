@@ -157,6 +157,7 @@ extension HomeScreenFactory {
                 requestStatesRepository: RequestStatesRepository.newRepo
             ),
             leftOffThumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            leftOffItemSelectionHandler: LeftOffItemNodeSelectionHandler(nodeRouter: nodeRouter),
             accountStorageUseCase: AccountStorageUseCase(
                 accountRepository: AccountRepository.newRepo,
                 preferenceUseCase: PreferenceUseCase.default

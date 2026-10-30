@@ -143,6 +143,8 @@ extension MEGANode {
                 return .allAudios(node: node.toNodeEntity(), queue: queue)
             case .search:
                 return .searchResult(node: node.toNodeEntity())
+            case .continueWhereYouLeftOff:
+                return .continueWhereYouLeftOff(node: node.toNodeEntity())
             default:
                 return .cloudNode(node: node.toNodeEntity(), queue: queue)
             }

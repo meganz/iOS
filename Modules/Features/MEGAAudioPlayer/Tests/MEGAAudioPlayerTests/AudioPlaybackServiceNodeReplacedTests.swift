@@ -423,6 +423,8 @@ private struct ResumeOfferingPlaybackContinuationUseCase: PlaybackContinuationUs
         .displayDialog(playbackTime: 30)
     }
 
+    func savedPlaybackTime(for fingerprint: FingerprintEntity) -> TimeInterval? { 30 }
+
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
 
     @discardableResult

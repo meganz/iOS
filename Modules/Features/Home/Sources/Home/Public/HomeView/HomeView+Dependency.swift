@@ -60,6 +60,7 @@ extension HomeView {
         // Continue where you left off widget
         let leftOffItemsUseCase: any LeftOffItemsUseCaseProtocol
         let leftOffThumbnailUseCase: any ThumbnailUseCaseProtocol
+        let leftOffItemSelectionHandler: any NodeSelectionHandling
         let accountStorageUseCase: any AccountStorageUseCaseProtocol
         let albumNameUseCase: any AlbumNameUseCaseProtocol
         let albumListUseCase: any AlbumListUseCaseProtocol
@@ -97,6 +98,7 @@ extension HomeView {
             viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
             leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
             leftOffThumbnailUseCase: some ThumbnailUseCaseProtocol,
+            leftOffItemSelectionHandler: some NodeSelectionHandling,
             accountStorageUseCase: some AccountStorageUseCaseProtocol,
             albumNameUseCase: some AlbumNameUseCaseProtocol,
             albumListUseCase: some AlbumListUseCaseProtocol
@@ -133,6 +135,7 @@ extension HomeView {
             self.viewedLinksUseCase = viewedLinksUseCase
             self.leftOffItemsUseCase = leftOffItemsUseCase
             self.leftOffThumbnailUseCase = leftOffThumbnailUseCase
+            self.leftOffItemSelectionHandler = leftOffItemSelectionHandler
             self.accountStorageUseCase = accountStorageUseCase
             self.albumNameUseCase = albumNameUseCase
             self.albumListUseCase = albumListUseCase

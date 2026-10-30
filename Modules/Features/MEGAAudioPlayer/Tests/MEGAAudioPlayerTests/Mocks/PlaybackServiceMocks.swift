@@ -175,6 +175,8 @@ struct StubPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
         .startFromBeginning
     }
 
+    func savedPlaybackTime(for fingerprint: FingerprintEntity) -> TimeInterval? { nil }
+
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
 
     @discardableResult
@@ -312,6 +314,8 @@ struct SpyPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
     func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity {
         .startFromBeginning
     }
+
+    func savedPlaybackTime(for fingerprint: FingerprintEntity) -> TimeInterval? { nil }
 
     func setPreference(to preferenceStatus: PlaybackContinuationPreferenceStatusEntity) {}
 

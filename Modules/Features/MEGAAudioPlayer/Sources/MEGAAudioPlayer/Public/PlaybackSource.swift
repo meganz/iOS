@@ -9,6 +9,9 @@ public enum PlaybackSource: Sendable {
     case allAudios(node: NodeEntity, queue: [NodeEntity])
     case chatMessage(node: NodeEntity)
     case cloudNode(node: NodeEntity, queue: [NodeEntity] = [])
+    /// Audio node played from Continue Where You Left Off list
+    /// For this source, we always resume from the saved position, with no resume prompt
+    case continueWhereYouLeftOff(node: NodeEntity)
     /// a file-link node is a standalone public node that isn't in any tree, so the streaming layer needs the object itself, not a handle.
     case fileLink(url: URL, node: (any PlayableNode)? = nil)
     /// a folder-link node lives in the folder-link SDK instance and has to be authorized before anything

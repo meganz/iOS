@@ -37,4 +37,25 @@ struct RevampedAudioPlaybackSourceTests {
         #expect(node.handle == 1)
         #expect(queue.map(\.handle) == [1, 5])
     }
+
+    @Test("A node opened from Continue where you left off gets its own source")
+    func continueWhereYouLeftOffSourcePage() throws {
+        let song = MockNode(handle: 1, name: "song.mp3")
+
+        let source = song.makeRevampedPlaybackSource(
+            node: song,
+            fileLink: nil,
+            isFolderLink: false,
+            chatId: nil,
+            messageId: nil,
+            allNodes: [],
+            sourcePage: .continueWhereYouLeftOff
+        )
+
+        guard case let .continueWhereYouLeftOff(node) = try #require(source) else {
+            Issue.record("Expected a continue where you left off source, got \(String(describing: source))")
+            return
+        }
+        #expect(node.handle == 1)
+    }
 }

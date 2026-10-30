@@ -59,7 +59,8 @@ extension PlaybackSource {
              .allAudios(let node, _),
              .recents(let node, _),
              .searchResult(let node),
-             .chatMessage(let node):
+             .chatMessage(let node),
+             .continueWhereYouLeftOff(let node):
             return .account(node)
         case .folderLink(let node, _):
             return .folderLink(node)

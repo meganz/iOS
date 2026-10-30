@@ -1684,6 +1684,7 @@
 		A5629FDF2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */; };
 		A563A52E2F6A6A0C00DD8BFD /* FavouritesNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A52D2F6A6A0400DD8BFD /* FavouritesNodeSelectionHandler.swift */; };
 		A563A5342F6A6BC900DD8BFD /* HomeSearchNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */; };
+		A563A5F12F6B000000DD8BFD /* LeftOffItemNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5F02F6B000000DD8BFD /* LeftOffItemNodeSelectionHandler.swift */; };
 		A563A5392F6A6BD300DD8BFD /* HomeSearchNodesActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */; };
 		A563A5492F6A77F100DD8BFD /* HomeAddMenuActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */; };
 		A563A5692F6A874200DD8BFD /* RecentActionBucketNodesActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5682F6A872A00DD8BFD /* RecentActionBucketNodesActionHandler.swift */; };
@@ -4633,6 +4634,7 @@
 		A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		A563A52D2F6A6A0400DD8BFD /* FavouritesNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesNodeSelectionHandler.swift; sourceTree = "<group>"; };
 		A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodeSelectionHandler.swift; sourceTree = "<group>"; };
+		A563A5F02F6B000000DD8BFD /* LeftOffItemNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftOffItemNodeSelectionHandler.swift; sourceTree = "<group>"; };
 		A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodesActionHandler.swift; sourceTree = "<group>"; };
 		A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAddMenuActionHandler.swift; sourceTree = "<group>"; };
 		A563A5682F6A872A00DD8BFD /* RecentActionBucketNodesActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketNodesActionHandler.swift; sourceTree = "<group>"; };
@@ -12894,6 +12896,7 @@
 				A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */,
 				A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */,
 				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
+				A563A5F02F6B000000DD8BFD /* LeftOffItemNodeSelectionHandler.swift */,
 				A5B848662F6BF9C10005F29F /* RecentActionBucketMoreActionsPresenter.swift */,
 				A563A5682F6A872A00DD8BFD /* RecentActionBucketNodesActionHandler.swift */,
 				A563A56C2F6A878F00DD8BFD /* RecentActionBucketNodeSelectionHandler.swift */,
@@ -15699,6 +15702,7 @@
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				C464FDE22D9CB79F00274FCD /* LayoutAttributesAnimator.swift in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
+				A563A5F12F6B000000DD8BFD /* LeftOffItemNodeSelectionHandler.swift in Sources */,
 				C4F1A0010001000000000007 /* LeftOffItemsDebugView.swift in Sources */,
 				C4F1A0010001000000000002 /* LeftOffItemsRecordUseCase.swift in Sources */,
 				A1D5F0C24E7B41A9B3C60002 /* LegacyAudioTearDownHandler.swift in Sources */,

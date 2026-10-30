@@ -386,6 +386,12 @@ final class AudioPlaybackService {
             .first()
             .sink { [weak self] _ in
                 guard let self, playGeneration == generation else { return }
+                if case .continueWhereYouLeftOff = currentSource {
+                    if let playbackTime = playbackContinuationUseCase.savedPlaybackTime(for: fingerprint) {
+                        engine.seek(toSeconds: playbackTime)
+                    }
+                    return
+                }
                 switch playbackContinuationUseCase.status(for: fingerprint) {
                 case .startFromBeginning:
                     break
