@@ -76,12 +76,17 @@ class RichPreviewContentView: UIView {
             switch (megaLink as NSURL).mnz_type() {
             case .fileLink:
                 let node = message.node
-                titleLabel.text = node?.name
+                titleLabel.text = node?.richPreviewTitle
                 descriptionLabel.text = String.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = DIContainer.domainName
                 iconImageView.image = MEGAAssets.UIImage.favicon
-                if let node = node {
-                    imageView.mnz_setThumbnail(by: node)
+                if let node {
+                    if node.isNodeKeyDecrypted() {
+                        imageView.mnz_setThumbnail(by: node)
+                    } else {
+                        // The thumbnail is encrypted with the same key, so it cannot be decrypted either.
+                        imageView.image = MEGAAssets.UIImage.filetypeGeneric
+                    }
                 }
             case .folderLink:
                 titleLabel.text = message.richTitle
@@ -101,5 +106,13 @@ class RichPreviewContentView: UIView {
                 break
             }
         }
+    }
+}
+
+extension MEGANode {
+    /// Title of a file link preview in chat. A link whose key does not match the file resolves to a node
+    /// named `CRYPTO_ERROR`, so say the key is invalid instead, as opening the link does.
+    var richPreviewTitle: String? {
+        isNodeKeyDecrypted() ? name : Strings.Localizable.decryptionKeyNotValid
     }
 }
