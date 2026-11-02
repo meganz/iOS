@@ -791,7 +791,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="为什么我需要恢复密钥？";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="恢复密钥已付知道剪贴板。请把它保存到一个您之后可以轻松访问的安全地方。";
+"recoveryKeyCopiedToClipboard"="恢复密钥已复制到剪贴板。请将其保存在安全且方便日后取用的地方。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="恢复密钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
