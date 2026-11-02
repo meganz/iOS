@@ -106,8 +106,11 @@ extension MainTabBarController {
     }
     
     func updateOverlayLayout(_ layoutWork: @escaping () -> Void) {
+        let oldHeight = currentContainerHeight()
         layoutWork()
         view.layoutIfNeeded()
+        // A new height was already reported by the container during the layout pass.
+        guard currentContainerHeight() == oldHeight else { return }
         updatePresenterContentView()
     }
     
@@ -156,7 +159,10 @@ extension MainTabBarController {
     private func createBottomOverlayContainerIfNeeded() {
         guard bottomOverlayContainer == nil else { return }
         
-        let container = UIView(frame: .zero)
+        let container = BottomOverlayContainerView(frame: .zero)
+        // Items such as the PSA banner and the progress bar change size without a layout call.
+        // The last view controller in the selected tab's navigation stack needs each new height to keep its content above the overlay.
+        container.onHeightChange = { [weak self] in self?.updatePresenterContentView() }
         container.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(container)
         
@@ -206,5 +212,18 @@ extension MainTabBarController {
         }
         
         bottomOverlayManager = BottomOverlayManager()
+    }
+}
+
+/// Calls `onHeightChange` after a layout pass that changed its height.
+private final class BottomOverlayContainerView: UIView {
+    var onHeightChange: (() -> Void)?
+    private var lastHeight: CGFloat = 0
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard bounds.height != lastHeight else { return }
+        lastHeight = bounds.height
+        onHeightChange?()
     }
 }
