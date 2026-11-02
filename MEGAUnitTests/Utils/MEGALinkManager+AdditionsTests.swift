@@ -42,6 +42,21 @@ final class MEGALinkManager_AdditionsTests: XCTestCase {
         }
     }
 
+    func testPublicHandleFromLink_tooShortForHandle_returnsNil() {
+        for link in ["", "#!", "#F!abc", "abc!de#f"] {
+            XCTAssertNil(MEGALinkManager.publicHandle(fromLink: link), link)
+        }
+    }
+
+    func testBuildPublicLink_emptyLink_returnsNil() {
+        XCTAssertNil(MEGALinkManager.buildPublicLink("", withKey: "Nt8-bopPB8em4cOlKFqStA", isFolder: false))
+        XCTAssertNil(MEGALinkManager.buildPublicLink("", withKey: "Nt8-bopPB8em4cOlKFqStA", isFolder: true))
+    }
+
+    func testBuildFileLink_emptyLink_returnsLinkAsGiven() {
+        XCTAssertEqual(MEGALinkManager.buildFileLink("", with: "Nt8-bopPB8em4cOlKFqStA"), "")
+    }
+
     func testShouldOpenWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeNotModerator_shouldReturnTrue() {
         let request = MockChatRequest()
         let chatSdk = MockChatSDK(

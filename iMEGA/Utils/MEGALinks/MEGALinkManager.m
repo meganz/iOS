@@ -262,11 +262,16 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 #pragma mark - Manage MEGA links
 
-+ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
-    return [MEGASdk.shared buildPublicLinkForHandle:[self publicHandleFromLink:link] key:key isFolder:isFolder];
++ (nullable NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
+    NSString *publicHandle = [self publicHandleFromLink:link];
+    if (!publicHandle) {
+        return nil;
+    }
+
+    return [MEGASdk.shared buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
 }
 
-+ (NSString *)publicHandleFromLink:(NSString *)link {
++ (nullable NSString *)publicHandleFromLink:(NSString *)link {
     // Same markers, in the same order, as the SDK's link parser: the handle is what follows them,
     // so a key already in the link (a wrong one the user is replacing) is left out.
     for (NSString *marker in @[@"#F!", @"folder/", @"#!", @"file/"]) {
@@ -277,6 +282,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
     
     NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
+    // A public handle is 6 bytes, 8 characters in Base64.
+    if (stringWithoutSymbols.length < 8) {
+        return nil;
+    }
+
     return [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
 }
 
@@ -305,7 +315,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
             
         case URLTypeFileLink:
-            [MEGALinkManager showFileLinkView];
+            [MEGALinkManager showFileLinkViewForURL:url];
             [MEGALinkManager resetLinkAndURLType];
             break;
             
@@ -314,7 +324,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [MEGALinkManager openDefaultLink:url];
                 break;
             }
-            [MEGALinkManager showFolderLinkView];
+            [MEGALinkManager showFolderLinkViewForURL:url];
             [MEGALinkManager resetLinkAndURLType];
             break;
             
@@ -659,8 +669,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
 }
 
-+ (void)showFileLinkView {
-    NSString *fileLinkURLString = MEGALinkManager.linkURL.mnz_MEGAURL;
++ (void)showFileLinkViewForURL:(NSURL *)url {
+    // Built from the URL being processed rather than the `linkURL` static, which another link can reset in the meantime.
+    NSString *fileLinkURLString = url.mnz_MEGAURL;
+    if (fileLinkURLString.length == 0) {
+        MEGALogError(@"[File Link] Could not build a MEGA URL for the file link");
+        return;
+    }
+
     // Captured before the request starts: another link can overwrite the static while this one resolves.
     NSString *encryptedLinkString = MEGALinkManager.secondaryLinkURL.absoluteString;
     NSString *receivedLinkString = encryptedLinkString ?: fileLinkURLString;
@@ -734,8 +750,13 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                      presentationStyle:UIModalPresentationAutomatic];
 }
 
-+ (void)showFolderLinkView {
-    NSString *link = MEGALinkManager.linkURL.mnz_MEGAURL;
++ (void)showFolderLinkViewForURL:(NSURL *)url {
+    // Built from the URL being processed rather than the `linkURL` static, which another link can reset in the meantime.
+    NSString *link = url.mnz_MEGAURL;
+    if (link.length == 0) {
+        MEGALogError(@"[Folder Link] Could not build a MEGA URL for the folder link");
+        return;
+    }
 
     NSURL *secondaryLink = MEGALinkManager.secondaryLinkURL;
     BOOL isEncryptedLink = secondaryLink.mnz_type == URLTypeEncryptedLink;

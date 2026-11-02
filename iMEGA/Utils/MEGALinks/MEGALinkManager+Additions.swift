@@ -457,8 +457,9 @@ extension MEGALinkManager {
         NewFolderLinkViewController(link: link, receivedLink: receivedLink)
     }
 
+    /// Falls back to `link` as given when it carries no public handle, for the SDK to reject.
     static func buildFolderLink(_ link: String, with key: String) -> String {
-        MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: true)
+        MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: true) ?? link
     }
 }
 
@@ -502,8 +503,9 @@ extension MEGALinkManager {
         })
     }
 
+    /// Falls back to `link` as given when it carries no public handle, for the SDK to reject.
     static func buildFileLink(_ link: String, with key: String) -> String {
-        MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: false)
+        MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: false) ?? link
     }
 
     /// Records a file link that resolved straight into the photo browser or the player, which never

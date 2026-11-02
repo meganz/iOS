@@ -38,10 +38,12 @@ NS_SWIFT_UI_ACTOR
 
 #pragma mark - Manage MEGA links
 
-+ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder;
+/// Nil when the link carries no public handle.
++ (nullable NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder;
 
 /// The public handle of a file or folder link, whether or not the link carries a key.
-+ (NSString *)publicHandleFromLink:(NSString *)link;
+/// Nil when the link is too short to hold one.
++ (nullable NSString *)publicHandleFromLink:(NSString *)link;
 
 + (void)processLinkURL:( NSURL * _Nullable)url;
 
@@ -49,7 +51,7 @@ NS_SWIFT_UI_ACTOR
 
 + (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email;
 
-+ (void)showFileLinkView;
++ (void)showFileLinkViewForURL:(NSURL *)url;
 
 + (void)handlePublicChatLink;
 
