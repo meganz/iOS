@@ -9,6 +9,7 @@ struct PlanEntityExternalPurchasePlanTests {
         (.proII, "propay_2"),
         (.proIII, "propay_3"),
         (.lite, "propay_4"),
+        (.essential, "propay_13"),
         (.proFlexi, "propay_101"),
         (.business, "registerb")
     ])
@@ -19,8 +20,7 @@ struct PlanEntityExternalPurchasePlanTests {
     @Test("A plan with no dedicated page falls back to the plans page", arguments: [
         AccountTypeEntity.free,
         .starter,
-        .basic,
-        .essential
+        .basic
     ])
     func externalPurchasePath_withoutADedicatedPage_isThePlansPage(type: AccountTypeEntity) {
         #expect(PlanEntity(type: type).externalPurchasePath == "pro")

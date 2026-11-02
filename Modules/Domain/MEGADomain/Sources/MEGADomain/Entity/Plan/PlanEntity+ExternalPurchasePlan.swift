@@ -5,6 +5,7 @@ public extension PlanEntity {
         case .proII: "propay_2"
         case .proIII: "propay_3"
         case .lite: "propay_4"
+        case .essential: "propay_13"
         case .proFlexi: "propay_101"
         case .business: "registerb"
         default: "pro"
