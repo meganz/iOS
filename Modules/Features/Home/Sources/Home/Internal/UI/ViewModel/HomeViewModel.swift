@@ -26,10 +26,12 @@ final class HomeViewModel: ObservableObject {
     private let widgetDisplayUseCase: any HomeWidgetDisplayUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
     convenience init(
         homeDeepLink: HomeDeepLink,
         featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol
     ) {
         let networkMonitoringUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
@@ -39,6 +41,7 @@ final class HomeViewModel: ObservableObject {
             widgetDisplayUseCase: HomeWidgetDisplayUseCase(),
             tracker: DIContainer.tracker,
             featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             nodeUseCase: nodeUseCase,
             offlineFileOpenGuard: OfflineFileOpenGuard(
                 isNewOfflineModeEnabled: featureFlagProvider.isNewOfflineModeEnabled,
@@ -58,6 +61,7 @@ final class HomeViewModel: ObservableObject {
         widgetDisplayUseCase: some HomeWidgetDisplayUseCaseProtocol,
         tracker: some AnalyticsTracking,
         featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         nodeUseCase: some NodeUseCaseProtocol,
         offlineFileOpenGuard: some OfflineFileOpenGuarding,
         offlineActionGuard: some OfflineActionGuarding
@@ -68,6 +72,7 @@ final class HomeViewModel: ObservableObject {
         self.isSearching = homeDeepLink.homeSearch
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.isNewOfflineModeEnabled = featureFlagProvider.isNewOfflineModeEnabled
         self.offlineFileOpenGuard = offlineFileOpenGuard
         self.offlineActionGuard = offlineActionGuard
@@ -87,7 +92,8 @@ final class HomeViewModel: ObservableObject {
     }
 
     func reloadWidgets() {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) else {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+                || remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) else {
             widgets = HomeWidgetType.phase1Widgets
             return
         }

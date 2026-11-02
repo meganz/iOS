@@ -40,7 +40,9 @@ extension PlaybackContinuationUseCase where T == PreviousPlaybackSessionReposito
     /// This preference only lives until the app is killed thus it shouldn't be kept in a local persistence framework like UserDefaults.
     static let shared: PlaybackContinuationUseCase = {
         let featureFlagUseCase = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)
-        let minimumPlaybackTime: TimeInterval = featureFlagUseCase.isFeatureFlagEnabled(for: FeatureFlagKey.iosHomeRevampPhaseTwo.rawValue)
+        let isHomeRevampPhaseTwoEnabled = featureFlagUseCase.isFeatureFlagEnabled(for: FeatureFlagKey.iosHomeRevampPhaseTwo.rawValue)
+            || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+        let minimumPlaybackTime: TimeInterval = isHomeRevampPhaseTwoEnabled
             ? Constants.minimumContinuationPlaybackTimeRevamp
             : Constants.minimumContinuationPlaybackTime
         return PlaybackContinuationUseCase(

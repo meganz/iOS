@@ -59,6 +59,7 @@ public struct HomeView: View {
 
     private var isHomeRevampPhase2Enabled: Bool {
         dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+            || dependency.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
     }
 
     // Product team decided to put customization on hold, so we temprarily disable it
@@ -108,6 +109,7 @@ public struct HomeView: View {
         _viewModel = StateObject(wrappedValue: HomeViewModel(
             homeDeepLink: homeDeepLink,
             featureFlagProvider: dependency.featureFlagProvider,
+            remoteFeatureFlagUseCase: dependency.remoteFeatureFlagUseCase,
             nodeUseCase: dependency.nodeUseCase
         ))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
@@ -430,7 +432,7 @@ public struct HomeView: View {
                             moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
                             photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
                             transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
-                            isHomeRevampPhaseTwoEnabled: dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+                            isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
                         ),
                         addMenuActionHandler: homeAddMenuActionHandler
                     )

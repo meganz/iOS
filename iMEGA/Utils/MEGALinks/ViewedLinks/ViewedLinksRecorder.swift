@@ -27,7 +27,8 @@ final class ViewedLinksRecorder: Sendable {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
 
         return {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+            (DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+                || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo))
                 && accountUseCase.isLoggedIn()
         }
     }

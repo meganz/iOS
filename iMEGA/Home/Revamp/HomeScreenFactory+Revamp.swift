@@ -141,13 +141,15 @@ extension HomeScreenFactory {
                 navigationController: navigationController,
                 nodeActions: nodeActions,
                 locationHandler: recentActionBucketLocationHandler,
-                showsShowInLocationAction: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo),
+                showsShowInLocationAction: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+                    || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo),
                 offlineActionGuard: offlineActionGuard
             ),
             recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket),
             tracker: DIContainer.tracker,
             featureFlagProvider: DIContainer.featureFlagProvider,
+            remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
             promotedPlanProvider: PromotedPlanFactory.makeProvider(),
             viewedLinksUseCase: ViewedLinksFactory.makeViewedLinksUseCase(),
             leftOffItemsUseCase: ContinueWhereYouLeftOffFactory.makeLeftOffItemsUseCase(

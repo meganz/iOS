@@ -291,7 +291,9 @@ extension AppDelegate {
 
     @objc func showLaunchTabDialogIfNeeded() {
 
-        let hasSelectedLaunchDestination = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+        let isHomeRevampPhaseTwoEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+            || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+        let hasSelectedLaunchDestination = isHomeRevampPhaseTwoEnabled
             ? defaultLaunchDestinationUseCase.hasSelectedDestination
             : TabManager.isLaunchTabSelected()
 
@@ -328,7 +330,8 @@ extension AppDelegate {
     /// Handle the cold-launch routing for user's chosen non-tab launch destination (Offline / Favourites / Shared items).
     /// No-ops when the phase-two flag is off, a launch action is already pending (launch action is prioritized over default destination).
     @objc func dispatchDefaultLaunchDestinationIfNeeded() {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) else { return }
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+                || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) else { return }
 
         guard !didDispatchDefaultLaunchDestination else { return }
 

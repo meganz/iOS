@@ -40,6 +40,7 @@ import MEGASwift
 
     private static var isHomeRevampPhaseTwoEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+            || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
     }
 
     private(set) static var designatedTab: Tab?

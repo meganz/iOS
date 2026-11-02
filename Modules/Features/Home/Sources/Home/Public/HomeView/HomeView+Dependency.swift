@@ -54,6 +54,7 @@ extension HomeView {
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
         let tracker: any AnalyticsTracking
         let featureFlagProvider: any FeatureFlagProviderProtocol
+        let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
         let promotedPlanProvider: @Sendable () async throws -> PlanEntity?
         // Viewed links widget
         let viewedLinksUseCase: any ViewedLinksUseCaseProtocol
@@ -94,6 +95,7 @@ extension HomeView {
             photoLibraryContentViewRouter: some PhotoLibraryContentViewRouting,
             tracker: some AnalyticsTracking,
             featureFlagProvider: some FeatureFlagProviderProtocol,
+            remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
             promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?,
             viewedLinksUseCase: some ViewedLinksUseCaseProtocol,
             leftOffItemsUseCase: some LeftOffItemsUseCaseProtocol,
@@ -131,6 +133,7 @@ extension HomeView {
             self.photoLibraryContentViewRouter = photoLibraryContentViewRouter
             self.tracker = tracker
             self.featureFlagProvider = featureFlagProvider
+            self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
             self.promotedPlanProvider = promotedPlanProvider
             self.viewedLinksUseCase = viewedLinksUseCase
             self.leftOffItemsUseCase = leftOffItemsUseCase
