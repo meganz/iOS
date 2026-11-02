@@ -472,38 +472,65 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 }
 
 - (void)deletePendingRecordsBeforeDate:(NSDate *)cutoff completion:(void (^ _Nullable)(NSError * _Nullable))completion {
-    // There can be a LOT of pending records (think a huge library that just enabled camera uploads),
-    // so: run async to keep the caller (the settings switch on main) unblocked, and delete in small
-    // batches of faults to keep memory and transaction size in check. No NSBatchDeleteRequest here —
-    // it skips delete rules, and this entity cascades into errorPerLaunch / errorPerLogin /
-    // fileNameRecord, so batch deleting would leave orphans behind.
-    static const NSUInteger batchSize = 500;
+    // Async to keep the caller (the settings switch on main) unblocked.
     [self.backgroundContext performBlock:^{
         NSError *coreDataError = nil;
-        while (YES) {
-            NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-            request.predicate = [CameraUploadRecordManager pendingRecordsToDeletePredicateBeforeDate:cutoff];
-            request.fetchLimit = batchSize;
-            request.includesPropertyValues = NO;
-            NSArray<MOAssetUploadRecord *> *records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
-            if (coreDataError != nil || records.count == 0) {
-                break;
-            }
-
-            for (MOAssetUploadRecord *record in records) {
-                [self.backgroundContext deleteObject:record];
-            }
-
-            [self.backgroundContext save:&coreDataError];
-            if (coreDataError != nil) {
-                break;
-            }
-        }
-
+        [self deletePendingRecordsInBatchesBeforeDate:cutoff error:&coreDataError];
         if (completion) {
             completion(coreDataError);
         }
     }];
+}
+
+- (NSUInteger)deletePendingRecordsBeforeDate:(NSDate *)cutoff error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSUInteger deletedCount = 0;
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        deletedCount = [self deletePendingRecordsInBatchesBeforeDate:cutoff error:&coreDataError];
+    }];
+
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+
+    return deletedCount;
+}
+
+// Must run on the background context's queue.
+- (NSUInteger)deletePendingRecordsInBatchesBeforeDate:(NSDate *)cutoff error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    // There can be a LOT of pending records (think a huge library that just enabled camera uploads),
+    // so delete in small batches of faults to keep memory and transaction size in check. 
+    static const NSUInteger batchSize = 500;
+    NSError *coreDataError = nil;
+    NSUInteger deletedCount = 0;
+    while (YES) {
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [CameraUploadRecordManager pendingRecordsToDeletePredicateBeforeDate:cutoff];
+        request.fetchLimit = batchSize;
+        request.includesPropertyValues = NO;
+        NSArray<MOAssetUploadRecord *> *records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+        if (coreDataError != nil || records.count == 0) {
+            break;
+        }
+
+        for (MOAssetUploadRecord *record in records) {
+            [self.backgroundContext deleteObject:record];
+        }
+
+        [self.backgroundContext save:&coreDataError];
+        if (coreDataError != nil) {
+            break;
+        }
+        deletedCount += records.count;
+    }
+
+    MEGALogDebug(@"[Camera Upload] deleted %lu pre-cutoff pending records before %@", (unsigned long)deletedCount, cutoff);
+
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+
+    return deletedCount;
 }
 
 #pragma mark - error record management

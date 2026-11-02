@@ -859,6 +859,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)didReceiveNodesCurrentNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] nodes current notification %@", notification);
+    [CameraUploadManager cacheUploadOnlyNewPhotosFeatureFlag];
     self.isNodeTreeCurrent = YES;
     [self startCameraUploadIfNeeded];
 }

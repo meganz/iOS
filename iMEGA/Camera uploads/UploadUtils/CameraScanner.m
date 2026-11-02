@@ -63,6 +63,8 @@
             return;
         }
         
+        [self deletePendingRecordsBeforeUploadOnlyNewPhotosCutoff];
+
         PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_scanFetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
         
         [self updateScannedResultsByAssetFetchResult:[[AssetFetchResult alloc] initWithMediaTypes:mediaTypes fetchResult:fetchResult]];
@@ -113,6 +115,25 @@
             completion(error);
         }
     }];
+}
+
+// Drops pre-cutoff pending records on every filtered scan, so records inserted by a scan that ran
+// without the cutoff (e.g. before remote flags were loaded) are removed before uploads are queued.
+- (void)deletePendingRecordsBeforeUploadOnlyNewPhotosCutoff {
+    NSDate *cutoff = CameraUploadManager.uploadOnlyNewPhotosCutoff;
+    if (!CameraUploadManager.shouldUploadOnlyNewPhotos || cutoff == nil) {
+        return;
+    }
+
+    NSError *error;
+    NSUInteger deletedCount = [CameraUploadRecordManager.shared deletePendingRecordsBeforeDate:cutoff error:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] error when deleting pre-cutoff pending records %@", error);
+    }
+
+    if (deletedCount > 0) {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+    }
 }
 
 - (void)updateScannedResultsByAssetFetchResult:(AssetFetchResult *)assetFetchResult {

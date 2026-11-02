@@ -43,8 +43,24 @@ extension CameraUploadManager {
         RemoteFeatureFlagUseCase(repository: remoteFeatureFlagRepository)
     }
     
+    static let uploadOnlyNewPhotosFeatureFlagCacheKey = "UploadOnlyNewPhotosFeatureFlagCache"
+
+    /// The SDK only loads remote flags during fetchnodes, so a scan at process launch (e.g. background refresh)
+    /// reads the flag as off. Until then, fall back to the value cached once flags were last loaded; with no
+    /// cached value assume ON, since the preference can only have been turned on while the flag was on.
     @objc class var isUploadOnlyNewPhotosFeatureEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosUploadOnlyNewPhotos)
+        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosUploadOnlyNewPhotos) {
+            return true
+        }
+        return UserDefaults.standard.object(forKey: uploadOnlyNewPhotosFeatureFlagCacheKey) as? Bool ?? true
+    }
+
+    /// Caches the current remote flag value. Call only once remote flags are loaded (nodes current).
+    @objc class func cacheUploadOnlyNewPhotosFeatureFlag() {
+        UserDefaults.standard.set(
+            remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosUploadOnlyNewPhotos),
+            forKey: uploadOnlyNewPhotosFeatureFlagCacheKey
+        )
     }
     
     func photoQueuePausedReason() -> CameraUploadMediaTypePausedReason? {

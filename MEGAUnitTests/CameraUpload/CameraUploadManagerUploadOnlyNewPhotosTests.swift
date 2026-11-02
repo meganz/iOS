@@ -14,14 +14,18 @@ import Testing
 final class CameraUploadManagerUploadOnlyNewPhotosTests {
     private let enabledKey = "UploadOnlyNewPhotosEnabled"
     private let cutoffKey = "UploadOnlyNewPhotosCutoff"
+    private let flagCacheKey = CameraUploadManager.uploadOnlyNewPhotosFeatureFlagCacheKey
     private let savedEnabled: Any?
     private let savedCutoff: Any?
+    private let savedFlagCache: Any?
     private let savedRemoteFeatureFlagRepository: any RemoteFeatureFlagRepositoryProtocol
 
     init() {
         savedEnabled = UserDefaults.standard.object(forKey: enabledKey)
         savedCutoff = UserDefaults.standard.object(forKey: cutoffKey)
+        savedFlagCache = UserDefaults.standard.object(forKey: flagCacheKey)
         savedRemoteFeatureFlagRepository = CameraUploadManager.remoteFeatureFlagRepository
+        UserDefaults.standard.removeObject(forKey: flagCacheKey)
         // The preference getter is gated by the remote flag (kill switch); the real flag value comes
         // from the SDK and cannot be flipped from a test, so inject a mock with the flag on to make
         // the preference behaviour under test observable.
@@ -32,6 +36,7 @@ final class CameraUploadManagerUploadOnlyNewPhotosTests {
     deinit {
         UserDefaults.standard.set(savedEnabled, forKey: enabledKey)
         UserDefaults.standard.set(savedCutoff, forKey: cutoffKey)
+        UserDefaults.standard.set(savedFlagCache, forKey: flagCacheKey)
         CameraUploadManager.remoteFeatureFlagRepository = savedRemoteFeatureFlagRepository
     }
 
@@ -86,7 +91,9 @@ final class CameraUploadManagerUploadOnlyNewPhotosTests {
         CameraUploadManager.shouldUploadOnlyNewPhotos = true
         #expect(CameraUploadManager.shouldUploadOnlyNewPhotos)
 
+        // Flag rolled back and loaded: nodes current caches the OFF value.
         Self.setUploadOnlyNewPhotosRemoteFlag(false)
+        CameraUploadManager.cacheUploadOnlyNewPhotosFeatureFlag()
 
         // Behaviour is off: the getter gates everything downstream of it, including the scan filter.
         #expect(CameraUploadManager.shouldUploadOnlyNewPhotos == false)
@@ -105,6 +112,39 @@ final class CameraUploadManagerUploadOnlyNewPhotosTests {
 
         #expect(CameraUploadManager.shouldUploadOnlyNewPhotos)
         #expect(CameraUploadManager.uploadOnlyNewPhotosCutoff == originalCutoff)
+    }
+
+    // MARK: - Remote flag not loaded yet (e.g. background refresh launch)
+
+    @Test func flagNotLoadedYet_withCachedOn_keepsCutoffFilter() throws {
+        CameraUploadManager.shouldUploadOnlyNewPhotos = true
+        CameraUploadManager.cacheUploadOnlyNewPhotosFeatureFlag()
+
+        // A new process before fetchnodes: the SDK reports the flag as 0.
+        Self.setUploadOnlyNewPhotosRemoteFlag(false)
+
+        #expect(CameraUploadManager.shouldUploadOnlyNewPhotos)
+        let predicate = try #require(PHFetchOptions.mnz_scanFetchOptionsForCameraUpload(withMediaTypes: mediaTypes).predicate)
+        #expect(predicate.predicateFormat.contains("creationDate"))
+    }
+
+    @Test func flagNotLoadedYet_withNoCachedValue_keepsCutoffFilter() throws {
+        CameraUploadManager.shouldUploadOnlyNewPhotos = true
+        Self.setUploadOnlyNewPhotosRemoteFlag(false)
+
+        #expect(UserDefaults.standard.object(forKey: flagCacheKey) == nil)
+        #expect(CameraUploadManager.shouldUploadOnlyNewPhotos)
+        let predicate = try #require(PHFetchOptions.mnz_scanFetchOptionsForCameraUpload(withMediaTypes: mediaTypes).predicate)
+        #expect(predicate.predicateFormat.contains("creationDate"))
+    }
+
+    @Test(arguments: [true, false])
+    func cacheFeatureFlag_storesCurrentRemoteValue(isFlagOn: Bool) {
+        Self.setUploadOnlyNewPhotosRemoteFlag(isFlagOn)
+
+        CameraUploadManager.cacheUploadOnlyNewPhotosFeatureFlag()
+
+        #expect(UserDefaults.standard.object(forKey: flagCacheKey) as? Bool == isFlagOn)
     }
 
     // MARK: - Scan fetch options (toggle OFF)

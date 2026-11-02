@@ -85,6 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// invoked on the context's queue with the first error encountered, or nil on success.
 - (void)deletePendingRecordsBeforeDate:(NSDate *)cutoff completion:(void (^ _Nullable)(NSError * _Nullable))completion;
 
+/// Synchronous variant of @c deletePendingRecordsBeforeDate:completion: , used by the scanner to drop
+/// pre-cutoff pending records before uploads are queued. Returns the number of deleted records.
+- (NSUInteger)deletePendingRecordsBeforeDate:(NSDate *)cutoff error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
 /// The fetch predicate used by @c deletePendingRecordsBeforeDate:completion: . Exposed for unit testing.
 + (NSPredicate *)pendingRecordsToDeletePredicateBeforeDate:(NSDate *)cutoff;
 
