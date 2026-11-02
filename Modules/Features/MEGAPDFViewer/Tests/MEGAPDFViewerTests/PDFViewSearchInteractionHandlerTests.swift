@@ -347,6 +347,28 @@ extension FindNavigatorPresentationTests {
             #expect(nextMenu.children.compactMap { ($0 as? UIAction)?.state } == [.off])
         }
 
+        @Test func sessionEnd_clearsHighlights() async throws {
+            let (window, pdfView, handler, interaction) = try makeAttachedHandler()
+            defer { window.isHidden = true }
+            let session = try #require(handler.findInteraction(interaction, sessionFor: pdfView))
+            try await jumpToFirstResult(in: session)
+            try #require(pdfView.searchHighlightOverlayViews.contains { !$0.boxes.isEmpty })
+
+            handler.findInteraction(interaction, didEnd: session)
+            try await Task.sleep(for: .milliseconds(100))
+
+            #expect(pdfView.searchHighlightOverlayViews.allSatisfy { $0.boxes.isEmpty && !$0.isDimmed })
+        }
+
+        @Test func attach_setsPageOverlayViewProvider() {
+            let pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: 400, height: 700))
+            let handler = PDFViewSearchInteractionHandler()
+
+            handler.attachToPDFView(pdfView)
+
+            #expect(pdfView.pageOverlayViewProvider is PDFSearchHighlightOverlayProvider)
+        }
+
         @Test func nativeFindNavigation_reportsSessionAndDistinctResultPositions() async throws {
             let (window, _, handler, interaction) = try makeAttachedHandler()
             defer { window.isHidden = true }

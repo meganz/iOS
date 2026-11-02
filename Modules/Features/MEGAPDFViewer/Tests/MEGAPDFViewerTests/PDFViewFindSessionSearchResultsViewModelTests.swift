@@ -24,7 +24,7 @@ struct PDFViewFindSessionSearchResultsViewModelTests {
         await searcher.report(matches[0])
 
         #expect(sut.highlightedIndex == 0)
-        #expect(updates.values == [.init(scrollTarget: matches[0])])
+        #expect(updates.values == [.init(scrollTarget: matches[0], dimsPages: true)])
     }
 
     @Test func laterMatches_publishUpdatesWithoutScroll() async throws {
@@ -36,7 +36,43 @@ struct PDFViewFindSessionSearchResultsViewModelTests {
         for match in matches.dropFirst() { await searcher.report(match) }
 
         #expect(sut.highlightedIndex == 0)
-        #expect(updates.values == Array(repeating: .init(scrollTarget: nil), count: 2))
+        #expect(updates.values == Array(repeating: .init(scrollTarget: nil, dimsPages: true), count: 2))
+    }
+
+    @Test func newQuery_keepsPagesDimmedUntilItsSearchEnds() async throws {
+        let (sut, searcher, matches) = try makeSUT(matchPages: [0])
+        sut.performSearch(query: "alpha", compareOptions: .caseInsensitive)
+        await searcher.report(matches[0])
+        let updates = UpdateRecorder(sut)
+
+        sut.performSearch(query: "alphas", compareOptions: .caseInsensitive)
+
+        #expect(sut.matches.isEmpty)
+        #expect(!updates.values.isEmpty)
+        #expect(updates.values.allSatisfy { $0.dimsPages })
+    }
+
+    @Test func searchFindingNothing_undimsPages() async throws {
+        let (sut, searcher, matches) = try makeSUT(matchPages: [0])
+        sut.performSearch(query: "alpha", compareOptions: .caseInsensitive)
+        await searcher.report(matches[0])
+        sut.performSearch(query: "alphas", compareOptions: .caseInsensitive)
+        let updates = UpdateRecorder(sut)
+
+        await searcher.finish()
+
+        #expect(updates.values.last?.dimsPages == false)
+    }
+
+    @Test func endSearch_undimsPages() async throws {
+        let (sut, searcher, matches) = try makeSUT(matchPages: [0])
+        sut.performSearch(query: "alpha", compareOptions: .caseInsensitive)
+        await searcher.report(matches[0])
+        let updates = UpdateRecorder(sut)
+
+        sut.endSearch()
+
+        #expect(updates.values.last?.dimsPages == false)
     }
 
     @Test func highlightNextForward_wrapsFromLastToFirst() async throws {

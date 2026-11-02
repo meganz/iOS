@@ -77,10 +77,39 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
         }
     }
 
+    /// A search of the frequent word through `PDFViewFindSession`, drawing
+    /// every match in page overlays as it arrives.
+    func testHighlightAllMatchesOfFrequentWord() throws {
+        let url = try BenchmarkDocuments.makeTextDocument()
+        let expected = try XCTUnwrap(PDFDocument(url: url)).findString("quick", withOptions: .caseInsensitive).count
+        measure(metrics: [XCTCPUMetric(), MainThreadStallMetric()]) {
+            let count = try? runOnMainLoop {
+                let overlay = PDFSearchHighlightOverlayProvider()
+                let (window, pdfView) = try Self.makeHostedView(url: url, overlayProvider: overlay)
+                defer { window.isHidden = true }
+                try await Self.waitUntilDisplayed(pdfView)
+                let session = PDFViewFindSession(
+                    pdfView: pdfView,
+                    findInteraction: UIFindInteraction(sessionDelegate: NoFindSessionDelegate.shared),
+                    documentSearcher: PDFDocumentSearcher(pdfView: pdfView),
+                    preferences: PDFViewSearchPreferences(),
+                    scrollAdjuster: PDFJumpToSearchResultScrollAdjuster(contentScrollView: { nil }),
+                    highlightOverlay: overlay
+                )
+                session.performSearch(query: "quick", options: nil)
+                try await Task.sleep(for: .milliseconds(10))
+                try await waitUntilPDFKitStopsFinding(in: pdfView.document)
+                return session.resultCount
+            }
+            XCTAssertEqual(count, expected)
+        }
+    }
+
     // MARK: - Helpers
 
     private static func makeHostedView(
-        url: URL
+        url: URL,
+        overlayProvider: (any PDFPageOverlayViewProvider)? = nil
     ) throws -> (UIWindow, MEGAPDFView) {
         let frame = CGRect(x: 0, y: 0, width: 402, height: 874)
         let window = UIWindow(frame: frame)
@@ -89,6 +118,7 @@ final class PDFDocumentSearcherBenchmarks: BenchmarkCase {
         window.makeKeyAndVisible()
         let pdfView = MEGAPDFView(frame: frame)
         root.view.addSubview(pdfView)
+        pdfView.pageOverlayViewProvider = overlayProvider
         pdfView.configure(document: try XCTUnwrap(PDFDocument(url: url)))
         pdfView.layoutIfNeeded()
         return (window, pdfView)
@@ -166,3 +196,9 @@ extension MatchCounter: @preconcurrency PDFDocumentDelegate {
     }
 }
 
+@MainActor
+private final class NoFindSessionDelegate: NSObject, UIFindInteractionDelegate {
+    static let shared = NoFindSessionDelegate()
+
+    func findInteraction(_ interaction: UIFindInteraction, sessionFor view: UIView) -> UIFindSession? { nil }
+}

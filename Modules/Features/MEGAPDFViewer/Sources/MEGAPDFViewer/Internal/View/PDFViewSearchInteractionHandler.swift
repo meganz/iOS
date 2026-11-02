@@ -9,6 +9,7 @@ final class PDFViewSearchInteractionHandler: NSObject {
     private var documentSearcher: PDFDocumentSearcher?
     private var currentSession: PDFViewFindSession?
     private var jumpToSearchResultScrollAdjuster: PDFJumpToSearchResultScrollAdjuster?
+    private let highlightOverlay = PDFSearchHighlightOverlayProvider()
     private let notificationCenter: NotificationCenter
     var onSearchSessionDidBegin: ((UUID) -> Void)?
     var onSearchSessionDidEnd: ((UUID) -> Void)?
@@ -22,7 +23,9 @@ final class PDFViewSearchInteractionHandler: NSObject {
     func attachToPDFView(_ pdfView: PDFView) {
         guard findInteraction == nil else { return }
         self.pdfView = pdfView
-        // Attach search highlight overlays here (actual code in next MR)
+        // Set before `MEGAPDFView` assigns its document, the only order
+        // measured to get overlay views.
+        pdfView.pageOverlayViewProvider = highlightOverlay
         // One searcher for the view's lifetime, so a search left running by an
         // ended session is still its own to cancel.
         documentSearcher = PDFDocumentSearcher(pdfView: pdfView)
@@ -69,7 +72,8 @@ extension PDFViewSearchInteractionHandler: UIFindInteractionDelegate {
             findInteraction: interaction,
             documentSearcher: documentSearcher,
             preferences: searchPreferences,
-            scrollAdjuster: adjuster
+            scrollAdjuster: adjuster,
+            highlightOverlay: highlightOverlay
         )
         session.onSearchResultChanged = { [weak self, weak session] generationID, resultID in
             guard let session else { return }

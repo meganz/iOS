@@ -8,6 +8,57 @@ import UIKit
 struct PDFViewFindSessionTests {
     // MARK: - Highlights
 
+    @Test func highlightedMatch_isShownInItsPageOverlayAndMatchesQuery() async throws {
+        let fixture = try await SessionFixture(pages: ["alpha one", "alpha two"])
+
+        try await fixture.searchAndWait("alpha")
+
+        let index = fixture.session.highlightedResultIndex
+        try #require(index != NSNotFound)
+        let highlighted = fixture.pdfView.searchHighlightOverlayViews
+            .flatMap(\.boxes)
+            .filter(\.isHighlighted)
+        #expect(highlighted.map(\.matchIndex) == [index])
+        let match = try #require(fixture.pdfView.document?.findString("alpha", withOptions: [])[index])
+        #expect(match.string == "alpha")
+    }
+
+    @Test func matchFound_isHighlightedBeforeSearchEnds() async throws {
+        let searcher = MockPDFDocumentSearcher()
+        let fixture = try await SessionFixture(pages: ["alpha one", "alpha two"], searcher: searcher)
+        let selection = try #require(fixture.pdfView.document?.findString("alpha", withOptions: []).first)
+        fixture.session.performSearch(query: "alpha", options: nil)
+
+        await searcher.report(PDFSearchMatch(selection: selection, pageIndex: 0))
+        try await Task.sleep(for: .milliseconds(100))
+
+        #expect(fixture.pdfView.searchHighlightOverlayViews.flatMap(\.boxes).count == 1)
+    }
+
+    @Test func highlights_persistAfterScrollAwayAndBack() async throws {
+        let fixture = try await SessionFixture(pages: ["alpha one"] + Array(repeating: "filler", count: 12))
+        try await fixture.searchAndWait("alpha")
+        let document = try #require(fixture.pdfView.document)
+
+        fixture.pdfView.go(to: try #require(document.page(at: document.pageCount - 1)))
+        try await Task.sleep(for: .milliseconds(300))
+        fixture.pdfView.go(to: try #require(document.page(at: 0)))
+        try await Task.sleep(for: .milliseconds(300))
+
+        #expect(fixture.pdfView.searchHighlightOverlayViews.flatMap(\.boxes).contains { $0.isHighlighted })
+    }
+
+    @Test func endSearch_clearsEveryPageOverlay() async throws {
+        let fixture = try await SessionFixture(pages: ["alpha one", "alpha two"])
+        try await fixture.searchAndWait("alpha")
+
+        fixture.session.endSearch()
+        try await Task.sleep(for: .milliseconds(100))
+
+        let overlays = fixture.pdfView.searchHighlightOverlayViews
+        #expect(overlays.allSatisfy { $0.boxes.isEmpty && !$0.isDimmed })
+    }
+
     @Test func performSearch_highlightsFirstMatchInDocumentWhateverPageIsShown() async throws {
         let searcher = MockPDFDocumentSearcher()
         let fixture = try await SessionFixture(pages: ["alpha one", "alpha two"], searcher: searcher)
@@ -93,6 +144,7 @@ private struct SessionFixture {
     let base: SearchFixture
     let session: PDFViewFindSession
     let interaction: CountingFindInteraction
+    let overlay: PDFSearchHighlightOverlayProvider
     private let delegate = NoSessionDelegate()
 
     var pdfView: MEGAPDFView { base.pdfView }
@@ -102,7 +154,9 @@ private struct SessionFixture {
         searcher: (any PDFDocumentSearching)? = nil,
         scrollAdjuster: PDFJumpToSearchResultScrollAdjuster? = nil
     ) async throws {
-        base = try await SearchFixture(pages: pages)
+        let overlay = PDFSearchHighlightOverlayProvider()
+        self.overlay = overlay
+        base = try await SearchFixture(pages: pages, overlayProvider: overlay)
         let pdfView = base.pdfView
         interaction = CountingFindInteraction(sessionDelegate: delegate)
         session = PDFViewFindSession(
@@ -113,7 +167,8 @@ private struct SessionFixture {
             scrollAdjuster: scrollAdjuster ?? PDFJumpToSearchResultScrollAdjuster(
                 contentScrollView: { [weak pdfView] in pdfView?.contentScrollView },
                 notificationCenter: NotificationCenter()
-            )
+            ),
+            highlightOverlay: overlay
         )
     }
 

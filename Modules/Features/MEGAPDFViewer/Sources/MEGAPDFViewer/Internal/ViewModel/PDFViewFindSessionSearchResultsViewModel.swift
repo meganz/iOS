@@ -11,6 +11,9 @@ final class PDFViewFindSessionSearchResultsViewModel {
         /// The highlighted match, only when `highlightedIndex` changed because
         /// of a search or a next/previous request.
         let scrollTarget: PDFSearchMatch?
+        /// True from the first match until a search finds nothing or ends,
+        /// including while a new query replaces the matches.
+        let dimsPages: Bool
     }
 
     @Published private(set) var resultsUpdate: ResultsUpdate?
@@ -20,6 +23,7 @@ final class PDFViewFindSessionSearchResultsViewModel {
 
     private let searchUseCase: any PDFDocumentSearchUseCaseProtocol
     private var generationID = UUID()
+    private var dimsPages = false
     private var searchTask: Task<Void, Never>?
 
     init(searchUseCase: some PDFDocumentSearchUseCaseProtocol) {
@@ -39,6 +43,8 @@ final class PDFViewFindSessionSearchResultsViewModel {
                 guard !Task.isCancelled else { return }
                 self?.didFind(match)
             }
+            guard !Task.isCancelled else { return }
+            self?.didFinishSearching()
         }
     }
 
@@ -64,6 +70,7 @@ final class PDFViewFindSessionSearchResultsViewModel {
     func endSearch() {
         searchTask?.cancel()
         searchTask = nil
+        dimsPages = false
         clearResults()
     }
 
@@ -75,6 +82,7 @@ final class PDFViewFindSessionSearchResultsViewModel {
 
     private func didFind(_ match: PDFSearchMatch) {
         matches.append(match)
+        dimsPages = true
         guard highlightedIndex == nil else {
             publish(scrollsToHighlighted: false)
             return
@@ -83,9 +91,15 @@ final class PDFViewFindSessionSearchResultsViewModel {
         publish(scrollsToHighlighted: true)
     }
 
+    private func didFinishSearching() {
+        guard matches.isEmpty, dimsPages else { return }
+        dimsPages = false
+        publish(scrollsToHighlighted: false)
+    }
+
     private func publish(scrollsToHighlighted: Bool) {
         let scrollTarget = scrollsToHighlighted ? highlightedIndex.map { matches[$0] } : nil
-        resultsUpdate = ResultsUpdate(scrollTarget: scrollTarget)
+        resultsUpdate = ResultsUpdate(scrollTarget: scrollTarget, dimsPages: dimsPages)
     }
 
     private func reportHighlightedResult() {

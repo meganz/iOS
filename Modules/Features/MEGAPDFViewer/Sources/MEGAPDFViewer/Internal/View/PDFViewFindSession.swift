@@ -16,6 +16,7 @@ final class PDFViewFindSession: UIFindSession {
     private weak var pdfView: PDFView?
     private weak var findInteraction: UIFindInteraction?
     private let scrollAdjuster: PDFJumpToSearchResultScrollAdjuster
+    private let highlightOverlay: PDFSearchHighlightOverlayProvider
     private let preferences: PDFViewSearchPreferences
     private var subscriptions = Set<AnyCancellable>()
 
@@ -27,11 +28,13 @@ final class PDFViewFindSession: UIFindSession {
         findInteraction: UIFindInteraction,
         documentSearcher: any PDFDocumentSearching,
         preferences: PDFViewSearchPreferences,
-        scrollAdjuster: PDFJumpToSearchResultScrollAdjuster
+        scrollAdjuster: PDFJumpToSearchResultScrollAdjuster,
+        highlightOverlay: PDFSearchHighlightOverlayProvider
     ) {
         self.pdfView = pdfView
         self.findInteraction = findInteraction
         self.scrollAdjuster = scrollAdjuster
+        self.highlightOverlay = highlightOverlay
         self.preferences = preferences
         viewModel = PDFViewFindSessionSearchResultsViewModel(
             searchUseCase: PDFDocumentSearchUseCase(documentSearcher: documentSearcher)
@@ -62,14 +65,14 @@ final class PDFViewFindSession: UIFindSession {
         viewModel.invalidateResults()
     }
 
-    /// Cancels the search and clears its results.
+    /// Cancels the search and clears its highlights.
     func endSearch() {
         viewModel.endSearch()
     }
 
     private func apply(_ update: PDFViewFindSessionSearchResultsViewModel.ResultsUpdate) {
         findInteraction?.updateResultCount()
-        // Highlight search result here (actual code in next MR)
+        highlightOverlay.show(viewModel.matches, highlightedIndex: viewModel.highlightedIndex, dims: update.dimsPages)
         guard let scrollTarget = update.scrollTarget, let pdfView else { return }
         scroll(to: scrollTarget.selection, in: pdfView)
     }
