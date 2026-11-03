@@ -39,6 +39,7 @@ class RichPreviewContentView: UIView {
     }
 
     func configureView() {
+        titleLabel.numberOfLines = message?.node?.richPreviewTitleNumberOfLines ?? 1
         if message?.containsMeta?.type == .richPreview {
             guard let richPreview = message?.containsMeta?.richPreview else {
                 return
@@ -114,5 +115,11 @@ extension MEGANode {
     /// named `CRYPTO_ERROR`, so say the key is invalid instead, as opening the link does.
     var richPreviewTitle: String? {
         isNodeKeyDecrypted() ? name : Strings.Localizable.decryptionKeyNotValid
+    }
+
+    /// The invalid key message is longer than a file name, so it wraps freely instead of being cut off
+    /// in other languages or at larger text sizes.
+    var richPreviewTitleNumberOfLines: Int {
+        isNodeKeyDecrypted() ? 1 : 0
     }
 }

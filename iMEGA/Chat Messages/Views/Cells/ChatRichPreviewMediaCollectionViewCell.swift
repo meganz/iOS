@@ -273,6 +273,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             let messageInfo = messageInfo(for: chatMessage)
             calculateTitleLabel.text = messageInfo.0
             calculateTitleLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+            calculateTitleLabel.numberOfLines = megaMessage.node?.richPreviewTitleNumberOfLines ?? 1
             calculateDescriptionLabel.text = messageInfo.1
             calculateDescriptionLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
             calculateLinkLabel.text = messageInfo.2
@@ -284,7 +285,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             let labelsContainerSize = CGSize(width: maxSize.width - elementSpacing - previewSize.width - elementSpacing, height: maxSize.height)
             let titleLabelSize = calculateTitleLabel.sizeThatFits(labelsContainerSize)
             let descriptionLabelSize = calculateDescriptionLabel.sizeThatFits(labelsContainerSize)
-            let linkLabelSize = calculateTitleLabel.sizeThatFits(CGSize(width: labelsContainerSize.width - 2 * elementSpacing, height: labelsContainerSize.height))
+            let linkLabelSize = calculateLinkLabel.sizeThatFits(CGSize(width: labelsContainerSize.width - 2 * elementSpacing, height: labelsContainerSize.height))
             
             return CGSize(width: max(maxSize.width, 0),
                           height: containerSize.height
