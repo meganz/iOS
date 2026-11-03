@@ -95,6 +95,7 @@ struct TransferResultRowView: View {
         .contentShape(Rectangle())
         // Shapes the lifted card. Left to itself SwiftUI rounds it more heavily than the design does.
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: previewCornerRadius))
+        .contentShape(.dragPreview, RoundedRectangle(cornerRadius: previewCornerRadius))
         // Masked rather than removed while selecting: an `if` around the gesture
         // and swipe modifiers would be a structural change, so entering select
         // mode would tear down and rebuild every visible row. A masked-off
@@ -105,13 +106,14 @@ struct TransferResultRowView: View {
             },
             including: isSelecting ? .none : .all
         )
-        // Tap-and-hold starts the drag on reorderable rows, so they offer no menu;
+        // Tap-and-hold starts the drag on reorderable rows, so they get no menu at all
+        // (an empty one still lifts the row and leaves a blank slot after the drop);
         // Select stays reachable from the More menu.
-        .contextMenu {
-            if !isSelecting, !isReorderable {
+        .modifier(OptionalContextMenu(isEnabled: !isReorderable) {
+            if !isSelecting {
                 selectMenuItem
             }
-        }
+        })
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             if !isSelecting, !isOffline {
                 swipeAction
@@ -411,6 +413,21 @@ private extension View {
         padding(TokenSpacing._4)
             .contentShape(Rectangle())
             .padding(-TokenSpacing._4)
+    }
+}
+
+/// Attaches a context menu only when enabled. `isEnabled` is fixed for a given list,
+/// so the branch never changes a row's identity.
+private struct OptionalContextMenu<MenuItems: View>: ViewModifier {
+    let isEnabled: Bool
+    @ViewBuilder let menuItems: () -> MenuItems
+
+    func body(content: Content) -> some View {
+        if isEnabled {
+            content.contextMenu(menuItems: menuItems)
+        } else {
+            content
+        }
     }
 }
 
