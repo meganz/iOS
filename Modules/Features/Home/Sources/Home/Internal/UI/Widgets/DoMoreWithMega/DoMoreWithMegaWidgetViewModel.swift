@@ -51,6 +51,7 @@ final class DoMoreWithMegaWidgetViewModel {
             let album = try await createAlbumUseCase.createAlbum(named: name)
             return SnackBar(
                 message: Strings.Localizable.Home.DoMoreWithMega.AlbumCreated.message(album.name),
+                layout: .horizontal,
                 action: .init(title: Strings.Localizable.Home.DoMoreWithMega.AlbumCreated.seeAlbum) { [weak self] in
                     self?.action = .album(album)
                 }
