@@ -950,7 +950,9 @@ struct CloudDriveViewControllerFactory {
                         // for more details inspect NodeOpener.swift and it's openNode method
                         allNodeHandles: selection.nonEmptyOrNilSiblingsIds(),
                         displayMode: config.displayMode?.carriedOverDisplayMode,
-                        sourcePage: selection.isSearchActive ? .search : config.sourcePage,
+                        // a folder opened from search keeps this screen's source page, so audio played
+                        // inside it still gets its queue; only files tapped in the results are `.search`
+                        sourcePage: selection.isSearchActive && !selection.result.isFolder ? .search : config.sourcePage,
                         isFromSharedItem: config.isFromSharedItem ?? false,
                         warningViewModel: config.warningViewModel
                     )

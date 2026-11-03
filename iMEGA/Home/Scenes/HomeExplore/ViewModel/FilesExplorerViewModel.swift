@@ -264,7 +264,7 @@ final class FilesExplorerViewModel: ViewModelType {
 
     private func open(node: MEGANode, allNodes: [MEGANode]) {
         let isSearching = !(searchText ?? "").isEmpty
-        let sourcePage: NodeSourcePage = isSearching
+        let sourcePage: NodeSourcePage = isSearching && !node.isFolder()
             ? .search
             : (explorerType == .audio ? .allAudios : .unknown)
         router.didSelect(node: node, allNodes: allNodes, sourcePage: sourcePage)

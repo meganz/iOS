@@ -1430,6 +1430,7 @@
 		947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947336C12BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift */; };
 		947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */; };
 		9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */; };
+		E1A7549640000000000000A2 /* HomeSearchNodeSelectionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A7549640000000000000A1 /* HomeSearchNodeSelectionHandlerTests.swift */; };
 		947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */; };
 		947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */; };
 		94779D9B2C075860008A5198 /* UsageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94779D9A2C075860008A5198 /* UsageViewModel.swift */; };
@@ -4359,6 +4360,7 @@
 		947336C12BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeAccountPlanRouter.swift; sourceTree = "<group>"; };
 		947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsBridge.swift; sourceTree = "<group>"; };
 		9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStoreTests.swift; sourceTree = "<group>"; };
+		E1A7549640000000000000A1 /* HomeSearchNodeSelectionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodeSelectionHandlerTests.swift; sourceTree = "<group>"; };
 		947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisabler.swift; sourceTree = "<group>"; };
 		947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisablerTests.swift; sourceTree = "<group>"; };
 		94779D9A2C075860008A5198 /* UsageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewModel.swift; sourceTree = "<group>"; };
@@ -8946,6 +8948,7 @@
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */,
 				6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */,
+				E1A7549640000000000000A1 /* HomeSearchNodeSelectionHandlerTests.swift */,
 				94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */,
 				6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */,
 				9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */,
@@ -17222,6 +17225,7 @@
 				0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */,
+				E1A7549640000000000000A2 /* HomeSearchNodeSelectionHandlerTests.swift in Sources */,
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
 				94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
