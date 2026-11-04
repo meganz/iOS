@@ -1587,12 +1587,6 @@
                 if (request.type == MEGARequestTypeLogout && request.paramType == MEGAErrorTypeApiESSL && !self.sslKeyPinningController) {
                     [SVProgressHUD dismiss];
                     _sslKeyPinningController = [UIAlertController alertControllerWithTitle:LocalizedString(@"sslUnverified_alertTitle", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ignore", @"Button title to allow the user ignore something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                        self.sslKeyPinningController = nil;
-                        [api setPublicKeyPinning:NO];
-                        [api reconnect];
-                    }]];
-                    
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         [api retryPendingConnections];
