@@ -23,6 +23,16 @@ final class TransferTabListViewModel: ObservableObject {
     /// The rows on screen: the tab's rows narrowed to the settled search query.
     @Published private(set) var rows: [TransferRowViewModel] = []
 
+    /// Active only: the download queue's rows, listed before the uploads.
+    var downloadRows: [TransferRowViewModel] {
+        rows.filter { $0.transfer.type != .upload }
+    }
+
+    /// Active only: the upload queue's rows, listed after the downloads.
+    var uploadRows: [TransferRowViewModel] {
+        rows.filter { $0.transfer.type == .upload }
+    }
+
     /// Whether the tab has any rows before the search filter applies. Tells the
     /// tab's own empty state apart from a search that matched nothing.
     @Published private(set) var hasTransfers = false
@@ -282,35 +292,28 @@ final class TransferTabListViewModel: ObservableObject {
 
     // MARK: - Reorder
 
-    /// Applies a drag on the Active tab to the list right away and returns the move for
+    /// Applies a drag within one queue of the Active tab and returns the move for
     /// `commitReorder(_:)` to send to the SDK, or `nil` when the queue order is unchanged.
+    /// Offsets are within `queue`'s rows.
     ///
-    /// Downloads and uploads are separate queues, so a row dropped among the other
-    /// direction's rows lands at the nearest end of its own queue.
-    func reorder(fromOffsets source: IndexSet, toOffset destination: Int) -> TransferReorder? {
-        guard tab.isQueueOrdered,
-              source.count == 1,
-              let sourceIndex = source.first,
-              rows.indices.contains(sourceIndex) else { return nil }
-        let movedRow = rows[sourceIndex]
+    /// `rows` shows the drop exactly as the list made it: publishing any other order in
+    /// the same pass leaves a blank slot where the row was. Rows that finished meanwhile
+    /// go with the next flush.
+    func reorder(in queue: TransferQueue, fromOffsets source: IndexSet, toOffset destination: Int) -> TransferReorder? {
+        guard tab.isQueueOrdered, source.count == 1, let sourceIndex = source.first else { return nil }
+        var queueRows = queue == .uploads ? uploadRows : downloadRows
+        guard queueRows.indices.contains(sourceIndex) else { return nil }
+        let movedRow = queueRows[sourceIndex]
         guard let previousPosition = queuePositions[movedRow.id] else { return nil }
 
-        let currentIds = rows.map(\.id)
-        var droppedIds = currentIds
-        droppedIds.remove(at: sourceIndex)
-        // `destination` counts the row itself while it is still in place.
-        let droppedIndex = destination > sourceIndex ? destination - 1 : destination
-        droppedIds.insert(movedRow.id, at: min(max(droppedIndex, 0), droppedIds.count))
-        let queue = sameQueueIds(droppedIds, as: previousPosition)
-        guard queue != sameQueueIds(currentIds, as: previousPosition),
-              let index = queue.firstIndex(of: movedRow.id) else {
-            // The list already moved the row on screen; publishing puts it back.
-            flush()
-            return nil
-        }
+        let currentIds = listedIds(queueRows)
+        queueRows.move(fromOffsets: source, toOffset: destination)
+        rows = queue == .uploads ? downloadRows + queueRows : queueRows + uploadRows
+        let droppedIds = listedIds(queueRows)
+        guard droppedIds != currentIds, let index = droppedIds.firstIndex(of: movedRow.id) else { return nil }
 
-        let previousId = index > 0 ? queue[index - 1] : nil
-        let nextId = index + 1 < queue.count ? queue[index + 1] : nil
+        let previousId = index > 0 ? droppedIds[index - 1] : nil
+        let nextId = index + 1 < droppedIds.count ? droppedIds[index + 1] : nil
         let provisionalPosition = TransferQueuePosition(
             isUpload: previousPosition.isUpload,
             priority: provisionalPriority(
@@ -323,7 +326,6 @@ final class TransferTabListViewModel: ObservableObject {
         // priority stale updates carry.
         prereorderPriorities[movedRow.id] = prereorderPriorities[movedRow.id] ?? previousPosition.priority
         move(id: movedRow.id, to: provisionalPosition)
-        flush()
 
         return TransferReorder(
             transfer: movedRow.transfer,
@@ -355,10 +357,10 @@ final class TransferTabListViewModel: ObservableObject {
 
     // MARK: - Queue order
 
-    /// The ids in `position`'s queue, leaving out rows that finished but stay on screen
-    /// until the next flush: the SDK can no longer move them or move anything before them.
-    private func sameQueueIds(_ ids: [Int], as position: TransferQueuePosition) -> [Int] {
-        ids.filter { presentIds.contains($0) && queuePositions[$0]?.isInSameQueue(as: position) == true }
+    /// The rows' ids, leaving out rows that finished but stay on screen until the next
+    /// flush: the SDK can no longer move them or move anything before them.
+    private func listedIds(_ queueRows: [TransferRowViewModel]) -> [Int] {
+        queueRows.map(\.id).filter { presentIds.contains($0) }
     }
 
     /// A priority between the new neighbours', so the row sorts where it was dropped

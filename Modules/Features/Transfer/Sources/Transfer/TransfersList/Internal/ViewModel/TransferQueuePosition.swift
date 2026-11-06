@@ -17,13 +17,15 @@ struct TransferQueuePosition: Comparable, Sendable {
         self.init(isUpload: transfer.type == .upload, priority: transfer.priority, tag: transfer.tag)
     }
 
-    func isInSameQueue(as other: TransferQueuePosition) -> Bool {
-        isUpload == other.isUpload
-    }
-
     static func < (lhs: TransferQueuePosition, rhs: TransferQueuePosition) -> Bool {
         (lhs.isUpload ? 1 : 0, lhs.priority, lhs.tag) < (rhs.isUpload ? 1 : 0, rhs.priority, rhs.tag)
     }
+}
+
+/// The Active tab's two transfer queues. Each is listed and reordered on its own.
+enum TransferQueue: Sendable {
+    case downloads
+    case uploads
 }
 
 /// A drag-reorder already applied to the Active tab, waiting to be sent to the SDK.

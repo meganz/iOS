@@ -102,31 +102,16 @@ struct TransferTabListView: View {
         // inert (the native checkboxes only appear in edit mode), while swapping
         // in a second `List` on mode changes would reset the scroll position.
         List(selection: $selection.selectedTags) {
-            ForEach(viewModel.rows) { row in
-                TransferResultRowView(
-                    viewModel: row,
-                    isReorderable: isReorderable,
-                    onCancelled: onTransferCancelled,
-                    onRetried: onTransferRetried,
-                    onSelectRequested: { onRowSelectRequested(row.id) }
-                )
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    // Selected rows carry the design's surface-1 highlight in
-                    // place of the native selected-cell grey.
-                    //
-                    // Unselected rows are painted the page colour rather than left clear: it reads
-                    // the same in the list, but the tap-and-hold lift is UIKit's snapshot of the
-                    // row, and a clear row snapshots to a transparent card that shows the dimmed
-                    // backdrop straight through instead of lifting off it.
-                    .listRowBackground(
-                        selection.selectedTags.contains(row.id)
-                            ? TokenColors.Background.surface1.swiftUI
-                            : TokenColors.Background.page.swiftUI
-                    )
-            }
             // The list drives the drag and the lifted row; rows opt out with `moveDisabled`.
-            .onMove(perform: isReorderable ? { moveRow(from: $0, to: $1) } : nil)
+            // One `ForEach` per queue, so a row can only be dropped within its own queue.
+            if isReorderable {
+                ForEach(viewModel.downloadRows, content: rowView)
+                    .onMove { moveRow(in: .downloads, from: $0, to: $1) }
+                ForEach(viewModel.uploadRows, content: rowView)
+                    .onMove { moveRow(in: .uploads, from: $0, to: $1) }
+            } else {
+                ForEach(viewModel.rows, content: rowView)
+            }
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
@@ -137,10 +122,34 @@ struct TransferTabListView: View {
         .tint(TokenColors.Components.selectionControlAlt.swiftUI)
     }
 
+    private func rowView(_ row: TransferRowViewModel) -> some View {
+        TransferResultRowView(
+            viewModel: row,
+            isReorderable: isReorderable,
+            onCancelled: onTransferCancelled,
+            onRetried: onTransferRetried,
+            onSelectRequested: { onRowSelectRequested(row.id) }
+        )
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+            // Selected rows carry the design's surface-1 highlight in
+            // place of the native selected-cell grey.
+            //
+            // Unselected rows are painted the page colour rather than left clear: it reads
+            // the same in the list, but the tap-and-hold lift is UIKit's snapshot of the
+            // row, and a clear row snapshots to a transparent card that shows the dimmed
+            // backdrop straight through instead of lifting off it.
+            .listRowBackground(
+                selection.selectedTags.contains(row.id)
+                    ? TokenColors.Background.surface1.swiftUI
+                    : TokenColors.Background.page.swiftUI
+            )
+    }
+
     /// Reorders the list in the same pass as the drop, so the row doesn't spring back,
     /// then hands the move to the SDK.
-    private func moveRow(from source: IndexSet, to destination: Int) {
-        guard let reorder = viewModel.reorder(fromOffsets: source, toOffset: destination) else { return }
+    private func moveRow(in queue: TransferQueue, from source: IndexSet, to destination: Int) {
+        guard let reorder = viewModel.reorder(in: queue, fromOffsets: source, toOffset: destination) else { return }
         Task { await viewModel.commitReorder(reorder) }
     }
 }
