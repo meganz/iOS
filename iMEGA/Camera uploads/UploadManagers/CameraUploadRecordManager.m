@@ -320,6 +320,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     return [self countForFetchRequest:request error:error];
 }
 
+- (NSUInteger)givenUpRecordsCountWithError:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    NSPredicate *notDone = [NSPredicate predicateWithFormat:@"status <> %@", @(CameraAssetUploadStatusDone)];
+    NSPredicate *overLimit = [NSCompoundPredicate notPredicateWithSubpredicate:[self predicateByFilterAssetUploadRecordError]];
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[notDone, overLimit]];
+    return [self countForFetchRequest:request error:error];
+}
+
 - (NSUInteger)pendingForUploadingRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(NOT (status IN %@)) AND (mediaType IN %@)", @[@(CameraAssetUploadStatusDone), @(CameraAssetUploadStatusUploading)], mediaTypes];

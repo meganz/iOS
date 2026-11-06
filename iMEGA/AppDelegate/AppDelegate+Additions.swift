@@ -536,7 +536,10 @@ extension AppDelegate {
                 let bitmap = try await cookieSettingsUseCase.cookieSettings()
                 let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
                 cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
-                await analyticsConsentUseCase.updateCollection(performanceAndAnalyticsConsent: isPerformanceAndAnalyticsEnabled)
+                let isCollectionEnabled = await analyticsConsentUseCase.updateCollection(
+                    performanceAndAnalyticsConsent: isPerformanceAndAnalyticsEnabled
+                )
+                CameraUploadTelemetry.shared.analyticsCollectionDidUpdate(isEnabled: isCollectionEnabled)
             } catch {
                 if case CookieSettingsErrorEntity.bitmapNotSet = error {
                     MEGALogDebug("Cookie settings bitmap not set yet; disabling Crashlytics and Analytics by default")
@@ -545,6 +548,7 @@ extension AppDelegate {
                 }
                 cookieSettingsUseCase.setCrashlyticsEnabled(false)
                 analyticsConsentUseCase.disableCollection()
+                CameraUploadTelemetry.shared.analyticsCollectionDidUpdate(isEnabled: false)
             }
         }
     }

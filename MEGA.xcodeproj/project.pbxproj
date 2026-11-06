@@ -3787,6 +3787,7 @@
 		5DF249DE24F381C8003FED76 /* DispatchFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchFunction.swift; sourceTree = "<group>"; };
 		5DF44CCB251369E000E9F0BC /* NodeDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDetailsUseCase.swift; sourceTree = "<group>"; };
 		5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlStyleFactoory.swift; sourceTree = "<group>"; };
+		675867B89B34A49EC6DD5AE5 /* CameraUploadOperation+Telemetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Telemetry.h"; sourceTree = "<group>"; };
 		6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Photos.swift"; sourceTree = "<group>"; };
 		6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLocalisationTests.swift; sourceTree = "<group>"; };
 		6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -5789,6 +5790,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6D51602D30293F8600ECEDBC /* OfflineMode */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OfflineMode; sourceTree = "<group>"; };
+		A683148F6A8CFD93A486EC8A /* Telemetry */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Telemetry; sourceTree = "<group>"; };
 		A8B1C3582F7D5F0B00772DE0 /* LiveActivity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LiveActivity; sourceTree = "<group>"; };
 		BFB014E82EDABA8F00F600E7 /* MEGAModulesTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MEGAModulesTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -7740,6 +7742,7 @@
 				12397E152820C39100A30CCC /* PhotoAlbum */,
 				0E31E9782EA08E6A002F7EC3 /* Progress */,
 				0E5238892AF0497C00AC5727 /* Status */,
+				A683148F6A8CFD93A486EC8A /* Telemetry */,
 				25A58FA22B0ED02F00050882 /* Timeline */,
 				B658D3BC218F9384004C0D64 /* TransferSession */,
 				B658D3BF218F93F5004C0D64 /* UploadManagers */,
@@ -12135,6 +12138,7 @@
 				B64F9A9D2238F4A4000A4EA7 /* AssetResourceUploadOperation.h */,
 				B64F9A9E2238F4A4000A4EA7 /* AssetResourceUploadOperation.m */,
 				A8C6494A2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift */,
+				675867B89B34A49EC6DD5AE5 /* CameraUploadOperation+Telemetry.h */,
 				B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */,
 				B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
@@ -14106,6 +14110,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				6D51602D30293F8600ECEDBC /* OfflineMode */,
+				A683148F6A8CFD93A486EC8A /* Telemetry */,
 			);
 			name = MEGA;
 			packageProductDependencies = (

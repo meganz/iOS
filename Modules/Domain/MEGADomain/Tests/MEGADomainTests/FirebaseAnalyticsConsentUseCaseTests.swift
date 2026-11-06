@@ -47,6 +47,17 @@ struct FirebaseAnalyticsConsentUseCaseTests {
         #expect(box.value == false)
     }
 
+    @Test("updateCollection returns whether collection was enabled",
+          arguments: [(true, "USA", "US"), (false, "USA", "US"), (true, "FRA", "FR")])
+    func updateCollection_returnsWhetherEnabled(consent: Bool, storefrontCode: String, localeCode: String) async {
+        let box = Box<Bool>()
+        let sut = makeSUT(storefrontCode: storefrontCode, localeCode: localeCode, box: box)
+
+        let isEnabled = await sut.updateCollection(performanceAndAnalyticsConsent: consent)
+
+        #expect(isEnabled == box.value)
+    }
+
     @Test("updateCollection with consent enables when both signals are allowed alpha-2",
           arguments: [("US", "US"), ("CA", "CA"), ("JP", "JP"), ("KR", "KR")])
     func updateCollection_consentAndBothAllowedAlpha2_enables(codes: (String, String)) async {

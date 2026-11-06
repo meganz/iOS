@@ -224,6 +224,7 @@
 - (IBAction)modalDialogDoneButtonTouched {
     CameraUploadManager.migratedToCameraUploadsV2 = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
     [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 

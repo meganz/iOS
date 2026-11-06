@@ -1,5 +1,6 @@
 #import "LivePhotoUploadOperation.h"
 #import "CameraUploadOperation+Utils.h"
+#import "CameraUploadOperation+Telemetry.h"
 #import "PHAssetResource+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSError+CameraUpload.h"
@@ -33,6 +34,8 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
+    
+    [self enterTelemetryStep:CameraUploadTelemetryStepFetchOriginal];
 
     PHAssetResource *videoResource = self.uploadInfo.asset.mnz_livePhotoResource;
     if (videoResource) {
@@ -52,6 +55,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
 
 - (void)assetResource:(PHAssetResource *)resource didExportToURL:(NSURL *)URL {
     MEGALogDebug(@"[Camera Upload] %@ starts exporting live photo to video", self);
+    [self enterTelemetryStep:CameraUploadTelemetryStepExport];
     
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:URL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
@@ -110,7 +114,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
                 if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                     [weakSelf finishUploadWithNoEnoughDiskSpace];
                 } else {
-                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
+                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed error:session.error];
                 }
                 break;
             default:

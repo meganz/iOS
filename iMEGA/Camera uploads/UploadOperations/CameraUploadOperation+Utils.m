@@ -1,4 +1,5 @@
 #import "CameraUploadOperation+Utils.h"
+#import "CameraUploadOperation+Telemetry.h"
 #import "CameraUploadRecordManager.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -96,6 +97,7 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 #pragma mark - disk space
 
 - (void)finishUploadWithNoEnoughDiskSpace {
+    [CameraUploadTelemetry.shared filePutAside:CameraUploadPutAsideReasonDiskFull];
     if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadVideoUploadLocalDiskFullNotification object:nil];
     } else {
@@ -113,20 +115,22 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
     } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
         [self finishUploadWithNoEnoughDiskSpace];
     } else if (!MEGAReachabilityManager.isReachable) {
+        [CameraUploadTelemetry.shared filePutAside:CameraUploadPutAsideReasonOffline];
         [self finishOperationWithStatus:CameraAssetUploadStatusNotReady];
     } else if (NSFileManager.defaultManager.mnz_fileSystemFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
         [self finishUploadWithNoEnoughDiskSpace];
     } else {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
     }
 }
 
 - (void)handleMEGARequestError:(MEGAError *)error {
     if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
+        [CameraUploadTelemetry.shared filePutAside:CameraUploadPutAsideReasonOverQuota];
         [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
     } else {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed error:error.nativeError];
     }
 }
 

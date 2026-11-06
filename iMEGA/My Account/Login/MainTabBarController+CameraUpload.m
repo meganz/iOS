@@ -29,6 +29,7 @@
         [weakCustom dismissViewControllerAnimated:YES completion:^{
             [CameraUploadManager configDefaultSettingsForCameraUploadV2];
             CameraUploadManager.migratedToCameraUploadsV2 = YES;
+            [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
             [CameraUploadManager.shared startCameraUploadIfNeeded];
         }];
     };

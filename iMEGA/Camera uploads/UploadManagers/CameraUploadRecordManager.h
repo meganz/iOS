@@ -59,9 +59,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)totalRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes includeUploadErrorRecords:(BOOL)includeUploadErrorRecords error:(NSError * _Nullable __autoreleasing *)error;
 
-- (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
+- (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error NS_SWIFT_NAME(pendingRecordsCount(mediaTypes:error:));
 
-- (NSUInteger)uploadingRecordsCountWithError:(NSError *__autoreleasing  _Nullable *)error;
+- (NSUInteger)uploadingRecordsCountWithError:(NSError *__autoreleasing  _Nullable *)error NS_SWIFT_NAME(uploadingRecordsCount(error:));
+
+/// Files not uploaded yet that reached a retry limit, so they are left out of the queue and of all pending counts.
+- (NSUInteger)givenUpRecordsCountWithError:(NSError *__autoreleasing  _Nullable *)error NS_SWIFT_NAME(givenUpRecordsCount(error:));
 
 - (NSUInteger)pendingForUploadingRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
 

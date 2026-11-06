@@ -15,8 +15,9 @@ public protocol FirebaseAnalyticsConsentUseCaseProtocol: Sendable {
     func disableCollection()
 
     /// Enable collection only when `performanceAndAnalyticsConsent` is `true` AND the user is in
-    /// an allowed region; otherwise disable it.
-    func updateCollection(performanceAndAnalyticsConsent: Bool) async
+    /// an allowed region; otherwise disable it. Returns whether collection was enabled.
+    @discardableResult
+    func updateCollection(performanceAndAnalyticsConsent: Bool) async -> Bool
 }
 
 // MARK: - Use case implementation
@@ -40,12 +41,15 @@ public struct FirebaseAnalyticsConsentUseCase: FirebaseAnalyticsConsentUseCasePr
         analyticsRepository.setAnalyticsEnabled(false)
     }
 
-    public func updateCollection(performanceAndAnalyticsConsent consent: Bool) async {
+    @discardableResult
+    public func updateCollection(performanceAndAnalyticsConsent consent: Bool) async -> Bool {
         guard consent else {
             analyticsRepository.setAnalyticsEnabled(false)
-            return
+            return false
         }
-        analyticsRepository.setAnalyticsEnabled(await isInAllowedRegion())
+        let isEnabled = await isInAllowedRegion()
+        analyticsRepository.setAnalyticsEnabled(isEnabled)
+        return isEnabled
     }
 
     private func isInAllowedRegion() async -> Bool {

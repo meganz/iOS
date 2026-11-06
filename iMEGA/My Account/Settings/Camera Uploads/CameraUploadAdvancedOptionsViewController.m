@@ -111,6 +111,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (void)configCameraUploadWhenValueChangedForSwitch:(UISwitch *)sender {
     [self.tableView reloadData];
     if (sender.isOn) {
+        [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
         [CameraUploadManager.shared startCameraUploadIfNeeded];
     }
 }

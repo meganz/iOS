@@ -85,6 +85,7 @@ extension CameraUploadManager {
         }
         isAppWillTerminateHandled = true
         MEGALogDebug("[Camera Upload] app will terminate")
+        CameraUploadTelemetry.shared.appWillTerminate()
         cancelAllPendingOperations()
     }
 }

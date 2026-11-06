@@ -3,6 +3,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "AVAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
+#import "CameraUploadOperation+Telemetry.h"
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
@@ -40,6 +41,8 @@
         return;
     }
     
+    [self enterTelemetryStep:CameraUploadTelemetryStepFetchOriginal];
+    
     __weak __typeof__(self) weakSelf = self;
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.version = version;
@@ -72,7 +75,7 @@
         NSError *error = info[PHImageErrorKey];
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to request video %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
             return;
         }
         
@@ -120,6 +123,8 @@
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
+    
+    [self enterTelemetryStep:CameraUploadTelemetryStepExport];
     
     if (CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
@@ -228,7 +233,7 @@
                             MEGALogDebug(@"[Camera Upload] %@ export options enabled, Now try disabling export options and try exporting", weakSelf);
                             [weakSelf exportAsset:asset withPreset:preset outputFileType:outputFileType outputFileExtension:extension enableExportOptions:NO];
                         } else {
-                            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
+                            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed error:session.error];
                         }
                         
                         break;
@@ -283,7 +288,7 @@
         if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
             [self finishUploadWithNoEnoughDiskSpace];
         } else {
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
         }
 
         return;

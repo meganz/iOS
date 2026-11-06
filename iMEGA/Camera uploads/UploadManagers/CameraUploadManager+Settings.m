@@ -241,11 +241,13 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
                 MEGALogError(@"[Camera Upload] error when deleting pre-cutoff pending records %@", error);
             }
             [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+            [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
             [CameraUploadManager.shared startCameraUploadIfNeeded];
         }];
     } else {
         // ON -> OFF: clear the cutoff and rescan so previously filtered older assets are backfilled.
         [self setUploadOnlyNewPhotosCutoff:nil];
+        [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
         [CameraUploadManager.shared startCameraUploadIfNeeded];
         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
     }

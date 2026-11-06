@@ -3,6 +3,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "CameraScanner.h"
 #import "CameraUploadRecordManager.h"
+#import "MEGA-Swift.h"
 
 @interface CameraUploadBackgroundRefreshPerformer ()
 
@@ -16,9 +17,11 @@
 
 - (void)performBackgroundRefreshWithTask:(BGAppRefreshTask *)task {
     self.refreshTask = task;
+    [CameraUploadTelemetry.shared backgroundWakeDidStart:CameraUploadWakeTypeBackgroundRefresh];
     __weak typeof(self) weakself = self;
     
     [task setExpirationHandler:^{
+        [CameraUploadTelemetry.shared backgroundTimeWillExpire];
         [weakself setTaskCompletedWithSuccess:NO];
     }];
     
@@ -49,6 +52,7 @@
 
 - (void)startCameraUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerBackgroundRefresh];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadAllAssetsFinishedProcessingNotification) name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
     
@@ -64,6 +68,9 @@
 #pragma mark - private methods
 
 - (void)setTaskCompletedWithSuccess:(BOOL)success {
+    if (self.refreshTask) {
+        [CameraUploadTelemetry.shared backgroundTaskDidFinish];
+    }
     [self.refreshTask setTaskCompletedWithSuccess:success];
     self.refreshTask = nil;
 }

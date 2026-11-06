@@ -9,7 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token;
 
-- (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status;
+/// Finishes the upload of a file after its background transfer ended. A failure is reported at the transfer step.
+- (void)finishTransferForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status error:(nullable NSError *)error;
 
 @end
 

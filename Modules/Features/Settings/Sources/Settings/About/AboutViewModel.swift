@@ -23,6 +23,11 @@ public final class AboutViewModel: ObservableObject {
     @Published var showApiEnvironmentChangedAlert = false
     @Published var showSfuServerChangeAlert = false
     @Published var sfuServerId = ""
+    @Published var showDiagnosticsFileActions = false
+    @Published var showDiagnosticsFileEmptyAlert = false
+
+    /// Presents the system share sheet for an exported diagnostics file. Set by the router.
+    var shareDiagnosticsFile: (@MainActor (URL) -> Void)?
 
     private var apiEnvironmentUseCase: any APIEnvironmentUseCaseProtocol
     private var manageLogsUseCase: any ManageLogsUseCaseProtocol
@@ -33,6 +38,11 @@ public final class AboutViewModel: ObservableObject {
     private let appBundle: Bundle
     private let systemVersion: String
     private let deviceName: String
+    private let diagnosticsFile: AboutDiagnosticsFile?
+
+    var diagnosticsFileTitle: String {
+        diagnosticsFile?.title ?? ""
+    }
 
     lazy var appVersion: String = {
         guard let infoPlistDictionary = appBundle.infoDictionary,
@@ -87,13 +97,15 @@ public final class AboutViewModel: ObservableObject {
                 changeSfuServerUC: any ChangeSfuServerUseCaseProtocol,
                 appBundle: Bundle,
                 systemVersion: String,
-                deviceName: String) {
+                deviceName: String,
+                diagnosticsFile: AboutDiagnosticsFile? = nil) {
         apiEnvironmentUseCase = apiEnvironmentUC
         manageLogsUseCase = manageLogsUC
         changeSfuServerUseCase = changeSfuServerUC
         self.appBundle = appBundle
         self.systemVersion = systemVersion
         self.deviceName = deviceName
+        self.diagnosticsFile = diagnosticsFile
         $isLoggingEnabled.useCase = preferenceUC
     }
     
@@ -143,6 +155,24 @@ public final class AboutViewModel: ObservableObject {
         changeSfuServerUseCase.changeSfuServer(to: sfuId)
     }
     
+    func refreshDiagnosticsFileActionsStatus() {
+        guard diagnosticsFile != nil else { return }
+        showDiagnosticsFileActions.toggle()
+    }
+
+    @MainActor
+    func exportDiagnosticsFile() {
+        guard let fileURL = diagnosticsFile?.makeExportFile() else {
+            showDiagnosticsFileEmptyAlert = true
+            return
+        }
+        shareDiagnosticsFile?(fileURL)
+    }
+
+    func clearDiagnosticsFile() {
+        diagnosticsFile?.clear()
+    }
+
     // MARK: - Private methods.
     
     private func selectedLanguage() -> String? {

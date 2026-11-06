@@ -16,19 +16,22 @@ public final class AboutViewRouter: Routing {
     private let systemVersion: String
     private let deviceName: String
     private let transferIndicatorConfigurator: ((UIViewController) -> Void)?
+    private let diagnosticsFile: AboutDiagnosticsFile?
 
     public init(
         presenter: UINavigationController?,
         appBundle: Bundle,
         systemVersion: String,
         deviceName: String,
-        transferIndicatorConfigurator: ((UIViewController) -> Void)? = nil
+        transferIndicatorConfigurator: ((UIViewController) -> Void)? = nil,
+        diagnosticsFile: AboutDiagnosticsFile? = nil
     ) {
         self.presenter = presenter
         self.appBundle = appBundle
         self.systemVersion = systemVersion
         self.deviceName = deviceName
         self.transferIndicatorConfigurator = transferIndicatorConfigurator
+        self.diagnosticsFile = diagnosticsFile
     }
     
     public func build() -> UIViewController {
@@ -42,8 +45,12 @@ public final class AboutViewRouter: Routing {
             changeSfuServerUC: ChangeSfuServerUseCase(repository: ChangeSfuServerRepository.newRepo),
             appBundle: appBundle,
             systemVersion: systemVersion,
-            deviceName: deviceName
+            deviceName: deviceName,
+            diagnosticsFile: diagnosticsFile
         )
+        aboutViewModel.shareDiagnosticsFile = { [weak self] fileURL in
+            self?.presentShareSheet(for: fileURL)
+        }
         let aboutView = AboutView(viewModel: aboutViewModel)
         let hostingController = UIHostingController(rootView: aboutView)
         baseViewController = hostingController
@@ -52,6 +59,13 @@ public final class AboutViewRouter: Routing {
         return hostingController
     }
     
+    private func presentShareSheet(for fileURL: URL) {
+        guard let baseViewController else { return }
+        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = baseViewController.view
+        baseViewController.present(activityViewController, animated: true)
+    }
+
     public func start() {
         let viewController = build()
         transferIndicatorConfigurator?(viewController)

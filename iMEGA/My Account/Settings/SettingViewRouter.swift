@@ -96,7 +96,8 @@ extension SettingViewRouter {
                                                          appBundle: .main,
                                                          systemVersion: UIDevice.current.systemVersion,
                                                          deviceName: UIDevice.current.deviceName() ?? "",
-                                                         transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) }))
+                                                         transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) },
+                                                         diagnosticsFile: makeCameraUploadTelemetryFile()))
             
             SettingCellViewModel(
                 image: MEGAAssets.UIImage.termsAndPoliciesSettings,
@@ -158,6 +159,22 @@ private extension SettingViewRouter {
         )
 
         return cells
+    }
+
+    /// The Camera Upload telemetry file, exported from About, exists only in development and QA builds.
+    func makeCameraUploadTelemetryFile() -> AboutDiagnosticsFile? {
+        #if DEBUG || QA_CONFIG
+        return AboutDiagnosticsFile(
+            title: "Camera Upload telemetry",
+            makeExportFile: { CameraUploadTelemetryFileSink.shared.makeExportFile() },
+            clear: {
+                CameraUploadTelemetryFileSink.shared.clear()
+                CameraUploadTelemetry.shared.resendUserProperties()
+            }
+        )
+        #else
+        return nil
+        #endif
     }
 }
 

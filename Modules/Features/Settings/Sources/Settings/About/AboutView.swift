@@ -10,7 +10,7 @@ struct AboutView: View {
         List {
             Section {
                 AppVersionView(viewModel: viewModel)
-                AboutItemView(title: Strings.Localizable.sdkVersion, subtitle: viewModel.sdkVersion)
+                SdkVersionView(viewModel: viewModel)
                 ChatSdkVersionView(viewModel: viewModel)
             }
             .listRowBackground(TokenColors.Background.page.swiftUI)
@@ -78,6 +78,35 @@ private struct AppVersionView: View {
         actionSheetButtons.append(ActionSheet.Button.cancel())
         
         return actionSheetButtons
+    }
+}
+
+private struct SdkVersionView: View {
+    @ObservedObject var viewModel: AboutViewModel
+
+    var body: some View {
+        AboutItemView(title: Strings.Localizable.sdkVersion, subtitle: viewModel.sdkVersion)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .onTapGesture(count: 5) {
+                viewModel.refreshDiagnosticsFileActionsStatus()
+            }
+            .confirmationDialog(
+                viewModel.diagnosticsFileTitle,
+                isPresented: $viewModel.showDiagnosticsFileActions,
+                titleVisibility: .visible
+            ) {
+                Button("Export") {
+                    viewModel.exportDiagnosticsFile()
+                }
+                Button("Clear", role: .destructive) {
+                    viewModel.clearDiagnosticsFile()
+                }
+                Button(Strings.Localizable.cancel, role: .cancel) { }
+            }
+            .alert("Nothing recorded yet", isPresented: $viewModel.showDiagnosticsFileEmptyAlert) {
+                Button(Strings.Localizable.ok) { }
+            }
     }
 }
 

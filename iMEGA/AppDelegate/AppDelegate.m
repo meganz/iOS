@@ -595,6 +595,8 @@
                               function:@(__FUNCTION__)];
     
     [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
+    [CameraUploadTelemetry.shared backgroundWakeDidStart:CameraUploadWakeTypeBackgroundUploadEvents];
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerBackgroundUploadEvents];
     [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 

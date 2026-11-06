@@ -1,6 +1,7 @@
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"
 #import "TransferSessionManager.h"
+#import "MEGA-Swift.h"
 
 @interface TransferSessionDelegate ()
 
@@ -52,6 +53,7 @@
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     MEGALogInfo(@"[Camera Upload] Session %@ did finish events for background URL Session", session.configuration.identifier);
+    [CameraUploadTelemetry.shared backgroundUploadEventsDidFinish];
     [self.manager finishEventsForBackgroundURLSession:session];
 }
 

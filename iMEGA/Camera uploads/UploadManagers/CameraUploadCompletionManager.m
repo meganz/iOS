@@ -1,4 +1,6 @@
 #import "CameraUploadCompletionManager.h"
+#import "MOAssetUploadErrorPerLaunch+CoreDataClass.h"
+#import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
 #import "PutNodeOperation.h"
 #import "AttributeUploadManager.h"
 #import "NSURL+CameraUpload.h"
@@ -64,7 +66,7 @@
             [CameraUploadNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
                 if (error || cameraUploadNode == nil) {
                     MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@ %@", localIdentifier, error);
-                    [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+                    [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed step:CameraUploadTelemetryStepCreateNode error:error];
                 } else {
                     MEGALogDebug(@"[Camera Upload] camera upload node loaded for %@", localIdentifier);
                     uploadInfo.parentNode = cameraUploadNode;
@@ -73,11 +75,11 @@
             }];
         } else {
             MEGALogError(@"[Camera Upload] error when to unarchive upload info for asset: %@, error %@", localIdentifier, error);
-            [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+            [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed step:CameraUploadTelemetryStepCreateNode error:error];
         }
     } else {
         MEGALogError(@"[Camera Upload] no archived upload info file found for %@", localIdentifier);
-        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed step:CameraUploadTelemetryStepCreateNode error:nil];
     }
 }
 
@@ -101,7 +103,7 @@
     AssetLocalAttribute *attributeInfo = [AttributeUploadManager.shared saveAttributesForUploadInfo:uploadInfo error:&attributesError];
     if (attributesError) {
         MEGALogError(@"[Camera Upload] error when to save attributes for %@ %@", uploadInfo.savedLocalIdentifier, attributesError);
-        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
+        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed step:CameraUploadTelemetryStepCreateNode error:attributesError];
         return;
     }
     
@@ -124,7 +126,7 @@
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusCancelled];
             } else {
-                [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
+                [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed step:CameraUploadTelemetryStepCreateNode error:error];
             }
         } else {
             MEGALogDebug(@"[Camera Upload] put node %@ succeeded for %@", node.name, uploadInfo.savedLocalIdentifier);
@@ -146,7 +148,7 @@
                 if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 }
-                [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
+                [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed step:CameraUploadTelemetryStepCreateNode error:error.nativeError];
             } else {
                 [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNodeUploadCompleteNotification object:nil userInfo:@{MEGANodeHandleKey : @(node.handle)}];
@@ -160,7 +162,18 @@
 
 #pragma mark - update status
 
+- (void)finishTransferForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status error:(nullable NSError *)error {
+    [self finishUploadForLocalIdentifier:localIdentifier status:status step:CameraUploadTelemetryStepTransfer error:error];
+}
+
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status {
+    [self finishUploadForLocalIdentifier:localIdentifier status:status step:CameraUploadTelemetryStepCreateNode error:nil];
+}
+
+/// - Parameters:
+///   - step: The step reported if the status is failed.
+///   - error: The error reported if the status is failed.
+- (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status step:(CameraUploadTelemetryStep)step error:(nullable NSError *)error {
     if (localIdentifier.length == 0 || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
@@ -176,6 +189,13 @@
         }
         
         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:status error:nil];
+        
+        BOOL isVideo = record.mediaType.integerValue == PHAssetMediaTypeVideo;
+        if (status == CameraAssetUploadStatusFailed) {
+            [CameraUploadTelemetry.shared fileFailedAtStep:step error:error isVideo:isVideo failuresSinceLaunch:record.errorPerLaunch.errorCount.integerValue failuresSinceLogin:record.errorPerLogin.errorCount.integerValue];
+        } else if (status == CameraAssetUploadStatusDone) {
+            [CameraUploadTelemetry.shared fileUploadedIsVideo:isVideo];
+        }
         
         [CameraUploadRecordManager.shared refaultObject:record];
         

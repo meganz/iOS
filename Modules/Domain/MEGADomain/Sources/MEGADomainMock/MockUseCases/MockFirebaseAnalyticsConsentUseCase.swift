@@ -4,13 +4,19 @@ public final class MockFirebaseAnalyticsConsentUseCase: FirebaseAnalyticsConsent
     public private(set) var disableCollectionCallCount = 0
     public private(set) var updateCollectionConsents: [Bool] = []
 
-    public init() {}
+    private let isCollectionEnabled: Bool
+
+    public init(isCollectionEnabled: Bool = false) {
+        self.isCollectionEnabled = isCollectionEnabled
+    }
 
     public func disableCollection() {
         disableCollectionCallCount += 1
     }
 
-    public func updateCollection(performanceAndAnalyticsConsent consent: Bool) async {
+    @discardableResult
+    public func updateCollection(performanceAndAnalyticsConsent consent: Bool) async -> Bool {
         updateCollectionConsents.append(consent)
+        return isCollectionEnabled
     }
 }

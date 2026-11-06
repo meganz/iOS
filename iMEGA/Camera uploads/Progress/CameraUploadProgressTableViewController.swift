@@ -43,6 +43,7 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        CameraUploadTelemetry.shared.setProgressViewVisible(true)
         
         monitorCameraUploadsTask = Task {
             await viewModel.loadInitial()
@@ -52,6 +53,7 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        CameraUploadTelemetry.shared.setProgressViewVisible(false)
         
         monitorCameraUploadsTask = nil
         scrollDebounceTask = nil

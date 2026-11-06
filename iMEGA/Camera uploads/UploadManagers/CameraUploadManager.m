@@ -1,5 +1,7 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadRecordManager.h"
+#import "MOAssetUploadErrorPerLaunch+CoreDataClass.h"
+#import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
 #import "CameraScanner.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
@@ -94,6 +96,8 @@ static BOOL gIsSharedInitialized = NO;
 #pragma mark - setup when app launches
 
 - (void)setupCameraUploadWhenApplicationLaunches {
+    [CameraUploadTelemetry.shared start];
+    
     if (CameraUploadManager.hasMigratedToCameraUploadsV2) {
         [CameraUploadManager configDefaultSettingsForCameraUploadV2];
     }
@@ -132,7 +136,12 @@ static BOOL gIsSharedInitialized = NO;
     float batteryLevel = UIDevice.currentDevice.batteryLevel;
     self.photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCountWithApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel];
     self.videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCountWithApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel];
+    [self reportMaxConcurrencyToTelemetry];
     [self unsuspendCameraUploadQueues];
+}
+
+- (void)reportMaxConcurrencyToTelemetry {
+    [CameraUploadTelemetry.shared setMaxConcurrencyForPhotos:self.photoUploadOperationQueue.maxConcurrentOperationCount videos:self.videoUploadOperationQueue.maxConcurrentOperationCount];
 }
 
 - (void)cancelVideoUploadOperations {
@@ -288,6 +297,7 @@ static BOOL gIsSharedInitialized = NO;
         _photoUploadPaused = photoUploadPaused;
         if (!photoUploadPaused) {
             MEGALogDebug(@"[Camera Upload] resume camera upload");
+            [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerResumed];
             [self startCameraUploadIfNeeded];
         }
     }
@@ -298,6 +308,7 @@ static BOOL gIsSharedInitialized = NO;
         _videoUploadPaused = videoUploadPaused;
         if (!videoUploadPaused) {
             MEGALogDebug(@"[Camera Upload] resume video upload");
+            [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerResumed];
             [self startVideoUploadIfNeeded];
         }
     }
@@ -307,6 +318,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)cameraScanner:(CameraScanner *)scanner didObserveNewAssets:(NSArray<PHAsset *> *)assets {
     MEGALogDebug(@"[Camera Upload] did scan new assets count %lu", (unsigned long)assets.count);
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerLibraryChanged];
     [self startCameraUploadWithRequestingMediaInfo];
 }
 
@@ -515,11 +527,14 @@ static BOOL gIsSharedInitialized = NO;
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         
         if ([CameraUploadRecordManager.shared pendingForUploadingRecordsCountByMediaTypes:CameraUploadManager.enabledMediaTypes error:nil] == 0) {
+            [CameraUploadTelemetry.shared didFinishQueueing];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAllAssetsFinishedProcessingNotification object:self userInfo:nil];
         }
         
         return;
     }
+    
+    [CameraUploadTelemetry.shared didQueueUpRecords];
     
     for (MOAssetUploadRecord *record in records) {
         [self createUploadOperationWithRecord:record completion:^(CameraUploadOperation * _Nullable operation, NSError * _Nullable error) {
@@ -539,6 +554,9 @@ static BOOL gIsSharedInitialized = NO;
                         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
                     } else {
                         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
+                        [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+                            [CameraUploadTelemetry.shared fileFailedAtStep:CameraUploadTelemetryStepPrepare error:error isVideo:mediaType == PHAssetMediaTypeVideo failuresSinceLaunch:record.errorPerLaunch.errorCount.integerValue failuresSinceLogin:record.errorPerLogin.errorCount.integerValue];
+                        }];
                     }
                 }
                 
@@ -589,6 +607,7 @@ static BOOL gIsSharedInitialized = NO;
     }
     
     if (!hasPendingOperation) {
+        [CameraUploadTelemetry.shared operation:uploadOperation didEnterStage:CameraUploadPipelineStageQueued isVideo:uploadOperation.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo];
         [queue addOperation:uploadOperation];
     }
 }
@@ -597,6 +616,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
     
     [self trackCameraUploadsEnableStatus:CameraUploadManager.cameraUploadEnabled];
     [self.heartbeat registerHeartbeat];
@@ -623,6 +643,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)enableVideoUpload {
     CameraUploadManager.videoUploadEnabled = YES;
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerSettingsChanged];
     [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
         [self.uploadRecordsCollator collateVideoUploadingRecordsByUploadTasks:uploadTasks];
     }];
@@ -633,6 +654,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)disableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = NO;
+    [CameraUploadTelemetry.shared didDisable];
     
     [self trackCameraUploadsEnableStatus:CameraUploadManager.cameraUploadEnabled];
     [self.heartbeat unregisterHeartbeat];
@@ -781,7 +803,9 @@ static BOOL gIsSharedInitialized = NO;
     MEGALogDebug(@"[Camera Upload] photo concurrent count changed %@", notification.userInfo);
     NSInteger photoConcurrentCount = [notification.userInfo[MEGAPhotoConcurrentCountUserInfoKey] integerValue];
     self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
+    [self reportMaxConcurrencyToTelemetry];
     if (self.photoUploadOperationQueue.operationCount < photoConcurrentCount) {
+        [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerConcurrencyChanged];
         [self startCameraUploadWithRequestingMediaInfo];
     }
 }
@@ -790,7 +814,9 @@ static BOOL gIsSharedInitialized = NO;
     MEGALogDebug(@"[Camera Upload] video concurrent count changed %@", notification.userInfo);
     NSInteger videoConcurrentCount = [notification.userInfo[MEGAVideoConcurrentCountUserInfoKey] integerValue];
     self.videoUploadOperationQueue.maxConcurrentOperationCount = videoConcurrentCount;
+    [self reportMaxConcurrencyToTelemetry];
     if (self.videoUploadOperationQueue.operationCount < videoConcurrentCount) {
+        [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerConcurrencyChanged];
         [self startVideoUploadIfNeeded];
     }
 }
@@ -803,6 +829,7 @@ static BOOL gIsSharedInitialized = NO;
     NSInteger photoUploadConcurrentCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCountWithApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel];
     NSInteger photoConcurrentCount = MIN(photoUploadConcurrentCount, PhotoUploadConcurrentCountInMemoryWarning);
     self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
+    [self reportMaxConcurrencyToTelemetry];
     
     NSInteger index = 0;
     for (NSOperation *operation in self.photoUploadOperationQueue.operations) {
@@ -823,6 +850,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] storage over quota notification %@", notification.userInfo);
+    [CameraUploadTelemetry.shared didPause:CameraUploadPauseReasonOverQuota];
     [self pauseCameraUploadIfNeeded];
 }
 
@@ -840,6 +868,7 @@ static BOOL gIsSharedInitialized = NO;
             [self resumeCameraUpload];
             break;
         case StorageStateRed:
+            [CameraUploadTelemetry.shared didPause:CameraUploadPauseReasonOverQuota];
             [self pauseCameraUploadIfNeeded];
             break;
         default:
@@ -849,6 +878,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)didReceiveBusinessAccountExpiredNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] business account expired notification");
+    [CameraUploadTelemetry.shared didPause:CameraUploadPauseReasonBusinessExpired];
     [self pauseCameraUploadIfNeeded];
 }
 
@@ -861,12 +891,16 @@ static BOOL gIsSharedInitialized = NO;
     MEGALogDebug(@"[Camera Upload] nodes current notification %@", notification);
     [CameraUploadManager cacheUploadOnlyNewPhotosFeatureFlag];
     self.isNodeTreeCurrent = YES;
+    [CameraUploadTelemetry.shared nodesDidBecomeCurrent];
+    [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerNodesReady];
     [self startCameraUploadIfNeeded];
 }
 
 - (void)didReceiveReachabilityChangedNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] reachability changed notification %@", notification.userInfo);
+    [CameraUploadTelemetry.shared networkReachabilityChanged:MEGAReachabilityManager.isReachable];
     if (MEGAReachabilityManager.isReachable) {
+        [CameraUploadTelemetry.shared noteTrigger:CameraUploadRunTriggerNetworkBack];
         [self startCameraUploadIfNeeded];
     }
 }
@@ -886,6 +920,7 @@ static BOOL gIsSharedInitialized = NO;
 
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] logout notification %@", notification);
+    [CameraUploadTelemetry.shared didLogOut];
     [self disableCameraUpload];
     _isNodeTreeCurrent = NO;
     [AttributeUploadManager.shared cancelAllAttributesUpload];

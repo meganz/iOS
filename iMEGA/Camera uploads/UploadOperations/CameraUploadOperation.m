@@ -1,9 +1,12 @@
 #import "CameraUploadOperation.h"
+#import "CameraUploadOperation+Telemetry.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "TransferSessionManager.h"
 #import "AssetUploadInfo.h"
 #import "CameraUploadRecordManager.h"
+#import "MOAssetUploadErrorPerLaunch+CoreDataClass.h"
+#import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
 #import "CameraUploadRequestDelegate.h"
 #import "FileEncrypter.h"
 #import "NSURL+CameraUpload.h"
@@ -66,6 +69,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
+    self.telemetryStep = CameraUploadTelemetryStepPrepare;
+    
     if (self.uploadInfo.asset == nil) {
         MEGALogError(@"[Camera Upload] %@ media asset is empty", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
@@ -113,6 +118,59 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     return UploadQueueTypePhoto;
 }
 
+#pragma mark - telemetry
+
+- (void)backgroundTaskDidExpire {
+    [CameraUploadTelemetry.shared backgroundTimeWillExpire];
+}
+
+- (BOOL)isVideoAsset {
+    return self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo;
+}
+
+- (void)enterTelemetryStep:(CameraUploadTelemetryStep)step {
+    self.telemetryStep = step;
+    
+    CameraUploadPipelineStage stage = CameraUploadPipelineStageFetching;
+    switch (step) {
+        case CameraUploadTelemetryStepPrepare:
+        case CameraUploadTelemetryStepFetchOriginal:
+            break;
+        case CameraUploadTelemetryStepExport:
+            stage = CameraUploadPipelineStageExporting;
+            break;
+        case CameraUploadTelemetryStepThumbnail:
+            stage = CameraUploadPipelineStageThumbnailing;
+            break;
+        case CameraUploadTelemetryStepEncrypt:
+            stage = CameraUploadPipelineStageEncrypting;
+            break;
+        case CameraUploadTelemetryStepRequestUploadURL:
+        case CameraUploadTelemetryStepTransfer:
+        case CameraUploadTelemetryStepCreateNode:
+            stage = CameraUploadPipelineStageRequestingUploadURL;
+            break;
+    }
+    [CameraUploadTelemetry.shared operation:self didEnterStage:stage isVideo:self.isVideoAsset];
+}
+
+- (void)reportTelemetryForStatus:(CameraAssetUploadStatus)status error:(nullable NSError *)error {
+    switch (status) {
+        case CameraAssetUploadStatusFailed:
+            [CameraUploadTelemetry.shared fileFailedAtStep:self.telemetryStep error:error isVideo:self.isVideoAsset failuresSinceLaunch:self.uploadRecord.errorPerLaunch.errorCount.integerValue failuresSinceLogin:self.uploadRecord.errorPerLogin.errorCount.integerValue];
+            break;
+        case CameraAssetUploadStatusUploading:
+            [CameraUploadTelemetry.shared fileHandedOverIsVideo:self.isVideoAsset];
+            break;
+        case CameraAssetUploadStatusDone:
+            // Operations only finish as done when the file is found in the cloud already.
+            [CameraUploadTelemetry.shared fileFoundInCloud];
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma mark - upload task
 
 - (void)handleProcessedFileWithMediaType:(PHAssetMediaType)type {
@@ -128,6 +186,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
+    
+    [self enterTelemetryStep:CameraUploadTelemetryStepThumbnail];
     
     if (type == PHAssetMediaTypeVideo) {
         self.uploadInfo.attributeImageURL = [[self.uploadInfo.fileURL URLByAppendingPathExtension:VideoAttributeImageName] URLByAppendingPathExtension:MEGAJPGFileExtension];
@@ -180,6 +240,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
+    [self enterTelemetryStep:CameraUploadTelemetryStepEncrypt];
+    
     self.fileEncrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     
     __weak __typeof__(self) weakSelf = self;
@@ -206,7 +268,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             } else if ([error.domain isEqualToString:CameraUploadErrorDomain] && error.code == CameraUploadErrorEncryptionCancelled) {
                 [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             } else {
-                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
             }
             return;
         }
@@ -218,6 +280,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
+    
+    [self enterTelemetryStep:CameraUploadTelemetryStepRequestUploadURL];
     
     [MEGASdk.shared requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (self.isCancelled) {
@@ -246,11 +310,13 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
+    [self enterTelemetryStep:CameraUploadTelemetryStepTransfer];
+    
     NSError *error;
     NSArray<NSURLSessionUploadTask *> *uploadTasks = [self createUploadTasksWithError:&error];
     if (error) {
         MEGALogError(@"[Camera Upload] %@ error when to create upload task %@", self, error);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
         for (NSURLSessionUploadTask *task in uploadTasks) {
             MEGALogDebug(@"[Camera Upload] %@ cancel upload task %@", self, task.taskDescription);
             [task cancel];
@@ -341,11 +407,16 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 #pragma mark - finish operation
 
 - (void)finishOperationWithStatus:(CameraAssetUploadStatus)status {
+    [self finishOperationWithStatus:status error:nil];
+}
+
+- (void)finishOperationWithStatus:(CameraAssetUploadStatus)status error:(nullable NSError *)error {
     if (self.isFinished) {
         return;
     }
     
     [self finishOperation];
+    [CameraUploadTelemetry.shared operationDidFinish:self];
     
     MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
     
@@ -355,6 +426,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
         [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
+        [self reportTelemetryForStatus:status error:error];
         [CameraUploadRecordManager.shared refaultObject:self.uploadRecord];
     }];
     

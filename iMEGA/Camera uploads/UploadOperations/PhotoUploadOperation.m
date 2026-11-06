@@ -3,6 +3,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
+#import "CameraUploadOperation+Telemetry.h"
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
@@ -39,6 +40,8 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         return;
     }
     
+    [self enterTelemetryStep:CameraUploadTelemetryStepFetchOriginal];
+    
     __weak __typeof__(self) weakSelf = self;
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
@@ -70,7 +73,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         NSError *error = info[PHImageErrorKey];
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to request photo %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
             return;
         }
         
@@ -124,6 +127,8 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         return;
     }
     
+    [self enterTelemetryStep:CameraUploadTelemetryStepExport];
+    
     NSString *outputTypeUTI;
     NSError *error;
     if ([self shouldConvertToJPGForUTI:dataUTI]) {
@@ -137,7 +142,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     if (error) {
         MEGALogError(@"[Camera Upload] %@ error when to generate local unique file name %@", self, error);
         [[FIRCrashlytics crashlytics] recordError:error];
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed error:error];
         return;
     }
     
