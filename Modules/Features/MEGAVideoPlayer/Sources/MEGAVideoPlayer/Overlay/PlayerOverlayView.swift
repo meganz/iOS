@@ -431,6 +431,9 @@ extension PlayerOverlayView {
                     .offset(x: viewModel.progress * geometry.size.width - 8)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            // The drag's hit area is the shape of the view it is attached to: without this, iOS 17
+            // only picks it up on the 4pt track and the thumb.
+            .contentShape(Rectangle())
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
@@ -452,7 +455,6 @@ extension PlayerOverlayView {
             )
         }
         .frame(height: TokenSpacing._8)
-        .contentShape(Rectangle())
     }
 
     func bottomControls(isLandscape: Bool) -> some View {
